@@ -1,4 +1,4 @@
-# Initial raw data from EconLit database search
+# Raw data from EconLit database search
 
 Here you find the original data we retrieved from the  [EconLit database](https://www.aeaweb.org/econlit/).
 

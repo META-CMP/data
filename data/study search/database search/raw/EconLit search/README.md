@@ -14,6 +14,8 @@ Additionally, we choose the search mode “Find all my search terms” and the e
 
 [https://search.ebscohost.com/login.aspx?direct=true&db=eoh&bquery=monetary+policy+shocks+AND+(+(%e2%80%9cindustrial+production%e2%80%9d+OR+output+OR+GDP+OR+%e2%80%9ceconomic+growth%e2%80%9d+OR+%e2%80%9ceconomic+activity%e2%80%9d+OR+employment+OR+unemployment+OR+inflation+OR+%e2%80%9cprice+level%e2%80%9d+OR+%e2%80%9cGDP+deflator%e2%80%9d+OR+CPI)+)&type=1&searchMode=And&site=ehost-live](https://search.ebscohost.com/login.aspx?direct=true&db=eoh&bquery=monetary+policy+shocks+AND+(+(%e2%80%9cindustrial+production%e2%80%9d+OR+output+OR+GDP+OR+%e2%80%9ceconomic+growth%e2%80%9d+OR+%e2%80%9ceconomic+activity%e2%80%9d+OR+employment+OR+unemployment+OR+inflation+OR+%e2%80%9cprice+level%e2%80%9d+OR+%e2%80%9cGDP+deflator%e2%80%9d+OR+CPI)+)&type=1&searchMode=And&site=ehost-live)
 
+You need a subscription or institutional access to EconLit to open this link.
+
 ## Files: 
 
 - The `.zip` [file](https://github.com/META-CMP/data/blob/main/data/study%20search/database%20search/raw/EconLit%20search/38ecfbf0-25c0-4cfb-bd0e-5fc4bbe0c62e.zip) is the original file as retrieved from EconLit.

@@ -8,17 +8,21 @@ We entered the following search queries into the Google Scholar database using t
 
 ### Queries: 
 
-- `Effect of “monetary policy” on “industrial production”`
-- `Effect of “monetary policy” on “economic growth”`
-- `Effect of “monetary policy” on the “price level”`
-- `Effect of “monetary policy” on the CPI`
-- `Effect of “monetary policy” on output`
-- `Effect of “monetary policy” on inflation`
-- `Effect of “monetary policy” on GDP`
-- `Effect of “monetary policy” on employment`
-- `Effect of "monetary policy" on unemployment`
-- `Effect of "monetary policy" on the "GDP deflator"`
-- `Effect of "monetary policy" on "economic activity"`
+The date of the search and the retrieved results are given in paranthesis.
+
+- `Effect of “monetary policy” on “industrial production”` (date of search: 7 February 2023; results: 980)
+- `Effect of “monetary policy” on “economic growth”` (date of search: 8 February 2023; results: 980)
+- `Effect of “monetary policy” on the “price level”` (date of search: 9 February 2023; results: 980)
+- `Effect of “monetary policy” on the CPI` (date of search: 9 February 2023; results: 1000)
+- `Effect of “monetary policy” on output` (date of search: 7 February 2023; results: 980)
+- `Effect of “monetary policy” on inflation` (date of search: 9 February 2023; results: 980)
+- `Effect of “monetary policy” on GDP` (date of search: 7 February 2023; results: 980)
+- `Effect of “monetary policy” on employment` (date of search: 8 February 2023; results: 980)
+- `Effect of "monetary policy" on unemployment` (date of search: 9 February 2023; results: 980)
+- `Effect of "monetary policy" on the "GDP deflator"` (date of search: 9 February 2023; results: 990)
+- `Effect of "monetary policy" on "economic activity"` (date of search: 9 February 2023; results: 980)
+
+Total number of results from our Google Scholar search: 10810
 
 ## Files: 
 

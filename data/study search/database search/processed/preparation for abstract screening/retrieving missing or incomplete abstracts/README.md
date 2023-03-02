@@ -5,7 +5,7 @@ This section describes the steps taken to retrieve missing abstracts for the 73 
 - Using the exact title within the Google Scholar search, we screened the first few entries. When the title of those did not match the respective title, we used paranthesis to search for the exact phrase.
 
 - When the title of an article matched a search result, but the Google Scholar citation did not have the option to retrieve the abstract, three options were used.  
-  1. First, we tapped the "All'X' versions" button in Google Scholar to screen for the respective abstracts of the relevant paper.
+  1. First, we tapped the "All 'X' versions" button in Google Scholar to screen for the respective abstracts of the relevant paper.
   2. Second, we entered the title in a Google search to retrieve the abstracts for the relevant articles.
   3. Third, we searched for the title in econlit.
   

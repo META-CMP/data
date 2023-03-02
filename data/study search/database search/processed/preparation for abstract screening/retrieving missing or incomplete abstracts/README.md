@@ -1,6 +1,6 @@
 # Retrieving missing abstracts when only titles are available
 
-This section describes the steps taken to retrieve missing abstracts for the 73 Zotero entries for which only titles were available. 
+This section describes the steps taken to retrieve missing abstracts for the 73 Zotero entries for which only titles were available. We conducted them on February 21st and 22nd in 2023.
 
 - Using the exact title within the Google Scholar search, we screened the first few entries. When the title of those did not match the respective title, we used paranthesis to search for the exact phrase.
 

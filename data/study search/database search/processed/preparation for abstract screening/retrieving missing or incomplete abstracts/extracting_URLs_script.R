@@ -11,7 +11,7 @@ library(here)
 #' Filter entries without an abstract or with shortened Google Scholar abstract and write a CSV file.
 #' 
 #' This function filters a provided CSV file by searching for "…" in the "Abstract Note" column.
-#' This will filter out entries containing an excerpted GS abstract or no abstrac at all. 
+#' This will filter out entries containing an excerpted GS abstract or no abstract at all. 
 #' Then the function writes the filtered data to a new CSV file. Note that is not impossible 
 #' that some complete abstracts might also contain "…" as actual content, but these entries we 
 #' would probably want to check anyway.
@@ -29,6 +29,31 @@ filter_gs_entries <- function(filepath, new_filepath) {
   df <- readr::read_csv(filepath)
   df_new <- df %>% 
     filter( grepl("…", df$`Abstract Note`) == TRUE | is.na(df$`Abstract Note`))
+  write.csv(df_new, new_filepath, row.names = FALSE)
+  View(df_new)
+}
+
+#' Filter entries that contain a complete abstract and write a CSV file.
+#' 
+#' This function filters a provided CSV file. It filters the complement to filter_gs_entries().
+#' This will filter out entries NOT containing an excerpted GS abstract or NOT containing no abstract at all. 
+#' Then the function writes the filtered data to a new CSV file.
+#'
+#' @param filepath The filepath of the CSV file to be filtered
+#' @param new_filepath The filepath of the new CSV file to be written
+#'
+#' @return The function returns the filtered dataframe and writes it to a new CSV file
+#' @export
+#'
+#' @examples
+#' filter_and_write_csv("data.csv", "example", "filtered_data.csv")
+
+filter_complete_entries <- function(filepath, new_filepath) {
+  df <- readr::read_csv(filepath)
+  df_new <- df %>% 
+    filter( grepl("…", df$`Abstract Note`) == FALSE)
+  df_new <- df_new %>%
+    filter(!is.na(df_new$`Abstract Note`))
   write.csv(df_new, new_filepath, row.names = FALSE)
   View(df_new)
 }
@@ -108,6 +133,12 @@ filter_gs_entries(
   filepath = here::here("data/study search/database search/processed/preparation for abstract screening/merging of EL and GS results and duplicate removal/merged_EL_GS_no_duplicates.csv"), 
   new_filepath = here::here("data/study search/database search/processed/preparation for abstract screening/retrieving missing or incomplete abstracts/entries_without_complete_abstracts.csv")
   )
+
+# Export the entries that have seemingly complete abstracts.
+filter_complete_entries(
+  filepath = here::here("data/study search/database search/processed/preparation for abstract screening/merging of EL and GS results and duplicate removal/merged_EL_GS_no_duplicates.csv"), 
+  new_filepath = here::here("data/study search/database search/processed/preparation for abstract screening/retrieving missing or incomplete abstracts/entries_complete_abstracts.csv")
+)
 
 # Extract URLs of entries without complete abstract.
 extract_urls(

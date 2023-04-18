@@ -3,7 +3,7 @@ library(readr)
 library(here)
 
 # Import the complete unlabeled dataset
-d_full <- read_csv(here("data/study search/database search/processed/abstract_screening/unlabelled_full_sample/unlabelled_full_sample.csv"))
+d_full <- read_csv(here("unlabelled_full_sample.csv"))
 
 length(unique(d_full$key)) == nrow(d_full) # Test if Key is unique
 nrow(d_full) - length(unique(d_full$title)) # Number of duplicate titles

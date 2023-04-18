@@ -32,5 +32,5 @@ d_full_lab <- rbind(d_lab, d_full_non_lab) # merged dataset including labeled en
 length(unique(d_full_lab$key)) == nrow(d_full_lab) # Test if Key is unique
 
 # Writing the partially labeled full sample as .csv
-write.csv(d_full_lab, here("data/study search/database search/processed/abstract_screening/partially_labeled_full_sample.csv"), row.names = FALSE)
+write.csv(d_full_lab, here("data/study search/database search/processed/abstract_screening/partially_labelled_full_sample.csv"), row.names = FALSE)
 

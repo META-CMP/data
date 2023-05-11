@@ -86,7 +86,7 @@ screen_duplicates(as.data.frame(df))
 
 ####### LOAD the "Final.csv" file and conduct a second round of duplicates checks. 
 
-# Second round of duplicates screening using fuzzdist matching with lowercases, the M ratio, and 0.05 as the maximum distance. 
+# Second round of duplicates screening using fuzzdist matching with lowercases, the M ratio, and 0.05 as the maximum distance. #395 suggestions of duplicates
 filepath <- here::here("data/study search/database search/processed/preparation for abstract screening/retrieving missing or incomplete abstracts/Final.csv")
 
 df <- readr::read_csv(filepath)

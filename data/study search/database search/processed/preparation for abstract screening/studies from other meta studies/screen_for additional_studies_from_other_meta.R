@@ -4,8 +4,8 @@ library(readr)
 
 merged_EL_GS_no_duplicates <- read_csv("data/study search/database search/processed/preparation for abstract screening/merging of EL and GS results and duplicate removal/merged_EL_GS_no_duplicates.csv")
 
-Nguyen_2021 <- read_csv("Nguyen_2021.csv")
-Nguyen_2020 <- read_csv("Nguyen_2020.csv")
+Nguyen_2021 <- read_csv("data/study search/database search/processed/preparation for abstract screening/studies from other meta studies/Nguyen_2021.csv")
+Nguyen_2020 <- read_csv("data/study search/database search/processed/preparation for abstract screening/studies from other meta studies/Nguyen_2020.csv")
 
 #De grauwe do not list their studies, the others do not state their search strategy.
 
@@ -14,8 +14,8 @@ library(readxl)
 
 
 # Read in the third sheet of the Excel file
-Havranek_2013 <- read_excel("Havranek_2013.xls", sheet = "studies")
-Rusnak_2013 <- read_excel("Rusnak_2013.xls", sheet = "studies")
+Havranek_2013 <- read_excel("data/study search/database search/processed/preparation for abstract screening/studies from other meta studies/Nguyen_2020.csv/Havranek_2013.xls", sheet = "studies")
+Rusnak_2013 <- read_excel("data/study search/database search/processed/preparation for abstract screening/studies from other meta studies/Nguyen_2020.csv/Rusnak_2013.xls", sheet = "studies")
 
 # Havranek_2013 and Rusnak use the exact same sample of studies
 sum(Rusnak_2013$Title==Havranek_2013$Title)

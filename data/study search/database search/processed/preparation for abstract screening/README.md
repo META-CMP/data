@@ -26,7 +26,7 @@ This procedure provided us with corresponding abstracts for 25 studies.
 
 ## Retrieving missing abstracts when urls are available
 
-Student assistants collected abstracts from the websites of bibliographic entries where possible based on the URLs from entries without complete abstracts, and 56 collections with complete abstracts were then combined in Zotero by following these steps:
+A student assistant collected abstracts from the websites of bibliographic entries where possible based on the URLs from entries without complete abstracts, and 56 collections with complete abstracts were then combined in Zotero by following these steps:
 
 #### 1st Step
 
@@ -38,7 +38,7 @@ We imported the initial "merged_EL_GS_no_duplicates.ris" into Zotero to make Zot
 
 #### 3rd Step
 
-We created an empty new collection in Zotero. Next, we imported the ris-files of the student assistant one by one, and move them as a subcollection into the empty collection (drag and drop). Subsequently, we deleted the "merged_EL_GS_no_duplicates" collection (with items!) from Zotero. This procedure should ensure that Zotero would have resolved any "Key" conflicts between the original dataset and the ris-files from the student assistant. In a last step, we removed duplicated item directly in Zotero.
+We created an empty new collection in Zotero. Next, we imported the ris-files of the student assistant one by one, and move them as a subcollection into the empty collection (drag and drop). Subsequently, we deleted the "merged_EL_GS_no_duplicates" collection (with items!) from Zotero. This procedure should ensure that Zotero would have resolved any "Key" conflicts between the original dataset and the ris-files from the student assistant. In a last step, we removed duplicated items directly in Zotero.
 
 The total collection of duplicate free student ris-files is saved as `abstracts_from_URLs.ris` and `abstracts_from_URLs.csv` in the folder "retrieving missing or incomplete abstracts". 
 

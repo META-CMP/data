@@ -14,8 +14,8 @@ library(readxl)
 
 
 # Read in the third sheet of the Excel file
-Havranek_2013 <- read_excel("data/study search/database search/processed/preparation for abstract screening/studies from other meta studies/Nguyen_2020.csv/Havranek_2013.xls", sheet = "studies")
-Rusnak_2013 <- read_excel("data/study search/database search/processed/preparation for abstract screening/studies from other meta studies/Nguyen_2020.csv/Rusnak_2013.xls", sheet = "studies")
+Havranek_2013 <- read_excel("data/study search/database search/processed/preparation for abstract screening/studies from other meta studies/Havranek_2013.xls", sheet = "studies")
+Rusnak_2013 <- read_excel("data/study search/database search/processed/preparation for abstract screening/studies from other meta studies/Rusnak_2013.xls", sheet = "studies")
 
 # Havranek_2013 and Rusnak use the exact same sample of studies
 sum(Rusnak_2013$Title==Havranek_2013$Title)

@@ -1,3 +1,5 @@
+library(dplyr)
+library(tidyr)
 library(readr)
 
 merged_EL_GS_no_duplicates <- read_csv("data/study search/database search/processed/preparation for abstract screening/merging of EL and GS results and duplicate removal/merged_EL_GS_no_duplicates.csv")
@@ -52,8 +54,8 @@ data_frame_author <- as.data.frame(do.call(rbind, min_cols_full))
 matches <- cbind(string1,min_dist_full,data_frame_author)
 colnames(matches)[3:4]<-c("Our_sample","Our_sample_option_2")
 
-# check these observations which seem different
-LOOK<-matches[min_dist_full > 26, ]
+# The following observations are currently not covered in our dataset
+additional_entries_nguyen2020<-matches[min_dist_full > 26, ]
 
 
 ########################## NGUYEN 2021
@@ -86,8 +88,8 @@ data_frame_author <- as.data.frame(do.call(rbind, min_cols_full))
 matches <- cbind(string1,min_dist_full,data_frame_author)
 colnames(matches)[3:4]<-c("Our_sample","Our_sample_option_2")
 
-# check these observations which seem different
-LOOK1<-matches[min_dist_full > 26, ]
+# The following observations are currently not covered in our dataset
+additional_entries_nguyen2021<-matches[min_dist_full > 26, ]
 
 
 
@@ -126,10 +128,12 @@ matches <- cbind(string1,min_dist_full,data_frame_author)
 colnames(matches)[3:4]<-c("Our_sample","Our_sample_option_2")
 
 # check these observations which seem different
-LOOK2<-matches[min_dist_full > 25, ]
+additional_entries_havranek_runsak<-matches[min_dist_full > 25, ]
+
+#ADDITIONAL to those 7 entries 12 studies have been found in Havranek 2013 and Rusnak 2013 which are not covered in our preliminary dataset: (The EFN study was not available)
 
 # 2010 Forni and Gambetti The dynamic effects of monetary policy: A structural factor model approach they have a newer study ours is from 2008
-# 2004 EFN Monetary transmission in acceding countries # ONLY APPENDIX FOUND AND NO ABSTRACT
+# 2004 EFN Monetary transmission in acceding countries # ONLY APPENDIX FOUND AND NO ABSTRACT #NOT IN OUR DATABASE
 # 1997 Bernanke et al. Systematic Monetary Policy and the Effects of Oil Price Shocks (HERE WE ONLY HAVE THE COMMENT BUT NOT THE ORIGINAL STUDY) - NO ABSTRACT
 # 2009 Borys et al. The effects of monetary policy in the Czech Republic: an empirical study - MAYBE THERE EXCISTS A NEWER STUDY we only have 2008
 # 2000 Shioji Identifying Monetary Policy Shocks in Japan
@@ -144,5 +148,5 @@ LOOK2<-matches[min_dist_full > 25, ]
 
 
 
-LOOK$covered_in_LOOK1<-is.element(LOOK$string1,LOOK1$string1)
-MISSING<-rbind(LOOK1,LOOK %>% filter(covered_in_LOOK1==FALSE) %>% select(-covered_in_LOOK1,-V3,-V4))
+additional_entries_nguyen2020$covered_in_additional_entries_nguyen2021<-is.element(additional_entries_nguyen2020$string1,additional_entries_nguyen2021$string1)
+MISSING<-rbind(additional_entries_nguyen2021,additional_entries_nguyen2020 %>% filter(covered_in_additional_entries_nguyen2021==FALSE) %>% select(-covered_in_additional_entries_nguyen2021,-V3,-V4))

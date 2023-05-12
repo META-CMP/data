@@ -43,9 +43,9 @@ We created an empty new collection in Zotero. Next, we imported the ris-files of
 The total collection of duplicate free student ris-files is saved as `abstracts_from_URLs.ris` and `abstracts_from_URLs.csv` in the folder "retrieving missing or incomplete abstracts". 
 
 
-3. We complemented our search strategy by screening relevant meta-studies to identify studies that were not covered in our initial search. Specifically, we manually gathered all 43 Studies of Nguyen (2021) and 45 Studies of Nguyen (2020) and read the data of Havranek et al (2013) (available at: http://meta-analysis.cz/lags/lags.zip) and Rusnak et al (2013) (http://meta-analysis.cz/price_puzzle/puzzle.xls) directly into R using the `code_to_read_in_data.R` script. 
+3. We complemented our search strategy by screening relevant meta-studies to identify studies that were not covered in our initial search. Specifically, we manually gathered all 43 Studies of Nguyen (2021) and 45 Studies of Nguyen (2020) and read the data of Havranek et al (2013) (available at: http://meta-analysis.cz/lags/lags.zip) and Rusnak et al (2013) (http://meta-analysis.cz/price_puzzle/puzzle.xls) directly into R using the `screen_for additional_studies_from_other_meta.R` script. 
 
-For a more detailed explanation of how we screened for additional studies, please refer to the `code_to_read_in_data.R` file. First, we identified 19 available studies from Havranek et al. (2013) and Rusnak et al. (2013) that were not yet in our database, added them to Zotero, and saved them as `havranek_2013.csv`. Second, we included 11 studies from Nguyen (2021) and Nguyen (2020) that were not covered in our initial search or the `havranek_2013.csv` file, and saved them as` Nguyen_2021_2020.csv`.
+For a more detailed explanation of how we screened for additional studies, please refer to the `screen_for additional_studies_from_other_meta.R` file. First, we identified 19 available studies from Havranek et al. (2013) and Rusnak et al. (2013) that were not yet in our database, added them to Zotero, and saved them as `havranek_2013.csv`. Second, we included 11 studies from Nguyen (2021) and Nguyen (2020) that were not covered in our initial search or the `havranek_2013.csv` file, and saved them as` Nguyen_2021_2020.csv`.
 
 4. Finally, we merged 
 

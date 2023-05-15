@@ -2,7 +2,9 @@
 title: "Abstract screening report and full text download data preparation"
 author: "Franz Prante"
 toc: true
-format: html
+format: 
+  pdf: default
+  html: default
 ---
 
 ## Summary

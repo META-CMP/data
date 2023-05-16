@@ -1,0 +1,49 @@
+---
+title: "Meta Projekt full text Download Anleitung"
+author: "Franz Prante"
+format: pdf
+---
+
+## ToDo:
+
+- Ordner “Packages_for_full_text_download”: 26 Excel – Files (study_set_xx) mit jeweils  100 Einträgen
+- Matthias bearbeitet study_set_1 bis study_set_2
+- Viktoria bearbeitet study_set_3 bis study_set_10
+- danach sehen wir weiter
+
+- Ziel: Volltexte als PDF-Datei downloaden und ablegen
+  - Für jedes study_set einen Ordner anlegen und zugehörige PDF‘s speichern
+  - Duplikate: Wenn beim Speichern eines PDF´s festgestellt wird, dass es dieses Dokument bereits existiert, dann existierende Datei anschauen und checken, ob es ein echtes Duplikat ist, oder nur der Bibtex-Key durch Zufall derselbe war
+    - wenn echtes Duplikat: 1 in die entsprechende Spalte
+    - wenn Zufall, den Bibtex-Key ändern für das PDF und auch in der Excel-Datei ändern.
+
+## How to?
+
+__Ganz wichtig: keine Änderungen an den bereits ausgefüllten Zellen der Excel-Tabelle vornehmen.__
+
+- Excel-File öffnen
+- Titel-Suche über GoogleScholar oder URL benutzen
+- Abgleichen mit den Daten aus der Excel-Tabelle
+- PDF als Volltext downloaden und im jeweiligen PDF_study_set-Ordner unter dem Namen speichern, der in der Excel-Tabelle mit „BibtexKey“ gelabelt wurde
+- Für jede Studie, die 4 Spalten ausfüllen
+
+`most_recent_version_available    not_available   retracted   duplicate   notes_PDF_download`
+
+- `most_recent_version_available`: 0 oder 1 vergeben [1 = ja]
+  - kontrollieren, ob das PDF die neueste Version des Artikels ist (wenn es ein publizierter JournalArticle ist, dann ist das klar; hier ggf. die Daten zu PublicationTitle, Issue, Volumne abgleichen /ergänzen/nachtragen)
+  - bei Working-Papern nach der neuesten Version suchen
+
+- `not_available`: 0 oder 1 vergeben [1 = ja]
+  - für den Fall, dass der Volltext nicht verfügbar ist (bspw.: die Quelle ist ein Buch oder Buchartikel, TUC hat keinen Volltextzugriff auf das Journal,…)
+
+- `retracted`: 0 oder 1 vergeben [1 = ja]
+  - nach Hinweisen suchen, ob ein Papier zurückgezogen wurde
+  - das kann bspw. so aussehen: https://academic.oup.com/restud/article/81/2/787/1520611?login=true
+
+- `notes_PDF_download`:
+  - Anmerkungen, Hinweise, Notizen jeder Art können in diese Spalte (Englisch)
+
+
+
+
+

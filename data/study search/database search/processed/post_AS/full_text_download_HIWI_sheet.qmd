@@ -1,49 +1,56 @@
 ---
-title: "Meta Projekt full text Download Anleitung"
+title: "MORPEP META CMP Full-Text-Download-Anleitung"
 author: "Franz Prante"
 format: pdf
 ---
 
 ## ToDo:
 
-- Ordner “Packages_for_full_text_download”: 26 Excel – Files (study_set_xx) mit jeweils  100 Einträgen
+__Ordner in Nextcloud:__ `HIWI_MP` -> `Full text download` -> `packages_for_full_text_download`. Darin befinden sich 26 Excel–Dateien (`study_set_XX.xlsx`) mit jeweils $\leq$ 100 Literatur-Einträgen.
+
 - Matthias bearbeitet study_set_1 bis study_set_2
 - Viktoria bearbeitet study_set_3 bis study_set_10
 - danach sehen wir weiter
 
-- Ziel: Volltexte als PDF-Datei downloaden und ablegen
-  - Für jedes study_set einen Ordner anlegen und zugehörige PDF‘s speichern
-  - Duplikate: Wenn beim Speichern eines PDF´s festgestellt wird, dass es dieses Dokument bereits existiert, dann existierende Datei anschauen und checken, ob es ein echtes Duplikat ist, oder nur der Bibtex-Key durch Zufall derselbe war
-    - wenn echtes Duplikat: 1 in die entsprechende Spalte
-    - wenn Zufall, den Bibtex-Key ändern für das PDF und auch in der Excel-Datei ändern.
+__Ziel:__ Volltexte als PDF-Datei downloaden
 
-## How to?
+- PDFs alle in den ordner `HIWI_MP` -> `Full text download` -> `PDFs` speichern. Keine Unterordner.
+- PDFs sollen nach ihrem `BibtexKey` benannt sein, welcher in der jeweiligen Excel–Datei `study_set_XX.xlsx` zu finden ist. 
+  - Beispiel: 
+    - `BibtexKey` = `Nguyen_2022_the`
+    - Dateiname des PDF's: `Nguyen_2022_the.pdf`
 
-__Ganz wichtig: keine Änderungen an den bereits ausgefüllten Zellen der Excel-Tabelle vornehmen.__
+__Umgang mit `BibtexKey`-Duplikaten:__ 
 
-- Excel-File öffnen
-- Titel-Suche über GoogleScholar oder URL benutzen
-- Abgleichen mit den Daten aus der Excel-Tabelle
-- PDF als Volltext downloaden und im jeweiligen PDF_study_set-Ordner unter dem Namen speichern, der in der Excel-Tabelle mit „BibtexKey“ gelabelt wurde
-- Für jede Studie, die 4 Spalten ausfüllen
+Wenn beim Speichern eines PDFs festgestellt wird, dass ein Dokument mit diesem Dateinamen bereits im Ordner `PDFs` existiert, dann die beiden PDFs vergleichen. Entweder es handelt sich um ein echtes Duplikat (gleicher Titel, Autor, Jahr) oder der `BibtexKey` war nur durch Zufall identisch.
 
-`most_recent_version_available    not_available   retracted   duplicate   notes_PDF_download`
+- Wenn echtes Duplikat: 1 in die Spalte `duplicate`. Bitte prüfen, welche Version des PDFs akuteller ist und ggf. die ältere Version durch die neuere ersetzen.
+- Wenn Zufall: den `BibtexKey` des neuen PDFs in der Datei `study_set_XX.xlsx` ändern (Unterstrich (`_`) + nächstes Wort des Titels hinten anfügen) und das neue PDF unter diesem Namen abspeichern. Das bereits existierende PDF behält den alten `BibtexKey`.
 
-- `most_recent_version_available`: 0 oder 1 vergeben [1 = ja]
+## Allgemeines Vorgehen:
+
+__Ganz wichtig: keine Änderungen an den bereits ausgefüllten Zellen der Excel-Tabelle vornehmen.__ Ausnahme: Zufälliges Bibtex-Key-Duplikat, siehe oben.
+
+- Excel-Datei (`study_set_XX.xlsx`) öffnen.
+- `url` aufrufen oder `doi`^[DOIs ("digital object identifiers") sind ähnlich wie URLs, können in der Regel also auch einfach in die Adresszeile des Browsers kopiert und geöffnet werden.] aufrufen. Falls diese ins Leere führen oder die aufgerufene Studie nicht mit den Angaben in `study_set_XX.xlsx` übereinstimmen, dann den Titel aus `study_set_XX.xlsx` (Spalte `title`) über GoogleScholar suchen.
+- Abgleichen des PDFs mit den Daten aus der Excel-Tabelle `study_set_XX.xlsx`. Titel und Autor(en) sollten gleich sein. Wenn andere Variablen abweichen, könnte es sich um eine neuere/ältere Version handeln. Dann prüfen und ggf. vermerken (`most_recent_version_available` 1 = ja, 0 = nein). 
+- PDF als Volltext downloaden und im Ordner `HIWI_MP` -> `Full text download` -> `PDFs` wie oben benannt abspeichern.
+
+Für jedes PDF die folgenden 5 Spalten in `study_set_XX.xlsx` ausfüllen:
+
+- `most_recent_version_available`: 0 oder 1 vergeben [1 = ja, 0 = nein]
   - kontrollieren, ob das PDF die neueste Version des Artikels ist (wenn es ein publizierter JournalArticle ist, dann ist das klar; hier ggf. die Daten zu PublicationTitle, Issue, Volumne abgleichen /ergänzen/nachtragen)
-  - bei Working-Papern nach der neuesten Version suchen
+  - bei Working-Papern nach der neuesten Version suchen (Google Scholar -> "alle ... Versionen")
 
-- `not_available`: 0 oder 1 vergeben [1 = ja]
-  - für den Fall, dass der Volltext nicht verfügbar ist (bspw.: die Quelle ist ein Buch oder Buchartikel, TUC hat keinen Volltextzugriff auf das Journal,…)
+- `not_available`: 0 oder 1 vergeben [1 = ja, 0 = nein]
+  - Für den Fall, dass der Volltext nicht als PDF verfügbar ist, bzw. darauf von der TU Chemnitz nicht zugegriffen werden kann. (WICHTIG: Buchkapitel aus Sammelbänden nehmen wir auf, wenn verfügbar! Auch Dissertationen, die als "Buch" publiziert sind. Dies wurde bei der anderen Metastudie eventuell anders gehandhabt.)
 
-- `retracted`: 0 oder 1 vergeben [1 = ja]
+- `retracted`: 0 oder 1 vergeben [1 = ja, 0 = nein]
   - nach Hinweisen suchen, ob ein Papier zurückgezogen wurde
-  - das kann bspw. so aussehen: https://academic.oup.com/restud/article/81/2/787/1520611?login=true
+  - das kann bspw. so aussehen: [https://academic.oup.com/restud/article/81/2/787/1520611?login=true](https://academic.oup.com/restud/article/81/2/787/1520611?login=true)
 
 - `notes_PDF_download`:
-  - Anmerkungen, Hinweise, Notizen jeder Art können in diese Spalte (Englisch)
-
-
+  - Anmerkungen, Hinweise, Notizen jeder Art können in diese Spalte (Englisch).
 
 
 

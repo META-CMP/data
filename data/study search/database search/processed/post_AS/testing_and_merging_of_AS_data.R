@@ -161,7 +161,7 @@ randomized_relevant_entries <- relevant_entries[sample(nrow(relevant_entries)),]
 # Extract data for full text download
 data_for_download <- randomized_relevant_entries %>% 
   select(record_id, key, author, title, `publication year`, `publication title`, issue, volume, `item type`, `abstract note`, doi, url, BibtexKey) %>% 
-  mutate(most_recent_version_available = NA, not_available = NA, retracted = NA, duplicate = NA, notes_PDF_download = NA)
+  mutate(most_recent_version_available = NA, not_available = NA, retracted = NA, duplicate = NA, PDF_source = NA, access_date = NA, personal_id = NA, master_bachelor_thesis = NA, notes_PDF_download = NA)
 
 # Create packages for full text download
 #' Save Dataframe to Multiple Excel Files

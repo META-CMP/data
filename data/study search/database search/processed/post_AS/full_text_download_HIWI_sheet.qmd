@@ -29,14 +29,14 @@ Wenn beim Speichern eines PDFs festgestellt wird, dass ein Dokument mit diesem D
 
 ## Allgemeines Vorgehen:
 
-__Ganz wichtig: keine Änderungen an den bereits ausgefüllten Zellen der Excel-Tabelle vornehmen.__ Ausnahme: Zufälliges Bibtex-Key-Duplikat, siehe oben.
+__Ganz wichtig: Grundsätzlich keine Änderungen an den bereits ausgefüllten Zellen der Excel-Tabelle vornehmen.__ Ausnahme: 1) Zufälliges Bibtex-Key-Duplikat, siehe oben. 2) Wenn die Zitation in Excel offensichtlich und eindeutig einen Fehler aufweist im Vergleich zu dem passenden pdf (z.B.: unnötige Sonderzeichen im Titel der Zitation, Autorenname falsch geschrieben, Jahreszahl falsch, ...) darf sie in den entsprechenden Spalten im Excel ausgebessert werden. Aber auch in diesem Fall dürfen keine Änderung in den ersten beiden Spalten (`record_id`, `key`) und in der `BibtexKey` Spalte gemacht werden. Falls Änderungen in den Zitationspalten in Excel gemacht werden, bitte dies in der `notes_PDF_download` mit der Note "biblio_edit" vermerken.
 
 - Excel-Datei (`study_set_XX.xlsx`) öffnen.
-- `url` aufrufen oder `doi`^[DOIs ("digital object identifiers") sind ähnlich wie URLs, können in der Regel also auch einfach in die Adresszeile des Browsers kopiert und geöffnet werden.] aufrufen. Falls diese ins Leere führen oder die aufgerufene Studie nicht mit den Angaben in `study_set_XX.xlsx` übereinstimmen, dann den Titel aus `study_set_XX.xlsx` (Spalte `title`) über GoogleScholar suchen.
-- Abgleichen des PDFs mit den Daten aus der Excel-Tabelle `study_set_XX.xlsx`. Titel und Autor(en) sollten gleich sein. Wenn andere Variablen abweichen, könnte es sich um eine neuere/ältere Version handeln. Dann prüfen und ggf. vermerken (`most_recent_version_available` 1 = ja, 0 = nein). 
+- `url` aufrufen oder `doi`^[DOIs ("digital object identifiers") sind ähnlich wie URLs, können in der Regel also auch einfach in die Adresszeile des Browsers kopiert und geöffnet werden.] aufrufen. Falls diese ins Leere führen oder die aufgerufene Studie nicht mit den Angaben in `study_set_XX.xlsx` übereinstimmen, dann den Titel aus `study_set_XX.xlsx` (Spalte `title`) über GoogleScholar suchen. Falls bei der entsprechende Studie kein pdf auffindbar ist, dann als nächstes über "All x versions"- Button nach dem entpsrechendem pdf suchen. Falls auch dies nicht erfolgreich ist dann auch noch über die normale Google-Suche nach dem Dokument suchen.   
+- Abgleichen des PDFs mit den Daten aus der Excel-Tabelle `study_set_XX.xlsx`. Titel und Autor(en) sollten gleich sein. Wenn andere Variablen abweichen, könnte es sich um eine neuere/ältere Version handeln. Wenn es sich um keine Veröffentlichung in einem Journal handelt, immer nach der aktuellesten Version des Papieres suchen. Selbst wenn die Daten aus der Excel Tabelle der einer älteren Version entsprechen. Dann prüfen und ggf. vermerken (`most_recent_version_available` 1 = ja, 0 = nein). Für den Fall, dass es eine neuere Version gibt bitte auch die Zitationsspalten in Excel demtentsprechend anpassen (bis auf die ersten beiden Spalten (`record_id`, `key`) und die`BibtexKey` Spalte) und in der `notes_PDF_download` Spalte mit der Note "biblio_edit_newer" vermerken.
 - PDF als Volltext downloaden und im Ordner `HIWI_MP` -> `Full text download` -> `PDFs` wie oben benannt abspeichern.
 
-Für jedes PDF die folgenden 5 Spalten in `study_set_XX.xlsx` ausfüllen:
+Für jedes PDF die folgenden 8 Spalten in `study_set_XX.xlsx` ausfüllen:
 
 - `most_recent_version_available`: 0 oder 1 vergeben [1 = ja, 0 = nein]
   - kontrollieren, ob das PDF die neueste Version des Artikels ist (wenn es ein publizierter JournalArticle ist, dann ist das klar; hier ggf. die Daten zu PublicationTitle, Issue, Volumne abgleichen /ergänzen/nachtragen)
@@ -49,8 +49,17 @@ Für jedes PDF die folgenden 5 Spalten in `study_set_XX.xlsx` ausfüllen:
   - nach Hinweisen suchen, ob ein Papier zurückgezogen wurde
   - das kann bspw. so aussehen: [https://academic.oup.com/restud/article/81/2/787/1520611?login=true](https://academic.oup.com/restud/article/81/2/787/1520611?login=true)
 
+- `PDF_source`:
+  - Link zu der Seite von der die Studie heruntergeladen wurde. Falls ein DOI Link vorhanden ist dann bitte diesen verwenden. Falls kein DOI Link verfügbar ist, dann bitte die URL von der Seite verwenden von der das PDF heruntergeladen werden kann. 
+
+- `access_date`: (dd-mm-yyyy)
+  - Datum an dem die Studie heruntergeladen wurde. 
+
+- `personal_id`: (e.g. FP, ME, ...)
+  - Anfangsbuchstag dess Vornamen und Anfangsbuchstabe des Nachnamens der Person, die die Studie heruntergeladen hat.    
+
+- `master_bachelor_thesis `: 0 oder 1 vergeben [1 = ja, 0 = nein]
+  - wenn die Studie eindeutig eine Master- oder Bachelorarbeit ist eine 1 vergeben. 
+
 - `notes_PDF_download`:
   - Anmerkungen, Hinweise, Notizen jeder Art können in diese Spalte (Englisch).
-
-
-

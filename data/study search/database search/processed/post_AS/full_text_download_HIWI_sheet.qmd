@@ -56,7 +56,7 @@ Für jedes PDF die folgenden 8 Spalten in `study_set_XX.xlsx` ausfüllen:
   - Datum an dem die Studie heruntergeladen wurde. 
 
 - `personal_id`: (e.g. FP, ME, ...)
-  - Anfangsbuchstag dess Vornamen und Anfangsbuchstabe des Nachnamens der Person, die die Studie heruntergeladen hat.    
+  - Anfangsbuchstabe des Vornamen und Anfangsbuchstabe des Nachnamens der Person, die die Studie heruntergeladen hat.    
 
 - `master_bachelor_thesis `: 0 oder 1 vergeben [1 = ja, 0 = nein]
   - wenn die Studie eindeutig eine Master- oder Bachelorarbeit ist eine 1 vergeben. 

@@ -8,11 +8,11 @@ format: pdf
 
 __Ordner in Nextcloud:__ `HIWI_MP` -> `Full text download` -> `packages_for_full_text_download`. Darin befinden sich 26 Excel–Dateien (`study_set_XX.xlsx`) mit jeweils $\leq$ 100 Literatur-Einträgen.
 
-- Matthias bearbeitet study_set_1 bis study_set_2
-- Viktoria bearbeitet study_set_3 bis study_set_10
-- danach sehen wir weiter
+- Matthias bearbeitet `study_set_1` bis `study_set_2`.
+- Viktoria bearbeitet `study_set_3` bis `study_set_10`.
+- Danach sehen wir weiter, je nachdem, wie weit wir mit dem Full Text Screening sind.
 
-__Ziel:__ Volltexte als PDF-Datei downloaden
+__Ziel:__ Volltexte als PDF-Datei downloaden.
 
 - PDFs alle in den ordner `HIWI_MP` -> `Full text download` -> `PDFs` speichern. Keine Unterordner.
 - PDFs sollen nach ihrem `BibtexKey` benannt sein, welcher in der jeweiligen Excel–Datei `study_set_XX.xlsx` zu finden ist. 
@@ -34,42 +34,51 @@ Wenn beim Speichern eines PDFs festgestellt wird, dass ein Dokument mit diesem D
 Ausnahmen: 
 >
 1. Zufälliges Bibtex-Key-Duplikat, siehe oben. 
-2. Wenn die Zitation in Excel offensichtlich und eindeutig einen Fehler aufweist im Vergleich zu dem passenden pdf (z.B.: unnötige Sonderzeichen im Titel der Zitation, Autorenname falsch geschrieben, Jahreszahl falsch, ...) darf sie in den entsprechenden Spalten im Excel ausgebessert werden. Aber auch in diesem Fall dürfen keine Änderung in den ersten beiden Spalten (`record_id`, `key`) und in der `BibtexKey` Spalte gemacht werden. Falls Änderungen in den Zitationspalten in Excel gemacht werden, bitte dies in der `notes_PDF_download` mit der Note "biblio_edit" vermerken.
+2. Wenn die Zitation in Excel offensichtlich und eindeutig einen Fehler aufweist im Vergleich zu dem passenden pdf (z.B.: unnötige Sonderzeichen im Titel der Zitation, Autorenname falsch geschrieben, Jahreszahl falsch, ...) darf sie in den entsprechenden Spalten im Excel ausgebessert werden. Aber auch in diesem Fall dürfen keine Änderung in den ersten beiden Spalten (`record_id`, `key`) und in der `BibtexKey` Spalte gemacht werden. Falls Änderungen in den Zitationspalten in Excel gemacht werden, bitte dies in der `notes_PDF_download` mit der Note `biblio_edit` vermerken.
 
 - Excel-Datei (`study_set_XX.xlsx`) öffnen.
 - `url` aufrufen oder `doi`^[DOIs ("digital object identifiers") sind ähnlich wie URLs, können in der Regel also auch einfach in die Adresszeile des Browsers kopiert und geöffnet werden.] aufrufen. Falls diese ins Leere führen oder die aufgerufene Studie nicht mit den Angaben in `study_set_XX.xlsx` übereinstimmen, dann den Titel aus `study_set_XX.xlsx` (Spalte `title`) über GoogleScholar suchen. Falls bei der entsprechende Studie kein PDF auffindbar ist, dann als nächstes über "Alle x Versionen"-Button nach dem entsprechendem PDF suchen. Falls auch dies nicht erfolgreich ist, dann auch noch über die normale Google-Suche nach dem Dokument suchen.   
 - Abgleichen des runtergeladenen PDFs mit den Daten aus der Excel-Tabelle `study_set_XX.xlsx`. 
   - Titel und Autor(en) sollten gleich sein. 
-  - Wenn andere Variablen abweichen, könnte es sich um eine neuere/ältere Version handeln. Wenn es sich um keine Veröffentlichung in einem Journal handelt, immer nach der aktuellesten Version des Papieres suchen, selbst wenn die Daten aus der Excel-Tabelle einer älteren Version entsprechen. Dann prüfen und ggf. vermerken (`most_recent_version_available` 1 = ja, 0 = nein). 
-  - Für den Fall, dass es eine neuere Version gibt bitte auch die Zitationsspalten in Excel dementsprechend anpassen (bis auf die ersten beiden Spalten (`record_id`, `key`) und die `BibtexKey` Spalte) und in der `notes_PDF_download` Spalte mit der Note "biblio_edit_newer" vermerken.
+  - Wenn andere Variablen abweichen, könnte es sich um eine neuere/ältere Version handeln. Wenn es sich um keine Veröffentlichung in einem Journal handelt, immer nach der aktuellesten Version des Papieres suchen, selbst wenn die Daten aus der Excel-Tabelle einer älteren Version entsprechen. Dann prüfen und ggf. vermerken (`most_recent_version_available`: `1` = ja, `0` = nein). 
+  - Für den Fall, dass es eine neuere Version gibt bitte auch die Zitationsspalten in Excel dementsprechend anpassen (bis auf die ersten beiden Spalten (`record_id`, `key`) und die `BibtexKey` Spalte) und in der `notes_PDF_download` Spalte mit der Note `biblio_edit_newer` vermerken.
 - PDF als Volltext downloaden und im Ordner `HIWI_MP` -> `Full text download` -> `PDFs` wie oben benannt abspeichern.
 
 Für jedes PDF die folgenden 9 Spalten in `study_set_XX.xlsx` ausfüllen:
 
-- `most_recent_version_available`: 0 oder 1 vergeben [1 = ja, 0 = nein]
-  - kontrollieren, ob das PDF die neueste Version des Artikels ist (wenn es ein publizierter JournalArticle ist, dann ist das klar; hier ggf. die Daten zu publication title, issue, volumne abgleichen /ergänzen/nachtragen)
-  - bei Working-Papern nach der neuesten Version suchen (Google Scholar -> "Alle ... Versionen")
+- `most_recent_version_available`: `0` oder `1` vergeben [`1` = ja, `0` = nein]
+  - Kontrollieren, ob das PDF die neueste Version des Artikels ist (wenn es ein publizierter JournalArticle ist, dann ist das klar; hier ggf. die Daten zu publication title, issue, volumne abgleichen /ergänzen/nachtragen)
+  - Bei Working-Papern nach der neuesten Version suchen (Google Scholar -> "Alle ... Versionen")
 
-- `not_available`: 0 oder 1 vergeben [1 = ja, 0 = nein]
-  - Für den Fall, dass der Volltext nicht als PDF verfügbar ist, bzw. darauf von der TU Chemnitz nicht zugegriffen werden kann. (WICHTIG: Buchkapitel aus Sammelbänden nehmen wir auf, wenn verfügbar! Auch Dissertationen, die als "Buch" publiziert sind. Dies wurde bei der anderen Metastudie eventuell anders gehandhabt.)
+- `not_available`: `0` oder `1` vergeben [`1` = ja, `0` = nein]
+  - Für den Fall, dass der Volltext nicht als PDF verfügbar ist, bzw. darauf von der TU Chemnitz nicht zugegriffen werden kann. __WICHTIG__: Buchkapitel aus Sammelbänden nehmen wir auf, wenn verfügbar! Auch Dissertationen, die als "Buch" publiziert sind. Dies wurde bei der anderen Metastudie eventuell anders gehandhabt.
 
-- `retracted`: 0 oder 1 vergeben [1 = ja, 0 = nein]
-  - nach Hinweisen suchen, ob ein Papier zurückgezogen wurde
-  - das kann bspw. so aussehen: [https://academic.oup.com/restud/article/81/2/787/1520611?login=true](https://academic.oup.com/restud/article/81/2/787/1520611?login=true)
+- `retracted`: `0` oder `1` vergeben [`1` = ja, `0` = nein]
+  - Nach Hinweisen suchen, ob ein Papier zurückgezogen wurde.
+  - Das kann bspw. so aussehen: [https://academic.oup.com/restud/article/81/2/787/1520611?login=true](https://academic.oup.com/restud/article/81/2/787/1520611?login=true).
 
-- `duplicate`: 0 oder 1 vergeben [1 = echtes Duplikat, 0 = kein Duplikat]
+- `duplicate`: `0` oder `1` vergeben [`1` = echtes Duplikat, `0` = kein Duplikat]
 
 - `PDF_source`:
   - Link zu der Seite von der die Studie heruntergeladen wurde. Falls ein DOI Link vorhanden ist, dann bitte diesen verwenden. Falls kein DOI Link verfügbar ist, dann bitte die URL von der Seite verwenden von der das PDF heruntergeladen werden kann. 
 
-- `access_date`: (dd-mm-yyyy)
+- `access_date`:
   - Datum an dem die Studie heruntergeladen wurde. 
+  - Format: `dd-mm-yyyy`
 
-- `personal_id`: (e.g. FP, ME, ...)
-  - Anfangsbuchstabe des Vornamen und Anfangsbuchstabe des Nachnamens der Person, die die Studie heruntergeladen hat.    
+- `personal_id`: 
+  - Anfangsbuchstabe des Vornamens und Anfangsbuchstabe des Nachnamens der Person, die die Studie heruntergeladen hat.
+  - Beispiele: `VM`, `ME`, `FP`, ...
 
-- `master_bachelor_thesis `: 0 oder 1 vergeben [1 = ja, 0 = nein]
-  - wenn die Studie eindeutig eine Master- oder Bachelorarbeit ist eine 1 vergeben. 
+- `master_bachelor_thesis `: `0` oder `1` vergeben [`1` = ja, `0` = nein]
+  - Wenn die Studie eindeutig eine Master- oder Bachelorarbeit ist eine 1 vergeben. 
 
 - `notes_PDF_download`:
-  - Anmerkungen, Hinweise, Notizen jeder Art können in diese Spalte (bitte immer Englisch).
+  - Anmerkungen, Hinweise, Notizen jeder Art können in diese Spalte (__bitte immer Englisch__).
+  - Es gibt einige standardisiere Kommentaroptionen:
+    - `biblio_edit`: Falls Korrekturen von fehlerhaften Angaben in den Zitationspalten in Excel vorgenommen wurden (siehe oben).
+    - `biblio_edit_newer`: Falls Korrekturen in den Zitationspalten in Excel aufgrund einer neueren Version des Artikels vorgenommen wurden (siehe oben).
+    - `corr`: Wenn ein "Corrigendum" für den Artikel vorliegt, also eine Notiz auf der Journalseite oder ein zusätzliches PDF, mit Korrekturen am ursprünglichen Artikel (manchmal auch "Errata" oder ähnlich genannt).
+    - `sh`: Wenn das PDF nur über eine Website zum Downloaden von Journalartikeln, die ansonsten hinter Paywalls liegen, bezogen werden konnte.
+    - `pay`: Wenn der Artikel hinter einer Paywall liegt und nicht anderweitig bezogen werden konnte.
+

@@ -48,7 +48,9 @@ Für jedes PDF die folgenden 9 Spalten in `study_set_XX.xlsx` ausfüllen:
 
 - `most_recent_version_available`: `0` oder `1` vergeben [`1` = ja, `0` = nein]
   - Kontrollieren, ob das PDF die neueste Version des Artikels ist (wenn es ein publizierter JournalArticle ist, dann ist das klar; hier ggf. die Daten zu publication title, issue, volumne abgleichen /ergänzen/nachtragen)
-  - Bei Working-Papern nach der neuesten Version suchen (Google Scholar -> "Alle ... Versionen")
+  - Bei Working-Papern nach der neuesten Version suchen:
+    - Schritt 1: Titel und AutorInnen bei Google Scholar eingeben und bei "Alle ... Versionen" schauen, ob es eine neuere Version des Working Papers bzw. eine Journal-Publikation des Papers gibt.
+    - Schritt 2: Manchmal werden Working Paper unter leicht abgeändertem Titel als Journal-Artikel publiziert (manchmal auch mit weiteren KoautorInnen oder leichten Änderungen im Abstract). Daher bitte auf Google Scholar nicht nur unter "Alle ... Versionen" suchen, sondern auch die ersten paar Einträge auf der Hauptseite von Google Scholar anschauen und bei sehr ähnlichem Titel/AutorInnen/Abstract prüfen, ob es sich um die publizierte Version des Artikels handelt. In diesem Fall, diesen als PDF runterladen.
 
 - `not_available`: `0` oder `1` vergeben [`1` = ja, `0` = nein]
   - Für den Fall, dass der Volltext nicht als PDF verfügbar ist, bzw. darauf von der TU Chemnitz nicht zugegriffen werden kann. __WICHTIG__: Buchkapitel aus Sammelbänden nehmen wir auf, wenn verfügbar! Auch Dissertationen, die als "Buch" publiziert sind. Dies wurde bei der anderen Metastudie eventuell anders gehandhabt.

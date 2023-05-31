@@ -1,0 +1,195 @@
+---
+title: "MORPEP META CMP Graphical-data-extraction guidance"
+author: "Matthias Enzinger, Franz Prante"
+format: pdf
+---
+
+## ToDo:
+
+- Download and install the newest version of WebPlot-Digitizer at [https://automeris.io](https://automeris.io/WebPlotDigitizer/download.html) for your machine.  
+
+- Open the WebPlot-Digitizer app and load the image of the respective impulse response function via `File` --> `Load Images(s)`.
+
+
+```{r}
+#| label: fig-ds
+#| echo: false
+#| fig-cap: >
+#|   Load the respective impulse response function.
+#| out.width: 400
+knitr::include_graphics("images/Load_images.png", dpi = 270)
+```
+
+
+
+- Select the respective file you want to load --> and select the option `2D (X-Y) Plot`.
+
+\newpage
+
+```{r}
+#| label: fig-ds-1
+#| echo: false
+#| fig-cap: >
+#|   Select "2D (X-Y) Plot"
+#| out.width: 400
+knitr::include_graphics("images/2d_plot.png", dpi = 270)
+```
+
+- Press `Align Axes`.
+
+- Now carefully read the text shown in the `Align X-Y Axes` window, press `Proceed`, and click four known points on the axes in the **ORDER shown in red**.
+
+
+```{r}
+#| label: fig-ds-2
+#| echo: false
+#| fig-cap: >
+#|   Align Axes
+#| out.width: 400
+knitr::include_graphics("images/align_axes.png", dpi = 270)
+```
+
+
+\newpage
+
+- Align the axes correspondingly and press `complete`. 
+
+
+
+```{r}
+#| label: fig-ds-3
+#| echo: false
+#| fig-cap: >
+#|   Align Axes example and press "complete"
+#| out.width: 500
+knitr::include_graphics("images/complete.png", dpi = 270)
+```
+
+
+\newpage
+
+- Now enter the respective values for the X-Axis and the Y-Axis you have chose beforehand (take the order of the points into account). Tick the box `Assume axes are perfectly aligned with image coordinates (skip rotation correction)`. Tick the `Log Scale` Boxes only if the respective Axis is in log scale and finally press `OK`. 
+
+```{r}
+#| label: fig-ds-4
+#| echo: false
+#| fig-cap: >
+#|   Enter the respective X-Axis and Y-Axis values example.
+#| out.width: 500
+knitr::include_graphics("images/axis_points.png", dpi = 270)
+```
+
+
+\newpage
+
+- Take a look at the `Automatic Extraction` Section and select the `Pen`-Tab. Underneath the `Pen`-Tab you can adjust the width of the Pen and try to follow the line you aim to extract as accurately as possible while pressing the left mouse button to draw a yellow line. 
+
+
+```{r}
+#| label: fig-ds-5
+#| echo: false
+#| fig-cap: >
+#|   Select Pen Tab, adjust the width of the pen, and draw a Line
+#| out.width: 500
+knitr::include_graphics("images/pen.png", dpi = 270)
+```
+
+- Make sure that you have marked the full area you would like to extract. 
+
+\newpage
+
+- Now configure the foreground and the background color of the respective line you would like to extract. First, click at the area with the preliminary chosen foreground color. Second click at the `Color Picker` button and click with the left mouse on the color of the foreground to automatically extract the color code. Third, press `Done` and check whether the foreground color changed accordingly. 
+
+
+```{r}
+#| label: fig-ds-6
+#| echo: false
+#| fig-cap: >
+#|   Three steps to adjust foreground color
+#| out.width: 500
+knitr::include_graphics("images/color_picker.png", dpi = 270)
+```
+
+
+\newpage
+
+- Choose again the `Pen` Tab (the yellow drawn line should be visible once you are within the `Pen` Tab).
+
+- Follow the same procedure for the background color but this time select the color of the background nearby the line you would like to extract. Therefore, change to the background color in the drop-down menu in a preliminary step and then follow the same steps as before. Be aware, that in the example bellow the background color is changed from white to grey (R:217 G:217 B:217) because the area next to the blue line is grey. 
+
+```{r}
+#| label: fig-ds-7
+#| echo: false
+#| fig-cap: >
+#|   Three steps to adjust background color
+#| out.width: 500
+knitr::include_graphics("images/color_picker_back.png", dpi = 270)
+```
+
+\newpage
+
+- Choose again the `Pen` Tab.
+
+- First, select the drop-down window near the `Algorithm` field, and second, select the option `X Step w/ Interpolation`.
+
+```{r}
+#| label: fig-ds-8
+#| echo: false
+#| fig-cap: >
+#|   Select `X Step w/ Interpolation` Algorithm
+#| out.width: 500
+knitr::include_graphics("images/step_inter.png", dpi = 270)
+```
+
+
+- Now adjust adjust the `ΔX Step` and starting + ending values for the X and Y axis. In the, example I changed the step-size from 0.08 to 1, because there are only yearly values observable. If instead the unit of the X Axis is years but the authors do the calculations using monthly data (and therefore y values adjust on a monthly basis), I would use 1/12=0.08333333333 for the `ΔX Step`.
+
+- Finally, press `Run` and see the magic happen (in the best case :D).
+
+```{r}
+#| label: fig-ds-9
+#| echo: false
+#| fig-cap: >
+#|   Adjust stepsize and starting and ending values for the X and Y axis. 
+#| out.width: 180
+knitr::include_graphics("images/stepsize.png", dpi = 270)
+```
+
+
+\newpage
+
+
+- In a next step we can adjust data points which have not worked out well. Therefore, we first click at the `Adjust Point S` button (1), and second, on the corresponding data point we would like to adjust (2). After a left click on the data point, you can adjust the position of the point using the arrows on the keyboard. ATTENTION: Only use the upward and the downward arrows, because the position on the X-Axis should be just fine if the `ΔX Step` and X_min and X_max have been chosen accordingly. In this way, you only adjust the Y-value of the respective observation. 
+
+
+```{r}
+#| label: fig-ds-10
+#| echo: false
+#| fig-cap: >
+#|   Adjust points 
+#| out.width: 400
+knitr::include_graphics("images/adjust_points.png", dpi = 270)
+```
+
+
+- Third, if all data points approximate their true values quite well, click on the `View Data` button. 
+
+- Check whether the data fits the graph and if yes press `Download .CSV` and save the file as "KEY_MODEL_OUTCOME_LINE.csv". Where, "KEY" indicates the unique key of the literature entry, "MODEL" the number of the model in the respective study, "OUTCOME" the respective outcome variable (one of output, employment, or inflation), and "LINE" is one of (mean,up,low) for the mean estimate, the upper confidence interval and the lower confidence interval.  
+
+
+```{r}
+#| label: fig-ds-11
+#| echo: false
+#| fig-cap: >
+#|   Save data
+#| out.width: 300
+knitr::include_graphics("images/save.png", dpi = 270)
+```
+
+
+1) Load 
+
+For each study, a dataset of raw effect measures, probably one dataset for eachmodel specification (e.g. for each extracted IRF from a paper)•These datasets would be created by us or automatically created by a tool like WebPlot-Digitizer or other data extraction software.
+
+WebPlotDigitizerA semi-automatic tool to extract data from plots. Free and open source. Used by many papers,including Ehrenbergerova, Bajzik, and Havranek (2022).Using this tool would allow for fully transparent data collection, since we can store screenshotsof the impulse-response functions along with the extracted data to be reopened in the tool, sodouble-checking and correcting measurements would be extremely easy. Data extraction usingthis tool is also fast, which allows to extract much more data (e.g. monthly where possible).We could potentially create instructions for student assistants on how to extract data withthis tool.TO DO: write instruction on how to extract the data with this tool
+

@@ -1,5 +1,5 @@
 ---
-title: "MORPEP META CMP Graphical-data-extraction guidance"
+title: "MORPEP META CMP Graphical-data-extraction manual"
 author: "Matthias Enzinger, Franz Prante"
 format: pdf
 ---

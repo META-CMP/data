@@ -1,0 +1,98 @@
+---
+title: "Merging retrieved abstracts"
+author: "Franz Prante"
+format: html
+---
+
+## Merging ris-files which include our missing abstracts
+
+Based on the URLs and titles from entries without complete abstracts, a student assistant collected abstracts from the websites of the bibliographic entries, where possible. 
+
+### How to merge these completed entries with the already complete entries?
+
+#### 1st Step - DONE
+
+First, I prepared a dataset, that contains those entries from the initial duplicate-free dataset that are not in "entries_without_complete_abstracts.csv". I added a function to `extracting_URLs_script.R` that did this. The file was stored as `entries_complete_abstracts.csv`.
+
+#### 2nd Step - DONE
+
+This is already done: I imported the initial "merged_EL_GS_no_duplicates.ris" into Zotero to make Zotero know the keys. Afterwards, I imported your ris-file that you retrieved based on the 73 titles of the entries that had no URLs. We removed the remaining duplicates and entries with missing abstracts together. Then I exported this file to the GitHub repo as `abstracts_from_titles.ris` and `abstracts_from_titles.csv`.
+
+#### 3rd Step - To be done in Zotero
+
+You need to import the initial "merged_EL_GS_no_duplicates.ris" into Zotero to make Zotero know the keys. Afterwards, create an empty new collection in Zotero. Now import the ris-files of the student assistant from the Nextcloud, one by one, and move them as a subcollection into the empty collection (drag and drop). Do this with all the ris-files.
+You will now have a very large amount of duplicates. But don't remove duplicates for now. First, delete the "merged_EL_GS_no_duplicates" collection (with items!) from Zotero. This procedure should ensure that Zotero would have resolved any "Key" conflicts between the original dataset and the ris-files from the student assistant. You can now remove any duplicates (which should be a lot less then before, now it is only the duplicates between the ris-files from the student assistant).
+
+Afterwards, export the total collection of now duplicate free student ris-files (in Zotero, you have to click on the collection and then select all items and right click on them to export everything). Make sure to export both a `ris` and a `csv` version of this dataset for data sharing on GitHub. Name the files `abstracts_from_URLs.ris` and `abstracts_from_URLs.csv`. 
+
+You can already store this stuff on GitHub in the folder "retrieving missing or incomplete abstracts" but please work in this branch on - we want to share the main branch later on, so it is important that we both double check everything before merging into main. When you are done, you can create a pull request and select me as a reviewer. 
+
+#### 4th Step - In R
+
+Merge the three files:
+
+1. `entries_complete_abstracts.csv`
+2. `abstracts_from_titles.csv`
+3. `abstracts_from_URLs.csv`
+
+This code should do it:
+```{r}
+library(tidyverse)
+library(here)
+
+filepath1 <- here::here("data/study search/database search/processed/preparation for abstract screening/retrieving missing or incomplete abstracts/entries_complete_abstracts.csv")
+filepath2 <- here::here("data/study search/database search/processed/preparation for abstract screening/retrieving missing or incomplete abstracts/abstracts_from_titles.csv")
+filepath3 <- here::here("data/study search/database search/processed/preparation for abstract screening/retrieving missing or incomplete abstracts/abstracts_from_URLs.csv")
+df1 <- readr::read_csv(filepath1)
+df2 <- readr::read_csv(filepath2)
+df3 <- readr::read_csv(filepath3)
+
+df <- rbind(df1, df2, df3)
+```
+
+## Final checks 
+
+Do a final round of checks:
+```{r}
+sum(is.na(df$`Abstract Note`)) # Should be 0. Otherwise, there are still completely missing abstracts.
+sum(grepl("…", df$`Abstract Note`) == TRUE) # Should be 0. Otherwise there are still shortened Google Scholar abstracts in the dataframe.
+```
+
+Final duplicate check (same title & same abstract)
+```{r}
+duplicated_rows <- duplicated(df[,c("Title", "Abstract Note")]) | duplicated(df[,c("Title", "Abstract Note")], fromLast = TRUE)
+sum(duplicated_rows) # Number of seeming duplicates based on title and abstract
+View(df[duplicated_rows, ])
+```
+We should discuss what to do with the remaining duplicates based on how many there are (having a few duplicates should cause no worry for ASReview, but a lot may).
+
+Based on these final checks, maybe do another round of duplicates removal and abstract retrieval, if this seems promising. Then repeat the final checks.
+
+## Store the dataset as `full_sample_unlabeled.csv`
+```{r}
+df_final <- # Define the final dataframe, depending on what we did with the remaining duplicates and missing abstracts.
+final_filepath <- ... # Let's discuss were we should best store this. This is important, as from this file, we will start the abstract screening.
+write.csv(df_final, final_filepath, row.names = FALSE)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

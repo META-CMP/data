@@ -12,3 +12,6 @@ This section describes the steps taken to retrieve missing abstracts for the 73 
 - Option two and three of the last point were also conducted if the title of the paper seemed to fit our research question at a very basic level and none of the previous steps was successful. 
 
 For 24 studies, this procedure provided us with the corresponding abstracts for the respective papers. 
+
+
+# https://github.com/META-CMP/data/tree/merging_retrieved_abstracts/data/study%20search/database%20search/processed/preparation%20for%20abstract%20screening in dem file alles ergänzen 

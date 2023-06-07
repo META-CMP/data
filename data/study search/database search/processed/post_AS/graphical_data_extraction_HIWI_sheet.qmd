@@ -176,7 +176,7 @@ knitr::include_graphics("images/adjust_points.png", dpi = 270)
 
 \newpage
 
-- In the next step, we add new datasets to the project to extract the upper and lower confidence bound in separate datasets. Therefore, we first click on `Datasets`. Secondly, click on the `Add Dataset` button, and third, add 2 additional datasets using the `Add Multiple Datasets` option. 
+- In the next step, we add new datasets to the project to extract the upper and lower confidence bound in separate datasets. Therefore, we first click on `Datasets`. Secondly, click on the `Add Dataset` button, and third, add 2 additional datasets using the `Add Multiple Datasets` option. Rename the datasets to `mean`, `upper`, and `lower`.   
 
 
 ```{r}
@@ -189,7 +189,7 @@ knitr::include_graphics("images/New_dataset.png", dpi = 270)
 ```
 
 
-- Now you can click through the different datasets and extract the upper bound of the confidence level in `Dataset 1` and the lower bound of the confidence level in `Dataset 2` in the same manner as for the mean estimate. Therefore, adjust the foreground and background colors accordingly. If a graph shows different confidence levels, choose the one that should be easier to extract automatically. But, use the same confidence level for the upper and lower bound. 
+- Now you can click through the different datasets and extract the upper bound of the confidence level in `upper` and the lower bound of the confidence level in `lower` in the same manner as for the mean estimate. Therefore, adjust the foreground and background colors accordingly. If a graph shows different confidence levels, choose the one that should be easier to extract automatically. But, use the same confidence level for the upper and lower bound. 
 
 
 \newpage

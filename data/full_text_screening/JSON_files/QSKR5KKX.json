@@ -63,14 +63,14 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": "Japan",
+        "list_of_countries": "JP",
         "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
         "start": "Q1-1975",
         "end": "Q1-1999",
-        "samplesize": false
+        "samplesize": "null"
     },
     "control_variables": {
         "comprice": false,
@@ -88,10 +88,7 @@
         "convent": true
     },
     "publication_characteristics": {
-        "citat": 3,
-        "impact": "null",
-        "cbanker": false,
-        "snowball": false
+        "cbanker": false
     }
 }
 

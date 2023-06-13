@@ -17,7 +17,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "3_month_repo",
-        "size": 100,
+        "size": "100bp",
         "dep": {
                 "model_1": "log_rgap logdiff_deflator",
                 "model_2": "log_rgap logdiff_cpi"

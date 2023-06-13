@@ -1,0 +1,86 @@
+{
+    "general": {
+        "key": "IAFWL5F9",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "quality_concern: Unclear if real or nominal GDP is used as dep (Fig. 1, p.336 suggests nominal, based on the growth rate). Unclear what the unit and definition of the interest rate  variable (probably %) and of the control variables is. Unclear identification_strategy.; control_vars: money supply, exchange rate, inflation rate. Also, the money supply is included in the estimation, but the coefficient of table 5 would imply that the money supply is. constant when the interest rate changes.; effect_size: Table 5 displays the long-run coefficients from the log_gdp equation of the vecm. The author interprets the coefficient in the following way (p.341): 'A unit increase in interest rate will reduce gross domestic product by 0.69935 units.', this interpretation seems wrong. It is rather a long-run cointegration relationship, that does not identify causality. Table 6 holds the short-run coefficients of the log_gdp equation of the vecm. As no IRF is presented, we can only extract the short-run coefficient and assign it as the effect in period 1. We do not extract the long-run coefficient.",
+        "model_notes": false,
+        "figure": false,
+        "page": false,
+        "irf": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "null",
+        "size": "1%",
+        "dep": "log_gdp",
+        "conf": false,
+        "main": "gdp",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": true,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": true,
+        "quarter": false,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "NG",
+        "n_of_countries": "null"
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": 1980,
+        "end": 2017,
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "convent": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+
+

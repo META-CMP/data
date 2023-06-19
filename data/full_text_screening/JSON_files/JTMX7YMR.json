@@ -1,0 +1,86 @@
+{
+    "general": {
+        "key": "JTMX7YMR",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": null,
+        "model_notes": null,
+        "figure": null,
+        "page": null,
+        "irf": null
+    },
+    "impulse_and_response_variables": {
+        "inttype": "3_month_repo",
+        "size": null,
+        "dep": "lev_rgdp log_rgdp logdiff_rgdp gr_rgdp lev_ngdp log_ngdp logdiff_ngdp logdiff_ngdp growth_rip logdiff_rgap lev_emp logdiff_une growth_cpi",
+        "conf": "68  90  95  1_SE  2_SE  80",
+        "main": "gdp  emp  inflation  other",
+        "prefer": null
+    },
+    "identification_strategy": {
+        "iv": null,
+        "nr": null,
+        "event": null,
+        "chol": null,
+        "svar": null,
+        "signr": null,
+        "hf": null,
+        "heteroskedas": null,
+        "longrun": null,
+        "idother": null
+    },
+    "estimation_method": {
+        "var": null,
+        "lp": null,
+        "vecm": null,
+        "dyn_ols": "ardl  ecm",
+        "fvar": null,
+        "tvar": null,
+        "gvar": null,
+        "bayes": null,
+        "varother": null
+    },
+    "regime_dependence": {
+        "lor": null,
+        "upr": null,
+        "scr": null,
+        "dcr": null,
+        "hike": null,
+        "cut": null
+    },
+    "data_frequency": {
+        "annual": null,
+        "quarter": null,
+        "month": null
+    },
+    "country_composition": {
+        "list_of_countries": null,
+        "n_of_countries": null
+    },
+    "further_data_characteristics": {
+        "panel": null,
+        "start": null,
+        "end": null,
+        "samplesize": null
+    },
+    "control_variables": {
+        "comprice": null,
+        "outpgap": null,
+        "find": null,
+        "eglob": null,
+        "cbind": null,
+        "fexch": null,
+        "inflexp": null,
+        "foreignir": null,
+        "fx": null,
+        "lrir": null
+    },
+    "econometric_details": {
+        "convent": null
+    },
+    "publication_characteristics": {
+        "cbanker": null
+    }
+}
+
+

@@ -19,8 +19,8 @@
         "inttype": "3_month_repo",
         "size": "100bp",
         "dep": {
-                "model_1": "log_rgap logdiff_deflator",
-                "model_2": "log_rgap logdiff_cpi"
+                "model_1": "log_rgap logdiff_deflator logdiff_wpi",
+                "model_2": "log_rgap logdiff_cpi logdiff_wpi"
         },
         "conf": "90",
         "main": "inflation",
@@ -42,11 +42,12 @@
         "var": true,
         "lp": false,
         "vecm": false,
-        "dyn_ols": false,
+        "dyn_ols": "false",
         "fvar": false,
         "tvar": false,
         "gvar": false,
         "bayes": false,
+        "dsge": false,
         "varother": false
     },
     "regime_dependence": {

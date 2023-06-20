@@ -1,0 +1,93 @@
+{
+    "general": {
+        "key": "C52KHMM8",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "quality_concern: Unclear if real or nominal IP is used as dep and not explicit on the sample period estimated for specific parts of the external instrument VAR; Jarocinski and Karadi (2020) approach for surprises; control for the effects of contemporaneous US data releases",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "composition: composition of monetary policy shock into information and pure policy component. Pure policy component is used"
+        },
+        "figure": 2,
+        "page": 4,
+        "irf": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "2_year_gov_de",
+        "size": "100bp",
+        "dep": "log_ip log_cpi",
+        "conf": "68",
+        "main": "gdp inflation",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": true,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": true,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "EA",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1999",
+        "end": "12-2019",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "convent": false,
+        "composition":  {
+                "model_1": false,
+                "model_2": true
+        }
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

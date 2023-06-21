@@ -1,0 +1,160 @@
+{
+    "general": {
+        "key": "BWHKQVPU",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "They propse a new identifcation combining Romer-Romer 2004 approach and with a natural language approach to FOMC douments using machine learning. They compare their estimates with other identification strategies.; control_vars: 1-year Treasury yield, the log of the S&P500, log real GDP, the log GDP deflator, the unemployment rate, and the excess bond premium (EBP)",
+        "model_notes": {
+            "model_1": "BVAR with their proposed 'full ridge model' shocks.",
+            "model_2": "BVAR with 'Romer-Romer OLS' shocks.",
+            "model_3": "BVAR with their proposed 'full ridge model' shocks and additional sign restrictions.",
+            "model_4": "BVAR with 'Romer-Romer OLS' shocks and additional sign restrictions",
+            "model_5": ...,
+            ...,
+            "model_XXX": "Local projections using shocks from full ridge model.",
+            "model_XXX": "Local projection using shocks from Romer-Romer OLS."
+        },
+        "figure": {
+            "model_1": null,
+            "model_2": null,
+            "model_3": null,
+            "model_4": null,
+            "model_5": ...,
+            ...,
+            "model_XXX": null,
+            "model_XXX": null
+        },
+        "page": {
+            "model_1": true,
+            "model_2": null,
+            "model_3": null,
+            "model_4": null,
+            "model_5": ...,
+            ...,
+            "model_XXX": null,
+            "model_XXX": null
+        },
+        "irf": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "1_year_gov_us",
+        "size": null,
+        "dep": "log_rgdp logdiff_rgdp        lev_emp logdiff_une growth_cpi unemp_rate", # unemp_rate in codebook?
+        "conf": "68  90  95  1_SE  2_SE  80",
+        "main": "gdp  emp  inflation  other",
+        "prefer": null
+    },
+    "identification_strategy": {
+        "iv": false,
+        "nr": false,
+        # Add "forecast_based"? Maybe also add sentiment based?
+        "event": false,
+        "chol": {
+            "model_1": true,
+            "model_2": null,
+            "model_3": null,
+            "model_4": null,
+            "model_5": ...,
+            ...,
+            "model_XXX": null,
+            "model_XXX": null
+        },
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": {
+            "model_1": true,
+            "model_2": null,
+            "model_3": null,
+            "model_4": null,
+            "model_5": ...,
+            ...,
+            "model_XXX": null,
+            "model_XXX": null
+        }
+    },
+    "estimation_method": {
+        "var": {
+            "model_1": true,
+            "model_2": true,
+            "model_3": true,
+            "model_4": true,
+            "model_5": ...,
+            ...,
+            "model_XXX": false,
+            "model_XXX": false
+        },
+        "lp": {
+            "model_1": false,
+            "model_2": false,
+            "model_3": false,
+            "model_4": false,
+            "model_5": ...,
+            ...,
+            "model_XXX": true,
+            "model_XXX": true
+        },
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": {
+            "model_1": true,
+            "model_2": null,
+            "model_3": null,
+            "model_4": null,
+            "model_5": ...,
+            ...,
+            "model_XXX": false,
+            "model_XXX": false
+        },
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": null,
+        "month": true # also for the LP?
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": null
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "02-1984",# also for the LP?
+        "end": "12-2016",# also for the LP?
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": null,
+        "outpgap": null,
+        "find": null,
+        "eglob": null,
+        "cbind": null,
+        "fexch": null,
+        "inflexp": null,
+        "foreignir": null,
+        "fx": null,
+        "lrir": null
+    },
+    "econometric_details": {
+        "convent": null
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+
+

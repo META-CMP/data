@@ -5,9 +5,56 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": 2,
-        "page": 4,
-        "irf": true
+        "figure": "null",
+        "page": {
+                "model_1": 322,
+                "model_2": 322,
+                "model_3": 322,
+                "model_4": 322,
+                "model_5": 322,
+                "model_6": 322,
+                "model_7": 322,
+                "model_8": 322,
+                "model_9": 322,
+                "model_10": 322,
+                "model_11": 322,
+                "model_12": 322,
+                "model_13": 322,
+                "model_14": 322,
+                "model_15": 322,
+                "model_16": 322,
+                "model_17": 322,
+                "model_18": 322,
+                "model_19": 322,
+                "model_20": 322,
+                "model_21": 322,
+                "model_22": 322,
+                "model_23": 322,
+                "model_24": 322,
+                "model_25": 322,
+                "model_26": 322,
+                "model_27": 322,
+                "model_28": 322,
+                "model_29": 322,
+                "model_30": 322,
+                "model_31": 322,
+                "model_32": 322,
+                "model_33": 322,
+                "model_34": 322,
+                "model_35": 322,
+                "model_36": 322,
+                "model_37": 322,
+                "model_38": 322,
+                "model_39": 322,
+                "model_40": 322,
+                "model_41": 322,
+                "model_42": 322,
+                "model_43": 322,
+                "model_44": 322,
+                "model_45": 322,
+                "model_46": 322
+                },
+        "irf": false
     },
     "impulse_and_response_variables": {
         "inttype": "overnight_lending",
@@ -265,14 +312,11 @@
         "lrir": false
     },
     "econometric_details": {
-        "convent": false,
-        "composition":  {
-                "model_1": false,
-                "model_2": true
-        }
+        "convent": true,
+        "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": true
+        "cbanker": false
     }
 }
 

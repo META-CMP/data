@@ -37,17 +37,44 @@
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "1_year_gov_us",
+        "inttype": "1_year_gov",
         "size": null,
         "dep": "log_rgdp logdiff_rgdp        lev_emp logdiff_une growth_cpi unemp_rate", # unemp_rate in codebook?
         "conf": "68  90  95  1_SE  2_SE  80",
-        "main": "gdp  emp  inflation  other",
-        "prefer": null
+        "main": "gdp  emp  inflation",
+        "prefer": {
+            "model_1": true,
+            "model_2": false,
+            "model_3": false,
+            "model_4": false,
+            "model_5": ...,
+            ...,
+            "model_XXX": false,
+            "model_XXX": false
+        }
     },
     "identification_strategy": {
         "iv": false,
-        "nr": false,
-        # Add "forecast_based"? Maybe also add sentiment based?
+        "forecast_based": {
+            "model_1": true,
+            "model_2": null,
+            "model_3": null,
+            "model_4": null,
+            "model_5": ...,
+            ...,
+            "model_XXX": null,
+            "model_XXX": null
+        }
+        "nr": {
+            "model_1": true,
+            "model_2": null,
+            "model_3": null,
+            "model_4": null,
+            "model_5": ...,
+            ...,
+            "model_XXX": null,
+            "model_XXX": null
+        },
         "event": false,
         "chol": {
             "model_1": true,
@@ -124,12 +151,12 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": null,
+        "quarter": false,
         "month": true # also for the LP?
     },
     "country_composition": {
         "list_of_countries": "US",
-        "n_of_countries": null
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
@@ -150,7 +177,7 @@
         "lrir": null
     },
     "econometric_details": {
-        "convent": null
+        "convent": false
     },
     "publication_characteristics": {
         "cbanker": false

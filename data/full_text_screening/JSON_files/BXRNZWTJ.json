@@ -14,11 +14,11 @@
           "model_7": "This model is equivalent to model_1 but does not assume factors as data. start: Sample start and vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
           "model_8": "This model is equivalent to model_1 but does only use aggregate data only to extract the factors. start: Sample start and vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
           "model_9": "Equivalent to model_1, but using a Cholesky identification instead of hf iv.",
-          "model_10": "Simple three variable monthly VAR with high-frequency identification.",
-          "model_11": "Simple three variable monthly VAR with Cholesky identification.",
-          "model_12": "Simple three variable quarterly VAR with high-frequency identification.",
-          "model_13": "Simple three variable quarterly VAR with Cholesky identification.",
-          "model_14": "Simple three variable quarterly VAR with Cholesky identification (policy indicator not last)."
+          "model_10": "null",
+          "model_11": "null",
+          "model_12": "null",
+          "model_13": "null",
+          "model_14": "Difference to model_13: policy indicator not last in recursive ordering."
 
         },
         "figure": {

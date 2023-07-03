@@ -18,7 +18,10 @@
         "dep": "log_ip log_cpi",
         "conf": "68",
         "main": "gdp inflation",
-        "prefer": true
+        "prefer": : {
+                "model_1": false,
+                "model_2": true
+        }
     },
     "identification_strategy": {
         "iv": true,
@@ -81,7 +84,7 @@
     },
     "econometric_details": {
         "convent": false,
-        "decomposition":  {
+        "decomposition": {
                 "model_1": false,
                 "model_2": true
         }

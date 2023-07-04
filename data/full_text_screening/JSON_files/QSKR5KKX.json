@@ -16,11 +16,11 @@
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "3_month_repo",
+        "inttype": "3_month_gensaki",
         "size": "100bp",
         "dep": {
-                "model_1": "log_rgap logdiff_deflator logdiff_wpi",
-                "model_2": "log_rgap logdiff_cpi logdiff_wpi"
+                "model_1": "logdiff_rgap logdiff_deflator logdiff_wpi",
+                "model_2": "logdiff_rgap logdiff_cpi logdiff_wpi"
         },
         "conf": "90",
         "main": "inflation",

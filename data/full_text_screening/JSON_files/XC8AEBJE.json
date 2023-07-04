@@ -11,14 +11,15 @@
     },
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
-        "size": "52 bp",
-        "dep": "log_rip log_cpi lev_une",
+        "size": "52bp",
+        "dep": "log_rip lev_une_rate log_cpi",
         "conf": "90",
         "main": "gdp emp",
         "prefer": true
     },
     "identification_strategy": {
         "iv": false,
+        "forecast_based": false,
         "nr": false,
         "event": false,
         "chol": true,
@@ -60,9 +61,9 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1971"",
-        "end": "12-2012"",
-        "samplesize": 504
+        "start": "01-1971",
+        "end": "12-2012",
+        "samplesize": "null"
     },
     "control_variables": {
         "comprice": true,
@@ -77,7 +78,8 @@
         "lrir": false
     },
     "econometric_details": {
-        "convent": 1
+        "convent": true,
+        "decomposition": false
     },
     "publication_characteristics": {
         "cbanker": false

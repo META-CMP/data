@@ -81,7 +81,7 @@
     },
     "econometric_details": {
         "convent": false,
-        "composition":  {
+        "decomposition":  {
                 "model_1": false,
                 "model_2": true
         }

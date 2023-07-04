@@ -1,29 +1,28 @@
 {
     "general": {
-        "key": "XC8AEBJE",
+        "key": "239CUCWA",
         "rid1": "ph",
         "rid2": "null",
-        "study_notes": null,
+        "study_notes": "study also includes impulse-response functions for the aggregate Swedish economy, as well as for several of its regions. We need to discuss wether this is something we can/want to code. So far, I only included the aggregate economy effects",
         "model_notes": null,
-        "figure": 3,
-        "page": 520,
+        "figure": 1,
+        "page": 14,
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
-        "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
+        "inttype": "3_month_interbank__rate",
+        "size": 100,
+        "dep": "log_gdp log_cpi",
         "conf": "90",
-        "main": "gdp emp",
+        "main": "gdp  inflation",
         "prefer": true
     },
     "identification_strategy": {
         "iv": false,
-        "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
-        "svar": false,
+        "chol": false,
+        "svar": true,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
@@ -34,7 +33,7 @@
         "var": true,
         "lp": false,
         "vecm": false,
-        "dyn_ols": "false",
+        "dyn_ols": "ardl  ecm false",
         "fvar": false,
         "tvar": false,
         "gvar": false,
@@ -52,18 +51,18 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": "US",
-        "n_of_countries": 1
+        "list_of_countries": "SE"",
+        "n_of_countries": "1"
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1971",
-        "end": "12-2012",
-        "samplesize": "null"
+        "start": 01-1993,
+        "end": 12-2007,
+        "samplesize": 60
     },
     "control_variables": {
         "comprice": true,
@@ -74,12 +73,11 @@
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": false,
+        "fx": true,
         "lrir": false
     },
     "econometric_details": {
-        "convent": true,
-        "decomposition": false
+        "convent": true
     },
     "publication_characteristics": {
         "cbanker": false

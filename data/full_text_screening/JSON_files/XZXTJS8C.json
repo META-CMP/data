@@ -1,44 +1,43 @@
 {
     "general": {
-        "key": "XC8AEBJE",
+        "key": "XZXTJS8C",
         "rid1": "ph",
         "rid2": "null",
-        "study_notes": null,
+        "study_notes": "estimated DSGE model (IRFs with standard errors)",
         "model_notes": null,
-        "figure": 3,
-        "page": 520,
+        "figure": 6,
+        "page": 601,
         "irf": true
     },
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
-        "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
+        "size": null,
+        "dep": "logdiff_rgdp gr_rgdp logdiff_GDPdef",
         "conf": "90",
-        "main": "gdp emp",
+        "main": "gdp  inflation",
         "prefer": true
     },
     "identification_strategy": {
         "iv": false,
-        "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
+        "chol": false,
         "svar": false,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
-        "idother": false
+        "idother": true
     },
     "estimation_method": {
-        "var": true,
+        "var": false,
         "lp": false,
         "vecm": false,
         "dyn_ols": "false",
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": false,
+        "bayes": true,
         "dsge": false,
         "varother": false
     },
@@ -52,21 +51,21 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": "US",
-        "n_of_countries": 1
+        "list_of_countries": 1,
+        "n_of_countries": "US"
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1971",
-        "end": "12-2012",
-        "samplesize": "null"
+        "start": "01-1966",
+        "end": "12-2004",
+        "samplesize": null
     },
     "control_variables": {
-        "comprice": true,
+        "comprice": false,
         "outpgap": false,
         "find": false,
         "eglob": false,
@@ -78,11 +77,10 @@
         "lrir": false
     },
     "econometric_details": {
-        "convent": true,
-        "decomposition": false
+        "convent": true
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

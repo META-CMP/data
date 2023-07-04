@@ -192,7 +192,7 @@
         }
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": null,
         "start": "Q1-1985",
         "end": "Q4-2008",
         "samplesize": "null"

@@ -7,7 +7,7 @@ General,model_notes,"Model specific notes (also use this to indicate the presenc
 General,FIGURE,Number of the figure from which the impulse response is taken. (if number not stated in the document code as null),numeric,"xxx; ""null""",,,TRUE,study,YES,YES,
 General,PAGE,"Page on which the impulse response is displayed. (page number displayed in the original document, if not available use the pdf page number) ",numeric,xxx,,,TRUE,study,YES,YES,
 General,IRF,Dummy if IRF is available (true if IRF is available; false if not),logical,true; false,,,TRUE,study,YES,YES,
-impulse_and_response_variables,INTTYPE,Type of short term interest rate variable which is shocked (add here on the fly),factor,3_month_gensaki fed_funds MRO_rate ester euribor 2_year_gov 2_year_gov_de 1_year_gov overnight_lending,,"e.g. Bauer and Swanson use 2 year treasury yield, fed funds rate, real interest rate,....",TRUE,study,YES,YES,
+impulse_and_response_variables,INTTYPE,Type of short term interest rate variable which is shocked (add here on the fly),factor,3_month_gensaki fed_funds MRO_rate eonia euribor 2_year_gov 2_year_gov_de 1_year_gov overnight_lending 3_month_interbank,,"e.g. Bauer and Swanson use 2 year treasury yield, fed funds rate, real interest rate,....",TRUE,study,YES,YES,
 impulse_and_response_variables,SIZE,"Shock size in basis points e.g., 100 = 1pp. How to deal with 1% shock? ",factor,"for bp shock: ""xbp""
 for % shock:
 ""x%""

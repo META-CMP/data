@@ -2,7 +2,7 @@
     "general": {
         "key": "XZXTJS8C",
         "rid1": "ph",
-        "rid2": "null",
+        "rid2": "me",
         "study_notes": "estimated DSGE model (IRFs with standard errors)",
         "model_notes": null,
         "figure": 6,
@@ -12,13 +12,14 @@
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
         "size": null,
-        "dep": "logdiff_rgdp gr_rgdp logdiff_GDPdef",
-        "conf": "90",
-        "main": "gdp  inflation",
+        "dep": "logdiff_rgdp logdiff_deflator",
+        "conf": "80",
+        "main": "gdp inflation",
         "prefer": true
     },
     "identification_strategy": {
         "iv": false,
+        "forecast_based": false,
         "nr": false,
         "event": false,
         "chol": false,
@@ -38,7 +39,7 @@
         "tvar": false,
         "gvar": false,
         "bayes": true,
-        "dsge": false,
+        "dsge": true,
         "varother": false
     },
     "regime_dependence": {
@@ -60,8 +61,8 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1966",
-        "end": "12-2004",
+        "start": "Q1-1966",
+        "end": "Q4-2004",
         "samplesize": null
     },
     "control_variables": {
@@ -77,7 +78,8 @@
         "lrir": false
     },
     "econometric_details": {
-        "convent": true
+        "convent": true,
+        "decomposition": false
     },
     "publication_characteristics": {
         "cbanker": true

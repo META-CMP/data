@@ -1,0 +1,86 @@
+{
+    "general": {
+        "key": "239CUCWA",
+        "rid1": "ph",
+        "rid2": "null",
+        "study_notes": "study also includes impulse-response functions for the aggregate Swedish economy, as well as for several of its regions. We need to discuss wether this is something we can/want to code. So far, I only included the aggregate economy effects",
+        "model_notes": null,
+        "figure": 1,
+        "page": 14,
+        "irf": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "3_month_interbank__rate",
+        "size": 100,
+        "dep": "log_gdp log_cpi",
+        "conf": "90",
+        "main": "gdp  inflation",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": true,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "ardl  ecm false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "SE"",
+        "n_of_countries": "1"
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": 01-1993,
+        "end": 12-2007,
+        "samplesize": 60
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "convent": true
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

@@ -7,12 +7,13 @@ General,model_notes,"Model specific notes (also use this to indicate the presenc
 General,FIGURE,Number of the figure from which the impulse response is taken. (if number not stated in the document code as null),numeric,"xxx; ""null""",,,TRUE,study,YES,YES,
 General,PAGE,"Page on which the impulse response is displayed. (page number displayed in the original document, if not available use the pdf page number) ",numeric,xxx,,,TRUE,study,YES,YES,
 General,IRF,Dummy if IRF is available (true if IRF is available; false if not),logical,true; false,,,TRUE,study,YES,YES,
-impulse_and_response_variables,INTTYPE,Type of short term interest rate variable which is shocked (add here on the fly),factor,3_month_gensaki fed_funds MRO_rate eonia euribor 2_year_gov 2_year_gov_de 1_year_gov overnight_lending 3_month_interbank,,"e.g. Bauer and Swanson use 2 year treasury yield, fed funds rate, real interest rate,....",TRUE,study,YES,YES,
+impulse_and_response_variables,INTTYPE,"Type of short term interest rate variable which is shocked (add here on the fly). If no information is provided or the paper only states ""interest rate"" code as ""null"".",factor,3_month_gensaki fed_funds MRO_rate eonia euribor 2_year_gov 2_year_gov_de 1_year_gov overnight_lending 3_month_interbank,,"e.g. Bauer and Swanson use 2 year treasury yield, fed funds rate, real interest rate,....",TRUE,study,YES,YES,
 impulse_and_response_variables,SIZE,"Shock size in basis points e.g., 100 = 1pp. How to deal with 1% shock? ",factor,"for bp shock: ""xbp""
 for % shock:
 ""x%""
 for SD shock (if no information on SD size):
 ""xSD""",Rusnak et al. 2013,,TRUE,study,YES,YES,
+impulse_and_response_variables,AXIS_TRANS,note if the axis scale needs to be transformed to be in percentage scale or another scale. Additionally add the information to the IRF picture. ,string,e.g.: y*100,,,TRUE,study,NEW_June,NEW_June,
 impulse_and_response_variables,DEP,Vector of variable names + transformation of the variabe and real or nominal (add here on the fly),factor,https://github.com/META-CMP/data/issues/10,,,TRUE,study,YES,YES,
 impulse_and_response_variables,CONF,Level of the confidence bounds or standard errors (add here on the fly),factor,68  90  95  1_SE  2_SE  80,,,TRUE,study,YES,Unsure,
 impulse_and_response_variables,MAIN,1 if outcome variable is of main research interest for the paper,factor,gdp  emp  inflation  other,,,TRUE,study,YES,YES,
@@ -22,7 +23,7 @@ Identification_strategy,FORECAST_BASED,"1 if forecast based identification strat
 Identification_strategy,NR,1 if Narrative record,logical,true; false,Gechert 2015,,TRUE,study,YES,YES,
 Identification_strategy,EVENT,1 if Event study or direct measurement of the shock ,logical,true; false,-,"Probably not that many and code togehter with narrative record, romer and romer 2010, or paper looking at the changes in eurodollar rates around FOMC meetings. SIRF can be directly obtained according to Stock and Watson 2016 p. 460",TRUE,study,YES,YES,
 Identification_strategy,CHOL,1 if obtained by recursive Cholesky identification - irrespective of the order of the variables (but note quality constraint if conteporaneous effect of inflation or output are zero on the interest rate). Hence the system of short run restrictions sets all the contemporaneous effects of variables ordered above on the variables ordered below to zero (and tries to estimates all the parameters of the lower triangular identification matrix of the monetary part). ,logical,true; false,Papadamou et al. 2019,Or more detailed on the ordering of the variables,TRUE,study,YES,YES,
-Identification_strategy,SVAR,1 if SVAR (for any other structural identification other than cholesky if the contemporaneous elasticities in the upper triangular of the identification matrix are set to some specific value instead of zero as for choleski),logical,true; false,Ehrenbergerova et al. 2021,Code the structure of the VAR? See Ramey page 78,TRUE,study,YES,YES,
+Identification_strategy,SVAR,1 if SVAR (for any other structural identification other than cholesky if the contemporaneous elasticities in the upper triangular of the identification matrix are set to some specific value instead of zero as for choleski or are not estimated in case of the lower triangular matrix),logical,true; false,Ehrenbergerova et al. 2021,Code the structure of the VAR? See Ramey page 78,TRUE,study,YES,YES,
 Identification_strategy,SIGNR,1 if obtained by employing sign restrictions (also known as ?set identification? or partial identification),logical,true; false,Papadamou et al. 2019,Or maybe exclude those responses where the variable of interest is sign restricted. In this case we do not need this moderator variable see Uhlig 2005,TRUE,study,YES,YES,
 Identification_strategy,HF,1 if high frequency identification is used,logical,true; false,- ,Is one identification method according to Ramey (2016),TRUE,study,YES,YES,
 Identification_strategy,HETEROSKEDAS,1 if Identification by Heteroskedasticity,logical,true; false,,Identification Method according to Stock and Watson 2016,TRUE,study,YES,YES,
@@ -48,7 +49,7 @@ Data_frequency,ANNUAL,1 if annual data are used,logical,true; false,Havranek and
 Data_frequency,QUARTER,1 if quarterly data are used,logical,true; false,Havranek and Rusnak 2013,,TRUE,study,YES,YES,
 Data_frequency,MONTH,1 if monthly data are used,logical,true; false,Havranek and Rusnak 2013,,TRUE,study,YES,YES,
 Country_composition,LIST_OF_COUNTRIES,"List of countries if Panel is used (iso2 code, ""EA"" for Euro area)",string,,,"Collect in the database, not used for estimation, construct dummy variables with this list?",TRUE,study,YES,YES,
-Country_composition,N_OF_COUNTRIES,Number of countries in sample - ONLY IF missing defintion of country sample,numeric,xxx,,,TRUE,study,YES,YES,
+Country_composition,N_OF_COUNTRIES,Number of countries in sample,numeric,xxx,,,TRUE,study,YES,YES,
 Further_data_characteristics,PANEL,1 if Panel(VAR),logical,true; false,Ehrenbergerova et al. 2021,,TRUE,study,YES,YES,
 Further_data_characteristics,START,Sample start (https://www.r-bloggers.com/2013/08/date-formats-in-r/) for format codes,string,"for monthly data: ""%m-%Y"" 
 for quarterly data: ""Q%q-%Y"" 

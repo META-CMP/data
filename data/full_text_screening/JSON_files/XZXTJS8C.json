@@ -4,14 +4,14 @@
         "rid1": "ph",
         "rid2": "me",
         "study_notes": "estimated DSGE model (IRFs with standard errors)",
-        "model_notes": null,
+        "model_notes": "null",
         "figure": 6,
         "page": 601,
         "irf": true
     },
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
-        "size": null,
+        "size": "null",
         "dep": "logdiff_rgdp logdiff_deflator",
         "conf": "80",
         "main": "gdp inflation",
@@ -63,7 +63,7 @@
         "panel": false,
         "start": "Q1-1966",
         "end": "Q4-2004",
-        "samplesize": null
+        "samplesize": "null"
     },
     "control_variables": {
         "comprice": false,

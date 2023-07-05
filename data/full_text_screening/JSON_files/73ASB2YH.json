@@ -30,13 +30,13 @@
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
         "size": "50bp",
-        "axis_trans": "null", # Okay like this if no scaling necessary?
+        "axis_trans": "null",
         "dep": "log_rgdp log_deflator",
         "conf": "68",
-        "main": "gdp  inflation  other", # Does ME and others agree?
+        "main": "gdp  inflation  other",
         "prefer": {
           "model_1": false,
-          "model_2": true, # correct?
+          "model_2": true,
           "model_3": false,
           "model_4": false,
           "model_5": false
@@ -63,7 +63,7 @@
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": true, # Really?
+        "bayes": true,
         "dsge": false,
         "varother": false
     },
@@ -119,7 +119,6 @@
           "model_5": true
         },
         "lrir": false
-        # create an issues to include if a monetary aggregate (e.g. M2) is controlled for?
     },
     "econometric_details": {
         "convent": true,

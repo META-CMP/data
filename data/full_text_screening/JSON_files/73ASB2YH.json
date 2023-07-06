@@ -30,7 +30,7 @@
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
         "size": "50bp",
-        "axis_trans": "null",
+        "axis_trans": false,
         "dep": "log_rgdp log_deflator",
         "conf": "68",
         "main": "gdp  inflation  other",

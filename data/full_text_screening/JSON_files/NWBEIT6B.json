@@ -54,7 +54,7 @@
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "",
+        "inttype": "null",
         "size": "100bp",
         "dep": {
                 "model_1": "log_rgdp log_deflator",

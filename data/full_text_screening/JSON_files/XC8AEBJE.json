@@ -1,8 +1,8 @@
 {
     "general": {
         "key": "XC8AEBJE",
-        "rid1": "me",
-        "rid2": "null",
+        "rid1": "ph",
+        "rid2": "me",
         "study_notes": "null",
         "model_notes": "null",
         "figure": 3,
@@ -14,8 +14,8 @@
         "size": "52bp",
         "dep": "log_rip lev_une_rate log_cpi",
         "conf": "90",
-        "main": "gdp  emp",
-        "prefer": false
+        "main": "gdp emp",
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,

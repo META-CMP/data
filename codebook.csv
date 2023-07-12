@@ -7,13 +7,13 @@ General,model_notes,"Model specific notes (also use this to indicate the presenc
 General,FIGURE,"Number of the figure from which the impulse response is taken. (if number contains an A for appendix write it as a string e.g. A2, if number not stated in the document code as null)",string,"xxx; ""A2""",,,TRUE,study,YES,YES,
 General,PAGE,"Page on which the impulse response is displayed. (page number displayed in the original document, if not available use the pdf page number) ",numeric,xxx,,,TRUE,study,YES,YES,
 General,IRF,Dummy if IRF is available (true if IRF is available; false if not),logical,true; false,,,TRUE,study,YES,YES,
-impulse_and_response_variables,INTTYPE,"Type of short term interest rate variable which is shocked (add here on the fly). If no information is provided or the paper only states ""interest rate"" code as ""null"".",factor,3_month_gensaki fed_funds MRO_rate eonia euribor 2_year_gov 2_year_gov_de 1_year_gov overnight_lending 3_month_interbank,,"e.g. Bauer and Swanson use 2 year treasury yield, fed funds rate, real interest rate,....",TRUE,study,YES,YES,
+impulse_and_response_variables,INTTYPE,"Type of short term interest rate variable which is shocked (add here on the fly). If no information is provided or the paper only states ""interest rate"" code as ""null"".",factor,https://github.com/META-CMP/data/issues/6,,"e.g. Bauer and Swanson use 2 year treasury yield, fed funds rate, real interest rate,....",TRUE,study,YES,YES,
 impulse_and_response_variables,SIZE,"Shock size in basis points e.g., 100 = 1pp. How to deal with 1% shock? ",factor,"for bp shock: ""xbp""
 for % shock:
 ""x%""
 for SD shock (if no information on SD size):
 ""xSD""",Rusnak et al. 2013,,TRUE,study,YES,YES,
-impulse_and_response_variables,AXIS_TRANS,note if the axis scale needs to be transformed to be in percentage scale or another scale. Additionally add the information to the IRF picture. ,string,e.g.: y*100,,,TRUE,study,NEW_June,NEW_June,
+impulse_and_response_variables,AXIS_TRANS,note if the axis scale needs to be transformed to be in percentage scale or another scale.,string,e.g.: y*100,,,TRUE,study,NEW_June,NEW_June,
 impulse_and_response_variables,DEP,Vector of variable names + transformation of the variabe and real or nominal (add here on the fly),factor,https://github.com/META-CMP/data/issues/10,,,TRUE,study,YES,YES,
 impulse_and_response_variables,CONF,Level of the confidence bounds or standard errors (add here on the fly),factor,68  90  95  1_SE  2_SE  80,,,TRUE,study,YES,Unsure,
 impulse_and_response_variables,MAIN,1 if outcome variable is of main research interest for the paper,factor,gdp  emp  inflation  other,,,TRUE,study,YES,YES,
@@ -60,7 +60,7 @@ for yearly data: ""%Y""",Ehrenbergerova et al. 2021,included in database but pro
 Further_data_characteristics,SAMPLESIZE,Sample size for estimation. For details see: https://github.com/META-CMP/data/issues/22,numeric,"xxx; ""null""",Havranek and Rusnak 2013,,TRUE,study/own_calculation,YES_or_imp,YES_or_imp,
 Control_variables,COMPRICE,1 if commodity price variable is included,logical,true; false,,"Aus Ramey (2016): Sims (1992) conjectured that the Federal Reserve used more information about future movements in inflation than was commonly included in the VAR. He showed that the price puzzle was substantially reduced if commodity prices, often a harbinger of future inflation, were included in the VAR. Rusnake et al. 2013 find that its inclusion drives the results in the literature.",TRUE,study,YES,YES,
 Control_variables,OUTPGAP,1 if output gap variable is included,logical,true; false,Havranek and Rusnak 2013,Aus Rusnak et al. 2013: Giordani (2004) argues that the use of GDP in the VAR system without controlling for the potential of the economy can bias the estimates and cause the price puzzle.,TRUE,study,YES,YES,
-Control_variables,FIND,1 if financial development is controlled for,logical,true; false,Havranek and Rusnak 2013 Ehrenbergerova et al. 2021,,TRUE,study,YES,YES,
+Control_variables,FIND,"1 if financial development is controlled for, for example by the usage of credit or asset variables related to financial development and or financial cycle variables (levels or GDP ratios)",logical,true; false,Havranek and Rusnak 2013 Ehrenbergerova et al. 2021,,TRUE,study,YES,YES,
 Control_variables,EGLOB,1 if economic globalisation is controlled for,logical,true; false,Havranek and Rusnak 2013,,TRUE,study,YES,YES,
 Control_variables,CBIND,1 if central bank independence is controlled for,logical,true; false,Havranek and Rusnak 2013,,TRUE,study,YES,YES,
 Control_variables,FEXCH,1 if exchange rate regime is controlled for,logical,true; false,Ehrenbergerova et al. 2021,,TRUE,study,YES,YES,
@@ -70,6 +70,7 @@ Control_variables,FX,1 if the exchange rate is included ,logical,true; false,Ehr
 Control_variables,LRIR,"1 if the long-run interest rate (in addition to the short-run
 interest rate) is included",logical,true; false,Ehrenbergerova et al. 2021,"Regarding specication characteristics, we nd that the omission of long-term interest rates and variables related to liquidity (credit or money supply) is associated with stronger responses of house prices to changes in the policy
 rate.",TRUE,study,YES,YES,
+Econometric_details,PURE_RATE_SHOCK,1 only if the monetary policy shock is defined in matters of interest rates. ,logical,true; false,,,TRUE,study,NEW_July,NEW_July,
 Econometric_details,CONVENT,1 if monetary policy shock plausibly only covers conventional monetary policy,logical,"true; false; ""null""",,,TRUE,study,NEW_May,NEW_May,
 Econometric_details,DECOMPOSITION,"1 if monetary policy shock is decomposed into several parts (conventional, unconventional, information, forward guidance, …)",logical,true; false,,,TRUE,study,NEW_June,NEW_June,
 External_controls,EXT_FEXCH,1 if exchange rate regime is fixed,,,Havranek and Rusnak 2013,,FALSE,public_database,YES,YES,

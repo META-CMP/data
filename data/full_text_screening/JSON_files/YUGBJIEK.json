@@ -1,0 +1,114 @@
+{
+    "general": {
+        "key": "YUGBJIEK",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": null,
+        "model_notes": null,
+        "figure":  {
+                "model_1": 3,
+                "model_2": 4,
+                "model_3": 7,
+                "model_4": 8
+        },
+        "page": {
+                "model_1": 121,
+                "model_2": 122,
+                "model_3": 127,
+                "model_4": 128
+        },
+        "irf": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+                "model_1": "7_day_repo",
+                "model_2": "1_year_lending",
+                "model_3": "7_day_repo",
+                "model_4": "1_year_lending"
+        },
+        "size": "100bp",
+        "axis_trans": "null",
+        "dep": "gr_ip gr_cpi",
+        "conf": "95",
+        "main": "other",
+        "prefer": null
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false
+        },
+        "svar": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true
+        },
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": null,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": null,
+        "vecm": null,
+        "dyn_ols": false,
+        "fvar": null,
+        "tvar": null,
+        "gvar": null,
+        "bayes": null,
+        "dsge": null,
+        "varother": null
+    },
+    "regime_dependence": {
+        "lor": null,
+        "upr": null,
+        "scr": null,
+        "dcr": null,
+        "hike": null,
+        "cut": null
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "CN",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": null,
+        "start": null,
+        "end": null,
+        "samplesize": null
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": null,
+        "find": null,
+        "eglob": null,
+        "cbind": null,
+        "fexch": null,
+        "inflexp": null,
+        "foreignir": null,
+        "fx": true,
+        "lrir": null
+    },
+    "econometric_details": {
+        "convent": null,
+        "decomposition": null
+    },
+    "publication_characteristics": {
+        "cbanker": null
+    }
+}
+

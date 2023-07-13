@@ -3,8 +3,8 @@
         "key": "YUGBJIEK",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": null,
-        "model_notes": null,
+        "study_notes": "quality_concern: no information if real or nominal IP is used. quality_concern: talks about percentage change in the interest rate even though it should be pp change. quality_concern: names the reaction of industrial production in the IRF output gap. Only the third paper of the thesis is relevant",
+        "model_notes": "null",
         "figure":  {
                 "model_1": 3,
                 "model_2": 4,
@@ -21,17 +21,22 @@
     },
     "impulse_and_response_variables": {
         "inttype": {
-                "model_1": "7_day_repo",
-                "model_2": "1_year_lending",
-                "model_3": "7_day_repo",
-                "model_4": "1_year_lending"
+                "model_1": "lev_a_7_day_repo",
+                "model_2": "lev_a_1_year_lending",
+                "model_3": "lev_a_7_day_repo",
+                "model_4": "lev_a_1_year_lending"
         },
         "size": "100bp",
-        "axis_trans": "null",
-        "dep": "gr_ip gr_cpi",
+        "axis_trans": false,
+        "dep": "gr_a_ip gr_a_cpi",
         "conf": "95",
         "main": "other",
-        "prefer": null
+        "prefer": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true
+        }
     },
     "identification_strategy": {
         "iv": false,
@@ -53,28 +58,33 @@
         "signr": false,
         "hf": false,
         "heteroskedas": false,
-        "longrun": null,
+        "longrun": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true
+        },
         "idother": false
     },
     "estimation_method": {
         "var": true,
-        "lp": null,
-        "vecm": null,
+        "lp": false,
+        "vecm": false,
         "dyn_ols": false,
-        "fvar": null,
-        "tvar": null,
-        "gvar": null,
-        "bayes": null,
-        "dsge": null,
-        "varother": null
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
     },
     "regime_dependence": {
-        "lor": null,
-        "upr": null,
-        "scr": null,
-        "dcr": null,
-        "hike": null,
-        "cut": null
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
     },
     "data_frequency": {
         "annual": false,
@@ -86,29 +96,30 @@
         "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": null,
-        "start": null,
-        "end": null,
-        "samplesize": null
+        "panel": false,
+        "start": "10-2003",
+        "end": "12-2016",
+        "samplesize": "null"
     },
     "control_variables": {
         "comprice": true,
-        "outpgap": null,
-        "find": null,
-        "eglob": null,
-        "cbind": null,
-        "fexch": null,
-        "inflexp": null,
-        "foreignir": null,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
         "fx": true,
-        "lrir": null
+        "lrir": false
     },
     "econometric_details": {
-        "convent": null,
-        "decomposition": null
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": null
+        "cbanker": false
     }
 }
 

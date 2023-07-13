@@ -7,11 +7,21 @@ key
 subsubfolders <- c("gr_rgdp")
 
 
+
+
+
+
+
+
+################## Table 14
+
+
+
 # Load the readxl library for reading Excel files
 library(readxl)
 
 # Read the data from an Excel file into the 'data' variable
-data <- readxl::read_xlsx(paste0(key, "/data.xlsx"))
+data <- readxl::read_xlsx(paste0(key, "/table14.xlsx"))
 
 # Add a new column 'est' based on the values in the 'Quarter' column
 # If 'Quarter' is NA, set 'est' to "se", otherwise set it to "mean"

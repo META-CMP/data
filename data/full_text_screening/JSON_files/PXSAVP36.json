@@ -1,0 +1,96 @@
+{
+    "general": {
+        "key": "PXSAVP36",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "quality_concern: no information if real or nominal IP is used. Log of outcome variable is used because of the interpretation provided by the authors for figure 1, 2, and 3. The size of the interest rate shock is taken from figure 1 because it shows the same median response as figure 3",
+        "model_notes": "null",
+        "figure": 3,
+        "page": 35,
+        "irf": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_eonia",
+        "size": "50bp",
+        "axis_trans": false,
+        "dep": "log_m_ip log_m_cpi",
+        "conf": "95",
+        "main": "gdp inflation",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "EA",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "01-1990",
+                "model_2": "01-1999"
+        },
+        "end": {
+                "model_1": "12-1998",
+                "model_2": "07-2007"
+        },
+        "samplesize": false
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

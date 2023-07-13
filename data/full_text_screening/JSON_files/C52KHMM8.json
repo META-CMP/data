@@ -13,18 +13,20 @@
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "2_year_gov_de",
+        "inttype": "lev_a_2_year_gov_de",
         "size": "100bp",
-        "dep": "log_ip log_cpi",
+        "axis_trans": false,
+        "dep": "log_m_ip log_m_cpi",
         "conf": "68",
         "main": "gdp inflation",
-        "prefer": : {
+        "prefer": {
                 "model_1": false,
                 "model_2": true
         }
     },
     "identification_strategy": {
         "iv": true,
+        "forecast_based": false,
         "nr": false,
         "event": false,
         "chol": false,
@@ -83,6 +85,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": false,
         "convent": false,
         "decomposition": {
                 "model_1": false,

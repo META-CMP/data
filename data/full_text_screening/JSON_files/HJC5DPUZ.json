@@ -1,20 +1,20 @@
 {
     "general": {
-        "key": "XC8AEBJE",
+        "key": "HJC5DPUZ",
         "rid1": "ph",
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": 3,
-        "page": 520,
+        "figure": 4,
+        "page": 12,
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
-        "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
-        "conf": "90",
-        "main": "gdp emp",
+        "inttype": "3_month_spread",
+        "size": "1SD",
+        "dep": "log_rgdp",
+        "conf": "2_SE",
+        "main": "gdp",
         "prefer": true
     },
     "identification_strategy": {
@@ -52,21 +52,21 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": "US",
+        "list_of_countries": "JO",
         "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1971",
-        "end": "12-2012",
+        "start": "Q1-1996",
+        "end": "Q1-2005",
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": true,
+        "comprice": false,
         "outpgap": false,
         "find": false,
         "eglob": false,

@@ -1,20 +1,32 @@
 {
     "general": {
-        "key": "XC8AEBJE",
+        "key": "CJS462EL",
         "rid1": "ph",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "Shock size only mentioned for three of the countries, so I just included those models.",
         "model_notes": "null",
-        "figure": 3,
-        "page": 520,
+        "figure": {
+                "model_1": "1a",
+                "model_2": "1b",
+                "model_3": "1b"
+        },
+        "page": {
+                "model_1": 30,
+                "model_2": 31,
+                "model_3": 31
+        },
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
-        "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
+        "inttype": "3_month_interest",
+        "size": {
+                "model_1": "48bp"
+                "model_2": "59bp",
+                "model_3": "84bp"
+        },
+        "dep": "log_rgdp log_cpi",
         "conf": "90",
-        "main": "gdp emp",
+        "main": "gdp  inflation",
         "prefer": true
     },
     "identification_strategy": {
@@ -52,17 +64,21 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": "US",
+        "list_of_countries": {
+                "model_1": "DE"
+                "model_2": "IT",
+                "model_3": "ES"
+        },
         "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1971",
-        "end": "12-2012",
+        "start": "Q1-1970",
+        "end": "Q4-1998",
         "samplesize": "null"
     },
     "control_variables": {
@@ -73,8 +89,8 @@
         "cbind": false,
         "fexch": false,
         "inflexp": false,
-        "foreignir": false,
-        "fx": false,
+        "foreignir": true,
+        "fx": true,
         "lrir": false
     },
     "econometric_details": {
@@ -82,7 +98,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

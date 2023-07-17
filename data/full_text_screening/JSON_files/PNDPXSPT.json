@@ -1,0 +1,179 @@
+{
+    "general": {
+        "key": "PNDPXSPT",
+        "rid1": "ph",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+                "model_1": 3,
+                "model_2": 5,
+                "model_3": 8
+        },
+        "page": {
+                "model_1": 27,
+                "model_2": 30,
+                "model_3": 48
+        },
+        "irf": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "bank_call",
+        "size": "59",
+        "dep": "log_gdp log_cpi",
+        "conf": "90",
+        "main": "gdp  inflation",
+        "prefer": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false
+        },
+    },
+    "identification_strategy": {
+        "iv": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "forecast_based": {
+                "model_1": false,
+                "model_2": false
+        },
+        "nr": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "event": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "chol": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false
+        },
+        "svar": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "signr": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "hf": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "heteroskedas": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "longrun": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "idother": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": true
+        },
+    },
+    "estimation_method": {
+        "var": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false
+        },
+        "lp": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "vecm": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "dyn_ols": "false",
+        "fvar": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "tvar": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "gvar": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "bayes": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+        "dsge": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": true
+        },
+        "varother": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false
+        },
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "DE",
+        "n_of_countries": 1,
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1975",
+        "end": "Q4-1998",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

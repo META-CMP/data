@@ -1,29 +1,57 @@
 {
     "general": {
-        "key": "XC8AEBJE",
+        "key": "RWBKEAHR",
         "rid1": "ph",
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": 3,
-        "page": 520,
+        "figure": {
+                "model_1": 4,
+                "model_2": 4,
+                "model_3": 5,
+                "model_4": 7,
+                "model_5": 7,
+                "model_6": 8
+        },
+        "page": {
+                "model_1": 64,
+                "model_2": 64,
+                "model_3": 65,
+                "model_4": 68,
+                "model_5": 68,
+                "model_6": 69
+        },
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
-        "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
-        "conf": "90",
-        "main": "gdp emp",
-        "prefer": true
+        "inttype": "3_month_euribor",
+        "size": "22bp",
+        "dep": {
+                "model_1": "logdiff_gdp logdiff_deflator",
+                "model_2": "logdiff_gdp logdiff_deflator",
+                "model_3": "logdiff_empl",
+                "model_4": "logdiff_gdp logdiff_deflator",
+                "model_5": "logdiff_gdp logdiff_deflator",
+                "model_6": "logdiff_empl"
+        },
+        "conf": "68 ",
+        "main": "gdp  inflation",
+        "prefer": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }
     },
     "identification_strategy": {
         "iv": false,
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
-        "svar": false,
+        "chol": false,
+        "svar": true,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
@@ -52,21 +80,21 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": "US",
-        "n_of_countries": 1
+        "list_of_countries": "EE, EA",
+        "n_of_countries": 2
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1971",
-        "end": "12-2012",
+        "start": "Q1-2000",
+        "end": "Q4-2012",
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": true,
+        "comprice": false,
         "outpgap": false,
         "find": false,
         "eglob": false,
@@ -82,7 +110,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

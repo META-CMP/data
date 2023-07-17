@@ -1,20 +1,37 @@
 {
     "general": {
-        "key": "XC8AEBJE",
+        "key": "FAQ4GGD6",
         "rid1": "ph",
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": 3,
-        "page": 520,
+        "figure": {
+                "model_1": 4,
+                "model_2": 4,
+                "model_4": 4,
+                "model_5": 4,
+                "model_6": 4,
+                "model_7": 4,
+                "model_8": 5
+        },
+        "page": {
+                "model_1": 34,
+                "model_2": 34,
+                "model_3": 34,
+                "model_4": 34,
+                "model_5": 34,
+                "model_6": 34,
+                "model_7": 34,
+                "model_8": 35
+        },
         "irf": true
     },
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
-        "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
-        "conf": "90",
-        "main": "gdp emp",
+        "size": "100bp",
+        "dep": "gr_rgdp gr_deflator",
+        "conf": "95",
+        "main": "gdp  inflation",
         "prefer": true
     },
     "identification_strategy": {
@@ -22,8 +39,8 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
-        "svar": false,
+        "chol": false,
+        "svar": true,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
@@ -51,22 +68,39 @@
         "cut": false
     },
     "data_frequency": {
-        "annual": false,
+        "annual": true,
         "quarter": false,
-        "month": true
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": "US",
-        "n_of_countries": 1
-    },
+        "list_of_countries": {
+                "model_1": "BH",
+                "model_2": "KW",
+                "model_3": "QA",
+                "model_4": "AE",
+                "model_5": "SA",
+                "model_6": "OM",
+                "model_7": "US",
+                "model_8": "BH, KW, QA, AE, SA, OM"
+        },
+        "n_of_countries": {
+                "model_1": 1,
+                "model_2": 1,
+                "model_3": 1,
+                "model_4": 1,
+                "model_5": 1,
+                "model_6": 1,
+                "model_7": 1,
+                "model_8": 6
+        },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1971",
-        "end": "12-2012",
+        "start": "1970",
+        "end": "2006",
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": true,
+        "comprice": false,
         "outpgap": false,
         "find": false,
         "eglob": false,

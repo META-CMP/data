@@ -1,20 +1,20 @@
 {
     "general": {
-        "key": "XC8AEBJE",
+        "key": "U22U6S8Q",
         "rid1": "ph",
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": 3,
-        "page": 520,
+        "figure": 8,
+        "page": 1720,
         "irf": true
     },
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
-        "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
-        "conf": "90",
-        "main": "gdp emp",
+        "size": "25bp",
+        "dep": "logdiff_gap logdiff_cpi",
+        "conf": "95",
+        "main": "other",
         "prefer": true
     },
     "identification_strategy": {
@@ -22,16 +22,16 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
+        "chol": false,
         "svar": false,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
-        "idother": false
+        "idother": true
     },
     "estimation_method": {
-        "var": true,
+        "var": false,
         "lp": false,
         "vecm": false,
         "dyn_ols": "false",
@@ -39,7 +39,7 @@
         "tvar": false,
         "gvar": false,
         "bayes": false,
-        "dsge": false,
+        "dsge": true,
         "varother": false
     },
     "regime_dependence": {
@@ -52,8 +52,8 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
         "list_of_countries": "US",
@@ -61,12 +61,12 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1971",
-        "end": "12-2012",
+        "start": "Q3-1954",
+        "end": "Q2-2007",
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": true,
+        "comprice": false,
         "outpgap": false,
         "find": false,
         "eglob": false,
@@ -82,7 +82,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

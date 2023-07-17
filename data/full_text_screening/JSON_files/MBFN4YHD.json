@@ -1,20 +1,20 @@
 {
     "general": {
-        "key": "XC8AEBJE",
+        "key": "MBFN4YHD",
         "rid1": "ph",
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
         "figure": 3,
-        "page": 520,
+        "page": 26,
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
-        "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
-        "conf": "90",
-        "main": "gdp emp",
+        "inttype": "3_month_interest",
+        "size": "77bp",
+        "dep": "log_rgdp log_cpi",
+        "conf": "2_SE",
+        "main": "gdp  inflation",
         "prefer": true
     },
     "identification_strategy": {
@@ -52,23 +52,23 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": "US",
-        "n_of_countries": 1
+        "list_of_countries": "AT", "BE", "CA", "DK", "FI", "FR", "DE", "IE", "IT", "JP", "NL", "NO", "ES", "SE", "CH", "UK", "US",
+        "n_of_countries": 17
     },
     "further_data_characteristics": {
-        "panel": false,
-        "start": "01-1971",
-        "end": "12-2012",
+        "panel": true,
+        "start": "Q1-1986",
+        "end": "Q4-2006",
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": true,
+        "comprice": false,
         "outpgap": false,
-        "find": false,
+        "find": true,
         "eglob": false,
         "cbind": false,
         "fexch": false,
@@ -82,7 +82,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

@@ -1,20 +1,20 @@
 {
     "general": {
-        "key": "XC8AEBJE",
+        "key": "SB346SWH",
         "rid1": "ph",
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": 3,
-        "page": 520,
+        "figure": 2,
+        "page": 25,
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
-        "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
-        "conf": "90",
-        "main": "gdp emp",
+        "inttype": "short_term_interest",
+        "size": "92bp",
+        "dep": "log_ip log_cpi",
+        "conf": "1_SE",
+        "main": "gdp  inflation",
         "prefer": true
     },
     "identification_strategy": {
@@ -52,21 +52,21 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": "US",
+        "list_of_countries": "IT",
         "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1971",
-        "end": "12-2012",
+        "start": "Q1-1980",
+        "end": "Q4-2002",
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": true,
+        "comprice": false,
         "outpgap": false,
         "find": false,
         "eglob": false,
@@ -74,7 +74,7 @@
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": false,
+        "fx": true,
         "lrir": false
     },
     "econometric_details": {
@@ -82,7 +82,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

@@ -1,20 +1,20 @@
 {
     "general": {
-        "key": "XC8AEBJE",
+        "key": "R9CN8EVZ",
         "rid1": "ph",
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": 3,
-        "page": 520,
+        "figure": 1,
+        "page": 25,
         "irf": true
     },
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
-        "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
+        "size": "25bp",
+        "dep": "logdiff_ip logdiff_cpi",
         "conf": "90",
-        "main": "gdp emp",
+        "main": "inflation",
         "prefer": true
     },
     "identification_strategy": {
@@ -61,8 +61,16 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1971",
-        "end": "12-2012",
+        "start": {
+                "model_1": "01-1966",
+                "model_2": "01-1966",
+                "model_3": "01-1983"
+        },
+        "end": {
+                "model_1": "12-2000",
+                "model_2": "06-1979",
+                "model_3": "12-2000"
+        },
         "samplesize": "null"
     },
     "control_variables": {

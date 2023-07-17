@@ -17,8 +17,8 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "log_m_pribor",
-        "size": "1%",
+        "inttype": "lev_a_pribor",
+        "size": "40bp",
         "axis_trans": false,
         "dep": "log_m_rgdp logdiff_m_cpi",
         "conf": "1_SE",

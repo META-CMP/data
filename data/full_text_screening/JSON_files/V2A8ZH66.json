@@ -66,7 +66,8 @@
                 "model_57": 328,
                 "model_58": 328
                 },
-        "irf": false
+        "irf": false,
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "overnight_lending",

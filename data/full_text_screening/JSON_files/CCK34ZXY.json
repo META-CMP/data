@@ -1,0 +1,109 @@
+{
+    "general": {
+        "key": "CCK34ZXY",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "quality_concern: output does not effect monetary policy contemporaneously but monetary policy effects output within the same period",
+        "model_notes": "null",
+        "figure": {
+                "model_1": 3,
+                "model_2": 5,
+                "model_3": 7,
+                "model_4": 9,
+                "model_5": 11
+                },
+        "page": {
+                "model_1": 16,
+                "model_2": 17,
+                "model_3": 18,
+                "model_4": 19,
+                "model_5": 21
+                },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "log_a_fed_funds",
+        "size": "1%",
+        "axis_trans": "y*100",
+        "dep": {
+                "model_1": "log_q_rgdp",
+                "model_2": "log_q_rgdp",
+                "model_3": "log_q_rgdp log_q_cpi",
+                "model_4": "log_q_rgdp",
+                "model_5": "log_q_rgdp log_q_cpi"
+                },
+        "conf": "90",
+        "main": "gdp",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1970",
+        "end": "Q1-2020",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

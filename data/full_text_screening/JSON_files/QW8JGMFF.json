@@ -95,7 +95,7 @@
                 "model_3": "Q3-1979",
                 "model_4": "Q2-2008"
                 },
-        "samplesize": false
+        "samplesize": "null"
     },
     "control_variables": {
         "comprice": false,

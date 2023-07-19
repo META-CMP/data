@@ -6,18 +6,16 @@
         "study_notes": "quality_concern: output does not effect monetary policy contemporaneously but monetary policy effects output within the same period",
         "model_notes": "null",
         "figure": {
-                "model_1": 3,
-                "model_2": 5,
-                "model_3": 7,
-                "model_4": 9,
-                "model_5": 11
+                "model_1": 5,
+                "model_2": 7,
+                "model_3": 9,
+                "model_4": 11
                 },
         "page": {
-                "model_1": 16,
-                "model_2": 17,
-                "model_3": 18,
-                "model_4": 19,
-                "model_5": 21
+                "model_1": 17,
+                "model_2": 18,
+                "model_3": 19,
+                "model_4": 21
                 },
         "irf": true,
         "cum": false
@@ -28,10 +26,9 @@
         "axis_trans": "y*100",
         "dep": {
                 "model_1": "log_q_rgdp",
-                "model_2": "log_q_rgdp",
-                "model_3": "log_q_rgdp log_q_cpi",
-                "model_4": "log_q_rgdp",
-                "model_5": "log_q_rgdp log_q_cpi"
+                "model_2": "log_q_rgdp log_q_cpi",
+                "model_3": "log_q_rgdp",
+                "model_4": "log_q_rgdp log_q_cpi"
                 },
         "conf": "90",
         "main": "gdp",

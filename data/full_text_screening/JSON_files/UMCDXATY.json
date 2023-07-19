@@ -1,9 +1,9 @@
 {
     "general": {
-        "key": "YUGBJIEK",
+        "key": "UMCDXATY",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "quality_concern: no information if real or nominal IP is used. quality_concern: talks about percentage change in the interest rate even though it should be pp change. quality_concern: names the reaction of industrial production in the IRF output gap. Only the third paper of the thesis is relevant",
+        "study_notes": "quality_concern: no information if real or nominal IP is used. quality_concern: talks about percentage change in the interest rate even though it should be pp change. quality_concern: names the reaction of industrial production in the IRF output gap",
         "model_notes": "null",
         "figure":  {
                 "model_1": 3,
@@ -12,12 +12,13 @@
                 "model_4": 8
         },
         "page": {
-                "model_1": 121,
-                "model_2": 122,
-                "model_3": 127,
-                "model_4": 128
+                "model_1": 17,
+                "model_2": 18,
+                "model_3": 25,
+                "model_4": 27
         },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": {

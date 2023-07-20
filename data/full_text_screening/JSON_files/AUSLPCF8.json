@@ -7,12 +7,14 @@
         "model_notes": "null",
         "figure": 4,
         "page": 13,
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
+        "inttype": "lev_a_fed_funds",
         "size": "67bp",
-        "dep": "logdiff_rgap",
+        "axis_trans": false,
+        "dep": "logdiff_a_rgap logdiff_a_deflator",
         "conf": "95",
         "main": "gdp  inflation",
         "prefer": true
@@ -78,6 +80,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

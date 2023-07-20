@@ -3,16 +3,18 @@
         "key": "VQT8R3WD",
         "rid1": "ph",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "TVAR; therefore, start and end period are the same; samplesize calculated from the information given in the paper.",
         "model_notes": "null",
         "figure": "2.12",
         "page": 28,
-        "irf": true
+        "irf": true,
+        "cum": true
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
+        "inttype": "lev_a_fed_funds",
         "size": "100bp",
-        "dep": "gr_cpi",
+        "axis_trans": false,
+        "dep": "gr_a_cpi",
         "conf": "68",
         "main": "gdp  emp  inflation  other",
         "prefer": true
@@ -31,12 +33,12 @@
         "idother": false
     },
     "estimation_method": {
-        "var": true,
+        "var": false,
         "lp": false,
         "vecm": false,
         "dyn_ols": "false",
         "fvar": false,
-        "tvar": false,
+        "tvar": true,
         "gvar": false,
         "bayes": false,
         "dsge": false,
@@ -61,9 +63,9 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "Q4-1971",
-        "end": "Q4-2018",
-        "samplesize": 190
+        "start": "Q4-2007",
+        "end": "Q4-2007",
+        "samplesize": 192
     },
     "control_variables": {
         "comprice": false,
@@ -78,6 +80,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": false,
         "decomposition": false
     },

@@ -29,33 +29,35 @@
                 "model_9": 23,
                 "model_10": 23
         },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": {
-                "model_1": "3_month_euribor",
-                "model_2": "shadow_rate",
-                "model_3": "3_month_euribor,
-                "model_4": "shadow_rate",
-                "model_5": "3_month_euribor,
-                "model_6": "shadow_rate",
-                "model_7": "3_month_euribor,
-                "model_8": "shadow_rate",
-                "model_9": "3_month_euribor,
-                "model_10": "shadow_rate"
+                "model_1": "lev_a_3_month_euribor",
+                "model_2": "lev_a_shadow_rate",
+                "model_3": "lev_a_3_month_euribor",
+                "model_4": "lev_a_shadow_rate",
+                "model_5": "lev_a_3_month_euribor",
+                "model_6": "lev_a_shadow_rate",
+                "model_7": "lev_a_3_month_euribor",
+                "model_8": "lev_a_shadow_rate",
+                "model_9": "lev_a_3_month_euribor",
+                "model_10": "lev_a_shadow_rate"
         },
         "size": "100bp",
-        "dep": "log_gdp log_deflator",{
-                "model_1": "log_gdp log_deflator",
-                "model_2": "log_gdp log_deflator",
-                "model_3": "log_gdp log_emp log_deflator",
-                "model_4": "log_gdp log_emp log_deflator",
-                "model_5": "log_gdp log_deflator",
-                "model_6": "log_gdp log_deflator",
-                "model_7": "log_gdp log_deflator",
-                "model_8": "log_gdp log_deflator",
-                "model_7": "log_gdp log_deflator",
-                "model_8": "log_gdp log_deflator"
+        "axis_trans": "y*100",
+        "dep": {
+                "model_1": "log_a_gdp log_a_deflator",
+                "model_2": "log_a_gdp log_a_deflator",
+                "model_3": "log_a_gdp log_a_emp log_a_deflator",
+                "model_4": "log_a_gdp log_a_emp log_a_deflator",
+                "model_5": "log_a_gdp log_a_deflator",
+                "model_6": "log_a_gdp log_a_deflator",
+                "model_7": "log_a_gdp log_a_deflator",
+                "model_8": "log_a_gdp log_a_deflator",
+                "model_7": "log_a_gdp log_a_deflator",
+                "model_8": "log_a_gdp log_a_deflator"
         },
         "conf": "90",
         "main": "other",
@@ -70,7 +72,7 @@
                 "model_8": false,
                 "model_7": false,
                 "model_8": false
-        },
+        }
     },
     "identification_strategy": {
         "iv": false,
@@ -111,7 +113,7 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": "AT", "BE", "FI", "FR", "DE", "GR", "IT", "NL", "PT", "ES",
+        "list_of_countries": "AT BE FI FR DE GR IT NL PT ES",
         "n_of_countries": 10
     },
     "further_data_characteristics": {
@@ -133,6 +135,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": {
                 "model_1": false,
                 "model_2": true,

@@ -23,22 +23,24 @@
                 "model_5": 39,
                 "model_6": 40,
                 "model_7": 41,
-                "model_7": 42
+                "model_8": 42
         },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "short_term_interest",
+        "inttype": "lev_a_short_term_interest",
         "size": "100bp",
+        "axis_trans": "y*100",
         "dep": {
-                "model_1": "log_ip log_CPI",
-                "model_2": "log_ip",
-                "model_3": "log_ip",
-                "model_4": "log_ip",
-                "model_5": "log_ip",
-                "model_6": "log_ip log_CPI",
-                "model_7": "log_ip log_CPI",
-                "model_8": "log_ip log_CPI"
+                "model_1": "log_a_ip log_a_cpi",
+                "model_2": "log_a_ip",
+                "model_3": "log_a_ip",
+                "model_4": "log_a_cpi",
+                "model_5": "log_a_cpi",
+                "model_6": "log_a_ip log_a_cpi",
+                "model_7": "log_a_ip log_a_cpi",
+                "model_8": "log_a_ip"
         },
         "conf": "95",
         "main": "gdp inflation",
@@ -150,6 +152,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

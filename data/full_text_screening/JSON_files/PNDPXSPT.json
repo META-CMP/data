@@ -15,12 +15,14 @@
                 "model_2": 30,
                 "model_3": 48
         },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "bank_call",
-        "size": "59",
-        "dep": "log_gdp log_cpi",
+        "inttype": "lev_a_bank_call",
+        "size": "59bp",
+        "axis_trans": "y*(-1)",
+        "dep": "log_a_gdp log_a_cpi",
         "conf": "90",
         "main": "gdp  inflation",
         "prefer": {
@@ -169,6 +171,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

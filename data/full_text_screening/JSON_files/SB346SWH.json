@@ -7,12 +7,14 @@
         "model_notes": "null",
         "figure": 2,
         "page": 25,
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "short_term_interest",
+        "inttype": "lev_a_short_term_interest",
         "size": "92bp",
-        "dep": "log_ip log_cpi",
+        "axis_trans": "y*100",
+        "dep": "log_a_ip log_a_cpi",
         "conf": "1_SE",
         "main": "gdp  inflation",
         "prefer": true
@@ -78,6 +80,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

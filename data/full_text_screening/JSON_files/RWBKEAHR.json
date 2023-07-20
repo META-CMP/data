@@ -21,17 +21,19 @@
                 "model_5": 68,
                 "model_6": 69
         },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "3_month_euribor",
+        "inttype": "lev_a_3_month_euribor",
         "size": "22bp",
+        "axis_trans": false,
         "dep": {
-                "model_1": "logdiff_gdp logdiff_deflator",
-                "model_2": "logdiff_gdp logdiff_deflator",
+                "model_1": "logdiff_a_gdp logdiff_a_deflator",
+                "model_2": "logdiff_a_gdp logdiff_a_deflator",
                 "model_3": "logdiff_empl",
-                "model_4": "logdiff_gdp logdiff_deflator",
-                "model_5": "logdiff_gdp logdiff_deflator",
+                "model_4": "logdiff_a_gdp logdiff_a_deflator",
+                "model_5": "logdiff_a_gdp logdiff_a_deflator",
                 "model_6": "logdiff_empl"
         },
         "conf": "68 ",
@@ -106,6 +108,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": false,
         "convent": true,
         "decomposition": false
     },

@@ -70,8 +70,8 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_interest",
-        "size": "100bp",
-        "axis_trans": "y*(-1)",
+        "size": "-100bp",
+        "axis_trans": false,
         "dep": {
                 "model_1": "logdiff_a_ip logdiff_a_cpi diff_a_une",
                 "model_2": "logdiff_a_ip",
@@ -167,7 +167,7 @@
         "scr": false,
         "dcr": false,
         "hike": false,
-        "cut": true
+        "cut": false
     },
     "data_frequency": {
         "annual": false,

@@ -11,7 +11,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
-        "size": "null",
+        "size": "24bp",
         "dep": "logdiff_rgdp logdiff_deflator",
         "conf": "80",
         "main": "gdp inflation",

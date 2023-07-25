@@ -37,7 +37,7 @@
                 "model_2": false,
                 "model_3": false,
                 "model_4": false
-        },     
+        }
     }, 
     "identification_strategy": { 
         "iv": true, 

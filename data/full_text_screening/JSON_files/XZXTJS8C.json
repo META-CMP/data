@@ -63,7 +63,7 @@
         "panel": false,
         "start": "Q1-1966",
         "end": "Q4-2004",
-        "samplesize": null
+        "samplesize": "null"
     },
     "control_variables": {
         "comprice": false,

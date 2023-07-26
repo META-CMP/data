@@ -13,7 +13,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_discount",
         "size": "1SD",
-        "axis_trans": false,
+        "axis_trans": "lev_a_discount_y/100",
         "dep": "log_q_rgdp log_q_cpi",
         "conf": "95",
         "main": "gdp inflation",

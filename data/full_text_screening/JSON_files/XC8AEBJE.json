@@ -3,16 +3,18 @@
         "key": "XC8AEBJE",
         "rid1": "ph",
         "rid2": "me",
-        "study_notes": "null",
+        "study_notes": "quality_concern: no information if real or nominal IP is used.",
         "model_notes": "null",
         "figure": 3,
         "page": 520,
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
+        "inttype": "lev_a_fed_funds",
         "size": "52bp",
-        "dep": "log_rip lev_une_rate log_cpi",
+        "axis_trans": "lev_a_fed_funds_y/100",
+        "dep": "log_m_ip lev_m_une_rate log_m_cpi",
         "conf": "90",
         "main": "gdp emp",
         "prefer": true
@@ -78,6 +80,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

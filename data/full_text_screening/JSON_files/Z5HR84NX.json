@@ -1,0 +1,106 @@
+{
+    "general": {
+        "key": "Z5HR84NX",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "size: The shock occurs only in the first period and imitates an increase of the per anno interest rate of 12.68 % which corresponds to an average increase of the interest rate of around 40 basis points.",
+        "model_notes": "null",
+        "figure": {
+                "model_1": 2,
+                "model_2": 3
+                },
+        "page": {
+                "model_1": 43,
+                "model_2": 44
+                },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_pribor",
+        "size": "40bp",
+        "axis_trans": false,
+        "dep": "log_m_rgdp logdiff_m_cpi",
+        "conf": "1_SE",
+        "main": "gdp  inflation",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+                "model_1": true,
+                "model_2": false
+                },
+        "svar": {
+                "model_1": false,
+                "model_2": true
+                },
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": {
+                "model_1": false,
+                "model_2": true
+                },
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "CZ",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1999",
+        "end": "09-2011",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

@@ -1,0 +1,140 @@
+{
+    "general": {
+        "key": "YGXXMLZW",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+                "model_1": 3,
+                "model_2": 6,
+                "model_3": 6,
+                "model_4": 8
+        },
+        "page": {
+                "model_1": 4,
+                "model_2": 8,
+                "model_3": 8,
+                "model_4": 11
+        },
+        "irf": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "-100bp",
+        "axis_trans": false,
+        "dep": "lev_q_une_rate",
+        "conf": "68",
+        "main": "emp",
+        "prefer": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false
+        },
+        "nr": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false
+        },
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true
+        },
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": true,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": false
+        },
+        "upr": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false
+        },
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q2-1969",
+        "end": "Q4–2015",
+        "samplesize": false
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false
+        },
+        "convent": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false
+        },
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

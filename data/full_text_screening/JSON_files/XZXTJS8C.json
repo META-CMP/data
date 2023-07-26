@@ -7,12 +7,14 @@
         "model_notes": "null",
         "figure": 6,
         "page": 601,
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
+        "inttype": "lev_a_fed_funds",
         "size": "24bp",
-        "dep": "logdiff_rgdp logdiff_deflator",
+        "axis_trans": false,
+        "dep": "logdiff_q_rgdp logdiff_q_deflator",
         "conf": "80",
         "main": "gdp inflation",
         "prefer": true
@@ -56,8 +58,8 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": 1,
-        "n_of_countries": "US"
+        "list_of_countries": "US",
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
@@ -78,6 +80,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

@@ -1,0 +1,126 @@
+{
+    "general": {
+        "key": "UMCDXATY",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "quality_concern: no information if real or nominal IP is used. quality_concern: talks about percentage change in the interest rate even though it should be pp change. quality_concern: names the reaction of industrial production in the IRF output gap",
+        "model_notes": "null",
+        "figure":  {
+                "model_1": 3,
+                "model_2": 4,
+                "model_3": 7,
+                "model_4": 8
+        },
+        "page": {
+                "model_1": 17,
+                "model_2": 18,
+                "model_3": 25,
+                "model_4": 27
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+                "model_1": "lev_a_7_day_repo",
+                "model_2": "lev_a_1_year_lending",
+                "model_3": "lev_a_7_day_repo",
+                "model_4": "lev_a_1_year_lending"
+        },
+        "size": "100bp",
+        "axis_trans": false,
+        "dep": "gr_a_ip gr_a_cpi",
+        "conf": "95",
+        "main": "other",
+        "prefer": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false
+        },
+        "svar": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true
+        },
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true
+        },
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "CN",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "10-2003",
+        "end": "12-2016",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

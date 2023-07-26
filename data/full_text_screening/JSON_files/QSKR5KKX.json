@@ -16,11 +16,12 @@
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "3_month_gensaki",
+        "inttype": "lev_a_3_month_gensaki",
         "size": "100bp",
+        "axis_trans": false,
         "dep": {
-                "model_1": "logdiff_rgap logdiff_deflator logdiff_wpi",
-                "model_2": "logdiff_rgap logdiff_cpi logdiff_wpi"
+                "model_1": "logdiff_q_rgap logdiff_q_deflator logdiff_q_wpi",
+                "model_2": "logdiff_q_rgap logdiff_q_cpi logdiff_q_wpi"
         },
         "conf": "90",
         "main": "inflation",
@@ -28,6 +29,7 @@
     },
     "identification_strategy": {
         "iv": false,
+        "forecast_based": false,
         "nr": false,
         "event": false,
         "chol": true,
@@ -86,7 +88,9 @@
         "lrir": false
     },
     "econometric_details": {
-        "convent": true
+        "pure_rate_shock": false,
+        "convent": true,
+        "decomposition": false
     },
     "publication_characteristics": {
         "cbanker": false

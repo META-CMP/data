@@ -1,0 +1,147 @@
+{ 
+    "general": { 
+        "key": "UZCDYDYB", 
+        "rid1": "ph", 
+        "rid2": "null", 
+        "study_notes": "null", 
+        "model_notes": "null", 
+        "figure": {
+                "model_1": 10,
+                "model_2": 11,
+                "model_3": 11,
+                "model_4": 11,
+                "model_5": 11,
+                "model_6": 11
+                
+        },   
+        "page": {
+                "model_1": 37,
+                "model_2": 38,
+                "model_3": 38,
+                "model_4": 38,
+                "model_5": 38,
+                "model_6": 38
+        },    
+        "irf": true,
+        "cum": false
+    }, 
+    "impulse_and_response_variables": { 
+        "inttype ": {
+                "model_1": "lev_a_reserve_requirement_ratio",
+                "model_2": "lev_a_12_month_lending",
+                "model_3": "lev_a_7_day_repo",
+                "model_4": "lev_a_reserve_requirement_ratio",
+                "model_5": "lev_a_12_month_lending",
+                "model_6": "lev_a_7_day_repo"
+        }, 
+        "size": "100bp", 
+        "axis_trans": false, 
+        "dep ": "gr_a_ip gr_a_cpi", 
+        "conf": "68", 
+        "main": "gdp  inflation  other", 
+        "prefer":  {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }
+    }, 
+    "identification_strategy": { 
+        "iv": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        },
+        "forecast_based": false, 
+        "nr": false, 
+        "event": true, 
+        "chol": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true
+        },
+        "svar": false, 
+        "signr": false, 
+        "hf": false, 
+        "heteroskedas": false, 
+        "longrun": false, 
+        "idother": false 
+    }, 
+    "estimation_method": { 
+        "var": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true
+        }, 
+        "lp": false, 
+        "vecm": false, 
+        "dyn_ols": "false", 
+        "fvar": false, 
+        "tvar": false, 
+        "gvar": false, 
+        "bayes": false, 
+        "dsge": false, 
+        "varother": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        } 
+    }, 
+    "regime_dependence": { 
+        "lor": false, 
+        "upr": false, 
+        "scr": false, 
+        "dcr": false, 
+        "hike": false, 
+        "cut": false 
+    }, 
+    "data_frequency": { 
+        "annual": false, 
+        "quarter": false, 
+        "month": true 
+    }, 
+    "country_composition": { 
+        "list_of_countries": "CN", 
+        "n_of_countries": 1
+    }, 
+    "further_data_characteristics": { 
+        "panel": false, 
+        "start": "01-2004", 
+        "end": "06-2016", 
+        "samplesize": "null" 
+    }, 
+    "control_variables": { 
+        "comprice": true, 
+        "outpgap": false, 
+        "find": false, 
+        "eglob": false, 
+        "cbind": false, 
+        "fexch": false, 
+        "inflexp": false, 
+        "foreignir": true, 
+        "fx": false, 
+        "lrir": false 
+    }, 
+    "econometric_details": { 
+        "pure_rate_shock": true, 
+        "convent": true, 
+        "decomposition": false 
+    }, 
+    "publication_characteristics": { 
+        "cbanker": true 
+    } 
+} 

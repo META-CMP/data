@@ -38,3 +38,10 @@ df<-read.csv("dup_free_title2.csv")
 
 # Screen duplicates in the "revtools" app for the xlsx files using author matches:
 screen_duplicates(as.data.frame(df))
+
+
+df<-read.csv("duplicate_free_final.csv")
+
+test<-df %>% filter(grepl("Braun",author, fixed = TRUE))
+
+

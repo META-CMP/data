@@ -1,0 +1,115 @@
+{ 
+    "general": { 
+        "key": "9QQCIRDD", 
+        "rid1": "ph", 
+        "rid2": "null", 
+        "study_notes": "null", 
+        "model_notes": "models 2 and 4 use information-robust instruments, coded as decomposition=1", 
+        "figure": {
+                "model_1": 7,
+                "model_2": 7,
+                "model_3": 7,
+                "model_4": 7
+        },   
+        "page": {
+                "model_1": 379,
+                "model_2": 379,
+                "model_3": 379,
+                "model_4": 379
+        },   
+        "irf": true,
+        "cum": false
+    }, 
+    "impulse_and_response_variables": { 
+        "inttype ": "fed_funds", 
+        "size": "100bp", 
+        "axis_trans": false, 
+        "dep ": "log_a_ip log_a_cpi log_a_une", 
+        "conf": "90", 
+        "main": "gdp  emp  inflation", 
+        "prefer": true 
+    }, 
+    "identification_strategy": { 
+        "iv": true, 
+        "forecast_based": true, 
+        "nr": false, 
+        "event": false, 
+        "chol": false, 
+        "svar": false, 
+        "signr": false, 
+        "hf": false, 
+        "heteroskedas": false, 
+        "longrun": false, 
+        "idother": false 
+    }, 
+    "estimation_method": { 
+        "var": false, 
+        "lp": false, 
+        "vecm": false, 
+        "dyn_ols": "false", 
+        "fvar": false, 
+        "tvar": false, 
+        "gvar": false, 
+        "bayes": true, 
+        "dsge": false, 
+        "varother": false 
+    }, 
+    "regime_dependence": { 
+        "lor": false, 
+        "upr": false, 
+        "scr": false, 
+        "dcr": false, 
+        "hike": false, 
+        "cut": false 
+    }, 
+    "data_frequency": { 
+        "annual": false, 
+        "quarter": false, 
+        "month": true 
+    }, 
+    "country_composition": { 
+        "list_of_countries": "US", 
+        "n_of_countries": 1 
+    }, 
+    "further_data_characteristics": { 
+        "panel": false, 
+        "start": {
+                "model_1": "01-1979",
+                "model_2": "07-2003",
+                "model_3": "01-1979",
+                "model_4": "07-2003"
+        }, 
+        "end": {
+                "model_1": "08-2003",
+                "model_2": "12-2019",
+                "model_3": "08-2003",
+                "model_4": "12-2019"
+        },  
+        "samplesize": "null" 
+    }, 
+    "control_variables": { 
+        "comprice": true, 
+        "outpgap": false, 
+        "find": false, 
+        "eglob": false, 
+        "cbind": false, 
+        "fexch": false, 
+        "inflexp": false, 
+        "foreignir": false, 
+        "fx": false, 
+        "lrir": false 
+    }, 
+    "econometric_details": { 
+        "pure_rate_shock": true, 
+        "convent": false, 
+        "decomposition": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true
+        },  
+    }, 
+    "publication_characteristics": { 
+        "cbanker": false 
+    } 
+} 

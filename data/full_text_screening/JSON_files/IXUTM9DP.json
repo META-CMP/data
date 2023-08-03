@@ -1,0 +1,126 @@
+{ 
+    "general": { 
+        "key": "IXUTM9DP", 
+        "rid1": "ph", 
+        "rid2": "null", 
+        "study_notes": "null", 
+        "model_notes": "null", 
+        "figure": {
+                "model_1": 1,
+                "model_2": 2,
+                "model_3": 3
+        },   
+        "page": {
+                "model_1": 802,
+                "model_2": 804,
+                "model_3": 806
+        },   
+        "irf": true,
+        "cum": false
+    }, 
+    "impulse_and_response_variables": { 
+        "inttype ": "lev_a_call_rate", 
+        "size": "25bp", 
+        "axis_trans": false, 
+        "dep ": {
+                "model_1": "log_a_ip log_a_cpi",
+                "model_2": "logdiff_a_ip logdiff_a_cpi",
+                "model_3": "logdiff_a_ip logdiff_a_cpi"
+        }, 
+        "conf": "1_SE", 
+        "main": "gdp  other", 
+        "prefer": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false
+        } 
+    }, 
+    "identification_strategy": { 
+        "iv": false, 
+        "forecast_based": false, 
+        "nr": false, 
+        "event": false, 
+        "chol": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true
+        },  
+        "svar": false, 
+        "signr": false, 
+        "hf": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false
+        }, 
+        "heteroskedas": false, 
+        "longrun": false, 
+        "idother": false 
+    }, 
+    "estimation_method": { 
+        "var": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true
+        }, 
+        "lp": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false
+        },  
+        "vecm": false, 
+        "dyn_ols": "false", 
+        "fvar": false, 
+        "tvar": false, 
+        "gvar": false, 
+        "bayes": false, 
+        "dsge": false, 
+        "varother": false 
+    }, 
+    "regime_dependence": { 
+        "lor": false, 
+        "upr": false, 
+        "scr": false, 
+        "dcr": false, 
+        "hike": false, 
+        "cut": false 
+    }, 
+    "data_frequency": { 
+        "annual": false, 
+        "quarter": false, 
+        "month": true 
+    }, 
+    "country_composition": { 
+        "list_of_countries": "JP", 
+        "n_of_countries": 1 
+    }, 
+    "further_data_characteristics": { 
+        "panel": false, 
+        "start": "09-1990", 
+        "end": "03-2001", 
+        "samplesize": "null" 
+    }, 
+    "control_variables": { 
+        "comprice": false, 
+        "outpgap": false, 
+        "find": false, 
+        "eglob": false, 
+        "cbind": false, 
+        "fexch": false, 
+        "inflexp": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true
+        },    
+        "foreignir": false, 
+        "fx": false, 
+        "lrir": false 
+    }, 
+    "econometric_details": { 
+        "pure_rate_shock": true, 
+        "convent": false, 
+        "decomposition": false 
+    }, 
+    "publication_characteristics": { 
+        "cbanker": false
+    } 
+} 

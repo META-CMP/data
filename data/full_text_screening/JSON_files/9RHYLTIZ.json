@@ -1,0 +1,278 @@
+{ 
+    "general": { 
+        "key": "9RHYLTIZ", 
+        "rid1": "ph", 
+        "rid2": "null", 
+        "study_notes": "null", 
+        "model_notes": "null", 
+        "figure": {
+                "model_1": 5,
+                "model_2": 6,
+                "model_3": 7,
+                "model_4": 8,
+                "model_5": 9,
+                "model_6": 10,
+                "model_7": 11,
+                "model_8": 12,
+                "model_9": 13,
+                "model_10": 14
+        },      
+        "page": {
+                "model_1": 26,
+                "model_2": 26,
+                "model_3": 27,
+                "model_4": 27,
+                "model_5": 28,
+                "model_6": 28,
+                "model_7": 29,
+                "model_8": 29,
+                "model_9": 30,
+                "model_10": 30
+        },       
+        "irf": true,
+        "cum": false
+    }, 
+    "impulse_and_response_variables": { 
+        "inttype ": {
+                "model_1": "lev_a_bank_rate",
+                "model_2": "lev_a_bank_rate",
+                "model_3": "lev_a_12_month_bond",
+                "model_4": "lev_a_bank_rate",
+                "model_5": "lev_a_bank_rate",
+                "model_6": "lev_a_bank_rate",
+                "model_7": "lev_a_bank_rate",
+                "model_8": "lev_a_12_month_bond",
+                "model_9": "lev_a_12_month_bond",
+                "model_10": "lev_a_12_month_bond"
+        }, 
+        "size": {
+                "model_1": "59bp",
+                "model_2": "87bp",
+                "model_3": "52bp",
+                "model_4": "49bp",
+                "model_5": "49bp",
+                "model_6": "59bp",
+                "model_7": "87bp",
+                "model_8": "52bp",
+                "model_9": "25bp",
+                "model_10": "25bp"
+        },   
+        "axis_trans": false, 
+        "dep ": {
+                "model_1": "log_a_rgdp log_a_deflator",
+                "model_2": "log_a_rgdp log_a_deflator",
+                "model_3": "log_a_rgdp log_a_deflator",
+                "model_4": "log_a_rgdp log_a_deflator",
+                "model_5": "log_a_rgdp log_a_deflator",
+                "model_6": "log_a_rgdp log_a_deflator",
+                "model_7": "log_a_rgdp log_a_deflator",
+                "model_8": "log_a_rgdp log_a_deflator",
+                "model_9": "lev_a_une log_a_cpi",
+                "model_10": "lev_a_une log_a_cpi"
+        }, 
+        "conf": {
+                "model_1": "95",
+                "model_2": "95",
+                "model_3": "95",
+                "model_4": "95",
+                "model_5": "95",
+                "model_6": "68",
+                "model_7": "68",
+                "model_8": "68",
+                "model_9": "95",
+                "model_10": "95"
+        },      
+        "main": "other", 
+        "prefer": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false
+        } 
+    }, 
+    "identification_strategy": { 
+        "iv": false, 
+        "forecast_based": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": true,
+                "model_10": true
+        },
+        "nr": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false
+        },    
+        "event": false, 
+        "chol": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false
+        },    
+        "svar": false, 
+        "signr": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true,
+                "model_9": false,
+                "model_10": false
+        },    
+        "hf": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": true,
+                "model_10": true
+        },   
+        "heteroskedas": false, 
+        "longrun": false, 
+        "idother": false 
+    }, 
+    "estimation_method": { 
+        "var": true, 
+        "lp": false, 
+        "vecm": false, 
+        "dyn_ols": "false", 
+        "fvar": false, 
+        "tvar": false, 
+        "gvar": false, 
+        "bayes": false, 
+        "dsge": false, 
+        "varother": false 
+    }, 
+    "regime_dependence": { 
+        "lor": false, 
+        "upr": false, 
+        "scr": false, 
+        "dcr": false, 
+        "hike": false, 
+        "cut": false 
+    }, 
+    "data_frequency": { 
+        "annual": false, 
+        "quarter": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true,
+                "model_9": false,
+                "model_10": false
+        },    
+        "month": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": true,
+                "model_10": true
+        }
+    }, 
+    "country_composition": { 
+        "list_of_countries": "UK", 
+        "n_of_countries": 1 
+    }, 
+    "further_data_characteristics": { 
+        "panel": false, 
+        "start": {
+                "model_1": "Q1-1983",
+                "model_2": "Q1-1983",
+                "model_3": "Q1-1983",
+                "model_4": "Q1-1983",
+                "model_5": "Q1-1983",
+                "model_6": "Q1-1983",
+                "model_7": "Q1-1983",
+                "model_8": "Q1-1983",
+                "model_9": "01-1993",
+                "model_10": "01-1993"
+        },    
+        "end": {
+                "model_1": "Q4-2008",
+                "model_2": "Q4-2008",
+                "model_3": "Q4-2015",
+                "model_4": "Q4-2007",
+                "model_5": "Q4-2007",
+                "model_6": "Q4-2008",
+                "model_7": "Q4-2008",
+                "model_8": "Q4-2015",
+                "model_9": "12-2008",
+                "model_10": "06-2015"
+        },    
+        "samplesize": "null" 
+    }, 
+    "control_variables": { 
+        "comprice": true, 
+        "outpgap": false, 
+        "find": false, 
+        "eglob": false, 
+        "cbind": false, 
+        "fexch": false, 
+        "inflexp": false, 
+        "foreignir": false, 
+        "fx": false, 
+        "lrir": false 
+    }, 
+    "econometric_details": { 
+        "pure_rate_shock": true, 
+        "convent": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true,
+                "model_7": true,
+                "model_8": false,
+                "model_9": true,
+                "model_10": false
+                
+        }  
+        "decomposition": false 
+    }, 
+    "publication_characteristics": { 
+        "cbanker": false 
+    } 
+} 

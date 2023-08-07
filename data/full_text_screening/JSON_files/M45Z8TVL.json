@@ -1,23 +1,26 @@
 {
     "general": {
-        "key": "68ZTZG63",
+        "key": "M45Z8TVL",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "For the remaining models the shock size is unclear.",
-        "model_notes": "null",
-        "figure": "5.2",
-        "page": 27,
-        "irf": false,
-        "cum": true
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "regime: nominal interest rate are not almost zero",
+          "model_2": "regime: nominal interest rate are almost zero"
+          },
+        "figure": 2,
+        "page": 443,
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_interbank",
-        "size": "1SD",
-        "axis_trans": "y*100",
-        "dep": "log_m_rgdp log_m_cpi",
-        "conf": "2_SE",
+        "inttype": "lev_a_callrate",
+        "size": "null",
+        "axis_trans": false,
+        "dep": "log_m_ip log_m_cpi",
+        "conf": "80",
         "main": "gdp inflation",
-        "prefer": false
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,
@@ -58,17 +61,17 @@
         "month": true
     },
     "country_composition": {
-        "list_of_countries": "PE",
+        "list_of_countries": "JP",
         "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "04-1995",
-        "end": "12-2005",
+        "start": "01-1985",
+        "end": "12-2003",
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
         "find": false,
         "eglob": false,
@@ -76,7 +79,7 @@
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": true,
+        "fx": false,
         "lrir": false
     },
     "econometric_details": {

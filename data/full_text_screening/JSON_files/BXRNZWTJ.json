@@ -89,7 +89,7 @@
           "model_13": "1SD",
           "model_14": "1SD"
           },
-        "axis_trans": "null",
+        "axis_trans": false,
         "dep": {
           "model_1": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
           "model_2": "logdiff_q_rgdp",

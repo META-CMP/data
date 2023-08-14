@@ -3,10 +3,19 @@
         "key": "SE77RKD5",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "Responses of figure 4 are not extracted because only one minor variable changes.",
-        "model_notes": "null",
-        "figure": 3,
-        "page": 983,
+        "study_notes": "Responses of figure 4 result of only minor variable changes (residential investment instead of housing starts in the VAR).",
+        "model_notes": {
+          "model_1": "Housing Starts as endogenous variable",
+          "model_2": "Residential Investment as endogenous variable"
+          },
+        "figure": {
+          "model_1": 3,
+          "model_2": 4
+          },
+        "page": {
+          "model_1": 983,
+          "model_2": 984
+          },
         "irf": true,
         "cum": false
     },

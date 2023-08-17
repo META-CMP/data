@@ -1,0 +1,100 @@
+{
+    "general": {
+        "key": "SE77RKD5",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "Responses of figure 4 result of only minor variable changes (residential investment instead of housing starts in the VAR).",
+        "model_notes": {
+          "model_1": "Housing Starts as endogenous variable",
+          "model_2": "Residential Investment as endogenous variable"
+          },
+        "figure": {
+          "model_1": 3,
+          "model_2": 4
+          },
+        "page": {
+          "model_1": 983,
+          "model_2": 984
+          },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": "log_m_rgdp log_m_deflator",
+        "conf": "2_SE",
+        "main": "other",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1965",
+        "end": "12-2005",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

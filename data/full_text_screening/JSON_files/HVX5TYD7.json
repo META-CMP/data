@@ -1,0 +1,179 @@
+{
+    "general": {
+        "key": "HVX5TYD7",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "idother: Smets and Wouters (2007) monetary policy shocks are used as external instruments. Using the income Gini as inequality measure.",
+          "model_2": "idother: Smets and Wouters (2007) monetary policy shocks are used as external instruments. Using top and bottom 10% difference as inequality measure.",
+          "model_3": "idother: Smets and Wouters (2007) monetary policy shocks are used as external instruments. Using pre-tax income for inequaltiy measures",
+          "model_4": "idother: Smets and Wouters (2007) monetary policy shocks are used as external instruments. Using pre-tax income for inequaltiy measures and top and bottom 10% difference.",
+          "model_5": "idother: Smets and Wouters (2007) monetary policy shocks are used as external instruments",
+          "model_6": "idother: Smets and Wouters (2007) monetary policy shocks are used as external instruments",
+          "model_7": "null",
+          "model_8": "null",
+          "model_9": "dep: unemployment rate is not extracted because the effect size looks completely inconsistent with the transformation of the variable stated. idother: Smets and Wouters (2007) monetary policy shocks are used as external instruments",
+          "model_10": "idother: Smets and Wouters (2007) monetary policy shocks are used as external instruments"
+        },
+        "figure": {
+          "model_1": 1,
+          "model_2": 1,
+          "model_3": 4,
+          "model_4": 4,
+          "model_5": 5,
+          "model_6": 5,
+          "model_7": 6,
+          "model_8": 6,
+          "model_9": 7,
+          "model_10": 7
+        },
+        "page": {
+          "model_1": 26,
+          "model_2": 26,
+          "model_3": 37,
+          "model_4": 37,
+          "model_5": 38,
+          "model_6": 38,
+          "model_7": 39,
+          "model_8": 39,
+          "model_9": 40,
+          "model_10": 40
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "100bp",
+        "axis_trans": false,
+        "dep": {
+          "model_1": "gr_a_ip gr_a_cpi",
+          "model_2": "gr_a_ip gr_a_cpi",
+          "model_3": "gr_a_ip gr_a_cpi",
+          "model_4": "gr_a_ip gr_a_cpi",
+          "model_5": "gr_a_ip gr_a_cpi",
+          "model_6": "gr_a_ip gr_a_cpi",
+          "model_7": "gr_a_ip gr_a_cpi",
+          "model_8": "gr_a_ip gr_a_cpi",
+          "model_9": "gr_a_cpi",
+          "model_10": "gr_a_ip"
+        },
+        "conf": "68",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false,
+          "model_9": false,
+          "model_10": false
+        }
+    },
+    "identification_strategy": {
+        "iv": true,
+        "forecast_based": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": true,
+          "model_9": false,
+          "model_10": false
+        },
+        "nr": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": true,
+          "model_9": false,
+          "model_10": false
+        },
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": false,
+          "model_8": false,
+          "model_9": true,
+          "model_10": true
+        }
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": true,
+        "quarter": false,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "1967",
+        "end": "2007",
+        "samplesize": 41
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

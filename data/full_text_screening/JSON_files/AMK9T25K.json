@@ -37,8 +37,8 @@
                 "model_2": true,
                 "model_3": false,
                 "model_4": false
-        },    
-    }, 
+        }
+    },
     "identification_strategy": { 
         "iv": false, 
         "forecast_based": false, 

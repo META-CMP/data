@@ -1,0 +1,104 @@
+{ 
+    "general": { 
+        "key": "VF3XTYYQ", 
+        "rid1": "ph", 
+        "rid2": "null", 
+        "study_notes": "null", 
+        "model_notes": "null", 
+        "figure": {
+                "model_1": 5,
+                "model_2": 5,
+                "model_3": 5,
+                "model_4": 5,
+                "model_5": 5,
+                "model_6": 5
+        },   
+        "page": 123, 
+        "irf": true,
+        "cum": false
+    }, 
+    "impulse_and_response_variables": { 
+        "inttype": "lev_a_short_term_rate", 
+        "size": "-25bp", 
+        "axis_trans": false, 
+        "dep": "log_a_emp", 
+        "conf": "1_SE", 
+        "main": "emp", 
+        "prefer": true
+    }, 
+    "identification_strategy": { 
+        "iv": false, 
+        "forecast_based": false, 
+        "nr": false, 
+        "event": false, 
+        "chol": false, 
+        "svar": false, 
+        "signr": true, 
+        "hf": false, 
+        "heteroskedas": false, 
+        "longrun": false, 
+        "idother": false 
+    }, 
+    "estimation_method": { 
+        "var": true, 
+        "lp": false, 
+        "vecm": false, 
+        "dyn_ols": "false", 
+        "fvar": false, 
+        "tvar": false, 
+        "gvar": false, 
+        "bayes": false, 
+        "dsge": false, 
+        "varother": false 
+    }, 
+    "regime_dependence": { 
+        "lor": false, 
+        "upr": false, 
+        "scr": false, 
+        "dcr": false, 
+        "hike": false, 
+        "cut": false 
+    }, 
+    "data_frequency": { 
+        "annual": false, 
+        "quarter": true, 
+        "month": false 
+    }, 
+    "country_composition": { 
+        "list_of_countries": {
+                "model_1": "US",
+                "model_2": "CA"
+                "model_3": "KR",
+                "model_4": "SE",
+                "model_5": "CZ",
+                "model_6": "HU"
+        },    
+        "n_of_countries": 1
+    }, 
+    "further_data_characteristics": { 
+        "panel": false, 
+        "start": "Q1-1995", 
+        "end": "Q4-2015", 
+        "samplesize": "null" 
+    }, 
+    "control_variables": { 
+        "comprice": false, 
+        "outpgap": false, 
+        "find": false, 
+        "eglob": false, 
+        "cbind": false, 
+        "fexch": false, 
+        "inflexp": false, 
+        "foreignir": false, 
+        "fx": true, 
+        "lrir": false 
+    }, 
+    "econometric_details": { 
+        "pure_rate_shock": true, 
+        "convent": false, 
+        "decomposition": false 
+    }, 
+    "publication_characteristics": { 
+        "cbanker": false 
+    } 
+} 

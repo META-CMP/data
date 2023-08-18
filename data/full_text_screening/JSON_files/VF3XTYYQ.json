@@ -67,7 +67,7 @@
     "country_composition": { 
         "list_of_countries": {
                 "model_1": "US",
-                "model_2": "CA"
+                "model_2": "CA",
                 "model_3": "KR",
                 "model_4": "SE",
                 "model_5": "CZ",

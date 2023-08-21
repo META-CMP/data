@@ -11,10 +11,10 @@
         "cum": true
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_3_month_libor", 
+        "inttype": "lev_a_3_month_libor", 
         "size": "25bp", 
         "axis_trans": false, 
-        "dep ": "logdiff_a_cpi", 
+        "dep": "logdiff_a_cpi", 
         "conf": "80", 
         "main": "inflation", 
         "prefer": true 

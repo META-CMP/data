@@ -19,10 +19,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_short_term_rate", 
+        "inttype": "lev_a_short_term_rate", 
         "size": "50bp", 
         "axis_trans": false, 
-        "dep ": {
+        "dep": {
                 "model_1": "logdiff_a_rgdp",
                 "model_2": "logdiff_a_deflator logdiff_a_cpi logdiff_a_une",
                 "model_3": "logdiff_a_deflator logdiff_a_rgdp"

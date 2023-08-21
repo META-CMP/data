@@ -13,7 +13,7 @@
                 "model_5": "A3",
                 "model_6": "A5",
                 "model_7": "A6",
-                "model_8": "A7"
+                "model_8": "A7",
                 "model_9": "A8",
                 "model_10": "A9",
                 "model_11": "A10"
@@ -35,10 +35,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_shadow_rate", 
+        "inttype": "lev_a_shadow_rate", 
         "size": "-14bp", 
         "axis_trans": false, 
-        "dep ": {
+        "dep": {
                 "model_1": "log_a_rgdp log_a_cpi",
                 "model_2": "log_a_emp",
                 "model_3": "log_a_rgdp log_a_cpi",
@@ -65,7 +65,7 @@
                 "model_9": false,
                 "model_10": false,
                 "model_11": false
-        },      
+        }      
     }, 
     "identification_strategy": { 
         "iv": {

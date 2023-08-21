@@ -25,7 +25,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": {
+        "inttype": {
                 "model_1": "fed_funds",
                 "model_2": "fed_funds",
                 "model_3": "fed_funds",
@@ -35,7 +35,7 @@
         }, 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep ": "lev_a_une", 
+        "dep": "lev_a_une", 
         "conf": "68", 
         "main": "emp", 
         "prefer": {

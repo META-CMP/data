@@ -17,10 +17,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_shadow_rate", 
+        "inttype": "lev_a_shadow_rate", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep ": "lev_a_une gr_a_cpi", 
+        "dep": "lev_a_une gr_a_cpi", 
         "conf": "90", 
         "main": "other", 
         "prefer": {

@@ -11,10 +11,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_q_short_term_rate", 
+        "inttype": "lev_q_short_term_rate", 
         "size": "31bp", 
         "axis_trans": "log_q_rgdp*100", 
-        "dep ": "log_q_rgdp gr_q_cpi", 
+        "dep": "log_q_rgdp gr_q_cpi", 
         "conf": "95", 
         "main": "other", 
         "prefer": true
@@ -58,7 +58,7 @@
         "month": false 
     }, 
     "country_composition": { 
-        "list_of_countries": "AU"
+        "list_of_countries": "AU",
         "n_of_countries": 1 
     }, 
     "further_data_characteristics": { 

@@ -19,10 +19,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_fed_funds", 
+        "inttype": "lev_a_fed_funds", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep ": {
+        "dep": {
                 "model_1": "log_a_ip",
                 "model_2": "log_a_ppi",
                 "model_3": "log_a_ip log_a_ppi"
@@ -44,7 +44,7 @@
                 "model_1": false,
                 "model_2": false,
                 "model_3": true 
-        }  
+        }, 
         "svar": false, 
         "signr": false, 
         "hf": false, 

@@ -17,10 +17,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_q_fed_funds", 
+        "inttype": "lev_q_fed_funds", 
         "size": "-18bp", 
         "axis_trans": false, 
-        "dep ": "logdiff_q_rgdp logdiff_q_cpi", 
+        "dep": "logdiff_q_rgdp logdiff_q_cpi", 
         "conf": "95", 
         "main": "other", 
         "prefer": {

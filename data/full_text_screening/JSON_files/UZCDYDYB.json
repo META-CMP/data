@@ -26,7 +26,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": {
+        "inttype": {
                 "model_1": "lev_a_reserve_requirement_ratio",
                 "model_2": "lev_a_12_month_lending",
                 "model_3": "lev_a_7_day_repo",
@@ -36,7 +36,7 @@
         }, 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep ": "gr_a_ip gr_a_cpi", 
+        "dep": "gr_a_ip gr_a_cpi", 
         "conf": "68", 
         "main": "gdp  inflation  other", 
         "prefer":  {

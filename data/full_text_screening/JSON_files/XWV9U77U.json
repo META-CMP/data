@@ -1,0 +1,120 @@
+{ 
+    "general": { 
+        "key": "XWV9U77U", 
+        "rid1": "ph", 
+        "rid2": "null", 
+        "study_notes": "null", 
+        "model_notes": "null", 
+        "figure": 1,
+        "page": 21, 
+        "irf": true,
+        "cum": false
+    }, 
+    "impulse_and_response_variables": { 
+        "inttype": "lev_a_12_month_government_bond_yield", 
+        "size": "50bp", 
+        "axis_trans": false, 
+        "dep": "log_a_ip log_a_cpi", 
+        "conf": "90", 
+        "main": "gdp inflation", 
+        "prefer": true 
+    }, 
+    "identification_strategy": { 
+        "iv": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true
+        },    
+        "forecast_based": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true
+        },     
+        "nr": false, 
+        "event": false, 
+        "chol": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": true,
+                "model_4": false
+        },   
+        "svar": false, 
+        "signr": false, 
+        "hf": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true
+        },     
+        "heteroskedas": false, 
+        "longrun": false, 
+        "idother": false 
+    }, 
+    "estimation_method": { 
+        "var": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false
+        },    
+        "lp": false, 
+        "vecm": false, 
+        "dyn_ols": "false", 
+        "fvar": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true
+        },     
+        "tvar": false, 
+        "gvar": false, 
+        "bayes": false, 
+        "dsge": false, 
+        "varother": false 
+    }, 
+    "regime_dependence": { 
+        "lor": false, 
+        "upr": false, 
+        "scr": false, 
+        "dcr": false, 
+        "hike": false, 
+        "cut": false 
+    }, 
+    "data_frequency": { 
+        "annual": false, 
+        "quarter": false, 
+        "month": true 
+    }, 
+    "country_composition": { 
+        "list_of_countries": "US", 
+        "n_of_countries": 1 
+    }, 
+    "further_data_characteristics": { 
+        "panel": false, 
+        "start": "04-1973", 
+        "end": "09-2016", 
+        "samplesize": "null" 
+    }, 
+    "control_variables": { 
+        "comprice": false, 
+        "outpgap": false, 
+        "find": false, 
+        "eglob": false, 
+        "cbind": false, 
+        "fexch": false, 
+        "inflexp": false, 
+        "foreignir": true, 
+        "fx": true, 
+        "lrir": false 
+    }, 
+    "econometric_details": { 
+        "pure_rate_shock": true, 
+        "convent": false, 
+        "decomposition": false 
+    }, 
+    "publication_characteristics": { 
+        "cbanker": true
+    } 
+} 

@@ -8,7 +8,7 @@
         "figure": 1,
         "page": 25,
         "irf": true,
-        "cum": false,
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",

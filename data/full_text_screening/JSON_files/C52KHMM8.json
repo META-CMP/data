@@ -10,7 +10,8 @@
         },
         "figure": 2,
         "page": 4,
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_2_year_gov_de",

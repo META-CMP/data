@@ -56,8 +56,8 @@
                 "model_6": "log_a_gdp log_a_deflator",
                 "model_7": "log_a_gdp log_a_deflator",
                 "model_8": "log_a_gdp log_a_deflator",
-                "model_7": "log_a_gdp log_a_deflator",
-                "model_8": "log_a_gdp log_a_deflator"
+                "model_9": "log_a_gdp log_a_deflator",
+                "model_10": "log_a_gdp log_a_deflator"
         },
         "conf": "90",
         "main": "other",
@@ -70,8 +70,8 @@
                 "model_6": false,
                 "model_7": false,
                 "model_8": false,
-                "model_7": false,
-                "model_8": false
+                "model_9": false,
+                "model_10": false
         }
     },
     "identification_strategy": {

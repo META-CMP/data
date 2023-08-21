@@ -58,7 +58,7 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": "AT", "BE", "CA", "DK", "FI", "FR", "DE", "IE", "IT", "JP", "NL", "NO", "ES", "SE", "CH", "UK", "US",
+        "list_of_countries": "AT BE CA DK FI FR DE IE IT JP NL NO ES SE CH UK US",
         "n_of_countries": 17
     },
     "further_data_characteristics": {

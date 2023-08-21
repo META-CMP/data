@@ -29,7 +29,7 @@
                 "model_1": true,
                 "model_2": false,
                 "model_3": false
-        },
+        }
     },
     "identification_strategy": {
         "iv": {
@@ -39,7 +39,8 @@
         },
         "forecast_based": {
                 "model_1": false,
-                "model_2": false
+                "model_2": false,
+                "model_3": false
         },
         "nr": {
                 "model_1": false,
@@ -85,7 +86,7 @@
                 "model_1": true,
                 "model_2": false,
                 "model_3": true
-        },
+        }
     },
     "estimation_method": {
         "var": {
@@ -133,7 +134,7 @@
                 "model_1": false,
                 "model_2": false,
                 "model_3": false
-        },
+        }
     },
     "regime_dependence": {
         "lor": false,
@@ -150,7 +151,7 @@
     },
     "country_composition": {
         "list_of_countries": "DE",
-        "n_of_countries": 1,
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,

@@ -134,7 +134,7 @@
                 "model_27": false,
                 "model_28": false
                 
-        },
+        }
     },
     "identification_strategy": {
         "iv": false,
@@ -209,7 +209,7 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1999"",
+        "start": "01-1999",
         "end": "12-2013",
         "samplesize": "null"
     },

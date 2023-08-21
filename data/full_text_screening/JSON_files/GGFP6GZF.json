@@ -64,7 +64,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": {
+        "inttype": {
                 "model_1": "lev_a_fed_funds",
                 "model_2": "lev_a_fed_funds",
                 "model_3": "lev_a_fed_funds",
@@ -93,7 +93,7 @@
         }, 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep ": {
+        "dep": {
                 "model_1": "log_a_ip log_a_cpi",
                 "model_2": "log_a_ip log_a_cpi",
                 "model_3": "log_a_ip log_a_cpi",
@@ -275,7 +275,7 @@
                 "model_1": "false",
                 "model_2": "false",
                 "model_3": "ardl",
-                "model_4": "ardl"
+                "model_4": "ardl",
                 "model_5": "false",
                 "model_6": "false",
                 "model_7": "false",
@@ -291,7 +291,7 @@
                 "model_17": "false",
                 "model_18": "false",
                 "model_19": "ardl",
-                "model_20": "ardl"
+                "model_20": "ardl",
                 "model_21": "false",
                 "model_22": "false",
                 "model_23": "ardl",

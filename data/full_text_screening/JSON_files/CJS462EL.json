@@ -21,7 +21,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_3_month_interest",
         "size": {
-                "model_1": "48bp"
+                "model_1": "48bp",
                 "model_2": "59bp",
                 "model_3": "84bp"
         },
@@ -71,7 +71,7 @@
     },
     "country_composition": {
         "list_of_countries": {
-                "model_1": "DE"
+                "model_1": "DE",
                 "model_2": "IT",
                 "model_3": "ES"
         },

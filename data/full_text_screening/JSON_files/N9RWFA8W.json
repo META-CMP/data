@@ -82,7 +82,7 @@
                 "model_10": true,
                 "model_11": false,
                 "model_12": false
-        },
+        }
     },
     "identification_strategy": {
         "iv": {
@@ -238,7 +238,7 @@
                 "model_10": false,
                 "model_11": false,
                 "model_12": false
-        },
+        }
     },
     "estimation_method": {
         "var": {
@@ -380,7 +380,7 @@
                 "model_10": false,
                 "model_11": false,
                 "model_12": false
-        },
+        }
     },
     "regime_dependence": {
         "lor": false,
@@ -472,7 +472,7 @@
                 "model_10": false,
                 "model_11": true,
                 "model_12": true
-        },
+        }
     },
     "publication_characteristics": {
         "cbanker": true

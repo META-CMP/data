@@ -21,10 +21,10 @@
         "cum": true
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_overnight_lending", 
+        "inttype": "lev_a_overnight_lending", 
         "size": "100bp", 
         "axis_trans": "y*100", 
-        "dep ": {
+        "dep": {
                 "model_1": "logdiff_a_ip logdiff_a_cpi logdiff_a_une",
                 "model_2": "logdiff_a_rgdp logdiff_a_deflator",
                 "model_3": "logdiff_a_ip logdiff_a_cpi",
@@ -34,10 +34,10 @@
         "main": "gdp  inflation", 
         "prefer": {
                 "model_1": true,
-                "model_2": false
+                "model_2": false,
                 "model_3": false,
                 "model_4": false
-        },    
+        }    
     }, 
     "identification_strategy": { 
         "iv": false, 
@@ -95,7 +95,7 @@
     "data_frequency": { 
         "annual": false, 
         "quarter": false, 
-        "month": month 
+        "month": true 
     }, 
     "country_composition": { 
         "list_of_countries": "KR", 

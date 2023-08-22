@@ -11,10 +11,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_repo_rate", 
+        "inttype": "lev_a_repo_rate", 
         "size": "-25bp", 
-        "axis_trans": "log_a_ip*100 gr_a_cpi lev_a_une" 
-        "dep ": "log_a_ip gr_a_cpi lev_a_une", 
+        "axis_trans": "log_a_ip_y*100", 
+        "dep": "log_a_ip gr_a_cpi lev_a_une", 
         "conf": "90", 
         "main": "other", 
         "prefer": true

@@ -24,10 +24,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_fed_funds",
+        "inttype": "lev_a_fed_funds",
         "size": "100bp", 
         "axis_trans": false, 
-        "dep ": {
+        "dep": {
                 "model_1": "log_a_emp log_a_cpi",
                 "model_2": "log_a_emp log_a_cpi",
                 "model_3": "log_a_emp log_a_cpi",
@@ -41,8 +41,8 @@
                 "model_2": false,
                 "model_3": false,
                 "model_4": true,
-                "model_5": false,
-        },   
+                "model_5": false
+        }   
     }, 
     "identification_strategy": { 
         "iv": false, 
@@ -98,7 +98,7 @@
                 "model_2": true,
                 "model_3": true,
                 "model_4": true,
-                "model_4": true
+                "model_5": true
         },    
         "outpgap": false, 
         "find": false, 

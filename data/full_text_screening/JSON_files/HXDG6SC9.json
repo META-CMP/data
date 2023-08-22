@@ -19,10 +19,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_fed_funds", 
+        "inttype": "lev_a_fed_funds", 
         "size": "50bp", 
         "axis_trans": false, 
-        "dep ": {
+        "dep": {
                 "model_1": "log_a_ip log_a_cpi",
                 "model_2": "log_a_ip log_a_cpi",
                 "model_3": "lev_a_emp lev_a_une"
@@ -51,7 +51,7 @@
     "estimation_method": { 
         "var": {
                 "model_1": true,
-                "model_2": false
+                "model_2": false,
                 "model_3": false
         }, 
         "lp": false, 
@@ -98,7 +98,7 @@
                 "model_1": false,
                 "model_2": false,
                 "model_3": true
-        } 
+        }, 
         "eglob": false, 
         "cbind": false, 
         "fexch": false, 

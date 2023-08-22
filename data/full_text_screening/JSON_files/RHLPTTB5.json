@@ -11,10 +11,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_fed_funds", 
+        "inttype": "lev_a_fed_funds", 
         "size": "50bp", 
-        "axis_trans": "y*100", 
-        "dep ": "log_a_deflator log_a_rgdp", 
+        "axis_trans": "y*100 lev_a_fed_funds_false", 
+        "dep": "log_a_deflator log_a_rgdp", 
         "conf": "2_SE", 
         "main": "other", 
         "prefer": true

@@ -21,7 +21,7 @@
         "cum": true
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": {
+        "inttype": {
                 "model_1": "lev_a_overnight_lending_rate",
                 "model_2": "lev_a_shadow_rate",
                 "model_3": "lev_a_shadow_rate",
@@ -29,7 +29,7 @@
         },
         "size": "-25bp", 
         "axis_trans": "y*100", 
-        "dep ": "logdiff_a_emp logdiff_a_cpi logdiff_a_rgdp logdiff_a_ip", 
+        "dep": "logdiff_a_emp logdiff_a_cpi logdiff_a_rgdp logdiff_a_ip", 
         "conf": "90", 
         "main": "gdp  emp  inflation", 
         "prefer": {

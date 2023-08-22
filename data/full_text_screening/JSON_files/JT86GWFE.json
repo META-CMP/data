@@ -21,10 +21,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_short_term_rate", 
+        "inttype": "lev_a_short_term_rate", 
         "size": "23bp", 
         "axis_trans": false, 
-        "dep ": {
+        "dep": {
                 "model_1": "log_a_rgdp gr_a_cpi",
                 "model_2": "lev_a_une",
                 "model_3": "log_a_rgdp gr_a_cpi",
@@ -37,7 +37,7 @@
                 "model_2": false,
                 "model_3": true,
                 "model_4": false
-        },  
+        }  
     }, 
     "identification_strategy": { 
         "iv": false, 

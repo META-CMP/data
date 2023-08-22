@@ -49,10 +49,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_3_month_rate", 
+        "inttype": "lev_a_3_month_rate", 
         "size": "25bp", 
         "axis_trans": "y*100", 
-        "dep ": "log_a_rgdp log_a_cpi", 
+        "dep": "log_a_rgdp log_a_cpi", 
         "conf": "2_SE", 
         "main": "other", 
         "prefer": {
@@ -155,7 +155,7 @@
                 "model_16": 1,
                 "model_17": 1,
                 "model_18": 17
-        },
+        }
     }, 
     "further_data_characteristics": { 
         "panel": {
@@ -171,7 +171,7 @@
                 "model_10": false,
                 "model_11": false,
                 "model_12": false,
-                "model_1false": false,
+                "model_13": false,
                 "model_14": false,
                 "model_15": false,
                 "model_16": false,
@@ -200,6 +200,6 @@
         "decomposition": null 
     }, 
     "publication_characteristics": { 
-        "cbanker": null 
+        "cbanker": true 
     } 
 } 

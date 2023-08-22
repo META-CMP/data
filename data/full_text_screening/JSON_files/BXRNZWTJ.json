@@ -53,7 +53,8 @@
           "model_13": "appendix p. 5",
           "model_14": "appendix p. 6"
           },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": {
@@ -396,6 +397,7 @@
         }
     },
     "econometric_details": {
+        "pure_rate_shock": false,
         "convent": false,
         "decomposition": false
     },

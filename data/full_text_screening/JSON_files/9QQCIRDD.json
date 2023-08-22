@@ -21,10 +21,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "fed_funds", 
+        "inttype": "fed_funds", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep ": "log_a_ip log_a_cpi log_a_une", 
+        "dep": "log_a_ip log_a_cpi log_a_une", 
         "conf": "90", 
         "main": "gdp  emp  inflation", 
         "prefer": true 
@@ -107,7 +107,7 @@
                 "model_2": true,
                 "model_3": false,
                 "model_4": true
-        },  
+        }  
     }, 
     "publication_characteristics": { 
         "cbanker": false 

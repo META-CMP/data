@@ -11,10 +11,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_m_short_term_rate", 
+        "inttype": "lev_m_short_term_rate", 
         "size": "-25bp", 
         "axis_trans": false, 
-        "dep ": "logdiff_m_rgdp logdiff_m_cpi", 
+        "dep": "logdiff_m_rgdp logdiff_m_cpi", 
         "conf": "90", 
         "main": "gdp  emp  inflation  other", 
         "prefer": true 

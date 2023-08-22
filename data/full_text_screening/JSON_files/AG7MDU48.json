@@ -33,7 +33,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": {
+        "inttype": {
                 "model_1": "lev_a_short_term_rate",
                 "model_2": "lev_a_short_term_rate",
                 "model_3": "lev_a_overnight_lending",
@@ -43,11 +43,11 @@
                 "model_7": "lev_a_3_month_interbank",
                 "model_8": "lev_a_3_month_interbank",
                 "model_9": "lev_a_short_term_rate",
-                "model_10": "lev_a_short_term_rate",
+                "model_10": "lev_a_short_term_rate"
         },    
         "size": "100bp", 
         "axis_trans": false, 
-        "dep ": "gr_a_ip gr_a_cpi", 
+        "dep": "gr_a_ip gr_a_cpi", 
         "conf": "90", 
         "main": "inflation", 
         "prefer": true 

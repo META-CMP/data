@@ -13,7 +13,8 @@
                 "model_1": 34,
                 "model_2": 35
         },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_3_month_gensaki",

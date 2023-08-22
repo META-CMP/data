@@ -51,7 +51,8 @@
                 "model_20": 36,
                 "model_21": 36
         },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "null",

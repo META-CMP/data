@@ -1,0 +1,97 @@
+{
+    "general": {
+        "key": "GS29TRL6",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "new-Keynesian model of the business cycle",
+        "figure": 1,
+        "page": 27,
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "null",
+        "axis_trans": false,
+        "dep": "logdiff_q_rgap logdiff_q_deflator",
+        "conf": "90",
+        "main": "gdp inflation",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": true
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": true,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "Q1-1960",
+          "model_2": "Q4-1982"
+          },
+        "end": {
+          "model_1": "Q2-1979",
+          "model_2": "Q2-2008"
+          },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

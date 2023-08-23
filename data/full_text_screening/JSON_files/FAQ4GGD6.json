@@ -8,6 +8,7 @@
         "figure": {
                 "model_1": 4,
                 "model_2": 4,
+                "model_3": 4,
                 "model_4": 4,
                 "model_5": 4,
                 "model_6": 4,
@@ -25,7 +26,7 @@
                 "model_8": 35
         },
         "irf": true,
-        "cum": false,
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
@@ -94,7 +95,8 @@
                 "model_6": 1,
                 "model_7": 1,
                 "model_8": 6
-        },
+        }
+    },
     "further_data_characteristics": {
         "panel": false,
         "start": "1970",
@@ -122,4 +124,3 @@
         "cbanker": false
     }
 }
-

@@ -2,11 +2,11 @@
     "general": { 
         "key": "HB9TGTCM", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "me", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": 3, 
-        "page": 28, 
+        "page": 172, 
         "irf": true,
         "cum": false
     }, 
@@ -14,7 +14,7 @@
         "inttype": "lev_a_short_term_rate", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "log_a_rgdp lev_a_une log_a_cpi", 
+        "dep": "log_a_rgdp lev_a_une_rate log_a_cpi", 
         "conf": "90", 
         "main": "other", 
         "prefer": true 
@@ -58,7 +58,7 @@
         "month": false 
     }, 
     "country_composition": { 
-        "list_of_countries": "AU CA CZ FR DE HK IT JP KR NL NZ NO SG SK ES SE CH TW CN GB US AR BR CL HU IN ID MY MX PH PL TH TR", 
+        "list_of_countries": "AU CA CZ FR DE HK IT JP KR NL NZ NO SG SK ES SE CH TW GB US AR BR CL HU IN ID MY MX PH PL TH TR", 
         "n_of_countries": 32 
     }, 
     "further_data_characteristics": { 

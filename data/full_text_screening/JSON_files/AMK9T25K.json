@@ -2,20 +2,24 @@
     "general": { 
         "key": "AMK9T25K", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "me", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
                 "model_1": 1,
                 "model_2": 1,
-                "model_3": 7,
-                "model_4": 7
+                "model_3": 2,
+                "model_4": 2,
+                "model_5": 7,
+                "model_6": 7
         },   
         "page": {
                 "model_1": 1265,
                 "model_2": 1265,
-                "model_3": 1281,
-                "model_4": 1281
+                "model_3": 1268,
+                "model_4": 1268,
+                "model_5": 1281,
+                "model_6": 1281
         },    
         "irf": true,
         "cum": false
@@ -25,18 +29,29 @@
         "size": "100bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "logdiff_a_gap gr_a_deflator",
-                "model_2": "logdiff_a_gap gr_a_deflator",
-                "model_3": "gr_a_deflator",
-                "model_4": "gr_a_deflator"
+                "model_1": "logdiff_q_gap gr_a_deflator",
+                "model_2": "logdiff_q_gap gr_a_deflator",
+                "model_3": "logdiff_q_gap gr_a_deflator",
+                "model_4": "logdiff_q_gap gr_a_deflator",
+                "model_5": "gr_a_deflator",
+                "model_6": "gr_a_deflator"
         }, 
-        "conf": "1_SE", 
-        "main": "gdp  inflation", 
+        "conf": {
+                "model_1": "68",
+                "model_2": "68",
+                "model_3": "68",
+                "model_4": "68",
+                "model_5": "1_SE",
+                "model_6": "1_SE"
+        }, 
+        "main": "inflation", 
         "prefer": {
-                "model_1": true,
-                "model_2": true,
+                "model_1": false,
+                "model_2": false,
                 "model_3": false,
-                "model_4": false
+                "model_4": false,
+                "model_5": true,
+                "model_6": true
         }
     },
     "identification_strategy": { 
@@ -47,15 +62,19 @@
         "chol": {
                 "model_1": true,
                 "model_2": true,
-                "model_3": true,
-                "model_4": false
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": false
         },     
         "svar": false, 
         "signr": {
                 "model_1": false,
                 "model_2": false,
-                "model_3": false,
-                "model_4": true
+                "model_3": true,
+                "model_4": true,
+                "model_5": false,
+                "model_6": true
         },      
         "hf": false, 
         "heteroskedas": false, 
@@ -96,16 +115,27 @@
         "start": {
                 "model_1": "Q1-1966",
                 "model_2": "Q4-1979",
-                "model_3": "Q4-1968",
-                "model_4": "Q4-1968"
+                "model_3": "Q1-1966",
+                "model_4": "Q4-1979",
+                "model_5": "Q4-1968",
+                "model_6": "Q4-1968"
         },   
         "end": {
                 "model_1": "Q3-1979",
                 "model_2": "Q4-2006",
                 "model_3": "Q3-1979",
-                "model_4": "Q3-1979"
+                "model_4": "Q4-2006",
+                "model_5": "Q3-1979",
+                "model_6": "Q3-1979"
         },    
-        "samplesize": "null" 
+        "samplesize": {
+                "model_1": 55,
+                "model_2": 109,
+                "model_3": 55,
+                "model_4": 109,
+                "model_5": "null",
+                "model_6": "null"
+        }     
     }, 
     "control_variables": { 
         "comprice": false, 
@@ -117,8 +147,10 @@
         "inflexp": {
                 "model_1": false,
                 "model_2": false,
-                "model_3": true,
-                "model_4": true
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": true
         }, 
         "foreignir": false, 
         "fx": false, 

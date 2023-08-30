@@ -2,8 +2,8 @@
     "general": { 
         "key": "WYYFGGTY", 
         "rid1": "ph", 
-        "rid2": "null", 
-        "study_notes": "null", 
+        "rid2": "me", 
+        "study_notes": "model: dsge estimates of figure 10 are not extracted because confidence bounds of the dsge IRFs are so samll that they are rater impossible to extract", 
         "model_notes": "null", 
         "figure": 10, 
         "page": 352, 

@@ -40,7 +40,8 @@
             "model_9": "A11",
             "model_10": "A11"
         },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": {

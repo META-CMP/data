@@ -1,0 +1,225 @@
+{
+    "general": {
+        "key": "F52VV29F",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "We only code IRFs of figures which have not already been plotted beforehand. estimation_method: They employ a system of equations with the recursivness assumption, that parallel the VAR methodogly, and estimated via GMM.",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "null",
+                "model_4": "null",
+                "model_5": "null",
+                "model_6": "null",
+                "model_7": "null",
+                "model_8": "control_variables: includes central bank reserves as control variable.",
+                "model_9": "null",
+                "model_10": "null"
+                
+        },
+        "figure": {
+                "model_1": 3,
+                "model_2": 3,
+                "model_3": 3,
+                "model_4": 3,
+                "model_5": 5,
+                "model_6": 6,
+                "model_7": 7,
+                "model_8": 8,
+                "model_9": 9,
+                "model_10": 9
+                
+        },
+        "page": {
+                "model_1": 813,
+                "model_2": 813,
+                "model_3": 813,
+                "model_4": 813,
+                "model_5": 816,
+                "model_6": 818,
+                "model_7": 819,
+                "model_8": 820,
+                "model_9": 822,
+                "model_10": 822
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+                "model_1": "lev_a_fed_funds",
+                "model_2": "3_month_gov",
+                "model_3": "lev_a_fed_funds",
+                "model_4": "3_month_gov",
+                "model_5": "3_month_gov",
+                "model_6": "3_month_gov",
+                "model_7": "3_month_gov",
+                "model_8": "3_month_gov",
+                "model_9": "3_month_gov",
+                "model_10": "3_month_gov"
+        },
+        "size": "100bp",
+        "axis_trans": false,
+        "dep": "log_q_rgdp log_q_deflator",
+        "conf": "95",
+        "main": "gdp inflation",
+        "prefer": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true,
+                "model_9": true,
+                "model_10": false
+        },
+        "nr": false,
+        "event": false,
+        "chol": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": true
+        },
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": true
+        },
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true,
+                "model_9": true,
+                "model_10": false
+        }
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "Q1-1976",
+                "model_2": "Q1-1976",
+                "model_3": "Q1-1976",
+                "model_4": "Q1-1976",
+                "model_5": "Q1-1976",
+                "model_6": "Q1-1976",
+                "model_7": "Q1-1976",
+                "model_8": "Q1-1976",
+                "model_9": "Q1-1983",
+                "model_10": "Q1-1983"
+        },
+        "end": "Q4-1997",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true,
+                "model_5": false,
+                "model_6": true,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": true
+        },
+        "outpgap": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": true,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false
+        },
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

@@ -96,7 +96,7 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": null,
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

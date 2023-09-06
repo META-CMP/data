@@ -52,7 +52,7 @@
                 "model_21": 141
         },
         "irf": true,
-        "cum": null
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": {

@@ -3,7 +3,7 @@
         "key": "F52VV29F",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "We only code IRFs of figures which have not already been plotted beforehand. estimation_method: They employ a system of equations with the recursivness assumption, that parallel the VAR methodogly, and estimated via GMM.",
+        "study_notes": "We only code IRFs of figures which have not already been plotted beforehand. estimation_method: They employ a system of equations with the recursivness assumption, that parallel the VAR methodogly, and estimated via GMM, that is why we coded varother=true. chol: Coded for all model as true as the authors use the recursivness assumption in their system of equations too.",
         "model_notes": {
                 "model_1": "null",
                 "model_2": "null",
@@ -92,18 +92,7 @@
         },
         "nr": false,
         "event": false,
-        "chol": {
-                "model_1": true,
-                "model_2": true,
-                "model_3": true,
-                "model_4": true,
-                "model_5": false,
-                "model_6": false,
-                "model_7": false,
-                "model_8": false,
-                "model_9": false,
-                "model_10": true
-        },
+        "chol": true,
         "svar": false,
         "signr": false,
         "hf": false,

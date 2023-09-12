@@ -74,7 +74,7 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": 
+        "list_of_countries": {
                 "model_1": "EA",
                 "model_2": "US",
                 "model_3": "US"

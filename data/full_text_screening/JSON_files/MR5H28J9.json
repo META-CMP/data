@@ -1,0 +1,195 @@
+{
+    "general": {
+        "key": "MR5H28J9",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "Many models have not been coded, for detailed reasoning see the notes in the pdf.",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "chol: ordering of the variables changes, not contemporaneous effect of GDP on policy rate but from policy rate to GDP.",
+                "model_4": "chol: ordering of the variables changes, not contemporaneous effect of prices on policy rate but from policy rate to prices.",
+                "model_5": "null",
+                "model_6": "null",
+                "model_7": "null"
+        },
+        "figure": {
+                "model_1": 2,
+                "model_2": 3,
+                "model_3": 4,
+                "model_4": 4,
+                "model_5": 8,
+                "model_6": 8,
+                "model_7": 11
+        },
+        "page": {
+                "model_1": 86,
+                "model_2": 90,
+                "model_3": 98,
+                "model_4": 98,
+                "model_5": 107,
+                "model_6": 107,
+                "model_7": 133   
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+                "model_1": "lev_a_fed_funds",
+                "model_2": "lev_a_fed_funds",
+                "model_3": "lev_a_fed_funds",
+                "model_4": "lev_a_fed_funds",
+                "model_5": "lev_a_fed_funds",
+                "model_6": "lev_a_fed_funds",
+                "model_7": "lev_a_3_month_gov"
+        },
+        "size": "null",
+        "axis_trans": false,
+        "dep": {
+                "model_1": "log_q_rgdp log_q_deflator",
+                "model_2": "log_m_emp log_m_cpi",
+                "model_3": "log_q_rgdp log_q_deflator",
+                "model_4": "log_q_rgdp log_q_deflator",
+                "model_5": "log_m_emp log_m_cpi",
+                "model_6": "log_m_emp log_m_cpi",
+                "model_7": "log_q_rgdp log_q_deflator"
+        },
+        "conf": "95",
+        "main": "gdp emp inflation",
+        "prefer": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": false,
+                "model_7": false
+        },
+        "nr": false,
+        "event": false,
+        "chol": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true,
+                "model_7": false
+        },
+        "svar": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": true
+        },
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false,
+                "model_7": true
+        },
+        "month": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": true,
+                "model_7": false
+        }
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "Q3-1965",
+                "model_2": "01-1965",
+                "model_3": "Q3-1965",
+                "model_4": "Q3-1965",
+                "model_5": "04-1989",
+                "model_6": "04-1989",
+                "model_7": "Q3-1965"
+        },
+        "end": {
+                "model_1": "Q2-1995",
+                "model_2": "03-1995",
+                "model_3": "Q2-1995",
+                "model_4": "Q2-1995",
+                "model_5": "03-1995",
+                "model_6": "03-1995",
+                "model_7": "Q2-1995"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

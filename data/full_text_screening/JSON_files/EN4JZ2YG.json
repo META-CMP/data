@@ -1,0 +1,223 @@
+{
+    "general": {
+        "key": "EN4JZ2YG",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "varother: uses a FAIR model approach, and instead of assuming the existence of a vector autoregression (VAR) representation, FAIR directly estimates the vector moving-average (VMA) representation of the data, i.e., FAIR directly esti- mates the IRFs.",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "null",
+                "model_4": "size: shock is normalized that it has a peak effect of 100bp, but we will take the origianl shock size since we obtain the full IRF of the poliy variable",
+                "model_5": "size: shock is normalized that it has a peak effect of 100bp, but we will take the origianl shock size since we obtain the full IRF of the poliy variable",
+                "model_6": "size: shock is normalized that it has a peak effect of 100bp, but we will take the origianl shock size since we obtain the full IRF of the poliy variable",
+                "model_7": "size: shock is normalized that it has a peak effect of 100bp, but we will take the origianl shock size since we obtain the full IRF of the poliy variable",
+                "model_8": "size: shock is normalized that it has a peak effect of 100bp, but we will take the origianl shock size since we obtain the full IRF of the poliy variable",
+                "model_9": "size: shock is normalized that it has a peak effect of 100bp, but we will take the origianl shock size since we obtain the full IRF of the poliy variable"
+        },
+        "figure": {
+                "model_1": 3,
+                "model_2": 3,
+                "model_3": 3,
+                "model_4": 6,
+                "model_5": 6,
+                "model_6": "A11",
+                "model_7": "A11",
+                "model_8": "A12",
+                "model_9": "A12"
+                
+        },
+        "page": {
+                "model_1": 49,
+                "model_2": 49,
+                "model_3": 49,
+                "model_4": 52,
+                "model_5": 52,
+                "model_6": "A31",
+                "model_7": "A31",
+                "model_8": "A32",
+                "model_9": "A32"
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": {
+                "model_1": "100bp",
+                "model_2": "100bp",
+                "model_3": "100bp",
+                "model_4": "null",
+                "model_5": "null",
+                "model_6": "null",
+                "model_7": "null",
+                "model_8": "null",
+                "model_9": "null"
+        },
+        "axis_trans": false,
+        "dep": {
+                "model_1": "lev_q_une_rate gr_a_cpi",
+                "model_2": "lev_q_une_rate gr_a_cpi",
+                "model_3": "lev_q_une_rate gr_a_cpi",
+                "model_4": "lev_q_une_rate log_q_cpi",
+                "model_5": "lev_q_une_rate log_q_cpi",
+                "model_6": "lev_q_une_rate log_q_cpi",
+                "model_7": "lev_q_une_rate log_q_cpi",
+                "model_8": "lev_q_une_rate log_q_cpi",
+                "model_9": "lev_q_une_rate log_q_cpi"
+        },
+        "conf": "90",
+        "main": "emp inflation",
+        "prefer": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": true,
+                "model_7": true,
+                "model_8": false,
+                "model_9": false
+        },
+        "nr": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": true,
+                "model_7": true,
+                "model_8": false,
+                "model_9": false
+        },
+        "event": false,
+        "chol": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false
+        },
+        "svar": false,
+        "signr": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": true,
+                "model_9": true
+        },
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": true
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": true,
+                "model_7": false,
+                "model_8": true,
+                "model_9": false
+        },
+        "cut": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": false,
+                "model_7": true,
+                "model_8": false,
+                "model_9": true
+        }
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "Q1-1969",
+                "model_2": "Q1-1969",
+                "model_3": "Q1-1969",
+                "model_4": "Q1-1959",
+                "model_5": "Q1-1959",
+                "model_6": "Q1-1969",
+                "model_7": "Q1-1969",
+                "model_8": "Q1-1959",
+                "model_9": "Q1-1959"
+                
+        },
+        "end": "Q4-2007",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

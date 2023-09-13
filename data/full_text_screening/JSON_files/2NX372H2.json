@@ -1,0 +1,139 @@
+{
+    "general": {
+        "key": "2NX372H2",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "regime: IRFs are calculated for a regime (time period) described by non-booming house prices.",
+                "model_4": "list_of_countries: dummy for countries which did not have the highest house price growth is set to one for the IRFs."
+                
+        },
+        "figure": {
+                "model_1": 3,
+                "model_2": 4,
+                "model_3": 5,
+                "model_4": 7
+                
+        },
+        "page": {
+                "model_1": 193,
+                "model_2": 196,
+                "model_3": 198,
+                "model_4": 201
+                
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_3_month_gov",
+        "size": "100bp",
+        "axis_trans": false,
+        "dep": "logdiff_q_rgdp logdiff_q_cpi",
+        "conf": "2_SE",
+        "main": "other",
+        "prefer": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false
+                
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": {
+                "model_1": "US JP DE FR IT GB CA CH SE NO FI DK ES NL BE IE AU",
+                "model_2": "US JP DE FR IT GB CA CH SE NO FI DK ES NL BE IE AU",
+                "model_3": "US JP DE FR IT GB CA CH SE NO FI DK ES NL BE IE AU",
+                "model_4": "US JP DE FR IT CA CH SE NO FI DK AU"
+                
+        },
+        "n_of_countries": {
+                "model_1": 17,
+                "model_2": 17,
+                "model_3": 17,
+                "model_4": 12
+                
+        }
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": {
+                "model_1": "Q1-1973",
+                "model_2": "Q1-1985",
+                "model_3": "Q1-1985",
+                "model_4": "Q1-1985"
+                
+        },
+        "end": {
+                "model_1": "Q4-2006",
+                "model_2": "Q4-2006",
+                "model_3": "Q4-2006",
+                "model_4": "Q4-2006"
+                
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

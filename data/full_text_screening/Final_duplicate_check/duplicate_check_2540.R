@@ -11,7 +11,7 @@ df <- bind_rows(df.list, .id = "id")
 library(revtools)
 
 
-setwd("~/data/data/full_text_screening/Code")
+setwd("~/data/data/full_text_screening/Final_duplicate_check")
 
 # Screen duplicates in the "revtools" app for the xlsx files using title matches:
 screen_duplicates(as.data.frame(df))
@@ -29,14 +29,14 @@ screen_duplicates(as.data.frame(df))
 df<-read.csv("dup_free_author.csv")
 
 
-# Screen duplicates in the "revtools" app for the xlsx files using author matches:
+# Screen duplicates in the "revtools" app for the xlsx files using title matches (with a change in the distance parameter):
 screen_duplicates(as.data.frame(df))
 
 
 df<-read.csv("dup_free_title2.csv")
 
 
-# Screen duplicates in the "revtools" app for the xlsx files using author matches:
+# Screen duplicates in the "revtools" app for the xlsx files using abstract matches:
 screen_duplicates(as.data.frame(df))
 
 

@@ -1,0 +1,117 @@
+{ 
+    "general": { 
+        "key": "YG", 
+        "rid1": "ph", 
+        "rid2": "null", 
+        "study_notes": "null", 
+        "model_notes": "null", 
+        "figure": {
+                "model_1": 3,
+                "model_2": 4
+        }, 
+        "page": {
+                "model_1": 98,
+                "model_2": 99
+        }, 
+        "irf": true,
+        "cum": false
+    }, 
+    "impulse_and_response_variables": { 
+        "inttype": "lev_a_repo_rate", 
+        "size": "100bp", 
+        "axis_trans": false, 
+        "dep": {
+                "model_1": "log_m_ip log_m_cpi",
+                "model_2": "logdiff_m_ip gr_m_cpi logdiff_m_emp"
+        }, 
+        "conf": "90", 
+        "main": "gdp  inflation  other", 
+        "prefer": {
+                "model_1": false,
+                "model_2": true
+        } 
+    }, 
+    "identification_strategy": { 
+        "iv": false, 
+        "forecast_based": false, 
+        "nr": false, 
+        "event": false, 
+        "chol": false, 
+        "svar": {
+                "model_1": false,
+                "model_2": true
+        }, 
+        "signr": false, 
+        "hf": false, 
+        "heteroskedas": false, 
+        "longrun": false, 
+        "idother": false 
+    }, 
+    "estimation_method": { 
+        "var": {
+                "model_1": true,
+                "model_2": false
+        }, 
+        "lp": false, 
+        "vecm": false, 
+        "dyn_ols": "false", 
+        "fvar": {
+                "model_1": false,
+                "model_2": true
+        }, 
+        "tvar": false, 
+        "gvar": false, 
+        "bayes": false, 
+        "dsge": false, 
+        "varother": false 
+    }, 
+    "regime_dependence": { 
+        "lor": false, 
+        "upr": false, 
+        "scr": false, 
+        "dcr": false, 
+        "hike": false, 
+        "cut": false 
+    }, 
+    "data_frequency": { 
+        "annual": false, 
+        "quarter": false, 
+        "month": true 
+    }, 
+    "country_composition": { 
+        "list_of_countries": "ZA", 
+        "n_of_countries": 1 
+    }, 
+    "further_data_characteristics": { 
+        "panel": false, 
+        "start": "02-1985", 
+        "end": "11-2007", 
+        "samplesize": "null" 
+    }, 
+    "control_variables": { 
+        "comprice": true, 
+        "outpgap": false, 
+        "find": {
+                "model_1": false,
+                "model_2": true
+        }, 
+        "eglob": false, 
+        "cbind": false, 
+        "fexch": false, 
+        "inflexp": false, 
+        "foreignir": false, 
+        "fx": false, 
+        "lrir": {
+                "model_1": false,
+                "model_2": true
+        }
+    }, 
+    "econometric_details": { 
+        "pure_rate_shock": true, 
+        "convent": true, 
+        "decomposition": false 
+    }, 
+    "publication_characteristics": { 
+        "cbanker": false
+    } 
+} 

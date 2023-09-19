@@ -49,7 +49,7 @@
                 "model_9": "lev_a_yield_curve",
                 "model_10": "lev_a_yield_curve",
                 "model_11": "lev_a_asset_price",
-                "model_12": "lev_a_short_term_int"
+                "model_12": "lev_a_short_term_rate"
         },
         "size": "100bp",
         "axis_trans": false,

@@ -46,7 +46,7 @@
         "irf": true
     },
     "impulse_and_response_variables": {
-        "inttype": "null",
+        "inttype": "lev_short_rate",
         "size": "42bp",
         "axis_trans": {
           "model_1": false,

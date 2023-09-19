@@ -55,7 +55,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "null",
+        "inttype": "lev_short_rate",
         "size": "100bp",
         "axis_trans": false,
         "dep": {

@@ -15,7 +15,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_q_bank_rate",
+        "inttype": "lev_q_short_term_rate",
         "size": "58bp",
         "axis_trans": false,
         "dep":{

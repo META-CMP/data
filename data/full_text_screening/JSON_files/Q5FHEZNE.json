@@ -11,7 +11,7 @@
         "cum": null
     },
     "impulse_and_response_variables": {
-        "inttype": "https://github.com/META-CMP/data/issues/6",
+        "inttype": "lev_m_fed_funds",
         "size": "for bp shock: \"xbp\"\nfor % shock:\n\"x%\"\nfor SD shock (if no information on SD size):\n\"xSD\"",
         "axis_trans": null,
         "dep": "https://github.com/META-CMP/data/issues/10",

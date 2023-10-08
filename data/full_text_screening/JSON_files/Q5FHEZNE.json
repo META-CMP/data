@@ -41,12 +41,12 @@
     "impulse_and_response_variables": {
         "inttype": "lev_m_fed_funds",
         "size": {
-                "model_1": "-25bp",
-                "model_2": "-200bp",
-                "model_3": "-100bp",
-                "model_4": "-100bp",
-                "model_5": "-100bp",
-                "model_6": "-100bp"
+                "model_1": "25bp",
+                "model_2": "200bp",
+                "model_3": "100bp",
+                "model_4": "100bp",
+                "model_5": "100bp",
+                "model_6": "100bp"
         },
         "axis_trans": "y*100",
         "dep": {

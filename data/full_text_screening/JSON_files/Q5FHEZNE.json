@@ -3,89 +3,145 @@
         "key": "Q5FHEZNE",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": null,
-        "model_notes": null,
-        "figure": null,
-        "page": null,
-        "irf": null,
-        "cum": null
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": 4,
+                "model_4": 4,
+                "model_5": "null",
+                "model_6": "null"
+        },
+        "page":  {
+                "model_1": 47,
+                "model_2": 47,
+                "model_3": 49,
+                "model_4": 49,
+                "model_5": 50,
+                "model_6": 50
+        },
+        "irf": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false
+        },
+        "cum": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": true
+        }
     },
     "impulse_and_response_variables": {
         "inttype": "lev_m_fed_funds",
-        "size": "for bp shock: \"xbp\"\nfor % shock:\n\"x%\"\nfor SD shock (if no information on SD size):\n\"xSD\"",
-        "axis_trans": null,
-        "dep": "https://github.com/META-CMP/data/issues/10",
-        "conf": "68  90  95  1_SE  2_SE  80",
+        "size": {
+                "model_1": "-25bp",
+                "model_2": "-200bp",
+                "model_3": "-100bp",
+                "model_4": "-100bp",
+                "model_5": "-100bp",
+                "model_6": "-100bp"
+        },
+        "axis_trans": "y*100",
+        "dep": {
+                "model_1": "log_m_ip log_a_pce_deflator",
+                "model_2": "log_m_ip log_a_pce_deflator",
+                "model_3": "log_m_ip log_a_pce_deflator",
+                "model_4": "log_m_ip log_a_pce_deflator",
+                "model_5": "log_m_ip log_a_pce_deflator",
+                "model_6": "log_m_ip log_a_pce_deflator"
+        },
+        "conf": "90",
         "main": "inflation",
-        "prefer": null
+        "prefer": false
     },
     "identification_strategy": {
-        "iv": null,
-        "forecast_based": null,
-        "nr": null,
-        "event": null,
-        "chol": null,
-        "svar": null,
-        "signr": null,
-        "hf": null,
-        "heteroskedas": null,
-        "longrun": null,
-        "idother": null
+        "iv": false,
+        "forecast_based": true,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
     },
     "estimation_method": {
-        "var": null,
-        "lp": null,
-        "vecm": null,
-        "dyn_ols": "ardl  ecm false",
-        "fvar": null,
-        "tvar": null,
-        "gvar": null,
-        "bayes": null,
-        "dsge": null,
-        "varother": null
+        "var": false,
+        "lp": true,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
     },
     "regime_dependence": {
-        "lor": null,
-        "upr": null,
-        "scr": null,
-        "dcr": null,
-        "hike": null,
-        "cut": null
+        "lor": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": true
+        },
+        "upr":{
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": false,
+                "model_5": true,
+                "model_6": false
+        },
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
     },
     "data_frequency": {
-        "annual": null,
-        "quarter": null,
-        "month": null
+        "annual": false,
+        "quarter": false,
+        "month": true
     },
     "country_composition": {
         "list_of_countries": "US",
         "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": null,
-        "start": null,
-        "end": null,
-        "samplesize": null
+        "panel": false,
+        "start": "01-1969",
+        "end": "12-2007",
+        "samplesize": "null"
     },
     "control_variables": {
-        "comprice": null,
-        "outpgap": null,
-        "find": null,
-        "eglob": null,
-        "cbind": null,
-        "fexch": null,
-        "inflexp": null,
-        "foreignir": null,
-        "fx": null,
-        "lrir": null
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": null,
-        "convent": null,
-        "decomposition": null
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": null
+        "cbanker": true
     }
 }
 

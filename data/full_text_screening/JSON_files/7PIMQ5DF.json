@@ -16,7 +16,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_q_short_term_rate",
-        "size": "-58bp",
+        "size": "58bp",
         "axis_trans": false,
         "dep":{
                 "model_1": "log_q_rgdp log_q_deflator"

@@ -4,7 +4,7 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "null",
+        "model_notes": "model_1 and model_2 for small (25bp) and large (200bp) shocks respectively, model_3, model_4, model_5 and model_6 conditional on high, low, peak high and peak low inflation regimes respectively",
         "figure": {
                 "model_1": "null",
                 "model_2": "null",

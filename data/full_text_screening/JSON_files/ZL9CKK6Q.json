@@ -17,7 +17,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_short_rate",
+        "inttype":{
+                "model_1": "lev_short_rate",
+                "model_2": "lev_discount"
+        }, 
         "size": "1SD",
         "axis_trans": "y*100",
         "dep": {

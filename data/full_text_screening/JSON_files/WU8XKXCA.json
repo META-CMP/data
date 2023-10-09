@@ -26,7 +26,7 @@
         "prefer": {
                 "model_1": true,
                 "model_2": false
-        },
+        }
     },
     "identification_strategy": {
         "iv": false,
@@ -78,11 +78,11 @@
     },
     "control_variables": {
         "comprice": false,
-        "outpgap": null,
+        "outpgap": false,
         "find": {
                 "model_1": false,
                 "model_2": true
-        }
+        },
         "eglob": false,
         "cbind": false,
         "fexch": true,

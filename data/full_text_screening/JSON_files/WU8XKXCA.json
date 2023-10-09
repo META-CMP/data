@@ -4,7 +4,7 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "null",
+        "model_notes": "The dashed lines represent one SE obtained by bootstrapping methods using 300 replications. Model_2 includes dummy variable for pre-1997 crisis.",
         "figure": {
                 "model_1": 5,
                 "model_2": "D1"

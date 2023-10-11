@@ -4,7 +4,7 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "They differenciate between UMP and CMP",
-        "model_notes": "Figures include 2 unobservable factors obtained from principal components. Figure 8 include the initial level of policy rate before the shock. Figure in Appendix C3 include 3 unobservable factors. Figure in Appendix C5 change the cholesky ordering.",
+        "model_notes": "All Figures include 2 unobservable factors obtained from principal components. Figure 4 and 5 (model_5 and model_6) include the initial level of policy rate before the shock. Figure in Appendix C3 (model_8) include 3 unobservable factors. Figure in Appendix C5 (model_10) change the cholesky ordering.",
         "figure": {
                 "model_1": 2,
                 "model_2": 3,
@@ -42,8 +42,8 @@
                 "model_4": "lev_shadow_rate",
                 "model_5": "lev_call_rate",
                 "model_6": "lev_shadow_rate_ueno(2017)",
-                "model_7": "lev_shadow_rate_ueno(2017)",
-                "model_8": "2_year_gov_jp",
+                "model_7": "2_year_gov_jp",
+                "model_8": "lev_shadow_rate",
                 "model_9": "lev_shadow_rate",
                 "model_10": "lev_shadow_rate"
                 

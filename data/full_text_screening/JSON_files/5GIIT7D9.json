@@ -67,7 +67,10 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": "BR US",
+        "list_of_countries": {
+                "model_1": "BR",
+                "model_2": "US"
+        },
         "n_of_countries": 2
     },
     "further_data_characteristics": {

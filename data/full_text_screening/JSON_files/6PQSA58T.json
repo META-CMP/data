@@ -4,7 +4,7 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "They differenciate between UMP and CMP",
-        "model_notes": "The response of the short-term interest rate is the same for all models since they show the response of short_term interest to a shock to shadow rate interest. All the Figures include 2 unobservable factors obtained from principal components. Figure 8 include the initial level of policy rate before the shock. Figure in Appendix C3 include 3 unobservable factors. Figure in Appendix C5 change the cholesky ordering.",
+        "model_notes": "Figures include 2 unobservable factors obtained from principal components. Figure 8 include the initial level of policy rate before the shock. Figure in Appendix C3 include 3 unobservable factors. Figure in Appendix C5 change the cholesky ordering.",
         "figure": {
                 "model_1": 2,
                 "model_2": 3,

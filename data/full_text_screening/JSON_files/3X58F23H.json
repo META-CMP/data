@@ -14,7 +14,7 @@
                 "model_2": 772
         },
         "irf": true,
-        "cum": true
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": {

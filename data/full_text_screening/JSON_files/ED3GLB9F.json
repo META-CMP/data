@@ -31,7 +31,14 @@
         "dep": "log_q_rgdp log_q_deflator",
         "conf": "95",
         "main": "gdp inflation",
-        "prefer": true
+        "prefer": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }
     },
     "identification_strategy": {
         "iv": false,

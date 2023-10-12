@@ -1,0 +1,95 @@
+{
+    "general": {
+        "key": "U7HHY5H5",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "I use EZ refering to Euro-area.",
+        "model_notes": "Figure 2 also reports the responses obtained following an expansionary conventional monetary policy shock (second column) and a UMP announcement surprise (third column). The focus of the paper is UMP but I will only code 1 figure based on CMP. Mixed-Frequency VAR (MF-VAR).",
+        "figure": {
+                "model_1": 2
+        },
+        "page": {
+                "model_1": 84
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_short_term_rate",
+        "size": "-1%",
+        "axis_trans": "*4",
+        "dep": "logdiff_m_ip logdiff_m_cpi",
+        "conf": "68",
+        "main": "other",
+        "prefer": "null"
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": true,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": true
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": true
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "EZ: CZ HU NO PL RO SE DK BG CH",
+        "n_of_countries": 9
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "18-12-2008",
+        "end": "10-05-2014",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": true,
+        "cbind": false,
+        "fexch": true,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": false,
+        "decomposition": true
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

@@ -55,10 +55,7 @@
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": {
-                "model_1": false,
-                "model_2": true
-        },
+        "bayes": false,
         "dsge": {
                 "model_1": false,
                 "model_2": true

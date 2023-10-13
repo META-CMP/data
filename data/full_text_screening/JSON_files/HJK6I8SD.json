@@ -1,0 +1,95 @@
+{
+    "general": {
+        "key": "HJK6I8SD",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "I set dyn_ols to true because they estimate individual country VARs and pool the individual impulse responses to take into account individual heterogeneity. Average impulse responses across countries are obtained by pooling individual country responses with weights corresponding to the country share of output. They estimate the model by least squares. This is not pure panel VAR.",
+        "figure": {
+                "model_1": 5
+        },
+        "page": {
+                "model_1": 354
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_short_term_rate",
+        "size": "100bp",
+        "axis_trans": false,
+        "dep": "lev_gap logdiff_q_cpi",
+        "conf": "68 ",
+        "main": "other",
+        "prefer": "null"
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": true,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": true,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AU BE CA DK FI FR DE IE IT JP NL NZ NO ES SE CH GB US",
+        "n_of_countries": 18
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "Q1-1975",
+        "end": "Q4-2014",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": false,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

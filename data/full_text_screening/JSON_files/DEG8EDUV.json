@@ -24,7 +24,7 @@
         "inttype": "lev_q_fed_funds",
         "size": "25bp",
         "axis_trans": false,
-        "dep": "logdiff_q_rgdp logdif_q_cpi",
+        "dep": "logdiff_q_rgdp logdiff_q_cpi",
         "conf": "68",
         "main": "other",
         "prefer": false

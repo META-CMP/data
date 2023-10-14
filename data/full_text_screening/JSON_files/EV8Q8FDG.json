@@ -1,0 +1,153 @@
+{ 
+    "general": { 
+        "key": "EV8Q8FDG", 
+        "rid1": "ph", 
+        "rid2": "null", 
+        "study_notes": "null", 
+        "model_notes": "note to model 6: results are for expansionary monetary policy shocks only; however, the note to the figure says that the IRF was multiplied by (-1), i.e. shows the impact of an increase in the interest rate; to be multiplied by (-1) to show results for an expansionary shock; therefore, I set axis_trans to y*-1 for model 6.", 
+        "figure": {
+                "model_1": 5,
+                "model_2": 5,
+                "model_3": 6,
+                "model_4": 6,
+                "model_5": 8,
+                "model_6": 8
+        },  
+        "page": {
+                "model_1": 531,
+                "model_2": 531,
+                "model_3": 532,
+                "model_4": 532,
+                "model_5": 536,
+                "model_6": 536
+        },   
+        "irf": true,
+        "cum": false
+    }, 
+    "impulse_and_response_variables": { 
+        "inttype": "lev_a_bank_rate", 
+        "size": "100bp", 
+        "axis_trans": {
+                "model_1": "y*100",
+                "model_2": "y*100",
+                "model_3": "y*100",
+                "model_4": "y*100",
+                "model_5": "y*100",
+                "model_6": "y*100*(-1)"
+        }, 
+        "dep": {
+                "model_1": "log_q_rgdp log_q_cpi",
+                "model_2": "log_q_rgdp log_q_cpi",
+                "model_3": "lev_q_une_rate",
+                "model_4": "lev_q_une_rate",
+                "model_5": "log_q_rgdp log_q_cpi",
+                "model_6": "log_q_rgdp log_q_cpi"
+        }, 
+        "conf": "90", 
+        "main": "gdp  emp  inflation", 
+        "prefer": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false
+        }
+    }, 
+    "identification_strategy": { 
+        "iv": false, 
+        "forecast_based": true, 
+        "nr": true, 
+        "event": false, 
+        "chol": false, 
+        "svar": false, 
+        "signr": false, 
+        "hf": false, 
+        "heteroskedas": false, 
+        "longrun": false, 
+        "idother": false 
+    }, 
+    "estimation_method": { 
+        "var": false, 
+        "lp": true, 
+        "vecm": false, 
+        "dyn_ols": "false", 
+        "fvar": false, 
+        "tvar": false, 
+        "gvar": false, 
+        "bayes": false, 
+        "dsge": false, 
+        "varother": false 
+    }, 
+    "regime_dependence": { 
+        "lor": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false
+        },   
+        "upr": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        },   
+        "scr": false, 
+        "dcr": false, 
+        "hike": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": false
+        },    
+        "cut": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": true
+        }    
+    }, 
+    "data_frequency": { 
+        "annual": false, 
+        "quarter": true, 
+        "month": false 
+    }, 
+    "country_composition": { 
+        "list_of_countries": "UK", 
+        "n_of_countries": 1 
+    }, 
+    "further_data_characteristics": { 
+        "panel": false, 
+        "start": "Q1-1975", 
+        "end": "Q4-2007", 
+        "samplesize": "null" 
+    }, 
+    "control_variables": { 
+        "comprice": false, 
+        "outpgap": false, 
+        "find": false, 
+        "eglob": false, 
+        "cbind": false, 
+        "fexch": false, 
+        "inflexp": false, 
+        "foreignir": false, 
+        "fx": false, 
+        "lrir": false 
+    }, 
+    "econometric_details": { 
+        "pure_rate_shock": true, 
+        "convent": null, 
+        "decomposition": null 
+    }, 
+    "publication_characteristics": { 
+        "cbanker": true 
+    } 
+} 

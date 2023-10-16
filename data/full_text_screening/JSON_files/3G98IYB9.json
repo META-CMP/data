@@ -4,7 +4,7 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "figures not coded because shock size unclear (text says something different than the response of short-term-rates in the plots.", 
+        "model_notes": "figures in appendix not coded because shock size unclear (text says something different than the response of short-term-rates in the plots.", 
         "figure": 2, 
         "page": 287, 
         "irf": true,

@@ -4,7 +4,7 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "note to model 6: results are for expansionary monetary policy shocks only; however, the note to the figure says that the IRF was multiplied by (-1), i.e. shows the impact of an increase in the interest rate; to be multiplied by (-1) to show results for an expansionary shock; therefore, I set axis_trans to y*-1 for model 6.", 
+        "model_notes": "note to model 6: results are for expansionary monetary policy shocks only; however, the note to the figure says that the IRF was multiplied by (-1), i.e. shows the impact of an increase in the interest rate", 
         "figure": {
                 "model_1": 5,
                 "model_2": 5,
@@ -33,7 +33,7 @@
                 "model_3": "y*100",
                 "model_4": "y*100",
                 "model_5": "y*100",
-                "model_6": "y*100*(-1)"
+                "model_6": "y*100"
         }, 
         "dep": {
                 "model_1": "log_q_rgdp log_q_cpi",

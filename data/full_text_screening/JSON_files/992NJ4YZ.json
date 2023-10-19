@@ -16,7 +16,7 @@
         "axis_trans": false,
         "dep": "gr_m_ip logdiff_m_cpi",
         "conf": "90",
-        "main": "gdp",
+        "main": "other",
         "prefer": true
     },
     "identification_strategy": {

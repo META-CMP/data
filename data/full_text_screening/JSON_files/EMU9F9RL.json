@@ -1,0 +1,196 @@
+{
+    "general": {
+        "key": "EMU9F9RL",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "dep: variable transformation for model_2 and model_3 are not clearly defined but most likely the same as for the VAR.",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "null",
+                "model_4": "null",
+                "model_5": "use different measure of income inequality",
+                "model_6": "use different measure of income inequality"
+        },
+        "figure": {
+                "model_1": 6,
+                "model_2": 8,
+                "model_3": 9,
+                "model_4": "A1",
+                "model_5": "A2",
+                "model_6": "A3"
+        },
+        "page": {
+                "model_1": 8,
+                "model_2": 9,
+                "model_3": 10,
+                "model_4": 11,
+                "model_5": 11,
+                "model_6": 12
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": {
+                "model_1": "1SD",
+                "model_2": "null",
+                "model_3": "null",
+                "model_4": "1SD",
+                "model_5": "1SD",
+                "model_6": "1SD"
+        },
+        "axis_trans": false,
+        "dep": {
+                "model_1": "log_q_rgdp log_q_deflator",
+                "model_2": "log_a_rgdp log_a_deflator",
+                "model_3": "log_a_rgdp log_a_deflator",
+                "model_4": "log_q_rgdp log_q_deflator",
+                "model_5": "log_q_rgdp log_q_deflator",
+                "model_6": "log_q_rgdp log_q_deflator"
+        },
+        "conf": "95",
+        "main": "other",
+        "prefer": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true
+        },
+        "svar": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        },
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        },
+        "idother": false
+    },
+    "estimation_method": {
+        "var": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true
+        },
+        "lp": false,
+        "vecm": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        },
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        },
+        "quarter": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true
+        },
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "Q1-1960",
+                "model_2": "1960",
+                "model_3": "1960",
+                "model_4": "Q1-1960",
+                "model_5": "Q1-1960",
+                "model_6": "Q1-1960"
+        },
+        "end": {
+                "model_1": "Q4-2012",
+                "model_2": "2012",
+                "model_3": "2012",
+                "model_4": "Q4-2008",
+                "model_5": "Q4-2012",
+                "model_6": "Q4-2012"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

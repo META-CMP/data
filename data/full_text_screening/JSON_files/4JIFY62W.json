@@ -4,7 +4,7 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "null",
+        "model_notes": "dep: no clear distinction between log_a_rgp or log_q_rgdp, but in note 18 they stated that Gruen, Romalis and Chandra consider the effects of a one percentage point rise in the real interest rate. To compare with our results, we scale their results by ¼. Then I understand it is in quarter levels. ",
         "figure": {
                 "model_1": 2,
                 "model_2": "3a"
@@ -19,8 +19,8 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_cash_rate",
         "size": "25bp",
-        "axis_trans": "y*100",
-        "dep": "log_rgdp log_cpi",
+        "axis_trans": "y*100 lev_a_cash_rate_false",
+        "dep": "log_q_rgdp log_q_cpi",
         "conf": "90",
         "main": "gdp inflation",
         "prefer": {
@@ -85,7 +85,7 @@
         },
         "eglob": false,
         "cbind": false,
-        "fexch": true,
+        "fexch": false,
         "inflexp": false,
         "foreignir": true,
         "fx": true,

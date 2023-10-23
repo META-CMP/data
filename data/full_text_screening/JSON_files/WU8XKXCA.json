@@ -4,7 +4,7 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "The dashed lines represent one SE obtained by bootstrapping methods using 300 replications. Model_2 includes dummy variable for pre-1997 crisis.",
+        "model_notes": "model_2: includes dummy variable for pre-1997 financial crisis, that's the reason why in model_2 I set to true find; size: they stated that shock size is 1SD and that the standard deviation of estimated monetary policy shock is 1.00, but the reponse of interest rate is 55bp and due to the fact that is a SVAR, I prefer 1SD (not purely cholesky).",
         "figure": {
                 "model_1": 5,
                 "model_2": "D1"
@@ -17,10 +17,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_q_call_rate",
+        "inttype": "lev_call_rate",
         "size": "1SD",
-        "axis_trans": "y*100",
-        "dep": "logdiff_q_gdp logdiff_q_cpi",
+        "axis_trans": "y*100 lev_call_rate_false",
+        "dep": "logdiff_a_gdp logdiff_a_cpi",
         "conf": "1_SE",
         "main": "other",
         "prefer": {
@@ -30,11 +30,11 @@
     },
     "identification_strategy": {
         "iv": false,
-        "forecast_based": true,
+        "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
-        "svar": false,
+        "chol": false,
+        "svar": true,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
@@ -85,11 +85,11 @@
         },
         "eglob": false,
         "cbind": false,
-        "fexch": true,
+        "fexch": false,
         "inflexp": false,
         "foreignir": true,
         "fx": true,
-        "lrir": false
+        "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,

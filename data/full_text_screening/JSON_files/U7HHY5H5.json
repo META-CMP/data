@@ -3,8 +3,8 @@
         "key": "U7HHY5H5",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "I use EZ refering to Euro-area.",
-        "model_notes": "Figure 2 also reports the responses obtained following an expansionary conventional monetary policy shock (second column) and a UMP announcement surprise (third column). The focus of the paper is UMP but I will only code 1 figure based on CMP. Mixed-Frequency VAR (MF-VAR).",
+        "study_notes": "list_of_countries: I use EZ refering to Euro-area.",
+        "model_notes": "axis_trans: the x-axis is in weeks, so we also need to multiply by 4 to compare with months or 16 to compare in quarters; model_1: report the responses obtained following an expansionary conventional monetary policy shock (second column) and a UMP announcement surprise (third column); main: the focus of the paper is UMP but I will only code 1 figure based on CMP; estimation_method: mixed-frequency VAR (MF-VAR).",
         "figure": {
                 "model_1": 2
         },
@@ -17,11 +17,11 @@
     "impulse_and_response_variables": {
         "inttype": "lev_short_term_rate",
         "size": "-1%",
-        "axis_trans": "*4",
+        "axis_trans": "y*100 lev_short_term_rate_false",
         "dep": "logdiff_m_ip logdiff_m_cpi",
         "conf": "68",
         "main": "other",
-        "prefer": "null"
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,
@@ -54,7 +54,7 @@
         "scr": false,
         "dcr": false,
         "hike": false,
-        "cut": true
+        "cut": false
     },
     "data_frequency": {
         "annual": false,
@@ -75,17 +75,17 @@
         "comprice": false,
         "outpgap": false,
         "find": true,
-        "eglob": true,
+        "eglob": false,
         "cbind": false,
-        "fexch": true,
+        "fexch": false,
         "inflexp": false,
-        "foreignir": true,
+        "foreignir": false,
         "fx": true,
         "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,
-        "convent": false,
+        "convent": true,
         "decomposition": true
     },
     "publication_characteristics": {

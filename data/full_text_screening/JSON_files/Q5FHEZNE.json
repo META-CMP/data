@@ -4,7 +4,14 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "model_1 and model_2 for small (25bp) and large (200bp) shocks respectively, model_3, model_4, model_5 and model_6 conditional on high, low, peak high and peak low inflation regimes respectively",
+        "model_notes": {
+                "model_1": "they already standarised the size of the shock. State dependence, control for small shock (25pp).",
+                "model_2": "they already standarised the size of the shock. State dependence, control for large shock (200bp).",
+                "model_3": "conditional on high inflation regime.",
+                "model_4": "conditional on low inflation regime.",
+                "model_5": "conditional on peak high inflation regime.",
+                "model_6": "conditional on peak low inflation regime."
+        },
         "figure": {
                 "model_1": "null",
                 "model_2": "null",
@@ -48,18 +55,18 @@
                 "model_5": "100bp",
                 "model_6": "100bp"
         },
-        "axis_trans": "y*100",
-        "dep": {
-                "model_1": "log_m_ip log_a_pce_deflator",
-                "model_2": "log_m_ip log_a_pce_deflator",
-                "model_3": "log_m_ip log_a_pce_deflator",
-                "model_4": "log_m_ip log_a_pce_deflator",
-                "model_5": "log_m_ip log_a_pce_deflator",
-                "model_6": "log_m_ip log_a_pce_deflator"
-        },
+        "axis_trans": false,
+        "dep": "log_m_ip log_a_pce_deflator",
         "conf": "90",
         "main": "inflation",
-        "prefer": false
+        "prefer": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }
     },
     "identification_strategy": {
         "iv": false,

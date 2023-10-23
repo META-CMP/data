@@ -4,7 +4,7 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "It is a working paper in industry level, but it has some aggregated response",
-        "model_notes": "null",
+        "model_notes": "model_1: new method of identification strategy in a mix of HF, they proxy the monetary policy shock by taking residuals from an estimated Taylor rule.",
         "figure":  {
                 "model_1": 1
         },
@@ -17,11 +17,11 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",
         "size": "1%",
-        "axis_trans": "y*100",
+        "axis_trans": "y*100 lev_a_short_term_rate_false",
         "dep": "gr_a_gap_r gr_a_gap_deflator",
         "conf": "95",
         "main": "other",
-        "prefer": "null"
+        "prefer": true
     },
     "identification_strategy": {
         "iv": true,
@@ -72,20 +72,20 @@
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
         "find": false,
         "eglob": false,
         "cbind": false,
-        "fexch": true,
+        "fexch": false,
         "inflexp": false,
-        "foreignir": true,
-        "fx": true,
+        "foreignir": false,
+        "fx": false,
         "lrir": false
     },
     "econometric_details": {
         "pure_rate_shock": true,
-        "convent": false,
+        "convent": true,
         "decomposition": false
     },
     "publication_characteristics": {

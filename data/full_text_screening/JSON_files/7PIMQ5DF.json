@@ -4,7 +4,9 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "null",
+        "model_notes": {
+                "model_1": "16th & 84th percentiles of the impulse responses."
+        },
         "figure": {
                 "model_1": 2
         },
@@ -19,11 +21,11 @@
         "size": "58bp",
         "axis_trans": false,
         "dep":{
-                "model_1": "log_q_rgdp log_q_deflator"
+                "model_1": "log_a_rgdp log_a_deflator"
         },
-        "conf": "16th & 84th percentiles of the impulse responses",
+        "conf": "16 & 84",
         "main": "gdp inflation other",
-        "prefer": false
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,
@@ -74,19 +76,19 @@
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
         "find": false,
         "eglob": false,
         "cbind": false,
-        "fexch": true,
+        "fexch": false,
         "inflexp": false,
         "foreignir": false,
         "fx": true,
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": false,
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

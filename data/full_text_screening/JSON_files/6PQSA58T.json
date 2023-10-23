@@ -3,8 +3,20 @@
         "key": "6PQSA58T",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "They differenciate between UMP and CMP",
-        "model_notes": "All Figures include 2 unobservable factors obtained from principal components. Figure 4 and 5 (model_5 and model_6) include the initial level of policy rate before the shock. Figure in Appendix C3 (model_8) include 3 unobservable factors. Figure in Appendix C5 (model_10) change the cholesky ordering.",
+        "study_notes": "decomposition: they differenciate between UMP and CMP; line red refers to CMP.",
+        "model_notes": {
+                "model_1": "includes 2 unobservable factors obtained from principal components.",
+                "model_2": "includes 2 unobservable factors obtained from principal components.",
+                "model_3": "includes 2 unobservable factors obtained from principal components.",
+                "model_4": "includes 2 unobservable factors obtained from principal components.",
+                "model_5": "includes 2 unobservable factors obtained from principal components; also it includes the initial level of policy rate before the shock.",
+                "model_6": "includes 2 unobservable factors obtained from principal components; also it includes the initial level of policy rate before the shock.",
+                "model_7": "includes 2 unobservable factors obtained from principal components.",
+                "model_8": "includes 3 unobservable factors obtained from principal components.",
+                "model_9": "includes 2 unobservable factors obtained from principal components.",
+                "model_10": "includes 2 unobservable factors obtained from principal components; change the cholesky ordering."
+                
+        },
         "figure": {
                 "model_1": 2,
                 "model_2": 3,
@@ -36,16 +48,16 @@
     },
     "impulse_and_response_variables": {
         "inttype": {
-                "model_1": "lev_shadow_rate",
-                "model_2": "lev_shadow_rate",
-                "model_3": "lev_shadow_rate",
-                "model_4": "lev_shadow_rate",
+                "model_1": "lev_ssr",
+                "model_2": "lev_ssr",
+                "model_3": "lev_ssr",
+                "model_4": "lev_ssr",
                 "model_5": "lev_call_rate",
-                "model_6": "lev_shadow_rate_ueno(2017)",
+                "model_6": "lev_ssr",
                 "model_7": "2_year_gov_jp",
-                "model_8": "lev_shadow_rate",
-                "model_9": "lev_shadow_rate",
-                "model_10": "lev_shadow_rate"
+                "model_8": "lev_ssr",
+                "model_9": "lev_ssr",
+                "model_10": "lev_ssr"
                 
         },
         "size": "-100bp",
@@ -64,8 +76,20 @@
                 
         },
         "conf": "95",
-        "main": "gdp inflation emp",
-        "prefer": "null"
+        "main": "gdp emp inflation",
+        "prefer": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false 
+                
+        }
     },
     "identification_strategy": {
         "iv": false,
@@ -164,84 +188,12 @@
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false,
-                "model_7": false,
-                "model_8": false,
-                "model_9": false,
-                "model_10": false
-                
-        },
-        "outpgap": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false,
-                "model_7": false,
-                "model_8": false,
-                "model_9": false,
-                "model_10": false
-                
-        },
-        "find": {
-                "model_1": false,
-                "model_2": true,
-                "model_3": true,
-                "model_4": true,
-                "model_5": true,
-                "model_6": false,
-                "model_7": false,
-                "model_8": false,
-                "model_9": false,
-                "model_10": false
-                
-        },
-        "eglob": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false,
-                "model_7": false,
-                "model_8": false,
-                "model_9": false,
-                "model_10": false
-                
-        },
-        "cbind": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false,
-                "model_7": false,
-                "model_8": false,
-                "model_9": false,
-                "model_10": false
-                
-        },
-        "fexch": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false,
-                "model_7": false,
-                "model_8": false,
-                "model_9": false,
-                "model_10": false
-                
-        },
+        "comprice": false,
+        "outpgap": true,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
         "inflexp": {
                 "model_1": false,
                 "model_2": true,
@@ -255,48 +207,24 @@
                 "model_10": false
                 
         },
-        "foreignir": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false,
-                "model_7": false,
-                "model_8": false,
-                "model_9": false,
-                "model_10": false
-                
-        },
-        "fx": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false,
-                "model_7": false,
-                "model_8": false,
-                "model_9": false,
-                "model_10": false
-                
-        },
-        "lrir": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false,
-                "model_7": false,
-                "model_8": false,
-                "model_9": false,
-                "model_10": false
-                
-        }
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": false,
+        "pure_rate_shock": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true,
+                "model_9": true,
+                "model_10": true
+                
+        },
         "convent": {
                 "model_1": true,
                 "model_2": true,
@@ -310,7 +238,7 @@
                 "model_10": true
                 
         },
-        "decomposition": true
+        "decomposition": false
     },
     "publication_characteristics": {
         "cbanker": true

@@ -3,15 +3,13 @@
         "key": "GM9NF3YK",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "Euro area in 2006 was of 12 countries",
-        "model_notes": "In cholesky 1 SD, is alwayis equal to 1, proof: Ambrogio Cesa-Bianchi (2022) VAR Toolbox 3, so the size is equal to 1 according to the levels used for the interest rate. The solid lines are calculated as the median of the bootstrapped impulse. Dotted lines are 95% Hall confidence intervals derived from a bootstrap procedure with 2000 replications",
+        "study_notes": "list_of_countries: euro-area in 2006 was of 12 countries.",
+        "model_notes": "conf: the solid lines are calculated as the median of the bootstrapped impulse, dotted lines are 95% Hall confidence intervals derived from a bootstrap procedure with 2000 replications; ",
         "figure": {
-                "model_1": 1,
-                "model_2": 2
+                "model_1": 1
         },
         "page": {
-                "model_1": 15,
-                "model_2": 18
+                "model_1": 15
         },
         "irf": true,
         "cum": false
@@ -23,32 +21,23 @@
         "dep": "log_a_rgdp gr_a_deflator",
         "conf": "95",
         "main": "other",
-        "prefer": false
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": {
-                "model_1": true,
-                "model_2": false
-        },
+        "chol": true,
         "svar": false,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
-        "idother": {
-                "model_1": false,
-                "model_2": true
-        }
+        "idother": false
     },
     "estimation_method": {
-        "var": {
-                "model_1": true,
-                "model_2": false
-        },
+        "var": true,
         "lp": false,
         "vecm": false,
         "dyn_ols": "false",
@@ -56,10 +45,7 @@
         "tvar": false,
         "gvar": false,
         "bayes": false,
-        "dsge": {
-                "model_1": false,
-                "model_2": true
-        },
+        "dsge": false,
         "varother": false
     },
     "regime_dependence": {
@@ -76,7 +62,7 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": "EZ",
+        "list_of_countries": "EZ: AT BE FI FR DE IE IT LU NL PT ES GR",
         "n_of_countries": 12
     },
     "further_data_characteristics": {

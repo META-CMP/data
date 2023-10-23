@@ -25,8 +25,11 @@
         "axis_trans": false,
         "dep": "log_a_rgap gr_a_cpi gr_a_domestic_cpi",
         "conf": "90",
-        "main": "gdp inflation other",
-        "prefer": "null"
+        "main": "other",
+        "prefer": {
+                "model_1": true,
+                "model_2": false
+        }
     },
     "identification_strategy": {
         "iv": false,
@@ -85,7 +88,7 @@
         "find": true,
         "eglob": true,
         "cbind": false,
-        "fexch": true,
+        "fexch": false,
         "inflexp": true,
         "foreignir": true,
         "fx": true,

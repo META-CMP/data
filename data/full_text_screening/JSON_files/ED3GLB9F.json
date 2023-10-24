@@ -3,8 +3,15 @@
         "key": "ED3GLB9F",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "They differenciate two different regimes, Great Inflation between 1960 and 1984, and Great Moderation between 1984 and 2008. More time-periods considered in robustness checks.",
-        "model_notes": "They employ non-recursive SVAR with break (SVAR-WB henceforth). Model 5 and 6 (Figures 6) use different definition of investment as in Justiniano et al. (2010, 2011).",
+        "study_notes": "regime_dependence: they differenciate two different regimes, Great Inflation between 1960 and 1984, and Great Moderation between 1984 and 2008; more time-periods considered in robustness checks.",
+        "model_notes": {
+                "model_1": "they employ non-recursive SVAR with break (SVAR-WB henceforth).",
+                "model_2": "they employ non-recursive SVAR with break (SVAR-WB henceforth).",
+                "model_3": "they employ non-recursive SVAR with break (SVAR-WB henceforth).",
+                "model_4": "they employ non-recursive SVAR with break (SVAR-WB henceforth).",
+                "model_5": "they employ non-recursive SVAR with break (SVAR-WB henceforth); use different definition of investment as in Justiniano et al. (2010, 2011).",
+                "model_6": "they employ non-recursive SVAR with break (SVAR-WB henceforth); use different definition of investment as in Justiniano et al. (2010, 2011)."
+        },
         "figure": {
                 "model_1": 1,
                 "model_2": 1,
@@ -70,7 +77,7 @@
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {

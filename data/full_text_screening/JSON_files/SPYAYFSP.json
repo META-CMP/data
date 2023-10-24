@@ -3,8 +3,10 @@
         "key": "SPYAYFSP",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "EZ represents Eurozone",
-        "model_notes": "null",
+        "study_notes": "list_of_countries: EZ represents Eurozone.",
+        "model_notes": {
+                "model_1": "the model is a near-VAR; I set dyn_ols to true because they use country-specific equations in the VAR, so it is not a pure panel VAR."
+        },
         "figure": {
                 "model_1": 2 
         },
@@ -15,10 +17,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "eonia",
+        "inttype": "lev_eonia",
         "size": "null",
         "axis_trans": false,
-        "dep": "log_rgdp log_cpi",
+        "dep": "log_a_rgdp log_a_cpi",
         "conf": "68",
         "main": "gdp inflation",
         "prefer": true
@@ -37,23 +39,23 @@
         "idother": false
     },
     "estimation_method": {
-        "var": true,
+        "var": false,
         "lp": false,
         "vecm": false,
-        "dyn_ols": "false",
+        "dyn_ols": true,
         "fvar": false,
         "tvar": false,
         "gvar": false,
         "bayes": true,
         "dsge": false,
-        "varother": false
+        "varother": true
     },
     "regime_dependence": {
         "lor": false,
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {
@@ -62,11 +64,11 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": "EZ",
-        "n_of_countries": 19
+        "list_of_countries": "EZ: DE FR IT ES NL BE AT PT IE FI",
+        "n_of_countries": 10
     },
     "further_data_characteristics": {
-        "panel": false,
+        "panel": true,
         "start": "Q1-1995",
         "end": "Q3-2015",
         "samplesize": "null"
@@ -85,7 +87,7 @@
     },
     "econometric_details": {
         "pure_rate_shock": true,
-        "convent": false,
+        "convent": true,
         "decomposition": false
     },
     "publication_characteristics": {

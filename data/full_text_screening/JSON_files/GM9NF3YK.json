@@ -3,8 +3,10 @@
         "key": "GM9NF3YK",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "list_of_countries: euro-area in 2006 was of 12 countries.",
-        "model_notes": "conf: the solid lines are calculated as the median of the bootstrapped impulse, dotted lines are 95% Hall confidence intervals derived from a bootstrap procedure with 2000 replications; ",
+        "study_notes": "list_of_countries: they use EA as aggregate data.",
+        "model_notes": {
+                "model_1": "conf: the solid lines are calculated as the median of the bootstrapped impulse, dotted lines are 95% Hall confidence intervals derived from a bootstrap procedure with 2000 replications; "
+        },
         "figure": {
                 "model_1": 1
         },
@@ -62,8 +64,8 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": "EZ: AT BE FI FR DE IE IT LU NL PT ES GR",
-        "n_of_countries": 12
+        "list_of_countries": "EA",
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,

@@ -3,7 +3,7 @@
         "key": "SPYAYFSP",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "list_of_countries: EZ represents Eurozone.",
+        "study_notes": "list_of_countries: they used euro-area but panel.",
         "model_notes": {
                 "model_1": "the model is a near-VAR; I set dyn_ols to true because they use country-specific equations in the VAR, so it is not a pure panel VAR."
         },
@@ -64,7 +64,7 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": "EZ: DE FR IT ES NL BE AT PT IE FI",
+        "list_of_countries": "DE FR IT ES NL BE AT PT IE FI",
         "n_of_countries": 10
     },
     "further_data_characteristics": {

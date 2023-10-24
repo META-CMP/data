@@ -3,7 +3,7 @@
         "key": "ZH68XCQ2",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "Only coded Figure 1 (model_1) because the rest of the figures did not present standard errors.",
+        "study_notes": "null",
         "model_notes": "null",
         "figure": {
                 "model_1": 1
@@ -15,13 +15,13 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_q_overnight_cash_rate,",
-        "size": "25bp",
-        "axis_trans": "y*100 log_q_rgdp",
+        "inttype": "lev_a_overnight_cashrate",
+        "size": "57bp",
+        "axis_trans": "log_q_rgdp_y*100",
         "dep": "log_q_rgdp gr_q_cpi",
         "conf": "90",
-        "main": "other gdp inflation",
-        "prefer": false
+        "main": "other",
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,
@@ -53,7 +53,7 @@
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {
@@ -75,7 +75,7 @@
         "comprice": true,
         "outpgap": false,
         "find": true,
-        "eglob": true,
+        "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,

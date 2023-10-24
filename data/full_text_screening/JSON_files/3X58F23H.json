@@ -3,8 +3,11 @@
         "key": "3X58F23H",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "list_of_countries: EZ means Eurozone.",
-        "model_notes": "conf: 16th & 84th percentiles, the percentiles work as confidence interval; the paper differenciate two periods, I will only code pre-2007 estimates.",
+        "study_notes": "list_of_countries: EA means Eurozone.",
+        "model_notes":{
+                "model_1": "conf: 16th & 84th percentiles, the percentiles work as confidence interval; the paper differenciate two periods, I will only code pre-2007 estimates.",
+                "model_2": "conf: 16th & 84th percentiles, the percentiles work as confidence interval; the paper differenciate two periods, I will only code pre-2007 estimates."
+        },
         "figure": {
                 "model_1": 4,
                 "model_2": 4
@@ -72,11 +75,11 @@
     "country_composition": {
         "list_of_countries": {
                 "model_1": "US",
-                "model_2": "EZ: AT BE FI FR DE IE IT LU NL PT ES GR SI CY MT SK EE LV LT"
+                "model_2": "EA"
         },
         "n_of_countries": {
                 "model_1": 1,
-                "model_2": 19
+                "model_2": 1
         }
     },
     "further_data_characteristics": {

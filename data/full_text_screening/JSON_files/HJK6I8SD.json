@@ -4,7 +4,9 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "I set dyn_ols to true because they estimate individual country VARs and pool the individual impulse responses to take into account individual heterogeneity. Average impulse responses across countries are obtained by pooling individual country responses with weights corresponding to the country share of output. They estimate the model by least squares. This is not pure panel VAR.",
+        "model_notes": {
+                "model_1": "I set dyn_ols to true because they estimate individual country VARs and average impulse responses across countries are obtained by pooling individual country responses with weights corresponding to the country share of output to take into account individual heterogeneity; they estimate the model by least squares; this is not pure panel VAR."
+        },
         "figure": {
                 "model_1": 5
         },
@@ -18,10 +20,10 @@
         "inttype": "lev_short_term_rate",
         "size": "100bp",
         "axis_trans": false,
-        "dep": "lev_gap logdiff_q_cpi",
-        "conf": "68 ",
+        "dep": "lev_q_rgap logdiff_q_cpi",
+        "conf": "68",
         "main": "other",
-        "prefer": "null"
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,
@@ -53,7 +55,7 @@
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {
@@ -74,7 +76,7 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
@@ -85,7 +87,7 @@
     },
     "econometric_details": {
         "pure_rate_shock": true,
-        "convent": false,
+        "convent": true,
         "decomposition": false
     },
     "publication_characteristics": {

@@ -22,7 +22,7 @@
                 "model_2": "lev_eonia"
         },
         "size": "null",
-        "axis_trans": "y*100 lev_fed_funds_y*10 lev_eonia_y*10",
+        "axis_trans": "y*100 lev_fed_funds_false lev_eonia_false",
         "dep": "log_a_rgdp log_a_cpi",
         "conf": "16 & 84",
         "main": "gdp inflation",

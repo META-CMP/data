@@ -4,7 +4,12 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "For the variables expressed in levels, the results in Figure 1 are the non-cumulative impulse response functions, whereas for the variables expressed in log-differences, the results in the same Figure correspond to the cumulative impulse response functions.",
+        "model_notes": {
+                "model_1": "results for dep logdiff_a_rgdp logdiff_a_cpi are cumulative impulse response, except for lev_a_fed_funds.", 
+                "model_2": "results for dep logdiff_a_rgdp logdiff_a_cpi are cumulative impulse response, except for lev_a_fed_funds.",
+                "model_3": "results for dep logdiff_a_rgdp logdiff_a_cpi are cumulative impulse response, except for lev_a_fed_funds.",
+                "model_4": "results for dep logdiff_q_rgdp logdiff_a_cpi are cumulative impulse response, except for lev_a_fed_funds."
+        },
         "figure": {
                 "model_1": 1, 
                 "model_2": 1,
@@ -18,16 +23,26 @@
                 "model_4": "A-7"
         },
         "irf": true,
-        "cum": true
+        "cum": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true
+        }
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_q_fed_funds",
+        "inttype": "lev_a_fed_funds",
         "size": "25bp",
         "axis_trans": false,
-        "dep": "logdiff_q_rgdp logdiff_q_cpi",
+        "dep": "logdiff_a_rgdp logdiff_a_cpi",
         "conf": "68",
         "main": "other",
-        "prefer": false
+        "prefer": {
+                "model_1": true, 
+                "model_2": true,
+                "model_3": false,
+                "model_4": false
+        }
     },
     "identification_strategy": {
         "iv": true,
@@ -79,7 +94,7 @@
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {
@@ -121,7 +136,7 @@
     },
     "econometric_details": {
         "pure_rate_shock": true,
-        "convent": false,
+        "convent": true,
         "decomposition": false
     },
     "publication_characteristics": {

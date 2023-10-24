@@ -5,7 +5,7 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-                "model_1": "16th & 84th percentiles of the impulse responses."
+                "model_1": "conf: 16th & 84th percentiles of the impulse responses."
         },
         "figure": {
                 "model_1": 2
@@ -23,7 +23,7 @@
         "dep":{
                 "model_1": "log_a_rgdp log_a_deflator"
         },
-        "conf": "16 & 84",
+        "conf": "68",
         "main": "gdp inflation other",
         "prefer": true
     },

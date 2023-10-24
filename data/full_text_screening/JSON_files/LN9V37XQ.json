@@ -3,8 +3,13 @@
         "key": "LN9V37XQ",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "The study differentiates two periods, conventional monetary policy and unconventional monetary policy. I will code only conventional monetary policy period.",
-        "model_notes": "Figure A8 and A9 corresponding to model_3 and 4, include another moderator vairable: inequality measure of  P90-50 and P50-10 respectively. ",
+        "study_notes": "null",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "include another moderator vairable inequality measure of  P90-50 and P50-10 respectively",
+                "model_4": "include another moderator vairable inequality measure of  P90-50 and P50-10 respectively" 
+        },
         "figure":  {
                 "model_1": 3,
                 "model_2": 7,
@@ -21,7 +26,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
+        "inttype": "lev_fed_funds",
         "size": "1SD",
         "axis_trans": false,
         "dep": "log_a_rgdp log_a_deflator",
@@ -39,7 +44,7 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
+        "chol": false,
         "svar": true,
         "signr": false,
         "hf": false,
@@ -64,7 +69,7 @@
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {

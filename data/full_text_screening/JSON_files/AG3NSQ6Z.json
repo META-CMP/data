@@ -3,8 +3,14 @@
         "key": "AG3NSQ6Z",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
-        "model_notes": "The model are reestimated by setting some key parameters to values that would help in generating an increase in inflation after a monetary policy tightening (model_3 to model_5). Model_3: all firms are subject to the cost channel of monetary policy. Model_4: same as model_3 but full price and wage indexation, prices are optimally reset every two periods and wages are optimally reset every four periods. Model_5: elasticity of investment to Tobin’s Q increases, making investment highly responsive to any change in economic conditions.",
+        "study_notes": "inttype: they use demeaned_q_fedfunds, I will code as lev_q_fed_funds; size: all models use 1SD but not is the same size; dep: the output is detrended using a quadratic trend, that's the reason why I use gap_a_ip.",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "reestimated by setting some key parameters to values that would help in generating an increase in inflation after a monetary policy tightening; all firms are subject to the cost channel of monetary policy.",
+                "model_4": "reestimated by setting some key parameters to values that would help in generating an increase in inflation after a monetary policy tightening; same as model_3 but full price and wage indexation, prices are optimally reset every two periods and wages are optimally reset every four periods.",
+                "model_5": "reestimated by setting some key parameters to values that would help in generating an increase in inflation after a monetary policy tightening; elasticity of investment to Tobin’s Q increases, making investment highly responsive to any change in economic conditions."  
+        },
         "figure": {
                 "model_1": 2,
                 "model_2": 4,
@@ -23,16 +29,16 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "demeaned_q_fedfunds",
+        "inttype": "lev_q_fedfunds",
         "size": {
-                "model_1": "1SD(21bp)",
-                "model_2": "1SD(25bp)",
-                "model_3": "1SD(25bp)",
-                "model_4": "1SD(25bp)",
-                "model_5": "1SD(25bp)"
+                "model_1": "21bp",
+                "model_2": "25bp",
+                "model_3": "25bp",
+                "model_4": "25bp",
+                "model_5": "25bp"
         },
         "axis_trans": false,
-        "dep": "gap_q_ip gr_q_deflator",
+        "dep": "gap_a_ip gr_q_deflator",
         "conf": {
                 "model_1": "2_SE", 
                 "model_2": "3_SE",
@@ -42,7 +48,7 @@
         },
         "main": "inflation",
         "prefer": {
-                "model_1": false, 
+                "model_1": true, 
                 "model_2": true,
                 "model_3": false,
                 "model_4": false,
@@ -109,7 +115,7 @@
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {

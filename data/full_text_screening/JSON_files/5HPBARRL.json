@@ -3,8 +3,8 @@
         "key": "5HPBARRL",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "The study use disaggregated data of cities. But there is one aggregate IRF. I will only code this aggregate IRF.",
-        "model_notes": "The solid line indicates the modal impulse response, while the dotted lines are the 16th and 84th percentiles of the impulse response function distributions. The percentiles work as a confidence interval.",
+        "study_notes": "null",
+        "model_notes": "model_1: the solid line indicates the modal impulse response, while the dotted lines are the 16th and 84th percentiles of the impulse response function distributions; the percentiles work as a confidence interval.",
         "figure": {
                 "model_1": 1
         },
@@ -19,9 +19,9 @@
         "size": "33bp",
         "axis_trans": false,
         "dep": "log_q_rgdp log_q_core",
-        "conf": "16th & 84th percentiles",
+        "conf": "16 & 84",
         "main": "other",
-        "prefer": false
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,
@@ -53,7 +53,7 @@
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {

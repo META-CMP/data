@@ -3,8 +3,11 @@
         "key": "A26S5KHF",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "EZ iso for the Eurozone",
-        "model_notes": "There are some Figures that don't have confidence interval. I only code Figures with confidence intervals. The euro area impulse responses are obtained by averaging over the impulse responses of member countries using PPP GDP weights. Figures show the median and the 5% and 95% quantiles of the bootstrap distribution.",
+        "study_notes": "list_of_countries: used EZ iso for the Eurozone; size: 1SD that corresponds to 22bp. We therefore code 22bp.",
+        "model_notes": {
+                "model_1": "euro area impulse responses are obtained by averaging over the impulse responses of member countries using PPP GDP weights. We therefore set dyn_ols also true; show the median and the 5% and 95% quantiles of the bootstrap distribution.",
+                "model_2": "euro area impulse responses are obtained by averaging over the impulse responses of member countries using PPP GDP weights. We therefore set dyn_ols also true; show the median and the 5% and 95% quantiles of the bootstrap distribution."
+        },
         "figure": {
                 "model_1": "5a",
                 "model_2": "5a"
@@ -17,37 +20,37 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "fed_funds",
-        "size": "1SD(22bp)",
+        "inttype": "lev_fed_funds",
+        "size": "22bp",
         "axis_trans": false,
-        "dep": "log_q_gap logdiff_q_cpi",
+        "dep": "log_a_gap logdiff_a_cpi",
         "conf": "90",
         "main": "gdp inflation",
         "prefer": "null"
     },
     "identification_strategy": {
-        "iv": true,
+        "iv": false,
         "forecast_based": false,
         "nr": false,
         "event": false,
         "chol": false,
         "svar": true,
-        "signr": true,
+        "signr": false,
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
-        "idother": true
+        "idother": false
     },
     "estimation_method": {
         "var": false,
         "lp": false,
         "vecm": true,
-        "dyn_ols": "false",
+        "dyn_ols": true,
         "fvar": false,
         "tvar": false,
         "gvar": true,
         "bayes": false,
-        "dsge": true,
+        "dsge": false,
         "varother": false
     },
     "regime_dependence": {
@@ -55,7 +58,7 @@
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {
@@ -66,7 +69,7 @@
     "country_composition": {
         "list_of_countries": {
                 "model_1": "US",
-                "model_2": "EZ"
+                "model_2": "EZ: AT BE FI FR DE IE IT LU NL PT ES GR"
         },
         "n_of_countries": {
                 "model_1": 1,
@@ -81,15 +84,15 @@
     },
     "control_variables": {
         "comprice": true,
-        "outpgap": true,
-        "find": true,
-        "eglob": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
         "cbind": false,
-        "fexch": true,
-        "inflexp": true,
-        "foreignir": true,
-        "fx": true,
-        "lrir": true
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
     },
     "econometric_details": {
         "pure_rate_shock": true,

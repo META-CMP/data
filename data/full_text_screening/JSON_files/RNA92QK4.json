@@ -9,27 +9,27 @@
                 "model_1": 4 
         },
         "page": {
-                "model_1": 149
+                "model_1": 148-150
         },
         "irf": true,
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "short_term",
+        "inttype": "lev_a_7_day_repo",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "gr_ip gr_a_cpi",
+        "dep": "gr_a_ip gr_a_cpi",
         "conf": "2_SE",
-        "main": "gdp inflation",
-        "prefer": "null"
+        "main": "other",
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
-        "svar": false,
+        "chol": false,
+        "svar": true,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
@@ -53,7 +53,7 @@
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {
@@ -85,7 +85,7 @@
     },
     "econometric_details": {
         "pure_rate_shock": true,
-        "convent": false,
+        "convent": true,
         "decomposition": false
     },
     "publication_characteristics": {

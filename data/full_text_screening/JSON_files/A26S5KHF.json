@@ -3,7 +3,7 @@
         "key": "A26S5KHF",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "list_of_countries: used EZ iso for the Eurozone; size: 1SD that corresponds to 22bp. We therefore code 22bp.",
+        "study_notes": "list_of_countries: used EA iso for the Eurozone; size: 1SD that corresponds to 22bp. We therefore code 22bp.",
         "model_notes": {
                 "model_1": "euro area impulse responses are obtained by averaging over the impulse responses of member countries using PPP GDP weights. We therefore set dyn_ols also true; show the median and the 5% and 95% quantiles of the bootstrap distribution.",
                 "model_2": "euro area impulse responses are obtained by averaging over the impulse responses of member countries using PPP GDP weights. We therefore set dyn_ols also true; show the median and the 5% and 95% quantiles of the bootstrap distribution."
@@ -69,11 +69,11 @@
     "country_composition": {
         "list_of_countries": {
                 "model_1": "US",
-                "model_2": "EZ: AT BE FI FR DE IE IT LU NL PT ES GR"
+                "model_2": "EA"
         },
         "n_of_countries": {
                 "model_1": 1,
-                "model_2": 16
+                "model_2": 1
         }
     },
     "further_data_characteristics": {

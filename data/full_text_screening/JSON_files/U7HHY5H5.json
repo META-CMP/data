@@ -3,8 +3,10 @@
         "key": "U7HHY5H5",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "list_of_countries: I use EZ refering to Euro-area.",
-        "model_notes": "axis_trans: the x-axis is in weeks, so we also need to multiply by 4 to compare with months or 16 to compare in quarters; model_1: report the responses obtained following an expansionary conventional monetary policy shock (second column) and a UMP announcement surprise (third column); main: the focus of the paper is UMP but I will only code 1 figure based on CMP; estimation_method: mixed-frequency VAR (MF-VAR).",
+        "study_notes": "list_of_countries: they use euro-area as aggregate data.",
+        "model_notes": {
+                "model_1": "axis_trans: the x-axis is in weeks, so we also need to multiply by 4 to compare with months or 16 to compare in quarters; model_1: report the responses obtained following an expansionary conventional monetary policy shock (second column) and a UMP announcement surprise (third column); main: the focus of the paper is UMP but I will only code 1 figure based on CMP; estimation_method: mixed-frequency VAR (MF-VAR)."
+        },
         "figure": {
                 "model_1": 2
         },
@@ -62,8 +64,8 @@
         "month": true
     },
     "country_composition": {
-        "list_of_countries": "EZ: CZ HU NO PL RO SE DK BG CH",
-        "n_of_countries": 9
+        "list_of_countries": "EA",
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,

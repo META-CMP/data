@@ -27,7 +27,7 @@
         "size": "null",
         "axis_trans": "y*100 lev_fed_funds_false lev_eonia_false",
         "dep": "log_a_rgdp log_a_cpi",
-        "conf": "16 & 84",
+        "conf": "68",
         "main": "gdp inflation",
         "prefer": {
                 "model_1": true,

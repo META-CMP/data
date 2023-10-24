@@ -3,8 +3,8 @@
         "key": "3X58F23H",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "EZ means Eurozone.",
-        "model_notes": "The paper differenciate two periods. I will only code pre-2007 estimates. A graph of the median and 16th and 84thpercentiles of the resulting distribution is then drawn. The percentiles work as confidence interval.",
+        "study_notes": "list_of_countries: EZ means Eurozone.",
+        "model_notes": "conf: 16th & 84th percentiles, the percentiles work as confidence interval; the paper differenciate two periods, I will only code pre-2007 estimates.",
         "figure": {
                 "model_1": 4,
                 "model_2": 4
@@ -18,22 +18,25 @@
     },
     "impulse_and_response_variables": {
         "inttype": {
-                "model_1": "lev_overnight_fedfunds",
+                "model_1": "lev_fed_funds",
                 "model_2": "lev_eonia"
         },
-        "size": "1SD",
-        "axis_trans": "y*100",
+        "size": "null",
+        "axis_trans": "y*100 lev_fed_funds_y*10 lev_eonia_y*10",
         "dep": "log_a_rgdp log_a_cpi",
-        "conf": "16th & 84th percentiles",
+        "conf": "16 & 84",
         "main": "gdp inflation",
-        "prefer": "null"
+        "prefer": {
+                "model_1": true,
+                "model_2": true
+        }
     },
     "identification_strategy": {
         "iv": false,
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
+        "chol": false,
         "svar": false,
         "signr": true,
         "hf": false,
@@ -58,7 +61,7 @@
         "upr": true,
         "scr": false,
         "dcr": false,
-        "hike": true,
+        "hike": false,
         "cut": false
     },
     "data_frequency": {
@@ -69,11 +72,11 @@
     "country_composition": {
         "list_of_countries": {
                 "model_1": "US",
-                "model_2": "EZ"
+                "model_2": "EZ: AT BE FI FR DE IE IT LU NL PT ES GR SI CY MT SK EE LV LT"
         },
         "n_of_countries": {
                 "model_1": 1,
-                "model_2": 1
+                "model_2": 19
         }
     },
     "further_data_characteristics": {
@@ -92,7 +95,7 @@
         "comprice": true,
         "outpgap": false,
         "find": true,
-        "eglob": true,
+        "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
@@ -103,7 +106,7 @@
     "econometric_details": {
         "pure_rate_shock": true,
         "convent": true,
-        "decomposition": true
+        "decomposition": false
     },
     "publication_characteristics": {
         "cbanker": false

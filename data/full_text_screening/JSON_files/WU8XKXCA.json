@@ -4,7 +4,10 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "model_2: includes dummy variable for pre-1997 financial crisis, that's the reason why in model_2 I set to true find; size: they stated that shock size is 1SD and that the standard deviation of estimated monetary policy shock is 1.00, but the reponse of interest rate is 55bp and due to the fact that is a SVAR, I prefer 1SD (not purely cholesky).",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "includes dummy variable for pre-1997 financial crisis, that's the reason why in model_2 I set to true find; size: they stated that shock size is 1SD and that the standard deviation of estimated monetary policy shock is 1.00, but the reponse of interest rate is 55bp and due to the fact that is a SVAR, I prefer 1SD (not purely cholesky)."
+        },
         "figure": {
                 "model_1": 5,
                 "model_2": "D1"

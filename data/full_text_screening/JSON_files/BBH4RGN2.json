@@ -4,7 +4,9 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "It is a working paper in industry level, but it has some aggregated response",
-        "model_notes": "model_1: new method of identification strategy in a mix of HF, they proxy the monetary policy shock by taking residuals from an estimated Taylor rule.",
+        "model_notes": {
+                "model_1": "new method of identification strategy in a mix of HF, they proxy the monetary policy shock by taking residuals from an estimated Taylor rule."
+        },
         "figure":  {
                 "model_1": 1
         },

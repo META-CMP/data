@@ -32,7 +32,15 @@
           "model_25": "conf: 0.16 and 0.84 percentile bands; low inflation regime determined endogenously with Threshold VAR.",
           "model_26": "conf: 0.16 and 0.84 percentile bands; high inflation regime determined endogenously with Threshold VAR.",
           "model_27": "conf: 0.16 and 0.84 percentile bands; low inflation regime determined endogenously with Threshold VAR.",
-          "model_28": "conf: 0.16 and 0.84 percentile bands; high inflation regime determined endogenously with Threshold VAR."
+          "model_28": "conf: 0.16 and 0.84 percentile bands; high inflation regime determined endogenously with Threshold VAR.",
+          "model_29": "uses a bayesian VAR; conf: 0.16 and 0.84 percentile bands.",
+          "model_30": "uses a bayesian VAR; conf: 0.16 and 0.84 percentile bands.",
+          "model_31": "uses a bayesian VAR; conf: 0.16 and 0.84 percentile bands.",
+          "model_32": "uses a bayesian VAR; conf: 0.16 and 0.84 percentile bands.",
+          "model_33": "uses a bayesian VAR; conf: 0.16 and 0.84 percentile bands.",
+          "model_34": "uses a bayesian VAR; conf: 0.16 and 0.84 percentile bands.",
+          "model_35": "uses a bayesian VAR; conf: 0.16 and 0.84 percentile bands.",
+          "model_36": "uses a bayesian VAR; conf: 0.16 and 0.84 percentile bands."
         },
         "figure": {
           "model_1": "5.1-left",
@@ -62,7 +70,15 @@
           "model_25": "6.8-middle",
           "model_26": "6.8-right",
           "model_27": "6.9-middle",
-          "model_28": "6.9-right"
+          "model_28": "6.9-right",
+          "model_29": "7.1-left",
+          "model_30": "7.1-right",
+          "model_31": "7.2-left",
+          "model_32": "7.2-middle",
+          "model_33": "7.2-right",
+          "model_34": "7.3-left",
+          "model_35": "7.3-middle",
+          "model_36": "7.3-right"
         },
         "page": {
           "model_1": 127,
@@ -92,7 +108,15 @@
           "model_25": 170,
           "model_26": 170,
           "model_27": 171,
-          "model_28": 171
+          "model_28": 171,
+          "model_29": 196,
+          "model_30": 196,
+          "model_31": 197,
+          "model_32": 197,
+          "model_33": 197,
+          "model_34": 198,
+          "model_35": 198,
+          "model_36": 198
         },
         "irf": true,
         "cum": false
@@ -132,7 +156,15 @@
           "model_25": true,
           "model_26": true,
           "model_27": true,
-          "model_28": true
+          "model_28": true,
+          "model_29": true,
+          "model_30": true,
+          "model_31": true,
+          "model_32": true,
+          "model_33": true,
+          "model_34": true,
+          "model_35": true,
+          "model_36": true
         }
     },
     "identification_strategy": {
@@ -177,7 +209,15 @@
           "model_25": false,
           "model_26": false,
           "model_27": false,
-          "model_28": false
+          "model_28": false,
+          "model_29": true,
+          "model_30": true,
+          "model_31": true,
+          "model_32": true,
+          "model_33": true,
+          "model_34": true,
+          "model_35": true,
+          "model_36": true
         },
         "lp": false,
         "vecm": false,
@@ -185,7 +225,44 @@
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": false,
+        "bayes": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false,
+          "model_9": false,
+          "model_10": false,
+          "model_11": false,
+          "model_12": false,
+          "model_13": false,
+          "model_14": false,
+          "model_15": false,
+          "model_16": false, 
+          "model_17": false,
+          "model_18": false,
+          "model_19": false,
+          "model_20": false,
+          "model_21": false,
+          "model_22": false,
+          "model_23": false,
+          "model_24": false,
+          "model_25": false,
+          "model_26": false,
+          "model_27": false,
+          "model_28": false,
+          "model_29": true,
+          "model_30": true,
+          "model_31": true,
+          "model_32": true,
+          "model_33": true,
+          "model_34": true,
+          "model_35": true,
+          "model_36": true
+        },
         "dsge": false,
         "varother": {
           "model_1": false,
@@ -215,7 +292,15 @@
           "model_25": true,
           "model_26": true,
           "model_27": true,
-          "model_28": true
+          "model_28": true,
+          "model_29": false,
+          "model_30": false,
+          "model_31": false,
+          "model_32": false,
+          "model_33": false,
+          "model_34": false,
+          "model_35": false,
+          "model_36": false
         }
     },
     "regime_dependence": {
@@ -247,7 +332,15 @@
           "model_25": true,
           "model_26": false,
           "model_27": true,
-          "model_28": false
+          "model_28": false,
+          "model_29": false,
+          "model_30": false,
+          "model_31": false,
+          "model_32": false,
+          "model_33": false,
+          "model_34": false,
+          "model_35": false,
+          "model_36": false
         },
         "upr": {
           "model_1": false,
@@ -277,7 +370,15 @@
           "model_25": false,
           "model_26": true,
           "model_27": false,
-          "model_28": true
+          "model_28": true,
+          "model_29": false,
+          "model_30": false,
+          "model_31": false,
+          "model_32": false,
+          "model_33": false,
+          "model_34": false,
+          "model_35": false,
+          "model_36": false
         },
         "scr": false,
         "dcr": false,
@@ -318,8 +419,15 @@
           "model_25": "TN",
           "model_26": "TN",
           "model_27": "UG",
-          "model_28": "UG"
-          
+          "model_28": "UG",
+          "model_29": "DZ",
+          "model_30": "BW",
+          "model_31": "GH",
+          "model_32": "KE",
+          "model_33": "NG",
+          "model_34": "ZA",
+          "model_35": "TN",
+          "model_36": "UG"
         },
         "n_of_countries": {
           "model_1": 1,
@@ -349,7 +457,15 @@
           "model_25": 1,
           "model_26": 1,
           "model_27": 1,
-          "model_28": 1
+          "model_28": 1,
+          "model_29": 1,
+          "model_30": 1,
+          "model_31": 1,
+          "model_32": 1,
+          "model_33": 1,
+          "model_34": 1,
+          "model_35": 1,
+          "model_36": 1
         }
     },
     "further_data_characteristics": {

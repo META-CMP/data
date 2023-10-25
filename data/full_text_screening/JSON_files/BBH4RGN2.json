@@ -27,7 +27,7 @@
     },
     "identification_strategy": {
         "iv": true,
-        "forecast_based": false,
+        "forecast_based": true,
         "nr": false,
         "event": false,
         "chol": false,
@@ -36,7 +36,7 @@
         "hf": true,
         "heteroskedas": false,
         "longrun": false,
-        "idother": false
+        "idother": true
     },
     "estimation_method": {
         "var": true,

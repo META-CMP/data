@@ -5,7 +5,7 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-                "model_1": "model_1: the solid line indicates the modal impulse response, while the dotted lines are the 16th and 84th percentiles of the impulse response function distributions; the percentiles work as a confidence interval."
+                "model_1": "the solid line indicates the modal impulse response, while the dotted lines are the 16th and 84th percentiles of the impulse response function distributions; the percentiles work as a confidence interval."
         },
         "figure": {
                 "model_1": 1

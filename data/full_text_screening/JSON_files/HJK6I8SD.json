@@ -5,7 +5,7 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-                "model_1": "I set dyn_ols to true because they estimate individual country VARs and average impulse responses across countries are obtained by pooling individual country responses with weights corresponding to the country share of output to take into account individual heterogeneity; they estimate the model by least squares; this is not pure panel VAR."
+                "model_1": "they estimate individual country VARs and average impulse responses across countries are obtained by pooling individual country responses with weights corresponding to the country share of output to take into account individual heterogeneity; they estimate the model by least squares; this is not pure panel VAR."
         },
         "figure": {
                 "model_1": 5
@@ -42,7 +42,7 @@
         "var": true,
         "lp": false,
         "vecm": false,
-        "dyn_ols": true,
+        "dyn_ols": "false",
         "fvar": false,
         "tvar": false,
         "gvar": false,

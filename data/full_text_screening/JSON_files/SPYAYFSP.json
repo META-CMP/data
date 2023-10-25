@@ -5,7 +5,7 @@
         "rid2": "null",
         "study_notes": "list_of_countries: they used euro-area but panel.",
         "model_notes": {
-                "model_1": "the model is a near-VAR; I set dyn_ols to true because they use country-specific equations in the VAR, so it is not a pure panel VAR."
+                "model_1": "the model is a near-VAR; because they use country-specific equations in the VAR, so it is not a pure panel VAR."
         },
         "figure": {
                 "model_1": 2 
@@ -42,7 +42,7 @@
         "var": false,
         "lp": false,
         "vecm": false,
-        "dyn_ols": true,
+        "dyn_ols": "false",
         "fvar": false,
         "tvar": false,
         "gvar": false,

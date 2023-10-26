@@ -3,7 +3,7 @@
         "key": "36YHG5BV",
         "rid1": "fp",
         "rid2": "null",
-        "study_notes": "inttype: Described as 'policy rate'.; size: Shock in Text 1SD as 48bp but from IRFs rather about 42bp.",
+        "study_notes": "null",
         "model_notes": {
           "model_1": "Baseline",
           "model_2": "Including exchange rate.",
@@ -47,7 +47,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_short_rate",
-        "size": "42bp",
+        "size": "1SD",
         "axis_trans": {
           "model_1": false,
           "model_2": false,
@@ -122,9 +122,9 @@
     },
     "further_data_characteristics": {
         "panel": true,
-        "start": null, # Q1:2000–Q2:2012 for Australia and Korea; Q1:2002–Q2:2012 for Thailand; and Q1:2005–Q2:2012 for Indonesia
-        "end": null,
-        "samplesize": null
+        "start": "Q1-2000",
+        "end": "Q2-2012",
+        "samplesize": "null"
     },
     "control_variables": {
         "comprice": false,
@@ -161,19 +161,6 @@
           "model_11": false
         },
         "lrir": false,
-        "hp": { # Incude house price control?
-          "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": false,
-          "model_5": false,
-          "model_6": false,
-          "model_7": false,
-          "model_8": false,
-          "model_9": false,
-          "model_10": false,
-          "model_11": true
-        }
     },
     "econometric_details": {
         "convent": false,

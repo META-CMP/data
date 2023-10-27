@@ -1,0 +1,93 @@
+{
+    "general": {
+        "key": "KN2ZSLPR",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "size: a positive one standard deviation short-term interest rate shock of about 30 basispoints, we choose 30 bp."
+        },
+        "figure": 3,
+        "page": 121,
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_short_term_rate",
+        "size": "30bp",
+        "axis_trans": false,
+        "dep": "log_a_rgdp logdiff_a_cpi",
+        "conf": " 95",
+        "main": "gdp  inflation",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": true,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": true,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "EA",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1978",
+        "end": "Q4-2000",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

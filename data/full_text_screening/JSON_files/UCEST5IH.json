@@ -1,0 +1,126 @@
+{
+    "general": {
+        "key": "UCEST5IH",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "for Australia two dummies were included; 1984Q1 and 2000Q3, that reflected a substantial decrease and increase in the inflation rate respectively.",
+          "model_2": "null",
+          "model_3": "null",
+          "model_4": "three dummies were included for Sweden; 1992Q3, 1993Q1 and 1995Q4. The first captures an exceptionally high interest rate increase (500%) implemented by the Riksbank in order to defend the Swedish exchange rate (see also the discussion in Lindé 2003), the second reflects the subsequent floating of the Swedish krona and the final one captures additional turbulence in the exchange rate."
+        },
+        "figure": {
+          "model_1": 2,
+          "model_2": 3,
+          "model_3": 4,
+          "model_4": 5
+        },
+        "page": {
+          "model_1": 69,
+          "model_2": 70,
+          "model_3": 71,
+          "model_4": 72
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_short_term_rate",
+        "size": "1%",
+        "axis_trans": false,
+        "dep": "log_q_rgdp gr_a_cpi",
+        "conf": "68",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": true,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": true,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": {
+          "model_1": "AU",
+          "model_2": "CA",
+          "model_3": "NZ",
+          "model_4": "SE"
+        },
+        "n_of_countries": {
+          "model_1": 1,
+          "model_2": 1,
+          "model_3": 1,
+          "model_4": 1
+        }
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "Q1-1983",
+          "model_2": "Q1-1983",
+          "model_3": "Q1-1988",
+          "model_4": "Q1-1983"
+        },
+        "end": "Q4-2004",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

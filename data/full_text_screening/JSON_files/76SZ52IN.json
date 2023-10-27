@@ -6,12 +6,12 @@
         "study_notes": "they define an indicator of gradualism (I) as a dummy variable which takes the value 1 if the changes in the policy rate in the current and the last two meetings have been of 25 basis points (i.e., multiple consecutive 25 bps hikes or cuts), and 0 otherwise; second robustness definition: high gradualism should be perceived in a slightly larger part of the sample; third robustness: the signal on gradualism extracted from newspaper articles.",
         "model_notes": {
           "model_1": "linear estimates.",
-          "model_2": "high perceived gradualism.",
-          "model_3": "low perceived gradualism.",
-          "model_4": "high perceived gradualism.",
-          "model_5": "low perceived gradualism.",
-          "model_6": "high perceived gradualism.",
-          "model_7": "low perceived gradualism."
+          "model_2": "blue line: high perceived gradualism.",
+          "model_3": "orange line: low perceived gradualism.",
+          "model_4": "blue line: high perceived gradualism.",
+          "model_5": "orange line: low perceived gradualism.",
+          "model_6": "blue line: high perceived gradualism.",
+          "model_7": "orange line: low perceived gradualism."
         },
         "figure": {
           "model_1": 4.2,

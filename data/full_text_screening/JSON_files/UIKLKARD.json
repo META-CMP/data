@@ -6,14 +6,14 @@
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
-          "model_1": 2,
-          "model_2": ,
-          "model_3": ,
+          "model_1": 3,
+          "model_2": 3,
+          "model_3": 3,
         },
         "page": {
-          "model_1": ,
-          "model_2": ,
-          "model_3": ,
+          "model_1": 10,
+          "model_2": 10,
+          "model_3": 10,
         },
         "irf": true,
         "cum": false

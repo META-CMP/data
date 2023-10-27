@@ -1,0 +1,115 @@
+{
+    "general": {
+        "key": "UIKLKARD",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 2,
+          "model_2": ,
+          "model_3": ,
+        },
+        "page": {
+          "model_1": ,
+          "model_2": ,
+          "model_3": ,
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_fed_funds",
+        "size": "100bp",
+        "axis_trans": "y*100 lev_fed_funds_false",
+        "dep": "logdiff_a_ip logdiff_a_cpi logdiff_a_emp",
+        "conf": "68",
+        "main": "other",
+        "prefer": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+        },
+        "svar": false,
+        "signr": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+        },
+        "hf": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+        },
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": true,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1973",
+        "end": "12-2011",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

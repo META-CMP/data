@@ -28,7 +28,7 @@
         "prefer": {
           "model_1": false,
           "model_2": true,
-          "model_3": false,
+          "model_3": false
         }
     },
     "identification_strategy": {
@@ -39,7 +39,7 @@
         "chol": {
           "model_1": true,
           "model_2": false,
-          "model_3": false,
+          "model_3": false
         },
         "svar": false,
         "signr": {

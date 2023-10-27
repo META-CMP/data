@@ -8,12 +8,12 @@
         "figure": {
           "model_1": 3,
           "model_2": 3,
-          "model_3": 3,
+          "model_3": 3
         },
         "page": {
           "model_1": 10,
           "model_2": 10,
-          "model_3": 10,
+          "model_3": 10
         },
         "irf": true,
         "cum": false
@@ -45,12 +45,12 @@
         "signr": {
           "model_1": false,
           "model_2": false,
-          "model_3": true,
+          "model_3": true
         },
         "hf": {
           "model_1": false,
           "model_2": true,
-          "model_3": true,
+          "model_3": true
         },
         "heteroskedas": false,
         "longrun": false,

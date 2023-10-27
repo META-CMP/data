@@ -5,8 +5,8 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-          "model_1": "to  obtain a monthly series on activity, they use a factor extraction, the principal component of a data set consisting of three frequently used monthly economic activity indicators (industrial production, retail sales and unemployment), and label this the ‘‘activity factor”. This factor is rescaled to have approximately the same variance as an HP-filter of (log) GDP with lambda equal 40000.", 
-          "model_2": "to  obtain a monthly series on activity, they use a factor extraction, the principal component of a data set consisting of three frequently used monthly economic activity indicators (industrial production, retail sales and unemployment), and label this the ‘‘activity factor”. This factor is rescaled to have approximately the same variance as an HP-filter of (log) GDP with lambda equal 40000."
+          "model_1": "not coded activity: because to  obtain a monthly series on activity, they use a factor extraction, the principal component of a data set consisting of three frequently used monthly economic activity indicators (industrial production, retail sales and unemployment), and label this the ‘‘activity factor”. This factor is rescaled to have approximately the same variance as an HP-filter of (log) GDP with lambda equal 40000.", 
+          "model_2": "not coded activity: because to  obtain a monthly series on activity, they use a factor extraction, the principal component of a data set consisting of three frequently used monthly economic activity indicators (industrial production, retail sales and unemployment), and label this the ‘‘activity factor”. This factor is rescaled to have approximately the same variance as an HP-filter of (log) GDP with lambda equal 40000."
         },
         "figure": {
           "model_1": "3-left", 
@@ -23,7 +23,7 @@
         "inttype": "lev_short_rate",
         "size": "null",
         "axis_trans": false,
-        "dep": "log_m_gdp gr_m_core",
+        "dep": "gr_m_core",
         "conf": "68",
         "main": "other",
         "prefer": {

@@ -1,0 +1,119 @@
+{
+    "general": {
+        "key": "MZS2DDZZ",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "estimate their baseline VAR with the new monetary policy measure ordered last in the recursive ordering.",
+          "model_2": "estimate our baseline VAR with the new monetary policy measure ordered first in the recursive ordering. This implies that contemporaneous macro economic fluctuations do not affect the policy decision other than via the forecasts.",
+          "model_3": "impulse response function from online Appendix B.B3, IRF shows that their results are to a larger specification, including adding unemployment and the actual policy rate." 
+        },
+        "figure": {
+          "model_1": 2,
+          "model_2": 7,
+          "model_3": "B2"
+        },
+        "page": {
+          "model_1": 89,
+          "model_2": 99,
+          "model_3": "appendix_8"
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_short_term_rate",
+        "size": "1%",
+        "axis_trans": false,
+        "dep": {
+          "model_1": "log_m_ip gr_a_cpi",
+          "model_2": "log_m_ip gr_a_cpi",
+          "model_3": "log_m_ip lev_m_une_rate gr_a_cpi"
+        },
+        "conf": "68 & 95",
+        "main": "gdp inflation",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false
+        }
+    },
+    "identification_strategy": {
+        "iv": true,
+        "forecast_based": true,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true
+        },
+        "lp": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false
+        },
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "GB",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1975",
+        "end": "12-2007",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

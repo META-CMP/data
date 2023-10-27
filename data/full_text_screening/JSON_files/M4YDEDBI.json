@@ -5,12 +5,8 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": {
-          "model_1": 1
-        },
-        "page": {
-          "model_1": 2114
-        },
+        "figure": 1,
+        "page": 2114,
         "irf": true,
         "cum": false
     },

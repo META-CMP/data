@@ -34,7 +34,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_short_term",
         "size": "1SD",
-        "axis_trans": "lev_short_term_y*100",
+        "axis_trans": false,
         "dep": "log_q_rgdp log_q_cpi",
         "conf": "90",
         "main": "other",

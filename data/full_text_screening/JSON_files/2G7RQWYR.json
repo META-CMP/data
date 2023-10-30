@@ -6,14 +6,12 @@
         "study_notes": "The study don't state is a 1SD, but they provided the estimated standard deviation of the federal funds rate is 0.79% which coincides in the graph of the response of the FF to FF shock; then size: 1SD.",
         "model_notes": "null",
         "figure": {
-          "model_1": 3,
-          "model_2": 4,
-          "model_3": 4
+          "model_1": "3 & 4",
+          "model_2": 4
         },
         "page": {
-          "model_1": 22,
-          "model_2": 23,
-          "model_3": 23
+          "model_1": "22 & 23",
+          "model_2": 23
         },
         "irf": true,
         "cum": false
@@ -23,16 +21,14 @@
         "size": "1SD",
         "axis_trans": false,
         "dep": {
-          "model_1": "log_a_rgdp log_a_emp lev_une_rate",
-          "model_2": "log_a_deflator",
-          "model_3": "log_a_deflator"
+          "model_1": "log_a_rgdp log_a_deflator log_a_emp lev_une_rate",
+          "model_2": "log_a_deflator"
         },
         "conf": "1_SE",
         "main": "gdp emp inflation",
         "prefer": {
           "model_1": true,
-          "model_2": true,
-          "model_3": false
+          "model_2": false
         }
     },
     "identification_strategy": {
@@ -86,8 +82,7 @@
     "control_variables": {
         "comprice": {
           "model_1": true,
-          "model_2": true,
-          "model_3": false
+          "model_2": false
         },
         "outpgap": false,
         "find": false,

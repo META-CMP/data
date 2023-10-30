@@ -23,7 +23,7 @@
         "size": "1SD",
         "axis_trans": false,
         "dep": {
-          "model_1": "log_a_gdp log_a_emp lev_une_rate",
+          "model_1": "log_a_rgdp log_a_emp lev_une_rate",
           "model_2": "log_a_deflator",
           "model_3": "log_a_deflator"
         },

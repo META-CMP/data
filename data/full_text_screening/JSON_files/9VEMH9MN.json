@@ -1,0 +1,126 @@
+{
+    "general": {
+        "key": "9VEMH9MN",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "varother: interacted panel VAR (IPVAR).",
+        "model_notes": {
+          "model_1": "lor: coded as true because of proximity of these data points to recessions.",
+          "model_2": "null",
+          "model_3": "null",
+          "model_4": "null",
+          "model_5": "null",
+          "model_6": "null"
+        },
+        "figure": {
+          "model_1": 1,
+          "model_2": 1,
+          "model_3": 4,
+          "model_4": 4,
+          "model_5": 4,
+          "model_6": 4
+        },
+        "page": {
+          "model_1": 19,
+          "model_2": 19,
+          "model_3": 28,
+          "model_4": 28,
+          "model_5": 28,
+          "model_6": 28
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_short_term_rate",
+        "size": "100bp",
+        "axis_trans": false,
+        "dep": "log_q_rgdp log_q_cpi",
+        "conf": "90",
+        "main": "gdp inflation other",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": true
+    },
+    "regime_dependence": {
+        "lor": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false
+        },
+        "upr": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true,
+          "model_5": false,
+          "model_6": true
+        },
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AU AT BE CA DK FI FR DE GR IE IT JP NL NO PT ES SE CH GB US",
+        "n_of_countries": 20
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "Q1-1984",
+        "end": "Q4-2016",
+        "samplesize": 2640
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": false,
+        "convent": false,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

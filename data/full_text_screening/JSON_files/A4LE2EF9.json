@@ -1,0 +1,103 @@
+{
+    "general": {
+        "key": "A4LE2EF9",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+                "model_1": 1,
+                "model_2": 2
+        },
+        "page": {
+                "model_1": 972,
+                "model_2": 973
+        },
+        "irf": true,
+        "cum": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "-100bp",
+        "axis_trans": false,
+        "dep": "logdiff_q_rgdp logdiff_q_cpi",
+        "conf": "68",
+        "main": "gdp inflation",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "Q3-1959",
+                "model_2": "Q2-1984"
+        },
+        "end": {
+                "model_1": "Q1-1984",
+                "model_2": "Q4-2012"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

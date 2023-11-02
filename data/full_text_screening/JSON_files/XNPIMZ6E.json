@@ -1,0 +1,161 @@
+{
+    "general": {
+        "key": "XNPIMZ6E",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "dep: log_q_rgdp has been detrended using the HP filter.; The other figures are excluded because they show duplicted estimates and there is no description in the text.",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "additionally includes the money stock",
+                "model_3": "Litterman Prior instead of conjugate prior.",
+                "model_4": "null",
+                "model_5": "Diffuse Prior instead of conjugate prior.",
+                "model_6": "Conjugate prior.",
+                "model_7": "Diffuse Prior instead of conjugate prior.",
+                "model_8": "Litterman Prior instead of conjugate prior.",
+                "model_9": "null"
+        },
+        "figure": {
+                "model_1": 3,
+                "model_2": 4,
+                "model_3": 5,
+                "model_4": 7,
+                "model_5": 9,
+                "model_6": 11,
+                "model_7": 12,
+                "model_8": 13,
+                "model_9": 14
+        },
+        "page": {
+                "model_1": 149,
+                "model_2": 151,
+                "model_3": 151,
+                "model_4": 153,
+                "model_5": 161,
+                "model_6": 162,
+                "model_7": 163,
+                "model_8": 163,
+                "model_9": 164
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_3_month_gov",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": "log_q_rgdp logdiff_q_cpi",
+        "conf": "95",
+        "main": "gdp inflation",
+        "prefer": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": true,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true,
+                "model_9": false
+        },
+        "svar": false,
+        "signr": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": true
+        },
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "IT",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "Q1-1981",
+                "model_2": "Q1-1981",
+                "model_3": "Q1-1981",
+                "model_4": "Q1-1981",
+                "model_5": "Q1-1981",
+                "model_6": "Q1-1999",
+                "model_7": "Q1-1999",
+                "model_8": "Q1-1999",
+                "model_9": "Q1-1999"
+        },
+        "end": "Q4-2006",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

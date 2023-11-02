@@ -42,6 +42,6 @@ screen_duplicates(as.data.frame(df))
 
 df<-read.csv("duplicate_free_final.csv")
 
-test<-df %>% filter(grepl("Boivin",author, fixed = TRUE))
+test<-df %>% filter(grepl("Agenor",author, fixed = TRUE))
 
 

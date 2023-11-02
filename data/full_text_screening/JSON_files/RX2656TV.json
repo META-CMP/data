@@ -23,7 +23,7 @@
         "inttype": "lev_euribor",
         "size": "1%",
         "axis_trans": "y*100 lev_euribor_false",
-        "dep": "log_a_ip log_a_cpi",
+        "dep": "log_m_ip log_m_cpi",
         "conf": "68",
         "main": "other",
         "prefer": {

@@ -4,7 +4,11 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "null",
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "null",
+          "model_3": "for this model only extract the response of color blue, that is non-ELZ regime (conventional period)."
+        },
         "figure": {
           "model_1": 1,
           "model_2": 2,

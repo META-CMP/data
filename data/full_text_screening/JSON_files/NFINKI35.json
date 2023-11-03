@@ -36,7 +36,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
-        "size": "",
+        "size": "null",
         "axis_trans": "y*100",
         "dep": "logdiff_a_rgdp logdiff_a_deflator",
         "conf": "95",

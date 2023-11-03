@@ -3,25 +3,15 @@
         "key": "TK99GQXD",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "Due to low quality graphs, I will not code the impulses responses from Bayesian VAR.",
+        "study_notes": "Due to low quality graphs, I will not code the impulses responses from Bayesian VAR and sign restricted VAR.",
         "model_notes": "null",
         "figure": {
-          "model_1": "6b",
-          "model_2": "7b",
-          "model_3": "8b",
-          "model_4": "9b",
-          "model_5": "10b",
-          "model_6": 11,
-          "model_7": 13
+          "model_1": 11,
+          "model_2": 13
         },
         "page": {
-          "model_1": 686,
-          "model_2": 687,
-          "model_3": 688,
-          "model_4": 689,
-          "model_5": 690,
-          "model_6": 691,
-          "model_7": 692
+          "model_1": 691,
+          "model_2": 692
         },
         "irf": true,
         "cum": false
@@ -32,23 +22,13 @@
         "axis_trans": "y*100",
         "dep": "logdiff_q_rgdp logdiff_q_cpi",
         "conf":  {
-          "model_1": "68",
-          "model_2": "68",
-          "model_3": "68",
-          "model_4": "68",
-          "model_5": "68",
-          "model_6": "36",
-          "model_7": "36"
+          "model_1": "36",
+          "model_2": "36"
         },
         "main": "inflation",
         "prefer": {
           "model_1": true,
-          "model_2": true,
-          "model_3": true,
-          "model_4": true,
-          "model_5": true,
-          "model_6": true,
-          "model_7": false
+          "model_2": false
         }
     },
     "identification_strategy": {
@@ -56,25 +36,9 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": false,
-          "model_5": false,
-          "model_6": true,
-          "model_7": true
-        },
+        "chol": true,
         "svar": false,
-        "signr": {
-          "model_1": true,
-          "model_2": true,
-          "model_3": true,
-          "model_4": true,
-          "model_5": true,
-          "model_6": false,
-          "model_7": false
-        },
+        "signr": false,
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
@@ -95,21 +59,11 @@
     "regime_dependence": {
         "lor": {
           "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": false,
-          "model_5": false,
-          "model_6": false,
-          "model_7": false
+          "model_2": false
         },
         "upr": {
           "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": false,
-          "model_5": false,
-          "model_6": false,
-          "model_7": true
+          "model_2": true
         },
         "scr": false,
         "dcr": false,
@@ -123,34 +77,16 @@
     },
     "country_composition": {
         "list_of_countries": {
-          "model_1": "BR",
-          "model_2": "RU",
-          "model_3": "IN",
-          "model_4": "CN",
-          "model_5": "ZA",
-          "model_6": "BR RU IN CN ZA",
-          "model_7": "BR RU IN CN ZA"
+          "model_1": "BR RU IN CN ZA",
+          "model_2": "BR RU IN CN ZA"
         },
         "n_of_countries": {
-          "model_1": 1,
-          "model_2": 1,
-          "model_3": 1,
-          "model_4": 1,
-          "model_5": 1,
-          "model_6": 5,
-          "model_7": 5
+          "model_1": 5,
+          "model_2": 5
         }
     },
     "further_data_characteristics": {
-        "panel": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": false,
-          "model_5": false,
-          "model_6": true,
-          "model_7": true
-        },
+        "panel": true,
         "start": "Q1-1990",
         "end": "Q1-2012",
         "samplesize": "null"

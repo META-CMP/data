@@ -1,0 +1,103 @@
+{
+    "general": {
+        "key": "AZYWZGAN",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "decomposition: target shock, information shock, forward guidance shock, LTRO shock and balance sheet (QE) shock, only target shock is extracted.",
+          "model_2": "decomposition: target shock, information shock, forward guidance shock, LTRO shock and balance sheet (QE) shock, only target shock is extracted; they re-estimate the same VAR with the difference of eliminating the long-run inflation expectation of forecasters from the data."
+        },
+        "figure": {
+          "model_1": "4,11 & 12",
+          "model_2": "5,16 & 17"
+        },
+        "page": {
+          "model_1": "24, 41 & 42",
+          "model_2": "25, 46 & 47"
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_eonia",
+        "size": "-20bp",
+        "axis_trans": false,
+        "dep": "logdiff_a_ip logdiff_a_cpi lev_a_une_rate",
+        "conf": "68",
+        "main": "inflation",
+        "prefer": {
+          "model_1": true,
+          "model_2": false 
+        }
+    },
+    "identification_strategy": {
+        "iv": true,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": true,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": true,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "EA",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-2007",
+        "end": "02-2020",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": true,
+        "foreignir": false,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": true
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

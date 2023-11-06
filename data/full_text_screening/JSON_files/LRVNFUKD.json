@@ -1,0 +1,203 @@
+{
+    "general": {
+        "key": "LRVNFUKD",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "null",
+          "model_3": "size: the responses of the variables in the baseline to a one standard devi- ation contractionary monetary policy surprise. The one-year rate increases roughly 20 basis points on impact.",
+          "model_4": "black line is the response of the federal funds rate.",
+          "model_5": "black line represents the response of 2_year_gov.",
+          "model_6": "a sample that don't include the crisis period; black line represents the response without the crisis.",
+          "model_7": "black line represents the response of the line of the shocks of Romer and Romer (2004)."
+        },
+        "figure": {
+          "model_1": "1-right",
+          "model_2": "1-left",
+          "model_3": 2,
+          "model_4": 7,
+          "model_5": 8,
+          "model_6": 9,
+          "model_7": 10
+        },
+        "page": {
+          "model_1": 61,
+          "model_2": 61,
+          "model_3": 64,
+          "model_4": 70,
+          "model_5": 71,
+          "model_6": 72,
+          "model_7": 74
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+          "model_1": "lev_a_1_year_gov",
+          "model_2": "lev_a_1_year_gov",
+          "model_3": "lev_a_1_year_gov",
+          "model_4": "lev_a_fed_funds",
+          "model_5": "lev_a_2_year_gov",
+          "model_6": "lev_a_1_year_gov",
+          "model_7": "lev_a_1_year_gov"
+        },
+        "size": {
+          "model_1": "25bp",
+          "model_2": "25bp",
+          "model_3": "1SD",
+          "model_4": "1SD",
+          "model_5": "1SD",
+          "model_6": "1SD",
+          "model_7": "1SD"
+        },
+        "axis_trans": false,
+        "dep": "log_a_ip log_a_cpi",
+        "conf": "95",
+        "main": "gdp inflation",
+        "prefer": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false
+        }
+    },
+    "identification_strategy": {
+        "iv": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true
+        },
+        "forecast_based": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true
+        },
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false
+        },
+        "svar": false,
+        "signr": false,
+        "hf": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": false
+        },
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "07-1979",
+          "model_2": "07-1979",
+          "model_3": "07-1979",
+          "model_4": "07-1979",
+          "model_5": "07-1979",
+          "model_6": "07-1979",
+          "model_7": "07-1979"
+        },
+        "end": {
+          "model_1": "06-2012",
+          "model_2": "06-2012",
+          "model_3": "06-2012",
+          "model_4": "06-2012",
+          "model_5": "06-2012",
+          "model_6": "06-2008",
+          "model_7": "06-2012"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true
+        },
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true
+        }
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

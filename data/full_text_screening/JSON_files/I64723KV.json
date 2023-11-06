@@ -1,0 +1,136 @@
+{
+    "general": {
+        "key": "I64723KV",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "A time trend is included in the model.",
+        "model_notes":  {
+          "model_1": "cum: cumulative responses from inflation are reported.",
+          "model_2": "impulse responses from cholesky identification are shown in blue lines.",
+          "model_3": "model identified with the first principal component of surprise changes in the 1-, 3-, 6- and 12-month libor rates; cum: cumulative responses from inflation are reported.",
+          "model_4": "identified using monetary shocks measured as changes in the 6-month libor rate in a 1-day window around MPC announcements (dashed blue lines); cum: cumulative responses from inflation are reported."
+        },
+        "figure": {
+          "model_1": 2,
+          "model_2": 3,
+          "model_3": 4,
+          "model_4": 5
+        },
+        "page": {
+          "model_1": 8,
+          "model_2": 8,
+          "model_3": 10,
+          "model_4": 11
+        },
+        "irf": true,
+        "cum": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true
+        }
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_short_term_rate",
+        "size": "25bp",
+        "axis_trans": false,
+        "dep": "log_m_ip gr_m_cpi",
+        "conf": "68",
+        "main": "gdp inflation",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false
+        }
+    },
+    "identification_strategy": {
+        "iv": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true
+        },
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false
+        },
+        "svar": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true
+        },
+        "signr": false,
+        "hf": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true
+        },
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "GB",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1994",
+        "end": "12-2007",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

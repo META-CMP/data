@@ -1,0 +1,130 @@
+{
+    "general": {
+        "key": "CH62L2Y7",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 2,
+          "model_2": 3
+        },
+        "page": {
+          "model_1": 121,
+          "model_2": 122
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+          "model_1": "lev_a_fed_funds",
+          "model_2": "lev_a_short_term"
+        },
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": {
+          "model_1": "log_a_rgdp log_a_deflator",
+          "model_2": "log_a_rgdp logdiff_a_deflator"
+        },
+        "conf": {
+          "model_1": "2_SE",
+          "model_2": "90"
+        },
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": true,
+          "model_2": false
+        },
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": {
+          "model_1": false,
+          "model_2": true 
+        }
+    },
+    "estimation_method": {
+        "var": {
+          "model_1": true,
+          "model_2": false 
+        },
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": {
+          "model_1": false,
+          "model_2": true
+        },
+        "dsge": {
+          "model_1": false,
+          "model_2": true
+        },
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1959",
+        "end": "Q4-2007",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": {
+          "model_1": false,
+          "model_2": true
+        },
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": {
+          "model_1": false,
+          "model_2": true
+        },
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

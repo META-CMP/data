@@ -24,7 +24,7 @@
         "inttype": "lev_a_short_term_rate",
         "size": "1%",
         "axis_trans": false,
-        "dep": "logdiff_a_rgdp logdiff_a_cpi",
+        "dep": "logdiff_a_rgdp logdiff_a_core",
         "conf": "68",
         "main": "other",
         "prefer": {

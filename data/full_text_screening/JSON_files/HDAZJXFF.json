@@ -1,0 +1,139 @@
+{
+    "general": {
+        "key": "HDAZJXFF",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "A time trend is included as a variable in the VAR.",
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "inttype: prior to Jan 2007, they use discount rate instead of repo_rate.",
+          "model_3": "null",
+          "model_4": "null",
+          "model_5": "null"
+        },
+        "figure": {
+          "model_1": "1-column-4",
+          "model_2": "2-column-4",
+          "model_3": "3-column-4",
+          "model_4": "4-column-4",
+          "model_5": "5-column-4"
+        },
+        "page": {
+          "model_1": 51,
+          "model_2": 52,
+          "model_3": 53,
+          "model_4": 54,
+          "model_5": 55
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+          "model_1": "lev_a_short_term_rate",
+          "model_2": "lev_a_repo",
+          "model_3": "lev_a_repo",
+          "model_4": "lev_a_short_term_rate",
+          "model_5": "lev_a_3_month_interbank"
+        },
+        "size": "1SD",
+        "axis_trans": {
+          "model_1": "y*100 lev_a_short_term_rate_false",
+          "model_2": "y*100 lev_a_repo_false",
+          "model_3": "y*100 lev_a_repo_false",
+          "model_4": "y*100 lev_a_short_term_rate_false",
+          "model_5": "y*100 lev_a_3_month_interbank_false"
+        },
+        "dep": "log_m_rgdp log_m_cpi",
+        "conf": "95",
+        "main": "gdp inflation",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": {
+          "model_1": "BI",
+          "model_2": "KE",
+          "model_3": "RW",
+          "model_4": "TZ",
+          "model_5": "UG"
+        },
+        "n_of_countries": {
+          "model_1": 1,
+          "model_2": 1,
+          "model_3": 1,
+          "model_4": 1,
+          "model_5": 1
+        }
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-2000",
+        "end": "12-2010",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

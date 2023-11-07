@@ -20,7 +20,11 @@
           "model_13": "inttype: Shock for Fed Funds Futures is missing, so we approximate it with the IRF of 1_year_gov (therefore size: 1SD).",
           "model_14": "inttype: Shock for Fed Funds Futures is missing, so we approximate it with the IRF of 1_year_gov (therefore size: 1SD).",
           "model_15": "inttype: Shock for Fed Funds Futures is missing, so we approximate it with the IRF of 1_year_gov (therefore size: 1SD).",
-          "model_16": "inttype: Shock for Fed Funds Futures is missing, so we approximate it with the IRF of 1_year_gov (therefore size: 1SD)."
+          "model_16": "inttype: Shock for Fed Funds Futures is missing, so we approximate it with the IRF of 1_year_gov (therefore size: 1SD).",
+          "model_17": "inttype: Shock for Fed Funds Futures is missing, so we approximate it with the IRF of 1_year_gov (therefore size: 1SD).",
+          "model_18": "inttype: Shock for Fed Funds Futures is missing, so we approximate it with the IRF of 1_year_gov (therefore size: 1SD).",
+          "model_19": "inttype: Shock for Fed Funds Futures is missing, so we approximate it with the IRF of 1_year_gov (therefore size: 1SD).",
+          "model_20": "inttype: Shock for Fed Funds Futures is missing, so we approximate it with the IRF of 1_year_gov (therefore size: 1SD)."
         },
         "figure": {
           "model_1": "2PanelA",
@@ -38,7 +42,11 @@
           "model_13": "Appendix Fig. C2 Panel B",
           "model_14": "Appendix Fig. C2 Panel C",
           "model_15": "Appendix Fig. C3 Panel A",
-          "model_15": "Appendix Fig. C3 Panel B"
+          "model_16": "Appendix Fig. C3 Panel B",
+          "model_17": "Appendix Fig. C5 Panel A",
+          "model_18": "Appendix Fig. C5 Panel B",
+          "model_19": "Appendix Fig. C5 Panel C",
+          "model_20": "Appendix Fig. D1"
         },
         "page": {
           "model_1": 13,
@@ -56,7 +64,12 @@
           "model_13": 7,
           "model_14": 7,
           "model_15": 8,
-          "model_16": 8
+          "model_16": 8,
+          "model_16": 8,
+          "model_17": 11,
+          "model_18": 11,
+          "model_19": 11,
+          "model_20": 13
         },
         "irf": true,
         "cum": false
@@ -78,7 +91,11 @@
           "model_13": "lev_m_1_year_gov",
           "model_14": "lev_m_1_year_gov",
           "model_15": "lev_m_1_year_gov",
-          "model_16": "lev_m_1_year_gov"
+          "model_16": "lev_m_1_year_gov",
+          "model_17": "lev_m_1_year_gov",
+          "model_18": "lev_m_1_year_gov",
+          "model_19": "lev_m_1_year_gov",
+          "model_20": "lev_m_1_year_gov"
         },
         "size": {
           "model_1": "5bp",
@@ -96,7 +113,11 @@
           "model_13": "1SD",
           "model_14": "1SD",
           "model_15": "1SD",
-          "model_16": "1SD"
+          "model_16": "1SD",
+          "model_17": "1SD",
+          "model_18": "1SD",
+          "model_19": "1SD",
+          "model_20": "1SD"
         },
         "axis_trans": false,
         "dep": {
@@ -115,7 +136,11 @@
           "model_13": "log_m_rgdp log_m_deflator",
           "model_14": "log_m_rgdp log_m_deflator",
           "model_15": "log_m_ip log_m_cpi",
-          "model_16": "log_m_ip log_m_cpi"
+          "model_16": "log_m_ip log_m_cpi",
+          "model_17": "log_m_rgdp log_m_deflator",
+          "model_18": "log_m_rgdp log_m_deflator",
+          "model_19": "log_m_rgdp log_m_deflator",
+          "model_20": "log_m_rgdp log_m_deflator"
         },
         "conf": "68 & 90",
         "main": "gdp inflation  other",
@@ -135,7 +160,11 @@
           "model_13": false,
           "model_14": false,
           "model_15": false,
-          "model_16": false
+          "model_16": false,
+          "model_17": false,
+          "model_18": false,
+          "model_19": false,
+          "model_20": false
         }
     },
     "identification_strategy": {
@@ -159,7 +188,11 @@
           "model_13": false,
           "model_14": false,
           "model_15": false,
-          "model_16": true
+          "model_16": true,
+          "model_17": true,
+          "model_18": false,
+          "model_19": true,
+          "model_20": false
         },
         "svar": null,
         "signr": {
@@ -178,7 +211,11 @@
           "model_13": true,
           "model_14": true,
           "model_15": true,
-          "model_16": false
+          "model_16": false,
+          "model_17": false,
+          "model_18": true,
+          "model_19": true,
+          "model_20": true
         },
         "hf": {
           "model_1": true,
@@ -196,7 +233,11 @@
           "model_13": true,
           "model_14": true,
           "model_15": true,
-          "model_16": true
+          "model_16": true,
+          "model_17": true,
+          "model_18": true,
+          "model_19": false,
+          "model_20": true
         },
         "heteroskedas": null,
         "longrun": null,
@@ -223,7 +264,11 @@
           "model_13": false,
           "model_14": false,
           "model_15": false,
-          "model_16": false
+          "model_16": false,
+          "model_17": true,
+          "model_18": true,
+          "model_19": true,
+          "model_20": false
         },
         "tvar": null,
         "gvar": null,
@@ -261,7 +306,11 @@
           "model_13": "US",
           "model_14": "US",
           "model_15": "US",
-          "model_16": "US"
+          "model_16": "US",
+          "model_17": "US",
+          "model_18": "US",
+          "model_19": "US"
+          "model_20": "EA"
         },
         "n_of_countries": 1
     },
@@ -283,7 +332,11 @@
           "model_13": "02-1984",
           "model_14": "07-1979",
           "model_15": "02-1984",
-          "model_16": "02-1984"
+          "model_16": "02-1984",
+          "model_17": "02-1984",
+          "model_18": "02-1984",
+          "model_19": "02-1984",
+          "model_20": "01-1998"
         },
         "end": {
           "model_1": "12-2016",
@@ -301,7 +354,11 @@
           "model_13": "12-2016",
           "model_14": "12-2016",
           "model_15": "12-2016",
-          "model_16": "12-2016"
+          "model_16": "12-2016",
+          "model_17": "12-2016",
+          "model_18": "12-2016",
+          "model_19": "12-2016",
+          "model_20": "12-2016"
         },
         "samplesize": "null"
     },

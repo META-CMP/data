@@ -45,7 +45,7 @@
           "model_5": "y*100 lev_a_3_month_interbank_false"
         },
         "dep": "log_m_rgdp log_m_cpi",
-        "conf": "95",
+        "conf": "2_SE",
         "main": "gdp inflation",
         "prefer": {
           "model_1": true,

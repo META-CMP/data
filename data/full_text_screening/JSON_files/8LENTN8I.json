@@ -1,0 +1,190 @@
+{
+    "general": {
+        "key": "8LENTN8I",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "cum: the impulse responses shown are cumulated responses except for output and the federal funds rate, only for price",
+        "model_notes": {
+          "model_1": "expansionary monetary policy in the low financial stress regime.",
+          "model_2": "expansionary monetary policy in the high financial stress regime.",
+          "model_3": "expansionary monetary policy in the low financial stress regime.",
+          "model_4": "expansionary monetary policy in the high financial stress regime.",
+          "model_5": "expansionary monetary policy in the low financial stress regime.",
+          "model_6": "expansionary monetary policy in the high financial stress regime.",
+          "model_7": "contractionary monetary policy in the low financial stress regime.",
+          "model_8": "contractionary monetary policy in the high financial stress regime.",
+          "model_9": "contractionary monetary policy in the low financial stress regime.",
+          "model_10": "contractionary monetary policy in the high financial stress regime." 
+        },
+        "figure": {
+          "model_1": "18-top",
+          "model_2": "18-bottom",
+          "model_3": "19-top",
+          "model_4": "19-bottom",
+          "model_5": "20-top",
+          "model_6": "20-bottom",
+          "model_7": "21-top",
+          "model_8": "21-bottom",
+          "model_9": "22-top",
+          "model_10": "22-bottom" 
+        },
+        "page": {
+          "model_1": 38,
+          "model_2": 38,
+          "model_3": 39,
+          "model_4": 39,
+          "model_5": 40,
+          "model_6": 40,
+          "model_7": 41,
+          "model_8": 41,
+          "model_9": 42,
+          "model_10": 42
+        },
+        "irf": true,
+        "cum": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": {
+          "model_1": "-1SD",
+          "model_2": "-1SD",
+          "model_3": "-1SD",
+          "model_4": "-1SD",
+          "model_5": "-2SD",
+          "model_6": "-2SD",
+          "model_7": "1SD",
+          "model_8": "1SD",
+          "model_9": "2SD",
+          "model_10": "2SD" 
+        },
+        "axis_trans": false,
+        "dep": "log_a_gap gr_a_cpi",
+        "conf": "68",
+        "main": "other",
+        "prefer": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true,
+          "model_8": true,
+          "model_9": true,
+          "model_10": true 
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": true
+    },
+    "regime_dependence": {
+        "lor": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": true,
+          "model_5": false,
+          "model_6": true,
+          "model_7": false,
+          "model_8": true,
+          "model_9": false,
+          "model_10": true
+        },
+        "upr": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false,
+          "model_7": true,
+          "model_8": false,
+          "model_9": true,
+          "model_10": false
+        },
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "Q1-1973",
+          "model_2": "Q1-1973",
+          "model_3": "Q1-1973",
+          "model_4": "Q1-1973",
+          "model_5": "Q1-1973",
+          "model_6": "Q1-1973",
+          "model_7": "Q1-1973",
+          "model_8": "Q1-1973",
+          "model_9": "Q1-1973",
+          "model_10": "Q1-1973"
+        },
+        "end": {
+          "model_1": "Q4-2008",
+          "model_2": "Q4-2008",
+          "model_3": "Q4-2008",
+          "model_4": "Q4-2008",
+          "model_5": "Q4-2008",
+          "model_6": "Q4-2008",
+          "model_7": "Q4-2008",
+          "model_8": "Q4-2008",
+          "model_9": "Q4-2008",
+          "model_10": "Q4-2008"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

@@ -37,7 +37,7 @@
           "model_2": "log_a_cpi",
           "model_3": "logdiff_a_cpi",
           "model_4": "logdiff_a_cpi",
-          "model_5": "log_a_cpi"
+          "model_5": "log_a_gdp log_a_cpi"
         },
         "conf": "95",
         "main": "other",

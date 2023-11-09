@@ -1,0 +1,181 @@
+{
+    "general": {
+        "key": "UQPS6SGJ",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 3,
+          "model_2": 3,
+          "model_3": 3,
+          "model_4": 3,
+          "model_5": 3,
+          "model_6": 3,
+          "model_7": 5,
+          "model_8": 5,
+          "model_9": 5,
+          "model_10": 5,
+          "model_11": 5,
+          "model_12": 5,
+          "model_13": 7,
+          "model_14": 7,
+          "model_15": 7,
+          "model_16": 7,
+          "model_17": 7
+        },
+        "page": {
+          "model_1": 15,
+          "model_2": 15,
+          "model_3": 15,
+          "model_4": 15,
+          "model_5": 15,
+          "model_6": 15,
+          "model_7": 17,
+          "model_8": 17,
+          "model_9": 17,
+          "model_10": 17,
+          "model_11": 17,
+          "model_12": 17,
+          "model_13": 19,
+          "model_14": 19,
+          "model_15": 19,
+          "model_16": 19,
+          "model_17": 19
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_1_month_interbank",
+        "size": "null",
+        "axis_trans": false,
+        "dep": "lev_m_gap log_m_cpi",
+        "conf": "68 & 90",
+        "main": "gdp  inflation  other",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": false,
+          "model_8": false,
+          "model_9": false,
+          "model_10": false,
+          "model_11": false,
+          "model_12": false,
+          "model_13": false,
+          "model_14": false,
+          "model_15": false,
+          "model_16": false,
+          "model_17": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": true,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": {
+          "model_1": "BR",
+          "model_2": "CL",
+          "model_3": "HU",
+          "model_4": "IL",
+          "model_5": "ZA",
+          "model_6": "TH",
+          "model_7": "BR",
+          "model_8": "CL",
+          "model_9": "HU",
+          "model_10": "IL",
+          "model_11": "ZA",
+          "model_12": "TH",
+          "model_13": "BR",
+          "model_14": "CL",
+          "model_15": "HU",
+          "model_16": "ZA",
+          "model_17": "TH"
+        },
+        "n_of_countries": {
+          "model_1": 6,
+          "model_2": 6,
+          "model_3": 6,
+          "model_4": 6,
+          "model_5": 6,
+          "model_6": 6,
+          "model_7": 6,
+          "model_8": 6,
+          "model_9": 6,
+          "model_10": 6,
+          "model_11": 6,
+          "model_12": 6,
+          "model_13": 5,
+          "model_14": 5,
+          "model_15": 5,
+          "model_16": 5,
+          "model_17": 5
+        }
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "null",
+        "end": "null",
+        "samplesize": 659
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

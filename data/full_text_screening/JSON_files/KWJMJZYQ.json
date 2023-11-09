@@ -40,8 +40,8 @@
         "axis_trans": {
           "model_1": "y*100 log_a_cpi_y/10 lev_a_overnight_lending_false",
           "model_2": "y*100 log_a_cpi_y/10 lev_a_short_term_rate_false",
-          "model_3": "y*100 log_a_cpi_y/10 lev_a_overnight_lending_false",
-          "model_4": "y*100 log_a_cpi_y/10 lev_a_overnight_lending_false",
+          "model_3": "y*100 lev_a_overnight_lending_false",
+          "model_4": "y*100 lev_a_overnight_lending_false",
           "model_5": "y*100 log_a_cpi_y/10 lev_a_short_term_rate_false"
         },
         "dep": "log_a_rgdp log_a_cpi",

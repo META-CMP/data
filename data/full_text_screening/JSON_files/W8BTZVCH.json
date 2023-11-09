@@ -86,13 +86,13 @@
           "model_79": "dashed lines: sign restrictions imposed for 2 quarters, model with broad measure of houses as durables.",
           "model_80": "dashed lines: sign restrictions imposed for 4 quarters, model with broad measure of houses as durables.",
           "model_81": "dashed lines: sign restrictions imposed for 6 quarters, model with broad measure of houses as durables.",
-          "model_82": "bold lines refer to the model with all durable goods.",
-          "model_83": "dashed lines refer to the model with only houses.",
+          "model_82": "proxy SVAR; bold lines refer to the model with all durable goods.",
+          "model_83": "proxy SVAR; dashed lines refer to the model with only houses.",
           "model_84": "SVAR impulse responses in a three-sector SVAR model.",
           "model_85": "SVAR impulse responses in a three-sector SVAR model.",
           "model_86": "SVAR impulse responses in a three-sector SVAR model.",
-          "model_87": "null",
-          "model_88": "null"
+          "model_87": "DSGE model.",
+          "model_88": "DSGE model."
         },
         "figure": {          
           "model_1": "1-1",

@@ -139,7 +139,16 @@
           "model_8": true
         },
         "gvar": false,
-        "bayes": false,
+        "bayes": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": true
+        },
         "dsge": false,
         "varother": false
     },

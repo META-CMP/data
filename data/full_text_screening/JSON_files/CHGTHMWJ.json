@@ -74,7 +74,7 @@
         "eglob": false,
         "cbind": false,
         "fexch": false,
-        "inflexp": true,
+        "inflexp": false,
         "foreignir": false,
         "fx": false,
         "lrir": false

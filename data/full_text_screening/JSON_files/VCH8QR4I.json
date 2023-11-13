@@ -69,12 +69,12 @@
     },
     "control_variables": {
         "comprice": false,
-        "outpgap": true,
+        "outpgap": false,
         "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
-        "inflexp": true,
+        "inflexp": false,
         "foreignir": false,
         "fx": false,
         "lrir": false

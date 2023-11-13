@@ -23,7 +23,7 @@
         "inttype": "lev_m_overnight_callrate",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "gr_m_ip gr_m_cpi",
+        "dep": "log_m_ip gr_m_cpi",
         "conf": "2_SE",
         "main": "gdp inflation",
         "prefer": {

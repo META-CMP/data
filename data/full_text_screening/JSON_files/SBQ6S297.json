@@ -1,0 +1,191 @@
+{
+    "general": {
+        "key": "SBQ6S297",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 2,
+          "model_2": 3,
+          "model_3": 4,
+          "model_4": 5,
+          "model_5": 6,
+          "model_6": 7,
+          "model_7": 8,
+          "model_8": 9,
+          "model_9": 10
+        },
+        "page": {
+          "model_1": 1153,
+          "model_2": 1153,
+          "model_3": 1154,
+          "model_4": 1155,
+          "model_5": 1156,
+          "model_6": 1156,
+          "model_7": 1157,
+          "model_8": 1157,
+          "model_9": 1158
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_short_term_rate",
+        "size": "1%",
+        "axis_trans": false,
+        "dep": "log_a_ip log_a_cpi",
+        "conf": "68",
+        "main": "gdp inflation",
+        "prefer": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true,
+          "model_8": true,
+          "model_9": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": false,
+          "model_5": false,
+          "model_6": true,
+          "model_7": false,
+          "model_8": false,
+          "model_9": true
+        },
+        "svar": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": true,
+          "model_5": true,
+          "model_6": false,
+          "model_7": true,
+          "model_8": true,
+          "model_9": false
+        },
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": {
+          "model_1": "CZ",
+          "model_2": "CZ",
+          "model_3": "CZ",
+          "model_4": "HU",
+          "model_5": "HU",
+          "model_6": "HU",
+          "model_7": "PL",
+          "model_8": "PL",
+          "model_9": "PL"
+        },
+        "n_of_countries": {
+          "model_1": 1,
+          "model_2": 1,
+          "model_3": 1,
+          "model_4": 1,
+          "model_5": 1,
+          "model_6": 1,
+          "model_7": 1,
+          "model_8": 1,
+          "model_9": 1
+        }
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "01-1993",
+          "model_2": "01-1993",
+          "model_3": "01-1993",
+          "model_4": "04-1995",
+          "model_5": "04-1995",
+          "model_6": "04-1995",
+          "model_7": "01-1993",
+          "model_8": "01-1993",
+          "model_9": "01-1993"
+        },
+        "end": {
+          "model_1": "01-2002",
+          "model_2": "01-2002",
+          "model_3": "01-2002",
+          "model_4": "01-2002",
+          "model_5": "01-2002",
+          "model_6": "01-2002",
+          "model_7": "01-2002",
+          "model_8": "01-2002",
+          "model_9": "01-2002"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": false,
+          "model_6": true,
+          "model_7": true,
+          "model_8": false,
+          "model_9": true
+        },
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

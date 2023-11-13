@@ -75,8 +75,8 @@
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": false,
-        "dsge": true,
+        "bayes": true,
+        "dsge": false,
         "varother": false
     },
     "regime_dependence": {

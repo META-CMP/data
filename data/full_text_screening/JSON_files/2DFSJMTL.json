@@ -7,7 +7,7 @@
         "model_notes": {
           "model_1": "null",
           "model_2": "pure sign restrictions approach.",
-          "model_3": "pure sign restrictions approach.",
+          "model_3": "pure sign restrictions approach, including real interest rate and 1 year treasury bill as endogenous variables in the VAR.",
           "model_4": "additionally imposing a zero response on impact for the GDP price deflator.",
           "model_5": "additionally imposing a zero response on impact for real GDP.",
           "model_6": "penalty-function approach, that is the responses of the GDP price deflator, the commodity price index, nonborrowed reserves and the negative of the federal funds rate have been penalized for positive values and slightly rewarded for negative values in first 5 months following the shock, then the shock was identified by minimizing total penalties."
@@ -32,14 +32,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": {
-          "model_1": "lev_a_fed_funds",
-          "model_2": "lev_a_fed_funds",
-          "model_3": "lev_a_1_year_gov",
-          "model_4": "lev_a_fed_funds",
-          "model_5": "lev_a_fed_funds",
-          "model_6": "lev_a_fed_funds"
-        },
+        "inttype": "lev_a_fed_funds",
         "size": "1SD",
         "axis_trans": false,
         "dep": "log_a_rgdp log_a_deflator",

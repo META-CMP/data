@@ -1,0 +1,178 @@
+{
+    "general": {
+        "key": "ZCPHPCLN",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "aggregate variables included as variables.",
+          "model_2": "disaggregated insdustrial production index together with aggregate inflation.",
+          "model_3": "including in the disaggregated model oil price inflation and food price inflation in disaggregated model.",
+          "model_4": "core inflation instead of WPI inflation as dependent variable in disaggregated model.",
+          "model_5": "core inflation instead of WPI inflation as dependent variable and including exchange rate as explanatory variable in disaggregated model.",
+          "model_6": "disaggregated insdustrial production index together with aggregate inflation; excluding the GFC period in the sample.",
+          "model_7": "including in the disaggregated model oil price inflation and food price inflation in disaggregated model; excluding the GFC period in the sample.",
+          "model_8": "core inflation instead of WPI inflation as dependent variable in disaggregated model; excluding the GFC period in the sample.",
+          "model_9": "core inflation instead of WPI inflation as dependent variable and including exchange rate as explanatory variable in disaggregated model; excluding the GFC period in the sample.".
+        },
+        "figure": {
+          "model_1": "Annex 3",
+          "model_2": "Annex 5",
+          "model_3": "Annex 6",
+          "model_4": "Annex 7",
+          "model_5": "Annex 8",
+          "model_6": "Annex 9a",
+          "model_7": "Annex 9b",
+          "model_8": "Annex 9c",
+          "model_9": "Annex 9d"
+        },
+        "page": {
+          "model_1": 70,
+          "model_2": 72,
+          "model_3": 73,
+          "model_4": 74,
+          "model_5": 75,
+          "model_6": 76,
+          "model_7": 77,
+          "model_8": 78,
+          "model_9": 79
+        },
+        "irf": true,
+        "cum": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a-overnight_callrate",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": {
+          "model_1": "logdiff_a_ip logdiff_a_wpi",
+          "model_2": "logdiff_a_wpi",
+          "model_3": "logdiff_a_wpi",
+          "model_4": "logdiff_a_core",
+          "model_5": "logdiff_a_core",
+          "model_6": "logdiff_a_wpi",
+          "model_7": "logdiff_a_wpi",
+          "model_8": "logdiff_a_core",
+          "model_9": "logdiff_a_core"
+        }
+        "conf": "2_SE",
+        "main": "other",
+        "prefer": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": true,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "IN",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "04-1993",
+          "model_2": "04-1993",
+          "model_3": "04-1993",
+          "model_4": "04-1993",
+          "model_5": "04-1993",
+          "model_6": "04-1993",
+          "model_7": "04-1993",
+          "model_8": "04-1993",
+          "model_9": "04-1993"
+        },
+        "end": {
+          "model_1": "10-2011",
+          "model_2": "10-2011",
+          "model_3": "10-2011",
+          "model_4": "10-2011",
+          "model_5": "10-2011",
+          "model_6": "03-2008",
+          "model_7": "03-2008",
+          "model_8": "03-2008",
+          "model_9": "03-2008"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": false,
+          "model_9": false
+        },
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false,
+          "model_9": true
+        },
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

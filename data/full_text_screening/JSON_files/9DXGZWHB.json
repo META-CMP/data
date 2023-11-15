@@ -5,14 +5,8 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": {
-          "model_1": "2-column-3, 3-column-3, 4-column-3 & 5-column-3",
-          "model_2": 7
-        },
-        "page": {
-          "model_1": "2-column-3, 3-column-3, 4-column-3 & 5-column-3",
-          "model_2": 1546
-        },
+        "figure": "2-column-3, 3-column-3, 4-column-3 & 5-column-3",
+        "page": "2-column-3, 3-column-3, 4-column-3 & 5-column-3",
         "irf": true,
         "cum": false
     },
@@ -20,10 +14,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "1SD",
         "axis_trans": false,
-        "dep": {
-          "model_1": "log_q_rgdp lev_q_emp logdiff_q_cpi",
-          "model_2": "logdiff_q_cpi"
-        },
+        "dep": "log_q_rgdp lev_q_emp logdiff_q_cpi",
         "conf": "90",
         "main": "other",
         "prefer": true
@@ -33,19 +24,13 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": {
-          "model_1": true,
-          "model_2": false
-        },
+        "chol": true
         "svar": false,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
-        "idother": {
-          "model_1": false,
-          "model_2": true
-        }
+        "idother": true
     },
     "estimation_method": {
         "var": false,

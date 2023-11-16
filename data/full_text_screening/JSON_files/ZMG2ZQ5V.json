@@ -1,0 +1,101 @@
+{
+    "general": {
+        "key": "ZMG2ZQ5V",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": "1 left",
+          "model_2": "1 middle",
+          "model_3": "2 left",
+          "model_4": "2 middle",
+        },
+        "page": {
+          "model_1": 3,
+          "model_2": 3,
+          "model_3": 4,
+          "model_4": 4
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_3_month_money_market",
+        "size": "null",
+        "axis_trans": false,
+        "dep": "log_q_cpi",
+        "conf": "68",
+        "main": "inflation other",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AU AT CA DK FI FR GR IE IT JP KR NL NZ NO PT ES SE CH GB US",
+        "n_of_countries": 23
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "Q1-1985",
+        "end": "Q4-2015",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

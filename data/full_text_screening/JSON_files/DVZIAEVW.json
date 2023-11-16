@@ -1,0 +1,191 @@
+{
+    "general": {
+        "key": "DVZIAEVW",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "dep: the paper uses Australian 'underlying CPI' data as the price variable, we code it as core.; cum: is set to false, because cumulated in the paper only refers to cumulation of the shock series, which makes the IRFs comparable to standard estimation with policy rate in levels and CPI etc. in log-levels (see p. 21).",
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "null",
+          "model_3": "null",
+          "model_4": "null",
+          "model_5": "null",
+          "model_6": "GFC episode excluded from the sample.",
+          "model_7": "GFC episode excluded from the sample.",
+          "model_8": "null",
+          "model_9": "null"
+        },
+        "figure": {
+          "model_1": 1,
+          "model_2": 7,
+          "model_3": 7,
+          "model_4": 9,
+          "model_5": 9,
+          "model_6": 11,
+          "model_7": 11,
+          "model_8": "D2",
+          "model_9": "D2"
+        },
+        "page": {
+          "model_1": 2,
+          "model_2": 23,
+          "model_3": 23,
+          "model_4": 25,
+          "model_5": 25,
+          "model_6": 29,
+          "model_7": 29,
+          "model_8": 38,
+          "model_9": 38
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_cash_rate",
+        "size": "100bp",
+        "axis_trans": false,
+        "dep": {
+          "model_1": "log_q_core",
+          "model_2": "log_q_core lev_q_une_rate log_q_rgdp",
+          "model_3": "log_q_core lev_q_une_rate log_q_rgdp",
+          "model_4": "log_q_core lev_q_une_rate log_q_rgdp",
+          "model_5": "log_q_core lev_q_une_rate log_q_rgdp",
+          "model_6": "log_q_core lev_q_une_rate",
+          "model_7": "log_q_core lev_q_une_rate",
+          "model_8": "log_q_core lev_q_une_rate",
+          "model_9": "log_q_core lev_q_une_rate"
+        },
+        "conf": "90",
+        "main": "gdp emp inflation",
+        "prefer": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false,
+          "model_9": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true,
+          "model_8": true,
+          "model_9": true
+        },
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false,
+          "model_9": false
+        },
+        "svar": false,
+        "signr": false,
+        "hf": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false,
+          "model_7": true,
+          "model_8": false,
+          "model_9": true
+        },
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true,
+          "model_8": false,
+          "model_9": false
+        },
+        "lp": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": true,
+          "model_7": true,
+          "model_8": true,
+          "model_9": true
+        },
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AU",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1994",
+        "end": "Q4-2018",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

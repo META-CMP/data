@@ -3,11 +3,11 @@
         "key": "WZAQPE9H",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "grey areas represents NBER recessions.",
         "model_notes": {
-          "model_1": "impulse responses for each point in time and selected horizons (one quarter)",
-          "model_2": "impulse responses for each point in time and selected horizons (four quarters)",  
-          "model_3": "impulse responses for each point in time and selected horizons (eight quarters)"
+          "model_1": "impulse responses for each point in time and selected horizons (one quarter).",
+          "model_2": "impulse responses for each point in time and selected horizons (four quarters).",  
+          "model_3": "impulse responses for each point in time and selected horizons (eight quarters)."
         },
         "figure": {
           "model_1": "7 & 10-top",

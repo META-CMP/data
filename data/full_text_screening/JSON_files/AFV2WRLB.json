@@ -25,7 +25,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",
         "size": "1SD",
-        "axis_trans": "y*100",
+        "axis_trans": "y*100 lev_a_short_term_rate_false",
         "dep": "log_a_gdp log_a_emp",
         "conf": "90",
         "main": "other gdp",

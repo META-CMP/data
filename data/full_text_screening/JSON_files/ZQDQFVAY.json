@@ -1,0 +1,116 @@
+{
+    "general": {
+        "key": "ZQDQFVAY",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 1,
+          "model_2": 3,
+          "model_3": 4,
+          "model_4": 5
+        },
+        "page": {
+          "model_1": 1051,
+          "model_2": 1054,
+          "model_3": 1055,
+          "model_4": 1056
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_overnight_target",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": "log_m_cpi log_m_rgdp",
+        "conf": "1_SE",
+        "main": "gdp inflation",
+        "prefer": {
+          "model_1": "null",
+          "model_2": "null",
+          "model_3": "null",
+          "model_4": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true
+        },
+        "svar": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": false
+        },
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "CA",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1994",
+        "end": "12-2008",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

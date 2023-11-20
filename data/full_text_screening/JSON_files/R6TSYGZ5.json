@@ -1,0 +1,106 @@
+{
+    "general": {
+        "key": "R6TSYGZ5",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "VAR in levels."
+        },
+        "figure": {
+          "model_1": 8,
+          "model_2": 16
+        },
+        "page": {
+          "model_1": 33,
+          "model_2": 46
+        },
+        "irf": true,
+        "cum": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_1_year_gov",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": {
+          "model_1": "logdiff_a_rgdp logdiff_a_cpi",
+          "model_2": "log_a_rgdp logdiff_a_cpi"
+        },
+        "conf": "95",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": false
+        }
+    },
+    "identification_strategy": {
+        "iv": true,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": true,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1984",
+        "end": "Q4-2007",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

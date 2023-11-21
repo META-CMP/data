@@ -1,0 +1,226 @@
+{
+    "general": {
+        "key": "TTSTU35N",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "the federal funds rate response indicated by the bold line; confidence bands are computed via a residual-based moving block bootstrap, resulting in relatively wide confidence intervals.",
+          "model_2": "the federal funds rate response indicated by the bold line; confidence bands are computed via a recursive Wild Bootstrap as in Mertens and Ravn (2013).",
+          "model_3": "the federal funds rate response indicated by the bold line; cholesky decomposition.",
+          "model_4": "the federal funds rate response indicated by the bold line; excluding ELB;  confidence bands are computed via a residual based moving block bootstrap as in Lunsford and Jentsch (2016).",
+          "model_5": "the federal funds rate response indicated by the bold line; including excess bond premium as a variable; confidence bands are computed via a residual based moving block bootstrap as in Lunsford and Jentsch (2016).",
+          "model_6": "the federal funds rate response indicated by the bold line; the contemporaneous response of the consumer price index is restricted to be zero; confidence bands are computed via a residual based moving block bootstrap as in Lunsford and Jentsch (2016).",
+          "model_7": "the federal funds rate response indicated by the bold line; LP-IV approach; confidence bands are computed via a residual based moving block bootstrap as in Lunsford and Jentsch (2016).",
+          "model_8": "the federal funds rate response indicated by the bold line; TVP-VAR for 01-2003; posterior credibility intervals based on iterations of the Gibbs sampler."
+        },
+        "figure": {
+          "model_1": 2,
+          "model_2": 8,
+          "model_3": 9,
+          "model_4": 10,
+          "model_5": 11,
+          "model_6": 12,
+          "model_7": 13,
+          "model_8": 16
+        },
+        "page": {
+          "model_1": 698,
+          "model_2": "Appendix-75",
+          "model_3": "Appendix-76",
+          "model_4": "Appendix-77",
+          "model_5": "Appendix-78",
+          "model_6": "Appendix-79",
+          "model_7": "Appendix-80",
+          "model_8": "Appendix-83"
+        },
+        "irf": true,
+        "cum": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": "logdiff_a_ip logdiff_a_cpi",
+        "conf": "68 & 95",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false
+        }
+    },
+    "identification_strategy": {
+        "iv": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": false
+        },
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false
+        },
+        "svar": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": true,
+          "model_7": false,
+          "model_8": false
+        },
+        "signr": false,
+        "hf": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": true,
+          "model_5": true,
+          "model_6": false,
+          "model_7": true,
+          "model_8": true
+        },
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": false,
+          "model_8": false
+        },
+        "lp": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": false
+        },
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": true
+        },
+        "gvar": false,
+        "bayes": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": true
+        },
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "11-1988",
+          "model_2": "11-1988",
+          "model_3": "11-1988",
+          "model_4": "11-1988",
+          "model_5": "11-1988",
+          "model_6": "11-1988",
+          "model_7": "11-1988",
+          "model_8": "11-1988"
+        },
+        "end": {
+          "model_1": "09-2017",
+          "model_2": "09-2017",
+          "model_3": "09-2017",
+          "model_4": "12-2007",
+          "model_5": "08-2016",
+          "model_6": "09-2017",
+          "model_7": "09-2017",
+          "model_8": "09-2017"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false
+        }
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

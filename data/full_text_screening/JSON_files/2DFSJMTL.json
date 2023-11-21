@@ -1,0 +1,147 @@
+{
+    "general": {
+        "key": "2DFSJMTL",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "the IRF graphs have been annualized.",
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "pure sign restrictions approach.",
+          "model_3": "pure sign restrictions approach, including real interest rate and 1 year treasury bill as endogenous variables in the VAR.",
+          "model_4": "additionally imposing a zero response on impact for the GDP price deflator.",
+          "model_5": "additionally imposing a zero response on impact for real GDP.",
+          "model_6": "penalty-function approach, that is the responses of the GDP price deflator, the commodity price index, nonborrowed reserves and the negative of the federal funds rate have been penalized for positive values and slightly rewarded for negative values in first 5 months following the shock, then the shock was identified by minimizing total penalties."
+        },
+        "figure": {
+          "model_1": 5,
+          "model_2": 6,
+          "model_3": 10,
+          "model_4": 11,
+          "model_5": 12,
+          "model_6": 14
+        },
+        "page": {
+          "model_1": 395,
+          "model_2": 397,
+          "model_3": 403,
+          "model_4": 404,
+          "model_5": 405,
+          "model_6": 416
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": "log_a_rgdp log_a_deflator",
+        "conf": {
+          "model_1": "68",
+          "model_2": "64",
+          "model_3": "64",
+          "model_4": "64",
+          "model_5": "64",
+          "model_6": "64"
+        },
+        "main": "gdp",
+        "prefer": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false
+        },
+        "svar": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true,
+          "model_5": true,
+          "model_6": false
+        },
+        "signr": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true
+        },
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1965",
+        "end": "12-1996",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

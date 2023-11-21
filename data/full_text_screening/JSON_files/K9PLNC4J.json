@@ -1,0 +1,203 @@
+{
+    "general": {
+        "key": "K9PLNC4J",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "equity bond premium included as a variable.",
+          "model_2": "replacing equity bond premium by bank equity.",
+          "model_3": "quaterly frequency including the log of the consumption deflator, the log of investment, the log of consumption; GDP is expressed in real per capita terms.",
+          "model_4": "using sign restrictions in the quarterly VAR.",
+          "model_5": "using monthly VAR and instead of 1_year_gov, they use fed_funds.",
+          "model_6": "extending to include the period of ZLB."
+        },
+        "figure": {
+          "model_1": 1,
+          "model_2": 2,
+          "model_3": 3,
+          "model_4": 4,
+          "model_5": 9,
+          "model_6": 10
+        },
+        "page": {
+          "model_1": 6,
+          "model_2": 7,
+          "model_3": 9,
+          "model_4": 11,
+          "model_5": 28,
+          "model_6": 29
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+          "model_1": "lev_a_1_year_gov",
+          "model_2": "lev_a_1_year_gov",
+          "model_3": "lev_a_1_year_gov",
+          "model_4": "lev_a_1_year_gov",
+          "model_5": "lev_a_fed_funds",
+          "model_6": "lev_a_fed_funds"
+        },
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": {
+          "model_1": "log_a_ip log_a_cpi",
+          "model_2": "log_a_ip log_a_cpi",
+          "model_3": "log_a_rgdp log_a_cpi",
+          "model_4": "log_a_rgdp log_a_cpi",
+          "model_5": "log_a_ip log_a_cpi",
+          "model_6": "log_a_ip log_a_cpi"
+        },
+        "conf": "68 & 90",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false
+        }
+    },
+    "identification_strategy": {
+        "iv": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": true
+        },
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false
+        },
+        "svar": false,
+        "signr": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true,
+          "model_5": false,
+          "model_6": false
+        },
+        "hf": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": true
+        },
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": false,
+          "model_6": false
+        },
+        "month": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": true
+        }
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "01-1973",
+          "model_2": "01-1973",
+          "model_3": "Q1-1973",
+          "model_4": "Q1-1973",
+          "model_5": "01-1973",
+          "model_6": "01-1973"
+        },
+        "end": {
+          "model_1": "12-2009",
+          "model_2": "12-2009",
+          "model_3": "Q4-2009",
+          "model_4": "Q4-2009",
+          "model_5": "12-2009",
+          "model_6": "12-2019"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false
+        },
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true 
+        }
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

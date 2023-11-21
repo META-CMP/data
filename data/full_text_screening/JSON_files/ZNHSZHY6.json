@@ -28,7 +28,7 @@
         "inttype": "lev_3_month_gov_us",
         "size": "100bp",
         "axis_trans": false,
-        "dep": "log_a_ip log_a_cpi",
+        "dep": "log_m_ip log_m_cpi",
         "conf": "68",
         "main": "other",
         "prefer": {

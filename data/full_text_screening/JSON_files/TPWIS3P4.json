@@ -1,0 +1,136 @@
+{
+    "general": {
+        "key": "TPWIS3P4",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "size: shock size is missing, but is an expansionary monetary policy shock.",
+        "model_notes": {
+          "model_1": "benchmark.",
+          "model_2": "consumption included as an endogenous variable.",
+          "model_3": "investment included as an endogenous variable, but not the others.",
+          "model_4": "government spending included as an an endogenous variable, but not the others.",
+          "model_5": "export included as an an endogenous variable, but not the others.",
+          "model_6": "import included as an endogenous variable, but not the others.",
+          "model_7": "net trade balance included as an endogenous variable, but not the others.",
+          "model_8": "accumulated impulse response."
+        },
+        "figure": {
+          "model_1": 1,
+          "model_2": 2,
+          "model_3": 3,
+          "model_4": 4,
+          "model_5": 5,
+          "model_6": 6,
+          "model_7": 7,
+          "model_8": 8
+        },
+        "page": {
+          "model_1": 4793,
+          "model_2": 4794,
+          "model_3": 4794,
+          "model_4": 4795,
+          "model_5": 4795,
+          "model_6": 4795,
+          "model_7": 4796,
+          "model_8": 4796
+        },
+        "irf": true,
+        "cum": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": true
+        }
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_3_month_interbank",
+        "size": "null",
+        "axis_trans": "y*100 lev_a_3_month_interbank_y/100",
+        "dep": "log_a_deflator",
+        "conf": "1_SE",
+        "main": "gdp",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "TR",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1987",
+        "end": "Q3-2008",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": true,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

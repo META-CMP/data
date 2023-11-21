@@ -43,12 +43,12 @@
         },
         "axis_trans": false,
         "dep": {
-          "model_1": "logdiff_a_rgdp logdiff_a_cpi lev_a_une_rate",
-          "model_2": "logdiff_a_rgdp logdiff_a_core",
-          "model_3": "logdiff_a_rgdp logdiff_a_core",
-          "model_4": "logdiff_a_rgdp logdiff_a_core",
-          "model_5": "logdiff_a_rgdp logdiff_a_core",
-          "model_6": "logdiff_a_rgdp logdiff_a_core"
+          "model_1": "logdiff_q_rgdp logdiff_q_cpi lev_q_une_rate",
+          "model_2": "logdiff_q_rgdp logdiff_q_core",
+          "model_3": "logdiff_q_rgdp logdiff_q_core",
+          "model_4": "logdiff_q_rgdp logdiff_q_core",
+          "model_5": "logdiff_q_rgdp logdiff_q_core",
+          "model_6": "logdiff_q_rgdp logdiff_q_core"
         },
         "conf": "68",
         "main": "gdp inflation",

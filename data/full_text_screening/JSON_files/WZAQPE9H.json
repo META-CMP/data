@@ -26,7 +26,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "1%",
         "axis_trans": false,
-        "dep": "logdiff_a_gdp logdiff_a_cpi logdiff_a_emp",
+        "dep": "logdiff_q_gdp logdiff_q_cpi logdiff_q_emp",
         "conf": "90",
         "main": "other",
         "prefer": {

@@ -1,0 +1,146 @@
+{
+    "general": {
+        "key": "WBVSJR74",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 1,
+          "model_2": "2 & 3",
+          "model_3": 4,
+          "model_4": 5
+        },
+        "page": {
+          "model_1": 13,
+          "model_2": "14 & 15",
+          "model_3": 15,
+          "model_4": 16
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_short_term_rate",
+        "size": "1SD",
+        "axis_trans": {
+          "model_1": "y*100 lev_a_short_term_rate_false",
+          "model_2": "y*100",
+          "model_3": "y*100",
+          "model_4": "y*100"
+        },
+        "dep": {
+          "model_1": "log_m_ip log_m_une_rate log_m_cpi",
+          "model_2": "log_m_ip log_m_une_rate log_m_cpi",
+          "model_3": "log_m_ip log_m_cpi",
+          "model_4": "log_m_ip log_m_cpi"
+        },
+        "conf": "2_SE",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false
+        },
+        "svar": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true
+        },
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "PL",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "01-1995",
+          "model_2": "01-1995",
+          "model_3": "01-1995",
+          "model_4": "01-1995"
+        },
+        "end": {
+          "model_1": "02-2002",
+          "model_2": "02-2002",
+          "model_3": "02-2002",
+          "model_4": "12-2000"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false
+        },
+        "outpgap": false,
+        "find": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false
+        },
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

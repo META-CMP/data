@@ -1,0 +1,147 @@
+{
+    "general": {
+        "key": "WEL4CM26",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "decomposition: the solid gray line represents the response in 1985.I–2000.IV, that corresponds to the conventional monetary policy period, the one will I code; the solid black line is the response in 2001.I–2014.IV which corresponds to unconventional monetary policy period, then not coded.",
+        "model_notes": {
+          "model_1": "baseline.",
+          "model_2": "setting the starting point to Q4-1988.",
+          "model_3": "taking a more agnostic stance with respect to real GDP and leave its response unrestricted. Instead, core inflation is restricted to increase for two periods following the shock.",
+          "model_4": "instead of a short-term interest rate, the nominal long-term bond yield is required not to increase; broad money supply and industrial production are restricted not to decrease; the real effective exchange rate is bound not to increase.",
+          "model_5": "overnight_callrate responds negatively, gdp and core inflation positive.",
+          "model_6": "setting the end point to Q4-1998."
+        },
+        "figure": {
+          "model_1": ",, 3 & 5",
+          "model_2": "B2",
+          "model_3": "B3",
+          "model_4": "B4",
+          "model_5": "B5",
+          "model_6": "B6" 
+        },
+        "page": {
+          "model_1": "118, 119 & 120",
+          "model_2": 129,
+          "model_3": 130,
+          "model_4": 131,
+          "model_5": 131,
+          "model_6": 132 
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_overnight_callrate",
+        "size": {
+          "model_1": "-20bp",
+          "model_2": "-20bp",
+          "model_3": "-20bp",
+          "model_4": "-4bp",
+          "model_5": "-20bp",
+          "model_6": "-20bp" 
+        },
+        "axis_trans": false,
+        "dep": {
+          "model_1": "logdiff_q_rgdp logdiff_q_cpi lev_q_une_rate",
+          "model_2": "logdiff_q_rgdp logdiff_q_core",
+          "model_3": "logdiff_q_rgdp logdiff_q_core",
+          "model_4": "logdiff_q_rgdp logdiff_q_core",
+          "model_5": "logdiff_q_rgdp logdiff_q_core",
+          "model_6": "logdiff_q_rgdp logdiff_q_core"
+        },
+        "conf": "68",
+        "main": "gdp inflation",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": true,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "JP",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "Q1-1985",
+          "model_2": "Q4-1988",
+          "model_3": "Q4-1988",
+          "model_4": "Q4-1988",
+          "model_5": "Q4-1988",
+          "model_6": "Q1-1985"
+        },
+        "end": {
+          "model_1": "Q4-2000",
+          "model_2": "Q4-2000",
+          "model_3": "Q4-2000",
+          "model_4": "Q4-2000",
+          "model_5": "Q4-2000",
+          "model_6": "Q4-1998"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": true
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

@@ -1,0 +1,107 @@
+{
+    "general": {
+        "key": "AFV2WRLB",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "panel: panel VAR of 13 Greek regions",
+        "model_notes": {
+          "model_1": "regions included in the panel with significant employment reaction to interest rate shock from times series analysis.",
+          "model_2": "regions included in the panel with significant household expenditure reaction to interest rate shock from times series analysis.",
+          "model_3": "regions included in the panel with significant investment reaction to interest rate shock from times series analysis."
+        },
+        "figure": {
+          "model_1": "5-left",
+          "model_2": "5-middle",
+          "model_3": "5-right"
+        },
+        "page": {
+          "model_1": 805,
+          "model_2": 805,
+          "model_3": 805
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_short_term_rate",
+        "size": "1SD",
+        "axis_trans": "y*100 lev_a_short_term_rate_false",
+        "dep": "log_a_gdp log_a_emp",
+        "conf": "90",
+        "main": "other gdp",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": true,
+        "quarter": false,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "GR",
+        "n_of_countries": 13
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "1980",
+        "end": "2009",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

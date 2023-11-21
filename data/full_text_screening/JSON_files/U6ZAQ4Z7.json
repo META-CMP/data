@@ -1,0 +1,126 @@
+{
+    "general": {
+        "key": "U6ZAQ4Z7",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "size: a one standard deviation reduction in the Federal Funds Rate, equal to a 22 basis point reduction.",
+          "model_2": "size: a one standard deviation reduction in the Shadow rate, equal to a 40 basis point reduction."
+        },
+        "figure": {
+          "model_1": "1.4",
+          "model_2": "1.8"
+        },
+        "page": {
+          "model_1": 19,
+          "model_2": 26
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+          "model_1": "lev_fed_funds",
+          "model_2": "lev_ssr"
+        },
+        "size": {
+          "model_1": "-22bp",
+          "model_2": "-40bp"
+        },
+        "axis_trans": false,
+        "dep": "log_a_rgdp log_a_core",
+        "conf": "68",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "Q2-1990",
+          "model_2": "Q4-2008" 
+          
+        },
+        "end": {
+          "model_1": "Q3-2008",
+          "model_2": "Q4-2018"
+          
+        },
+        "samplesize": false
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": {
+          "model_1": true,
+          "model_2": true 
+        },
+        "convent": {
+          "model_1": true,
+          "model_2": false 
+        },
+        "decomposition": {
+          "model_1": false,
+          "model_2": true 
+        }
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

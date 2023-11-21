@@ -1,0 +1,97 @@
+{
+    "general": {
+        "key": "BBH4RGN2",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "It is a working paper in industry level, but it has some aggregated response",
+        "model_notes": {
+                "model_1": "new method of identification strategy in a mix of HF, they proxy the monetary policy shock by taking residuals from an estimated Taylor rule."
+        },
+        "figure":  {
+                "model_1": 1
+        },
+        "page": {
+                "model_1": 16
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_short_term_rate",
+        "size": "1%",
+        "axis_trans": "y*100 lev_a_short_term_rate_false",
+        "dep": "gr_a_gap_r gr_a_gap_deflator",
+        "conf": "95",
+        "main": "other",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": true,
+        "forecast_based": true,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": true,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": true
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": true,
+        "quarter": false,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AL DZ AM AU AT AZ BH BB BY BE BO BA BW BR BG CM CA CL CN CO CD CR CI HR CY CZ DK EC EG EE ET FJ FI FR GE DE GH GR HN HK HU IS IN ID IR IQ IE IL IT 50.JM JP JO KZ KE KR KW KG LA LV LT LU MW MY MT MU MX MD MN MA MM NL NZ NE MK NO OM PK PA PE PH PL PT QA RO RU SA SN SG SK SI ZA ES LK SE CH SY TZ TH TT TN TR GB UY VN YE",
+        "n_of_countries": 105
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "1973",
+        "end": "2019",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

@@ -1,0 +1,106 @@
+{
+    "general": {
+        "key": "A26S5KHF",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "list_of_countries: used EA iso for the Eurozone; size: 1SD that corresponds to 22bp. We therefore code 22bp.",
+        "model_notes": {
+                "model_1": "euro area impulse responses are obtained by averaging over the impulse responses of member countries using PPP GDP weights; show the median and the 5% and 95% quantiles of the bootstrap distribution.",
+                "model_2": "euro area impulse responses are obtained by averaging over the impulse responses of member countries using PPP GDP weights; show the median and the 5% and 95% quantiles of the bootstrap distribution."
+        },
+        "figure": {
+                "model_1": "5a",
+                "model_2": "5a"
+        },
+        "page": {
+                "model_1": 39,
+                "model_2": 39
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_fed_funds",
+        "size": "22bp",
+        "axis_trans": false,
+        "dep": "log_a_gap logdiff_a_cpi",
+        "conf": "90",
+        "main": "gdp inflation",
+        "prefer": "null"
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": true,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": true,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": true,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": {
+                "model_1": "US",
+                "model_2": "EA"
+        },
+        "n_of_countries": {
+                "model_1": 1,
+                "model_2": 1
+        }
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "Q1-1980",
+        "end": "Q3-2006",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

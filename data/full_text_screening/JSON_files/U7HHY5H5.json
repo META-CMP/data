@@ -1,0 +1,97 @@
+{
+    "general": {
+        "key": "U7HHY5H5",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "list_of_countries: they use euro-area as aggregate data.",
+        "model_notes": {
+                "model_1": "axis_trans: the x-axis is in weeks, so we also need to multiply by 4 to compare with months or 16 to compare in quarters; model_1: report the responses obtained following an expansionary conventional monetary policy shock (second column) and a UMP announcement surprise (third column); main: the focus of the paper is UMP but I will only code 1 figure based on CMP; estimation_method: mixed-frequency VAR (MF-VAR)."
+        },
+        "figure": {
+                "model_1": 2
+        },
+        "page": {
+                "model_1": 84
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_short_term_rate",
+        "size": "-1%",
+        "axis_trans": "y*100 lev_short_term_rate_false",
+        "dep": "logdiff_m_ip logdiff_m_cpi",
+        "conf": "68",
+        "main": "other",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": true,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": true
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "EA",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "18-12-2008",
+        "end": "10-05-2014",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": true
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

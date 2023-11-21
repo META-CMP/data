@@ -1,0 +1,118 @@
+{
+    "general": {
+        "key": "3X58F23H",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "list_of_countries: EA means Eurozone.",
+        "model_notes":{
+                "model_1": "conf: 16th & 84th percentiles, the percentiles work as confidence interval; the paper differenciate two periods, I will only code pre-2007 estimates.",
+                "model_2": "conf: 16th & 84th percentiles, the percentiles work as confidence interval; the paper differenciate two periods, I will only code pre-2007 estimates."
+        },
+        "figure": {
+                "model_1": 4,
+                "model_2": 4
+        },
+        "page": {
+                "model_1": 772,
+                "model_2": 772
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+                "model_1": "lev_fed_funds",
+                "model_2": "lev_eonia"
+        },
+        "size": "null",
+        "axis_trans": "y*100 lev_fed_funds_false lev_eonia_false",
+        "dep": "log_a_rgdp log_a_cpi",
+        "conf": "68",
+        "main": "gdp inflation",
+        "prefer": {
+                "model_1": true,
+                "model_2": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": true,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": {
+                "model_1": "US",
+                "model_2": "EA"
+        },
+        "n_of_countries": {
+                "model_1": 1,
+                "model_2": 1
+        }
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "01-1995",
+                "model_2": "06-1999"
+        },
+        "end": {
+                "model_1": "07-2007",
+                "model_2": "07-2007"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": false,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

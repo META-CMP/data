@@ -1,0 +1,131 @@
+{
+    "general": {
+        "key": "2S8LEU6Z",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+                "model_1": "show the IRF point estimates of the VAR along with the model-based IRF point estimates of the two DSGE.",
+                "model_2": "show the IRF point estimates of the VAR along with the model-based IRF point estimates of the two DSGE; the confidence interval of the two DSGE are in the figure 2; takes into account sticky information.",
+                "model_3": "show the IRF point estimates of the VAR along with the model-based IRF point estimates of the two DSGE; the confidence interval of the two DSGE are in the figure 2; takes into account backward-looking behaviour."
+        },
+        "figure": {
+                "model_1": 1,
+                "model_2": 1,
+                "model_3": 1
+        },
+        "page": {
+                "model_1": 833,
+                "model_2": 833,
+                "model_3": 833 
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_fed_funds",
+        "size": "null",
+        "axis_trans": false,
+        "dep": "log_q_gap gr_q_deflator",
+        "conf": "80",
+        "main": "other",
+        "prefer": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false
+        },
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true
+        }
+    },
+    "estimation_method": {
+        "var": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false
+        },
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true
+        },
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q3-1954",
+        "end": "Q4-2007",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false
+        },
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true
+        },
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

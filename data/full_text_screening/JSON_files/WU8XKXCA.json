@@ -1,0 +1,106 @@
+{
+    "general": {
+        "key": "WU8XKXCA",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "includes dummy variable for pre-1997 financial crisis, that's the reason why in model_2 I set to true find; size: they stated that shock size is 1SD and that the standard deviation of estimated monetary policy shock is 1.00, but the reponse of interest rate is 55bp and due to the fact that is a SVAR, I prefer 1SD (not purely cholesky)."
+        },
+        "figure": {
+                "model_1": 5,
+                "model_2": "D1"
+        },
+        "page": {
+                "model_1": 15,
+                "model_2": 27
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_call_rate",
+        "size": "1SD",
+        "axis_trans": "y*100 lev_call_rate_false",
+        "dep": "logdiff_a_gdp logdiff_a_cpi",
+        "conf": "1_SE",
+        "main": "other",
+        "prefer": {
+                "model_1": true,
+                "model_2": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": true,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "KR US",
+        "n_of_countries": 2
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "Q1-1991",
+        "end": "Q1-2015",
+        "samplesize": 93
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": {
+                "model_1": false,
+                "model_2": true
+        },
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

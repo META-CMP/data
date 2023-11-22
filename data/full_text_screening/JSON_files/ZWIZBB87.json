@@ -29,7 +29,7 @@
         "inttype": "lev_m_3_month_interbank",
         "size": "1SD",
         "axis_trans": "log_m_ip_y*100",
-        "dep": "log_m_ip log_m_cpi",
+        "dep": "log_m_ip gr_m_cpi",
         "conf": "68",
         "main": "other",
         "prefer": {

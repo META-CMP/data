@@ -84,7 +84,7 @@
           "model_7": "lev_m_une_rate",
           "model_8": "lev_m_une_rate",
           "model_9": "logdiff_m_ip logdiff_m_cpi lev_m_une_rate",
-          "model_10": "logdiff_m_ip logdiff_m_cpi lev_m_une_rate",
+          "model_10": "lev_m_une_rate",
           "model_11": "lev_m_une_rate",
           "model_12": "lev_m_une_rate",
           "model_13": "lev_m_une_rate",

@@ -1,0 +1,109 @@
+{
+    "general": {
+        "key": "BKIN7DAE",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "they use a structural vector autoregressive moving average (SVARMA) model, that's the reason why I set varother to true.",
+          "model_2": "null"
+        },
+        "figure": {
+          "model_1": "1.column-3",
+          "model_2": "1.column-4"
+        },
+        "page": {
+          "model_1": 194,
+          "model_2": 194
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_overnight_callrate",
+        "size": "1SD",
+        "axis_trans": "y*100",
+        "dep": "log_m_ip logdiff_a_cpi",
+        "conf": "68",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": {
+          "model_1": false,
+          "model_2": true
+        },
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": {
+          "model_1": true,
+          "model_2": false
+        }
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "MY US",
+        "n_of_countries": 2
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "01-1985",
+        "end": "12-2015",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

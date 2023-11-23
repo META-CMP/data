@@ -1,0 +1,156 @@
+{
+    "general": {
+        "key": "VQXARSCQ",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "they only cumulate the impulse responses of the U.S. and Mexican inflation rates; the results are for US domestic variables not mexican.",
+        "model_notes": {
+          "model_1": "type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction; the one-standard-deviation innovation translates into an unexpected rise in the Fed funds rate of roughly 10 bp in the impact period.",
+          "model_2": "type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions; the median peak effect of the U.S. policy rate after a one standard-deviation innovation is of 7 bp.",
+          "model_3": "they impose no zero restriction on the impact response of output, while we maintain the required negative response of prices both on impact and during the six moths after the two types contractionary monetary policy shocks; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
+          "model_4": "they impose no zero restriction on the impact response of output, while we maintain the required negative response of prices both on impact and during the six moths after the two types contractionary monetary policy shocks; type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions.",
+          "model_5": "they impose positive sign restrictions on the contemporaneous structural parameters associated to the U.S. output gap and inflation in the monetary equation; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
+          "model_6": "they impose positive sign restrictions on the contemporaneous structural parameters associated to the U.S. output gap and inflation in the monetary equation; type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions.",
+          "model_7": "they replace the output gap variables in the baseline estimation with an alternative measure: the log of real GDP in levels; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
+          "model_8": "they replace the output gap variables in the baseline estimation with an alternative measure: the log of real GDP in levels;  type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions.",
+          "model_9": "they replace the output gap variables in the baseline estimation with an  alternative measure: the output gap gathered from a model in log-level that computes the trend of real GDP for each country; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
+          "model_10": "they replace the output gap variables in the baseline estimation with an  alternative measure: the output gap gathered from a model in log-level that computes the trend of real GDP for each country; type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions.",
+          "model_11": "they replace the U.S. term premium in the baseline estimation by the percent change in the Standard & Poor’s 500 stock market index; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
+          "model_12": "they replace the U.S. term premium in the baseline estimation by the percent change in the Standard & Poor’s 500 stock market index; type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions."
+        },
+        "figure": {
+          "model_1": 9,
+          "model_2": 11,
+          "model_3": "Appendix E3",
+          "model_4": "Appendix E4",
+          "model_5": "Appendix E5",
+          "model_6": "Appendix E6",
+          "model_7": "Appendix E10 row-5",
+          "model_8": "Appendix E10 row-6",
+          "model_9": "Appendix E11 row-5",
+          "model_10": "Appendix E11 row-6",
+          "model_11": "Appendix E12 row-1",
+          "model_12": "Appendix E12 row-3"
+        },
+        "page": {
+          "model_1": 15,
+          "model_2": 18,
+          "model_3": "Appendix xiv",
+          "model_4": "Appendix xiv",
+          "model_5": "Appendix xv",
+          "model_6": "Appendix xv",
+          "model_7": "Appendix xix",
+          "model_8": "Appendix xix",
+          "model_9": "Appendix xx",
+          "model_10": "Appendix xx",
+          "model_11": "Appendix xxi",
+          "model_12": "Appendix xxi"
+        },
+        "irf": true,
+        "cum": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_ssr",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": {
+          "model_1": "lev_m_gap gr_a_core",
+          "model_2": "lev_m_gap gr_a_core",
+          "model_3": "lev_m_gap gr_a_core",
+          "model_4": "lev_m_gap gr_a_core",
+          "model_5": "lev_m_gap gr_a_core",
+          "model_6": "lev_m_gap gr_a_core",
+          "model_7": "log_m_rgdp gr_a_core",
+          "model_8": "log_m_rgdp gr_a_core",
+          "model_9": "log_m_gap gr_a_core",
+          "model_10": "log_m_gap gr_a_core",
+          "model_11": "lev_m_gap gr_a_core",
+          "model_12": "lev_m_gap gr_a_core"
+        },
+        "conf": "68",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false,
+          "model_9": false,
+          "model_10": false,
+          "model_11": false,
+          "model_12": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": true,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "MX US",
+        "n_of_countries": 2
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "01-2002",
+        "end": "03-2018",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": true,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": false,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

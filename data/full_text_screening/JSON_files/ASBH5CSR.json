@@ -29,7 +29,7 @@
         "size": "1SD",
         "axis_trans": false,
         "dep": "logdiff_a_ip logdiff_a_cpi",
-        "conf": "95",
+        "conf": "1_SE & 2_SE",
         "main": "other",
         "prefer": {
           "model_1": true,

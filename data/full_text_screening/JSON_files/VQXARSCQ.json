@@ -11,12 +11,12 @@
           "model_4": "they impose no zero restriction on the impact response of output, while we maintain the required negative response of prices both on impact and during the six moths after the two types contractionary monetary policy shocks; type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions.",
           "model_5": "they impose positive sign restrictions on the contemporaneous structural parameters associated to the U.S. output gap and inflation in the monetary equation; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
           "model_6": "they impose positive sign restrictions on the contemporaneous structural parameters associated to the U.S. output gap and inflation in the monetary equation; type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions.",
-          "model_7": "they replace the output gap variables in the baseline estimation with an alternative measure: the log of real GDP in levels; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
-          "model_8": "they replace the output gap variables in the baseline estimation with an alternative measure: the log of real GDP in levels;  type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions.",
-          "model_9": "they replace the output gap variables in the baseline estimation with an  alternative measure: the output gap gathered from a model in log-level that computes the trend of real GDP for each country; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
-          "model_10": "they replace the output gap variables in the baseline estimation with an  alternative measure: the output gap gathered from a model in log-level that computes the trend of real GDP for each country; type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions.",
-          "model_11": "they replace the U.S. term premium in the baseline estimation by the percent change in the Standard & Poor’s 500 stock market index; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
-          "model_12": "they replace the U.S. term premium in the baseline estimation by the percent change in the Standard & Poor’s 500 stock market index; type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions."
+          "model_7": "they only cumulate the impulse responses of the U.S. inflation rate; they replace the output gap variables in the baseline estimation with an alternative measure: the log of real GDP in levels; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
+          "model_8": "they only cumulate the impulse responses of the U.S. inflation rate; they replace the output gap variables in the baseline estimation with an alternative measure: the log of real GDP in levels;  type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions.",
+          "model_9": "they only cumulate the impulse responses of the U.S. inflation rate; they replace the output gap variables in the baseline estimation with an  alternative measure: the output gap gathered from a model in log-level that computes the trend of real GDP for each country; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
+          "model_10": "they only cumulate the impulse responses of the U.S. inflation rate; they replace the output gap variables in the baseline estimation with an  alternative measure: the output gap gathered from a model in log-level that computes the trend of real GDP for each country; type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions.",
+          "model_11": "they only cumulate the impulse responses of the U.S. inflation rate; they replace the U.S. term premium in the baseline estimation by the percent change in the Standard & Poor’s 500 stock market index; type I monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in the same direction.",
+          "model_12": "they only cumulate the impulse responses of the U.S. inflation rate; they replace the U.S. term premium in the baseline estimation by the percent change in the Standard & Poor’s 500 stock market index; type II monetary policy shock described in sign restrictions: in the impact period, the policy rate and the term premium move in opposite directions."
         },
         "figure": {
           "model_1": 9,
@@ -47,7 +47,20 @@
           "model_12": "Appendix xxi"
         },
         "irf": true,
-        "cum": false
+        "cum": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": true,
+          "model_9": true,
+          "model_10": true,
+          "model_11": true,
+          "model_12": true
+        }
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_ssr",

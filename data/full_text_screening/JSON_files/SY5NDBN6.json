@@ -19,11 +19,11 @@
           "model_5": "1a.row5-column-1, 1b.row5-column-1, 1c.row5-column-1 & 1c.row5-column-4"
         },
         "page": {
-          "model_1": "93, 94 & 95",
-          "model_2": "93, 94 & 95",
-          "model_3": "93, 94 & 95",
-          "model_4": "93, 94 & 95",
-          "model_5": "93, 94 & 95"
+          "model_1": "93, 94, 95 & 95",
+          "model_2": "93, 94, 95 & 95",
+          "model_3": "93, 94, 95 & 95",
+          "model_4": "93, 94, 95 & 95",
+          "model_5": "93, 94, 95 & 95"
         },
         "irf": true,
         "cum": false

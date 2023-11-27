@@ -9,27 +9,21 @@
           "model_2": "model for Germany.",
           "model_3": "model for France.",
           "model_4": "model for Italy.",
-          "model_5": "model for Spain.",
-          "model_6": "model for Euro-area starting in 1988.",
-          "model_7": "model for Euro-area starting in 1999."
+          "model_5": "model for Spain."
         },
         "figure": {
           "model_1": "1a.row1-column-1, 1b.row1-column-1, 1c.row1-column-1 & 1c.row1-column-4",
           "model_2": "1a.row2-column-1, 1b.row2-column-1, 1c.row2-column-1 & 1c.row2-column-4",
           "model_3": "1a.row3-column-1, 1b.row3-column-1, 1c.row3-column-1 & 1c.row3-column-4",
           "model_4": "1a.row4-column-1, 1b.row4-column-1, 1c.row4-column-1 & 1c.row4-column-4",
-          "model_5": "1a.row5-column-1, 1b.row5-column-1, 1c.row5-column-1 & 1c.row5-column-4",
-          "model_6": "1a.row6-column-1, 1b.row6-column-1, 1c.row6-column-1 & 1c.row6-column-4",
-          "model_7": "1a.row7-column-1, 1b.row7-column-1, 1c.row7-column-1 & 1c.row7-column-4"
+          "model_5": "1a.row5-column-1, 1b.row5-column-1, 1c.row5-column-1 & 1c.row5-column-4"
         },
         "page": {
           "model_1": "93, 94 & 95",
           "model_2": "93, 94 & 95",
           "model_3": "93, 94 & 95",
           "model_4": "93, 94 & 95",
-          "model_5": "93, 94 & 95",
-          "model_6": "93, 94 & 95",
-          "model_7": "93, 94 & 95"
+          "model_5": "93, 94 & 95"
         },
         "irf": true,
         "cum": false
@@ -46,9 +40,7 @@
           "model_2": false,
           "model_3": false,
           "model_4": false,
-          "model_5": false,
-          "model_6": false,
-          "model_7": false
+          "model_5": false
         }
     },
     "identification_strategy": {
@@ -95,18 +87,14 @@
           "model_2": "DE EA FR IT ES",
           "model_3": "FR DE EA IT ES",
           "model_4": "IT FR DE EA ES",
-          "model_5": "ES IT FR DE EA",
-          "model_6": "EA DE FR IT ES",
-          "model_7": "EA DE FR IT ES"
+          "model_5": "ES IT FR DE EA"
         },
         "n_of_countries": {
           "model_1": 5,
           "model_2": 5,
           "model_3": 5,
           "model_4": 5,
-          "model_5": 5,
-          "model_6": 5,
-          "model_7": 5
+          "model_5": 5
         }
     },
     "further_data_characteristics": {
@@ -116,18 +104,14 @@
           "model_2": "Q1-1980",
           "model_3": "Q1-1980",
           "model_4": "Q1-1980",
-          "model_5": "Q1-1980",
-          "model_6": "Q1-1988",
-          "model_7": "Q1-1999"
+          "model_5": "Q1-1980"
         },
         "end": {
           "model_1": "Q3-2007",
           "model_2": "Q3-2007",
           "model_3": "Q3-2007",
           "model_4": "Q3-2007",
-          "model_5": "Q3-2007",
-          "model_6": "Q3-2007",
-          "model_7": "Q3-2007"
+          "model_5": "Q3-2007"
         },
         "samplesize": "null"
     },

@@ -3,7 +3,7 @@
         "key": "SY5NDBN6",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "the dark solid lines plot the responses of the variables in each country for the full sample of 1988–2007.",
         "model_notes": {
           "model_1": "model for Euro-area.",
           "model_2": "model for Germany.",
@@ -100,11 +100,11 @@
     "further_data_characteristics": {
         "panel": true,
         "start": {
-          "model_1": "Q1-1980",
-          "model_2": "Q1-1980",
-          "model_3": "Q1-1980",
-          "model_4": "Q1-1980",
-          "model_5": "Q1-1980"
+          "model_1": "Q1-1988",
+          "model_2": "Q1-1988",
+          "model_3": "Q1-1988",
+          "model_4": "Q1-1988",
+          "model_5": "Q1-1988"
         },
         "end": {
           "model_1": "Q3-2007",

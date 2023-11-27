@@ -4,7 +4,11 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "null",
+        "model_notes": {
+          "model_1": "panel of countries under flexible exchange rate regime.",
+          "model_2": "panel of countries under a pegged exchange rate regime.",
+          "model_3": "focus on thelast years of the period from 2009 to 2015 (zero lower bound)."
+        },
         "figure": {
           "model_1": 4,
           "model_2": 5,
@@ -23,7 +27,7 @@
         "size": {
           "model_1": "30bp",
           "model_2": "30bp",
-          "model_3": "100bp"
+          "model_3": "10bp"
         },
         "axis_trans": "logdiff_q_rgdp_y*100",
         "dep": "logdiff_q_rgdp logdiff_q_deflator",

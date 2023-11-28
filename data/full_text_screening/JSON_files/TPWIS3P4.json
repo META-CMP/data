@@ -50,7 +50,7 @@
         "inttype": "lev_a_3_month_interbank",
         "size": "null",
         "axis_trans": "y*100 lev_a_3_month_interbank_y/100",
-        "dep": "log_a_deflator",
+        "dep": "log_q_deflator",
         "conf": "1_SE",
         "main": "gdp",
         "prefer": {

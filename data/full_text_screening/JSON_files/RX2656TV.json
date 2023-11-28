@@ -20,9 +20,9 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_euribor",
+        "inttype": "lev_a_1_month_euribor",
         "size": "1%",
-        "axis_trans": "y*100 lev_euribor_false",
+        "axis_trans": "y*100 lev_a_1_month_euribor_false",
         "dep": "log_m_ip log_m_cpi",
         "conf": "68",
         "main": "other",

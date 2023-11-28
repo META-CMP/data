@@ -31,7 +31,7 @@
         }
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_short_term_rate",
+        "inttype": "lev_a_policy_rate",
         "size": "25bp",
         "axis_trans": false,
         "dep": "log_m_ip gr_m_cpi",

@@ -144,7 +144,15 @@
     "further_data_characteristics": {
         "panel": false,
         "start": "Q1-1965",
-        "end": "Q3-2008",
+        "end": {
+          "model_1": "Q4-2004",
+          "model_2": "Q4-2007",
+          "model_3": "Q1-2003",
+          "model_4": "Q4-2004",
+          "model_5": "Q3-2008",
+          "model_6": "Q3-2008",
+          "model_7": "Q3-2008"
+        },
         "samplesize": {
           "model_1": 156,
           "model_2": "null",

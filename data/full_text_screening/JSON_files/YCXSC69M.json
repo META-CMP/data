@@ -14,7 +14,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "1%",
         "axis_trans": false,
-        "dep": "log_a_rgdp log_a_emp",
+        "dep": "log_q_rgdp log_q_emp",
         "conf": "95",
         "main": "other",
         "prefer": true

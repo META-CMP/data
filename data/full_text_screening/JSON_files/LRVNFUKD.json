@@ -54,7 +54,7 @@
           "model_7": "1SD"
         },
         "axis_trans": false,
-        "dep": "log_a_ip log_a_cpi",
+        "dep": "log_m_ip log_m_cpi",
         "conf": "95",
         "main": "gdp inflation",
         "prefer": {

@@ -1,0 +1,199 @@
+{
+    "general": {
+        "key": "GBAXG3YQ",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "dep: trimmed mean cpi is used.",
+        "model_notes": {
+                "model_1": "Sign restrictions on impulse responses of the cash rate and CPI.",
+                "model_2": "Sign restrictions on impulse responses of the cash rate, TWI, and CPI.",
+                "model_3": "Sign restrictions on coefficients in the monetary policy reaction function (real GDP and CPI).",
+                "model_4": "Restrictions on coefficients in the monetary policy reaction function (real GDP, TWI and CPI)",
+                "model_5": "Sign restrictions on impulse responses (cash rate, CPI and TWI) and coefficients in the monetary policy reaction function (real GDP, CPI and TWI).",
+                "model_6": "Sign restrictions on impulse responses (cash rate, CPI and TWI), coefficients in the monetary policy reaction function (real GDP, CPI and TWI), and relationship between monetary policy shock and proxy for the shock.",
+                "model_7": "Sign restrictions on impulse responses (cash rate, CPI and TWI),coefficients in the monetary policy reaction function (real GDP, CPI and TWI), and relationship between monetary policy shock and proxy for the shock",
+                "model_8": "Sign restrictions on impulse responses (cash rate, CPI and TWI), coefficients in the monetary policy reaction function (real GDP, CPI and TWI), and relationship between monetary policy shock and proxy for the shock.",
+                "model_9": "Sign restrictions on impulse responses (cash rate, CPI and TWI), coefficients in the monetary policy reaction function (real GDP, CPI and TWI), and relationship between monetary policy shock and proxy for the shock.",
+                "model_10": "Sign restrictions on impulse responses (cash rate, CPI and TWI), coefficients in the monetary policy reaction function (real GDP, CPI and TWI), and relationship between monetary policy shock and proxy for the shock.",
+                "model_11": "Sign restrictions on impulse responses (cash rate, CPI and TWI), coefficients in the monetary policy reaction function (real GDP, CPI and TWI), and relationship between monetary policy shock and proxy for the shock."
+        },
+        "figure": {
+                "model_1": 1,
+                "model_2": 2,
+                "model_3": 3,
+                "model_4": 4,
+                "model_5": 5,
+                "model_6": 6,
+                "model_7": 7,
+                "model_8": 8,
+                "model_9": 9,
+                "model_10": 10,
+                "model_11": 11
+        },
+        "page": {
+                "model_1": 336,
+                "model_2": 338,
+                "model_3": 339,
+                "model_4": 341,
+                "model_5": 342,
+                "model_6": 344,
+                "model_7": 347,
+                "model_8": 350,
+                "model_9": 351,
+                "model_10": 352,
+                "model_11": 353
+        },
+        "irf": true,
+        "cum": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": true,
+                "model_9": false,
+                "model_10": false,
+                "model_11": false
+        }
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_overnight_cashrate",
+        "size": {
+                "model_1": "1SD",
+                "model_2": "1SD",
+                "model_3": "1SD",
+                "model_4": "1SD",
+                "model_5": "1SD",
+                "model_6": "1SD",
+                "model_7": "100bp",
+                "model_8": "1SD",
+                "model_9": "1SD",
+                "model_10": "1SD",
+                "model_11": "1SD"
+        },
+        "axis_trans": false,
+        "dep": {
+                "model_1": "log_q_rgdp log_q_cpi",
+                "model_2": "log_q_rgdp log_q_cpi",
+                "model_3": "log_q_rgdp log_q_cpi",
+                "model_4": "log_q_rgdp log_q_cpi",
+                "model_5": "log_q_rgdp log_q_cpi",
+                "model_6": "log_q_rgdp log_q_cpi",
+                "model_7": "log_q_rgdp log_q_cpi",
+                "model_8": "logdiff_q_rgdp logdiff_q_cpi",
+                "model_9": "log_q_rgdp log_q_cpi",
+                "model_10": "log_q_rgdp log_q_cpi",
+                "model_11": "lev_q_une_rate log_q_cpi"
+        },
+        "conf": "68",
+        "main": "gdp inflation",
+        "prefer": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": true,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false,
+                "model_11": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AU",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "Q1-1984",
+                "model_2": "Q1-1984",
+                "model_3": "Q1-1984",
+                "model_4": "Q1-1984",
+                "model_5": "Q1-1984",
+                "model_6": "Q1-1984",
+                "model_7": "Q1-1984",
+                "model_8": "Q1-1984",
+                "model_9": "Q1-1993",
+                "model_10": "Q1-1993",
+                "model_11": "Q1-1993"
+        },
+        "end": "Q4-2019",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": true,
+                "model_11": false
+        },
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": false,
+        "convent": false,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

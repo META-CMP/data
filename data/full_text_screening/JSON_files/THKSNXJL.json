@@ -1,0 +1,91 @@
+{
+    "general": {
+        "key": "THKSNXJL",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "fvar: The paper uses a multi-country structural dynamic factor model, which we code as fvar.",
+        "model_notes": "null",
+        "figure": 1,
+        "page": 83,
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_augmented_fed_funds",
+        "size": "50bp",
+        "axis_trans": false,
+        "dep": "logdiff_q_rgdp logdiff_q_cpi lev_q_une_rate",
+        "conf": "84",
+        "main": "gdp  emp  inflation  other",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": true,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1983",
+        "end": "Q1-2015",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": true,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": false,
+        "convent": false,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

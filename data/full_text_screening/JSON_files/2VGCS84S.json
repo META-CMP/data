@@ -23,7 +23,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_3_month_euribor",
+        "inttype": "lev_a_1_month_euribor",
         "size": "100bp",
         "axis_trans": false,
         "dep": "logdiff_q_rgdp logdiff_q_cpi logdiff_q_emp",

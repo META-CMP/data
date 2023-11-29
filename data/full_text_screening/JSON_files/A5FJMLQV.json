@@ -20,7 +20,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_short_rate",
+        "inttype": "lev_a_short_rate",
         "size": "null",
         "axis_trans": false,
         "dep": "gr_m_core",

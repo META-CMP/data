@@ -20,7 +20,7 @@
         "inttype": "lev_a_short_term_rate",
         "size": "1%",
         "axis_trans": "y*100 lev_a_short_term_rate_false",
-        "dep": "gr_a_gap_r gr_a_gap_deflator",
+        "dep": "gr_a_gap gr_a_deflator",
         "conf": "95",
         "main": "other",
         "prefer": true

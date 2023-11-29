@@ -21,12 +21,12 @@
     },
     "impulse_and_response_variables": {
         "inttype": {
-                "model_1": "lev_fed_funds",
-                "model_2": "lev_eonia"
+                "model_1": "lev_a_fed_funds",
+                "model_2": "lev_a_eonia"
         },
         "size": "null",
-        "axis_trans": "y*100 lev_fed_funds_false lev_eonia_false",
-        "dep": "log_a_rgdp log_a_cpi",
+        "axis_trans": "y*100 lev_a_fed_funds_false leva_a_eonia_false",
+        "dep": "log_m_rgdp log_m_cpi",
         "conf": "68",
         "main": "gdp inflation",
         "prefer": {

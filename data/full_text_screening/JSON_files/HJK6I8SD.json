@@ -17,10 +17,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_short_term_rate",
+        "inttype": "lev_a_short_term_rate",
         "size": "100bp",
         "axis_trans": false,
-        "dep": "lev_q_rgap logdiff_q_cpi",
+        "dep": "lev_q_gap logdiff_q_cpi",
         "conf": "68",
         "main": "other",
         "prefer": true

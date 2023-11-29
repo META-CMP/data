@@ -29,7 +29,7 @@
           "model_4": "-25bp"
         },
         "axis_trans": false,
-        "dep": "logdiff_a_ip levdiff_m_une_rate logdiff_a_cpi",
+        "dep": "logdiff_m_ip levdiff_m_une_rate logdiff_m_cpi",
         "conf": "90",
         "main": "gdp emp inflation",
         "prefer": {

@@ -22,10 +22,10 @@
     },
     "impulse_and_response_variables": {
         "inttype": {
-          "model_1": "lev_fed_funds",
-          "model_2": "lev_discount",
-          "model_3": "lev_short_term_rate",
-          "model_4": "1_year_gov"
+          "model_1": "lev_a_fed_funds",
+          "model_2": "lev_a_discount",
+          "model_3": "lev_a_short_term_rate",
+          "model_4": "lev_a_1_year_gov"
         },
         "size": "25bp",
         "axis_trans": false,

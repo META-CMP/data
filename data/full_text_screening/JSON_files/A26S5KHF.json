@@ -23,7 +23,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "22bp",
         "axis_trans": false,
-        "dep": "log_q_gap logdiff_a_cpi",
+        "dep": "log_q_gap logdiff_q_cpi",
         "conf": "90",
         "main": "gdp inflation",
         "prefer": "null"

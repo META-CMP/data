@@ -21,7 +21,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
         "size": "100bp",
-        "axis_trans": "y*100 lev_fed_funds_false",
+        "axis_trans": "y*100 lev_a_fed_funds_false",
         "dep": "logdiff_m_ip logdiff_m_cpi logdiff_m_emp",
         "conf": "68",
         "main": "other",

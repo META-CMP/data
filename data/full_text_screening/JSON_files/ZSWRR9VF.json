@@ -21,7 +21,7 @@
         "cum": true
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_fed_funds",
+        "inttype": "lev_a_fed_funds",
         "size": {
           "model_1": "25bp",
           "model_2": "-25bp",

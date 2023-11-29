@@ -1,0 +1,140 @@
+{
+    "general": {
+        "key": "ASBH5CSR",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": "A5.5-A",
+          "model_2": "A6.5-A",
+          "model_3": "A7.5-A",
+          "model_4": "A8.5-A",
+          "model_5": "A9.5-A",
+          "model_6": "A10.5-A"
+        },
+        "page": {
+          "model_1": 340,
+          "model_2": 342,
+          "model_3": 344,
+          "model_4": 346,
+          "model_5": 348,
+          "model_6": 350
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_short_term_rate",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": "logdiff_a_ip logdiff_a_cpi",
+        "conf": "1_SE & 2_SE",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": true,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": {
+          "model_1": "CZ",
+          "model_2": "HU",
+          "model_3": "PL",
+          "model_4": "CA",
+          "model_5": "SE",
+          "model_6": "GB"
+        },
+        "n_of_countries": {
+          "model_1": 1,
+          "model_2": 1,
+          "model_3": 1,
+          "model_4": 1,
+          "model_5": 1,
+          "model_6": 1
+        }
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "01-1998",
+          "model_2": "01-1995",
+          "model_3": "01-1997",
+          "model_4": "01-1995",
+          "model_5": "06-1995",
+          "model_6": "01-1995"
+        },
+        "end": {
+          "model_1": "12-2006",
+          "model_2": "12-2006",
+          "model_3": "12-2006",
+          "model_4": "12-2006",
+          "model_5": "07-2006",
+          "model_6": "12-2006"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

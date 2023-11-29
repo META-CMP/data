@@ -29,7 +29,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_q_fedfunds",
+        "inttype": "lev_a_fedfunds",
         "size": {
                 "model_1": "21bp",
                 "model_2": "25bp",
@@ -38,7 +38,7 @@
                 "model_5": "25bp"
         },
         "axis_trans": false,
-        "dep": "gap_a_ip gr_q_deflator",
+        "dep": "lev_q_gap gr_q_deflator",
         "conf": {
                 "model_1": "2_SE", 
                 "model_2": "3_SE",

@@ -5,10 +5,10 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-                "model_1": "results for dep logdiff_a_rgdp logdiff_a_cpi are cumulative impulse response, except for lev_a_fed_funds.", 
-                "model_2": "results for dep logdiff_a_rgdp logdiff_a_cpi are cumulative impulse response, except for lev_a_fed_funds.",
-                "model_3": "results for dep logdiff_a_rgdp logdiff_a_cpi are cumulative impulse response, except for lev_a_fed_funds.",
-                "model_4": "results for dep logdiff_q_rgdp logdiff_a_cpi are cumulative impulse response, except for lev_a_fed_funds."
+                "model_1": "results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.", 
+                "model_2": "results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.",
+                "model_3": "results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.",
+                "model_4": "results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds."
         },
         "figure": {
                 "model_1": 1, 
@@ -34,7 +34,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "25bp",
         "axis_trans": false,
-        "dep": "logdiff_a_rgdp logdiff_a_cpi",
+        "dep": "logdiff_q_rgdp logdiff_q_cpi",
         "conf": "68",
         "main": "other",
         "prefer": {

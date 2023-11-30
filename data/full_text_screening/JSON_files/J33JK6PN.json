@@ -19,7 +19,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",
         "size": "1SD",
-        "axis_trans": false,
+        "axis_trans": "y*100",
         "dep": "log_m_ip log_m_cpi",
         "conf": "95",
         "main": "other",

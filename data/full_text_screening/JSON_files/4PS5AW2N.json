@@ -17,7 +17,7 @@
           "model_10": "baseline with external instrument approach.",
           "model_11": "baseline with lagged shocks as control variables.",
           "model_12": "baseline with a time trend as control variable.",
-          "model_13": "baseline with lagged dependent variables as control variables.,
+          "model_13": "baseline with lagged dependent variables as control variables.",
           "model_14": "baseline model with identified shocks using the nowcast errors in output gap and inflation as exogenous predictors.",
           "model_15": "baseline model with identified shocks using the inflation nowcast errors only as predictors for the policy rate."
         },
@@ -94,7 +94,7 @@
           "model_13": "log_q_rgdp log_q_deflator",
           "model_14": "log_q_rgdp log_q_deflator",
           "model_15": "log_q_rgdp log_q_deflator"
-        }
+        },
         "conf": "95",
         "main": "other",
         "prefer": {

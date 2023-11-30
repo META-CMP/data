@@ -7,8 +7,8 @@
         "model_notes": {
           "model_1": "baseline.",
           "model_2": "recursive VAR results.",
-          "model_3": "calibrated DSGE.",
-          "model_4": "calibrated DSGE.",
+          "model_3": "calibrated DSGE without correlation in covariance-variance matrix.",
+          "model_4": "calibrated DSGE with correlation in covariance-variance matrix.",
           "model_5": "calibrated DSGE but identification of shocks with proposed their one forecast_based measure.",
           "model_6": "calibrated DSGE but recursive identification of shocks.",
           "model_7": "calibrated DSGE but identification of shocks with Romer and Romer (2004) forecast_based measure.",

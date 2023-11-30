@@ -1,0 +1,91 @@
+{
+    "general": {
+        "key": "T3EZK9JC",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": null,
+        "model_notes": null,
+        "figure": null,
+        "page": null,
+        "irf": null,
+        "cum": null
+    },
+    "impulse_and_response_variables": {
+        "inttype": "https://github.com/META-CMP/data/issues/6",
+        "size": "for bp shock: \"xbp\"\nfor % shock:\n\"x%\"\nfor SD shock (if no information on SD size):\n\"xSD\"",
+        "axis_trans": null,
+        "dep": "https://github.com/META-CMP/data/issues/10",
+        "conf": "68  90  95  1_SE  2_SE  80",
+        "main": "gdp  emp  inflation  other",
+        "prefer": null
+    },
+    "identification_strategy": {
+        "iv": null,
+        "forecast_based": null,
+        "nr": null,
+        "event": null,
+        "chol": null,
+        "svar": null,
+        "signr": null,
+        "hf": null,
+        "heteroskedas": null,
+        "longrun": null,
+        "idother": null
+    },
+    "estimation_method": {
+        "var": null,
+        "lp": null,
+        "vecm": null,
+        "dyn_ols": "ardl  ecm false",
+        "fvar": null,
+        "tvar": null,
+        "gvar": null,
+        "bayes": null,
+        "dsge": null,
+        "varother": null
+    },
+    "regime_dependence": {
+        "lor": null,
+        "upr": null,
+        "scr": null,
+        "dcr": null,
+        "hike": null,
+        "cut": null
+    },
+    "data_frequency": {
+        "annual": null,
+        "quarter": null,
+        "month": null
+    },
+    "country_composition": {
+        "list_of_countries": null,
+        "n_of_countries": null
+    },
+    "further_data_characteristics": {
+        "panel": null,
+        "start": null,
+        "end": null,
+        "samplesize": null
+    },
+    "control_variables": {
+        "comprice": null,
+        "outpgap": null,
+        "find": null,
+        "eglob": null,
+        "cbind": null,
+        "fexch": null,
+        "inflexp": null,
+        "foreignir": null,
+        "fx": null,
+        "lrir": null
+    },
+    "econometric_details": {
+        "pure_rate_shock": null,
+        "convent": null,
+        "decomposition": null
+    },
+    "publication_characteristics": {
+        "cbanker": null
+    }
+}
+

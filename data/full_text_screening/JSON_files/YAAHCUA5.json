@@ -1,0 +1,106 @@
+{
+    "general": {
+        "key": "YAAHCUA5",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 4,
+          "model_2": 4,
+          "model_3": 7,
+          "model_4": 7
+        },
+        "page": {
+          "model_1": 227,
+          "model_2": 227,
+          "model_3": 231,
+          "model_4": 231
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "100bp",
+        "axis_trans": false,
+        "dep": "logdiff_q_deflator",
+        "conf": "68",
+        "main": "inflation",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "ardl  ecm false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q2-1967",
+        "end": "Q4-2012",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

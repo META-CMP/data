@@ -1,0 +1,111 @@
+{
+    "general": {
+        "key": "IC2MMT6E",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "results for the euro-area as an aggregate.",
+          "model_2": "results for the Slovakia.",
+          "model_3": "results for the Slovenia." 
+        },
+        "figure": {
+          "model_1": 2,
+          "model_2": "C1, C2 & C3",
+          "model_3": "C1, C2 & C3"
+        },
+        "page": {
+          "model_1": 1080,
+          "model_2": 1095,
+          "model_3": 1095
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_3_month_interbank",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": "gr_a_rgdp gr_a_cpi",
+        "conf": "68",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false 
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": true,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": true,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": {
+          "model_1": "EA CH NO CA TR RU JP CN US SK SI GB SE RO PL HU HR DK CZ BG",
+          "model_2": "SK EA CH NO CA TR RU JP CN US SI GB SE RO PL HU HR DK CZ BG",
+          "model_3": "SI EA CH NO CA TR RU JP CN US SK GB SE RO PL HU HR DK CZ BG" 
+        },
+        "n_of_countries": 20
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "01-2001",
+        "end": "06-2018",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": true,
+        "foreignir": true,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

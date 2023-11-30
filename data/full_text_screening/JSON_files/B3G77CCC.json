@@ -1,0 +1,91 @@
+{
+    "general": {
+        "key": "B3G77CCC",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "fvar: The paper employs a structural factor model, of which the FAVAR is a special case.; panel: false because it is only for Hungary.",
+        "model_notes": "null",
+        "figure": "2 & 3",
+        "page": "29 & 30",
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_3_month_short_term_rate",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": "lev_q_gdp lev_q_une_rate gr_a_cpi",
+        "conf": "68",
+        "main": "gdp emp inflation",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": true
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "HU",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q2-2000",
+        "end": "Q4-2010",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": "null",
+        "outpgap": "null",
+        "find": "null",
+        "eglob": "null",
+        "cbind": false,
+        "fexch": false,
+        "inflexp": true,
+        "foreignir": true,
+        "fx": true,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

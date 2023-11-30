@@ -1,0 +1,171 @@
+{
+    "general": {
+        "key": "Q3HBV384",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "The TVP-VAR estimations from chapter 3 are not extracted because of missing shock size (no SOFR IRFs). The models in the appendix are not extracted because the sample is unclear.",
+        "model_notes": {
+          "model_1": "dep: They use the Index for Aggregate Economic Activity which is similar to GDP (https://en.www.inegi.org.mx/contenidos/programas/igae/2013/doc/met_igae.pdf), we code it as gpd.",
+          "model_2": "dep: They use the Index for Aggregate Economic Activity which is similar to GDP (https://en.www.inegi.org.mx/contenidos/programas/igae/2013/doc/met_igae.pdf), we code it as gpd.",
+          "model_3": "null",
+          "model_4": "null"
+        },
+        "figure": {
+            "model_1": "2.3",
+            "model_2": "2.5",
+            "model_3": "3.6a",
+            "model_4": "3.6b"
+          },
+        "page": {
+            "model_1": 19,
+            "model_2": 20,
+            "model_3": 66,
+            "model_4": 66
+          },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_1_month_gov",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": {
+            "model_1": "log_a_gdp log_a_cpi",
+            "model_2": "log_a_gdp log_a_cpi",
+            "model_3": "log_a_ip log_a_cpi",
+            "model_4": "log_a_ip log_a_cpi"
+          },
+        "conf": "68",
+        "main": {
+            "model_1": "gdp inflation other",
+            "model_2": "gdp inflation other",
+            "model_3": "gdp inflation other",
+            "model_4": "gdp inflation other"
+          },
+        "prefer": {
+            "model_1": true,
+            "model_2": false,
+            "model_3": false,
+            "model_4": true
+          }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+            "model_1": false,
+            "model_2": true,
+            "model_3": false,
+            "model_4": false
+          },
+        "svar": {
+            "model_1": true,
+            "model_2": false,
+            "model_3": true,
+            "model_4": true
+          },
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": {
+            "model_1": false,
+            "model_2": false,
+            "model_3": false,
+            "model_4": false
+          },
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "MX",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "07-2007",
+          "model_2": "07-2007",
+          "model_3": "12-2001",
+          "model_4": "12-2001"
+        },
+        "end": {
+          "model_1": "12-2019",
+          "model_2": "12-2019",
+          "model_3": "08-2019",
+          "model_4": "08-2019"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": {
+            "model_1": false,
+            "model_2": false,
+            "model_3": true,
+            "model_4": true
+          },
+        "outpgap": false,
+        "find": {
+            "model_1": true,
+            "model_2": true,
+            "model_3": false,
+            "model_4": false
+          },
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": {
+            "model_1": true,
+            "model_2": false,
+            "model_3": false,
+            "model_4": false
+          },
+        "fx": {
+            "model_1": true,
+            "model_2": false,
+            "model_3": false,
+            "model_4": false
+          },
+        "lrir": {
+            "model_1": false,
+            "model_2": false,
+            "model_3": true,
+            "model_4": true
+          }
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

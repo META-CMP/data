@@ -1,0 +1,155 @@
+{
+    "general": {
+        "key": "TCBCM9KJ",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 1,
+          "model_2": 9,
+          "model_3": 15,
+          "model_4": 16,
+          "model_5": 19,
+          "model_6": 20,
+          "model_7": 21
+        },
+        "page": {
+          "model_1": 4,
+          "model_2": 9,
+          "model_3": 12,
+          "model_4": 12,
+          "model_5": 14,
+          "model_6": 15,
+          "model_7": 16
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_short_term_rate",
+        "size": "null",
+        "axis_trans": false,
+        "dep": "log_q_rgdp gr_q_price_level",
+        "conf": "68",
+        "main": "gdp inflation other",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": false
+        },
+        "svar": false,
+        "signr": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true
+        },
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": false
+        },
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "EA",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "Q1-1980",
+          "model_2": "Q1-1980",
+          "model_3": "Q1-1981",
+          "model_4": "Q1-1999",
+          "model_5": "Q1-1980",
+          "model_6": "Q1-1980",
+          "model_7": "Q1-1980"
+        },
+        "end": {
+          "model_1": "Q1-2008",
+          "model_2": "Q1-2008",
+          "model_3": "Q4-1998",
+          "model_4": "Q4-2007",
+          "model_5": "Q1-2008",
+          "model_6": "Q1-2008",
+          "model_7": "Q1-2008"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

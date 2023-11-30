@@ -1,0 +1,112 @@
+{
+    "general": {
+        "key": "H88FWS5U",
+        "rid1": "fp",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 1,
+          "model_2": 1,
+          "model_3": 2,
+          "model_4": 2,
+          "model_5": 3,
+          "model_6": 3
+        },
+        "page": {
+          "model_1": 170,
+          "model_2": 170,
+          "model_3": 171,
+          "model_4": 171,
+          "model_5": 172,
+          "model_6": 172
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_overnight_money_market",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": "log_a_rgdp log_a_cpi",
+        "conf": "90",
+        "main": "gdp inflation",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": true,
+        "quarter": false,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AR BR BG CL CN CZ EE HU IN ID LV LT MY MX PK PH PL RU SK SI ZA TH UA",
+        "n_of_countries": 23
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "1998",
+        "end": "2010",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

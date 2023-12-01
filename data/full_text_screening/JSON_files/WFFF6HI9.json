@@ -17,10 +17,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_q_fed_funds",
+        "inttype": "lev_a_fed_funds",
         "size": "25bp",
-        "axis_trans": "y*100 lev_q_fed_funds_false",
-        "dep": "logdiff_a_rgdp logdiff_a_deflator",
+        "axis_trans": "y*100 lev_a_fed_funds_false",
+        "dep": "logdiff_q_rgdp logdiff_q_deflator",
         "conf": "90",
         "main": "gdp inflation other",
         "prefer": true

@@ -17,9 +17,9 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_short_term_rate",
+        "inttype": "lev_a_short_term_rate",
         "size": "-1%",
-        "axis_trans": "y*100 lev_short_term_rate_false",
+        "axis_trans": "lev_a_short_term_rate_y*10",
         "dep": "logdiff_m_ip logdiff_m_cpi",
         "conf": "68",
         "main": "other",

@@ -14,7 +14,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "log_q_rgdp lev_q_emp logdiff_q_cpi",
+        "dep": "log_q_rgdp lev_q_emp logdiff_q_deflator",
         "conf": "90",
         "main": "other",
         "prefer": true

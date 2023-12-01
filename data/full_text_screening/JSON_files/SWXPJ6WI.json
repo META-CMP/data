@@ -1,0 +1,131 @@
+{
+    "general": {
+        "key": "SWXPJ6WI",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "a deterministic time trend is included as a variable.",
+        "model_notes": {
+          "model_1": "impulse responses to a monetary policy shock in the four-variable VAR with no time dependence.",
+          "model_2": "impulse responses from a VAR with time dependence. The response of variables to a monetary policy shock varies depending on the quarter in which the shock takes place; the shock takes place in quarter 1.",
+          "model_3": "impulse responses from a VAR with time dependence. The response of variables to a monetary policy shock varies depending on the quarter in which the shock takes place; the shock takes place in quarter 2.",
+          "model_4": "impulse responses from a VAR with time dependence. The response of variables to a monetary policy shock varies depending on the quarter in which the shock takes place; the shock takes place in quarter 3.",
+          "model_5": "impulse responses from a VAR with time dependence. The response of variables to a monetary policy shock varies depending on the quarter in which the shock takes place; the shock takes place in quarter 4.",
+          "model_6": "impulse responses from four-variable VARs with no time dependence in which the GDP deflator is replaced with nominal average hourly earnings of production workers in the total private, private manufacturing, and private service-providing sectors.",
+          "model_7": "impulse responses from four-variable VARs with no time dependence in which the GDP deflator is replaced with compensation per hour in the nonfinancial corporate sector."
+        },
+        "figure": {
+          "model_1": 1,
+          "model_2": "2 & 3",
+          "model_3": "2 & 3",
+          "model_4": "2 & 3",
+          "model_5": "2 & 3",
+          "model_6": 4,
+          "model_7": 5
+        },
+        "page": {
+          "model_1": 17,
+          "model_2": "18 & 19",
+          "model_3": "18 & 19",
+          "model_4": "18 & 19",
+          "model_5": "18 & 19",
+          "model_6": 20,
+          "model_7": 21
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "-25bp",
+        "axis_trans": false,
+        "dep": {
+          "model_1": "log_q_rgdp log_q_deflator",
+          "model_2": "log_q_rgdp log_q_deflator",
+          "model_3": "log_q_rgdp log_q_deflator",
+          "model_4": "log_q_rgdp log_q_deflator",
+          "model_5": "log_q_rgdp log_q_deflator",
+          "model_6": "log_q_rgdp",
+          "model_7": "log_q_rgdp"
+        },
+        "conf": "80",
+        "main": "gdp inflation",
+        "prefer": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1966",
+        "end": "Q4-2007",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

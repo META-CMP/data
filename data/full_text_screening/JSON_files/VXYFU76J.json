@@ -86,7 +86,7 @@
         "inttype": "lev_a_1_year_gov",
         "size": "1%",
         "axis_trans": false,
-        "dep": "gr_a_ip log_a_cpi lev_m_une_rate",
+        "dep": "gr_a_ip log_m_cpi lev_m_une_rate",
         "conf": "68",
         "main": "emp inflation",
         "prefer": {

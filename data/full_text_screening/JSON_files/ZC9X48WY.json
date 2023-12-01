@@ -14,7 +14,7 @@
         "inttype": "lev_a_MRO_rate",
         "size": "0.25%",
         "axis_trans": false,
-        "dep": "logdiff_a_ip lev_m_une_rate",
+        "dep": "logdiff_m_ip lev_m_une_rate",
         "conf": "68 & 95",
         "main": "emp gdp",
         "prefer": true

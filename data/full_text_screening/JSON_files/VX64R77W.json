@@ -14,7 +14,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "1SD",
         "axis_trans": "y*100 lev_a_fed_funds_false",
-        "dep": "log_a_rgdp lev_q_une_rate log_a_deflator",
+        "dep": "log_q_rgdp lev_q_une_rate log_q_deflator",
         "conf": "2_SE",
         "main": "gdp inflation",
         "prefer": true

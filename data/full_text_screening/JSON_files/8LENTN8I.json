@@ -58,7 +58,7 @@
           "model_10": "2SD" 
         },
         "axis_trans": false,
-        "dep": "log_a_gap gr_a_cpi",
+        "dep": "log_q_gap gr_a_cpi",
         "conf": "68",
         "main": "other",
         "prefer": {

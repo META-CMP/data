@@ -1,0 +1,91 @@
+{
+    "general": {
+        "key": "MLDUVLQ7",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "decomposition: true; there are two shocks a target shock and a path shock (foward guidance shock), we only code target shock.",
+        "model_notes": "null",
+        "figure": "5-left,29-left & 30-left",
+        "page": "35,43 & 43",
+        "irf": true,
+        "cum": true
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_1_month_gov",
+        "size": "25bp",
+        "axis_trans": false,
+        "dep": "gr_m_ip gr_m_cpi",
+        "conf": "95",
+        "main": "other inflation",
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": true,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": true,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": true,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "RU",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "07-2011",
+        "end": "07-2021",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": true
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

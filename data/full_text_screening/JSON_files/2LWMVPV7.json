@@ -23,10 +23,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_1_year_gov_jp",
+        "inttype": "lev_a_1_year_gov_jp",
         "size": "-1%",
         "axis_trans": false,
-        "dep": "log_a_ip log_a_cpi",
+        "dep": "log_m_ip log_m_cpi",
         "conf": "68 & 90",
         "main": "other",
         "prefer": {

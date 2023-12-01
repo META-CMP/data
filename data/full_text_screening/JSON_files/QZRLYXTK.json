@@ -22,7 +22,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "1%",
         "axis_trans": "y*100 lev_a_fed_funds_false",
-        "dep": "log_a_ip log_a_cpi",
+        "dep": "log_m_ip log_m_cpi",
         "conf": "1_SE",
         "main": "other",
         "prefer": {

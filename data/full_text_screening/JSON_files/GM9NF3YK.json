@@ -17,10 +17,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_short_rate",
+        "inttype": "lev_a_short_rate",
         "size": "1%",
         "axis_trans": false,
-        "dep": "log_a_rgdp gr_a_deflator",
+        "dep": "log_q_rgdp gr_a_deflator",
         "conf": "95",
         "main": "other",
         "prefer": true

@@ -36,7 +36,7 @@
         "inttype": "lev_a_overnight_callrate",
         "size": "null",
         "axis_trans": false,
-        "dep": "log_a_cpi",
+        "dep": "log_q_cpi",
         "conf": "80",
         "main": "other",
         "prefer": {

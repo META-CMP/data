@@ -14,7 +14,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "100bp",
         "axis_trans": false,
-        "dep": "logdiff_a_gap logdiff_a_deflator",
+        "dep": "log_q_gap logdiff_a_deflator",
         "conf": "2_SE",
         "main": "inflation",
         "prefer": true

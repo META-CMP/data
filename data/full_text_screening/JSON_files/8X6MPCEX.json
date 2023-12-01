@@ -26,7 +26,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "null",
         "axis_trans": false,
-        "dep": "log_a_gdp log_a_deflator",
+        "dep": "log_m_gdp log_m_deflator",
         "conf": "90",
         "main": "gdp inflation",
         "prefer": {

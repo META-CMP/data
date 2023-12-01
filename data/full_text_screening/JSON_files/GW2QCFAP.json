@@ -3,7 +3,7 @@
         "key": "GW2QCFAP",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "results are for UK.",
         "model_notes": "null",
         "figure": 5,
         "page": 594,
@@ -14,7 +14,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "gr_a_gdp gr_a_cpi",
+        "dep": "gr_q_gdp gr_a_cpi",
         "conf": "1_SE",
         "main": "other",
         "prefer": true
@@ -58,11 +58,11 @@
         "month": true
     },
     "country_composition": {
-        "list_of_countries": "GB",
+        "list_of_countries": "GB US DE",
         "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": false,
+        "panel": true,
         "start": "01-1988",
         "end": "01-2008",
         "samplesize": "null"

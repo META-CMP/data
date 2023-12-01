@@ -15,10 +15,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_overnight_callrate",
+        "inttype": "lev_a_overnight_callrate",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "logdiff_a_gap gr_a_cpi",
+        "dep": "log_q_gap gr_a_cpi",
         "conf": "95",
         "main": "gdp inflation",
         "prefer": {

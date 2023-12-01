@@ -281,7 +281,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "log_a_gdp log_a_deflator",
+        "dep": "log_q_gdp log_q_deflator",
         "conf": {                    
           "model_1": "1_SE",
           "model_2": "1_SE",

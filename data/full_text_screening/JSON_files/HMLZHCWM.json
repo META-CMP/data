@@ -119,10 +119,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_short_term",
+        "inttype": "lev_a_short_term",
         "size": "1SD",
-        "axis_trans": "y*100 gr_a_cpi_false lev_short_term_false",
-        "dep": "gr_a_gap gr_a_cpi",
+        "axis_trans": "y*100 gr_a_cpi_false lev_a_short_term_false",
+        "dep": "log_q_gap gr_a_cpi",
         "conf": "68",
         "main": "gdp inflation",
         "prefer": {

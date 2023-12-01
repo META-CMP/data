@@ -24,8 +24,8 @@
         "size": "1SD",
         "axis_trans": false,
         "dep": {
-          "model_1": "log_a_rgdp log_a_deflator",
-          "model_2": "log_a_rgdp logdiff_a_deflator"
+          "model_1": "log_q_rgdp log_q_deflator",
+          "model_2": "log_q_rgdp log_q_deflator"
         },
         "conf": {
           "model_1": "2_SE",

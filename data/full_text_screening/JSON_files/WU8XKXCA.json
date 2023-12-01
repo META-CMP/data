@@ -20,10 +20,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_call_rate",
+        "inttype": "lev_a_call_rate",
         "size": "1SD",
-        "axis_trans": "y*100 lev_call_rate_false",
-        "dep": "logdiff_a_gdp logdiff_a_cpi",
+        "axis_trans": "y*100 lev_a_call_rate_false",
+        "dep": "log_q_gdp log_q_cpi",
         "conf": "1_SE",
         "main": "other",
         "prefer": {

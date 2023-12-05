@@ -24,8 +24,8 @@
         "conf": "95",
         "main": "other",
         "prefer": {
-          "model_1": true,
-          "model_2": false
+          "model_1": false,
+          "model_2": true
         }
     },
     "identification_strategy": {

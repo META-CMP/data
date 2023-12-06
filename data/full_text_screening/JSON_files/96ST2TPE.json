@@ -32,7 +32,15 @@
           "model_7": "Appendix-5"
         },
         "irf": true,
-        "cum": false
+        "cum": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true
+        }
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_overnight_cashrate",

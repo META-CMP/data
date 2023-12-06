@@ -4,16 +4,16 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "decomposition: they decompose into target factor and path factor, we code path factor that is not conventional monetary policy. But target factor does not hold ",
-        "model_notes": null,
+        "model_notes": "null",
         "figure": {
           "model_1": 4,
           "model_2": "Appendix-A.2",
-          "model_3": "Appendix-A.3",
+          "model_3": "Appendix-A.3"
         },
         "page": {
           "model_1": 36,
-          "model_2": ,
-          "model_3": ,
+          "model_2": 44,
+          "model_3": 45
         },
         "irf": true,
         "cum": false
@@ -28,33 +28,33 @@
         "prefer": {
           "model_1": true,
           "model_2": false,
-          "model_3": false,
+          "model_3": false
         }
     },
     "identification_strategy": {
         "iv": {
           "model_1": true,
           "model_2": false,
-          "model_3": true,
+          "model_3": true
         },
         "forecast_based": false,
         "nr": {
           "model_1": true,
           "model_2": false,
-          "model_3": true,
+          "model_3": true
         },
         "event": false,
         "chol": {
           "model_1": false,
           "model_2": true,
-          "model_3": false,
+          "model_3": false
         },
         "svar": false,
         "signr": false,
         "hf": {
           "model_1": true,
           "model_2": false,
-          "model_3": true,
+          "model_3": true
         },
         "heteroskedas": false,
         "longrun": false,
@@ -108,7 +108,7 @@
         "lrir": {
           "model_1": false,
           "model_2": false,
-          "model_3": true,
+          "model_3": true
         }
     },
     "econometric_details": {

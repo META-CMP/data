@@ -1,46 +1,46 @@
 {
     "general": {
-        "key": "8FGFVVNP",
+        "key": "SPBPFTI6",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "Output transformation not clearly defined, thus IRF not included.",
-        "model_notes": "Only relevant model since the other figures display the same empirical estimates.",
-        "figure": 3,
-        "page": 22,
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": 6,
+        "page": 1241,
         "irf": true,
         "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
-        "size": "-25bp",
-        "axis_trans": false,
-        "dep": "log_q_cpi",
-        "conf": "90",
+        "size": "25bp",
+        "axis_trans": "lev_a_fed_funds_y/100 lev_m_une_rate_y/100",
+        "dep": "log_m_ip lev_m_une_rate log_m_wpi",
+        "conf": "68",
         "main": "other",
         "prefer": true
     },
     "identification_strategy": {
         "iv": false,
-        "forecast_based": true,
-        "nr": true,
+        "forecast_based": false,
+        "nr": false,
         "event": false,
         "chol": false,
         "svar": false,
-        "signr": false,
+        "signr": true,
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
         "idother": false
     },
     "estimation_method": {
-        "var": false,
-        "lp": true,
+        "var": true,
+        "lp": false,
         "vecm": false,
         "dyn_ols": false,
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": false,
+        "bayes": true,
         "dsge": false,
         "varother": false
     },
@@ -54,8 +54,8 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": true,
-        "month": false
+        "quarter": false,
+        "month": true
     },
     "country_composition": {
         "list_of_countries": "US",
@@ -63,12 +63,12 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "Q2-1969",
-        "end": "Q4-1996",
-        "samplesize": 309
+        "start": "01-1994",
+        "end": "07-2007",
+        "samplesize": "null"
     },
     "control_variables": {
-        "comprice": true,
+        "comprice": false,
         "outpgap": false,
         "find": false,
         "eglob": false,

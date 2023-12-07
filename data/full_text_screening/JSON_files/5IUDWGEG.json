@@ -1,0 +1,181 @@
+{
+    "general": {
+        "key": "5IUDWGEG",
+        "rid1": "me",
+        "rid2": "null",
+        "study_notes": "dep: In the UK the RPI (retail price index) is used instead of the cpi for all models except model_6 & 8. axis_trans: UK ip and cpi responses should probably be multiplied by 100 but the information is not stated in the paper.",
+        "model_notes": "null",
+        "figure": {
+                "model_1": 3,
+                "model_2": 6,
+                "model_3": 7,
+                "model_4": "C.1a",
+                "model_5": "C.1b",
+                "model_6": "C.2a",
+                "model_7": "C.3a",
+                "model_8": "C.3b"
+        },
+        "page": {
+                "model_1": 16,
+                "model_2": 31,
+                "model_3": 33,
+                "model_4": 53,
+                "model_5": 53,
+                "model_6": 54,
+                "model_7": 55,
+                "model_8": 55
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_1_year_gov",
+        "size": "100bp",
+        "axis_trans": false,
+        "dep": "log_m_ip lev_m_une_rate log_m_cpi",
+        "conf": "90",
+        "main": "gdp emp inflation",
+        "prefer": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false
+        }
+    },
+    "identification_strategy": {
+        "iv": true,
+        "forecast_based": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true
+        },
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": true,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": false,
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": {
+                "model_1": "US",
+                "model_2": "US",
+                "model_3": "GB",
+                "model_4": "US",
+                "model_5": "US",
+                "model_6": "GB",
+                "model_7": "GB",
+                "model_8": "GB"
+        },
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "01-1969",
+                "model_2": "01-1969",
+                "model_3": "01-1979",
+                "model_4": "01-1969",
+                "model_5": "01-1990",
+                "model_6": "01-1990",
+                "model_7": "01-1979",
+                "model_8": "01-1990"
+        },
+        "end": {
+                "model_1": "12-2014",
+                "model_2": "12-2014",
+                "model_3": "12-2014",
+                "model_4": "12-2007",
+                "model_5": "12-2012",
+                "model_6": "12-2014",
+                "model_7": "12-2014",
+                "model_8": "12-2014"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false
+        },
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false
+        },
+        "convent": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false
+        },
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

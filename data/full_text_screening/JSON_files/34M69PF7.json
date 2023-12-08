@@ -1,0 +1,121 @@
+{
+    "general": {
+        "key": "34M69PF7",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "impose narrative sign restriction: the monetary policy shock for the observation corresponding to October 1979 must be of positive value.",
+          "model_2": "zero and sign restriction imposed of Uhlig.",
+          "model_3": "alternative narrative sign restriction: the monetary policy shock for the observation corresponding to October 1979 must be of positive value and the contribution is larger than the absolute value of the contribution of any other structural shocks.",
+          "model_4": "impose narrative sign restriction: the monetary policy shock must be positive for the observations corresponding to April 1974, October 1979, December 1988, and February 1994, and negative for December 1990, October 1998, April 2001, and November 2002.",
+          "model_5": "impose narrative sign restriction: the monetary policy shock must be positive for the observation corresponding to February 1994."
+        },
+        "figure": {
+          "model_1": "6-red line",
+          "model_2": "6-blue dotted line",
+          "model_3": "B.2-red line",
+          "model_4": "C.2-red line",
+          "model_5": "C.3-red line"
+        },
+        "page": {
+          "model_1": 2826,
+          "model_2": 2826,
+          "model_3": "Appendix-6",
+          "model_4": "Appendix-16",
+          "model_5": "Appendix-18"
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "25bp",
+        "axis_trans": false,
+        "dep": "log_m_rgdp log_m_deflator",
+        "conf": "68",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true,
+          "model_5": true
+        },
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": true,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1965",
+        "end": "11-2007",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

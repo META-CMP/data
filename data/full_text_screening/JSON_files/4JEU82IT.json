@@ -1,0 +1,123 @@
+{
+    "general": {
+        "key": "4JEU82IT",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "decomposition: they decompose into target factor and path factor, we code path factor that is not conventional monetary policy. But target factor does not hold ",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 4,
+          "model_2": "Appendix-A.2",
+          "model_3": "Appendix-A.3"
+        },
+        "page": {
+          "model_1": 36,
+          "model_2": 44,
+          "model_3": 45
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_1_year_lending",
+        "size": "100bp",
+        "axis_trans": false,
+        "dep": "log_m_ip log_m_cpi",
+        "conf": "90",
+        "main": "gdp inflation",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false
+        }
+    },
+    "identification_strategy": {
+        "iv": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true
+        },
+        "forecast_based": false,
+        "nr": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true
+        },
+        "event": false,
+        "chol": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false
+        },
+        "svar": false,
+        "signr": false,
+        "hf": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true
+        },
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "IN",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "09-2003",
+        "end": "12-2020",
+        "samplesize": 195
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true
+        }
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": false,
+        "decomposition": true
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

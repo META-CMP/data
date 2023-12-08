@@ -86,12 +86,12 @@
         "start": {
           "model_1": "Q1-1983",
           "model_2": "Q1-1983",
-          "model_3": "Q1-1990",
+          "model_3": "Q1-1990"
         },
         "end": {
           "model_1": "Q4-2007",
           "model_2": "Q4-2007",
-          "model_3": "Q4-2012",
+          "model_3": "Q4-2012"
         },
         "samplesize": "null"
     },

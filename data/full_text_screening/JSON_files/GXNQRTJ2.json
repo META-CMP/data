@@ -1,0 +1,123 @@
+{
+    "general": {
+        "key": "GXNQRTJ2",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "they use the Romer & Romer (2004) residuals as an exogenous instrument for the monetary policy shock.",
+          "model_2": "they use zero and sign restrictions as Arias et al. (2018).",
+          "model_3": "they combine zero and sign restrictions witn Romer and Romer (2004) external intrument."
+        },
+        "figure": {
+          "model_1": "1.row-1",
+          "model_2": "1.row-2",
+          "model_3": "1.row-3"
+        },
+        "page": {
+          "model_1": 1087,
+          "model_2": 1087,
+          "model_3": 1087
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "null",
+        "axis_trans": false,
+        "dep": "log_m_rgdp log_m_deflator",
+        "conf": "68 & 90",
+        "main": "other",
+        "prefer": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true
+        }
+    },
+    "identification_strategy": {
+        "iv": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true
+        },
+        "forecast_based": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true
+        },
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true
+        },
+        "signr": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true
+        },
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1965",
+        "end": "12-2007",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

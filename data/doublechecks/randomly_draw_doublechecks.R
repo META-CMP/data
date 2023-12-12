@@ -4,20 +4,20 @@ library(tidyr)
 
 # setwd("~/data/data/snowballing")
 # getwd()
-
-
-
-## read in xlsx files after the full text screening and the adjustment of the bibliographic information, do this only once to create r file.
+# 
+# 
+# 
+# ## read in xlsx files after the full text screening and the adjustment of the bibliographic information, do this only once to create r file.
 # library(readxl)
-# file.list <- 1:26
+# file.list <- 1:27
 # df.list <- lapply(file.list, function(x) read_excel(paste0("study_set_",x,".xlsx")))
 # 
 # 
 # library(dplyr)
 # df_full_text <- bind_rows(df.list, .id = "id")
-# adjust type of doublecheck column
+# # adjust type of doublecheck column
 # df_full_text$doublecheck<-ifelse(df_full_text$doublecheck!=1 | is.na(df_full_text$doublecheck),FALSE,TRUE)
-#
+# 
 # setwd("~/data/data/doublechecks")
 # saveRDS(df_full_text,"df_full_text")
 

@@ -6,6 +6,7 @@ getwd()
 ## read in xlsx files after the full text screening and the adjustment of the bibliographic information.
 library(readxl)
 file.list <- 1:27
+# study_set_27 is obtained via snowballing. 
 df.list <- lapply(file.list, function(x) read_excel(paste0("study_set_",x,".xlsx")))
 
 

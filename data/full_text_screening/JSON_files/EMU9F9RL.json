@@ -2,7 +2,7 @@
     "general": {
         "key": "EMU9F9RL",
         "rid1": "me",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "dep: variable transformation for model_2 and model_3 are not clearly defined but most likely the same as for the VAR.",
         "model_notes": {
                 "model_1": "null",
@@ -33,14 +33,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
-        "size": {
-                "model_1": "1SD",
-                "model_2": "null",
-                "model_3": "null",
-                "model_4": "1SD",
-                "model_5": "1SD",
-                "model_6": "1SD"
-        },
+        "size": "1SD",
         "axis_trans": false,
         "dep": {
                 "model_1": "log_q_rgdp log_q_deflator",

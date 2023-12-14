@@ -2,7 +2,7 @@
     "general": {
         "key": "CVV46BQN",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
@@ -20,7 +20,10 @@
         "inttype": "lev_a_3_month_euribor",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "log_q_rgdp log_q_deflator",
+        "dep": {
+          "model_1": "log_q_rgdp log_q_deflator",
+          "model_2": "log_q_rgdp log_q_cpi"
+        },
         "conf": "80 & 90",
         "main": "gdp inflation other",
         "prefer": true
@@ -42,7 +45,7 @@
         "var": true,
         "lp": false,
         "vecm": false,
-        "dyn_ols": "false",
+        "dyn_ols": false,
         "fvar": false,
         "tvar": false,
         "gvar": false,

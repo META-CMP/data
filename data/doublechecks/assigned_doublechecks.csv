@@ -1,0 +1,66 @@
+key,publication title,BibtexKey,rid1,rid2,doublecheck_request,reason_for_doublecheck_request,doublecheck_completed
+BXRNZWTJ,Journal of the European Economic Association,Corsetti_2018_one,fp,sg,TRUE,NA,1
+6D8BE2G2,Review of Economic Analysis,Christidou_NA_housing,me,dr,TRUE,check coding of identification_strategy,1
+239CUCWA,Working Paper No. 2012:9,Svensson_2013_regional,ph,me,FALSE,NA,1
+XZXTJS8C,American Economic Review,Smets_2007_shocks,ph,me,FALSE,NA,1
+XC8AEBJE,Applied Economics Letters,Chiu_2014_a,ph,me,FALSE,NA,1
+HXDG6SC9,Journal of Monetary Economics,Forni_2008_the,ph,dr,FALSE,NA,1
+HB9TGTCM,Journal of International Money and Finance,Furceri_2018_the,ph,me,FALSE,NA,1
+WYYFGGTY,Handbook of Monetary Economics,Christiano_2010_chapter,ph,me,FALSE,NA,1
+AMK9T25K,The Economic Journal,Castelnuovo_2010_monetary,ph,me,FALSE,NA,1
+ZR6BLXTL,NA,Tugan_2014_three,me,dr,FALSE,NA,1
+CVV46BQN,International Journal of Finance and Economics,Sousa_2013_the,fp,dr,FALSE,NA,1
+JLZI3XBA,Journal of Economic Policy Reform,Ballabriga_2022_distributional,ph,dr,FALSE,NA,1
+EMU9F9RL,Economic Modelling,Davtyan_2017_the,me,dr,TRUE,"Variable transformation for VECM,accumulated IRFs for variables in logs are excluded (fig.7)",1
+AG3NSQ6Z,Journal of Economic Dynamics and Control,Rabanal_2007_does,dr,me,FALSE,NA,1
+I64723KV,Macroeconomic Dynamics,Zanetti_2020_vintage,dr,me,FALSE,NA,1
+QQDUEBQE,Oxford Bulletin of Economics and Statistics,Herwartz_2014_sign,me,ph,TRUE,How to code size if heteroskedacity identification is used?,NA
+WY36XGDK,Journal of Monetary Economics,Jordà; Schularick_2020_the,dr,ph,TRUE,"interest_rate_diff?; ""dep"": log_a? or logdiff_a?; ""eglob"": true?;",NA
+NEFMB9KG,SSRN Electronic Journal,Piffer_2021_monetary,me,ph,TRUE,"The others IRFs in the appendix are irrelevant, right?",NA
+K3KLYTYD,SSRN Electronic Journal,Tulip_2017_anticipatory,me,ph,TRUE,Additional responses in bars,NA
+HHFHURMM,European Economic Review,Reichlin_2021_monetaryfiscal,dr,ph,TRUE,nr vs event,NA
+BWHKQVPU,NA,Aruoba_2022_identifying,fp,ph,TRUE,Identification.,NA
+9VEMH9MN,International Journal of Central Banking,Jannsen_2015_monetary,fp,ph,TRUE,regime_dependence,NA
+NKLJIEA3,Open Economies Review,Barnett_2016_an,fp,ph,TRUE,axis_trans,NA
+P4G8BWT9,NA,Boivin_2008_global,me,ph,TRUE,Identification SVAR?,NA
+XZRKIWZ4,NA,Francis_2011_the,fp,ph,TRUE,identification_strategy,NA
+MR5H28J9,Handbook of Macroeconomics,Christiano_1999_chapter,me,sg,TRUE,many difficult decissions and models not coded for various reasons,NA
+5F7IJHQM,Economics Working Paper Series,Miescu_2019_proxy,me,sg,TRUE,"Check transformation of variables, as not clearly defined in the study",NA
+TPWQ4JHS,"""Marco Fanno"" Working Papers",Castelnuovo_2022_delayed,dr,sg,TRUE,"""event"": true?",NA
+RJCFGTPJ,Applied Economics,Geiger_2020_inequality,fp,sg,TRUE,axis_trans,NA
+DMN9K3YP,Journal of Financial Economics,Karnaukh_2022_growth,fp,sg,TRUE,NA,NA
+96ST2TPE,Economic Modelling,Fisher_2023_systematic,dr,sg,TRUE,"""eglob"": false?",NA
+KK2NJRFB,NA,Benati_2007_us,me,sg,TRUE,Coding inttype and samplesize,NA
+4IVTIREB,"Journal of Money, Credit and Banking",Alpanda_2019_household,ph,sg,TRUE,transformation of response variables?,NA
+2NX372H2,Oxford Review of Economic Policy,Goodhart_2008_house,me,sg,TRUE,Are these already the cumulated IRFs? Effects will be huuuge otherwise,NA
+J33JK6PN,Korea and the World Economy,Buyangerel_2013_the,dr,sg,TRUE,"they use r = ln(1+i/100), no_comparable_effect_size but then interest impulse response resemble to a level variable",NA
+XVFN2LAU,South African Journal of Economics,Kabundi_2011_assessing,ph,me,TRUE,transformation of response variables differs in figures 3 and 4?,NA
+4JEU82IT,#N/D,Aeimit Lakdawala; Rajeswari Sengupta_2021_measuring,dr,me,TRUE,"excluded: path factor?, convent?, pure rate shock?",NA
+SJ84WRG8,Economic Journal,Garratt_2003_a,dr,me,TRUE,"they use r = 0.25 * ln(1+R/100), but then interest impulse response resemble to a level variable, and interest_rate_diff??",NA
+KLSX6MBF,NA,Bagliano_NA_measuring,dr,me,TRUE,"""inttype"": yield curve, then reason for exclusion",NA
+WEL4CM26,Journal of International Money and Finance,Hanisch_2017_the,dr,me,FALSE,NA,NA
+87Z49TMV,American Economic Journal: Macroeconomics,Jarociński_2020_deconstructing,fp,me,TRUE,inttype; signr,NA
+QKHQZ3ZG,NA,Sandström_2018_the,fp,me,TRUE,"inttype: ""lev_a_repo""",NA
+9DXGZWHB,"Journal of Money, Credit, and Banking",Evans_2009_fundamental,dr,me,TRUE,idother or excluded,NA
+652CDYWY,American Economic Journal: Macroeconomics,Badinger_2020_measuring,fp,me,TRUE,"""signr"": false; axis_trans",NA
+AFV2WRLB,Environment and Planning C: Government and Policy,Anagnostou_2016_regional,dr,me,TRUE,"""chol"": true?",NA
+RVPNMC49,Working Papers,Kilinc_2014_identification,me,fp,TRUE,How to handle that log transformed data is hp filtered afterwards?,NA
+YAL9JMQ7,Economic Modelling,Zheng_2013_estimating,me,fp,TRUE,"in the paper they calculates the annualized output gap, therefore coded as logdiff_a_rgap.",NA
+XNPIMZ6E,AUCO Czech Economic Review,Migliardo_2010_monetary,me,fp,TRUE,hp filtered data,NA
+KR577QCR,De Economist,Smets_1999_the,me,fp,TRUE,check coding of identification_strategy,NA
+FI95JJ2I,Journal of Applied Econometrics,Luciani_2015_monetary,me,fp,TRUE,pure rate shock=True?,NA
+T5DWFC89,Economic Modelling,Kumar_2020_changing,me,fp,TRUE,"Check transformation and periodicity of ""inttype"" and „dep“.",NA
+CCK34ZXY,Working paper,Góes_NA_a,me,fp,TRUE,response to real interest rate not coded.,NA
+IC2MMT6E,Oxford Bulletin of Economics and Statistics,Bock_2021_international,dr,fp,FALSE,NA,NA
+YBNLSGYN,Journal of Macroeconomics,Voss_2009_monetary,dr,fp,FALSE,NA,NA
+Z2EIFGK7,Empirical Economics,Bagzibagli_2014_monetary,dr,fp,FALSE,NA,NA
+CTS6MQJC,Southern Economic Journal,Ho_2010_measuring,fp,dr,FALSE,NA,NA
+G968JAHL,Oxford Bulletin of Economics and Statistics,Dery_2021_disentangling,ph,dr,FALSE,NA,NA
+X7D67U3R,NA,Burgard_2023_almost,ph,dr,FALSE,NA,NA
+NWBEIT6B,"BIS Quarterly Review, December",Hofmann_2017_is,me,dr,FALSE,NA,NA
+8B2BELF5,Atlantic Economic Journal,Arin_2005_transtasman,me,dr,FALSE,NA,NA
+SPBPFTI6,Quantitative Economics,Bruns_2023_a,me,dr,FALSE,NA,NA
+WRZ8Q2N8,NA,Jordà_2020_the,ph,dr,FALSE,NA,NA
+6H5EMS5T,Economic Modelling,Altavilla_2010_evaluating,ph,dr,FALSE,NA,NA
+4TYJQZIQ,Journal of Financial Stability,Kim_2017_managing,ph,dr,FALSE,NA,NA
+32UQB7L5,American Economic Journal: Macroeconomics,Tenreyro_2016_pushing,me,dr,FALSE,NA,NA

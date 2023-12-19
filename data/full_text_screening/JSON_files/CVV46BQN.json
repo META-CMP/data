@@ -21,7 +21,7 @@
         "size": "1SD",
         "axis_trans": false,
         "dep": "log_q_rgdp log_q_deflator",
-        "conf": "80 & 90",
+        "conf": "90",
         "main": "gdp inflation other",
         "prefer": true
     },
@@ -42,7 +42,7 @@
         "var": true,
         "lp": false,
         "vecm": false,
-        "dyn_ols": "ardl  ecm false",
+        "dyn_ols": false,
         "fvar": false,
         "tvar": false,
         "gvar": false,

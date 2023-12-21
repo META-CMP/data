@@ -2,8 +2,8 @@
     "general": {
         "key": "AG3NSQ6Z",
         "rid1": "dr",
-        "rid2": "null",
-        "study_notes": "inttype: they use demeaned_q_fedfunds, I will code as lev_q_fed_funds; size: all models use 1SD but not is the same size; dep: the output is detrended using a quadratic trend, that's the reason why I use gap_a_ip.",
+        "rid2": "me",
+        "study_notes": "inttype: they use demeaned_q_fedfunds, I will code as lev_q_fed_funds; dep: the output is detrended using a quadratic trend, that's the reason why I use lev_q_gap.",
         "model_notes": {
                 "model_1": "null",
                 "model_2": "null",
@@ -29,7 +29,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_fedfunds",
+        "inttype": "lev_q_fed_funds",
         "size": {
                 "model_1": "21bp",
                 "model_2": "25bp",
@@ -40,10 +40,10 @@
         "axis_trans": false,
         "dep": {
                 "model_1": "lev_q_gap gr_q_deflator",
-                "model_2": "log_q_gap gr_q_deflator",
-                "model_3": "log_q_gap gr_q_deflator",
-                "model_4": "log_q_gap gr_q_deflator",
-                "model_5": "log_q_gap gr_q_deflator"
+                "model_2": "lev_q_gap gr_q_deflator",
+                "model_3": "lev_q_gap gr_q_deflator",
+                "model_4": "lev_q_gap gr_q_deflator",
+                "model_5": "lev_q_gap gr_q_deflator"
         },
         "conf": {
                 "model_1": "2_SE", 
@@ -146,13 +146,7 @@
         "eglob": false,
         "cbind": false,
         "fexch": false,
-        "inflexp": {
-                "model_1": false, 
-                "model_2": true,
-                "model_3": true,
-                "model_4": true,
-                "model_5": true
-        },
+        "inflexp": false,
         "foreignir": false,
         "fx": false,
         "lrir": false

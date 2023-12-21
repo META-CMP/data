@@ -2,16 +2,22 @@
     "general": { 
         "key": "JLZI3XBA", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
-        "model_notes": "figures 2 and 3 not included because it is not conventional monetary policy only", 
-        "figure": 1, 
-        "page": 8, 
+        "model_notes": "figures 3 not included because it consists of unconventional monetary policy period only", 
+        "figure": {
+                "model_1": 1,
+                "model_2": 2
+        },  
+        "page": {
+                "model_1": 8,
+                "model_2": 10
+        },   
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_12_month_rate", 
+        "inttype": "lev_a_1_year_gov", 
         "size": "-100bp", 
         "axis_trans": false, 
         "dep": "lev_m_une_rate log_m_cpi", 
@@ -20,8 +26,8 @@
         "prefer": true
     }, 
     "identification_strategy": { 
-        "iv": false, 
-        "forecast_based": true, 
+        "iv": true, 
+        "forecast_based": false, 
         "nr": false, 
         "event": false, 
         "chol": false, 
@@ -33,10 +39,10 @@
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": false, 
+        "var": true, 
         "lp": false, 
         "vecm": false, 
-        "dyn_ols": "false", 
+        "dyn_ols": false, 
         "fvar": false, 
         "tvar": false, 
         "gvar": false, 
@@ -64,7 +70,10 @@
     "further_data_characteristics": { 
         "panel": false, 
         "start": "01-1993", 
-        "end": "04-2008", 
+        "end": {
+                "model_1": "01-2008",
+                "model_2": "01-2015"
+        }, 
         "samplesize": "null" 
     }, 
     "control_variables": { 
@@ -76,12 +85,21 @@
         "fexch": false, 
         "inflexp": false, 
         "foreignir": false, 
-        "fx": true, 
+        "fx": {
+                "model_1": true,
+                "model_2": false
+        }, 
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
-        "convent": true, 
+        "pure_rate_shock": {
+                "model_1": true,
+                "model_2": false
+        },  
+        "convent":  {
+                "model_1": true,
+                "model_2": false
+        },
         "decomposition": false 
     }, 
     "publication_characteristics": { 

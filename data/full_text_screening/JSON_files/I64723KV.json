@@ -2,7 +2,7 @@
     "general": {
         "key": "I64723KV",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "me",
         "study_notes": "A time trend is included in the model.",
         "model_notes":  {
           "model_1": "cum: cumulative responses from inflation are reported.",
@@ -23,12 +23,7 @@
           "model_4": 11
         },
         "irf": true,
-        "cum": {
-          "model_1": true,
-          "model_2": false,
-          "model_3": true,
-          "model_4": true
-        }
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_policy_rate",
@@ -60,12 +55,7 @@
           "model_3": false,
           "model_4": false
         },
-        "svar": {
-          "model_1": true,
-          "model_2": false,
-          "model_3": true,
-          "model_4": true
-        },
+        "svar": false,
         "signr": false,
         "hf": {
           "model_1": true,

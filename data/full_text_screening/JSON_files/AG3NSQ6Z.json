@@ -146,13 +146,7 @@
         "eglob": false,
         "cbind": false,
         "fexch": false,
-        "inflexp": {
-                "model_1": false, 
-                "model_2": true,
-                "model_3": true,
-                "model_4": true,
-                "model_5": true
-        },
+        "inflexp": false,
         "foreignir": false,
         "fx": false,
         "lrir": false

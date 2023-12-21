@@ -31,7 +31,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
         "size": "25bp",
-        "axis_trans": false,
+        "axis_trans": "lev_a_fed_funds_y/100",
         "dep": "log_m_rgdp log_m_deflator",
         "conf": "68",
         "main": "other",

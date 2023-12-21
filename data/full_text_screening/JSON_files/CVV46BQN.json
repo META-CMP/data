@@ -24,7 +24,7 @@
           "model_1": "log_q_rgdp log_q_deflator",
           "model_2": "log_q_rgdp log_q_cpi"
         },
-        "conf": "80 & 90",
+        "conf": "90",
         "main": "gdp inflation other",
         "prefer": true
     },

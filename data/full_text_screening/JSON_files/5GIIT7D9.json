@@ -16,7 +16,7 @@
         "inttype": "lev_a_short_term_rate",
         "size": "1%",
         "axis_trans": false,
-        "dep": "log_a_rgap gr_a_cpi gr_a_domestic_cpi",
+        "dep": "log_q_rgap gr_a_cpi gr_a_domestic_cpi",
         "conf": "90",
         "main": "other",
         "prefer": true

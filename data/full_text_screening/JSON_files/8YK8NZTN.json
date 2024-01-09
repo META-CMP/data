@@ -28,7 +28,7 @@
                 "model_3": "43bp"
                 "model_4": "48bp"
         }, 
-        "axis_trans": "y*100", 
+        "axis_trans": "y*100 lev_a_fed_funds_false", 
         "dep": "logdiff_m_cpi logdiff_m_ip", 
         "conf": "2_SE", 
         "main": "gdp  inflation  other", 

@@ -9,7 +9,7 @@
                 "model_2": "null",
                 "model_3": "uses the cross-sectional data on earnings in addition to the aggregate variables in the model.",
                 "model_4": "null",
-                "model_5": "also includes real per capita consumption in the model."
+                "model_5": "also includes real per capita consumption in the model. 25bp shock but due to quarterly data the shock size in the IRF looks much larger."
         },
         "figure": {
                 "model_1": "1a",
@@ -32,7 +32,13 @@
         "inttype": "lev_a_1_year_gov",
         "size": "-25bp",
         "axis_trans": false,
-        "dep": "log_m_rgdp lev_m_une_rate log_m_deflator",
+        "dep": {
+                "model_1": "log_m_rgdp lev_m_une_rate log_m_deflator",
+                "model_2": "log_m_rgdp lev_m_une_rate log_m_deflator",
+                "model_3": "log_m_rgdp lev_m_une_rate log_m_deflator",
+                "model_4": "log_m_rgdp lev_m_une_rate log_m_deflator",
+                "model_5": "log_q_rgdp lev_q_une_rate log_q_deflator"
+        },
         "conf": "80",
         "main": "other",
         "prefer": {
@@ -79,18 +85,18 @@
     "data_frequency": {
         "annual": false,
         "quarter": {
-                "model_1": true,
-                "model_2": true,
-                "model_3": true,
-                "model_4": true,
-                "model_5": false
-        },
-        "month": {
                 "model_1": false,
                 "model_2": false,
                 "model_3": false,
                 "model_4": false,
                 "model_5": true
+        },
+        "month": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": false
         }
     },
     "country_composition": {

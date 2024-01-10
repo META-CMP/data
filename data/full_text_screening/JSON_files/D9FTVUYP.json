@@ -33,7 +33,7 @@
         "size": "1%",
         "axis_trans": false,
         "dep": "log_m_ip log_m_cpi lev_m_une_rate",
-        "conf": "68 & 90",
+        "conf": "68",
         "main": "other",
         "prefer": {
           "model_1": true,

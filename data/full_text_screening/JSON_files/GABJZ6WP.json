@@ -47,7 +47,7 @@
                 "model_6": "log_q_rgdp log_q_cpi",
                 "model_7": "log_q_rgdp log_q_cpi",
                 "model_8": "log_a_rgdp log_a_cpi",
-                "model_9": "log_a_rgdp log_a_cpi",
+                "model_9": "log_q_rgdp log_q_cpi",
                 "model_10": "log_q_rgdp log_q_cpi",
                 "model_11": "log_q_rgdp log_q_cpi"
         }, 
@@ -170,7 +170,7 @@
                 "model_6": false,
                 "model_7": false,
                 "model_8": true,
-                "model_9": true,
+                "model_9": false,
                 "model_10": false,
                 "model_11": false
         },    
@@ -183,7 +183,7 @@
                 "model_6": true,
                 "model_7": true,
                 "model_8": false,
-                "model_9": false,
+                "model_9": true,
                 "model_10": true,
                 "model_11": true
         },    

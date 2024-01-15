@@ -14,7 +14,7 @@
         "inttype": "lev_a_short_term_rate", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "log_a_gdp log_a_cpi", 
+        "dep": "log_q_gdp log_q_cpi", 
         "conf": "68", 
         "main": "gdp", 
         "prefer": true

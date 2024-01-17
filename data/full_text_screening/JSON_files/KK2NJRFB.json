@@ -2,7 +2,7 @@
     "general": {
         "key": "KK2NJRFB",
         "rid1": "me",
-        "rid2": "null",
+        "rid2": "sg",
         "study_notes": "inttype: footnote 3 for the definition of the interest rate transformation. samplesize: set to 156 because of 39 years of data (1967-2005)*4 and first 8 years (1959-1966) have been used for prior setup.",
         "model_notes": "null",
         "figure": 12,

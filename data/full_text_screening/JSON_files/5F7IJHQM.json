@@ -2,13 +2,13 @@
     "general": {
         "key": "5F7IJHQM",
         "rid1": "me",
-        "rid2": "null",
-        "study_notes": "quality_concern: not defined if real or nominal IP is used. quality_concern: not certain whether the CPI, IP, employment and the labor force enter the VAR log transformed and if the interest rate and the unemployment rate are in levels.",
+        "rid2": "sg",
+        "study_notes": "me: quality_concern: not defined if real or nominal IP is used. quality_concern: not certain whether the CPI, IP, employment and the labor force enter the VAR log transformed and if the interest rate and the unemployment rate are in levels. sg: from data appendix clear that IP is real index. appendix says that ip, cpi, employment enter logdiff transformed, but this is only for the factor augmentation, not for the VAR model itself, I guess. unemprate is in percent, interest rate in annualized percent",
         "model_notes": {
-          "model_1": "null",
-          "model_2": "null",
-          "model_3": "null",
-          "model_4": "null",
+          "model_1": "sg: model 1 + 2 from Fig 5 show var vs fvar for IP + CPI",
+          "model_2": "sg: model 1 + 2 from Fig 5 show var vs fvar for IP + CPI",
+          "model_3": "sg: model 3 + 4 from Fig 6 show var vs fvar for employment and unemprate",
+          "model_4": "sg: model 3 + 4 from Fig 6 show var vs fvar for employment and unemprate",
           "model_5": "Jarocinski and Karadi (2018) shocks are used to obtain information free pure monetary policy shocks",
           "model_6": "Jarocinski and Karadi (2018) shocks are used to obtain information free pure monetary policy shocks"
         },
@@ -37,9 +37,9 @@
         "axis_trans": false,
         "dep": {
           "model_1": "log_m_ip log_m_cpi",
-          "model_2": "log_m_ip log_m_cpi lev_m_une_rate",
-          "model_3": "log_m_emp",
-          "model_4": "lev_m_une_rate",
+          "model_2": "log_m_ip log_m_cpi",
+          "model_3": "log_m_emp lev_m_une_rate",
+          "model_4": "log_m_emp lev_m_une_rate",
           "model_5": "log_m_ip log_m_cpi",
           "model_6": "log_m_ip log_m_cpi"
         },
@@ -49,9 +49,9 @@
           "model_1": false,
           "model_2": true,
           "model_3": false,
-          "model_4": false,
+          "model_4": true,
           "model_5": false,
-          "model_6": false
+          "model_6": true
         }
     },
     "identification_strategy": {
@@ -72,22 +72,22 @@
           "model_1": true,
           "model_2": false,
           "model_3": true,
-          "model_4": true,
+          "model_4": false,
           "model_5": true,
           "model_6": false
         },
         "lp": false,
         "vecm": false,
         "dyn_ols": false,
-        "fvar": false,
-        "tvar": {
+        "fvar": {
           "model_1": false,
           "model_2": true,
           "model_3": false,
-          "model_4": false,
+          "model_4": true,
           "model_5": false,
           "model_6": true
         },
+        "tvar": false,
         "gvar": false,
         "bayes": true,
         "dsge": false,
@@ -121,7 +121,7 @@
           "model_1": false,
           "model_2": true,
           "model_3": false,
-          "model_4": false,
+          "model_4": true,
           "model_5": false,
           "model_6": true
         },
@@ -130,7 +130,7 @@
           "model_1": false,
           "model_2": true,
           "model_3": false,
-          "model_4": false,
+          "model_4": true,
           "model_5": false,
           "model_6": true
         },
@@ -143,7 +143,7 @@
           "model_1": false,
           "model_2": true,
           "model_3": false,
-          "model_4": false,
+          "model_4": true,
           "model_5": false,
           "model_6": true
         },
@@ -151,7 +151,7 @@
           "model_1": false,
           "model_2": true,
           "model_3": false,
-          "model_4": false,
+          "model_4": true,
           "model_5": false,
           "model_6": true
         }

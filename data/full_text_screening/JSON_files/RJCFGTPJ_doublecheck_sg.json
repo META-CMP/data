@@ -1,0 +1,123 @@
+{
+    "general": {
+        "key": "RJCFGTPJ_doublecheck_sg",
+        "rid1": "dc_sg",
+        "rid2": "null",
+        "study_notes": "shock sizes hard to read",
+        "model_notes":  {
+          "model_2": "differences only relevant for inequality impact"
+        },
+        "figure": {
+          "model_1": 1, //flipped with page model_1
+          "model_2": 5,
+          "model_3": 9,
+          "model_4": 10,
+          "model_5": 11
+        },
+        "page": {
+          "model_1": 3422, //flipped with figure model_1
+          "model_2": 3428,
+          "model_3": 3431,
+          "model_4": 3432,
+          "model_5": 3433
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "null",  //we can read it out via the IRF of FFR
+        "axis_trans": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": "false log_a_rgdp_y*100" //fp has log_q, but isn't it an annualized rate? Usually US data are published as annualized.  
+        },
+        "dep": {
+          "model_1": "lev_q_une_rate gr_a_cpi",
+          "model_2": "lev_q_une_rate gr_a_cpi",
+          "model_3": "lev_q_une_rate gr_a_cpi",
+          "model_4": "lev_q_une_rate gr_a_cpi",
+          "model_5": "log_a_rgdp gr_a_cpi" //same here
+        },
+        "conf": "84", //main text 84, figure notes 86, but only 84 consistent with 16; fp 68
+        "main": "other", //fp also emp, infl, but focus is on inequality!
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true, //fp has svar true but these are 0 restrictions only
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "ardl  ecm false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1_1980",
+        "end": "Q4_2008",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

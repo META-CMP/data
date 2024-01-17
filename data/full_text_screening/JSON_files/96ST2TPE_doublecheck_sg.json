@@ -1,0 +1,155 @@
+{
+    "general": {
+        "key": "96ST2TPE",
+        "rid1": "dc_sg",
+        "rid2": "null",
+        "study_notes": "only code Med-T responses by the dashed-dotted line, with the dark shaded region that is the 68% equal-tailed point-wise probability interval for the accepted responses.",
+        "model_notes": {
+          "model_1": "baseline. They report cumulated IRFs, but also the IRFs of inflation, output growth and UR change. Which one did you store?",
+          "model_2": "output gap in levels and unemployment rate in levels.!!! logdiff_q_cpi not reported as cumulative!",
+          "model_3": "baseline case using the algorithm of Arias et al. (2018). Sign restrictions only!",
+          "model_4": "baseline identification with coefficient on real exchange rate set to zero in monetary policy equation.",
+          "model_5": "baseline identification with coefficient on credit spread set to zero in monetary policy equation.",
+          "model_6": "baseline identification with coefficients in monetary policy equation generated directly from either U(0, 10) or U(-10, 0).",
+          "model_7": "normalized impulse responses 25 basis points. -> I would skip this model since it is just a rescaled version of model 1."
+        },
+        "figure": {
+          "model_1": 1,
+          "model_2": 2,
+          "model_3": 3,
+          "model_4": "Appendix-1(a)",
+          "model_5": "Appendix-1(b)",
+          "model_6": "Appendix-1(c)",
+          "model_7": "Appendix-1(d)"
+        },
+        "page": {
+          "model_1": 6,
+          "model_2": 9,
+          "model_3": 12,
+          "model_4": "Appendix-2",
+          "model_5": "Appendix-3",
+          "model_6": "Appendix-4",
+          "model_7": "Appendix-5"
+        },
+        "irf": true,
+        "cum": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true
+        }
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_overnight_cashrate",
+        "size": {
+          "model_1": "1SD",
+          "model_2": "1SD",
+          "model_3": "1SD",
+          "model_4": "1SD",
+          "model_5": "1SD",
+          "model_6": "1SD",
+          "model_7": "25bp"
+        },
+        "axis_trans": false,
+        "dep": {
+          "model_1": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
+          "model_2": "lev_q_gap logdiff_q_cpi lev_q_une_rate",
+          "model_3": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
+          "model_4": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
+          "model_5": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
+          "model_6": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
+          "model_7": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate"
+        },
+        "conf": "68",
+        "main": "inflation emp",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false
+        },
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AU",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1993",
+        "end": "Q4-2019",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false, //dr=true but credit spread<> financial cycle!
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": true,
+        "lrir": false //dr=true but there is no mention of it in the paper. Seems to be a typo
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

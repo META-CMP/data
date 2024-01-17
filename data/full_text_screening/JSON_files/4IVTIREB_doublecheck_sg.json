@@ -1,0 +1,200 @@
+{
+    "general": {
+        "key": "4IVTIREB_doublecheck_sg",
+        "rid1": "dc_sg",
+        "rid2": "null",
+        "study_notes": "I would additionally code Figure 13, as it is a recession regime scenario and otherwise. These are two models. Fig 16 should receive a quality concern as the authors state. ",
+                "model_4": "quality concern, as the authors state that it is a short and special period",
+        "model_notes": {
+                "model_5": "Fig 13 additionally. Has recession and other scenario",
+                "model_6": "Fig 13 additionally. Has recession and other scenario"
+        }, 
+        "figure": {
+                "model_1": 2,
+                "model_2": 5,
+                "model_3": 12,
+                "model_4": 16,
+                "model_5": 13,
+                "model_6": 13
+        }, 
+        "page": {
+                "model_1": 1274,
+                "model_2": 1278, //ph has 1280, but that is for the other variables
+                "model_3": 1288,
+                "model_4": 1303,
+                "model_5": 1290,
+                "model_6": 1290
+        },   
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "-100bp",
+        "axis_trans": {
+                "model_1": "y*100", //ph has y*10^(-3). direction inconsistent with fp + *10!!!
+                "model_2": "y*100",
+                "model_3": "y*100",
+                "model_4": "false logdiff_a_deflator_y*100",
+                "model_5": "false logdiff_a_deflator_y*100",
+                "model_6": "false logdiff_a_deflator_y*100"
+        },        
+        "dep": "log_a_rgdp logdiff_a_deflator", // ph has reverse order and gr_q_cpi and log_q_rgdp https://drive.google.com/file/d/0Bx--MzAt0xM-SXZzWUVNSnM4elk/view?usp=sharing&resourcekey=0-fJ7tWbLJGY_th0SUokG5sQ
+        "conf": "90",
+        "main": "gdp inflation other", //ph has only GDP
+        "prefer": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false, 
+                "model_5": false,
+                "model_6": false
+        }
+    },
+   "identification_strategy": { 
+        "iv": {
+                "model_1": false,
+                "model_2": false, //ph has true
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        },      
+        "forecast_based": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }, 
+        "nr": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }, 
+        "event": false, 
+        "chol": {
+                "model_1": true,
+                "model_2": false, //ph mixed with model 3
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true
+        },    
+        "svar": false, 
+        "signr": false, 
+        "hf": false, 
+        "heteroskedas": false, 
+        "longrun": false, 
+        "idother": false 
+    }, 
+    "estimation_method": { 
+        "var": false, 
+        "lp": true, 
+        "vecm": false, 
+        "dyn_ols": "false", 
+        "fvar": false, 
+        "tvar": false, 
+        "gvar": false, 
+        "bayes": false, 
+        "dsge": false, 
+        "varother": false 
+    }, 
+    "regime_dependence": {
+        "lor": {
+                "model_1": false,
+                "model_2": false, 
+                "model_3": false,
+                "model_4": false,
+                "model_5": true, //dashed black with shaded CI
+                "model_6": false
+        },    
+        "upr": {
+                "model_1": false,
+                "model_2": false, 
+                "model_3": false,
+                "model_4": false,
+                "model_5": false, 
+                "model_6": true //dot-dashed grey with solid CI
+        },    
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false, 
+        "start": {
+                "model_1": "Q1-1955",
+                "model_2": "Q1-1969",
+                "model_3": "Q1-1955",
+                "model_4": "Q4-1990",
+                "model_5": "Q1-1955",
+                "model_6": "Q1-1955"
+        }, 
+        "end": {
+                "model_1": "Q1-2007",
+                "model_2": "Q1-2007",
+                "model_3": "Q1-2007",
+                "model_4": "Q3-2015",
+                 "model_4": "Q3-2015",
+                "model_4": "Q3-2015"
+       }, 
+        "samplesize": "null" 
+    }, 
+    "control_variables": { 
+        "comprice": false, //ph has true, but they say they only include in a robustness check that we don't code 
+        "outpgap": false, 
+        "find": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false
+        },  
+        "eglob": false, 
+        "cbind": false, 
+        "fexch": false, 
+        "inflexp": false, 
+        "foreignir": false, 
+        "fx": false, 
+        "lrir": false 
+    }, 
+    "econometric_details": {
+        "pure_rate_shock": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false, //ph had true for every model but they use shadow rates and point to the unconventional phase after 2007
+                "model_5": false,
+                "model_6": false
+        },  
+        "convent": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false, //ph had true for every model but they use shadow rates and point to the unconventional phase after 2007
+                "model_5": false,
+                "model_6": false
+        },  
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

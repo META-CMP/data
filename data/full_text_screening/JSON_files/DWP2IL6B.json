@@ -5,8 +5,14 @@
         "rid2": "null", 
         "study_notes": "null", 
         "model_notes": "null", 
-        "figure": 3, 
-        "page": 2014, 
+        "figure": {
+                "model_1": 3,
+                "model_2": 4
+        },  
+        "page": {
+                "model_1": 149,
+                "model_2": 150
+        },  
         "irf": true,
         "cum": false
     }, 
@@ -17,8 +23,8 @@
                 "model_2": "13bp"
         }, 
         "axis_trans": {
-                "model_1": "log_q_rgdp_y*10^(-3) lev_q_une_rate_y*10^(-3)",
-                "model_2": "lev_q_une_rate_y*10^(-3)"
+                "model_1": "log_q_rgdp_y*100 lev_q_une_rate_y*100",
+                "model_2": "lev_q_une_rate_y*100"
         }, 
         "dep": "gr_a_cpi log_q_rgdp lev_q_une_rate", 
         "conf": "2_SE", 

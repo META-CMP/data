@@ -28,12 +28,12 @@
         "inttype": "lev_a_bank_rate", 
         "size": "100bp", 
         "axis_trans": {
-                "model_1": "y*100",
-                "model_2": "y*100",
-                "model_3": "y*100",
-                "model_4": "y*100",
-                "model_5": "y*100",
-                "model_6": "y*100"
+                "model_1": "y*100 lev_a_bank_rate_false",
+                "model_2": "y*100 lev_a_bank_rate_false",
+                "model_3": false,
+                "model_4": false,
+                "model_5": "y*100 lev_a_bank_rate_false",
+                "model_6": "y*100 lev_a_bank_rate_false"
         }, 
         "dep": {
                 "model_1": "log_q_rgdp log_q_cpi",
@@ -144,8 +144,8 @@
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": null, 
-        "decomposition": null 
+        "convent": true, 
+        "decomposition": false 
     }, 
     "publication_characteristics": { 
         "cbanker": true 

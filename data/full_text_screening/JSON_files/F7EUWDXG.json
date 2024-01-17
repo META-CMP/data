@@ -31,13 +31,19 @@
           "model_4": "-50bp",
           "model_5": "-100bp"
         },
-        "axis_trans": false,
+        "axis_trans": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": "log_q_gdp_y*100"
+        },
         "dep": {
           "model_1": "logdiff_a_cpi",
           "model_2": "log_m_cpi",
           "model_3": "logdiff_a_cpi",
           "model_4": "logdiff_a_cpi",
-          "model_5": "log_a_gdp log_a_cpi"
+          "model_5": "log_q_gdp log_q_cpi"
         },
         "conf": "95",
         "main": "other",

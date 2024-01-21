@@ -25,10 +25,10 @@
         "size": "23bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "log_a_rgdp gr_a_cpi",
-                "model_2": "lev_a_une",
-                "model_3": "log_a_rgdp gr_a_cpi",
-                "model_4": "lev_a_une"
+                "model_1": "log_q_rgdp gr_a_cpi",
+                "model_2": "lev_q_une",
+                "model_3": "log_q_rgdp gr_a_cpi",
+                "model_4": "lev_q_une"
         }, 
         "conf": "68", 
         "main": "other", 

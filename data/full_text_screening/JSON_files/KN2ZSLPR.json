@@ -17,7 +17,7 @@
         "size": "30bp",
         "axis_trans": false,
         "dep": "log_q_rgdp logdiff_a_cpi",
-        "conf": " 95",
+        "conf": "95",
         "main": "gdp  inflation",
         "prefer": true
     },

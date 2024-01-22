@@ -29,12 +29,12 @@
         "size": "100bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "log_a_cpi log_a_deflator",
-                "model_2": "log_a_cpi log_a_deflator",
-                "model_3": "log_a_ip log_a_rgdp",
-                "model_4": "log_a_ip log_a_rgdp",
-                "model_5": "log_a_cpi log_a_rgdp",
-                "model_6": "log_a_cpi log_a_rgdp"
+                "model_1": "log_q_cpi",
+                "model_2": "log_q_cpi",
+                "model_3": "log_q_rgdp",
+                "model_4": "log_q_rgdp",
+                "model_5": "log_q_cpi log_q_rgdp",
+                "model_6": "log_q_cpi log_q_rgdp"
         }, 
         "conf": "68", 
         "main": "inflation other", 

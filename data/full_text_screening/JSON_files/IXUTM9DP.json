@@ -23,7 +23,7 @@
         "size": "25bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "log_a_ip log_a_cpi",
+                "model_1": "log_m_ip log_m_cpi",
                 "model_2": "logdiff_a_ip logdiff_a_cpi",
                 "model_3": "logdiff_a_ip logdiff_a_cpi"
         }, 

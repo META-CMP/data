@@ -13,7 +13,7 @@
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
         "size": "50bp", 
-        "axis_trans": "y*100", 
+        "axis_trans": "y*100 lev_a_short_term_rate_false", 
         "dep": "log_a_cpi log_a_rgdp", 
         "conf": "68", 
         "main": "other", 

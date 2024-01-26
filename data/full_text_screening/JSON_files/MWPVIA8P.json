@@ -14,7 +14,7 @@
         "inttype": "lev_a_12_month_bond", 
         "size": "-25bp", 
         "axis_trans": false, 
-        "dep": "log_a_ip log_a_cpi", 
+        "dep": "log_m_ip log_m_cpi", 
         "conf": "68", 
         "main": "other", 
         "prefer": true

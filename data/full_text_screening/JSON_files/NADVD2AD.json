@@ -22,7 +22,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",
-        "size": "1%",
+        "size": "100bp",
         "axis_trans": false,
         "dep": "logdiff_q_rgdp logdiff_a_core",
         "conf": "68",

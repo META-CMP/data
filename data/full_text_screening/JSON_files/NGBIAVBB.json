@@ -18,11 +18,11 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_weighted_call_money_rate", 
-        "size": "100bps", 
+        "size": "100bp", 
         "axis_trans": false, 
         "dep": "gr_m_ip gr_m_cpi", 
         "conf": "95", 
-        "main": "gdp  inflation", 
+        "main": "gdp inflation", 
         "prefer": true 
     }, 
     "identification_strategy": { 

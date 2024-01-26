@@ -50,7 +50,7 @@
           "model_5": "log_m_ip log_m_cpi",
           "model_6": "log_m_ip log_m_cpi"
         },
-        "conf": "68 & 90",
+        "conf": "68",
         "main": "other",
         "prefer": {
           "model_1": true,

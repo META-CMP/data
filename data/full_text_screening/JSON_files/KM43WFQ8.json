@@ -37,7 +37,7 @@
                 "model_6": "8bp",
                 "model_7": "16bp"
         }, 
-        "axis_trans": false, 
+        "axis_trans": "y/100 log_m_ip_false", 
         "dep": "log_m_ip lev_m_une_rate", 
         "conf": "90", 
         "main": "gdp emp other", 

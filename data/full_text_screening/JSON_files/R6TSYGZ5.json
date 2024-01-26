@@ -25,7 +25,7 @@
         "axis_trans": false,
         "dep": {
           "model_1": "logdiff_a_rgdp logdiff_a_cpi",
-          "model_2": "log_a_rgdp logdiff_a_cpi"
+          "model_2": "log_q_rgdp logdiff_a_cpi"
         },
         "conf": "95",
         "main": "other",

@@ -12,10 +12,10 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
-        "size": "1SD",
-        "axis_trans": "logdiff_q_gdp_y*100 logdiff_q_deflator_y*100 lev_a_fed_funds_false",
+        "size": "-1SD",
+        "axis_trans": "y*100 lev_a_fed_funds_false",
         "dep": "logdiff_q_gdp logdiff_q_deflator",
-        "conf": "68 & 90",
+        "conf": "90",
         "main": "other",
         "prefer": true
     },

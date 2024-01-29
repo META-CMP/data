@@ -38,14 +38,7 @@
         "dep": "log_m_rgdp log_m_deflator",
         "conf": "68",
         "main": "gdp inflation",
-        "prefer": {
-                "model_1": true,
-                "model_2": true,
-                "model_3": false,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false
-        }
+        "prefer": true
     },
     "identification_strategy": {
         "iv": true,

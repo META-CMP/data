@@ -1,0 +1,257 @@
+{
+    "general": {
+        "key": "BWHKQVPU",
+        "rid1": "fp",
+        "rid2": "ph",
+        "study_notes": "They propse a new identifcation combining Romer-Romer 2004 approach and with a natural language approach to FOMC douments using machine learning. They compare their estimates with other identification strategies.; control_vars: 1-year Treasury yield, the log of the S&P500, log real GDP, the log GDP deflator, the unemployment rate, and the excess bond premium (EBP); convent: MP shocks are estimated for the period before the ZLB (and sample restricted for the local projections models). Therefore, we set convent true.",
+        "model_notes": {
+            "model_1": "BVAR with their proposed 'full ridge model' shocks.",
+            "model_2": "BVAR with 'Romer-Romer OLS' shocks.",
+            "model_3": "BVAR with their proposed 'full ridge model' shocks and additional sign restrictions.",
+            "model_4": "BVAR with 'Romer-Romer OLS' shocks and additional sign restrictions",
+            "model_5": "Romer-Romer ridge",
+            "model_6": "Linear only",
+            "model_7": "Linear and lags",
+            "model_8": "Nonlinear but no lags",
+            "model_9": "Local projections using shocks from full ridge model.",
+            "model_10": "Local projection using shocks from Romer-Romer OLS."
+        },
+        "figure": {
+            "model_1": "4 (a)",
+            "model_2": "4 (b)",
+            "model_3": "5 (a)",
+            "model_4": "5 (b)",
+            "model_5": "G.1 (a)",
+            "model_6": "G.1 (b)",
+            "model_7": "G.1 (c)",
+            "model_8": "G.1 (d)",
+            "model_9": "H.1 (a)",
+            "model_10": "H.1 (b)"
+        },
+        "page": {
+            "model_1": 28,
+            "model_2": 28,
+            "model_3": 30,
+            "model_4": 30,
+            "model_5": "A10",
+            "model_6": "A10",
+            "model_7": "A10",
+            "model_8": "A10",
+            "model_9": "A11",
+            "model_10": "A11"
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+            "model_1": "lev_a_1_year_gov",
+            "model_2": "lev_a_1_year_gov",
+            "model_3": "lev_a_1_year_gov",
+            "model_4": "lev_a_1_year_gov",
+            "model_5": "lev_a_1_year_gov",
+            "model_6": "lev_a_1_year_gov",
+            "model_7": "lev_a_1_year_gov",
+            "model_8": "lev_a_1_year_gov",
+            "model_9": "lev_a_fed_funds",
+            "model_10": "lev_a_fed_funds"
+        },
+        "size": "null",
+        "axis_trans": false,
+        "dep": {
+            "model_1": "log_m_rgdp lev_m_une_rate log_m_deflator",
+            "model_2": "log_m_rgdp lev_m_une_rate log_m_deflator",
+            "model_3": "log_m_rgdp lev_m_une_rate log_m_deflator",
+            "model_4": "log_m_rgdp lev_m_une_rate log_m_deflator",
+            "model_5": "log_m_rgdp lev_m_une_rate log_m_deflator",
+            "model_6": "log_m_rgdp lev_m_une_rate log_m_deflator",
+            "model_7": "log_m_rgdp lev_m_une_rate log_m_deflator",
+            "model_8": "log_m_rgdp lev_m_une_rate log_m_deflator",
+            "model_9": "log_m_ip lev_m_une_rate log_m_cpi",
+            "model_10": "log_m_ip lev_m_une_rate log_m_cpi"
+        },
+        "conf": {
+            "model_1": "68 & 90",
+            "model_2": "68 & 90",
+            "model_3": "68 & 90",
+            "model_4": "68 & 90",
+            "model_5": "68 & 90",
+            "model_6": "68 & 90",
+            "model_7": "68 & 90",
+            "model_8": "68 & 90",
+            "model_9": "90",
+            "model_10": "90"
+        },
+        "main": "gdp emp inflation",
+        "prefer": {
+            "model_1": true,
+            "model_2": false,
+            "model_3": false,
+            "model_4": false,
+            "model_5": false,
+            "model_6": false,
+            "model_7": false,
+            "model_8": false,
+            "model_9": false,
+            "model_10": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": true,
+        "nr": {
+            "model_1": true,
+            "model_2": true,
+            "model_3": true,
+            "model_4": true,
+            "model_5": true,
+            "model_6": true,
+            "model_7": true,
+            "model_8": true,
+            "model_9": true,
+            "model_10": false
+        },
+        "event": false,
+        "chol": {
+            "model_1": true,
+            "model_2": true,
+            "model_3": true,
+            "model_4": true,
+            "model_5": true,
+            "model_6": true,
+            "model_7": true,
+            "model_8": true,
+            "model_9": false,
+            "model_10": false
+        },
+        "svar": false,
+        "signr": {
+            "model_1": false,
+            "model_2": false,
+            "model_3": true,
+            "model_4": true,
+            "model_5": false,
+            "model_6": false,
+            "model_7": false,
+            "model_8": false,
+            "model_9": false,
+            "model_10": false
+        },
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": {
+            "model_1": true,
+            "model_2": true,
+            "model_3": true,
+            "model_4": true,
+            "model_5": true,
+            "model_6": true,
+            "model_7": true,
+            "model_8": true,
+            "model_9": false,
+            "model_10": false
+        },
+        "lp": {
+            "model_1": false,
+            "model_2": false,
+            "model_3": false,
+            "model_4": false,
+            "model_5": false,
+            "model_6": false,
+            "model_7": false,
+            "model_8": false,
+            "model_9": true,
+            "model_10": true
+        },
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": {
+            "model_1": true,
+            "model_2": true,
+            "model_3": true,
+            "model_4": true,
+            "model_5": true,
+            "model_6": true,
+            "model_7": true,
+            "model_8": true,
+            "model_9": false,
+            "model_10": false
+        },
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "02-1984",
+        "end": {
+            "model_1": "12-2016",
+            "model_2": "12-2016",
+            "model_3": "12-2016",
+            "model_4": "12-2016",
+            "model_5": "12-2016",
+            "model_6": "12-2016",
+            "model_7": "12-2016",
+            "model_8": "12-2016",
+            "model_9": "10-2008",
+            "model_10": "10-2008"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": {
+            "model_1": false,
+            "model_2": false,
+            "model_3": false,
+            "model_4": false,
+            "model_5": false,
+            "model_6": false,
+            "model_7": false,
+            "model_8": false,
+            "model_9": true,
+            "model_10": true
+        },
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+
+

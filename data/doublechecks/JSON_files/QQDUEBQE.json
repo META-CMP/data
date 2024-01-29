@@ -1,35 +1,32 @@
 {
     "general": {
-        "key": "NKLJIEA3",
-        "rid1": "fp",
+        "key": "QQDUEBQE",
+        "rid1": "me",
         "rid2": "ph",
         "study_notes": "null",
-        "model_notes": "null",
-        "figure": {
-          "model_1": 7,
-          "model_2": 8,
-          "model_3": 8
-        },
-        "page": {
-          "model_1": 882,
-          "model_2": 883,
-          "model_3": 883
-        },
+        "model_notes": {
+          "model_1": "signr: agnostic sign restrictions",
+          "model_2": "signr: fully sign restricted",
+          "model_3": "null",
+          "model_4": "we look at the impulse response functions resulting from the volatility approach, which are displayed in the right-hand side panels of Figure 3 together with 68% bootstrap confidence bands. Here, the size of the monetary policy shock is normalized by construction.' - code as is: interest rate IRF shows the response on impact."},
+        "figure": 3,
+        "page": 109,
         "irf": true,
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_short_term_rate",
-        "size": "null",
+        "inttype": "lev_a_fed_funds",
+        "size": {
+          "model_1": "1SD",
+          "model_2": "1SD",
+          "model_3": "1SD",
+          "model_4": "1bp"
+        },
         "axis_trans": false,
-        "dep": "log_m_ip logdiff_a_cpi",
+        "dep": "logdiff_q_rgap gr_a_deflator",
         "conf": "68",
         "main": "gdp inflation",
-        "prefer": {
-          "model_1": false,
-          "model_2": true,
-          "model_3": true
-        }
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,
@@ -37,18 +34,25 @@
         "nr": false,
         "event": false,
         "chol": {
-          "model_1": true,
-          "model_2": false,
-          "model_3": false
-        },
-        "svar": {
           "model_1": false,
-          "model_2": true,
-          "model_3": true
+          "model_2": false,
+          "model_3": true,
+          "model_4": false
         },
-        "signr": false,
+        "svar": false,
+        "signr": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false
+        },
         "hf": false,
-        "heteroskedas": false,
+        "heteroskedas": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true
+        },
         "longrun": false,
         "idother": false
     },
@@ -56,7 +60,7 @@
         "var": true,
         "lp": false,
         "vecm": false,
-        "dyn_ols": "false",
+        "dyn_ols": false,
         "fvar": false,
         "tvar": false,
         "gvar": false,
@@ -74,29 +78,29 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": "IN",
+        "list_of_countries": "US",
         "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-2000",
-        "end": "01-2008",
+        "start": "Q1-1965",
+        "end": "Q3-2008",
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": true,
+        "comprice": false,
         "outpgap": false,
         "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
-        "foreignir": true,
-        "fx": true,
+        "foreignir": false,
+        "fx": false,
         "lrir": false
     },
     "econometric_details": {
@@ -105,7 +109,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": true
+        "cbanker": false
     }
 }
 

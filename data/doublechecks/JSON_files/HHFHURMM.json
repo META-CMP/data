@@ -1,0 +1,133 @@
+{
+    "general": {
+        "key": "HHFHURMM",
+        "rid1": "dr",
+        "rid2": "ph",
+        "study_notes": "null",
+        "model_notes": {
+          "model_1": "small VAR in which only Euro Area aggregates are included.",
+          "model_2": "larger VAR model in which surplus, debt, and return for the four countries enter the VAR individually.",
+          "model_3": "large VAR model in which surplus, debt, and return for the four countries enter the VAR individually but in the period of the pre-ZLB.",
+          "model_4": "large VAR model in which inflation, surplus, debt, and return for the four countries enter the VAR individually.",
+          "model_5": "small VAR in which only Euro Area aggregates are included, but a different level of the steady-state of Debt to GDP ratio."
+        },
+        "figure": {
+          "model_1": 2,
+          "model_2": 3,
+          "model_3": "1-Appendix",
+          "model_4": "3-Appendix",
+          "model_5": "5-Appendix"
+        },
+        "page": {
+          "model_1": 9,
+          "model_2": 10,
+          "model_3": "12-Appendix",
+          "model_4": "17-Appendix",
+          "model_5": "21-Appendix"
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_short_term",
+        "size": "-1SD",
+        "axis_trans": false,
+        "dep": "logdiff_a_rgdp logdiff_a_deflator",
+        "conf": "68",
+        "main": "other",
+        "prefer": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": true,
+        "chol": false,
+        "svar": false,
+        "signr": true,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "EA",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "Q2-1991",
+          "model_2": "Q2-1991",
+          "model_3": "Q2-1991",
+          "model_4": "Q2-1991",
+          "model_5": "Q2-1991"
+        },
+        "end": {
+          "model_1": "Q4-2019",
+          "model_2": "Q4-2019",
+          "model_3": "Q2-2014",
+          "model_4": "Q4-2019",
+          "model_5": "Q4-2019"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": true,
+        "foreignir": false,
+        "fx": false,
+        "lrir": true
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": false,
+          "model_5": false
+        },
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

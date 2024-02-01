@@ -2,8 +2,8 @@
     "general": {
         "key": "652CDYWY",
         "rid1": "fp",
-        "rid2": "null",
-        "study_notes": "cbanker: true, because the study benefitted from financial support by the Anniversary Fund of Oesterreichische Nationalbank.",
+        "rid2": "me",
+        "study_notes": "null",
         "model_notes": "null",
         "figure": {
           "model_1": 2,
@@ -32,7 +32,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_eonia",
-        "size": "25",
+        "size": "25bp",
         "axis_trans": false,
         "dep": {
           "model_1": "log_m_ip log_m_cpi",
@@ -74,8 +74,28 @@
           "model_9": true
         },
         "event": false,
-        "chol": false,
-        "svar": true,
+        "chol": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false
+        },
+        "svar": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true,
+                "model_9": true
+        }, 
         "signr": false,
         "hf": {
           "model_1": true,
@@ -90,17 +110,7 @@
         },
         "heteroskedas": false,
         "longrun": false,
-        "idother": {
-          "model_1": true,
-          "model_2": false,
-          "model_3": true,
-          "model_4": true,
-          "model_5": false,
-          "model_6": true,
-          "model_7": true,
-          "model_8": true,
-          "model_9": true
-        }
+        "idother": false
     },
     "estimation_method": {
         "var": true,
@@ -145,7 +155,17 @@
           "model_8": "12-2019",
           "model_9": "12-2019"
         },
-        "samplesize": 252
+        "samplesize": {
+                "model_1": 252,
+                "model_2": 252,
+                "model_3": 252,
+                "model_4": "null",
+                "model_5": 252,
+                "model_6": 252,
+                "model_7": 252,
+                "model_8": 252,
+                "model_9": 252
+        }
     },
     "control_variables": {
         "comprice": false,
@@ -160,8 +180,28 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": true,
-        "convent": true,
+        "pure_rate_shock": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true,
+          "model_8": true,
+          "model_9": true
+        },
+        "convent": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true,
+          "model_8": true,
+          "model_9": true
+        },
         "decomposition": {
           "model_1": true,
           "model_2": false,
@@ -175,7 +215,7 @@
         }
     },
     "publication_characteristics": {
-        "cbanker": true
+        "cbanker": false
     }
 }
 

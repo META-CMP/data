@@ -29,7 +29,7 @@
         }, 
         "size": "25bp", 
         "axis_trans": false, 
-        "dep": "lev_a_ip lev_a_cpi", 
+        "dep": "gr_a_ip gr_a_cpi", 
         "conf": "90", 
         "main": "gdp  inflation  other", 
         "prefer": {

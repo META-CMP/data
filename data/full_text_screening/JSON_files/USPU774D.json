@@ -17,13 +17,13 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_short_term_rate", 
+        "inttype": "lev_a_3_month_money_market_rate", 
         "size": {
                 "model_1": "-10bp",
                 "model_2": "-17bp"
         }, 
         "axis_trans": "y*0.001", 
-        "dep": "log_a_rgdp gr_a_cpi", 
+        "dep": "log_q_rgdp gr_q_cpi", 
         "conf": "90", 
         "main": "gdp  inflation", 
         "prefer": true
@@ -82,7 +82,7 @@
     "control_variables": { 
         "comprice": false, 
         "outpgap": false, 
-        "find": false, 
+        "find": true, 
         "eglob": false, 
         "cbind": false, 
         "fexch": false, 

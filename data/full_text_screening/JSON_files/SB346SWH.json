@@ -14,7 +14,7 @@
         "inttype": "lev_a_short_term_rate",
         "size": "92bp",
         "axis_trans": "y*100",
-        "dep": "log_a_ip log_a_cpi",
+        "dep": "log_q_ip log_q_cpi",
         "conf": "1_SE",
         "main": "gdp  inflation",
         "prefer": true

@@ -18,12 +18,9 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_3_month_money_market_rate", 
-        "size": {
-                "model_1": "-10bp",
-                "model_2": "-17bp"
-        }, 
-        "axis_trans": "y*0.001", 
-        "dep": "log_q_rgdp gr_q_cpi", 
+        "size": "1SD", 
+        "axis_trans": "y*100 lev_a_3_month_money_market_rate_false", 
+        "dep": "log_q_rgdp gr_q_deflator", 
         "conf": "90", 
         "main": "gdp  inflation", 
         "prefer": true

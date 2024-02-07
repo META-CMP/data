@@ -4,7 +4,7 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "note to model 3: results are for expansionary monetary policy shocks only; however, the note to the figure says that the IRF was multiplied by (-1), i.e. shows the impact of an increase in the interest rate. Inflation results not included because they capture the 12 month percentage change of the wholesale price index for all commodities.", 
+        "model_notes": "note to model 3: results are for expansionary monetary policy shocks only; however, the note to the figure says that the IRF was multiplied by (-1), i.e. shows the impact of an increase in the interest rate.", 
         "figure": {
                 "model_1": 4,
                 "model_2": 12,
@@ -22,9 +22,9 @@
         "inttype": "lev_a_bank_rate", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "lev_m_une_rate", 
+        "dep": "lev_m_une_rate gr_a_wpi", 
         "conf": "95", 
-        "main": "emp", 
+        "main": "emp inflation", 
         "prefer": {
                 "model_1": true,
                 "model_2": true,

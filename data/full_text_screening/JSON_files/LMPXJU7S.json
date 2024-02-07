@@ -28,14 +28,14 @@
         "size": "100bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "log_a_emp log_a_cpi",
-                "model_2": "log_a_emp log_a_cpi",
-                "model_3": "log_a_emp log_a_cpi",
-                "model_4": "log_a_emp log_a_cpi",
-                "model_5": "log_a_emp log_a_cpi log_a_ip lev_a_une"
+                "model_1": "log_m_emp log_m_cpi",
+                "model_2": "log_m_emp log_m_cpi",
+                "model_3": "log_m_emp log_m_cpi",
+                "model_4": "log_m_emp log_m_cpi",
+                "model_5": "log_m_cpi log_m_ip lev_m_une_rate"
         },  
-        "conf": "90", 
-        "main": "gdp  emp  inflation", 
+        "conf": "68", 
+        "main": "other", 
         "prefer": {
                 "model_1": false,
                 "model_2": false,

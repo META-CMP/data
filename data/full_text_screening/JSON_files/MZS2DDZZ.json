@@ -24,14 +24,14 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",
-        "size": "1%",
+        "size": "100bp",
         "axis_trans": false,
         "dep": {
           "model_1": "log_m_ip gr_a_cpi",
           "model_2": "log_m_ip gr_a_cpi",
           "model_3": "log_m_ip lev_m_une_rate gr_a_cpi"
         },
-        "conf": "68 & 95",
+        "conf": "95",
         "main": "gdp inflation",
         "prefer": {
           "model_1": true,

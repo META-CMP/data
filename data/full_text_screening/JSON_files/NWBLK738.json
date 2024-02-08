@@ -20,11 +20,7 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_fed_funds", 
-        "size": {
-                "model_1": "70bp",
-                "model_2": "29bp",
-                "model_3": "70bp"
-        },  
+        "size": "null",  
         "axis_trans": false, 
         "dep": "log_q_cpi log_q_rgdp", 
         "conf": "80", 

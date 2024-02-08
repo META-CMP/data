@@ -49,7 +49,7 @@
                 "model_8": "log_m_ip log_m_cpi",
                 "model_9": "log_m_ip log_m_cpi",
                 "model_10": "log_m_ip log_m_cpi",
-                "model_11": "log_m_ip log_m_cpi lev_a_une_rate"
+                "model_11": "log_m_ip log_m_cpi lev_m_une_rate"
         }, 
         "conf": "90", 
         "main": "gdp  inflation", 

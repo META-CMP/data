@@ -38,7 +38,7 @@
           "model_1": "log_q_rgdp logdiff_a_deflator log_q_emp",
           "model_2": "log_q_rgdp logdiff_a_deflator log_q_emp",
           "model_3": "log_q_rgdp logdiff_a_deflator log_q_emp",
-          "model_4": "gr_a_rgdp gr_a_deflator gr_a_emp"
+          "model_4": "gr_q_rgdp gr_a_deflator gr_q_emp"
         },
         "conf": "68",
         "main": "other",

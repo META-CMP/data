@@ -23,7 +23,7 @@
         "dep": {
           "model_1": "logdiff_a_ip logdiff_a_cpi",
           "model_2": "logdiff_a_ip lev_m_emp_rate logdiff_a_cpi"
-        }
+        },
         "conf": "1_SE & 2_SE",
         "main": "emp",
         "prefer": {

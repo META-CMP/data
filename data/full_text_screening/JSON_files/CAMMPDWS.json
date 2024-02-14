@@ -24,7 +24,7 @@
         "size": "-100bp",
         "axis_trans": false,
         "dep": "gr_a_rgdp gr_a_core",
-        "conf": "68 & 95",
+        "conf": "95",
         "main": "other",
         "prefer": {
           "model_1": true,

@@ -46,9 +46,9 @@
           "model_1": "logdiff_m_ip logdiff_m_cpi",
           "model_2": "logdiff_m_ip logdiff_m_cpi",
           "model_3": "logdiff_m_ip logdiff_m_cpi logdiff_m_emp",
-          "model_4": "logdiff_m_ip logdiff_m_cpi logdiff_m_emp",,
+          "model_4": "logdiff_m_ip logdiff_m_cpi logdiff_m_emp",
           "model_5": "logdiff_m_ip logdiff_m_cpi",
-          "model_6": "logdiff_m_ip logdiff_m_cpi",
+          "model_6": "logdiff_m_ip logdiff_m_cpi"
         },
         "conf": "95",
         "main": "inflation",

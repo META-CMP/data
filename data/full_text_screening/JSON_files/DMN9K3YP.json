@@ -2,7 +2,7 @@
     "general": {
         "key": "DMN9K3YP",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "sg",
         "study_notes": "We interprete the estimation method as a variant of local projections and assume that the shock enters the regression in basis points, which implies shock size is equal to 1bp (see figure 1, p. 58). We also assume that the dependent variable is the growth rate of industrial production at each time horizon, as implied by the authors' interpretation of the IRFs.",
         "model_notes": {
               "Overall monetary policy news shock.",
@@ -30,7 +30,10 @@
     },
     "identification_strategy": {
         "iv": false,
-        "forecast_based": false,
+        "forecast_based": {
+                "model_1": false,
+                "model_2": true
+                },
         "nr": false,
         "event": false,
         "chol": false,
@@ -89,10 +92,7 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": {
-            "model_1": false,
-            "model_2": true
-          },
+        "pure_rate_shock": false,
         "convent": false,
         "decomposition": {
             "model_1": false,

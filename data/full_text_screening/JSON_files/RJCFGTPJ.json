@@ -2,18 +2,18 @@
     "general": {
         "key": "RJCFGTPJ",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "sg",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
-          "model_1": 3422,
+          "model_1": 1,
           "model_2": 5,
           "model_3": 9,
           "model_4": 10,
           "model_5": 11
         },
         "page": {
-          "model_1": 1,
+          "model_1": 3422,
           "model_2": 3428,
           "model_3": 3431,
           "model_4": 3432,
@@ -30,17 +30,17 @@
           "model_2": false,
           "model_3": false,
           "model_4": false,
-          "model_5": "false log_q_rgdp_y*100"
+          "model_5": "false log_a_rgdp_y*100"
         },
         "dep": {
           "model_1": "lev_q_une_rate gr_a_cpi",
           "model_2": "lev_q_une_rate gr_a_cpi",
           "model_3": "lev_q_une_rate gr_a_cpi",
           "model_4": "lev_q_une_rate gr_a_cpi",
-          "model_5": "log_q_rgdp gr_a_cpi"
+          "model_5": "log_a_rgdp gr_a_cpi"
         },
         "conf": "68",
-        "main": "emp inflation other",
+        "main": "other",
         "prefer": {
           "model_1": true,
           "model_2": false,
@@ -54,8 +54,8 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": false,
-        "svar": true,
+        "chol": true,
+        "svar": false,
         "signr": true,
         "hf": false,
         "heteroskedas": false,

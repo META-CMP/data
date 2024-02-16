@@ -22,12 +22,7 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_money_market_rate", 
-        "size": {
-                "model_1": "48bp",
-                "model_2": "37bp",
-                "model_3": "48bp",
-                "model_4": "39bp"
-        }, 
+        "size": "null", 
         "axis_trans": false, 
         "dep": "log_q_deflator log_q_rgdp", 
         "conf": "68", 

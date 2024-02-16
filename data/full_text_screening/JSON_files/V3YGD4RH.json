@@ -11,8 +11,8 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_2_year_government_bond_yield", 
-        "size": "4bp", 
+        "inttype": "lev_a_2_year_gov", 
+        "size": "1SD", 
         "axis_trans": false, 
         "dep": "gr_a_cpi", 
         "conf": "68", 

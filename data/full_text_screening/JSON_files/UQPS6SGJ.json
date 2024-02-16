@@ -51,7 +51,7 @@
         "size": "null",
         "axis_trans": false,
         "dep": "lev_m_gap log_m_cpi",
-        "conf": "68 & 90",
+        "conf": "68",
         "main": "gdp  inflation  other",
         "prefer": {
           "model_1": true,

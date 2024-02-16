@@ -28,7 +28,10 @@
           "model_1": "-22bp",
           "model_2": "-40bp"
         },
-        "axis_trans": false,
+        "axis_trans": {
+          "model_1": false,
+          "model_2": "lev_a_ssr_y/100"
+        },
         "dep": "log_q_rgdp log_q_core",
         "conf": "68",
         "main": "other",

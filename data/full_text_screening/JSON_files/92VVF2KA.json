@@ -7,8 +7,8 @@
         "model_notes": {
           "model_1": "3 variable VAR without commodity price index.",
           "model_2": "4 variable VAR with commodity price index VAR.",
-          "model_3": "idother: graph-theoretic causal search algorithm to identify causal relations, then to impose zero short-run restrictions.",
-          "model_4": "idother: graph-theoretic causal search algorithm to identify causal relations, then to impose zero short-run restrictions."
+          "model_3": "graph-theoretic causal search algorithm to identify causal relations, then to impose zero short-run restrictions.",
+          "model_4": "graph-theoretic causal search algorithm to identify causal relations, then to impose zero short-run restrictions."
         },
         "figure": {
           "model_1": 1,
@@ -65,12 +65,7 @@
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
-        "idother": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": true,
-          "model_4": true 
-        }
+        "idother": false
     },
     "estimation_method": {
         "var": true,

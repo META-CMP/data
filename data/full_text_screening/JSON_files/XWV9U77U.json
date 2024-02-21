@@ -11,10 +11,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_12_month_government_bond_yield", 
+        "inttype": "lev_a_1_year_gov", 
         "size": "50bp", 
         "axis_trans": false, 
-        "dep": "log_a_ip log_a_cpi", 
+        "dep": "log_m_ip log_m_cpi", 
         "conf": "90", 
         "main": "gdp inflation", 
         "prefer": true 

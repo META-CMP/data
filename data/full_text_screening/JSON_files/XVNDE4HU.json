@@ -14,7 +14,7 @@
         "inttype": "lev_a_3_month_rate", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "log_q_cpi log_q_rgdp", 
+        "dep": "logdiff_a_cpi log_q_rgdp", 
         "conf": "68", 
         "main": "other", 
         "prefer": true

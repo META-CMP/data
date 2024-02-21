@@ -20,7 +20,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "1%",
         "axis_trans": "y*100",
-        "dep": "log_m_ip log_m_ppi",
+        "dep": "log_m_ip",
         "conf": "1_SE",
         "main": "gdp inflation",
         "prefer": {

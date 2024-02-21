@@ -32,7 +32,7 @@
         "inttype": "lev_a_MRO_rate",
         "size": "1%",
         "axis_trans": false,
-        "dep": "logdiff_m_ip logdiff_m_cpi lev_q_une_rate",
+        "dep": "logdiff_m_ip logdiff_m_cpi lev_m_une_rate",
         "conf": "68 & 95",
         "main": "gdp emp inflation",
         "prefer": {

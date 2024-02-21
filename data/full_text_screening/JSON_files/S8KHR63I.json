@@ -3,24 +3,18 @@
         "key": "S8KHR63I",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "The variables have been appropriately transformed to induce stationarity and have been demeaned and standardized before estimation.",
+        "study_notes": "The variables have been appropriately transformed to induce stationarity and have been demeaned and standardized before estimation, samplesize: calculated from the estimated period from Q1-1960 to Q3-2008.",
         "model_notes": {
           "model_1": "tvar: 1 year after the monetary policy shock in Q1-1975.",
-          "model_2": "tvar: 1 year after the monetary policy shock in Q1-2008.",
-          "model_3": "tvar: at each point in time 4 quarters after the monetary policy shock.",
-          "model_4": "tvar: at each point in time 12 quarters after the monetary policy shock."
+          "model_2": "tvar: 1 year after the monetary policy shock in Q1-2008."
         },
         "figure": {
           "model_1": "1-second column",
-          "model_2": "1-third column",
-          "model_3": "2-panel B",
-          "model_4": "2-panel B"
+          "model_2": "1-third column"
         },
         "page": {
           "model_1": 549,
-          "model_2": 549,
-          "model_3": 550,
-          "model_4": 550
+          "model_2": 549
         },
         "irf": true,
         "cum": false
@@ -31,17 +25,13 @@
         "axis_trans": false,
         "dep": {
           "model_1": "logdiff_q_rgdp logdiff_q_emp logdiff_q_cpi",
-          "model_2": "logdiff_q_rgdp logdiff_q_emp logdiff_q_cpi",
-          "model_3": "logdiff_q_cpi",
-          "model_4": "logdiff_q_cpi"
+          "model_2": "logdiff_q_rgdp logdiff_q_emp logdiff_q_cpi"
         },
         "conf": "68",
         "main": "inflation",
         "prefer": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": true,
-          "model_4": true
+          "model_1": true,
+          "model_2": true
         }
     },
     "identification_strategy": {
@@ -88,9 +78,15 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "Q1-1960",
-        "end": "Q3-2008",
-        "samplesize": "null"
+        "start": {
+          "model_1": "Q1-1975",
+          "model_2": "Q1-2008"
+        },
+        "end": {
+          "model_1": "Q1-1975",
+          "model_2": "Q1-2008"
+        },
+        "samplesize": 195
     },
     "control_variables": {
         "comprice": true,

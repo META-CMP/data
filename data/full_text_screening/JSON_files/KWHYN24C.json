@@ -1,70 +1,52 @@
 {
     "general": {
-        "key": "7UQPIHMA",
+        "key": "KWHYN24C",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "conf: posterior credibility intervals based on iterations of the Gibbs sampler for the month of 01-2003; samplesize: calculated from 11-1978 to 09-2017, that is the period estimated.",
-        "model_notes": {
-          "model_1": "displays the response in high investor sentiment regime.",
-          "model_2": "displays the response in low investor sentiment regime."
-        },
-        "figure": {
-          "model_1": "A.1",
-          "model_2": "A.1"
-        },
-        "page": {
-          "model_1": 10,
-          "model_2": 10
-        },
+        "study_notes": "null",
+        "model_notes": "panel: how the transmission of monetary policy shocks to prices and employment differs across metropolitan areas in the United States. They use a panel of 28 US metropolitan areas.",
+        "figure": 2,
+        "page": 12,
         "irf": true,
         "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
-        "size": "20bp",
+        "size": "1%",
         "axis_trans": false,
-        "dep": "log_m_ip log_m_cpi",
-        "conf": "68 & 95",
-        "main": "other",
-        "prefer": {
-          "model_1": true,
-          "model_2": true
-        }
+        "dep": "gr_q_cpi gr_q_emp",
+        "conf": "90",
+        "main": "inflation emp",
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,
-        "forecast_based": false,
+        "forecast_based": true,
         "nr": false,
         "event": false,
         "chol": false,
         "svar": false,
         "signr": false,
-        "hf": true,
+        "hf": false,
         "heteroskedas": false,
         "longrun": false,
         "idother": false
     },
     "estimation_method": {
         "var": false,
-        "lp": false,
+        "lp": true,
         "vecm": false,
         "dyn_ols": "false",
         "fvar": false,
-        "tvar": true,
+        "tvar": false,
         "gvar": false,
         "bayes": false,
         "dsge": false,
         "varother": false
     },
     "regime_dependence": {
-        "lor": {
-          "model_1": false,
-          "model_2": true
-        },
-        "upr": {
-          "model_1": true,
-          "model_2": false
-        },
+        "lor": false,
+        "upr": false,
         "scr": false,
         "dcr": false,
         "hike": false,
@@ -72,23 +54,23 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
         "list_of_countries": "US",
         "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": false,
-        "start": "01-2003",
-        "end": "01-2003",
-        "samplesize": "467"
+        "panel": true,
+        "start": "Q1-1969",
+        "end": "Q4-2007",
+        "samplesize": "null"
     },
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,

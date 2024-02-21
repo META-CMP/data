@@ -1,38 +1,34 @@
 {
     "general": {
-        "key": "IC2MMT6E",
+        "key": "HE89C3DA",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "samplesize: calculated from estimated period from 01-2001 to 06-2018.",
-        "model_notes": {
-          "model_1": "results for the euro-area as an aggregate.",
-          "model_2": "results for the Slovakia.",
-          "model_3": "results for the Slovenia." 
-        },
+        "study_notes": "null",
+        "model_notes": "null",
         "figure": {
-          "model_1": 2,
-          "model_2": "C1, C2 & C3",
-          "model_3": "C1, C2 & C3"
+          "model_1": 5,
+          "model_2": "Appendix 2"
         },
         "page": {
-          "model_1": 1080,
-          "model_2": 1095,
-          "model_3": 1095
+          "model_1": 214,
+          "model_2": 223
         },
         "irf": true,
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_3_month_interbank",
-        "size": "1SD",
+        "inttype": "lev_a_policy_rate",
+        "size": "1%",
         "axis_trans": false,
-        "dep": "gr_a_rgdp gr_a_cpi",
-        "conf": "68",
-        "main": "other",
+        "dep": {
+          "model_1": "logdiff_a_ip logdiff_a_cpi",
+          "model_2": "logdiff_a_ip lev_m_emp_rate logdiff_a_cpi"
+        },
+        "conf": "1_SE & 2_SE",
+        "main": "emp",
         "prefer": {
           "model_1": true,
-          "model_2": false,
-          "model_3": false 
+          "model_2": false
         }
     },
     "identification_strategy": {
@@ -40,9 +36,9 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": false,
-        "svar": true,
-        "signr": true,
+        "chol": true,
+        "svar": false,
+        "signr": false,
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
@@ -53,8 +49,8 @@
         "lp": false,
         "vecm": false,
         "dyn_ols": "false",
-        "fvar": false,
-        "tvar": true,
+        "fvar": true,
+        "tvar": false,
         "gvar": false,
         "bayes": false,
         "dsge": false,
@@ -74,27 +70,23 @@
         "month": true
     },
     "country_composition": {
-        "list_of_countries": {
-          "model_1": "EA",
-          "model_2": "SK",
-          "model_3": "SI" 
-        },
-        "n_of_countries": 20
+        "list_of_countries": "KR",
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
-        "start": "06-2018",
-        "end": "06-2018",
-        "samplesize": "210"
+        "panel": false,
+        "start": "07-1999",
+        "end": "05-2015",
+        "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
         "find": true,
-        "eglob": false,
+        "eglob": true,
         "cbind": false,
         "fexch": false,
-        "inflexp": true,
+        "inflexp": false,
         "foreignir": true,
         "fx": true,
         "lrir": true
@@ -105,7 +97,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

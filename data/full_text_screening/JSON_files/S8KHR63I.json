@@ -1,38 +1,37 @@
 {
     "general": {
-        "key": "IC2MMT6E",
+        "key": "S8KHR63I",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "samplesize: calculated from estimated period from 01-2001 to 06-2018.",
+        "study_notes": "The variables have been appropriately transformed to induce stationarity and have been demeaned and standardized before estimation, samplesize: calculated from the estimated period from Q1-1960 to Q3-2008.",
         "model_notes": {
-          "model_1": "results for the euro-area as an aggregate.",
-          "model_2": "results for the Slovakia.",
-          "model_3": "results for the Slovenia." 
+          "model_1": "tvar: 1 year after the monetary policy shock in Q1-1975.",
+          "model_2": "tvar: 1 year after the monetary policy shock in Q1-2008."
         },
         "figure": {
-          "model_1": 2,
-          "model_2": "C1, C2 & C3",
-          "model_3": "C1, C2 & C3"
+          "model_1": "1-second column",
+          "model_2": "1-third column"
         },
         "page": {
-          "model_1": 1080,
-          "model_2": 1095,
-          "model_3": 1095
+          "model_1": 549,
+          "model_2": 549
         },
         "irf": true,
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_3_month_interbank",
-        "size": "1SD",
+        "inttype": "lev_a_fed_funds",
+        "size": "100bp",
         "axis_trans": false,
-        "dep": "gr_a_rgdp gr_a_cpi",
+        "dep": {
+          "model_1": "logdiff_q_rgdp logdiff_q_emp logdiff_q_cpi",
+          "model_2": "logdiff_q_rgdp logdiff_q_emp logdiff_q_cpi"
+        },
         "conf": "68",
-        "main": "other",
+        "main": "inflation",
         "prefer": {
           "model_1": true,
-          "model_2": false,
-          "model_3": false 
+          "model_2": true
         }
     },
     "identification_strategy": {
@@ -40,9 +39,9 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": false,
-        "svar": true,
-        "signr": true,
+        "chol": true,
+        "svar": false,
+        "signr": false,
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
@@ -53,10 +52,10 @@
         "lp": false,
         "vecm": false,
         "dyn_ols": "false",
-        "fvar": false,
+        "fvar": true,
         "tvar": true,
         "gvar": false,
-        "bayes": false,
+        "bayes": true,
         "dsge": false,
         "varother": false
     },
@@ -70,32 +69,34 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": {
-          "model_1": "EA",
-          "model_2": "SK",
-          "model_3": "SI" 
-        },
-        "n_of_countries": 20
+        "list_of_countries": "US",
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
-        "start": "06-2018",
-        "end": "06-2018",
-        "samplesize": "210"
+        "panel": false,
+        "start": {
+          "model_1": "Q1-1975",
+          "model_2": "Q1-2008"
+        },
+        "end": {
+          "model_1": "Q1-1975",
+          "model_2": "Q1-2008"
+        },
+        "samplesize": 195
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
         "find": true,
         "eglob": false,
         "cbind": false,
         "fexch": false,
-        "inflexp": true,
-        "foreignir": true,
+        "inflexp": false,
+        "foreignir": false,
         "fx": true,
         "lrir": true
     },
@@ -105,7 +106,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

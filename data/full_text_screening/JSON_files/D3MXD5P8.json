@@ -1,38 +1,34 @@
 {
     "general": {
-        "key": "IC2MMT6E",
+        "key": "D3MXD5P8",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "samplesize: calculated from estimated period from 01-2001 to 06-2018.",
-        "model_notes": {
-          "model_1": "results for the euro-area as an aggregate.",
-          "model_2": "results for the Slovakia.",
-          "model_3": "results for the Slovenia." 
-        },
+        "study_notes": "null",
+        "model_notes": "null",
         "figure": {
-          "model_1": 2,
-          "model_2": "C1, C2 & C3",
-          "model_3": "C1, C2 & C3"
+          "model_1": "3-(d)",
+          "model_2": "4-(d)"
         },
         "page": {
-          "model_1": 1080,
-          "model_2": 1095,
-          "model_3": 1095
+          "model_1": 91,
+          "model_2": 92
         },
         "irf": true,
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_3_month_interbank",
-        "size": "1SD",
+        "inttype": "lev_a_overnight_callrate",
+        "size": "1%",
         "axis_trans": false,
-        "dep": "gr_a_rgdp gr_a_cpi",
-        "conf": "68",
-        "main": "other",
+        "dep": {
+          "model_1": "gr_a_wpi",
+          "model_2": "gr_a_deflator"
+        },
+        "conf": "95",
+        "main": "inflation",
         "prefer": {
           "model_1": true,
-          "model_2": false,
-          "model_3": false 
+          "model_2": false
         }
     },
     "identification_strategy": {
@@ -42,19 +38,19 @@
         "event": false,
         "chol": false,
         "svar": true,
-        "signr": true,
+        "signr": false,
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
         "idother": false
     },
     "estimation_method": {
-        "var": false,
+        "var": true,
         "lp": false,
         "vecm": false,
         "dyn_ols": "false",
         "fvar": false,
-        "tvar": true,
+        "tvar": false,
         "gvar": false,
         "bayes": false,
         "dsge": false,
@@ -70,34 +66,30 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": true,
+        "month": false
     },
     "country_composition": {
-        "list_of_countries": {
-          "model_1": "EA",
-          "model_2": "SK",
-          "model_3": "SI" 
-        },
-        "n_of_countries": 20
+        "list_of_countries": "IN",
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
-        "start": "06-2018",
-        "end": "06-2018",
-        "samplesize": "210"
+        "panel": false,
+        "start": "Q1-1997",
+        "end": "Q3-2014",
+        "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
-        "outpgap": false,
-        "find": true,
+        "comprice": true,
+        "outpgap": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
-        "inflexp": true,
-        "foreignir": true,
-        "fx": true,
-        "lrir": true
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
     },
     "econometric_details": {
         "pure_rate_shock": true,
@@ -105,7 +97,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

@@ -21,7 +21,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_1_year_government_bond_yield", 
+        "inttype": "lev_a_1_year_gov", 
         "size": "100bp", 
         "axis_trans": false, 
         "dep": {

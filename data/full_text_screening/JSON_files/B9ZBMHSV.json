@@ -1,0 +1,107 @@
+{
+    "general": {
+        "key": "B9ZBMHSV",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "the dependent variable is detrended using the Hodrick-Prescott (1997) filter with the proportionate deviations from the trend.",
+        "model_notes": {
+          "model_1": "they fixed the intertemporal elasticity of substitution equal to 1 (logarithmic utility), and the average real rate of return on financial assets equal to 7%, the average real rate of return of the S&P500 over the sample period; segmented markets where the households are all traders.",
+          "model_2": "An experiment where they allowed all parameters of the model to be estimated without fixing it to a specefic value; segmented market where the households are all traders.",
+          "model_3": "An experiment where they allowed all parameters of the model to be estimated without fixing it to a specefic value; full participation market where the households are traders and non-traders."
+        },
+        "figure": {
+          "model_1": "1-row 2-left",
+          "model_2": "2-row 2-left",
+          "model_3": "2-row 2-right"
+        },
+        "page": {
+          "model_1": 27,
+          "model_2": 29,
+          "model_3": 29
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "1%",
+        "axis_trans": false,
+        "dep": "logdiff_a_deflator",
+        "conf": "90",
+        "main": "other",
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": true
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": true,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1959",
+        "end": "Q4-2002",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

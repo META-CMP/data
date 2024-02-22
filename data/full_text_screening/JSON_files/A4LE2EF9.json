@@ -3,7 +3,7 @@
         "key": "A4LE2EF9",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "ME: during the IRF extraction the responses have been accidently coded as y/100. To adjust for that we multiply each value by 100 (y*100) to obtain the original resposnes.",
         "model_notes": "null",
         "figure": {
                 "model_1": 1,
@@ -19,7 +19,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
         "size": "-100bp",
-        "axis_trans": false,
+        "axis_trans": "y*100",
         "dep": "logdiff_q_rgdp logdiff_q_cpi",
         "conf": "68",
         "main": "gdp inflation",

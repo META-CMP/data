@@ -141,7 +141,7 @@
           "model_19": "log_m_rgdp log_m_deflator",
           "model_20": "log_m_rgdp log_m_deflator"
         },
-        "conf": "68 & 90",
+        "conf": "68",
         "main": "gdp inflation  other",
         "prefer": {
           "model_1": true,

@@ -58,16 +58,16 @@
                 "model_7": "50bp",
                 "model_8": "50bp",
                 "model_9": "50bp",
-                "model_10": "46bp",
-                "model_11": "48bp",
-                "model_12": "32bp",
-                "model_13": "50bp",
-                "model_14": "50bp",
-                "model_15": "50bp",
-                "model_16": "35bp",
-                "model_17": "21bp"
+                "model_10": "null",
+                "model_11": "null",
+                "model_12": "null",
+                "model_13": "null",
+                "model_14": "null",
+                "model_15": "null",
+                "model_16": "null",
+                "model_17": "null"
         }, 
-        "axis_trans": false, 
+        "axis_trans": "lev_a_fed_funds_y/100", 
         "dep": {
                 "model_1": "log_m_ip log_m_cpi",
                 "model_2": "log_m_ip log_m_cpi",
@@ -192,7 +192,7 @@
         "start": {
                 "model_1": "01-1959",
                 "model_2": "01-1959",
-                "model_3": "01-1959",
+                "model_3": "Q1-1959",
                 "model_4": "01-1959",
                 "model_5": "01-1959",
                 "model_6": "01-1959",
@@ -211,7 +211,7 @@
         "end": {
                 "model_1": "12-1998",
                 "model_2": "12-1998",
-                "model_3": "12-1998",
+                "model_3": "Q4-1998",
                 "model_4": "12-1998",
                 "model_5": "12-1998",
                 "model_6": "12-1998",

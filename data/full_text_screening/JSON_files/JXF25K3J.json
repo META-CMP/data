@@ -1,6 +1,6 @@
 {
     "general": {
-        "key": "ZX6JJGH5",
+        "key": "JXF25K3J",
         "rid1": "fp",
         "rid2": "null",
         "study_notes": "null",
@@ -13,7 +13,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",
         "size": "1SD",
-        "axis_trans": false,
+        "axis_trans": "y*100 lev_a_short_term_rate_false",
         "dep": "log_q_ip log_q_cpi",
         "conf": "95",
         "main": "gdp inflation",

@@ -21,7 +21,7 @@
                 "model_1": "log_q_rgdp log_q_cpi",
                 "model_2": "log_q_rgdp"
         },
-        "conf": "68 & 90",
+        "conf": "90",
         "main": "gdp inflation",
         "prefer": true
     },

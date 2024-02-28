@@ -280,7 +280,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
         "size": "1SD",
-        "axis_trans": false,
+        "axis_trans": "y*100",
         "dep": "log_q_gdp log_q_deflator",
         "conf": {                    
           "model_1": "1_SE",

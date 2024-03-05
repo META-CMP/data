@@ -27,7 +27,7 @@
           "model_2": "log_m_rgdp lev_m_une_rate log_m_cpi",
           "model_3": "log_m_rgdp log_m_cpi"
         },
-        "conf": "68 & 95",
+        "conf": "95",
         "main": "gdp inflation",
         "prefer": {
           "model_1": true,

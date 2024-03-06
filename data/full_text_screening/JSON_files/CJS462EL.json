@@ -3,17 +3,25 @@
         "key": "CJS462EL",
         "rid1": "ph",
         "rid2": "null",
-        "study_notes": "Shock size only mentioned for three of the countries, so I just included those models.",
+        "study_notes": "null",
         "model_notes": "null",
         "figure": {
                 "model_1": "1a",
                 "model_2": "1b",
-                "model_3": "1b"
+                "model_3": "1b",
+                "model_4": "1a",
+                "model_5": "1b",
+                "model_6": "1b",
+                "model_7": "1b"
         },
         "page": {
                 "model_1": 30,
                 "model_2": 31,
-                "model_3": 31
+                "model_3": 31,
+                "model_4": 30,
+                "model_5": 31,
+                "model_6": 31,
+                "model_7": 31
         },
         "irf": true,
         "cum": false
@@ -23,7 +31,11 @@
         "size": {
                 "model_1": "48bp",
                 "model_2": "59bp",
-                "model_3": "84bp"
+                "model_3": "84bp",
+                "model_4": "1SD",
+                "model_5": "1SD",
+                "model_6": "1SD",
+                "model_7": "1SD"
         },
         "axis_trans": false,
         "dep": "log_q_rgdp log_q_cpi",
@@ -73,13 +85,26 @@
         "list_of_countries": {
                 "model_1": "DE",
                 "model_2": "IT",
-                "model_3": "ES"
+                "model_3": "ES",
+                "model_4": "FR",
+                "model_5": "FI",
+                "model_6": "GR",
+                "model_7": "IE"
+                
         },
         "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "Q1-1970",
+        "start": {
+                "model_1": "Q1-1970",
+                "model_2": "Q1-1980",
+                "model_3": "Q1-1980",
+                "model_4": "Q1-1980",
+                "model_5": "Q1-1980",
+                "model_6": "Q1-1980",
+                "model_7": "Q1-1980"
+        },
         "end": "Q4-1998",
         "samplesize": "null"
     },

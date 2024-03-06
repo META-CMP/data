@@ -27,7 +27,15 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_3_month_interest",
+        "inttype": {
+                "model_1": "lev_a_3_month_short_term_rate",
+                "model_2": "lev_a_3_month_short_term_rate",
+                "model_3": "lev_a_3_month_short_term_rate",
+                "model_4": "lev_a_3_month_short_term_rate",
+                "model_5": "lev_a_3_month_short_term_rate",
+                "model_6": "lev_a_overnight_rate",
+                "model_7": "lev_a_3_month_short_term_rate"
+        },
         "size": {
                 "model_1": "48bp",
                 "model_2": "59bp",

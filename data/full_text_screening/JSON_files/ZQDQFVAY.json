@@ -23,7 +23,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_overnight_target",
         "size": "1SD",
-        "axis_trans": "y*100",
+        "axis_trans": "y*100 lev_a_overnight_target_false",
         "dep": "log_m_cpi log_m_rgdp",
         "conf": "1_SE",
         "main": "gdp inflation",

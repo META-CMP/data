@@ -55,7 +55,21 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",
         "size": "1SD",
-        "axis_trans": false,
+        "axis_trans": {
+          "model_1": "y*100",
+          "model_2": "y*100",
+          "model_3": "y*100",
+          "model_4": "y*100",
+          "model_5": "y*100",
+          "model_6": "y*100",
+          "model_7": "y*100 log_q_deflator_false",
+          "model_8": "y*100 log_q_deflator_false",
+          "model_9": "y*100 log_q_deflator_false",
+          "model_10": "y*100 log_q_deflator_false",
+          "model_11": "y*100",
+          "model_12": "y*100",
+          "model_13": "y*100"
+        },
         "dep": {
           "model_1": "log_q_rgdp log_q_deflator",
           "model_2": "log_q_rgdp log_q_deflator",

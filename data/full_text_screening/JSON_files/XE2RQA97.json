@@ -21,13 +21,13 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_1_year_government_bond_yield", 
+        "inttype": "lev_a_1_year_gov", 
         "size": "100bp", 
         "axis_trans": false, 
         "dep": {
                 "model_1": "log_m_cpi log_m_ip log_m_une_rate",
                 "model_2": "log_m_cpi log_m_ip log_m_une_rate",
-                "model_3": "log_m_cpi log_m_ip",
+                "model_3": "log_m_cpi log_m_ip log_m_une_rate",
                 "model_4": "log_m_cpi log_m_ip log_m_une_rate"
         }, 
         "conf": "90", 

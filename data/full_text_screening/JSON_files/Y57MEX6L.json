@@ -23,7 +23,12 @@
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
         "size": "50bp", 
-        "axis_trans": "y*10^(-3)", 
+        "axis_trans": {
+                "model_1": "y/10",
+                "model_2": "y/10",
+                "model_3": "y/10 lev_a_short_term_rate_y*100",
+                "model_4": "y/10 lev_a_short_term_rate_y*100"
+        }, 
         "dep": "log_m_cpi log_m_rgdp", 
         "conf": "68", 
         "main": "gdp  inflation", 

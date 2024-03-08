@@ -33,7 +33,7 @@
         "size": "1%",
         "axis_trans": false,
         "dep": "logdiff_m_ip logdiff_m_cpi lev_m_une_rate",
-        "conf": "68 & 95",
+        "conf": "68",
         "main": "gdp emp inflation",
         "prefer": {
           "model_1": true,

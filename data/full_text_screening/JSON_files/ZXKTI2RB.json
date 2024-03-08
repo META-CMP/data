@@ -21,14 +21,14 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_12_month_bond", 
+        "inttype": "lev_a_1_year_gov", 
         "size": "25bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "log_a_cpi lev_a_une",
-                "model_2": "log_a_rgdp",
-                "model_3": "log_a_cpi lev_a_une",
-                "model_4": "log_a_cpi lev_a_une"
+                "model_1": "log_m_cpi lev_m_une",
+                "model_2": "log_m_rgdp",
+                "model_3": "log_m_cpi lev_m_une",
+                "model_4": "log_m_cpi lev_m_une"
         }, 
         "conf": "68", 
         "main": "gdp  inflation", 

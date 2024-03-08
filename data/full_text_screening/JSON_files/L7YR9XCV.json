@@ -30,7 +30,7 @@
         "size": "-3bp",
         "axis_trans": "y*100",
         "dep": "log_m_ip",
-        "conf": "1_SE & 2_SE",
+        "conf": "2_SE",
         "main": "inflation",
         "prefer": {
           "model_1": true,

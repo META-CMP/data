@@ -4,7 +4,12 @@
         "rid1": "fp",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "null",
+        "model_notes": {
+          "model_1": "regime: low debt regime. Purple/blue lines coded.",
+          "model_2": "regime: high debt regime. Orange line and shaded region coded.",
+          "model_3": "regime: low debt regime. Purple/blue lines coded.",
+          "model_4": "regime: high debt regime. Orange line and shaded region coded."
+        },
         "figure": {
           "model_1": 4,
           "model_2": 4,

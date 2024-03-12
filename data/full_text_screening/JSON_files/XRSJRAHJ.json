@@ -42,7 +42,7 @@
           "model_7": "log_m_rgdp log_m_deflator",
           "model_8": "logdiff_m_rgdp logdiff_m_deflator"
         },
-        "conf": "68 & 95",
+        "conf": "68",
         "main": "gdp inflation",
         "prefer": {
           "model_1": true,

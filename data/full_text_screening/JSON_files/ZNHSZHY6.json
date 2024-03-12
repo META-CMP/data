@@ -3,7 +3,7 @@
         "key": "ZNHSZHY6",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "they include United States variables",
         "model_notes": "null",
         "figure": {
           "model_1": "4-DE,6-DE & 7-DE",
@@ -80,12 +80,12 @@
     },
     "country_composition": {
         "list_of_countries": {
-          "model_1": "US DE",
-          "model_2": "US GB",
-          "model_3": "US CA",
-          "model_4": "US FR",
-          "model_5": "US IT",
-          "model_6": "US JP"
+          "model_1": "DE",
+          "model_2": "GB",
+          "model_3": "CA",
+          "model_4": "FR",
+          "model_5": "IT",
+          "model_6": "JP"
         },
         "n_of_countries": {
           "model_1": 2,

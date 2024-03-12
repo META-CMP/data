@@ -19,11 +19,11 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_bank_call",
-        "size": "59bp",
-        "axis_trans": "y*(-1)",
+        "inttype": "lev_a_overnight_callrate",
+        "size": "1SD",
+        "axis_trans": false,
         "dep": "log_a_gdp log_a_cpi",
-        "conf": "90",
+        "conf": "80",
         "main": "gdp  inflation",
         "prefer": {
                 "model_1": true,
@@ -54,12 +54,12 @@
         },
         "chol": {
                 "model_1": false,
-                "model_2": true,
+                "model_2": false,
                 "model_3": false
         },
         "svar": {
                 "model_1": false,
-                "model_2": false,
+                "model_2": true,
                 "model_3": false
         },
         "signr": {
@@ -121,9 +121,9 @@
                 "model_3": false
         },
         "bayes": {
-                "model_1": false,
+                "model_1": true,
                 "model_2": false,
-                "model_3": false
+                "model_3": true
         },
         "dsge": {
                 "model_1": true,

@@ -1,0 +1,133 @@
+{
+    "general": {
+        "key": "X7D67U3R",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "All variables enter the VAR model linearly de-trended; note that this is equivalent to including a linear trend in the VAR system.", #I agree that in the appendix little variation
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "null",
+          "model_3": "sign restrictions applied only during first month",
+          "model_4": "sign restrictions applied during 2 month",
+          "model_5": "sign restrictions applied only during first month",
+          "model_6": "sign restrictions applied during 2 month"
+        },
+        "figure": {#why not including 2 models with no rotation of Cholesky
+          "model_1": 1,
+          "model_2": 2,
+          "model_3": "Panel B-3",
+          "model_4": "Panel B-4",
+          "model_5": "Panel A-3",
+          "model_6": "Panel A-4"
+        },
+        "page": {
+          "model_1": 3,
+          "model_2": 4,
+          "model_3": 17,
+          "model_4": 18,
+          "model_5": 17,
+          "model_6": 18  
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_ssr",
+        "size": "25bp",
+        "axis_trans": false,
+        "dep": "log_m_ip gr_a_cpi", #looking at the graph (Figure A1) it seems as annual inflation for the Euro area
+        "conf": "68", #(68 & 95) based on IRF extraction we choose 68
+        "main": "gdp inflation", #perfect
+        "prefer": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true,#perfect
+          "model_5": false,
+          "model_6": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true,
+          "model_5": false, #inclusion of these two models
+          "model_6": false 
+        },
+        "svar": false,
+        "signr": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true
+        },
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false #for me there is no varother as it is a normal VAR model changing the identification strategy
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "EA",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {#perfect
+        "panel": false,
+        "start": "01-1999",
+        "end": "12-2019",
+        "samplesize": "null"
+    },
+    "control_variables": { #perfect
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {#perfect
+        "pure_rate_shock": true,
+        "convent": false,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

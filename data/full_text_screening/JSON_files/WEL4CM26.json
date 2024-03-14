@@ -2,8 +2,8 @@
     "general": {
         "key": "WEL4CM26",
         "rid1": "dr",
-        "rid2": "null",
-        "study_notes": "decomposition: the solid gray line represents the response in 1985.I–2000.IV, that corresponds to the conventional monetary policy period, the one will I code; the solid black line is the response in 2001.I–2014.IV which corresponds to unconventional monetary policy period, then not coded.",
+        "rid2": "me",
+        "study_notes": "The solid gray line represents the response in 1985.I–2000.IV, that corresponds to the conventional monetary policy period, the one will I code; the solid black line is the response in 2001.I–2014.IV which corresponds to unconventional monetary policy period, which is not coded.",
         "model_notes": {
           "model_1": "baseline.",
           "model_2": "setting the starting point to Q4-1988.",
@@ -13,8 +13,8 @@
           "model_6": "setting the end point to Q4-1998."
         },
         "figure": {
-          "model_1": ",, 3 & 5",
-          "model_2": "B2",
+          "model_1": "1, 3 & 5",
+          "model_2": "B1",
           "model_3": "B3",
           "model_4": "B4",
           "model_5": "B5",
@@ -125,20 +125,20 @@
     },
     "control_variables": {
         "comprice": false,
-        "outpgap": false,
-        "find": false,
+        "outpgap": true,
+        "find": true,
         "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": false,
-        "lrir": false
+        "fx": true,
+        "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,
         "convent": true,
-        "decomposition": true
+        "decomposition": false
     },
     "publication_characteristics": {
         "cbanker": false

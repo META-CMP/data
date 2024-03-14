@@ -2,7 +2,7 @@
     "general": {
         "key": "9DXGZWHB",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "me",
         "study_notes": "null",
         "model_notes": "null",
         "figure": "2-column-3, 3-column-3, 4-column-3 & 5-column-3",
@@ -24,8 +24,8 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true
-        "svar": false,
+        "chol": false
+        "svar": true,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
@@ -40,7 +40,7 @@
         "fvar": true,
         "tvar": false,
         "gvar": false,
-        "bayes": false,
+        "bayes": true,
         "dsge": false,
         "varother": false
     },
@@ -69,15 +69,15 @@
     },
     "control_variables": {
         "comprice": false,
-        "outpgap": false,
+        "outpgap": true,
         "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": false,
-        "lrir": false
+        "fx": true,
+        "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,

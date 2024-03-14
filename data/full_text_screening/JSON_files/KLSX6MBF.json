@@ -3,7 +3,7 @@
         "key": "KLSX6MBF",
         "rid1": "dr",
         "rid2": "me",
-        "study_notes": "null",
+        "study_notes": "size: in the paper they talk about a 100bp point shock, but since they use the Cholesky decomposition and the IRF of the interest rate show different values we set it null.",
         "model_notes": "null",
         "figure": {
           "model_1": 2,
@@ -27,7 +27,7 @@
           "model_3": "lev_a_fed_funds",
           "model_4": "lev_a_overnight_callrate"
         },
-        "size": "1SD",
+        "size": "null",
         "axis_trans": {
           "model_1": "y*100 lev_a_fed_funds_false",
           "model_2": "y*100 lev_a_overnight_callrate_false",

@@ -2,7 +2,7 @@
     "general": {
         "key": "AFV2WRLB",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "me",
         "study_notes": "panel: panel VAR of 13 Greek regions",
         "model_notes": {
           "model_1": "regions included in the panel with significant employment reaction to interest rate shock from times series analysis.",
@@ -75,7 +75,7 @@
     },
     "country_composition": {
         "list_of_countries": "GR",
-        "n_of_countries": 13
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": true,

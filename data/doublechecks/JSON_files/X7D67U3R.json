@@ -1,8 +1,8 @@
 {
     "general": {
         "key": "X7D67U3R",
-        "rid1": "dr",
-        "rid2": "null",
+        "rid1": "ph",
+        "rid2": "dr",
         "study_notes": "All variables enter the VAR model linearly de-trended; note that this is equivalent to including a linear trend in the VAR system.", #I agree that in the appendix little variation
         "model_notes": {
           "model_1": "null",

@@ -2,39 +2,60 @@
     "general": {
         "key": "KLSX6MBF",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "me",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
           "model_1": 2,
-          "model_2": 8
+          "model_2": 3,
+          "model_3": 8,
+          "model_4": 9
         },
         "page": {
           "model_1": 24,
-          "model_2": 29
+          "model_2": 25,
+          "model_3": 29,
+          "model_4": 30
         },
         "irf": true,
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_fed_funds",
-        "size": "1%",
-        "axis_trans": "y*100 lev_a_fed_funds_false",
+        "inttype": {
+          "model_1": "lev_a_fed_funds",
+          "model_2": "lev_a_overnight_callrate",
+          "model_3": "lev_a_fed_funds",
+          "model_4": "lev_a_overnight_callrate"
+        },
+        "size": "1SD",
+        "axis_trans": {
+          "model_1": "y*100 lev_a_fed_funds_false",
+          "model_2": "y*100 lev_a_overnight_callrate_false",
+          "model_3": "y*100 lev_a_fed_funds_false",
+          "model_4": "y*100 lev_a_overnight_callrate_false"
+        },
         "dep": "log_m_ip log_m_cpi",
         "conf": "68",
         "main": "other",
         "prefer": {
           "model_1": false,
-          "model_2": true
+          "model_2": false,
+          "model_3": true,
+          "model_4": true
         }
     },
     "identification_strategy": {
         "iv": false,
-        "forecast_based": false,
+        "forecast_based": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true
+        },
         "nr": false,
         "event": false,
-        "chol": false,
-        "svar": true,
+        "chol": true,
+        "svar": false,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
@@ -67,11 +88,16 @@
         "month": true
     },
     "country_composition": {
-        "list_of_countries": "US DE",
-        "n_of_countries": 2
+        "list_of_countries": {
+          "model_1": "US",
+          "model_2": "DE",
+          "model_3": "US",
+          "model_4": "DE"
+        },
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": false,
         "start": "01-1983",
         "end": "11-1997",
         "samplesize": "null"

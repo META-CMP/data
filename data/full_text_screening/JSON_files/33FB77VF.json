@@ -18,7 +18,7 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_fed_funds", 
-        "size": "27bp", 
+        "size": "1SD", 
         "axis_trans": false, 
         "dep": "log_m_ip log_m_cpi",
         "conf": "95", 

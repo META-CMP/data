@@ -1,6 +1,6 @@
-# Data and scripts for the project  “Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy”
+# Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy
 
-This repository contains all raw and transformed data for our meta study on the macroeconomic effects of conventional monetary policy. It also contains the documentation for data collection, management and transformation, as well as scripts for our data analyses.
+This repository contains all raw and transformed data for our [pre-registered meta-study on the macroeconomic effects of conventional monetary policy](https://osf.io/cduq4). Below, we refer to the documentation of our data collection, management and transformation, as well as scripts for our data analyses.
 
 # Data collection
 

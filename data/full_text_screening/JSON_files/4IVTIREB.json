@@ -24,10 +24,10 @@
         "inttype": "lev_a_fed_funds", 
         "size": "-100bp", 
         "axis_trans": {
-                "model_1": "y*10^(-3)",
-                "model_2": "y*10^(-3)",
-                "model_3": "y*10^(-3)",
-                "model_4": "gr_q_cpi_y*10^(-3)"
+                "model_1": "y/10 lev_a_fed_funds_false",
+                "model_2": "y/10 lev_a_fed_funds_false",
+                "model_3": "y/10 lev_a_fed_funds_false",
+                "model_4": "gr_q_cpi_y/10"
         }, 
         "dep": "gr_q_cpi log_q_rgdp", 
         "conf": "90", 

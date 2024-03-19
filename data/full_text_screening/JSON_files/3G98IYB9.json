@@ -11,8 +11,8 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_shadow_rate", 
-        "size": "48bp", 
+        "inttype": "lev_a_ssr", 
+        "size": "null", 
         "axis_trans": false, 
         "dep": "log_q_rgdp log_q_deflator", 
         "conf": "95", 

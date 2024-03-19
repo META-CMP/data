@@ -1,18 +1,32 @@
-# data
-This repository contains all raw and transformed data for our meta study. It also contains scripts for data collection, management and transformation.
+# Data and scripts for the project  “Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy”
 
-# How to code ...
+This repository contains all raw and transformed data for our meta study on the macroeconomic effects of conventional monetary policy. It also contains the documentation for data collection, management and transformation, as well as scripts for our data analyses.
 
-https://github.com/META-CMP/data/issues/10
+# Data collection
 
-https://github.com/META-CMP/data/issues/9
+...
 
-https://github.com/META-CMP/data/issues/22
+## Data base search
 
-https://github.com/META-CMP/data/issues/17
+...
 
-https://github.com/META-CMP/data/issues/24
 
-https://github.com/META-CMP/data/issues/25
+## Abstract screening
 
-https://github.com/META-CMP/data/issues/26
+...
+
+## Full text screening
+
+...
+
+## External data
+
+...
+
+# Data processing and transformation
+
+...
+
+# Data analyses
+
+...

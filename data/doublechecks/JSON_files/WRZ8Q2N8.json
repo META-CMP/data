@@ -83,7 +83,7 @@
           "model_15": "logdiff_a_rgdp",
           "model_16": "logdiff_a_rgdp"
         },
-        "conf": "1_SE",
+        "conf": "1_SE",#based on IRF extraction, good
         "main": "gdp emp",
         "prefer": {#I included more as true because is the baseline specification.
           "model_1": true,

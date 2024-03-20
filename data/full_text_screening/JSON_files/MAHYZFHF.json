@@ -11,7 +11,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "short_term_rate",
+        "inttype": "lev_a_short_term_rate",
         "size": "-25bp",
         "axis_trans": false,
         "dep": "gr_q_cpi",

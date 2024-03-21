@@ -3,7 +3,7 @@
         "key": "P85XBWGQ", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "axis_trans: probably gr_q_deflator responses should be divided by 100 as the interest rate as they are pretty large compared to the gdp responses. Moreover, interest rates and inflation rates could be used in the same way in the model.", 
         "model_notes": "null", 
         "figure": {
                 "model_1": 3,
@@ -21,8 +21,8 @@
                 "model_1": "lev_a_fed_funds",
                 "model_2": "lev_a_shadow_rate"
         }, 
-        "size": "24bp", 
-        "axis_trans": false, 
+        "size": "25bp", 
+        "axis_trans": "y/100 log_q_rgdp_false",  
         "dep": "gr_q_deflator log_q_rgdp", 
         "conf": "68", 
         "main": "gdp", 
@@ -45,7 +45,7 @@
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": false, 
+        "var": true, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
@@ -98,7 +98,10 @@
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
+        "pure_rate_shock": {
+                "model_1": true,
+                "model_2": false
+        }, 
         "convent": {
                 "model_1": true,
                 "model_2": false

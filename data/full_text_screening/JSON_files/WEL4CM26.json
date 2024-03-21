@@ -5,7 +5,7 @@
         "rid2": "me",
         "study_notes": "The solid gray line represents the response in 1985.I–2000.IV, that corresponds to the conventional monetary policy period, the one will I code; the solid black line is the response in 2001.I–2014.IV which corresponds to unconventional monetary policy period, which is not coded.",
         "model_notes": {
-          "model_1": "baseline.",
+          "model_1": "baseline. dep: lev_q_une_rate assumed because of the shape of the IRF and it is usually used in the literature, even though stated differently in A1.",
           "model_2": "setting the starting point to Q4-1988.",
           "model_3": "taking a more agnostic stance with respect to real GDP and leave its response unrestricted. Instead, core inflation is restricted to increase for two periods following the shock.",
           "model_4": "instead of a short-term interest rate, the nominal long-term bond yield is required not to increase; broad money supply and industrial production are restricted not to decrease; the real effective exchange rate is bound not to increase.",

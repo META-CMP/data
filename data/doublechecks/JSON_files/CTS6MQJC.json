@@ -1,5 +1,5 @@
 {
-    "general": {
+    "general": {#perfect
         "key": "CTS6MQJC",
         "rid1": "fp",
         "rid2": "dr",
@@ -8,7 +8,7 @@
         "figure": 2,
         "page": 818,
         "irf": true,
-        "cum": true #looking at the graph, it's seem that is cumulative also in the text they state in long run is -0.63, that corresponds exactly to the value.
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",

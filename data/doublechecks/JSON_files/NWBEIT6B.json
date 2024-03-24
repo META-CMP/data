@@ -261,7 +261,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false #BIS (Bank for International Settlements) counts as central bank for central banks?
+        "cbanker": true
     }
 }
 

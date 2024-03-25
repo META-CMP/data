@@ -37,7 +37,7 @@
           "model_5": "lev_a_ssr"
         },
         "size": "25bp",
-        "axis_trans": "y*100 lev_a_fed_funds_false",
+        "axis_trans": false,
         "dep": "logdiff_q_rgdp logdiff_q_deflator",
         "conf": "90",
         "main": "gdp inflation other",

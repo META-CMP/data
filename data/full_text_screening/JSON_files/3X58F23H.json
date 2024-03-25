@@ -3,11 +3,8 @@
         "key": "3X58F23H",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "list_of_countries: EA means Eurozone.",
-        "model_notes":{
-                "model_1": "conf: 16th & 84th percentiles, the percentiles work as confidence interval; the paper differenciate two periods, I will only code pre-2007 estimates.",
-                "model_2": "conf: 16th & 84th percentiles, the percentiles work as confidence interval; the paper differenciate two periods, I will only code pre-2007 estimates."
-        },
+        "study_notes": "null",
+        "model_notes": "null",
         "figure": {
                 "model_1": 4,
                 "model_2": 4
@@ -25,7 +22,10 @@
                 "model_2": "lev_a_eonia"
         },
         "size": "null",
-        "axis_trans": "y*100 lev_a_fed_funds_false leva_a_eonia_false",
+        "axis_trans": {
+                "model_1": "y*100 lev_a_fed_funds_false",
+                "model_2": "y*100 lev_a_eonia_false"
+        },
         "dep": "log_m_rgdp log_m_cpi",
         "conf": "68",
         "main": "gdp inflation",

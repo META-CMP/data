@@ -3,11 +3,11 @@
         "key": "IC2MMT6E",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "samplesize: calculated from estimated period from 01-2001 to 06-2018.",
+        "study_notes": "null",
         "model_notes": {
           "model_1": "results for the euro-area as an aggregate.",
-          "model_2": "results for the Slovakia.",
-          "model_3": "results for the Slovenia." 
+          "model_2": "results for Slovakia.",
+          "model_3": "results for Slovenia." 
         },
         "figure": {
           "model_1": 2,
@@ -79,13 +79,13 @@
           "model_2": "SK",
           "model_3": "SI" 
         },
-        "n_of_countries": 20
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
-        "start": "06-2018",
+        "panel": false,
+        "start": "01-2001",
         "end": "06-2018",
-        "samplesize": "210"
+        "samplesize": "null"
     },
     "control_variables": {
         "comprice": false,

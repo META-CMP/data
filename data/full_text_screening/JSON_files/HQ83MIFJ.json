@@ -2,9 +2,13 @@
     "general": { 
         "key": "HQ83MIFJ", 
         "rid1": "ph", 
-        "rid2": "null", 
-        "study_notes": "null", 
-        "model_notes": "null", 
+        "rid2": "me", 
+        "study_notes": "dep: transformation of inflation not clearly stated.", 
+        "model_notes": {
+                "model_1": "upr: in the paper they define the regime as a state representing normal times. But since it excludes crisis periods we code it as upswing",
+                "model_2": "null",
+                "model_3": "null"
+        }, 
         "figure": {
                 "model_1": 3,
                 "model_2": 3,
@@ -23,8 +27,8 @@
         "size": "40bp", 
         "axis_trans": false, 
         "dep": "log_m_ip gr_m_cpi", 
-        "conf": "68", 
-        "main": "gdp  inflation", 
+        "conf": "95", 
+        "main": "gdp inflation", 
         "prefer": {
                 "model_1": true,
                 "model_2": true,
@@ -59,12 +63,12 @@
     "regime_dependence": { 
         "lor": {
                 "model_1": false,
-                "model_2": false,
-                "model_3": true
+                "model_2": true,
+                "model_3": false
         },   
         "upr": {
-                "model_1": false,
-                "model_2": true,
+                "model_1": true,
+                "model_2": false,
                 "model_3": false
         },   
         "scr": false, 
@@ -100,7 +104,7 @@
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
+        "pure_rate_shock": false, 
         "convent": false, 
         "decomposition": false 
     }, 

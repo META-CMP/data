@@ -25,7 +25,10 @@
                 "model_2": "lev_a_eonia"
         },
         "size": "null",
-        "axis_trans": "y*100 lev_a_fed_funds_false leva_a_eonia_false",
+        "axis_trans": {
+                "model_1": "y*100 lev_a_fed_funds_false",
+                "model_2": "y*100 lev_a_eonia_false"
+        },
         "dep": "log_m_rgdp log_m_cpi",
         "conf": "68",
         "main": "gdp inflation",

@@ -26,7 +26,7 @@
         "inttype": "lev_a_bank_rate",
         "size": "25bp",
         "axis_trans": false,
-        "dep": "log_m_employ",
+        "dep": "log_m_emp",
         "conf": "90",
         "main": "emp",
         "prefer": {

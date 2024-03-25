@@ -48,15 +48,15 @@
     "impulse_and_response_variables": {
         "inttype": {
                 "model_1": "lev_a_fed_funds",
-                "model_2": "3_month_gov",
+                "model_2": "lev_a_3_month_gov",
                 "model_3": "lev_a_fed_funds",
-                "model_4": "3_month_gov",
-                "model_5": "3_month_gov",
-                "model_6": "3_month_gov",
-                "model_7": "3_month_gov",
-                "model_8": "3_month_gov",
-                "model_9": "3_month_gov",
-                "model_10": "3_month_gov"
+                "model_4": "lev_a_3_month_gov",
+                "model_5": "lev_a_3_month_gov",
+                "model_6": "lev_a_3_month_gov",
+                "model_7": "lev_a_3_month_gov",
+                "model_8": "lev_a_3_month_gov",
+                "model_9": "lev_a_3_month_gov",
+                "model_10": "lev_a_3_month_gov"
         },
         "size": "100bp",
         "axis_trans": false,

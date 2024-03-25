@@ -18,7 +18,7 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_fed_funds", 
-        "size": "23bp", 
+        "size": "25bp", 
         "axis_trans": false, 
         "dep": "logdiff_q_deflator logdiff_q_gap", 
         "conf": "90", 
@@ -58,7 +58,10 @@
         "fvar": false, 
         "tvar": false, 
         "gvar": false, 
-        "bayes": false, 
+        "bayes": {
+                "model_1": true,
+                "model_2": false
+        },
         "dsge": {
                 "model_1": true,
                 "model_2": false

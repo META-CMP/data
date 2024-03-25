@@ -5,25 +5,49 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-          "model_1": "the thick black line and the dark gray shaded area show the median point estimate and the 90% posterior coverage, respectively, for the impulse responses to a 25-basis-point shock to the FFR in the non-ZLB environment (Q1-1960-Q4-2007); the thick light gray line and the light shaded area give the median generalized IRF point estimates and 90% posterior coverage, respectively, of the responses to a 25 basis point increase in the 10-year Treasury Bond Rate duing the ZLB environment (Q1-2008-Q4-2015), so only extract black line and dark gray shadeda area."
+          "model_1": "the thick black line and the dark gray shaded area show the median point estimate and the 90% posterior coverage, respectively, for the impulse responses to a 25-basis-point shock to the FFR in the non-ZLB environment (Q1-1960-Q4-2007); the thick light gray line and the light shaded area give the median generalized IRF point estimates and 90% posterior coverage, respectively, of the responses to a 25 basis point increase in the 10-year Treasury Bond Rate duing the ZLB environment (Q1-2008-Q4-2015), so only extract black line and dark gray shadeda area.",
+          "model_2": "Benchmark IRF (1960:I-2007:IV): The thick black line and the dark gray shaded area show the median point estimate and the 90% posterior coverage, respectively, for the impulse responses to a 25-basis-point shock to the policy instrument.",
+          "model_3": "IRF of full-sample VAR (1960:I-2018:III) using the FFR as the policy instrument through the ZLB period; the thick light gray line and the light shaded area give the median IRF point estimates and 90% posterior coverage, respectively, incorporating data through the ZLB period without accounting for any potential changing macroeconomic dynamics.",
+          "model_4": "Left Column: IRF of full-sample VAR (1960:I-2018:III) using the Krippner (2015a,b) shadow rate as the policy instrument through the ZLB period. The thick light gray line and the light shaded area give the median IRF point estimates and 90% posterior coverage, respectively, incorporating data through the ZLB period without accounting for any potential changing macroeconomic dynamics.",
+          "model_5": "Right Column: IRF of full-sample VAR using the Wu and Xia (2016) shadow rate as the policy instrument through the ZLB period."
         },
         "figure": {
-          "model_1": "2-left"
+          "model_1": "2-left",
+          "model_2": "1-left",
+          "model_3": "1-right",
+          "model_4": "5-left",
+          "model_5": "5-right"
         },
         "page": {
-          "model_1": 313
+          "model_1": 313,
+          "model_2": 311,
+          "model_3": 311,
+          "model_4": 316,
+          "model_5": 316
         },
         "irf": true,
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_fed_funds",
+        "inttype": {
+          "model_1": "lev_a_fed_funds",
+          "model_2": "lev_a_fed_funds",
+          "model_3": "lev_a_fed_funds",
+          "model_4": "lev_a_ssr",
+          "model_5": "lev_a_ssr"
+        },
         "size": "25bp",
         "axis_trans": "y*100 lev_a_fed_funds_false",
         "dep": "logdiff_q_rgdp logdiff_q_deflator",
         "conf": "90",
         "main": "gdp inflation other",
-        "prefer": true
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false
+        }
     },
     "identification_strategy": {
         "iv": false,
@@ -69,8 +93,20 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "Q1-1960",
-        "end": "Q4-2007",
+        "start": {
+          "model_1": "Q1-1960",
+          "model_2": "Q1-1960",
+          "model_3": "Q1-1960",
+          "model_4": "Q1-1960",
+          "model_5": "Q1-1960"
+        },
+        "end": {
+          "model_1": "Q4-2007",
+          "model_2": "Q4-2007",
+          "model_3": "Q3-2018",
+          "model_4": "Q3-2018",
+          "model_5": "Q3-2018"
+        },
         "samplesize": "null"
     },
     "control_variables": {
@@ -83,7 +119,14 @@
         "inflexp": false,
         "foreignir": false,
         "fx": false,
-        "lrir": true
+        "lrir": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_4": true,
+          "model_5": true
+        }
     },
     "econometric_details": {
         "pure_rate_shock":  true,

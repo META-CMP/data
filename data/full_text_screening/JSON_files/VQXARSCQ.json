@@ -136,11 +136,11 @@
         "month": true
     },
     "country_composition": {
-        "list_of_countries": "MX US",
-        "n_of_countries": 2
+        "list_of_countries": "US",
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": false,
         "start": "01-2002",
         "end": "03-2018",
         "samplesize": "null"

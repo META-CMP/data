@@ -48,7 +48,7 @@
           "model_4": "log_q_rgdp gr_a_cpi",
           "model_5": "log_m_ip gr_a_cpi",
           "model_6": "gr_a_cpi",
-          "model_7": "lev_m_une_rate",
+          "model_7": "lev_q_une_rate",
           "model_8": "gr_a_cpi"
         },
         "conf": "95",

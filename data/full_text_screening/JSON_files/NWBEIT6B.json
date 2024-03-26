@@ -2,9 +2,31 @@
     "general": {
         "key": "NWBEIT6B",
         "rid1": "me",
-        "rid2": "null",
-        "study_notes": "null",
-        "model_notes": "The difference between model_2 and model_3 is that for model_2 the sample is based on high debt countries and model_3 low debt countries",
+        "rid2": "dr",
+        "study_notes": "In figure A1 they plot the interest rate response and in figure A2 the real GDP response.",
+        "model_notes": {
+                "model_1": "panel of 18 countries",
+                "model_2": "panel of 9 high debt countries",
+                "model_3": "panel of 9 low debt countries",
+                "model_4": "null",
+                "model_5": "null",
+                "model_6": "null",
+                "model_7": "null",
+                "model_8": "null",
+                "model_9": "null",
+                "model_10": "null",
+                "model_11": "null",
+                "model_12": "null",
+                "model_13": "null",
+                "model_14": "null",
+                "model_15": "null",
+                "model_16": "null",
+                "model_17": "null",
+                "model_18": "null",
+                "model_19": "null",
+                "model_20": "null",
+                "model_21": "null"
+        },
         "figure": {
                 "model_1": 1,
                 "model_2": 3,
@@ -55,7 +77,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_short_rate",
+        "inttype": "lev_a_policy_rate",
         "size": "100bp",
         "axis_trans": false,
         "dep": {
@@ -82,7 +104,7 @@
                 "model_21": "log_q_rgdp"
         },
         "conf": "1_SE",
-        "main": "gdp  inflation",
+        "main": "gdp inflation other",
         "prefer": {
                 "model_1": false,
                 "model_2": true,

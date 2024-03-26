@@ -2,7 +2,7 @@
     "general": {
         "key": "8B2BELF5",
         "rid1": "me",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
@@ -27,7 +27,7 @@
                 "model_2": "y*100 lev_a_overnight_interbank_false"
         },
         "dep": "log_q_rgdp log_q_cpi",
-        "conf": "68",
+        "conf": "1_SE",
         "main": "gdp inflation",
         "prefer": true
     },

@@ -2,7 +2,7 @@
     "general": {
         "key": "CTS6MQJC",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "null",
         "model_notes": "null",
         "figure": 2,
@@ -16,7 +16,7 @@
         "axis_trans": false,
         "dep": "log_q_rgdp log_q_cpi",
         "conf": "68",
-        "main": "gdp inflation",
+        "main": "other gdp inflation",
         "prefer": true
     },
     "identification_strategy": {

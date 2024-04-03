@@ -9,7 +9,7 @@
           "model_2": "annual data, changing the order of the variables in Cholesky identification.",
           "model_3": "monthly data, baseline.",
           "model_4": "monthly data, changing the order of the variables in Cholesky identification.",
-          "model_5": 
+          "model_5": "using narrative method of Romer and Romer (1989)."
         },
         "figure": {
           "model_1": "1.row-1",

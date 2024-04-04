@@ -4,9 +4,48 @@
         "rid1": "dr",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "null",
-        "figure": "2 & 5",
-        "page": "2906 & 2913",
+        "model_notes": {
+          "model_1": "a time trend is included.",
+          "model_2": "a time trend is included.",
+          "model_3": "a time trend is included.",
+          "model_4": "a time trend is included.",
+          "model_5": "a time trend is included; total assets liabilities are excluded.",
+          "model_6": "a time trend is included; total assets liabilities are excluded.",
+          "model_7": "a time trend is included; total assets liabilities are excluded.",
+          "model_8": "a time trend is included; total assets liabilities are excluded.",
+          "model_9": "the time trend is left out; total assets liabilities are included.",
+          "model_10": "the time trend is left out; total assets liabilities are included.",
+          "model_11": "the time trend is left out; total assets liabilities are included.",
+          "model_12": "the time trend is left out; total assets liabilities are included."
+        },
+        "figure": {
+          "model_1": "2 & 5",
+          "model_2": 3,
+          "model_3": 3,
+          "model_4": 4,
+          "model_5": 6,
+          "model_6": 7,
+          "model_7": 7,
+          "model_8": 8,
+          "model_9": 12,
+          "model_10": 13,
+          "model_11": 13,
+          "model_12": 14
+        },
+        "page": {
+          "model_1": "2906 & 2913",
+          "model_2": 2907,
+          "model_3": 2907,
+          "model_4": 2908,
+          "model_5": 2914,
+          "model_6": 2914,
+          "model_7": 2914,
+          "model_8": 2915,
+          "model_9": 2917,
+          "model_10": 2917,
+          "model_11": 2917,
+          "model_12": 2918
+        },
         "irf": true,
         "cum": false
     },
@@ -17,7 +56,20 @@
         "dep": "logdiff_m_ip lev_m_une_rate",
         "conf": "95",
         "main": "emp gdp",
-        "prefer": true
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false,
+          "model_9": false,
+          "model_10": false,
+          "model_11": false,
+          "model_12": false
+        }
     },
     "identification_strategy": {
         "iv": false,
@@ -63,8 +115,34 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1999",
-        "end": "07-2017",
+        "start": {
+          "model_1": "01-1999",
+          "model_2": "01-1999",
+          "model_3": "08-2007",
+          "model_4": "05-2009",
+          "model_5": "01-1999",
+          "model_6": "01-1999",
+          "model_7": "08-2007",
+          "model_8": "05-2009",
+          "model_9": "01-1999",
+          "model_10": "01-1999",
+          "model_11": "08-2007",
+          "model_12": "05-2009"
+        },
+        "end": {
+          "model_1": "07-2017",
+          "model_2": "07-2007",
+          "model_3": "07-2017",
+          "model_4": "07-2017",
+          "model_5": "07-2017",
+          "model_6": "07-2007",
+          "model_7": "07-2017",
+          "model_8": "07-2017",
+          "model_9": "07-2017",
+          "model_10": "07-2007",
+          "model_11": "07-2017",
+          "model_12": "07-2017"
+        },
         "samplesize": "null"
     },
     "control_variables": {
@@ -77,7 +155,20 @@
         "inflexp": true,
         "foreignir": true,
         "fx": true,
-        "lrir": true
+        "lrir": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false,
+          "model_9": true,
+          "model_10": true,
+          "model_11": true,
+          "model_12": true
+        }
     },
     "econometric_details": {
         "pure_rate_shock": true,

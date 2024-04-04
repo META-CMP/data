@@ -5,19 +5,31 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": 2,
-        "page": 11,
+        "figure": {
+          "model_1": 2,
+          "model_2": 7
+        },
+        "page": {
+          "model_1": 11,
+          "model_2": 18
+        },
         "irf": true,
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_overnight_cashrate",
+        "inttype": {
+          "model_1": "lev_a_overnight_cashrate",
+          "model_2": "lev_a_fed_funds"
+        },
         "size": "25bp",
         "axis_trans": false,
         "dep": "log_q_rgdp gr_q_cpi",
         "conf": "95",
         "main": "other gdp",
-        "prefer": true
+        "prefer": {
+          "model_1": true,
+          "model_2": false
+        }
     },
     "identification_strategy": {
         "iv": false,
@@ -58,14 +70,20 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": "AU",
+        "list_of_countries": {
+          "model_1": "AU",
+          "model_2": "US"
+        },
         "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
         "start": "Q4-1983",
         "end": "Q3-2007",
-        "samplesize": 96
+        "samplesize": {
+          "model_1": 96,
+          "model_2": "null"
+        }
     },
     "control_variables": {
         "comprice": true,
@@ -75,7 +93,10 @@
         "cbind": false,
         "fexch": false,
         "inflexp": false,
-        "foreignir": false,
+        "foreignir": {
+          "model_1": false,
+          "model_2": true
+        },
         "fx": true,
         "lrir": false
     },

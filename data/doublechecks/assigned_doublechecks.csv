@@ -24,16 +24,16 @@ BWHKQVPU,NA,Aruoba_2022_identifying,fp,ph,TRUE,Identification.,NA
 NKLJIEA3,Open Economies Review,Barnett_2016_an,fp,ph,TRUE,axis_trans,NA
 P4G8BWT9,NA,Boivin_2008_global,me,ph,TRUE,Identification SVAR?,NA
 XZRKIWZ4,NA,Francis_2011_the,fp,ph,TRUE,identification_strategy,NA
-MR5H28J9,Handbook of Macroeconomics,Christiano_1999_chapter,me,sg,TRUE,many difficult decissions and models not coded for various reasons,NA
-5F7IJHQM,Economics Working Paper Series,Miescu_2019_proxy,me,sg,TRUE,"Check transformation of variables, as not clearly defined in the study",NA
-TPWQ4JHS,"""Marco Fanno"" Working Papers",Castelnuovo_2022_delayed,dr,sg,TRUE,"""event"": true?",NA
+MR5H28J9,Handbook of Macroeconomics,Christiano_1999_chapter,me,sg,TRUE,many difficult decissions and models not coded for various reasons,1
+5F7IJHQM,Economics Working Paper Series,Miescu_2019_proxy,me,sg,TRUE,"Check transformation of variables, as not clearly defined in the study",1
+TPWQ4JHS,"""Marco Fanno"" Working Papers",Castelnuovo_2022_delayed,dr,sg,TRUE,"""event"": true?",1
 RJCFGTPJ,Applied Economics,Geiger_2020_inequality,fp,sg,TRUE,axis_trans,NA
 DMN9K3YP,Journal of Financial Economics,Karnaukh_2022_growth,fp,sg,TRUE,NA,NA
 96ST2TPE,Economic Modelling,Fisher_2023_systematic,dr,sg,TRUE,"""eglob"": false?",NA
-KK2NJRFB,NA,Benati_2007_us,me,sg,TRUE,Coding inttype and samplesize,NA
+KK2NJRFB,NA,Benati_2007_us,me,sg,TRUE,Coding inttype and samplesize,1
 4IVTIREB,"Journal of Money, Credit and Banking",Alpanda_2019_household,ph,sg,TRUE,transformation of response variables?,NA
-2NX372H2,Oxford Review of Economic Policy,Goodhart_2008_house,me,sg,TRUE,Are these already the cumulated IRFs? Effects will be huuuge otherwise,NA
-J33JK6PN,Korea and the World Economy,Buyangerel_2013_the,dr,sg,TRUE,"they use r = ln(1+i/100), no_comparable_effect_size but then interest impulse response resemble to a level variable",NA
+2NX372H2,Oxford Review of Economic Policy,Goodhart_2008_house,me,sg,TRUE,Are these already the cumulated IRFs? Effects will be huuuge otherwise,1
+J33JK6PN,Korea and the World Economy,Buyangerel_2013_the,dr,sg,TRUE,"they use r = ln(1+i/100), no_comparable_effect_size but then interest impulse response resemble to a level variable",1
 XVFN2LAU,South African Journal of Economics,Kabundi_2011_assessing,ph,me,TRUE,transformation of response variables differs in figures 3 and 4?,NA
 4JEU82IT,#N/D,Aeimit Lakdawala; Rajeswari Sengupta_2021_measuring,dr,me,TRUE,"excluded: path factor?, convent?, pure rate shock?",NA
 SJ84WRG8,Economic Journal,Garratt_2003_a,dr,me,TRUE,"they use r = 0.25 * ln(1+R/100), but then interest impulse response resemble to a level variable, and interest_rate_diff??",NA

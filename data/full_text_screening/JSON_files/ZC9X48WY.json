@@ -68,15 +68,15 @@
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
         "find": false,
-        "eglob": false,
+        "eglob": true,
         "cbind": false,
         "fexch": false,
-        "inflexp": false,
-        "foreignir": false,
-        "fx": false,
+        "inflexp": true,
+        "foreignir": true,
+        "fx": true,
         "lrir": true
     },
     "econometric_details": {

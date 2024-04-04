@@ -23,12 +23,12 @@
         "size": "25bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "log_m_ip log_m_cpi",
-                "model_2": "logdiff_a_ip logdiff_a_cpi",
-                "model_3": "logdiff_a_ip logdiff_a_cpi"
+                "model_1": "log_m_ip log_m_core",
+                "model_2": "logdiff_m_ip logdiff_m_core",
+                "model_3": "logdiff_m_ip logdiff_m_core"
         }, 
         "conf": "1_SE", 
-        "main": "gdp  other", 
+        "main": "gdp other", 
         "prefer": {
                 "model_1": true,
                 "model_2": false,
@@ -112,12 +112,16 @@
                 "model_3": true
         },    
         "foreignir": false, 
-        "fx": false, 
+        "fx": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true
+        }, 
         "lrir": false 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": false, 
+        "convent": true, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

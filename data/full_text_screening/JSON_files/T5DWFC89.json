@@ -51,9 +51,9 @@
         "size": "100bp",
         "axis_trans": false,
         "dep": {
-                "model_1": "gr_a_ip logdiff_a_wpi",
-                "model_2": "gr_a_ip logdiff_a_wpi",
-                "model_3": "gr_a_ip logdiff_a_wpi",
+                "model_1": "logdiff_a_ip logdiff_a_wpi",
+                "model_2": "logdiff_a_ip logdiff_a_wpi",
+                "model_3": "logdiff_a_ip logdiff_a_wpi",
                 "model_4": "logdiff_a_wpi",
                 "model_5": "logdiff_a_wpi",
                 "model_6": "logdiff_a_wpi",

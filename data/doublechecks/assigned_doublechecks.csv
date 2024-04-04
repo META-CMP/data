@@ -44,16 +44,16 @@ QKHQZ3ZG,NA,Sandström_2018_the,fp,me,TRUE,"inttype: ""lev_a_repo""",NA
 9DXGZWHB,"Journal of Money, Credit, and Banking",Evans_2009_fundamental,dr,me,TRUE,idother or excluded,NA
 652CDYWY,American Economic Journal: Macroeconomics,Badinger_2020_measuring,fp,me,TRUE,"""signr"": false; axis_trans",NA
 AFV2WRLB,Environment and Planning C: Government and Policy,Anagnostou_2016_regional,dr,me,TRUE,"""chol"": true?",NA
-RVPNMC49,Working Papers,Kilinc_2014_identification,me,fp,TRUE,How to handle that log transformed data is hp filtered afterwards?,NA
-YAL9JMQ7,Economic Modelling,Zheng_2013_estimating,me,fp,TRUE,"in the paper they calculates the annualized output gap, therefore coded as logdiff_a_rgap.",NA
-XNPIMZ6E,AUCO Czech Economic Review,Migliardo_2010_monetary,me,fp,TRUE,hp filtered data,NA
-KR577QCR,De Economist,Smets_1999_the,me,fp,TRUE,check coding of identification_strategy,NA
-FI95JJ2I,Journal of Applied Econometrics,Luciani_2015_monetary,me,fp,TRUE,pure rate shock=True?,NA
-T5DWFC89,Economic Modelling,Kumar_2020_changing,me,fp,TRUE,"Check transformation and periodicity of ""inttype"" and „dep“.",NA
-CCK34ZXY,Working paper,Góes_NA_a,me,fp,TRUE,response to real interest rate not coded.,NA
-IC2MMT6E,Oxford Bulletin of Economics and Statistics,Bock_2021_international,dr,fp,FALSE,NA,NA
-YBNLSGYN,Journal of Macroeconomics,Voss_2009_monetary,dr,fp,FALSE,NA,NA
-Z2EIFGK7,Empirical Economics,Bagzibagli_2014_monetary,dr,fp,FALSE,NA,NA
+RVPNMC49,Working Papers,Kilinc_2014_identification,me,fp,TRUE,How to handle that log transformed data is hp filtered afterwards?,1
+YAL9JMQ7,Economic Modelling,Zheng_2013_estimating,me,fp,TRUE,"in the paper they calculates the annualized output gap, therefore coded as logdiff_a_rgap.",1
+XNPIMZ6E,AUCO Czech Economic Review,Migliardo_2010_monetary,me,fp,TRUE,hp filtered data,1
+KR577QCR,De Economist,Smets_1999_the,me,fp,TRUE,check coding of identification_strategy,1
+FI95JJ2I,Journal of Applied Econometrics,Luciani_2015_monetary,me,fp,TRUE,pure rate shock=True?,1
+T5DWFC89,Economic Modelling,Kumar_2020_changing,me,fp,TRUE,"Check transformation and periodicity of ""inttype"" and „dep“.",1
+CCK34ZXY,Working paper,Góes_NA_a,me,fp,TRUE,response to real interest rate not coded.,1
+IC2MMT6E,Oxford Bulletin of Economics and Statistics,Bock_2021_international,dr,fp,FALSE,NA,1
+YBNLSGYN,Journal of Macroeconomics,Voss_2009_monetary,dr,fp,FALSE,NA,1
+Z2EIFGK7,Empirical Economics,Bagzibagli_2014_monetary,dr,fp,FALSE,NA,1
 CTS6MQJC,Southern Economic Journal,Ho_2010_measuring,fp,dr,FALSE,NA,NA
 G968JAHL,Oxford Bulletin of Economics and Statistics,Dery_2021_disentangling,ph,dr,FALSE,NA,NA
 X7D67U3R,NA,Burgard_2023_almost,ph,dr,FALSE,NA,NA

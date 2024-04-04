@@ -76,12 +76,12 @@
           "model_4": true,
           "model_5": true,
           "model_6": true,
-          "model_7": false,
-          "model_8": false,
-          "model_9": false,
-          "model_10": false,
-          "model_11": false,
-          "model_12": false 
+          "model_7": true,
+          "model_8": true,
+          "model_9": true,
+          "model_10": true,
+          "model_11": true,
+          "model_12": true 
         }
     },
     "identification_strategy": {

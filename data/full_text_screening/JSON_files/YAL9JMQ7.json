@@ -2,7 +2,7 @@
     "general": {
         "key": "YAL9JMQ7",
         "rid1": "me",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "dep: in the paper they calculate the annualized output gap, therefore coded as logdiff_a_rgap.",
         "model_notes": "null",
         "figure": 1,

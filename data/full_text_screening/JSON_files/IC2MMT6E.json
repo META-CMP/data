@@ -2,7 +2,7 @@
     "general": {
         "key": "IC2MMT6E",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
           "model_1": "results for the euro-area as an aggregate.",
@@ -55,7 +55,7 @@
         "dyn_ols": "false",
         "fvar": false,
         "tvar": true,
-        "gvar": false,
+        "gvar": true,
         "bayes": false,
         "dsge": false,
         "varother": false
@@ -105,7 +105,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

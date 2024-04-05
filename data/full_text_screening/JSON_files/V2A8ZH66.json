@@ -131,6 +131,7 @@
                   "model_57": "530bp",
                   "model_58": "380bp"
                   },
+        "axis_trans": null, 
         "dep": "gr_rgdp",
         "conf": "1_SE",
         "main": "gdp",

@@ -120,7 +120,7 @@
           "model_19": "log_a_rgdp log_a_cpi",
           "model_20": "log_a_rgdp log_a_cpi"
         },
-        "conf": "90 & 1_SE",
+        "conf": "90",
         "main": "other",
         "prefer": {
           "model_1": true,

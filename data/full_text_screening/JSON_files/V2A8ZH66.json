@@ -256,6 +256,7 @@
                 "model_57": false,
                 "model_58": false
                 },
+        "forecast_based": false,
         "nr": false,
         "event": false,
         "chol": {
@@ -609,6 +610,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

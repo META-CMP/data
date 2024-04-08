@@ -14,7 +14,7 @@
         "inttype": "lev_a_overnight_cashrate",
         "size": "100bp",
         "axis_trans": false,
-        "dep": "gr_q_rgdp lev_q_emp gr_q_cpi",
+        "dep": "gr_q_rgdp gr_q_cpi",
         "conf": "90",
         "main": "gdp emp inflation",
         "prefer": true

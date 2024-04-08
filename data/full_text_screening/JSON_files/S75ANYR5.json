@@ -3,7 +3,7 @@
         "key": "S75ANYR5", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "decomposition: decompostion into forward guidance and fed funds shock. Only fed funds shock coded.", 
         "model_notes": "null", 
         "figure": 2, 
         "page": 5, 
@@ -27,7 +27,7 @@
         "chol": true, 
         "svar": false, 
         "signr": false, 
-        "hf": false, 
+        "hf": true, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 
@@ -81,8 +81,8 @@
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": false, 
-        "decomposition": false 
+        "convent": true, 
+        "decomposition": true 
     }, 
     "publication_characteristics": { 
         "cbanker": false 

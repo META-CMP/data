@@ -24,7 +24,7 @@
         "axis_trans": false, 
         "dep": {
                 "model_1": "logdiff_a_rgdp",
-                "model_2": "logdiff_a_deflator logdiff_a_cpi logdiff_a_une",
+                "model_2": "logdiff_a_cpi logdiff_a_une",
                 "model_3": "logdiff_a_deflator logdiff_a_rgdp"
         },
         "conf": {

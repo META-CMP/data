@@ -7,8 +7,8 @@
         "model_notes": {
           "model_1": "dep: They use the Index for Aggregate Economic Activity which is similar to GDP (https://en.www.inegi.org.mx/contenidos/programas/igae/2013/doc/met_igae.pdf), we code it as gpd.",
           "model_2": "dep: They use the Index for Aggregate Economic Activity which is similar to GDP (https://en.www.inegi.org.mx/contenidos/programas/igae/2013/doc/met_igae.pdf), we code it as gpd.",
-          "model_3": "null",
-          "model_4": "null"
+          "model_3": "axis_trans: since while extracting the IRF data the *10^-3 was not taken into account we divide the estimates by 10.",
+          "model_4": "axis_trans: since while extracting the IRF data the *10^-3 was not taken into account we divide the estimates by 10."
         },
         "figure": {
             "model_1": "2.3",
@@ -28,7 +28,12 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_1_month_gov",
         "size": "1SD",
-        "axis_trans": false,
+        "axis_trans": {
+            "model_1": false,
+            "model_2": false,
+            "model_3": "y/10 lev_a_1_month_gov_false",
+            "model_4": "y/10 lev_a_1_month_gov_false"
+          },
         "dep": {
             "model_1": "log_a_gdp log_a_cpi",
             "model_2": "log_a_gdp log_a_cpi",

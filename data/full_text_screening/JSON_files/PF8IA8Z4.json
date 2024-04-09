@@ -15,7 +15,7 @@
         "size": "1SD",
         "axis_trans": false,
         "dep": "log_q_rgdp log_q_deflator",
-        "conf": "1SE & 90",
+        "conf": "1SE",
         "main": "gdp inflation",
         "prefer": true
     },

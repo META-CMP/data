@@ -34,7 +34,7 @@
           "model_5": "log_m_rgdp"
         },
         "conf": {
-          "model_1": "68 & 95",
+          "model_1": "95",
           "model_2": "68",
           "model_3": "68",
           "model_4": "68",

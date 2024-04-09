@@ -19,7 +19,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_ssr",
+        "inttype": "lev_a_ssr",
         "size": "-1SD",
         "axis_trans": false,
         "dep": "log_q_gap",

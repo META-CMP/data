@@ -9,19 +9,19 @@
                 "model_1": 1
         },   
         "page": {
-                "model_1": 1
+                "model_1": 19
         },    
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "12_month_government_bond_yield", 
+        "inttype": "lev_a_1_year_gov", 
         "size": "100bp", 
         "axis_trans": false, 
         "dep": {
                 "model_1": "log_a_ip log_a_cpi"
         }, 
-        "conf": "68", 
+        "conf": "90", 
         "main": "gdp  inflation", 
         "prefer": {
                 "model_1": false
@@ -41,7 +41,7 @@
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": false, 
+        "var": true, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
@@ -96,7 +96,7 @@
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
+        "pure_rate_shock": false, 
         "convent": false, 
         "decomposition": false 
     }, 

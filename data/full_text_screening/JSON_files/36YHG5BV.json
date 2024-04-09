@@ -43,10 +43,11 @@
           "model_10": 988,
           "model_11": 988
         },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_short_rate",
+        "inttype": "lev_a_policy_rate",
         "size": "1SD",
         "axis_trans": {
           "model_1": false,
@@ -61,7 +62,7 @@
           "model_10": false,
           "model_11": false
         },
-        "dep": "log_rgdp log_cpi",
+        "dep": "log_q_rgdp log_q_cpi",
         "conf": "90",
         "main": "gdp  inflation",
         "prefer": {
@@ -160,10 +161,11 @@
           "model_10": false,
           "model_11": false
         },
-        "lrir": false,
+        "lrir": false
     },
     "econometric_details": {
-        "convent": false,
+        "pure_rate_shock": true,
+        "convent": true,
         "decomposition": false 
     },
     "publication_characteristics": {

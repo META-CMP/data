@@ -3,7 +3,7 @@
         "key": "8DE3Y3IM", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "dep: ME: une_rate is assumed since according to the IRF une_rate does not seem to be log transformed. In this case the usage of the level of the rate is likely.", 
         "model_notes": "null", 
         "figure": 4, 
         "page": 12, 
@@ -11,10 +11,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_shadow_rate", 
+        "inttype": "lev_a_ssr", 
         "size": "-100bp", 
-        "axis_trans": false, 
-        "dep": "log_a_rgdp log_a_cpi lev_a_une", 
+        "axis_trans": "log_a_rgdp_y*100 log_a_cpi_y*100", 
+        "dep": "log_a_rgdp log_a_cpi lev_a_une_rate", 
         "conf": "68", 
         "main": "other", 
         "prefer": true

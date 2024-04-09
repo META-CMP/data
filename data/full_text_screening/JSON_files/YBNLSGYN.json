@@ -2,7 +2,7 @@
     "general": {
         "key": "YBNLSGYN",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
           "model_1": "size: a one standard deviation US monetary policy innovation gives rise to a sustained increase in the Federal Funds rate of about 25 basis points over the five year horizon.",
@@ -76,10 +76,10 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries":  {
+        "list_of_countries": {
           "model_1": "US",
           "model_2": "AU"
-        }
+        },
         "n_of_countries": 1
     },
     "further_data_characteristics": {

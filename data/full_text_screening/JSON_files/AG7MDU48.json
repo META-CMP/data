@@ -47,7 +47,7 @@
         },    
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "gr_a_ip gr_a_cpi", 
+        "dep": "log_a_ip log_a_cpi", 
         "conf": "90", 
         "main": "inflation", 
         "prefer": true 

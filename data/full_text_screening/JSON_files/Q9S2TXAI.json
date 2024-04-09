@@ -27,12 +27,12 @@
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
         "size": {
-                "model_1": "29bp",
-                "model_2": "29bp",
-                "model_3": "46bp",
-                "model_4": "29bp",
-                "model_5": "29bp",
-                "model_6": "29bp"
+                "model_1": "30bp",
+                "model_2": "30bp",
+                "model_3": "45bp",
+                "model_4": "30bp",
+                "model_5": "30bp",
+                "model_6": "30bp"
         }, 
         "axis_trans": false, 
         "dep": {

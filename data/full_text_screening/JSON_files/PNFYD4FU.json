@@ -30,7 +30,12 @@
         "size": "25bp",
         "axis_trans": false,
         "dep": "log_m_rgdp log_m_core",
-        "conf": "68 & 90",
+        "conf": {
+          "model_1": "68",
+          "model_2": "68",
+          "model_3": "90",
+          "model_4": "90"
+        },
         "main": "other",
         "prefer": {
           "model_1": true,

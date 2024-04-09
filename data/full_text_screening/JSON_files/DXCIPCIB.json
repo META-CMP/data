@@ -4,7 +4,11 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "null", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "they include a time trend as an exogenous variable."
+        }, 
         "figure": {
                 "model_1": 1,
                 "model_2": 3,
@@ -23,9 +27,9 @@
         "size": "50bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "logdiff_a_rgdp",
-                "model_2": "logdiff_a_cpi logdiff_a_une",
-                "model_3": "logdiff_a_deflator logdiff_a_rgdp"
+                "model_1": "logdiff_q_rgdp",
+                "model_2": "logdiff_q_cpi logdiff_q_une_rate",
+                "model_3": "log_q_deflator log_q_rgdp"
         },
         "conf": {
                 "model_1": "70",
@@ -105,7 +109,11 @@
         "inflexp": false, 
         "foreignir": true, 
         "fx": true, 
-        "lrir": false 
+        "lrir": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true
+        } 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 

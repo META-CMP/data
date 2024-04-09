@@ -11,10 +11,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_overnight_lending", 
+        "inttype": "lev_a_eonia", 
         "size": "-25bp", 
         "axis_trans": false, 
-        "dep": "log_a_rgdp", 
+        "dep": "log_m_rgdp", 
         "conf": {
                 "model_1": "2_SE",
                 "model_2": "2_SE",
@@ -48,7 +48,7 @@
         "chol": false, 
         "svar": false, 
         "signr": false, 
-        "hf": false, 
+        "hf": true, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 

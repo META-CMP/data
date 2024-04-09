@@ -107,7 +107,7 @@
         "comprice": true,
         "outpgap": false,
         "find": false,
-        "eglob": false,
+        "eglob": true,
         "cbind": false,
         "fexch": false,
         "inflexp": false,

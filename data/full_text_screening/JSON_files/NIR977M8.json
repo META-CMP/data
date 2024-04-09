@@ -18,7 +18,7 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_q_fed_funds", 
-        "size": "null", 
+        "size": "1SD", 
         "axis_trans": false, 
         "dep": "logdiff_q_rgdp logdiff_q_cpi", 
         "conf": "95", 

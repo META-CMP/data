@@ -10,32 +10,30 @@
           "model_3": "start: Sample start and end vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
           "model_4": "start: Sample start and end vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
           "model_5": "start: Sample start and end vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
-          "model_6": "start: Sample start and end vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
-          "model_7": "This model is equivalent to model_1 but does not assume factors as data. start: Sample start and end vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
-          "model_8": "This model is equivalent to model_1 but does use aggregate data only to extract the factors. start: Sample start and end vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
-          "model_9": "Equivalent to model_1, but using a Cholesky identification instead of hf iv.",
+          "model_6": "This model is equivalent to model_1 but does not assume factors as data. start: Sample start and end vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
+          "model_7": "This model is equivalent to model_1 but does use aggregate data only to extract the factors. start: Sample start and end vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
+          "model_8": "Equivalent to model_1, but using a Cholesky identification instead of hf iv.",
+          "model_9": "Simple VAR.",
           "model_10": "Simple VAR.",
           "model_11": "Simple VAR.",
           "model_12": "Simple VAR.",
-          "model_13": "Simple VAR.",
-          "model_14": "Simple VAR. Difference to model_13: policy indicator not last in recursive ordering."
+          "model_13": "Simple VAR. Difference to model_13: policy indicator not last in recursive ordering."
 
         },
         "figure": {
           "model_1": 4,
           "model_2": "G.1",
           "model_3": "G.1/2",
-          "model_4": "G.1",
+          "model_4": "G.2",
           "model_5": "G.2",
-          "model_6": "G.2",
-          "model_7": "H.3",
-          "model_8": "H.4",
-          "model_9": "H.6",
+          "model_6": "H.3",
+          "model_7": "H.4",
+          "model_8": "H.6",
+          "model_9": "C.1",
           "model_10": "C.1",
-          "model_11": "C.1",
+          "model_11": "C.2",
           "model_12": "C.2",
-          "model_13": "C.2",
-          "model_14": "C.3"
+          "model_13": "C.3"
           },
         "page": {
           "model_1": 530,
@@ -43,15 +41,14 @@
           "model_3": "appendix p. 15",
           "model_4": "appendix p. 15",
           "model_5": "appendix p. 15",
-          "model_6": "appendix p. 15",
-          "model_7": "appendix p. 19",
-          "model_8": "appendix p. 22",
-          "model_9": "appendix p. 24",
+          "model_6": "appendix p. 19",
+          "model_7": "appendix p. 22",
+          "model_8": "appendix p. 24",
+          "model_9": "appendix p. 3",
           "model_10": "appendix p. 3",
-          "model_11": "appendix p. 3",
+          "model_11": "appendix p. 5",
           "model_12": "appendix p. 5",
-          "model_13": "appendix p. 5",
-          "model_14": "appendix p. 6"
+          "model_13": "appendix p. 6"
           },
         "irf": true,
         "cum": false
@@ -66,12 +63,11 @@
           "model_6": "lev_a_1_year_eonia",
           "model_7": "lev_a_1_year_eonia",
           "model_8": "lev_a_1_year_eonia",
-          "model_9": "lev_a_1_year_eonia",
+          "model_9": "lev_a_2_year_gov_de",
           "model_10": "lev_a_2_year_gov_de",
-          "model_11": "lev_a_2_year_gov_de",
+          "model_11": "lev_a_1_year_gov",
           "model_12": "lev_a_1_year_gov",
-          "model_13": "lev_a_1_year_gov",
-          "model_14": "lev_a_1_year_gov"
+          "model_13": "lev_a_1_year_gov"
           },
         "size": {
           "model_1": "25bp",
@@ -82,29 +78,27 @@
           "model_6": "25bp",
           "model_7": "25bp",
           "model_8": "25bp",
-          "model_9": "25bp",
+          "model_9": "1SD",
           "model_10": "1SD",
           "model_11": "1SD",
           "model_12": "1SD",
-          "model_13": "1SD",
-          "model_14": "1SD"
+          "model_13": "1SD"
           },
         "axis_trans": false,
         "dep": {
-          "model_1": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
+          "model_1": "logdiff_q_rgdp logdiff_q_cpi",
           "model_2": "logdiff_q_rgdp",
-          "model_3": "logdiff_q_rgdp levdiff_q_une_rate",
-          "model_4": "levdiff_q_une_rate",
+          "model_3": "logdiff_q_rgdp",
+          "model_4": "logdiff_q_cpi",
           "model_5": "logdiff_q_cpi",
-          "model_6": "logdiff_q_cpi",
-          "model_7": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
-          "model_8": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
-          "model_9": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
+          "model_6": "logdiff_q_rgdp logdiff_q_cpi",
+          "model_7": "logdiff_q_rgdp logdiff_q_cpi",
+          "model_8": "logdiff_q_rgdp logdiff_q_cpi",
+          "model_9": "logdiff_m_rip logdiff_m_cpi",
           "model_10": "logdiff_m_rip logdiff_m_cpi",
-          "model_11": "logdiff_m_rip logdiff_m_cpi",
+          "model_11": "logdiff_q_rgdp logdiff_q_cpi",
           "model_12": "logdiff_q_rgdp logdiff_q_cpi",
-          "model_13": "logdiff_q_rgdp logdiff_q_cpi",
-          "model_14": "logdiff_q_rgdp logdiff_q_cpi"
+          "model_13": "logdiff_q_rgdp logdiff_q_cpi"
           }, 
         "conf": "68",
         "main": "gdp emp inflation other",
@@ -121,8 +115,7 @@
           "model_10": false,
           "model_11": false,
           "model_12": false,
-          "model_13": false,
-          "model_14": false
+          "model_13": false
           }
     },
     "identification_strategy": {
@@ -134,13 +127,12 @@
           "model_5": true,
           "model_6": true,
           "model_7": true,
-          "model_8": true,
-          "model_9": false,
-          "model_10": true,
-          "model_11": false,
-          "model_12": true,
-          "model_13": false,
-          "model_14": false
+          "model_8": false,
+          "model_9": true,
+          "model_10": false,
+          "model_11": true,
+          "model_12": false,
+          "model_13": false
           },
         "forecast_based": false,
         "nr": false,
@@ -153,13 +145,12 @@
           "model_5": false,
           "model_6": false,
           "model_7": false,
-          "model_8": false,
-          "model_9": true,
-          "model_10": false,
-          "model_11": true,
-          "model_12": false,
-          "model_13": true,
-          "model_14": true
+          "model_8": true,
+          "model_9": false,
+          "model_10": true,
+          "model_11": false,
+          "model_12": true,
+          "model_13": true
           },
         "svar": false,
         "signr": false,
@@ -171,13 +162,12 @@
           "model_5": true,
           "model_6": true,
           "model_7": true,
-          "model_8": true,
-          "model_9": false,
-          "model_10": true,
-          "model_11": false,
-          "model_12": true,
-          "model_13": false,
-          "model_14": false
+          "model_8": false,
+          "model_9": true,
+          "model_10": false,
+          "model_11": true,
+          "model_12": false,
+          "model_13": false
           },
         "heteroskedas": false,
         "longrun": false,
@@ -193,12 +183,11 @@
           "model_6": false,
           "model_7": false,
           "model_8": false,
-          "model_9": false,
+          "model_9": true,
           "model_10": true,
           "model_11": true,
           "model_12": true,
-          "model_13": true,
-          "model_14": true
+          "model_13": true
           },
         "lp": false,
         "vecm": false,
@@ -212,12 +201,11 @@
           "model_6": true,
           "model_7": true,
           "model_8": true,
-          "model_9": true,
+          "model_9": false,
           "model_10": false,
           "model_11": false,
           "model_12": false,
-          "model_13": false,
-          "model_14": false
+          "model_13": false
           },
         "tvar": false,
         "gvar": false,
@@ -244,12 +232,11 @@
           "model_6": true,
           "model_7": true,
           "model_8": true,
-          "model_9": true,
+          "model_9": false,
           "model_10": false,
-          "model_11": false,
+          "model_11": true,
           "model_12": true,
-          "model_13": true,
-          "model_14": true
+          "model_13": true
           },
         "month": {
           "model_1": false,
@@ -260,12 +247,11 @@
           "model_6": false,
           "model_7": false,
           "model_8": false,
-          "model_9": false,
+          "model_9": true,
           "model_10": true,
-          "model_11": true,
+          "model_11": false,
           "model_12": false,
-          "model_13": false,
-          "model_14": false
+          "model_13": false
           }
     },
     "country_composition": {
@@ -273,17 +259,16 @@
           "model_1": "EA",
           "model_2": "ES",
           "model_3": "IE",
-          "model_4": "LU",
-          "model_5": "NL",
-          "model_6": "AT",
+          "model_4": "NL",
+          "model_5": "AT",
+          "model_6": "EA",
           "model_7": "EA",
           "model_8": "EA",
           "model_9": "EA",
           "model_10": "EA",
           "model_11": "EA",
           "model_12": "EA",
-          "model_13": "EA",
-          "model_14": "EA"
+          "model_13": "EA"
           },
         "n_of_countries": {
           "model_1": 1,
@@ -298,8 +283,7 @@
           "model_10": 1,
           "model_11": 1,
           "model_12": 1,
-          "model_13": 1,
-          "model_14": 1
+          "model_13": 1
           }
     },
     "further_data_characteristics": {
@@ -313,12 +297,11 @@
           "model_6": "Q1-2000",
           "model_7": "Q1-2000",
           "model_8": "Q1-2000",
-          "model_9": "Q1-2000",
+          "model_9": "01-2000",
           "model_10": "01-2000",
-          "model_11": "01-2000",
+          "model_11": "Q1-2000",
           "model_12": "Q1-2000",
-          "model_13": "Q1-2000",
-          "model_14": "Q1-2000"
+          "model_13": "Q1-2000"
           },
         "end": {
           "model_1": "Q4-2016",
@@ -329,12 +312,11 @@
           "model_6": "Q4-2016",
           "model_7": "Q4-2016",
           "model_8": "Q4-2016",
-          "model_9": "Q4-2016",
+          "model_9": "12-2016",
           "model_10": "12-2016",
-          "model_11": "12-2016",
+          "model_11": "Q4-2016",
           "model_12": "Q4-2016",
-          "model_13": "Q4-2016",
-          "model_14": "Q4-2016"
+          "model_13": "Q4-2016"
           },
         "samplesize": "null"
     },
@@ -348,12 +330,11 @@
           "model_6": true,
           "model_7": true,
           "model_8": true,
-          "model_9": true,
+          "model_9": false,
           "model_10": false,
           "model_11": false,
           "model_12": false,
-          "model_13": false,
-          "model_14": false
+          "model_13": false
         },
         "outpgap": false,
         "find": false,
@@ -371,12 +352,11 @@
           "model_6": true,
           "model_7": true,
           "model_8": true,
-          "model_9": true,
+          "model_9": false,
           "model_10": false,
           "model_11": false,
           "model_12": false,
-          "model_13": false,
-          "model_14": false
+          "model_13": false
         },
         "lrir": {
           "model_1": true,
@@ -387,12 +367,11 @@
           "model_6": true,
           "model_7": true,
           "model_8": true,
-          "model_9": true,
+          "model_9": false,
           "model_10": false,
           "model_11": false,
           "model_12": false,
-          "model_13": false,
-          "model_14": false
+          "model_13": false
         }
     },
     "econometric_details": {

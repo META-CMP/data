@@ -25,7 +25,8 @@
           "model_4": 73,
           "model_5": 74
         },
-        "irf": true
+        "irf": true,
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "fed_funds",
@@ -100,7 +101,7 @@
         "comprice": true,
         "outpgap": false,
         "find": false,
-        "eglob": false,
+        "eglob": true,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
@@ -121,6 +122,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

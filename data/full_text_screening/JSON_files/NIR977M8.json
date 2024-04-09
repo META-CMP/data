@@ -3,29 +3,36 @@
         "key": "NIR977M8", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
-        "model_notes": "null", 
+        "study_notes": "size. expansionary monetary policy shock.", 
+        "model_notes": {
+                "model_1": "IRFs based on standard measure of mark-up.",
+                "model_2": "IRFs based on overhead labor-adjusted measure of mark-up.",
+                "model_3": "large-scale VAR that includes consumption and investment."
+        }, 
         "figure": {
-                "model_1": 5,
-                "model_2": 5
+                "model_1": "5-A",
+                "model_2": "5-B",
+                "model_3": "7-C"
         },      
         "page": {
                 "model_1": 1485,
-                "model_2": 1485
+                "model_2": 1485,
+                "model_3": 1487
         },       
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_q_fed_funds", 
-        "size": "1SD", 
+        "size": "-1SD", 
         "axis_trans": false, 
         "dep": "logdiff_q_rgdp logdiff_q_cpi", 
         "conf": "95", 
         "main": "other", 
         "prefer": {
                 "model_1": true,
-                "model_2": false
+                "model_2": false,
+                "model_3": false
         } 
     }, 
     "identification_strategy": { 

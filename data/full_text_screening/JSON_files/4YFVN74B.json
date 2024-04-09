@@ -6,26 +6,23 @@
         "study_notes": "null", 
         "model_notes": "results from appendix not coded because comparability of IRFs is questionable.", 
         "figure": {
-                "model_1": 1,
-                "model_2": 1
+                "model_1": 1
         }, 
         "page": {
-                "model_1": 288,
-                "model_2": 288
+                "model_1": 288
         }, 
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_fed_funds", 
-        "size": "23bp", 
+        "size": "25bp", 
         "axis_trans": false, 
         "dep": "logdiff_q_deflator logdiff_q_gap", 
         "conf": "90", 
         "main": "gdp  inflation  other", 
         "prefer": {
-                "model_1": true,
-                "model_2": false
+                "model_1": true
         } 
     }, 
     "identification_strategy": { 
@@ -34,8 +31,7 @@
         "nr": false, 
         "event": false, 
         "chol": {
-                "model_1": false,
-                "model_2": true
+                "model_1": false
         },  
         "svar": false, 
         "signr": false, 
@@ -43,14 +39,12 @@
         "heteroskedas": false, 
         "longrun": false, 
         "idother": {
-                "model_1": true,
-                "model_2": false
+                "model_1": true
         } 
     }, 
     "estimation_method": { 
         "var": {
-                "model_1": false,
-                "model_2": true
+                "model_1": false
         },  
         "lp": false, 
         "vecm": false, 
@@ -58,10 +52,11 @@
         "fvar": false, 
         "tvar": false, 
         "gvar": false, 
-        "bayes": false, 
+        "bayes": {
+                "model_1": true
+        },
         "dsge": {
-                "model_1": true,
-                "model_2": false
+                "model_1": true
         },  
         "varother": false 
     }, 

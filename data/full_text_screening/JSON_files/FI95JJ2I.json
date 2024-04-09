@@ -2,7 +2,7 @@
     "general": {
         "key": "FI95JJ2I",
         "rid1": "me",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "pure_rate_shock: set to true because the MP shock is normalized to a 50 bp increase in the ff, but since the interest rate factor also consists of long run interest rates it could probably be set to false as well.",
         "model_notes": "null",
         "figure": 1,

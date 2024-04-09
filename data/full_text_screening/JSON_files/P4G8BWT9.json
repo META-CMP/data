@@ -13,7 +13,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
         "size": "25bp",
-        "axis_trans": false,
+        "axis_trans": "lev_a_fed_funds_y/100",
         "dep": "logdiff_q_rgdp logdiff_q_emp logdiff_q_cpi",
         "conf": "70",
         "main": "gdp emp inflation",

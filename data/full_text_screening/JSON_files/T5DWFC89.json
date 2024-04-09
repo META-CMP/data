@@ -2,8 +2,8 @@
     "general": {
         "key": "T5DWFC89",
         "rid1": "me",
-        "rid2": "null",
-        "study_notes": "quality_concern: no information if real or nominal industrial production is used. The sample for the TVP-FAVAR uses data from 02-1997 until 02-2017 (21*12+1=253), even though data from Feb 1998 to Jan 2002 has only been used for purpose of prior setting and not for the estimation itself. Results of the appendix have not been used as it is not clearly defined what the average inflation response should be. quality_concern: unclear how the growth rate of industrial production is calculated, anual or monthly growth rates? Unclear whether logdiff or growth rates have been used.",
+        "rid2": "fp",
+        "study_notes": "quality_concern: The sample for the TVP-FAVAR uses data from 02-1997 until 02-2017 (21*12+1=253), even though data from Feb 1998 to Jan 2002 has only been used for purpose of prior setting and not for the estimation itself.; Results of the appendix have not been used as it is not clearly defined what the average inflation response should be.; quality_concern: unclear how the growth rate of industrial production is calculated, anual or monthly growth rates? Compared to the wpi results, it seems to be annualized too for ip.",
         "model_notes": {
                 "model_1": "FAVAR based on three factors",
                 "model_2": "FAVAR based on three factors",
@@ -51,9 +51,9 @@
         "size": "100bp",
         "axis_trans": false,
         "dep": {
-                "model_1": "logdiff_m_ip logdiff_a_wpi",
-                "model_2": "logdiff_m_ip logdiff_a_wpi",
-                "model_3": "logdiff_m_ip logdiff_a_wpi",
+                "model_1": "logdiff_a_ip logdiff_a_wpi",
+                "model_2": "logdiff_a_ip logdiff_a_wpi",
+                "model_3": "logdiff_a_ip logdiff_a_wpi",
                 "model_4": "logdiff_a_wpi",
                 "model_5": "logdiff_a_wpi",
                 "model_6": "logdiff_a_wpi",

@@ -21,7 +21,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_main_refinancing_rate", 
+        "inttype": "lev_a_MRO_rate", 
         "size": "25bp", 
         "axis_trans": false, 
         "dep": "gr_m_cpi log_m_ip", 

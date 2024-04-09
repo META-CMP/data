@@ -3,7 +3,7 @@
         "key": "8VBXRY3I",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "In this model 1SD corresponds to a rise in interest rate of 24bp; they report the SD of monetary olicy shock which is equal to 0.24%.",
+        "study_notes": "In this model 1SD corresponds to a rise in interest rate of 24bp; they report the SD of monetary policy shock which is equal to 0.24%.",
         "model_notes": "null",
         "figure": {
           "model_1": 2
@@ -15,7 +15,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_overnight_callrate",
+        "inttype": "lev_a_overnight_cashrate",
         "size": "1SD",
         "axis_trans": false,
         "dep": "log_q_gap gr_a_cpi",

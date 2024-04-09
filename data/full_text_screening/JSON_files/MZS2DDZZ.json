@@ -7,17 +7,32 @@
         "model_notes": {
           "model_1": "estimate their baseline VAR with the new monetary policy measure ordered last in the recursive ordering.",
           "model_2": "estimate our baseline VAR with the new monetary policy measure ordered first in the recursive ordering. This implies that contemporaneous macro economic fluctuations do not affect the policy decision other than via the forecasts.",
-          "model_3": "impulse response function from online Appendix B.B3, IRF shows that their results are to a larger specification, including adding unemployment and the actual policy rate." 
+          "model_3": "impulse response function from online Appendix B.B3, IRF shows that their results are to a larger specification, including adding unemployment and the actual policy rate.",
+          "model_4": "they estimate a quarterly VAR with GDP instead of industrial production.",
+          "model_5": "hybrid VAR based on inlation targeting sample: 1993-2007.",
+          "model_6": "they show the response of inflation in recursive VAR (Cholesky).",
+          "model_7": "they show the response of unemployment using the single equation approach estimated using local projections in a quaterly frequency.",
+          "model_8": "conventional VAR using Bank Rate (Cholesky) after 1992."
         },
         "figure": {
           "model_1": 2,
           "model_2": 7,
-          "model_3": "B2"
+          "model_3": "Appendix B3",
+          "model_4": "6-(a)",
+          "model_5": "6-(c)",
+          "model_6": "Appendix B6",
+          "model_7": "Appendix D2",
+          "model_8": "Appendix E2"
         },
         "page": {
           "model_1": 89,
           "model_2": 99,
-          "model_3": "appendix_8"
+          "model_3": "Appendix 8",
+          "model_4": 96,
+          "model_5": 96,
+          "model_6": "Appendix 12",
+          "model_7": "Appendix 17",
+          "model_8": "Appendix 18"
         },
         "irf": true,
         "cum": false
@@ -29,22 +44,68 @@
         "dep": {
           "model_1": "log_m_ip gr_a_cpi",
           "model_2": "log_m_ip gr_a_cpi",
-          "model_3": "log_m_ip lev_m_une_rate gr_a_cpi"
+          "model_3": "log_m_ip lev_m_une_rate gr_a_cpi",
+          "model_4": "log_q_rgdp gr_a_cpi",
+          "model_5": "log_m_ip gr_a_cpi",
+          "model_6": "gr_a_cpi",
+          "model_7": "lev_q_une_rate",
+          "model_8": "gr_a_cpi"
         },
         "conf": "95",
         "main": "gdp inflation",
         "prefer": {
           "model_1": true,
           "model_2": false,
-          "model_3": false
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": false
         }
     },
     "identification_strategy": {
-        "iv": true,
-        "forecast_based": true,
-        "nr": false,
+        "iv": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": false,
+          "model_7": true,
+          "model_8": false
+        },
+        "forecast_based": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": false,
+          "model_7": true,
+          "model_8": false
+        },
+        "nr": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": false,
+          "model_7": true,
+          "model_8": false
+        },
         "event": false,
-        "chol": false,
+        "chol": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": true,
+          "model_7": false,
+          "model_8": true
+        },
         "svar": false,
         "signr": false,
         "hf": false,
@@ -56,12 +117,22 @@
         "var": {
           "model_1": true,
           "model_2": false,
-          "model_3": true
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": false,
+          "model_8": true
         },
         "lp": {
           "model_1": false,
           "model_2": true,
-          "model_3": false
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": false
         },
         "vecm": false,
         "dyn_ols": "false",
@@ -82,8 +153,26 @@
     },
     "data_frequency": {
         "annual": false,
-        "quarter": false,
-        "month": true
+        "quarter": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": false
+        },
+        "month": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": false,
+          "model_5": true,
+          "model_6": true,
+          "model_7": false,
+          "model_8": true
+        }
     },
     "country_composition": {
         "list_of_countries": "GB",
@@ -91,8 +180,26 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "01-1975",
-        "end": "12-2007",
+        "start": {
+          "model_1": "01-1975",
+          "model_2": "01-1975",
+          "model_3": "01-1975",
+          "model_4": "Q1-1975",
+          "model_5": "01-1993",
+          "model_6": "01-1975",
+          "model_7": "Q1-1975",
+          "model_8": "01-1993"
+        },
+        "end": {
+          "model_1": "12-2007",
+          "model_2": "12-2007",
+          "model_3": "12-2007",
+          "model_4": "Q4-2007",
+          "model_5": "12-2007",
+          "model_6": "12-2007",
+          "model_7": "Q4-2007",
+          "model_8": "12-2007"
+        },
         "samplesize": "null"
     },
     "control_variables": {

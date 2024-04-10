@@ -16,16 +16,16 @@
                 "model_3": 1079
         },     
         "irf": true,
-        "cum": false
+        "cum": true
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_fed_funds", 
         "size": "100bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "log_a_ip",
-                "model_2": "log_a_ppi",
-                "model_3": "log_a_ip log_a_ppi"
+                "model_1": "log_m_ip",
+                "model_2": "log_m_wpi",
+                "model_3": "log_m_ip log_m_wpi"
         },     
         "conf": "1_SE", 
         "main": "gdp  inflation", 
@@ -61,9 +61,9 @@
         "lp": false, 
         "vecm": false, 
         "dyn_ols": {
-                "model_1": "ardl",
-                "model_2": "ardl",
-                "model_3": "false"
+                "model_1": true,
+                "model_2": true,
+                "model_3": false
         },      
         "fvar": false, 
         "tvar": false, 
@@ -96,7 +96,11 @@
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": false, 
+        "comprice": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true
+        }, 
         "outpgap": false, 
         "find": false, 
         "eglob": false, 

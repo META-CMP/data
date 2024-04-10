@@ -29,7 +29,9 @@ error_jsons <- c(
   "Z2EIFGK7", 
   "ZCPHPCLN", 
   "ZMG2ZQ5V", 
-  "ZV28P9HY"
+  "ZV28P9HY",
+  "8WECXHE5",
+  "MAHYZFHF"
   
   # Add further problem studies above
   )
@@ -113,8 +115,10 @@ ignore <- c(error_jsons, unextracted,
             # Add further problem studies above, ideally, paste the error message as a comment
 )
 json.irf.join <- MetaExtractR::final_join(json_path = "data/full_text_screening/JSON_files", irf_path = "data/effect_sizes/IRFs/", only_json = FALSE, ignore = ignore)
+
 library(MetaExtractR)
 json.irf.join <- MetaExtractR::final_join(json_path = "data/full_text_screening/JSON_files", irf_path = "data/effect_sizes/IRFs/", only_json = FALSE, investigate="3X48J8NE")
+
 
 # Get IRF assignee:
 # Get assignee (replace the key below)

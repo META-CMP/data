@@ -39,10 +39,10 @@ XVFN2LAU,South African Journal of Economics,Kabundi_2011_assessing,ph,me,TRUE,tr
 SJ84WRG8,Economic Journal,Garratt_2003_a,dr,me,TRUE,"they use r = 0.25 * ln(1+R/100), but then interest impulse response resemble to a level variable, and interest_rate_diff??",NA
 KLSX6MBF,NA,Bagliano_NA_measuring,dr,me,TRUE,"""inttype"": yield curve, then reason for exclusion",NA
 WEL4CM26,Journal of International Money and Finance,Hanisch_2017_the,dr,me,FALSE,NA,NA
-87Z49TMV,American Economic Journal: Macroeconomics,Jarociński_2020_deconstructing,fp,me,TRUE,inttype; signr,NA
-QKHQZ3ZG,NA,Sandström_2018_the,fp,me,TRUE,"inttype: ""lev_a_repo""",NA
+87Z49TMV,American Economic Journal: Macroeconomics,Jarociński_2020_deconstructing,fp,me,TRUE,inttype; signr,1
+QKHQZ3ZG,NA,Sandström_2018_the,fp,me,TRUE,"inttype: ""lev_a_repo""",1
 9DXGZWHB,"Journal of Money, Credit, and Banking",Evans_2009_fundamental,dr,me,TRUE,idother or excluded,NA
-652CDYWY,American Economic Journal: Macroeconomics,Badinger_2020_measuring,fp,me,TRUE,"""signr"": false; axis_trans",NA
+652CDYWY,American Economic Journal: Macroeconomics,Badinger_2020_measuring,fp,me,TRUE,"""signr"": false; axis_trans",1
 AFV2WRLB,Environment and Planning C: Government and Policy,Anagnostou_2016_regional,dr,me,TRUE,"""chol"": true?",NA
 RVPNMC49,Working Papers,Kilinc_2014_identification,me,fp,TRUE,How to handle that log transformed data is hp filtered afterwards?,NA
 YAL9JMQ7,Economic Modelling,Zheng_2013_estimating,me,fp,TRUE,"in the paper they calculates the annualized output gap, therefore coded as logdiff_a_rgap.",NA

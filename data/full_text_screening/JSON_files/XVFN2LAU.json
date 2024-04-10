@@ -2,7 +2,7 @@
     "general": { 
         "key": "XVFN2LAU", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "me", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
@@ -39,11 +39,8 @@
         "forecast_based": false, 
         "nr": false, 
         "event": false, 
-        "chol": false, 
-        "svar": {
-                "model_1": false,
-                "model_2": true
-        }, 
+        "chol": true, 
+        "svar": false, 
         "signr": false, 
         "hf": false, 
         "heteroskedas": false, 
@@ -89,7 +86,7 @@
         "panel": false, 
         "start": "02-1985", 
         "end": "11-2007", 
-        "samplesize": "null" 
+        "samplesize": 274 
     }, 
     "control_variables": { 
         "comprice": true, 
@@ -103,7 +100,10 @@
         "fexch": false, 
         "inflexp": false, 
         "foreignir": false, 
-        "fx": false, 
+        "fx": {
+                "model_1": false,
+                "model_2": true
+        }, 
         "lrir": {
                 "model_1": false,
                 "model_2": true

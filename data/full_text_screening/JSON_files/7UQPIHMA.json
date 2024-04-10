@@ -3,7 +3,7 @@
         "key": "7UQPIHMA",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "conf: posterior credibility intervals based on iterations of the Gibbs sampler for the month of 01-2003.",
+        "study_notes": "conf: posterior credibility intervals based on iterations of the Gibbs sampler for the month of 01-2003; samplesize: calculated from 11-1978 to 09-2017, that is the period estimated.",
         "model_notes": {
           "model_1": "displays the response in high investor sentiment regime.",
           "model_2": "displays the response in low investor sentiment regime."
@@ -24,7 +24,7 @@
         "size": "20bp",
         "axis_trans": false,
         "dep": "log_m_ip log_m_cpi",
-        "conf": "68 & 95",
+        "conf": "68",
         "main": "other",
         "prefer": {
           "model_1": true,
@@ -81,9 +81,9 @@
     },
     "further_data_characteristics": {
         "panel": false,
-        "start": "11-1978",
-        "end": "09-2017",
-        "samplesize": "null"
+        "start": "01-2003",
+        "end": "01-2003",
+        "samplesize": "467"
     },
     "control_variables": {
         "comprice": false,

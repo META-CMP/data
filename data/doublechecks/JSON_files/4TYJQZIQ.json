@@ -1,0 +1,91 @@
+{
+    "general": {
+        "key": "4TYJQZIQ",
+        "rid1": "ph",
+        "rid2": "dr",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": 2,#the figure is the number 2, no huge problem
+        "page": 111,
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_policy_rate",#perfect
+        "size": "1SD",#we know that Philipp extracted the bp from the graph so OK.
+        "axis_trans": false,
+        "dep": "log_q_cpi",#perfect
+        "conf": "90",
+        "main": "inflation other",#great, perfect
+        "prefer": true
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,#why svar to true? they state clearly they apply cholesky
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {#perfect
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AU KR TH ID",#perfect
+        "n_of_countries": 4
+    },
+    "further_data_characteristics": {#perfect
+        "panel": true,
+        "start": "Q1-2000",
+        "end": "Q2-2012",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,#they state that they introduced fed funds as a exogenous variable
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {#perfect
+        "cbanker": true
+    }
+}
+

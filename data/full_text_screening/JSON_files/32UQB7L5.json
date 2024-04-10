@@ -2,7 +2,7 @@
     "general": {
         "key": "32UQB7L5",
         "rid1": "me",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "end: shocks are only considered until Q4-2002 but response variables until Q4-2007.",
         "model_notes": {
                 "model_1": "null",
@@ -116,7 +116,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "100bp",
         "axis_trans": "y*100 lev_a_fed_funds_false",
-        "dep": "log_q_rgdp gr_a_deflator",
+        "dep": "log_q_rgdp logdiff_a_deflator",
         "conf": "90",
         "main": "gdp inflation",
         "prefer": {

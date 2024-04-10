@@ -1,90 +1,90 @@
-{ 
-    "general": { 
-        "key": "4TYJQZIQ", 
-        "rid1": "ph", 
-        "rid2": "null", 
-        "study_notes": "null", 
-        "model_notes": "null", 
-        "figure": 1, 
-        "page": 111, 
+{
+    "general": {
+        "key": "4TYJQZIQ",
+        "rid1": "ph",
+        "rid2": "dr",
+        "study_notes": "one standard deviation which equals 42bp.",
+        "model_notes": "null",
+        "figure": 2,
+        "page": 111,
         "irf": true,
         "cum": false
-    }, 
-    "impulse_and_response_variables": { 
-        "inttype": "lev_a_policy_rate", 
-        "size": "42bp", 
-        "axis_trans": false, 
-        "dep": "log_q_cpi", 
-        "conf": "90", 
-        "main": "inflation  other", 
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_policy_rate",
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": "log_q_cpi",
+        "conf": "90",
+        "main": "inflation other",
         "prefer": true
-    }, 
-    "identification_strategy": { 
-        "iv": false, 
-        "forecast_based": false, 
-        "nr": false, 
-        "event": false, 
-        "chol": true, 
-        "svar": true, 
-        "signr": false, 
-        "hf": false, 
-        "heteroskedas": false, 
-        "longrun": false, 
-        "idother": false 
-    }, 
-    "estimation_method": { 
-        "var": true, 
-        "lp": false, 
-        "vecm": false, 
-        "dyn_ols": "false", 
-        "fvar": false, 
-        "tvar": false, 
-        "gvar": false, 
-        "bayes": false, 
-        "dsge": false, 
-        "varother": false 
-    }, 
-    "regime_dependence": { 
-        "lor": false, 
-        "upr": false, 
-        "scr": false, 
-        "dcr": false, 
-        "hike": false, 
-        "cut": false 
-    }, 
-    "data_frequency": { 
-        "annual": false, 
-        "quarter": true, 
-        "month": false 
-    }, 
-    "country_composition": { 
-        "list_of_countries": "AU KR TH ID", 
-        "n_of_countries": 4 
-    }, 
-    "further_data_characteristics": { 
-        "panel": true, 
-        "start": "Q1-2000", 
-        "end": "Q2-2012", 
-        "samplesize": "null" 
-    }, 
-    "control_variables": { 
-        "comprice": false, 
-        "outpgap": false, 
-        "find": true, 
-        "eglob": false, 
-        "cbind": false, 
-        "fexch": false, 
-        "inflexp": false, 
-        "foreignir": false, 
-        "fx": false, 
-        "lrir": false 
-    }, 
-    "econometric_details": { 
-        "pure_rate_shock": true, 
-        "convent": true, 
-        "decomposition": false 
-    }, 
-    "publication_characteristics": { 
-        "cbanker": true 
-    } 
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AU KR TH ID",
+        "n_of_countries": 4
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "Q1-2000",
+        "end": "Q2-2012",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": true,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
 } 

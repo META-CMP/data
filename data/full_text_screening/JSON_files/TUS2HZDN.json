@@ -12,8 +12,8 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
-        "size": "32bp", 
-        "axis_trans": "y*100", 
+        "size": "null", 
+        "axis_trans": "y*100 lev_a_short_term_rate_false", 
         "dep": "log_q_gdp log_q_deflator", 
         "conf": "68", 
         "main": "other",

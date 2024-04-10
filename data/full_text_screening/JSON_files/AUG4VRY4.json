@@ -23,12 +23,12 @@
     "impulse_and_response_variables": { 
         "inttype": "lev_a_overnight_lending", 
         "size": "100bp", 
-        "axis_trans": "y*100", 
+        "axis_trans": false,  
         "dep": {
-                "model_1": "logdiff_a_ip logdiff_a_cpi logdiff_a_une",
-                "model_2": "logdiff_a_rgdp logdiff_a_deflator",
-                "model_3": "logdiff_a_ip logdiff_a_cpi",
-                "model_4": "logdiff_a_ip logdiff_a_cpi"
+                "model_1": "logdiff_q_ip logdiff_q_cpi lev_a_une_rate",
+                "model_2": "logdiff_q_rgdp logdiff_q_deflator",
+                "model_3": "logdiff_q_ip logdiff_q_cpi",
+                "model_4": "logdiff_q_ip logdiff_q_cpi"
         }, 
         "conf": "1_SE", 
         "main": "gdp  inflation", 

@@ -18,11 +18,11 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
-        "size": {
-                "model_1": "29bp",
-                "model_2": "23bp"
-        },
-        "axis_trans": "y*100", 
+        "size": "null",
+        "axis_trans": {
+                "model_1": "y*100 lev_a_short_term_rate_false",
+                "model_2": "y*100 lev_a_short_term_rate_false lev_q_une_rate_false"
+        },  
         "dep": {
                 "model_1": "log_q_rgdp log_q_deflator",
                 "model_2": "log_q_rgdp log_q_deflator lev_q_une_rate"

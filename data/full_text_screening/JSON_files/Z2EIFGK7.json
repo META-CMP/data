@@ -2,8 +2,8 @@
     "general": {
         "key": "Z2EIFGK7",
         "rid1": "dr",
-        "rid2": "null",
-        "study_notes": "null",
+        "rid2": "fp",
+        "study_notes": "quality_concern: All results are reported in standard deviation units.",
         "model_notes": "null",
         "figure": {
           "model_1": 1,
@@ -166,14 +166,14 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": false,
+        "find": true,
         "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": false,
-        "lrir": false
+        "fx": true,
+        "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,

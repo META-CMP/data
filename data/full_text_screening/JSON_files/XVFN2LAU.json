@@ -19,9 +19,12 @@
     "impulse_and_response_variables": { 
         "inttype": "lev_a_repo_rate", 
         "size": "100bp", 
-        "axis_trans": false, 
+        "axis_trans": {
+                "model_1": "logdiff_m_ip_y*100",
+                "model_2": false
+        },  
         "dep": {
-                "model_1": "log_m_ip log_m_cpi",
+                "model_1": "logdiff_m_ip gr_m_cpi",
                 "model_2": "logdiff_m_ip gr_m_cpi logdiff_m_emp"
         }, 
         "conf": "90", 

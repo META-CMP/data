@@ -2,12 +2,12 @@
     "general": {
         "key": "IC2MMT6E",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
           "model_1": "results for the euro-area as an aggregate.",
-          "model_2": "results for the Slovakia.",
-          "model_3": "results for the Slovenia." 
+          "model_2": "results for Slovakia.",
+          "model_3": "results for Slovenia." 
         },
         "figure": {
           "model_1": 2,
@@ -55,7 +55,7 @@
         "dyn_ols": "false",
         "fvar": false,
         "tvar": true,
-        "gvar": false,
+        "gvar": true,
         "bayes": false,
         "dsge": false,
         "varother": false
@@ -75,14 +75,14 @@
     },
     "country_composition": {
         "list_of_countries": {
-          "model_1": "EA CH NO CA TR RU JP CN US SK SI GB SE RO PL HU HR DK CZ BG",
-          "model_2": "SK EA CH NO CA TR RU JP CN US SI GB SE RO PL HU HR DK CZ BG",
-          "model_3": "SI EA CH NO CA TR RU JP CN US SK GB SE RO PL HU HR DK CZ BG" 
+          "model_1": "EA",
+          "model_2": "SK",
+          "model_3": "SI" 
         },
-        "n_of_countries": 20
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": false,
         "start": "01-2001",
         "end": "06-2018",
         "samplesize": "null"
@@ -105,7 +105,7 @@
         "decomposition": false
     },
     "publication_characteristics": {
-        "cbanker": false
+        "cbanker": true
     }
 }
 

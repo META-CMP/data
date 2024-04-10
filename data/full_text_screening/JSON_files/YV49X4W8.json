@@ -73,7 +73,7 @@
         "size": "-100bp",
         "axis_trans": false,
         "dep": {
-                "model_1": "logdiff_a_ip logdiff_a_cpi diff_a_une",
+                "model_1": "logdiff_a_ip logdiff_a_cpi levdiff_a_une",
                 "model_2": "logdiff_a_ip",
                 "model_3": "logdiff_a_ip",
                 "model_4": "logdiff_a_ip",
@@ -102,7 +102,7 @@
                 "model_27": "logdiff_a_cpi",
                 "model_28": "logdiff_a_cpi"
         },
-        "conf": "90",
+        "conf": "68",
         "main": "gdp  emp  inflation",
         "prefer": {
                 "model_1": true,

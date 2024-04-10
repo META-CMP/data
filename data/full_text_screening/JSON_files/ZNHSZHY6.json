@@ -3,15 +3,34 @@
         "key": "ZNHSZHY6",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
-        "model_notes": "null",
+        "study_notes": "they include United States variables",
+        "model_notes": {
+          "model_1": "model with variables of Germany.",
+          "model_2": "model with variables of United Kingdom.",
+          "model_3": "model with variables of Canada.",
+          "model_4": "model with variables of France.",
+          "model_5": "model with variables of Italy.",
+          "model_6": "model with variables of Japan.",
+          "model_7": "model with variables of Germany; including 48 lags of the exogenous shock.",
+          "model_8": "model with variables of United Kingdom; including 48 lags of the exogenous shock.",
+          "model_9": "model with variables of Canada; including 48 lags of the exogenous shock.",
+          "model_10": "model with variables of France; including 48 lags of the exogenous shock.",
+          "model_11": "model with variables of Italy; including 48 lags of the exogenous shock.",
+          "model_12": "model with variables of Japan; including 48 lags of the exogenous shock."
+        },
         "figure": {
           "model_1": "4-DE,6-DE & 7-DE",
           "model_2": "4-GB,6-GB & 7-GB",
           "model_3": "4-CA,6-CA & 7-CA",
           "model_4": "4-FR,6-FR & 7-FR",
           "model_5": "4-IT,6-IT & 7-IT",
-          "model_6": "4-JP,6-JP & 7-JP"
+          "model_6": "4-JP,6-JP & 7-JP",
+          "model_7": "8-DE",
+          "model_8": "8-GB",
+          "model_9": "8-CA",
+          "model_10": "8-FR",
+          "model_11": "8-IT",
+          "model_12": "8-JP"
         },
         "page": {
           "model_1": "323, 325 & 327",
@@ -19,7 +38,13 @@
           "model_3": "323, 325 & 327",
           "model_4": "323, 325 & 327",
           "model_5": "323, 325 & 327",
-          "model_6": "323, 325 & 327" 
+          "model_6": "323, 325 & 327",
+          "model_7": 328,
+          "model_8": 328,
+          "model_9": 328,
+          "model_10": 328,
+          "model_11": 328,
+          "model_12": 328
         },
         "irf": true,
         "cum": false
@@ -28,7 +53,20 @@
         "inttype": "lev_3_month_gov_us",
         "size": "100bp",
         "axis_trans": false,
-        "dep": "log_m_ip log_m_cpi",
+        "dep": {
+          "model_1": "log_m_ip log_m_cpi",
+          "model_2": "log_m_ip log_m_cpi",
+          "model_3": "log_m_ip log_m_cpi",
+          "model_4": "log_m_ip log_m_cpi",
+          "model_5": "log_m_ip log_m_cpi",
+          "model_6": "log_m_ip log_m_cpi",
+          "model_7": "log_m_cpi",
+          "model_8": "log_m_cpi",
+          "model_9": "log_m_cpi",
+          "model_10": "log_m_cpi",
+          "model_11": "log_m_cpi",
+          "model_12": "log_m_cpi"
+        },
         "conf": "68",
         "main": "other",
         "prefer": {
@@ -37,13 +75,19 @@
           "model_3": true,
           "model_4": true,
           "model_5": true,
-          "model_6": true 
+          "model_6": true,
+          "model_7": true,
+          "model_8": true,
+          "model_9": true,
+          "model_10": true,
+          "model_11": true,
+          "model_12": true 
         }
     },
     "identification_strategy": {
         "iv": false,
         "forecast_based": true,
-        "nr": false,
+        "nr": true,
         "event": false,
         "chol": false,
         "svar": false,
@@ -79,39 +123,24 @@
         "month": true
     },
     "country_composition": {
-        "list_of_countries": {
-          "model_1": "US DE",
-          "model_2": "US GB",
-          "model_3": "US CA",
-          "model_4": "US FR",
-          "model_5": "US IT",
-          "model_6": "US JP"
-        },
-        "n_of_countries": {
-          "model_1": 2,
-          "model_2": 2,
-          "model_3": 2,
-          "model_4": 2,
-          "model_5": 2,
-          "model_6": 2
-        }
+        "list_of_countries": "US",
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": {
-          "model_1": true,
-          "model_2": true,
-          "model_3": true,
-          "model_4": true,
-          "model_5": true,
-          "model_6": true
-        },
+        "panel": false,
         "start": {
           "model_1": "01-1974",
           "model_2": "01-1974",
           "model_3": "01-1974",
           "model_4": "01-1974",
           "model_5": "03-1977",
-          "model_6": "01-1974" 
+          "model_6": "01-1974",
+          "model_7": "01-1974",
+          "model_8": "01-1974",
+          "model_9": "01-1974",
+          "model_10": "01-1974",
+          "model_11": "03-1977",
+          "model_12": "01-1974" 
         },
         "end": {
           "model_1": "10-2001",
@@ -119,7 +148,13 @@
           "model_3": "10-2001",
           "model_4": "10-2001",
           "model_5": "10-2001",
-          "model_6": "10-2001" 
+          "model_6": "10-2001",
+          "model_7": "10-2001",
+          "model_8": "10-2001",
+          "model_9": "10-2001",
+          "model_10": "10-2001",
+          "model_11": "10-2001",
+          "model_12": "10-2001"
         },
         "samplesize": "null"
     },

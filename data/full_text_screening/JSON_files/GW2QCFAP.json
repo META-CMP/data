@@ -3,7 +3,7 @@
         "key": "GW2QCFAP",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "results are for UK.",
+        "study_notes": "results are for UK; they introduced the variables for the following countries: United States and Germany.",
         "model_notes": "null",
         "figure": 5,
         "page": 594,
@@ -58,11 +58,11 @@
         "month": true
     },
     "country_composition": {
-        "list_of_countries": "GB US DE",
+        "list_of_countries": "GB",
         "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": false,
         "start": "01-1988",
         "end": "01-2008",
         "samplesize": "null"

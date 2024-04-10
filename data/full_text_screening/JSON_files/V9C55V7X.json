@@ -1,0 +1,119 @@
+{
+    "general": {
+        "key": "V9C55V7X",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "Structural VAR (SVAR) model with temporal as well as spatial lags; 6 spatial units given by 5 regions (groups of states) plus the previously defined conglomerate city of Buenos Aires.",
+        "model_notes": {
+          "model_1": "Region that consists of La Pampa, Córdoba, Santa Fe, Entre Ríos y Buenos Aires.",
+          "model_2": "Region that consists of Mendoza, San Luis y San Juan.",
+          "model_3": "Region that consists of Ciudad Autónoma de Buenos Aires.",
+          "model_4": "Region that consists of La Rioja, Catamarca, Tucumán, Jujuy, Santiago del Estereo y Salta.",
+          "model_5": "Region that consists of Chaco, Formosa, Corrientes y Misiones.",
+          "model_6": "Region that consists of Neuquén, Santa Cruz, Chubut, Tierra del Fuego y Río Negro."
+        },
+        "figure": {
+          "model_1": "4.(a)",
+          "model_2": "4.(b)",
+          "model_3": "4.(c)",
+          "model_4": "4.(d)",
+          "model_5": "4.(e)",
+          "model_6": "4.(f)"
+        },
+        "page": {
+          "model_1": 11,
+          "model_2": 11,
+          "model_3": 11,
+          "model_4": 11,
+          "model_5": 11,
+          "model_6": 11
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_policy_rate",
+        "size": "1%",
+        "axis_trans": "y*100",
+        "dep": "logdiff_q_emp",
+        "conf": "80",
+        "main": "emp",
+        "prefer": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": true,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": 1,
+        "n_of_countries": "AR"
+    },
+    "further_data_characteristics": {
+        "panel": true,
+        "start": "Q1-2003",
+        "end": "Q2-2017",
+        "samplesize": false
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": true,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

@@ -8,19 +8,22 @@
           "model_1": "annual data, baseline.",
           "model_2": "annual data, changing the order of the variables in Cholesky identification.",
           "model_3": "monthly data, baseline.",
-          "model_4": "monthly data, changing the order of the variables in Cholesky identification."
+          "model_4": "monthly data, changing the order of the variables in Cholesky identification.",
+          "model_5": "using narrative method of Romer and Romer (1989)."
         },
         "figure": {
           "model_1": "1.row-1",
           "model_2": "2.row-3",
           "model_3": "3.row-1",
-          "model_4": "4.row-3"
+          "model_4": "4.row-3",
+          "model_5": 6
         },
         "page": {
           "model_1": 25,
           "model_2": 26,
           "model_3": 27,
-          "model_4": 28
+          "model_4": 28,
+          "model_5": 30
         },
         "irf": true,
         "cum": false
@@ -30,20 +33,29 @@
           "model_1": "lev_a_overnight_lending",
           "model_2": "lev_a_overnight_lending",
           "model_3": "lev_a_discount",
-          "model_4": "lev_a_discount"
+          "model_4": "lev_a_discount",
+          "model_5": "lev_a_discount"
         },
         "size": {
           "model_1": "70bp",
           "model_2": "67bp",
           "model_3": "25bp",
-          "model_4": "24bp"
+          "model_4": "24bp",
+          "model_5": "100bp"
         },
-        "axis_trans": false,
+        "axis_trans": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": "y*100"
+        },
         "dep": {
           "model_1": "log_a_gdp log_a_deflator",
           "model_2": "log_a_gdp log_a_deflator",
           "model_3": "log_m_ip log_m_wpi",
-          "model_4": "log_m_ip log_m_wpi"
+          "model_4": "log_m_ip log_m_wpi",
+          "model_5": "log_a_gdp"
         },
         "conf": "2_SE",
         "main": "gdp",
@@ -51,15 +63,28 @@
           "model_1": false,
           "model_2": false,
           "model_3": false,
-          "model_4": true
+          "model_4": false,
+          "model_5": true
         }
     },
     "identification_strategy": {
         "iv": false,
         "forecast_based": false,
-        "nr": false,
+        "nr": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true
+        },
         "event": false,
-        "chol": true,
+        "chol": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": false
+        },
         "svar": false,
         "signr": false,
         "hf": false,
@@ -92,14 +117,16 @@
           "model_1": true,
           "model_2": true,
           "model_3": false,
-          "model_4": false
+          "model_4": false,
+          "model_5": true
         },
         "quarter": false,
         "month": {
           "model_1": false,
           "model_2": false,
           "model_3": true,
-          "model_4": true
+          "model_4": true,
+          "model_5": false
         }
     },
     "country_composition": {
@@ -112,19 +139,22 @@
           "model_1": "1885",
           "model_2": "1885",
           "model_3": "01-1919",
-          "model_4": "01-1919"
+          "model_4": "01-1919",
+          "model_5": "1885"
         },
         "end": {
           "model_1": "1940",
           "model_2": "1940",
           "model_3": "12-1930",
-          "model_4": "12-1930"
+          "model_4": "12-1930",
+          "model_5": "1940"
         },
         "samplesize": {
           "model_1": 56,
           "model_2": 56,
           "model_3": "null",
-          "model_4": "null"
+          "model_4": "null",
+          "model_5": "null"
         }
     },
     "control_variables": {

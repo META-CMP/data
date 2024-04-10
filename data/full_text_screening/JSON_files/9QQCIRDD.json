@@ -21,12 +21,12 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "fed_funds", 
+        "inttype": "lev_a_1_year_gov", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "log_a_ip log_a_cpi log_a_une", 
+        "dep": "log_a_ip log_a_cpi lev_a_une_rate", 
         "conf": "90", 
-        "main": "gdp  emp  inflation", 
+        "main": "gdp emp inflation", 
         "prefer": true 
     }, 
     "identification_strategy": { 
@@ -37,13 +37,13 @@
         "chol": false, 
         "svar": false, 
         "signr": false, 
-        "hf": false, 
+        "hf": true, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": false, 
+        "var": true, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
@@ -100,7 +100,7 @@
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
+        "pure_rate_shock": false, 
         "convent": false, 
         "decomposition": {
                 "model_1": false,

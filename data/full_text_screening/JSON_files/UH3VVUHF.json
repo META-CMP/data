@@ -14,7 +14,7 @@
         "inttype": "lev_a_overnight_lending", 
         "size": "-100bp", 
         "axis_trans": false, 
-        "dep": "log_a_rgdp logdiff_a_cpi", 
+        "dep": "log_q_rgdp logdiff_a_cpi", 
         "conf": "68", 
         "main": "gdp", 
         "prefer": true
@@ -75,7 +75,7 @@
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
-        "foreignir": false, 
+        "foreignir": true, 
         "fx": true, 
         "lrir": false 
     }, 

@@ -4,7 +4,11 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "null", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "dep: ppi renamed as wpi due to US context",
+                "model_3": "dep: ppi renamed as wpi due to US context"
+        }, 
         "figure": {
                 "model_1": 2,
                 "model_2": 4,
@@ -24,8 +28,8 @@
         "axis_trans": false, 
         "dep": {
                 "model_1": "log_a_ip",
-                "model_2": "log_a_ppi",
-                "model_3": "log_a_ip log_a_ppi"
+                "model_2": "log_a_wpi",
+                "model_3": "log_a_ip log_a_wpi"
         },     
         "conf": "1_SE", 
         "main": "gdp  inflation", 

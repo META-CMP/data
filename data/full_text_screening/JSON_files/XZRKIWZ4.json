@@ -2,7 +2,7 @@
     "general": {
         "key": "XZRKIWZ4",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "ph",
         "study_notes": "null",
         "model_notes": {
           "model_1": "idother: FOMC dummy and MIDAS regression used in identification.",

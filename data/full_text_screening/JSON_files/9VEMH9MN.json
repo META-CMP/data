@@ -2,7 +2,7 @@
     "general": {
         "key": "9VEMH9MN",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "ph",
         "study_notes": "varother: interacted panel VAR (IPVAR).",
         "model_notes": {
           "model_1": "lor: coded as true because of proximity of these data points to recessions.",
@@ -33,7 +33,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",
-        "size": "100bp",
+        "size": "-100bp",
         "axis_trans": false,
         "dep": "log_q_rgdp log_q_cpi",
         "conf": "90",

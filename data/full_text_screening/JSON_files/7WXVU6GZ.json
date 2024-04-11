@@ -46,7 +46,18 @@
                 "model_10": "lev_a_shadow_rate"
         },
         "size": "100bp",
-        "axis_trans": "y*100",
+        "axis_trans": {
+                "model_1": "y*100 lev_a_3_month_euribor_false",
+                "model_2": "y*100 lev_a_shadow_rate_false",
+                "model_3": "y*100 lev_a_3_month_euribor_false",
+                "model_4": "y*100 lev_a_shadow_rate_false",
+                "model_5": "y*100 lev_a_3_month_euribor_false",
+                "model_6": "y*100 lev_a_shadow_rate_false",
+                "model_7": "y*100 lev_a_3_month_euribor_false",
+                "model_8": "y*100 lev_a_shadow_rate_false",
+                "model_9": "y*100 lev_a_3_month_euribor_false",
+                "model_10": "y*100 lev_a_shadow_rate_false"
+        },
         "dep": {
                 "model_1": "log_a_gdp log_a_deflator",
                 "model_2": "log_a_gdp log_a_deflator",
@@ -135,7 +146,18 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": true,
+        "pure_rate_shock": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": true,
+                "model_7": false,
+                "model_8": true,
+                "model_9": false,
+                "model_10": true
+        },
         "convent": {
                 "model_1": false,
                 "model_2": true,

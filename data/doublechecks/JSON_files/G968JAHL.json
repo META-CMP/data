@@ -1,0 +1,106 @@
+{
+    "general": {
+        "key": "G968JAHL",
+        "rid1": "ph",
+        "rid2": "dr",
+        "study_notes": "null",
+        "model_notes": "null",
+        "figure": {
+          "model_1": 7,
+          "model_2": "Appendix-A2" #I included the appendix because they use the period before financial crisis
+        },
+        "page": {
+          "model_1": 1048,
+          "model_2": "Appendix-4"
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds", #For the VAR model they use lev_a_fed_funds
+        "size": "1SD",#mistake (1SD?? or null?)
+        "axis_trans": false,
+        "dep": "gr_a_rgdp gr_a_deflator gr_a_une_rate",#perfect
+        "conf": "68",#(68 & 95) based on IRF extraction we choose 68
+        "main": "other gdp",#perfect
+        "prefer": {
+          "model_1": true,
+          "model_2": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,#it is not a svar
+        "signr": true, #I think it's signr
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,#I usually coded var as well when it is bayesian
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,#perfect
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+          "model_1": "Q1-1973",
+          "model_2": "Q1-1973"
+        },
+        "end": {
+          "model_1": "Q2-2020",
+          "model_2": "Q4-2007"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,#they use fed_funds instead of lev_a_ssr
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

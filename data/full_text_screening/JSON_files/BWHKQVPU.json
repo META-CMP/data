@@ -2,7 +2,7 @@
     "general": {
         "key": "BWHKQVPU",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "ph",
         "study_notes": "They propse a new identifcation combining Romer-Romer 2004 approach and with a natural language approach to FOMC douments using machine learning. They compare their estimates with other identification strategies.; control_vars: 1-year Treasury yield, the log of the S&P500, log real GDP, the log GDP deflator, the unemployment rate, and the excess bond premium (EBP); convent: MP shocks are estimated for the period before the ZLB (and sample restricted for the local projections models). Therefore, we set convent true.",
         "model_notes": {
             "model_1": "BVAR with their proposed 'full ridge model' shocks.",
@@ -71,14 +71,14 @@
             "model_10": "log_m_ip lev_m_une_rate log_m_cpi"
         },
         "conf": {
-            "model_1": "68 & 90",
-            "model_2": "68 & 90",
-            "model_3": "68 & 90",
-            "model_4": "68 & 90",
-            "model_5": "68 & 90",
-            "model_6": "68 & 90",
-            "model_7": "68 & 90",
-            "model_8": "68 & 90",
+            "model_1": "90",
+            "model_2": "90",
+            "model_3": "90",
+            "model_4": "90",
+            "model_5": "90",
+            "model_6": "90",
+            "model_7": "90",
+            "model_8": "90",
             "model_9": "90",
             "model_10": "90"
         },

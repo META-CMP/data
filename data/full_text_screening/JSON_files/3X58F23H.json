@@ -3,11 +3,8 @@
         "key": "3X58F23H",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "list_of_countries: EA means Eurozone.",
-        "model_notes":{
-                "model_1": "conf: 16th & 84th percentiles, the percentiles work as confidence interval; the paper differenciate two periods, I will only code pre-2007 estimates.",
-                "model_2": "conf: 16th & 84th percentiles, the percentiles work as confidence interval; the paper differenciate two periods, I will only code pre-2007 estimates."
-        },
+        "study_notes": "null",
+        "model_notes": "null",
         "figure": {
                 "model_1": 4,
                 "model_2": 4

@@ -1,0 +1,210 @@
+{
+    "general": {
+        "key": "WRZ8Q2N8",
+        "rid1": "ph",
+        "rid2": "dr",
+        "study_notes": "In all the graphs World Wars excluded. Figure 5 not included because mean estimate cannot be read.",#agree, Figure 5 impossible to read the mean effects.
+        "model_notes": {#why not include the models in the Appendix?
+          "model_1": "null",
+          "model_2": "null",
+          "model_3": "null",
+          "model_4": "null",
+          "model_5": "null",
+          "model_6": "null",
+          "model_7": "labor obtained from Cobb-Douglas, estimates using raw data.",
+          "model_8": "labor obtained from Cobb-Douglas, estimates using Imbs correction for factor utilization.",
+          "model_9": "labor obtained from Cobb-Douglas, estimates using raw data.",
+          "model_10": "labor obtained from Cobb-Douglas, estimates using Imbs correction for factor utilization.",
+          "model_11": "adding the control variables in levels.",
+          "model_12": "adding the control variables in differences as well as up to 5 lags of the control variables.",
+          "model_13": "null",
+          "model_14": "null",
+          "model_15": "with 5 structural breaks in TPF.",
+          "model_16": "with 5 structural breaks in GDP."
+        },
+        "figure": {
+          "model_1": "2-(a)",
+          "model_2": "2-(b)",
+          "model_3": "2-(c)",
+          "model_4": "2-(d)",
+          "model_5": "6-(a)",
+          "model_6": "6-(b)",
+          "model_7": "3-(a)",
+          "model_8": "3-(b)",
+          "model_9": "Appendix A3-(a)",
+          "model_10": "Appendix A3-(b)",
+          "model_11": "Appendix A4-left",
+          "model_12": "Appendix A4-right",
+          "model_13": "Appendix A5",
+          "model_14": "Appendix A6",
+          "model_15": "Appendix A7-(a)",
+          "model_16": "Appendix A7-(b)"
+        },
+        "page": {
+          "model_1": 24,
+          "model_2": 24,
+          "model_3": 24,
+          "model_4": 24,
+          "model_5": 29,
+          "model_6": 29,
+          "model_7": 26,
+          "model_8": 26,
+          "model_9": "Appendix A20",
+          "model_10": "Appendix A20",
+          "model_11": "Appendix A21",
+          "model_12": "Appendix A21",
+          "model_13": "Appendix A22",
+          "model_14": "Appendix A23",
+          "model_15": "Appendix A24",
+          "model_16": "Appendix A24"
+        },
+        "irf": true,
+        "cum": true #the text state that is cumulative effect, Jordà's papers tend to present the IRF in cum effect, also in the context of local projections. 
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_short_term_rate",#perfect
+        "size": "100bp",#perfect
+        "axis_trans": false,#perfect
+        "dep": {#in the text they state also that all variables enters in first differences except for the interest rate
+          "model_1": "logdiff_a_rgdp",
+          "model_2": "logdiff_a_rgdp",
+          "model_3": "logdiff_a_rgdp",
+          "model_4": "logdiff_a_rgdp",
+          "model_5": "logdiff_a_rgdp",
+          "model_6": "logdiff_a_rgdp",
+          "model_7": "logdiff_a_rgdp logdiff_a_emp",
+          "model_8": "logdiff_a_rgdp logdiff_a_emp",
+          "model_9": "logdiff_a_rgdp logdiff_a_emp",
+          "model_10": "logdiff_a_rgdp logdiff_a_emp",
+          "model_11": "logdiff_a_rgdp",
+          "model_12": "logdiff_a_rgdp",
+          "model_13": "logdiff_a_rgdp logdiff_a_cpi",
+          "model_14": "logdiff_a_rgdp logdiff_a_cpi",
+          "model_15": "logdiff_a_rgdp",
+          "model_16": "logdiff_a_rgdp"
+        },
+        "conf": "1_SE",#based on IRF extraction, good
+        "main": "gdp emp",
+        "prefer": {#I included more as true because is the baseline specification.
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": true,
+          "model_9": false,
+          "model_10": false,
+          "model_11": false,
+          "model_12": false,
+          "model_13": false,
+          "model_14": false,
+          "model_15": false,
+          "model_16": false
+        }
+    },
+    "identification_strategy": {
+        "iv": true,#perfect
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": true,#perfect
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": true,#perfect
+        "quarter": false,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "AU BE CA CH DE DK ES FI FR GB IE IT JP NL PT SE US",#perfect
+        "n_of_countries": 17#perfect
+    },
+    "further_data_characteristics": {
+        "panel": true,#perfect
+        "start": {
+          "model_1": "1890",
+          "model_2": "1948",
+          "model_3": "1890",
+          "model_4": "1948",
+          "model_5": "1890",
+          "model_6": "1890",#perfect
+          "model_7": "1890",
+          "model_8": "1890",
+          "model_9": "1948",
+          "model_10": "1948",
+          "model_11": "1890",
+          "model_12": "1890",
+          "model_13": "1890",
+          "model_14": "1948",
+          "model_15": "1890",
+          "model_16": "1890"
+        },
+        "end": "2015",#perfect
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": true, #perfect
+        "eglob": true, #they include World GDP as a control variable
+        "cbind": false,
+        "fexch": true,#perfect
+        "inflexp": false,
+        "foreignir": true,#perfect
+        "fx": {
+          "model_1": false, #perfect
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": true,
+          "model_7": false,
+          "model_8": false,
+          "model_9": false,
+          "model_10": false,
+          "model_11": false,
+          "model_12": false,
+          "model_13:": false,
+          "model_14": false,
+          "model_15": false,
+          "model_16": false
+        },
+        "lrir": true #perfect, they include long-term interest rate as a control variable
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}
+

@@ -93,16 +93,16 @@
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
-        "find": false,
+        "find": true,
         "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": false,
-        "lrir": false
+        "fx": true,
+        "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,

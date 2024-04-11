@@ -29,7 +29,7 @@
         "inttype": "lev_a_eonia",
         "size": "-3bp",
         "axis_trans": "y*100",
-        "dep": "log_m_ip",
+        "dep": "log_m_ip logdiff_m_wpi",
         "conf": "2_SE",
         "main": "inflation",
         "prefer": {

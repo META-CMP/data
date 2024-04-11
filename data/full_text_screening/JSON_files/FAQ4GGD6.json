@@ -6,24 +6,10 @@
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
-                "model_1": 4,
-                "model_2": 4,
-                "model_3": 4,
-                "model_4": 4,
-                "model_5": 4,
-                "model_6": 4,
-                "model_7": 4,
-                "model_8": 5
+                "model_1": 4
         },
         "page": {
-                "model_1": 34,
-                "model_2": 34,
-                "model_3": 34,
-                "model_4": 34,
-                "model_5": 34,
-                "model_6": 34,
-                "model_7": 34,
-                "model_8": 35
+                "model_1": 34
         },
         "irf": true,
         "cum": false
@@ -34,8 +20,8 @@
         "axis_trans": false,
         "dep": "gr_a_rgdp gr_a_deflator",
         "conf": "95",
-        "main": "gdp  inflation",
-        "prefer": true
+        "main": "other",
+        "prefer": false
     },
     "identification_strategy": {
         "iv": false,
@@ -77,24 +63,10 @@
     },
     "country_composition": {
         "list_of_countries": {
-                "model_1": "BH",
-                "model_2": "KW",
-                "model_3": "QA",
-                "model_4": "AE",
-                "model_5": "SA",
-                "model_6": "OM",
-                "model_7": "US",
-                "model_8": "BH, KW, QA, AE, SA, OM"
+                "model_1": "US"
         },
         "n_of_countries": {
-                "model_1": 1,
-                "model_2": 1,
-                "model_3": 1,
-                "model_4": 1,
-                "model_5": 1,
-                "model_6": 1,
-                "model_7": 1,
-                "model_8": 6
+                "model_1": 1
         }
     },
     "further_data_characteristics": {

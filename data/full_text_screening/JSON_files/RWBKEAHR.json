@@ -3,8 +3,15 @@
         "key": "RWBKEAHR",
         "rid1": "ph",
         "rid2": "null",
-        "study_notes": "null",
-        "model_notes": "null",
+        "study_notes": "list_of_countries: responses of EE included because it joined the EA in 2011 and the sample lasts until the end of 2012.",
+        "model_notes": {
+                "model_1": "dep: log_q_gdp because for gdp they plotted accumulated IRFs whereas for deflator not. As we designed our dataset, we could not distinct between cum true or false for different dependent variables within a model.",
+                "model_2": "dep: log_q_gdp because for gdp they plotted accumulated IRFs whereas for deflator not. As we designed our dataset, we could not distinct between cum true or false for different dependent variables within a model.",
+                "model_3": "dep: log_q_emp because for gdp they plotted accumulated IRFs whereas for deflator not. As we designed our dataset, we could not distinct between cum true or false for different dependent variables within a model.",
+                "model_4": "dep: log_q_gdp because for gdp they plotted accumulated IRFs whereas for deflator not. As we designed our dataset, we could not distinct between cum true or false for different dependent variables within a model.",
+                "model_5": "dep: log_q_gdp because for gdp they plotted accumulated IRFs whereas for deflator not. As we designed our dataset, we could not distinct between cum true or false for different dependent variables within a model.",
+                "model_6": "dep: log_q_emp because for gdp they plotted accumulated IRFs whereas for deflator not. As we designed our dataset, we could not distinct between cum true or false for different dependent variables within a model."
+        },
         "figure": {
                 "model_1": 4,
                 "model_2": 4,
@@ -29,15 +36,15 @@
         "size": "22bp",
         "axis_trans": false,
         "dep": {
-                "model_1": "logdiff_a_gdp logdiff_a_deflator",
-                "model_2": "logdiff_a_gdp logdiff_a_deflator",
-                "model_3": "logdiff_empl",
-                "model_4": "logdiff_a_gdp logdiff_a_deflator",
-                "model_5": "logdiff_a_gdp logdiff_a_deflator",
-                "model_6": "logdiff_empl"
+                "model_1": "log_q_gdp logdiff_a_deflator",
+                "model_2": "log_q_gdp logdiff_a_deflator",
+                "model_3": "log_q_emp",
+                "model_4": "log_q_gdp logdiff_a_deflator",
+                "model_5": "log_q_gdp logdiff_a_deflator",
+                "model_6": "log_q_emp"
         },
         "conf": "68 ",
-        "main": "gdp  inflation",
+        "main": "gdp inflation",
         "prefer": {
                 "model_1": true,
                 "model_2": true,
@@ -86,8 +93,15 @@
         "month": false
     },
     "country_composition": {
-        "list_of_countries": "EE, EA",
-        "n_of_countries": 2
+        "list_of_countries": {
+                "model_1": "EE",
+                "model_2": "EA",
+                "model_3": "EE",
+                "model_4": "EE",
+                "model_5": "EA",
+                "model_6": "EE"
+        },
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
         "panel": false,
@@ -109,7 +123,7 @@
     },
     "econometric_details": {
         "pure_rate_shock": false,
-        "convent": true,
+        "convent": false,
         "decomposition": false
     },
     "publication_characteristics": {

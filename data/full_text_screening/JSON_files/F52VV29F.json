@@ -90,7 +90,18 @@
                 "model_9": true,
                 "model_10": false
         },
-        "nr": false,
+        "nr": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true,
+                "model_9": true,
+                "model_10": false
+        },
         "event": false,
         "chol": true,
         "svar": false,

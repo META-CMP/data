@@ -70,7 +70,14 @@
         },
         "svar": false, 
         "signr": false, 
-        "hf": false, 
+        "hf": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 

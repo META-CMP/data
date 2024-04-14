@@ -28,10 +28,10 @@
     "impulse_and_response_variables": { 
         "inttype": {
                 "model_1": "lev_a_reserve_requirement_ratio",
-                "model_2": "lev_a_12_month_lending",
+                "model_2": "lev_a_1_year_lending",
                 "model_3": "lev_a_7_day_repo",
                 "model_4": "lev_a_reserve_requirement_ratio",
-                "model_5": "lev_a_12_month_lending",
+                "model_5": "lev_a_1_year_lending",
                 "model_6": "lev_a_7_day_repo"
         }, 
         "size": "100bp", 
@@ -70,7 +70,14 @@
         },
         "svar": false, 
         "signr": false, 
-        "hf": false, 
+        "hf": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 
@@ -137,7 +144,14 @@
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
+        "pure_rate_shock": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": true,
+                "model_6": true
+        } , 
         "convent": true, 
         "decomposition": false 
     }, 

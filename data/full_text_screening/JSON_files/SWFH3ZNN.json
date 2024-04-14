@@ -14,7 +14,7 @@
         "inttype": "lev_a_3_month_libor", 
         "size": "25bp", 
         "axis_trans": false, 
-        "dep": "logdiff_a_cpi", 
+        "dep": "logdiff_q_cpi", 
         "conf": "80", 
         "main": "inflation", 
         "prefer": true 
@@ -68,16 +68,16 @@
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": false, 
+        "comprice": true, 
         "outpgap": false, 
-        "find": false, 
-        "eglob": false, 
+        "find": true, 
+        "eglob": true, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": true, 
-        "foreignir": false, 
+        "foreignir": true, 
         "fx": false, 
-        "lrir": false 
+        "lrir": true 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 

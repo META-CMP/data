@@ -3,8 +3,20 @@
         "key": "GABJZ6WP", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
-        "model_notes": "null", 
+        "study_notes": "expansionary one standard deviation monetary policy shock which equals -14bp.", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "null",
+                "model_4": "null",
+                "model_5": "null",
+                "model_6": "null",
+                "model_7": "identification_strategy: identification via residuals of Taylor rule, that's the reason why idother is set to true in this model.",
+                "model_8": "null",
+                "model_9": "null",
+                "model_10": "null",
+                "model_11": "null"
+        }, 
         "figure": {
                 "model_1": 6,
                 "model_2": 8,
@@ -35,7 +47,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_shadow_rate", 
+        "inttype": "lev_a_ssr", 
         "size": "-14bp", 
         "axis_trans": false, 
         "dep": {
@@ -73,7 +85,7 @@
                 "model_2": false,
                 "model_3": false,
                 "model_4": false,
-                "model_5": false,
+                "model_5": true,
                 "model_6": false,
                 "model_7": true,
                 "model_8": false,
@@ -94,7 +106,19 @@
                 "model_10": true,
                 "model_11": true
         },  
-        "nr": false, 
+        "nr": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": false,
+                "model_7": false,
+                "model_8": true,
+                "model_9": true,
+                "model_10": true,
+                "model_11": true
+        }, 
         "event": false, 
         "chol": false, 
         "svar": {
@@ -103,8 +127,8 @@
                 "model_3": false,
                 "model_4": false,
                 "model_5": false,
-                "model_6": false,
-                "model_7": true,
+                "model_6": true,
+                "model_7": false,
                 "model_8": false,
                 "model_9": false,
                 "model_10": false,
@@ -138,7 +162,19 @@
         },   
         "heteroskedas": false, 
         "longrun": false, 
-        "idother": false 
+        "idother": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": true,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false,
+                "model_11": false
+        } 
     }, 
     "estimation_method": { 
         "var": true, 
@@ -236,16 +272,52 @@
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": false, 
+        "comprice": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": true,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false,
+                "model_11": false
+        }, 
         "outpgap": false, 
-        "find": false, 
+        "find": true, 
         "eglob": false, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
-        "foreignir": false, 
-        "fx": true, 
-        "lrir": false 
+        "foreignir": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": true,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false,
+                "model_11": false
+        }, 
+        "fx": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": true,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false,
+                "model_11": false
+        }, 
+        "lrir": false
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 

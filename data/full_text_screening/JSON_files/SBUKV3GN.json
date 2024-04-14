@@ -17,7 +17,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "3_month_eurodollar", 
+        "inttype": "lev_a_3_month_eurodollar", 
         "size": "-25bp", 
         "axis_trans": false, 
         "dep": "log_m_ip log_m_cpi", 
@@ -30,7 +30,7 @@
         "forecast_based": true, 
         "nr": false, 
         "event": false, 
-        "chol": false, 
+        "chol": true, 
         "svar": false, 
         "signr": false, 
         "hf": true, 

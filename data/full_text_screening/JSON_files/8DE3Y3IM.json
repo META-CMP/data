@@ -2,7 +2,7 @@
     "general": { 
         "key": "8DE3Y3IM", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "dep: ME: une_rate is assumed since according to the IRF une_rate does not seem to be log transformed. In this case the usage of the level of the rate is likely.", 
         "model_notes": {
           "model_1": "inttype: using shadow rates from Wu and Xia (2016).",

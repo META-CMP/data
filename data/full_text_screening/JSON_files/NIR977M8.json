@@ -2,8 +2,8 @@
     "general": { 
         "key": "NIR977M8", 
         "rid1": "ph", 
-        "rid2": "null", 
-        "study_notes": "size. expansionary monetary policy shock.", 
+        "rid2": "dr", 
+        "study_notes": "size: expansionary monetary policy shock.", 
         "model_notes": {
                 "model_1": "IRFs based on standard measure of mark-up.",
                 "model_2": "IRFs based on overhead labor-adjusted measure of mark-up.",

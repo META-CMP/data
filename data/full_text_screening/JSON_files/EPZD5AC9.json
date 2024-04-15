@@ -2,7 +2,7 @@
     "general": { 
         "key": "EPZD5AC9", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
         "model_notes": "only industrial production IRF needs to be scale-adjusted, they include a linear time trend.", 
         "figure": "A1", 

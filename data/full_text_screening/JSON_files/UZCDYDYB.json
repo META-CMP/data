@@ -6,33 +6,27 @@
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
-                "model_1": 10,
+                "model_1": 11,
                 "model_2": 11,
                 "model_3": 11,
-                "model_4": 11,
-                "model_5": 11,
-                "model_6": 11
+                "model_4": 11
                 
         },   
         "page": {
-                "model_1": 37,
+                "model_1": 38,
                 "model_2": 38,
                 "model_3": 38,
-                "model_4": 38,
-                "model_5": 38,
-                "model_6": 38
+                "model_4": 38
         },    
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
         "inttype": {
-                "model_1": "lev_a_reserve_requirement_ratio",
-                "model_2": "lev_a_1_year_lending",
-                "model_3": "lev_a_7_day_repo",
-                "model_4": "lev_a_reserve_requirement_ratio",
-                "model_5": "lev_a_1_year_lending",
-                "model_6": "lev_a_7_day_repo"
+                "model_1": "lev_a_1_year_lending",
+                "model_2": "lev_a_7_day_repo",
+                "model_3": "lev_a_1_year_lending",
+                "model_4": "lev_a_7_day_repo"
         }, 
         "size": "100bp", 
         "axis_trans": false, 
@@ -43,19 +37,15 @@
                 "model_1": true,
                 "model_2": false,
                 "model_3": false,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false
+                "model_4": false
         }
     }, 
     "identification_strategy": { 
         "iv": {
                 "model_1": true,
                 "model_2": true,
-                "model_3": true,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false
+                "model_3": false,
+                "model_4": false
         },
         "forecast_based": false, 
         "nr": false, 
@@ -63,20 +53,16 @@
         "chol": {
                 "model_1": false,
                 "model_2": false,
-                "model_3": false,
-                "model_4": true,
-                "model_5": true,
-                "model_6": true
+                "model_3": true,
+                "model_4": true
         },
         "svar": false, 
         "signr": false, 
         "hf": {
                 "model_1": true,
                 "model_2": true,
-                "model_3": true,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false
+                "model_3": false,
+                "model_4": false
         }, 
         "heteroskedas": false, 
         "longrun": false, 
@@ -86,10 +72,8 @@
         "var": {
                 "model_1": false,
                 "model_2": false,
-                "model_3": false,
-                "model_4": true,
-                "model_5": true,
-                "model_6": true
+                "model_3": true,
+                "model_4": true
         }, 
         "lp": false, 
         "vecm": false, 
@@ -102,10 +86,8 @@
         "varother": {
                 "model_1": true,
                 "model_2": true,
-                "model_3": true,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false
+                "model_3": false,
+                "model_4": false
         } 
     }, 
     "regime_dependence": { 
@@ -144,14 +126,7 @@
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": {
-                "model_1": false,
-                "model_2": true,
-                "model_3": true,
-                "model_4": false,
-                "model_5": true,
-                "model_6": true
-        } , 
+        "pure_rate_shock": true, 
         "convent": true, 
         "decomposition": false 
     }, 

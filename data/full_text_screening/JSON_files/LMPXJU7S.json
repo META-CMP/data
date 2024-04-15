@@ -2,7 +2,7 @@
     "general": { 
         "key": "LMPXJU7S", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
@@ -58,11 +58,23 @@
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": false, 
+        "var": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false
+        }, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
-        "fvar": false, 
+        "fvar": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true
+        }, 
         "tvar": false, 
         "gvar": false, 
         "bayes": true, 
@@ -100,21 +112,51 @@
                 "model_4": true,
                 "model_5": true
         },    
-        "outpgap": false, 
-        "find": false, 
-        "eglob": false, 
+        "outpgap": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true
+        }, 
+        "find": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true
+        }, 
+        "eglob": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true
+        }, 
         "cbind": false, 
         "fexch": false, 
-        "inflexp": false, 
+        "inflexp": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true
+        }, 
         "foreignir": false, 
         "fx": {
                 "model_1": false,
-                "model_2": true,
+                "model_2": false,
                 "model_3": true,
                 "model_4": true,
                 "model_5": true
         },    
-        "lrir": false 
+        "lrir": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true
+        } 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 

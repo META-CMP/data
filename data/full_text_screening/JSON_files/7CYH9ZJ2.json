@@ -5,29 +5,50 @@
         "rid2": "null", 
         "study_notes": "null", 
         "model_notes": "null", 
-        "figure": 4, 
-        "page": 38, 
+        "figure": {
+          "model_1": 4,
+          "model_2": 5
+        }, 
+        "page": {
+          "model_1": 38,
+          "model_2": 39
+        }, 
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_short_term_rate", 
+        "inttype": "lev_a_1_year_gov", 
         "size": "25bp", 
         "axis_trans": false, 
-        "dep": "log_a_ip log_a_cpi lev_a_une_rate", 
+        "dep": "log_m_ip log_m_cpi lev_m_une_rate", 
         "conf": "68", 
         "main": "gdp  inflation", 
-        "prefer": true
+        "prefer": {
+          "model_1": true,
+          "model_2": false
+        }
     }, 
     "identification_strategy": { 
-        "iv": false, 
-        "forecast_based": true, 
-        "nr": false, 
+        "iv": {
+          "model_1": true,
+          "model_2": true
+        }, 
+        "forecast_based": {
+          "model_1": false,
+          "model_2": true
+        }, 
+        "nr": {
+          "model_1": false,
+          "model_2": true
+        }, 
         "event": false, 
         "chol": false, 
         "svar": false, 
         "signr": false, 
-        "hf": true, 
+        "hf": {
+          "model_1": true,
+          "model_2": false
+        }, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 
@@ -77,12 +98,12 @@
         "inflexp": false, 
         "foreignir": false, 
         "fx": false, 
-        "lrir": false 
+        "lrir": true 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": false, 
-        "convent": false, 
-        "decomposition": true 
+        "pure_rate_shock": true, 
+        "convent": true, 
+        "decomposition": false 
     }, 
     "publication_characteristics": { 
         "cbanker": true

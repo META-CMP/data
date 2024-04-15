@@ -4,7 +4,7 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "only industrial production IRF needs to be scale-adjusted", 
+        "model_notes": "only industrial production IRF needs to be scale-adjusted, they include a linear time trend.", 
         "figure": "A1", 
         "page": 26, 
         "irf": true,
@@ -13,8 +13,8 @@
     "impulse_and_response_variables": { 
         "inttype": "lev_a_repo_rate", 
         "size": "-25bp", 
-        "axis_trans": "log_a_ip_y*100", 
-        "dep": "log_a_ip gr_a_cpi lev_a_une", 
+        "axis_trans": "log_m_ip_y*100", 
+        "dep": "log_m_ip gr_a_cpi lev_m_une_rate", 
         "conf": "90", 
         "main": "other", 
         "prefer": true
@@ -81,7 +81,7 @@
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": false, 
+        "convent": true, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

@@ -22,13 +22,13 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
-        "size": "-23bp", 
+        "size": "-1SD", 
         "axis_trans": false, 
         "dep": {
                 "model_1": "log_q_rgdp gr_a_cpi",
-                "model_2": "lev_q_une",
+                "model_2": "lev_q_une_rate",
                 "model_3": "log_q_rgdp gr_a_cpi",
-                "model_4": "lev_q_une"
+                "model_4": "lev_q_une_rate"
         }, 
         "conf": "68", 
         "main": "other", 
@@ -95,13 +95,18 @@
     "control_variables": { 
         "comprice": true, 
         "outpgap": false, 
-        "find": false, 
-        "eglob": false, 
+        "find": true, 
+        "eglob": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true
+        }, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
         "foreignir": true, 
-        "fx": false, 
+        "fx": true, 
         "lrir": false 
     }, 
     "econometric_details": { 

@@ -22,19 +22,19 @@
                 "model_6": 691
         },   
         "irf": true,
-        "cum": false
+        "cum": true
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_bank_rate", 
         "size": "100bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "log_q_cpi",
-                "model_2": "log_q_cpi",
-                "model_3": "log_q_rgdp",
-                "model_4": "log_q_rgdp",
-                "model_5": "log_q_cpi log_q_rgdp",
-                "model_6": "log_q_cpi log_q_rgdp"
+                "model_1": "logdiff_q_cpi",
+                "model_2": "logdiff_q_cpi",
+                "model_3": "logdiff_q_rgdp",
+                "model_4": "logdiff_q_rgdp",
+                "model_5": "logdiff_q_cpi logdiff_q_rgdp",
+                "model_6": "logdiff_q_cpi logdiff_q_rgdp"
         }, 
         "conf": "68", 
         "main": "inflation other", 
@@ -80,7 +80,7 @@
         "vecm": false, 
         "dyn_ols": "false", 
         "fvar": true, 
-        "tvar": false, 
+        "tvar": true, 
         "gvar": false, 
         "bayes": false, 
         "dsge": false, 
@@ -124,7 +124,7 @@
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": false, 
+        "comprice": true, 
         "outpgap": false, 
         "find": true, 
         "eglob": false, 
@@ -133,7 +133,7 @@
         "inflexp": false, 
         "foreignir": false, 
         "fx": true, 
-        "lrir": false 
+        "lrir": true 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 

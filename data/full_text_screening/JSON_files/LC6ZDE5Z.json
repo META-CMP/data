@@ -91,12 +91,7 @@
     }, 
     "econometric_details": { 
         "pure_rate_shock": false, 
-        "convent": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": true
-        }, 
+        "convent": false, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

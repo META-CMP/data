@@ -22,7 +22,12 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
-        "size": "-1SD", 
+        "size": {
+                "model_1": "-1SD",
+                "model_2": "-23bp",
+                "model_3": "-1SD",
+                "model_4": "-23bp"
+        }, 
         "axis_trans": false, 
         "dep": {
                 "model_1": "log_q_rgdp gr_a_cpi",

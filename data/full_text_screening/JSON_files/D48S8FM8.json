@@ -2,7 +2,7 @@
     "general": { 
         "key": "D48S8FM8", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
@@ -17,12 +17,12 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype ": "lev_a_fed_funds", 
+        "inttype": "lev_a_fed_funds", 
         "size": "25bp", 
         "axis_trans": false, 
-        "dep ": "logdiff_a_rgap logdiff_a_cpi", 
+        "dep": "log_q_rgap gr_a_deflator", 
         "conf": "95", 
-        "main": "gdp  inflation", 
+        "main": "gdp inflation", 
         "prefer": true
     }, 
     "identification_strategy": { 
@@ -34,7 +34,7 @@
         "svar": true, 
         "signr": false, 
         "hf": false, 
-        "heteroskedas": false, 
+        "heteroskedas": true, 
         "longrun": false, 
         "idother": false 
     }, 

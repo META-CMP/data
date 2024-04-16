@@ -2,7 +2,7 @@
     "general": { 
         "key": "JT86GWFE", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
@@ -22,13 +22,18 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
-        "size": "-23bp", 
+        "size": {
+                "model_1": "-1SD",
+                "model_2": "-23bp",
+                "model_3": "-1SD",
+                "model_4": "-23bp"
+        }, 
         "axis_trans": false, 
         "dep": {
                 "model_1": "log_q_rgdp gr_a_cpi",
-                "model_2": "lev_q_une",
+                "model_2": "lev_q_une_rate",
                 "model_3": "log_q_rgdp gr_a_cpi",
-                "model_4": "lev_q_une"
+                "model_4": "lev_q_une_rate"
         }, 
         "conf": "68", 
         "main": "other", 
@@ -95,13 +100,18 @@
     "control_variables": { 
         "comprice": true, 
         "outpgap": false, 
-        "find": false, 
-        "eglob": false, 
+        "find": true, 
+        "eglob": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true
+        }, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
         "foreignir": true, 
-        "fx": false, 
+        "fx": true, 
         "lrir": false 
     }, 
     "econometric_details": { 

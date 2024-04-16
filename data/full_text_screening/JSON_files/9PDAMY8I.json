@@ -2,7 +2,7 @@
     "general": {
         "key": "9PDAMY8I",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "quality_concern: use of HP-filtered data.; Unemployment rate enters the model in log (log_m_une_rate), which makes it difficult to compare the effect size to other model with unemployment rate in levels. We therefore do not extract the IRF of the unemployment rate in this case.",
         "model_notes": "null",
         "figure": {

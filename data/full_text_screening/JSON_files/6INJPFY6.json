@@ -2,7 +2,7 @@
     "general": { 
         "key": "6INJPFY6", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
@@ -22,21 +22,21 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": {
-                "model_1": "lev_a_overnight_lending_rate",
-                "model_2": "lev_a_shadow_rate",
-                "model_3": "lev_a_shadow_rate",
-                "model_4": "lev_a_overnight_lending_rate"
+                "model_1": "lev_a_eonia",
+                "model_2": "lev_a_ssr",
+                "model_3": "lev_a_ssr",
+                "model_4": "lev_a_eonia"
         },
         "size": "-25bp", 
         "axis_trans": {
-                "model_1": "y*100 lev_a_overnight_lending_rate_false",
-                "model_2": "y*100 lev_a_shadow_rate_false",
-                "model_3": "y*100 lev_a_shadow_rate_false",
-                "model_4": "y*100 lev_a_overnight_lending_rate_false"
+                "model_1": "y*100 lev_a_eonia__false",
+                "model_2": "y*100 lev_a_ssr_false",
+                "model_3": "y*100 lev_a_ssr_false",
+                "model_4": "y*100 lev_a_eonia_false"
         }, 
-        "dep": "logdiff_a_emp logdiff_a_cpi logdiff_a_rgdp", 
+        "dep": "logdiff_q_emp logdiff_m_cpi logdiff_q_rgdp", 
         "conf": "90", 
-        "main": "gdp  emp  inflation", 
+        "main": "gdp emp inflation", 
         "prefer": {
                 "model_1": true,
                 "model_2": true,
@@ -104,15 +104,15 @@
     }, 
     "control_variables": { 
         "comprice": true, 
-        "outpgap": false, 
+        "outpgap": true, 
         "find": true, 
-        "eglob": false, 
+        "eglob": true, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
-        "foreignir": false, 
+        "foreignir": true, 
         "fx": true, 
-        "lrir": false 
+        "lrir": true 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 

@@ -2,8 +2,8 @@
     "general": { 
         "key": "4I9VK6KB", 
         "rid1": "ph", 
-        "rid2": "null", 
-        "study_notes": "null", 
+        "rid2": "dr", 
+        "study_notes": "they include a linear and a quadratic term in the model.", 
         "model_notes": "null", 
         "figure": 2, 
         "page": 1214, 
@@ -14,7 +14,7 @@
         "inttype": "lev_a_fed_funds", 
         "size": "25bp", 
         "axis_trans": "y*100", 
-        "dep": "log_a_ip log_a_cpi", 
+        "dep": "log_m_ip log_m_cpi", 
         "conf": "68", 
         "main": "gdp", 
         "prefer": true 
@@ -81,7 +81,7 @@
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": false, 
+        "convent": true, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

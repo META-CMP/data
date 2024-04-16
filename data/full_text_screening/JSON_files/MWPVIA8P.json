@@ -11,7 +11,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_12_month_bond", 
+        "inttype": "lev_a_1_year_gov", 
         "size": "-25bp", 
         "axis_trans": false, 
         "dep": "log_m_ip log_m_cpi", 
@@ -20,8 +20,8 @@
         "prefer": true
     }, 
     "identification_strategy": { 
-        "iv": false, 
-        "forecast_based": true, 
+        "iv": true, 
+        "forecast_based": false, 
         "nr": false, 
         "event": false, 
         "chol": false, 
@@ -81,7 +81,7 @@
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": false, 
+        "convent": true, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

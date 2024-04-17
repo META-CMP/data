@@ -3,10 +3,10 @@
         "key": "DMN9K3YP",
         "rid1": "fp",
         "rid2": "sg",
-        "study_notes": "We interprete the estimation method as a variant of local projections and assume that the shock enters the regression in basis points, which implies shock size is equal to 1bp (see figure 1, p. 58). We also assume that the dependent variable is the growth rate of industrial production at each time horizon, as implied by the authors' interpretation of the IRFs.",
+        "study_notes": "null",
         "model_notes": {
-              "Overall monetary policy news shock.",
-              "MP shock orthogonal to professionals' GDP forecast revisions, i.e. the “truly unexpected” contractionary monetary policy shock."
+              "model_1": "Overall monetary policy news shock.",
+              "model_2": "MP shock orthogonal to professionals' GDP forecast revisions, i.e. the ``truly unexpected contractionary monetary policy shock''."
             },
         "figure": {
               "model_1": "Fig. 7 Panel A",
@@ -14,11 +14,11 @@
             },
         "page": 65,
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_1_year_gov",
-        "size": "1bp",
+        "size": "100bp",
         "axis_trans": false,
         "dep": "gr_m_ip",
         "conf": "2_SE",
@@ -29,12 +29,18 @@
             }
     },
     "identification_strategy": {
-        "iv": false,
-        "forecast_based": {
+        "iv": {
                 "model_1": false,
                 "model_2": true
                 },
-        "nr": false,
+        "forecast_based": {
+                "model_1": true,
+                "model_2": false
+                },
+        "nr": {
+                "model_1": true,
+                "model_2": false
+                },
         "event": false,
         "chol": false,
         "svar": false,
@@ -76,7 +82,7 @@
     "further_data_characteristics": {
         "panel": false,
         "start": "01-1995",
-        "end": "12-2014",
+        "end": "03-2014",
         "samplesize": "null"
     },
     "control_variables": {
@@ -92,12 +98,9 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": false,
-        "convent": false,
-        "decomposition": {
-            "model_1": false,
-            "model_2": true
-          }
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
     },
     "publication_characteristics": {
         "cbanker": false

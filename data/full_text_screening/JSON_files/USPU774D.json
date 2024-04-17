@@ -2,7 +2,7 @@
     "general": { 
         "key": "USPU774D", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
@@ -17,9 +17,9 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_3_month_money_market_rate", 
+        "inttype": "lev_a_3_month_interbank", 
         "size": "1SD", 
-        "axis_trans": "y*100 lev_a_3_month_money_market_rate_false", 
+        "axis_trans": "y*100 lev_a_3_month_interbank_false", 
         "dep": "log_q_rgdp gr_q_deflator", 
         "conf": "90", 
         "main": "gdp  inflation", 
@@ -72,7 +72,10 @@
     }, 
     "further_data_characteristics": { 
         "panel": false, 
-        "start": "Q1-1985", 
+        "start": {
+                "model_1": "Q1-1991",
+                "model_2": "Q1-1985"
+        }, 
         "end": "Q3-2005", 
         "samplesize": "null" 
     }, 

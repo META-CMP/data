@@ -2,14 +2,28 @@
     "general": { 
         "key": "3WZLJ92M", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
-        "model_notes": "null", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "null",
+                "model_4": "symmetric priors with optimal tightness hyperparameter computed as in Giannone et al. (2015).",
+                "model_5": "asymmetric priors following Chan (2019)."
+        }, 
         "figure": {
-                "model_1": 1
+                "model_1": 1,
+                "model_2": 17,
+                "model_3": 17,
+                "model_4": "Appendix B.1",
+                "model_5": "Appendix B.1"
         },   
         "page": {
-                "model_1": 19
+                "model_1": 19,
+                "model_2": 47,
+                "model_3": 47,
+                "model_4": "Appendix XVI",
+                "model_5": "Appendix XVI"
         },    
         "irf": true,
         "cum": false
@@ -18,13 +32,15 @@
         "inttype": "lev_a_1_year_gov", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": {
-                "model_1": "log_a_ip log_a_cpi"
-        }, 
+        "dep": "log_m_ip log_m_cpi", 
         "conf": "90", 
-        "main": "gdp  inflation", 
+        "main": "gdp inflation", 
         "prefer": {
-                "model_1": false
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false
         } 
     }, 
     "identification_strategy": { 
@@ -41,13 +57,13 @@
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": true, 
+        "var": false, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
         "fvar": false, 
         "tvar": false, 
-        "gvar": false, 
+        "gvar": true, 
         "bayes": true, 
         "dsge": false, 
         "varother": false 
@@ -57,8 +73,20 @@
         "upr": false, 
         "scr": false, 
         "dcr": false, 
-        "hike": false, 
-        "cut": false 
+        "hike": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false
+        }, 
+        "cut": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false
+        } 
     }, 
     "data_frequency": { 
         "annual": false, 
@@ -66,38 +94,30 @@
         "month": true 
     }, 
     "country_composition": { 
-        "list_of_countries": {
-                "model_1": "US"
-        },    
-        "n_of_countries": {
-                "model_1": 1
-        } 
+        "list_of_countries": "US",    
+        "n_of_countries": 1
     }, 
     "further_data_characteristics": { 
         "panel": false, 
-        "start": {
-                "model_1": "01-1990"
-        },    
-        "end": {
-                "model_1": "09-2018"
-        },    
+        "start": "01-1990",    
+        "end": "09-2018",    
         "samplesize": "null" 
     }, 
     "control_variables": { 
         "comprice": true, 
         "outpgap": false, 
         "find": true, 
-        "eglob": false, 
+        "eglob": true, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
         "foreignir": true, 
         "fx": true, 
-        "lrir": false 
+        "lrir": true 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": false, 
-        "convent": false, 
+        "pure_rate_shock": true, 
+        "convent": true, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

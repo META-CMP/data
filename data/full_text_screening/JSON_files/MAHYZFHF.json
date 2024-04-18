@@ -36,7 +36,7 @@
         "var": false,
         "lp": false,
         "vecm": false,
-        "dyn_ols": true,
+        "dyn_ols": "ardl",
         "fvar": false,
         "tvar": false,
         "gvar": false,

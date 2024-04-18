@@ -2,7 +2,7 @@
     "general": {
         "key": "C6UVA3Z2",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "Specificaition (log vs level) not clear, but interpretation of IRFs is in percent.",
         "model_notes": "null",
         "figure": 1,
@@ -15,7 +15,7 @@
         "size": "100bp",
         "axis_trans": false,
         "dep": "log_m_cpi log_m_une_rate",
-        "conf": "68 & 90",
+        "conf": "68",
         "main": "emp inflation",
         "prefer": true
     },

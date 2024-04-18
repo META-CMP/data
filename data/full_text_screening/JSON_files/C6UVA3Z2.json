@@ -14,7 +14,7 @@
         "inttype": "lev_a_3_month_gov",
         "size": "100bp",
         "axis_trans": false,
-        "dep": "log_m_cpi log_m_une_rate",
+        "dep": "log_m_cpi lev_m_une_rate",
         "conf": "68",
         "main": "emp inflation",
         "prefer": true

@@ -2,7 +2,7 @@
     "general": {
         "key": "DRELBLR3",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
@@ -142,7 +142,7 @@
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": false,
+        "fx": true,
         "lrir": false
     },
     "econometric_details": {

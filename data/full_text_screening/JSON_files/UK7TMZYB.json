@@ -2,7 +2,7 @@
     "general": {
         "key": "UK7TMZYB",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "null",
         "model_notes": "null",
         "figure": 1,
@@ -68,7 +68,7 @@
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
         "find": false,
         "eglob": false,

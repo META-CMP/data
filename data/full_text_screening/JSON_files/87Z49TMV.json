@@ -75,26 +75,26 @@
     },
     "impulse_and_response_variables": {
         "inttype": {
-          "model_1": "lev_m_1_year_gov",
-          "model_2": "lev_m_1_year_gov",
-          "model_3": "lev_m_1_year_gov",
-          "model_4": "lev_m_1_year_gov",
-          "model_5": "lev_m_1_year_gov_de",
-          "model_6": "lev_m_1_year_gov_de",
-          "model_7": "lev_m_1_year_gov_de",
-          "model_8": "lev_m_1_year_gov",
-          "model_9": "lev_m_1_year_gov",
-          "model_10": "lev_m_1_year_gov",
-          "model_11": "lev_m_1_year_gov",
-          "model_12": "lev_m_1_year_gov",
-          "model_13": "lev_m_1_year_gov",
-          "model_14": "lev_m_1_year_gov",
-          "model_15": "lev_m_1_year_gov",
-          "model_16": "lev_m_1_year_gov",
-          "model_17": "lev_m_1_year_gov",
-          "model_18": "lev_m_1_year_gov",
-          "model_19": "lev_m_1_year_gov",
-          "model_20": "lev_m_1_year_gov_de"
+          "model_1": "lev_a_1_year_gov",
+          "model_2": "lev_a_1_year_gov",
+          "model_3": "lev_a_1_year_gov",
+          "model_4": "lev_a_1_year_gov",
+          "model_5": "lev_a_1_year_gov_de",
+          "model_6": "lev_a_1_year_gov_de",
+          "model_7": "lev_a_1_year_gov_de",
+          "model_8": "lev_a_1_year_gov",
+          "model_9": "lev_a_1_year_gov",
+          "model_10": "lev_a_1_year_gov",
+          "model_11": "lev_a_1_year_gov",
+          "model_12": "lev_a_1_year_gov",
+          "model_13": "lev_a_1_year_gov",
+          "model_14": "lev_a_1_year_gov",
+          "model_15": "lev_a_1_year_gov",
+          "model_16": "lev_a_1_year_gov",
+          "model_17": "lev_a_1_year_gov",
+          "model_18": "lev_a_1_year_gov",
+          "model_19": "lev_a_1_year_gov",
+          "model_20": "lev_a_1_year_gov_de"
         },
         "size": {
           "model_1": "1SD",
@@ -350,31 +350,10 @@
         "inflexp": false,
         "foreignir": false,
         "fx": false,
-        "lrir": false
+        "lrir": true
     },
     "econometric_details": {
-        "pure_rate_shock": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": false,
-          "model_5": false,
-          "model_6": false,
-          "model_7": false,
-          "model_8": false,
-          "model_9": false,
-          "model_10": false,
-          "model_11": false,
-          "model_12": true,
-          "model_13": false,
-          "model_14": false,
-          "model_15": false,
-          "model_16": false,
-          "model_17": false,
-          "model_18": false,
-          "model_19": false,
-          "model_20": false
-        },
+        "pure_rate_shock": true,
         "convent": {
           "model_1": false,
           "model_2": false,
@@ -424,5 +403,3 @@
         "cbanker": true
     }
 }
-
-

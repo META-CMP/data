@@ -2,7 +2,7 @@
     "general": {
         "key": "CL5M62K2",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "null",
         "model_notes": "null",
         "figure": "2b",
@@ -76,7 +76,7 @@
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": false,
+        "fx": true,
         "lrir": true
     },
     "econometric_details": {

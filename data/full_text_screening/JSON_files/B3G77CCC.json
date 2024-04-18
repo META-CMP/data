@@ -2,8 +2,8 @@
     "general": {
         "key": "B3G77CCC",
         "rid1": "fp",
-        "rid2": "null",
-        "study_notes": "fvar: The paper employs a structural factor model, of which the FAVAR is a special case.; panel: false because it is only for Hungary.",
+        "rid2": "dr",
+        "study_notes": "null",
         "model_notes": "null",
         "figure": "2 & 3",
         "page": "29 & 30",
@@ -11,10 +11,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_3_month_short_term_rate",
+        "inttype": "lev_a_short_term_rate",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "lev_q_gdp lev_q_une_rate gr_a_cpi",
+        "dep": "log_q_gdp lev_q_une_rate gr_a_cpi",
         "conf": "68",
         "main": "gdp emp inflation",
         "prefer": true
@@ -25,7 +25,7 @@
         "nr": false,
         "event": false,
         "chol": false,
-        "svar": false,
+        "svar": true,
         "signr": true,
         "hf": false,
         "heteroskedas": false,
@@ -37,12 +37,12 @@
         "lp": false,
         "vecm": false,
         "dyn_ols": "false",
-        "fvar": false,
+        "fvar": true,
         "tvar": false,
         "gvar": false,
         "bayes": false,
         "dsge": false,
-        "varother": true
+        "varother": false
     },
     "regime_dependence": {
         "lor": false,
@@ -68,10 +68,10 @@
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": "null",
-        "outpgap": "null",
-        "find": "null",
-        "eglob": "null",
+        "comprice": true,
+        "outpgap": false,
+        "find": true,
+        "eglob": true,
         "cbind": false,
         "fexch": false,
         "inflexp": true,

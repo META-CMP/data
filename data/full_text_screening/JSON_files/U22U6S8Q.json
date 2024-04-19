@@ -13,8 +13,8 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
         "size": "25bp",
-        "axis_trans": "y*100 lev_a_fed_funds_false",
-        "dep": "logdiff_a_gap logdiff_a_cpi",
+        "axis_trans": false,
+        "dep": "logdiff_q_gap logdiff_q_cpi",
         "conf": "95",
         "main": "other",
         "prefer": true
@@ -40,7 +40,7 @@
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": false,
+        "bayes": true,
         "dsge": true,
         "varother": false
     },

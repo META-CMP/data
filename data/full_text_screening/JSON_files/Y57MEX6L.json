@@ -3,7 +3,7 @@
         "key": "Y57MEX6L", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "pure_rate_shock: false because sign restrictions restrict the response of the exchange rate as well. ", 
         "model_notes": "null", 
         "figure": {
                 "model_1": 1,
@@ -41,12 +41,12 @@
     }, 
     "identification_strategy": { 
         "iv": false, 
-        "forecast_based": true, 
+        "forecast_based": false, 
         "nr": false, 
         "event": false, 
         "chol": false, 
-        "svar": true, 
-        "signr": false, 
+        "svar": false, 
+        "signr": true, 
         "hf": false, 
         "heteroskedas": false, 
         "longrun": false, 
@@ -100,7 +100,7 @@
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
+        "pure_rate_shock": false, 
         "convent": true, 
         "decomposition": false 
     }, 

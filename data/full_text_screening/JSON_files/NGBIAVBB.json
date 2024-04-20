@@ -3,7 +3,7 @@
         "key": "NGBIAVBB", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "pure_rate_shock: false because weighted call money rate is used and India used several convenational monetary policy tools in the corresponding time period; dep: periodicity could also be _a_ according to figure 1 plots.", 
         "model_notes": "model 1: low uncertainty regime; model 2: high uncertaintly regime", 
         "figure": {
                 "model_1": 7,
@@ -17,7 +17,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_weighted_call_money_rate", 
+        "inttype": "lev_a_callrate", 
         "size": "100bp", 
         "axis_trans": false, 
         "dep": "gr_m_ip gr_m_cpi", 
@@ -86,8 +86,8 @@
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
-        "convent": false,
+        "pure_rate_shock": false, 
+        "convent": true,
         "decomposition": false 
     }, 
     "publication_characteristics": { 

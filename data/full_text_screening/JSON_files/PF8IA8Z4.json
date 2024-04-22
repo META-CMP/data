@@ -2,7 +2,7 @@
     "general": {
         "key": "PF8IA8Z4",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "dep: They use a GDP chain-type price index to measure prices, which is similar to an implicit price deflator, we therefore code it as deflator (see https://www.bea.gov/resources/methodologies/nipa-handbook/pdf/all-chapters.pdf).; outpgap: Output gap proxied by capacity utilization.; For the second model in the paper, the IRF of fed_funds is missing, therfore not extracted due to missing shock size value.",
         "model_notes": "null",
         "figure": "1 and A1",
@@ -15,7 +15,7 @@
         "size": "1SD",
         "axis_trans": false,
         "dep": "log_q_rgdp log_q_deflator",
-        "conf": "1SE",
+        "conf": "1_SE",
         "main": "gdp inflation",
         "prefer": true
     },

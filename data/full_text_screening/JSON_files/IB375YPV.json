@@ -2,9 +2,15 @@
     "general": {
         "key": "IB375YPV",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "null",
-        "model_notes": "null",
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "using employment micro data at the firm level instead of aggregate data.",
+          "model_3": "employment micro data by firm level: small firms.",
+          "model_4": "employment micro data by firm level: medium firms.",
+          "model_5": "employment micro data by firm level: large firms."
+        },
         "figure": {
           "model_1": 1,
           "model_2": 2,
@@ -40,7 +46,7 @@
     "identification_strategy": {
         "iv": false,
         "forecast_based": true,
-        "nr": false,
+        "nr": true,
         "event": false,
         "chol": false,
         "svar": false,

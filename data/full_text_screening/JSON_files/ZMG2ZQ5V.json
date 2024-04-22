@@ -2,14 +2,14 @@
     "general": {
         "key": "ZMG2ZQ5V",
         "rid1": "fp",
-        "rid2": "null",
-        "study_notes": "null",
+        "rid2": "dr",
+        "study_notes": "varother: interacted panel VAR.",
         "model_notes": "null",
         "figure": {
           "model_1": "1 left",
           "model_2": "1 middle",
           "model_3": "2 left",
-          "model_4": "2 middle",
+          "model_4": "2 middle"
         },
         "page": {
           "model_1": 3,
@@ -52,7 +52,7 @@
         "gvar": false,
         "bayes": true,
         "dsge": false,
-        "varother": false
+        "varother": true
     },
     "regime_dependence": {
         "lor": false,
@@ -81,7 +81,7 @@
         "comprice": false,
         "outpgap": false,
         "find": true,
-        "eglob": false,
+        "eglob": true,
         "cbind": false,
         "fexch": false,
         "inflexp": false,

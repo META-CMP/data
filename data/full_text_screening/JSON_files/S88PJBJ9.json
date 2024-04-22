@@ -2,7 +2,7 @@
     "general": {
         "key": "S88PJBJ9",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
@@ -16,13 +16,17 @@
           "model_3": 11
         },
         "irf": true,
-        "cum": true
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
-        "size": "null",
+        "size": "100bp",
         "axis_trans": false,
-        "dep": "lev_q_gap logdiff_q_deflator",
+        "dep": {
+          "model_1": "log_q_gap log_q_deflator",
+          "model_2": "log_q_gap logdiff_q_deflator",
+          "model_3": "log_q_gap logdiff_q_deflator"
+        },
         "conf": "68",
         "main": "gdp inflation other",
         "prefer": {

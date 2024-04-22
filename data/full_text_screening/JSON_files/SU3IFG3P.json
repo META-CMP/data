@@ -2,7 +2,7 @@
     "general": {
         "key": "SU3IFG3P",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
@@ -83,7 +83,10 @@
         "comprice": true,
         "outpgap": false,
         "find": false,
-        "eglob": false,
+        "eglob": {
+          "model_1": false,
+          "model_2": true
+        },
         "cbind": false,
         "fexch": false,
         "inflexp": false,

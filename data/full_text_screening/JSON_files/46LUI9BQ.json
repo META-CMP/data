@@ -2,9 +2,9 @@
     "general": {
         "key": "46LUI9BQ",
         "rid1": "fp",
-        "rid2": "null",
-        "study_notes": false,
-        "model_notes": false,
+        "rid2": "dr",
+        "study_notes": "null",
+        "model_notes": "null",
         "figure": {
           "model_1": 1,
           "model_2": 2,
@@ -44,14 +44,19 @@
         "main": "gdp inflation",
         "prefer": {
           "model_1": false,
-          "model_2": false,
-          "model_3": "null",
-          "model_4": "null"
+          "model_2": true,
+          "model_3": false,
+          "model_4": false
         }
     },
     "identification_strategy": {
         "iv": false,
-        "forecast_based": false,
+        "forecast_based": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+          "model_4": false
+        },
         "nr": {
           "model_1": false,
           "model_2": true,
@@ -88,9 +93,9 @@
         "vecm": false,
         "dyn_ols": {
           "model_1": false,
-          "model_2": "ardl",
+          "model_2": true,
           "model_3": false,
-          "model_4": "ardl"
+          "model_4": true
         },
         "fvar": false,
         "tvar": false,

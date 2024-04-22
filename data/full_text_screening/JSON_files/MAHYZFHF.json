@@ -2,8 +2,8 @@
     "general": {
         "key": "MAHYZFHF",
         "rid1": "fp",
-        "rid2": "null",
-        "study_notes": "null",
+        "rid2": "dr",
+        "study_notes": "they include a time trend in the model.",
         "model_notes": "null",
         "figure": 12,
         "page": 125,
@@ -14,7 +14,7 @@
         "inttype": "lev_a_short_term_rate",
         "size": "-25bp",
         "axis_trans": false,
-        "dep": "gr_q_cpi",
+        "dep": "gr_a_cpi",
         "conf": "90",
         "main": "other",
         "prefer": true
@@ -22,7 +22,7 @@
     "identification_strategy": {
         "iv": false,
         "forecast_based": true,
-        "nr": false,
+        "nr": true,
         "event": false,
         "chol": false,
         "svar": false,

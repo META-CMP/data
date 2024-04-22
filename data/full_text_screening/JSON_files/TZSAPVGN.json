@@ -2,7 +2,7 @@
     "general": {
         "key": "TZSAPVGN",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "null",
         "model_notes": "null",
         "figure": "Appendix: Impulse Response Functions for Basic Model",
@@ -76,7 +76,7 @@
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": false,
+        "fx": true,
         "lrir": false
     },
     "econometric_details": {

@@ -2,7 +2,7 @@
     "general": {
         "key": "MR5H28J9",
         "rid1": "me",
-        "rid2": "null",
+        "rid2": "sg",
         "study_notes": "Many models have not been coded, for detailed reasoning see the notes in the pdf.",
         "model_notes": {
                 "model_1": "null",
@@ -11,7 +11,7 @@
                 "model_4": "chol: ordering of the variables changes, not contemporaneous effect of prices on policy rate but from policy rate to prices.",
                 "model_5": "null",
                 "model_6": "null",
-                "model_7": "null"
+                "model_7": "sg: Fig 11 column 2 is similar, but left out, because the Figure does not fit to the description in the text."
         },
         "figure": {
                 "model_1": 2,

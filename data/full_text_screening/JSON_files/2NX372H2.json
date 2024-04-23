@@ -2,8 +2,8 @@
     "general": {
         "key": "2NX372H2",
         "rid1": "me",
-        "rid2": "null",
-        "study_notes": "null",
+        "rid2": "sg",
+        "study_notes": "sg:they say they use first differenced data in the VAR and make no statement about cumulative IRFs, but they look cumulative (very persistent and don't fall back to zero. this is typical pattern for FD estimation and then cumulation). Also the captions over the IRFs point to a level interpretation.",
         "model_notes": {
                 "model_1": "null",
                 "model_2": "null",
@@ -26,7 +26,7 @@
                 
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_3_month_gov",

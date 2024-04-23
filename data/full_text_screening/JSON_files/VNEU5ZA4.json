@@ -4,7 +4,10 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "model 1: high excell bond premium regime; model 2: low excess bond premium regime.", 
+        "model_notes": {
+                "model_1": "high excess bond premium regime",
+                "model_2": "low excess bond premium regime."
+        }, 
         "figure": {
                 "model_1": 3,
                 "model_2": 3
@@ -28,7 +31,7 @@
     "identification_strategy": { 
         "iv": true, 
         "forecast_based": true, 
-        "nr": false, 
+        "nr": true, 
         "event": false, 
         "chol": false, 
         "svar": false, 

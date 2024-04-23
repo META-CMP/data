@@ -35,7 +35,7 @@
         "iv": false, 
         "forecast_based": {
                 "model_1": true,
-                "model_2": true,
+                "model_2": false,
                 "model_3": true
         },    
         "nr": {
@@ -44,7 +44,11 @@
                 "model_3": true
         }, 
         "event": false, 
-        "chol": false, 
+        "chol": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false
+        }, 
         "svar": false, 
         "signr": false, 
         "hf": false, 

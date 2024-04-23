@@ -8,7 +8,7 @@
         "figure": "5.2",
         "page": 27,
         "irf": false,
-        "cum": true
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_interbank",

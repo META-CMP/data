@@ -14,7 +14,7 @@
         "inttype": "lev_a_fed_funds", 
         "size": "25bp", 
         "axis_trans": false,
-        "dep": "logdiff_a_ip lev_m_une logdiff_a_cpi", 
+        "dep": "logdiff_a_ip lev_m_une_rate logdiff_a_cpi", 
         "conf": "90", 
         "main": "inflation", 
         "prefer": true 

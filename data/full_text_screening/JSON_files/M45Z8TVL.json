@@ -80,7 +80,7 @@
         "inflexp": false,
         "foreignir": false,
         "fx": false,
-        "lrir": false
+        "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,

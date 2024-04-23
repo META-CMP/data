@@ -82,7 +82,7 @@
     "econometric_details": { 
         "pure_rate_shock": true, 
         "convent": true, 
-        "decomposition": true 
+        "decomposition": false 
     }, 
     "publication_characteristics": { 
         "cbanker": true

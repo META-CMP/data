@@ -84,9 +84,9 @@
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
-        "find": false,
+        "find": true,
         "eglob": false,
         "cbind": false,
         "fexch": false,

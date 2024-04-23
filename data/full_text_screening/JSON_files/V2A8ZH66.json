@@ -131,6 +131,7 @@
                   "model_57": "530bp",
                   "model_58": "380bp"
                   },
+        "axis_trans": null, 
         "dep": "gr_rgdp",
         "conf": "1_SE",
         "main": "gdp",
@@ -256,6 +257,7 @@
                 "model_57": false,
                 "model_58": false
                 },
+        "forecast_based": false,
         "nr": false,
         "event": false,
         "chol": {
@@ -609,6 +611,7 @@
         "lrir": false
     },
     "econometric_details": {
+        "pure_rate_shock": true,
         "convent": true,
         "decomposition": false
     },

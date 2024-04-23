@@ -24,7 +24,7 @@
         "forecast_based": false, 
         "nr": false, 
         "event": false, 
-        "chol": false, 
+        "chol": true, 
         "svar": false, 
         "signr": true, 
         "hf": false, 

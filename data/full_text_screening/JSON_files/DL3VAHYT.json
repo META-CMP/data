@@ -4,7 +4,7 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "figure 2 and 3 not coded, as they show the same IRFs as figure 1 (comparisons with simulated model outputs).", 
+        "model_notes": "figure 2 and 4 not coded, as they show the same IRFs as figure 1 (comparisons with simulated model outputs).", 
         "figure": 1, 
         "page": 106, 
         "irf": true,

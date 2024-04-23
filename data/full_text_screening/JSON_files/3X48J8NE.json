@@ -100,13 +100,13 @@
           "model_13": "log_m_emp"
           },
         "conf": {
-          "model_1": "1SD",
+          "model_1": "1_SE",
           "model_2": "90",
           "model_3": "90",
           "model_4": "90",
           "model_5": "90",
           "model_6": "90",
-          "model_7": "1SD",
+          "model_7": "1_SE",
           "model_8": "95",
           "model_9": "90",
           "model_10": "90",

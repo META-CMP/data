@@ -4,7 +4,11 @@
         "rid1": "ph", 
         "rid2": "dr", 
         "study_notes": "null", 
-        "model_notes": "null", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "dep: ppi renamed as wpi due to US context",
+                "model_3": "dep: ppi renamed as wpi due to US context"
+        }, 
         "figure": {
                 "model_1": 2,
                 "model_2": 4,

@@ -2,39 +2,127 @@
     "general": { 
         "key": "8DE3Y3IM", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "dep: ME: une_rate is assumed since according to the IRF une_rate does not seem to be log transformed. In this case the usage of the level of the rate is likely.", 
-        "model_notes": "null", 
-        "figure": 4, 
-        "page": 12, 
+        "model_notes": {
+          "model_1": "inttype: using shadow rates from Wu and Xia (2016).",
+          "model_2": "inttype: using shadow rates from Krippner (2012).",
+          "model_3": "inttype: using YZ(3)-25 policy rate from Bauer and Rudebusch (2016).",
+          "model_4": "inttype: using MZ(2)-25 policy rate from Bauer and Rudebusch (2016).",
+          "model_5": "using Miranda-Arippino and Ricco (2021) high frequency-identification.",
+          "model_6": "null",
+          "model_7": "null"
+        }, 
+        "figure": {
+          "model_1": 4,
+          "model_2": "Appendix A.7",
+          "model_3": "Appendix A.8",
+          "model_4": "Appendix A.9",
+          "model_5": "Appendix A.10",
+          "model_6": "Online Appendix O1",
+          "model_7": "Online Appendix O2"
+        }, 
+        "page": {
+          "model_1": 12,
+          "model_2": 18,
+          "model_3": 19,
+          "model_4": 20,
+          "model_5": 21,
+          "model_6": "Online Appendix 2",
+          "model_7": "Online Appendix 3"
+        }, 
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_ssr", 
         "size": "-100bp", 
-        "axis_trans": "log_a_rgdp_y*100 log_a_cpi_y*100", 
-        "dep": "log_a_rgdp log_a_cpi lev_a_une_rate", 
+        "axis_trans": {
+          "model_1": "log_q_rgdp_y*100 log_q_cpi_y*100",
+          "model_2": "log_q_rgdp_y*100 log_q_cpi_y*100",
+          "model_3": "log_q_rgdp_y*100 log_q_cpi_y*100",
+          "model_4": "log_q_rgdp_y*100 log_q_cpi_y*100",
+          "model_5": false,
+          "model_6": "log_q_rgdp log_q_cpi lev_q_une_rate",
+          "model_7": "log_q_rgdp log_q_cpi lev_q_une_rate"
+        }, 
+        "dep": {
+          "model_1": "log_q_rgdp log_q_cpi lev_q_une_rate",
+          "model_2": "log_q_rgdp log_q_cpi lev_q_une_rate",
+          "model_3": "log_q_rgdp log_q_cpi lev_q_une_rate",
+          "model_4": "log_q_rgdp log_q_cpi lev_q_une_rate",
+          "model_5": "log_q_ip log_q_cpi lev_q_une_rate",
+          "model_6": "log_q_rgdp log_q_cpi lev_q_une_rate",
+          "model_7": "log_q_rgdp log_q_cpi lev_q_une_rate"
+        }, 
         "conf": "68", 
         "main": "other", 
-        "prefer": true
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false
+        }
     }, 
     "identification_strategy": { 
-        "iv": false, 
+        "iv": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false
+        },
         "forecast_based": false, 
         "nr": false, 
         "event": false, 
-        "chol": true, 
+        "chol": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": false,
+          "model_6": true,
+          "model_7": true
+        }, 
         "svar": false, 
         "signr": false, 
-        "hf": false, 
+        "hf": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false
+        }, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": true, 
-        "lp": false, 
+        "var": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": false,
+          "model_6": true,
+          "model_7": true
+        }, 
+        "lp": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false
+        }, 
         "vecm": false, 
         "dyn_ols": "false", 
         "fvar": false, 
@@ -63,14 +151,38 @@
     }, 
     "further_data_characteristics": { 
         "panel": false, 
-        "start": "Q1-1974", 
-        "end": "Q1-2017", 
+        "start": {
+          "model_1": "Q1-1974",
+          "model_2": "Q1-1974",
+          "model_3": "Q1-1974",
+          "model_4": "Q1-1974",
+          "model_5": "Q1-1974",
+          "model_6": "Q1-1974",
+          "model_7": "Q1-1982"
+        }, 
+        "end": {
+          "model_1": "Q1-2017",
+          "model_2": "Q1-2017",
+          "model_3": "Q1-2017",
+          "model_4": "Q1-2017",
+          "model_5": "Q1-2017",
+          "model_6": "Q4-2007",
+          "model_7": "Q1-2017"
+        }, 
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": false, 
+        "comprice": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false
+        }, 
         "outpgap": false, 
-        "find": false, 
+        "find": true, 
         "eglob": false, 
         "cbind": false, 
         "fexch": false, 

@@ -2,7 +2,7 @@
     "general": { 
         "key": "WTKGYQLC", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
@@ -28,7 +28,7 @@
         "inttype": "lev_a_call_rate", 
         "size": "null",      
         "axis_trans": false, 
-        "dep": "log_a_cpi log_a_ip", 
+        "dep": "log_m_cpi log_m_ip", 
         "conf": "68", 
         "main": "other", 
         "prefer": {
@@ -116,7 +116,7 @@
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": false, 
+        "convent": true, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

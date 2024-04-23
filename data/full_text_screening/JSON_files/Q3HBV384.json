@@ -2,13 +2,13 @@
     "general": {
         "key": "Q3HBV384",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "The TVP-VAR estimations from chapter 3 are not extracted because of missing shock size (no SOFR IRFs). The models in the appendix are not extracted because the sample is unclear.",
         "model_notes": {
-          "model_1": "dep: They use the Index for Aggregate Economic Activity which is similar to GDP (https://en.www.inegi.org.mx/contenidos/programas/igae/2013/doc/met_igae.pdf), we code it as gpd.",
-          "model_2": "dep: They use the Index for Aggregate Economic Activity which is similar to GDP (https://en.www.inegi.org.mx/contenidos/programas/igae/2013/doc/met_igae.pdf), we code it as gpd.",
-          "model_3": "axis_trans: since while extracting the IRF data the *10^-3 was not taken into account we divide the estimates by 10.",
-          "model_4": "axis_trans: since while extracting the IRF data the *10^-3 was not taken into account we divide the estimates by 10."
+          "model_1": "dep: They use the Index for Aggregate Economic Activity which is similar to GDP (https://en.www.inegi.org.mx/contenidos/programas/igae/2013/doc/met_igae.pdf), we code it as gdp.",
+          "model_2": "dep: They use the Index for Aggregate Economic Activity which is similar to GDP (https://en.www.inegi.org.mx/contenidos/programas/igae/2013/doc/met_igae.pdf), we code it as gdp.",
+          "model_3": "null",
+          "model_4": "null"
         },
         "figure": {
             "model_1": "2.3",
@@ -31,22 +31,17 @@
         "axis_trans": {
             "model_1": false,
             "model_2": false,
-            "model_3": "y/10 lev_a_1_month_gov_false",
-            "model_4": "y/10 lev_a_1_month_gov_false"
+            "model_3": "y*100 lev_a_1_month_gov_false",
+            "model_4": "y*100 lev_a_1_month_gov_false"
           },
         "dep": {
-            "model_1": "log_a_gdp log_a_cpi",
-            "model_2": "log_a_gdp log_a_cpi",
-            "model_3": "log_a_ip log_a_cpi",
-            "model_4": "log_a_ip log_a_cpi"
+            "model_1": "log_m_gdp log_m_cpi",
+            "model_2": "log_m_gdp log_m_cpi",
+            "model_3": "log_m_ip log_m_cpi",
+            "model_4": "log_m_ip log_m_cpi"
           },
         "conf": "68",
-        "main": {
-            "model_1": "gdp inflation other",
-            "model_2": "gdp inflation other",
-            "model_3": "gdp inflation other",
-            "model_4": "gdp inflation other"
-          },
+        "main": "gdp inflation other",
         "prefer": {
             "model_1": true,
             "model_2": false,
@@ -83,12 +78,7 @@
         "vecm": false,
         "dyn_ols": false,
         "fvar": false,
-        "tvar": {
-            "model_1": false,
-            "model_2": false,
-            "model_3": false,
-            "model_4": false
-          },
+        "tvar": false,
         "gvar": false,
         "bayes": false,
         "dsge": false,
@@ -114,8 +104,8 @@
     "further_data_characteristics": {
         "panel": false,
         "start": {
-          "model_1": "07-2007",
-          "model_2": "07-2007",
+          "model_1": "07-2001",
+          "model_2": "07-2001",
           "model_3": "12-2001",
           "model_4": "12-2001"
         },

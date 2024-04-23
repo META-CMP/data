@@ -2,7 +2,7 @@
     "general": { 
         "key": "TNC575HK", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
@@ -17,10 +17,10 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_shadow_rate", 
+        "inttype": "lev_a_ssr", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "lev_a_une gr_a_cpi", 
+        "dep": "lev_m_une_rate gr_a_cpi", 
         "conf": "90", 
         "main": "other", 
         "prefer": {

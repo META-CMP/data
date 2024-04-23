@@ -2,7 +2,7 @@
     "general": { 
         "key": "UDETUM6U", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
         "model_notes": "null", 
         "figure": {
@@ -29,9 +29,9 @@
         }, 
         "size": "25bp", 
         "axis_trans": false, 
-        "dep": "gr_a_ip gr_a_cpi", 
+        "dep": "logdiff_a_ip logdiff_a_cpi", 
         "conf": "90", 
-        "main": "gdp  inflation  other", 
+        "main": "gdp inflation other", 
         "prefer": {
                 "model_1": true,
                 "model_2": false,
@@ -101,12 +101,12 @@
         "comprice": true, 
         "outpgap": false, 
         "find": true, 
-        "eglob": false, 
+        "eglob": true, 
         "cbind": false, 
         "fexch": false, 
-        "inflexp": false, 
+        "inflexp": true, 
         "foreignir": false, 
-        "fx": false, 
+        "fx": true, 
         "lrir": false 
     }, 
     "econometric_details": { 

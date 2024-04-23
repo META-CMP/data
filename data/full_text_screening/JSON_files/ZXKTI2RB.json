@@ -2,20 +2,34 @@
     "general": { 
         "key": "ZXKTI2RB", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "null", 
-        "model_notes": "null", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "they use 2 instruments for the lev_a_1_year_gov, the narrative proposed by Cloyne and Hurtgen (2016) and high-frequency..",
+                "model_4": "null",
+                "model_5": "null",
+                "model_6": "null",
+                "model_7": "null"
+        }, 
         "figure": {
                 "model_1": 2,
                 "model_2": 3,
                 "model_3": 5,
-                "model_4": "B1"
+                "model_4": "B1",
+                "model_5": "B2",
+                "model_6": "B3",
+                "model_7": "B4"
         },     
         "page": {
                 "model_1": 7,
                 "model_2": 9,
                 "model_3": 12,
-                "model_4": 15
+                "model_4": 15,
+                "model_5": 16,
+                "model_6": 17,
+                "model_7": 18
         },
         "irf": true,
         "cum": false
@@ -25,24 +39,46 @@
         "size": "25bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "log_m_cpi lev_m_une",
+                "model_1": "log_m_cpi lev_m_une_rate",
                 "model_2": "log_m_rgdp",
-                "model_3": "log_m_cpi lev_m_une",
-                "model_4": "log_m_cpi lev_m_une"
+                "model_3": "log_m_cpi lev_m_une_rate",
+                "model_4": "log_m_cpi lev_m_une_rate",
+                "model_5": "log_m_cpi lev_m_une_rate",
+                "model_6": "log_m_cpi lev_m_une_rate",
+                "model_7": "log_m_cpi lev_m_une_rate"
         }, 
         "conf": "68", 
-        "main": "gdp  inflation", 
+        "main": "gdp inflation", 
         "prefer": {
                 "model_1": true,
                 "model_2": false,
                 "model_3": false,
-                "model_4": false
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false
         }
     }, 
     "identification_strategy": { 
         "iv": true, 
-        "forecast_based": true, 
-        "nr": false, 
+        "forecast_based": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false
+        }, 
+        "nr": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false
+        }, 
         "event": false, 
         "chol": false, 
         "svar": false, 
@@ -90,18 +126,34 @@
     "control_variables": { 
         "comprice": false, 
         "outpgap": false, 
-        "find": false, 
-        "eglob": false, 
+        "find": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": true,
+                "model_7": false
+        }, 
+        "eglob": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": true
+        }, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
         "foreignir": true, 
         "fx": true, 
-        "lrir": false 
+        "lrir": true 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": false, 
+        "convent": true, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

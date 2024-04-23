@@ -4,18 +4,7 @@
         "rid1": "fp",
         "rid2": "ph",
         "study_notes": "null",
-        "model_notes": {
-          "model_1": "idother: FOMC dummy and MIDAS regression used in identification.",
-          "model_2": "idother: FOMC dummy and MIDAS regression used in identification.",
-          "model_3": "idother: FOMC dummy and MIDAS regression used in identification.",
-          "model_4": "idother: FOMC dummy and MIDAS regression used in identification.",
-          "model_5": "idother: FOMC dummy and MIDAS regression used in identification.",
-          "model_6": "idother: FOMC dummy used in identification.",
-          "model_7": "idother: FOMC dummy used in identification.",
-          "model_8": "idother: FOMC dummy used in identification.",
-          "model_9": "idother: FOMC dummy used in identification.",
-          "model_10": "idother: FOMC dummy used in identification."
-        },
+        "model_notes": "null",
         "figure": {
           "model_1": 4,
           "model_2": 4,
@@ -75,31 +64,7 @@
         }
     },
     "identification_strategy": {
-        "iv": false,
-        "forecast_based": false,
-        "nr": false,
-        "event": false,
-        "chol": false,
-        "svar": false,
-        "signr": false,
-        "hf": {
-          "model_1": true,
-          "model_2": true,
-          "model_3": true,
-          "model_4": true,
-          "model_5": true,
-          "model_6": false,
-          "model_7": false,
-          "model_8": false,
-          "model_9": false,
-          "model_10": false
-        },
-        "heteroskedas": false,
-        "longrun": false,
-        "idother": true
-    },
-    "estimation_method": {
-        "var": {
+        "iv": {
           "model_1": false,
           "model_2": false,
           "model_3": false,
@@ -111,18 +76,20 @@
           "model_9": true,
           "model_10": true
         },
-        "lp": {
-          "model_1": true,
-          "model_2": true,
-          "model_3": true,
-          "model_4": true,
-          "model_5": true,
-          "model_6": false,
-          "model_7": false,
-          "model_8": false,
-          "model_9": false,
-          "model_10": false
-        },
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": true,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": true,
         "vecm": false,
         "dyn_ols": "false",
         "fvar": false,
@@ -180,11 +147,11 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": false,
+        "find": true,
         "eglob": false,
         "cbind": false,
         "fexch": false,
-        "inflexp": false,
+        "inflexp": true,
         "foreignir": false,
         "fx": false,
         "lrir": false

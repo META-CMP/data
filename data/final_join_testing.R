@@ -1,5 +1,11 @@
 # Final join testing 
 
+##### Only JSON files not compiling after recoding. 
+error_jsons <- c(
+  "V2A8ZH66"# no IRFs
+)
+
+
 ##### Only JSON
 error_jsons <- c(
   "36YHG5BV", 

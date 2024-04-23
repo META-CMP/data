@@ -82,7 +82,7 @@
     "control_variables": {
         "comprice": true,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,

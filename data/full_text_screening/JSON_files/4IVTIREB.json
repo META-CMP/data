@@ -1,69 +1,92 @@
-{ 
-    "general": { 
-        "key": "4IVTIREB", 
-        "rid1": "ph", 
-        "rid2": "null", 
-        "study_notes": "null", 
-        "model_notes": "Did not code the state-dependent (high-debt - low-debt IRFs, because their average should anyways give the linear IRFs also reported. Figure 9 not coded because the error bands cannot be read.", 
+{
+    "general": {
+        "key": "4IVTIREB",
+        "rid1": "ph",
+        "rid2": "sg",
+        "study_notes": "null",
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "null",
+                "model_4": "quality_concern: the authors state that it is a short and special period",
+                "model_5": "Fig 13 additionally. Has recession and other scenario",
+                "model_6": "Fig 13 additionally. Has recession and other scenario"
+        }, 
         "figure": {
                 "model_1": 2,
                 "model_2": 5,
                 "model_3": 12,
-                "model_4": 16
+                "model_4": 16,
+                "model_5": 13,
+                "model_6": 13
         }, 
         "page": {
                 "model_1": 1274,
-                "model_2": 1280,
+                "model_2": 1278,
                 "model_3": 1288,
-                "model_4": 1303
+                "model_4": 1303,
+                "model_5": 1290,
+                "model_6": 1290
         },   
         "irf": true,
         "cum": false
-    }, 
-    "impulse_and_response_variables": { 
-        "inttype": "lev_a_fed_funds", 
-        "size": "-100bp", 
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "-100bp",
         "axis_trans": {
-                "model_1": "y/10 lev_a_fed_funds_false",
-                "model_2": "y/10 lev_a_fed_funds_false",
-                "model_3": "y/10 lev_a_fed_funds_false",
-                "model_4": "gr_q_cpi_y/10 log_q_rgdp_y*100"
-        }, 
-        "dep": "gr_q_cpi log_q_rgdp", 
-        "conf": "90", 
-        "main": "gdp other", 
+                "model_1": "y*100",
+                "model_2": "y*100",
+                "model_3": "y*100",
+                "model_4": "false logdiff_a_deflator_y*100",
+                "model_5": "false logdiff_a_deflator_y*100",
+                "model_6": "false logdiff_a_deflator_y*100"
+        },        
+        "dep": "log_a_rgdp logdiff_a_deflator",
+        "conf": "90",
+        "main": "gdp inflation other",
         "prefer": {
                 "model_1": true,
                 "model_2": false,
                 "model_3": false,
-                "model_4": false
+                "model_4": false, 
+                "model_5": false,
+                "model_6": false
         }
-    }, 
-    "identification_strategy": { 
+    },
+   "identification_strategy": { 
         "iv": {
                 "model_1": false,
                 "model_2": false,
                 "model_3": false,
-                "model_4": false
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
         },      
         "forecast_based": {
                 "model_1": false,
                 "model_2": true,
                 "model_3": false,
-                "model_4": false
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
         }, 
         "nr": {
                 "model_1": false,
                 "model_2": true,
                 "model_3": false,
-                "model_4": false
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
         }, 
         "event": false, 
         "chol": {
                 "model_1": true,
                 "model_2": false,
                 "model_3": true,
-                "model_4": true
+                "model_4": true,
+                "model_5": true,
+                "model_6": true
         },    
         "svar": false, 
         "signr": false, 
@@ -84,47 +107,67 @@
         "dsge": false, 
         "varother": false 
     }, 
-    "regime_dependence": { 
-        "lor": false, 
-        "upr": false, 
-        "scr": false, 
-        "dcr": false, 
-        "hike": false, 
-        "cut": false 
-    }, 
-    "data_frequency": { 
-        "annual": false, 
-        "quarter": true, 
-        "month": false 
-    }, 
-    "country_composition": { 
-        "list_of_countries": "US", 
-        "n_of_countries": 1 
-    }, 
-    "further_data_characteristics": { 
+    "regime_dependence": {
+        "lor": {
+                "model_1": false,
+                "model_2": false, 
+                "model_3": false,
+                "model_4": false,
+                "model_5": true,
+                "model_6": false
+        },    
+        "upr": {
+                "model_1": false,
+                "model_2": false, 
+                "model_3": false,
+                "model_4": false,
+                "model_5": false, 
+                "model_6": true
+        },    
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
         "panel": false, 
         "start": {
                 "model_1": "Q1-1955",
                 "model_2": "Q1-1969",
                 "model_3": "Q1-1955",
-                "model_4": "Q4-1990"
+                "model_4": "Q4-1990",
+                "model_5": "Q1-1955",
+                "model_6": "Q1-1955"
         }, 
         "end": {
                 "model_1": "Q1-2007",
                 "model_2": "Q1-2007",
                 "model_3": "Q1-2007",
-                "model_4": "Q3-2015"
-        }, 
+                "model_4": "Q3-2015",
+                 "model_5": "Q3-2015",
+                "model_6": "Q3-2015"
+       }, 
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": false, 
+        "comprice": false,
         "outpgap": false, 
         "find": {
-                "model_1": true,
-                "model_2": true,
-                "model_3": true,
-                "model_4": true
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false
         },  
         "eglob": false, 
         "cbind": false, 
@@ -134,12 +177,27 @@
         "fx": false, 
         "lrir": false 
     }, 
-    "econometric_details": { 
-        "pure_rate_shock": true, 
-        "convent": true, 
-        "decomposition": false 
-    }, 
-    "publication_characteristics": { 
-        "cbanker": false 
-    } 
-} 
+    "econometric_details": {
+        "pure_rate_shock": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false, 
+                "model_5": false,
+                "model_6": false
+        },  
+        "convent": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        },  
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}
+

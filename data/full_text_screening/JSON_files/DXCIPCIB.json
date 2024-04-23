@@ -28,7 +28,7 @@
         "axis_trans": false, 
         "dep": {
                 "model_1": "logdiff_q_rgdp",
-                "model_2": "logdiff_q_cpi logdiff_q_une_rate",
+                "model_2": "logdiff_q_cpi",
                 "model_3": "log_q_deflator log_q_rgdp"
         },
         "conf": {

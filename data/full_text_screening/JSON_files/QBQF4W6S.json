@@ -83,7 +83,7 @@
                 "model_15": "log_m_rgdp log_m_core",
                 "model_16": "log_m_rgdp log_m_core"
                 },
-        "conf": "68 & 90",
+        "conf": "68",
         "main": "gdp",
         "prefer": {
                 "model_1": false,

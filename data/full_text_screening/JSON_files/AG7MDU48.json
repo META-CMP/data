@@ -156,23 +156,12 @@
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": false, 
+        "comprice": true, 
         "outpgap": false, 
         "find": false, 
         "eglob": false, 
         "cbind": false, 
-        "fexch": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": true,
-                "model_4": true,
-                "model_5": false,
-                "model_6": false,
-                "model_7": true,
-                "model_8": true,
-                "model_9": true,
-                "model_10": true
-        },    
+        "fexch": false,    
         "inflexp": false, 
         "foreignir": false, 
         "fx": true, 

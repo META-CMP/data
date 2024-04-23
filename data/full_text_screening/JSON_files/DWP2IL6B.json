@@ -20,12 +20,9 @@
         "inttype": "lev_a_fed_funds", 
         "size": {
                 "model_1": "22bp",
-                "model_2": "13bp"
+                "model_2": "1SD"
         }, 
-        "axis_trans": {
-                "model_1": "log_q_rgdp_y*100 lev_q_une_rate_y*100",
-                "model_2": "lev_q_une_rate_y*100"
-        }, 
+        "axis_trans": "y*100 lev_a_fed_funds_false gr_a_cpi_false", 
         "dep": "gr_a_cpi log_q_rgdp lev_q_une_rate", 
         "conf": "2_SE", 
         "main": "gdp  emp  inflation", 
@@ -42,11 +39,8 @@
         }, 
         "nr": false, 
         "event": false, 
-        "chol": {
-                "model_1": false,
-                "model_2": true
-        }, 
-        "svar": false, 
+        "chol": false, 
+        "svar": true, 
         "signr": false, 
         "hf": false, 
         "heteroskedas": false, 
@@ -55,7 +49,7 @@
     }, 
     "estimation_method": { 
         "var": {
-                "model_1": false,
+                "model_1": true,
                 "model_2": true
         }, 
         "lp": false, 
@@ -66,7 +60,7 @@
         "gvar": false, 
         "bayes": {
                 "model_1": true,
-                "model_2": false
+                "model_2": true
         }, 
         "dsge": false, 
         "varother": false 
@@ -101,7 +95,10 @@
         "eglob": false, 
         "cbind": false, 
         "fexch": false, 
-        "inflexp": false, 
+        "inflexp": {
+                "model_1": true,
+                "model_2": false
+        }, 
         "foreignir": false, 
         "fx": true, 
         "lrir": false 

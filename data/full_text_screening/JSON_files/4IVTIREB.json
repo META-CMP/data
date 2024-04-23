@@ -27,7 +27,7 @@
                 "model_1": "y/10 lev_a_fed_funds_false",
                 "model_2": "y/10 lev_a_fed_funds_false",
                 "model_3": "y/10 lev_a_fed_funds_false",
-                "model_4": "gr_q_cpi_y/10"
+                "model_4": "gr_q_cpi_y/10 log_q_rgdp_y*100"
         }, 
         "dep": "gr_q_cpi log_q_rgdp", 
         "conf": "90", 
@@ -42,7 +42,7 @@
     "identification_strategy": { 
         "iv": {
                 "model_1": false,
-                "model_2": true,
+                "model_2": false,
                 "model_3": false,
                 "model_4": false
         },      
@@ -61,8 +61,8 @@
         "event": false, 
         "chol": {
                 "model_1": true,
-                "model_2": true,
-                "model_3": false,
+                "model_2": false,
+                "model_3": true,
                 "model_4": true
         },    
         "svar": false, 
@@ -118,12 +118,12 @@
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": true, 
+        "comprice": false, 
         "outpgap": false, 
         "find": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
                 "model_4": true
         },  
         "eglob": false, 

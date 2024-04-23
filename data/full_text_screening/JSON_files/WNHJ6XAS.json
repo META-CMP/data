@@ -11,9 +11,9 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_short_term_rate", 
+        "inttype": "lev_a_3_month_euribor", 
         "size": "-25bp", 
-        "axis_trans": "lev_a_short_term_rate_y/100", 
+        "axis_trans": "lev_a_3_month_euribor_y/100", 
         "dep": {
                 "model_1": "log_m_rgdp log_m_cpi",
                 "model_2": "log_m_rgdp log_m_cpi lev_m_une_rate"
@@ -83,10 +83,10 @@
         "inflexp": false, 
         "foreignir": false, 
         "fx": false, 
-        "lrir": false 
+        "lrir": true 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
+        "pure_rate_shock": false, 
         "convent": false, 
         "decomposition": false 
     }, 

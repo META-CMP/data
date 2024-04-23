@@ -75,13 +75,13 @@
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
-        "foreignir": false, 
+        "foreignir": true, 
         "fx": true, 
-        "lrir": true 
+        "lrir": false 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": false, 
+        "convent": true, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

@@ -21,7 +21,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_short_term_rate", 
+        "inttype": "lev_a_3_month_short_term_rate", 
         "size": "100bp", 
         "axis_trans": false, 
         "dep": "logdiff_a_ip logdiff_a_cpi", 

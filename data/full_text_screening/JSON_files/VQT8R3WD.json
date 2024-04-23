@@ -77,11 +77,11 @@
         "inflexp": false,
         "foreignir": false,
         "fx": false,
-        "lrir": false
+        "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,
-        "convent": false,
+        "convent": true,
         "decomposition": false
     },
     "publication_characteristics": {

@@ -12,8 +12,8 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",
-        "size": "92bp",
-        "axis_trans": "y*100",
+        "size": "1SD",
+        "axis_trans": "y*100 lev_a_short_term_rate_false",
         "dep": "log_q_ip log_q_cpi",
         "conf": "1_SE",
         "main": "gdp  inflation",

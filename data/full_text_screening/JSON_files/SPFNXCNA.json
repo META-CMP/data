@@ -12,7 +12,7 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
-        "size": "45bp", 
+        "size": "null", 
         "axis_trans": "log_q_rgdp_y*100", 
         "dep": "logdiff_q_deflator log_q_rgdp", 
         "conf": "90", 
@@ -35,8 +35,8 @@
     "estimation_method": { 
         "var": false, 
         "lp": false, 
-        "vecm": false, 
-        "dyn_ols": "vecm", 
+        "vecm": true, 
+        "dyn_ols": "false", 
         "fvar": false, 
         "tvar": false, 
         "gvar": false, 
@@ -77,7 +77,7 @@
         "inflexp": false, 
         "foreignir": false, 
         "fx": false, 
-        "lrir": false 
+        "lrir": true 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 

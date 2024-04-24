@@ -37,12 +37,12 @@
         "lp": false,
         "vecm": false,
         "dyn_ols": "false",
-        "fvar": true,
+        "fvar": false,
         "tvar": false,
         "gvar": false,
         "bayes": true,
         "dsge": false,
-        "varother": false
+        "varother": true
     },
     "regime_dependence": {
         "lor": false,

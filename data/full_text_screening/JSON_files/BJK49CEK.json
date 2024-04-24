@@ -80,8 +80,8 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": false,
-        "convent": false,
+        "pure_rate_shock": true,
+        "convent": true,
         "decomposition": false
     },
     "publication_characteristics": {

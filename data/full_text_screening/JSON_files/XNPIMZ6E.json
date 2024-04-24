@@ -44,7 +44,7 @@
         "inttype": "lev_a_3_month_gov",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "log_q_gap logdiff_q_cpi",
+        "dep": "logdiff_q_rgdp logdiff_q_cpi",
         "conf": "95",
         "main": "gdp inflation",
         "prefer": {

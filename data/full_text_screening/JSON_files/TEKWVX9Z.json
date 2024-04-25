@@ -3,7 +3,7 @@
         "key": "TEKWVX9Z",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "dep: output transformation not described thus output is not coded.; inttype: lev_q assumed because of figure 2.",
+        "study_notes": "dep: the output transformation consists in removing deterministic trend from the GDP series, DR understands is log_q_gap; inttype: lev_q assumed because of figure 2.",
         "model_notes": {
                 "model_1": "regime: High inflation regime",
                 "model_2": "regime: Low inflation regime"
@@ -17,7 +17,7 @@
         "inttype": "lev_q_short_term_rate",
         "size": "null",
         "axis_trans": "y*100",
-        "dep": "gr_q_cpi",
+        "dep": "log_q_gap gr_q_cpi",
         "conf": "95",
         "main": "other",
         "prefer": true

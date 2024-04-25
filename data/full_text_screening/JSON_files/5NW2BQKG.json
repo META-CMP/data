@@ -36,9 +36,9 @@
         "idother": false
     },
     "estimation_method": {
-        "var": true,
+        "var": false,
         "lp": false,
-        "vecm": false,
+        "vecm": true,
         "dyn_ols": false,
         "fvar": false,
         "tvar": false,

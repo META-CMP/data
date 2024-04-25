@@ -9,7 +9,11 @@
                 "model_2": "regime: high inflationary period (indeterminacy regime)",
                 "model_3": "regime: after high inflationary period (second determinacy regime)"
         },
-        "figure": 6,
+        "figure": {
+                "model_1": "6a-1.column",
+                "model_2": "6a-2.column",
+                "model_3": "6a-3.column"
+        },
         "page": 634,
         "irf": true,
         "cum": false

@@ -3,7 +3,7 @@
         "key": "YAAHCUA5",
         "rid1": "fp",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "varother: they use a threshold VAR, that's the reason varother is set to true.",
         "model_notes": {
           "model_1": "regime: low debt regime. Purple/blue lines coded.",
           "model_2": "regime: high debt regime. Orange line and shaded region coded.",
@@ -27,9 +27,9 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
-        "size": "100bp",
+        "size": "-100bp",
         "axis_trans": false,
-        "dep": "logdiff_q_deflator",
+        "dep": "logdiff_q_rgdp logdiff_q_deflator",
         "conf": "68",
         "main": "inflation",
         "prefer": {
@@ -48,12 +48,12 @@
         "svar": false,
         "signr": false,
         "hf": false,
-        "heteroskedas": false,
+        "heteroskedas": true,
         "longrun": false,
         "idother": false
     },
     "estimation_method": {
-        "var": true,
+        "var": false,
         "lp": false,
         "vecm": false,
         "dyn_ols": "false",
@@ -62,7 +62,7 @@
         "gvar": false,
         "bayes": true,
         "dsge": false,
-        "varother": false
+        "varother": true
     },
     "regime_dependence": {
         "lor": false,

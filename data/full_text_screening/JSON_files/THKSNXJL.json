@@ -11,7 +11,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_augmented_fed_funds",
+        "inttype": "lev_a_ssr",
         "size": "50bp",
         "axis_trans": false,
         "dep": "logdiff_q_rgdp logdiff_q_cpi lev_q_une_rate",
@@ -71,7 +71,7 @@
         "comprice": true,
         "outpgap": true,
         "find": true,
-        "eglob": false,
+        "eglob": true,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
@@ -80,7 +80,7 @@
         "lrir": true
     },
     "econometric_details": {
-        "pure_rate_shock": false,
+        "pure_rate_shock": true,
         "convent": false,
         "decomposition": false
     },

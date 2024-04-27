@@ -34,7 +34,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_overnight_money_market",
         "size": "1SD",
-        "axis_trans": false,
+        "axis_trans": "y*100 lev_a_overnight_money_market_false",
         "dep": "log_a_rgdp log_a_cpi",
         "conf": "90",
         "main": "gdp inflation",

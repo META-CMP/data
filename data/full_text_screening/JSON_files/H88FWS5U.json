@@ -3,7 +3,14 @@
         "key": "H88FWS5U",
         "rid1": "fp",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": {
+          "model_1": "without taking into account the level of the central bank transparency.",
+          "model_2": "different cholesky ordering without taking into account the level of the central bank transparency.",
+          "model_3": "with high level of central bank transparency.",
+          "model_4": "with low level of central bank transparency.",
+          "model_5": "inflation targeting.",
+          "model_6": "inflation targeting."
+        },
         "model_notes": "null",
         "figure": {
           "model_1": 1,

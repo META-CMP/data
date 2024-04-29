@@ -2,7 +2,7 @@
     "general": {
         "key": "HDAZJXFF",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "A time trend is included as a variable in the VAR.",
         "model_notes": {
           "model_1": "null",

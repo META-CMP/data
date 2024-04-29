@@ -2,7 +2,7 @@
     "general": {
         "key": "YNQDSLUH",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
           "model_1": "impulse responses to an adverse monetary policy shock when the measure of interconnectedness is low, interconnectedness is a mesure of credit.",
@@ -88,7 +88,7 @@
     "control_variables": {
         "comprice": true,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,

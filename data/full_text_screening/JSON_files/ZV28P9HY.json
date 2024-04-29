@@ -71,7 +71,7 @@
         "dep": {
                 "model_1": "log_m_ip log_m_cpi",
                 "model_2": "log_m_ip log_m_cpi",
-                "model_3": "log_m_ip log_m_deflator",
+                "model_3": "log_q_rgdp log_q_deflator",
                 "model_4": "log_m_ip log_m_cpi",
                 "model_5": "log_m_ip log_m_cpi",
                 "model_6": "log_m_ip log_m_cpi",
@@ -87,7 +87,25 @@
                 "model_16": "log_m_ip log_m_cpi",
                 "model_17": "log_m_ip log_m_cpi"
         }, 
-        "conf": "68", 
+        "conf": {
+                "model_1": "68",
+                "model_2": "68",
+                "model_3": "68",
+                "model_4": "68",
+                "model_5": "68",
+                "model_6": "68",
+                "model_7": "68",
+                "model_8": "68",
+                "model_9": "68",
+                "model_10": "68",
+                "model_11": "68",
+                "model_12": "68",
+                "model_13": "68",
+                "model_14": "68",
+                "model_15": "68",
+                "model_16": "95",
+                "model_17": "95"
+        }, 
         "main": "inflation", 
         "prefer": {
                 "model_1": false,
@@ -161,7 +179,7 @@
                 "model_14": false,
                 "model_15": false,
                 "model_16": false,
-                "model_17": false,
+                "model_17": false
         },   
         "month": {
                 "model_1": true,
@@ -249,7 +267,25 @@
                 "model_16": false,
                 "model_17": false
         },  
-        "outpgap": false, 
+        "outpgap": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false,
+                "model_10": false,
+                "model_11": false,
+                "model_12": false,
+                "model_13": false,
+                "model_14": false,
+                "model_15": true,
+                "model_16": false,
+                "model_17": false
+        }, 
         "find": false, 
         "eglob": false, 
         "cbind": false, 

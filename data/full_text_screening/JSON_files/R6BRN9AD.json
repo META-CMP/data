@@ -4,11 +4,20 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "Figure 6 not included because impossible to read confidence intervals", 
-        "figure": 1, 
-        "page": 728, 
+        "model_notes": {
+          "model_1": "with micro-level data of bank information.",
+          "model_2": "without micro_level data of bank information."
+        }, 
+        "figure": {
+          "model_1": 1,
+          "model_2": 3
+        }, 
+        "page": {
+          "model_1": 728,
+          "model_2": 733
+        }, 
         "irf": true,
-        "cum": false
+        "cum": true
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_fed_funds", 
@@ -24,20 +33,26 @@
         "forecast_based": false, 
         "nr": false, 
         "event": false, 
-        "chol": true, 
-        "svar": false, 
-        "signr": false, 
+        "chol": false, 
+        "svar": true, 
+        "signr": true, 
         "hf": false, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": false, 
+        "var": {
+          "model_1": false,
+          "model_2": true
+        }, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
-        "fvar": true, 
+        "fvar": {
+          "model_1": true,
+          "model_2": false
+        }, 
         "tvar": false, 
         "gvar": false, 
         "bayes": false, 
@@ -70,7 +85,10 @@
     "control_variables": { 
         "comprice": false, 
         "outpgap": false, 
-        "find": true, 
+        "find": {
+          "model_1": true,
+          "model_2": false
+        }, 
         "eglob": false, 
         "cbind": false, 
         "fexch": false, 

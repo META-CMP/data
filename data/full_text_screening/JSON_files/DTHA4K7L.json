@@ -5,8 +5,14 @@
         "rid2": "null", 
         "study_notes": "null", 
         "model_notes": "null", 
-        "figure": 2, 
-        "page": 631, 
+        "figure": {
+          "model_1": 2,
+          "model_2": "A.4"
+        }, 
+        "page": {
+          "model_1": 631,
+          "model_2": 640
+        }, 
         "irf": true,
         "cum": false
     }, 
@@ -71,12 +77,18 @@
         "comprice": false, 
         "outpgap": false, 
         "find": false, 
-        "eglob": false, 
+        "eglob": {
+          "model_1": false,
+          "model_2": true
+        }, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
         "foreignir": false, 
-        "fx": false, 
+        "fx": {
+          "model_1": false,
+          "model_2": true
+        }, 
         "lrir": false 
     }, 
     "econometric_details": { 

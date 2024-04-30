@@ -23,7 +23,10 @@
         "dep": "log_a_cpi log_a_rgdp", 
         "conf": "68", 
         "main": "other", 
-        "prefer": true 
+        "prefer": {
+          "model_1": true,
+          "model_2": false
+        } 
     }, 
     "identification_strategy": { 
         "iv": false, 

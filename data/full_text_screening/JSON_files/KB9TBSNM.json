@@ -14,9 +14,9 @@
         "inttype": "lev_a_bank_rate", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "gr_a_cpi log_m_ip", 
+        "dep": "gr_a_cpi lev_m_gap", 
         "conf": "68", 
-        "main": "gdp  inflation  other", 
+        "main": "gdp inflation other", 
         "prefer": true 
     }, 
     "identification_strategy": { 
@@ -28,7 +28,7 @@
         "svar": false, 
         "signr": false, 
         "hf": false, 
-        "heteroskedas": false, 
+        "heteroskedas": true, 
         "longrun": false, 
         "idother": false 
     }, 
@@ -38,9 +38,9 @@
         "vecm": false, 
         "dyn_ols": "false", 
         "fvar": true, 
-        "tvar": false, 
+        "tvar": true, 
         "gvar": false, 
-        "bayes": false, 
+        "bayes": true, 
         "dsge": false, 
         "varother": false 
     }, 

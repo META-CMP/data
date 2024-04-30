@@ -4,14 +4,23 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "figure 4 not coded because domestic and foreign is mixed", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "including Portugal and Euro-area as a whole.",
+                "model_4": "including Portugal and Euro-area as a whole."
+        }, 
         "figure": {
                 "model_1": 1,
-                "model_2": 3
+                "model_2": 3,
+                "model_3": 4,
+                "model_4": 4
         }, 
         "page": {
                 "model_1": 243,
-                "model_2": 245
+                "model_2": 245,
+                "model_3": 246,
+                "model_4": 246
         },  
         "irf": true,
         "cum": false
@@ -21,17 +30,23 @@
         "size": "null",
         "axis_trans": {
                 "model_1": "y*100 lev_a_short_term_rate_false",
-                "model_2": "y*100 lev_a_short_term_rate_false lev_q_une_rate_false"
+                "model_2": "y*100 lev_a_short_term_rate_false lev_q_une_rate_false",
+                "model_3": "y*100 lev_a_short_term_rate_false",
+                "model_4": "y*100 lev_a_short_term_rate_false"
         },  
         "dep": {
                 "model_1": "log_q_rgdp log_q_deflator",
-                "model_2": "log_q_rgdp log_q_deflator lev_q_une_rate"
+                "model_2": "log_q_rgdp log_q_deflator lev_q_une_rate",
+                "model_3": "log_q_rgdp log_q_deflator",
+                "model_4": "log_q_rgdp log_q_deflator"
         }, 
         "conf": "68", 
-        "main": "gdp  emp  inflation", 
+        "main": "gdp emp inflation", 
         "prefer": {
                 "model_1": true,
-                "model_2": false
+                "model_2": false,
+                "model_3": false,
+                "model_4": false
         } 
     }, 
     "identification_strategy": { 
@@ -41,11 +56,15 @@
         "event": false, 
         "chol": {
                 "model_1": true,
-                "model_2": false
+                "model_2": false,
+                "model_3": false,
+                "model_4": false
         },  
         "svar": {
                 "model_1": false,
-                "model_2": true
+                "model_2": true,
+                "model_3": true,
+                "model_4": true
         },   
         "signr": false, 
         "hf": false, 
@@ -79,12 +98,22 @@
         "month": false 
     }, 
     "country_composition": { 
-        "list_of_countries": "PT", 
+        "list_of_countries": {
+                "model_1": "PT",
+                "model_2": "PT",
+                "model_3": "PT",
+                "model_4": "EA"
+        }, 
         "n_of_countries": 1 
     }, 
     "further_data_characteristics": { 
         "panel": false, 
-        "start": "Q1-1947", 
+        "start": {
+                "model_1": "Q1-1980",
+                "model_2": "Q1-1984",
+                "model_3": "Q2-1980",
+                "model_4": "Q2-1980"
+        }, 
         "end": "Q4-2007", 
         "samplesize": "null" 
     }, 
@@ -98,7 +127,12 @@
         "inflexp": false, 
         "foreignir": false, 
         "fx": false, 
-        "lrir": false 
+        "lrir": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true,
+                "model_4": true
+        } 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 

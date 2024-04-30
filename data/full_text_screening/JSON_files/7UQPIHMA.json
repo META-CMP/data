@@ -2,7 +2,7 @@
     "general": {
         "key": "7UQPIHMA",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "conf: posterior credibility intervals based on iterations of the Gibbs sampler for the month of 01-2003; samplesize: calculated from 11-1978 to 09-2017, that is the period estimated.",
         "model_notes": {
           "model_1": "displays the response in high investor sentiment regime.",

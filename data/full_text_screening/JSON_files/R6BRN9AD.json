@@ -26,7 +26,10 @@
         "dep": "logdiff_q_rgdp logdiff_q_deflator", 
         "conf": "90", 
         "main": "other", 
-        "prefer": false 
+        "prefer": {
+          "model_1": true,
+          "model_2": false
+        } 
     }, 
     "identification_strategy": { 
         "iv": false, 

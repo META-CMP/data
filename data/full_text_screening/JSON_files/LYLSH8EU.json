@@ -16,7 +16,7 @@
         "axis_trans": false, 
         "dep": "gr_a_ip gr_a_cpi", 
         "conf": "90", 
-        "main": "gdp  inflation", 
+        "main": "gdp inflation", 
         "prefer": true 
     }, 
     "identification_strategy": { 

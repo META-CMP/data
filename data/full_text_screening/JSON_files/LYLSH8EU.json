@@ -26,7 +26,10 @@
         "dep": "gr_a_ip gr_a_cpi", 
         "conf": "90", 
         "main": "gdp inflation", 
-        "prefer": true 
+        "prefer": {
+          "model_1": false,
+          "model_2": true
+        } 
     }, 
     "identification_strategy": { 
         "iv": false, 

@@ -80,12 +80,9 @@
         "samplesize": 76
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
-        "find": {
-                "model_1": false,
-                "model_2": true 
-        },
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,

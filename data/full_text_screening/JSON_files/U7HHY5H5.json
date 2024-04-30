@@ -76,14 +76,14 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
         "fx": true,
-        "lrir": true
+        "lrir": false
     },
     "econometric_details": {
         "pure_rate_shock": true,

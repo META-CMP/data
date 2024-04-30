@@ -41,7 +41,13 @@
         }, 
         "conf": "90", 
         "main": "gdp other", 
-        "prefer": true 
+        "prefer": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false
+        } 
     }, 
     "identification_strategy": { 
         "iv": false, 

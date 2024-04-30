@@ -7,8 +7,10 @@
         "model_notes": "null",
         "figure": {
                 "model_1": 4
+        },
         "page":{
                 "model_1": 357
+        },
         "irf": true,
         "cum": false
     },
@@ -16,7 +18,7 @@
         "inttype": "lev_a_short_term_rate",
         "size": "1%",
         "axis_trans": false,
-        "dep": "log_q_rgap gr_a_cpi gr_a_domestic_cpi",
+        "dep": "log_q_rgap gr_a_cpi",
         "conf": "90",
         "main": "other",
         "prefer": true
@@ -72,8 +74,8 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
-        "eglob": true,
+        "find": false,
+        "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,

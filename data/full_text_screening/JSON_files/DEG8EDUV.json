@@ -5,10 +5,10 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-                "model_1": "results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.", 
-                "model_2": "results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.",
-                "model_3": "results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.",
-                "model_4": "results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds."
+                "model_1": "decomposition: decomposition between central bank information shock and pure monetary policy surprises, onle the pure monetary policy surprise is used.; results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.", 
+                "model_2": "decomposition: decomposition between central bank information shock and pure monetary policy surprises, onle the pure monetary policy surprise is used.; results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.",
+                "model_3": "decomposition: decomposition between central bank information shock and pure monetary policy surprises, onle the pure monetary policy surprise is used.; results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.",
+                "model_4": "decomposition: decomposition between central bank information shock and pure monetary policy surprises, onle the pure monetary policy surprise is used.; results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds."
         },
         "figure": {
                 "model_1": 1, 
@@ -132,12 +132,12 @@
         "inflexp": false,
         "foreignir": false,
         "fx": false,
-        "lrir": true
+        "lrir": false
     },
     "econometric_details": {
         "pure_rate_shock": true,
         "convent": true,
-        "decomposition": false
+        "decomposition": true
     },
     "publication_characteristics": {
         "cbanker": true

@@ -5,8 +5,8 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-          "model_1": "not coded activity: because to  obtain a monthly series on activity, they use a factor extraction, the principal component of a data set consisting of three frequently used monthly economic activity indicators (industrial production, retail sales and unemployment), and label this the ‘‘activity factor”. This factor is rescaled to have approximately the same variance as an HP-filter of (log) GDP with lambda equal 40000.", 
-          "model_2": "not coded activity: because to  obtain a monthly series on activity, they use a factor extraction, the principal component of a data set consisting of three frequently used monthly economic activity indicators (industrial production, retail sales and unemployment), and label this the ‘‘activity factor”. This factor is rescaled to have approximately the same variance as an HP-filter of (log) GDP with lambda equal 40000."
+          "model_1": "decomposition: decomposition into traget, forward guidance, and information shock. Only the target shock is extracted.; not coded activity: because to  obtain a monthly series on activity, they use a factor extraction, the principal component of a data set consisting of three frequently used monthly economic activity indicators (industrial production, retail sales and unemployment), and label this the ‘‘activity factor”. This factor is rescaled to have approximately the same variance as an HP-filter of (log) GDP with lambda equal 40000.", 
+          "model_2": "decomposition: decomposition into traget, forward guidance, and information shock. Only the target shock is extracted.; not coded activity: because to  obtain a monthly series on activity, they use a factor extraction, the principal component of a data set consisting of three frequently used monthly economic activity indicators (industrial production, retail sales and unemployment), and label this the ‘‘activity factor”. This factor is rescaled to have approximately the same variance as an HP-filter of (log) GDP with lambda equal 40000."
         },
         "figure": {
           "model_1": "3-left", 
@@ -100,7 +100,7 @@
     "econometric_details": {
         "pure_rate_shock": true,
         "convent": true,
-        "decomposition": false
+        "decomposition": true
     },
     "publication_characteristics": {
         "cbanker": true

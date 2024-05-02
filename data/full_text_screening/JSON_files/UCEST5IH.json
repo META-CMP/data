@@ -26,10 +26,10 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_short_term_rate",
+        "inttype": "lev_a_3_month_short_term_rate",
         "size": "1%",
         "axis_trans": false,
-        "dep": "log_q_rgdp gr_a_cpi",
+        "dep": "log_q_rgdp logdiff_a_cpi",
         "conf": "68",
         "main": "other",
         "prefer": {

@@ -42,7 +42,7 @@
                 "model_5": "false logdiff_a_deflator_y*100",
                 "model_6": "false logdiff_a_deflator_y*100"
         },        
-        "dep": "log_a_rgdp logdiff_a_deflator",
+        "dep": "log_q_rgdp logdiff_a_deflator",
         "conf": "90",
         "main": "gdp inflation other",
         "prefer": {

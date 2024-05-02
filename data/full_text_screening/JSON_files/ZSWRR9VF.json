@@ -29,7 +29,7 @@
           "model_4": "-25bp"
         },
         "axis_trans": false,
-        "dep": "logdiff_m_ip levdiff_m_une_rate logdiff_m_cpi",
+        "dep": "logdiff_m_ip logdiff_m_cpi",
         "conf": "90",
         "main": "gdp emp inflation",
         "prefer": {
@@ -69,8 +69,18 @@
         "upr": false,
         "scr": false,
         "dcr": false,
-        "hike": false,
-        "cut": false
+        "hike": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false
+        },
+        "cut": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true
+        }
     },
     "data_frequency": {
         "annual": false,

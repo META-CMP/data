@@ -5,7 +5,7 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-          "model_1": "size: a positive one standard deviation short-term interest rate shock of about 30 basispoints, we choose 30 bp."
+          "model_1": "null"
         },
         "figure": 3,
         "page": 121,
@@ -26,8 +26,8 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
-        "svar": false,
+        "chol": false,
+        "svar": true,
         "signr": false,
         "hf": false,
         "heteroskedas": false,

@@ -17,7 +17,7 @@
           "model_2": 549
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
@@ -90,7 +90,7 @@
     },
     "control_variables": {
         "comprice": true,
-        "outpgap": false,
+        "outpgap": true,
         "find": true,
         "eglob": false,
         "cbind": false,

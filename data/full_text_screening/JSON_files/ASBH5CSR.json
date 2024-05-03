@@ -25,11 +25,11 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_short_term_rate",
+        "inttype": "lev_a_3_month_short_term_rate",
         "size": "1SD",
         "axis_trans": false,
         "dep": "logdiff_a_ip logdiff_a_cpi",
-        "conf": "1_SE & 2_SE",
+        "conf": "1_SE",
         "main": "other",
         "prefer": {
           "model_1": true,

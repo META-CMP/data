@@ -51,14 +51,8 @@
         "varother": true 
     }, 
     "regime_dependence": { 
-        "lor": {
-                "model_1": true,
-                "model_2": false
-        }, 
-        "upr": {
-                "model_1": false,
-                "model_2": true
-        }, 
+        "lor": false, 
+        "upr": false, 
         "scr": false, 
         "dcr": false, 
         "hike": false, 

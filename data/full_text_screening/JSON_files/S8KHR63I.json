@@ -5,8 +5,8 @@
         "rid2": "null",
         "study_notes": "The variables have been appropriately transformed to induce stationarity and have been demeaned and standardized before estimation, samplesize: calculated from the estimated period from Q1-1960 to Q3-2008.",
         "model_notes": {
-          "model_1": "tvar: 1 year after the monetary policy shock in Q1-1975.",
-          "model_2": "tvar: 1 year after the monetary policy shock in Q1-2008."
+          "model_1": "tvar: monetary policy shock in Q1-1975.",
+          "model_2": "tvar: monetary policy shock in Q1-2008."
         },
         "figure": {
           "model_1": "1-second column",

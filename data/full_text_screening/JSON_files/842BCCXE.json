@@ -34,7 +34,13 @@
                 "model_27": "high rate.",
                 "model_28": "low rate.",
                 "model_29": "high rate.",
-                "model_30": "null"
+                "model_30": "interest rate is low for zero quarters.",
+                "model_31": "interest rate is low for 16 quarters.",
+                "model_32": "interest rate is low for zero quarters, high-debt and recession regime.",
+                "model_33": "interest rate is low for 16 quarters, high-debt and recession regime.",
+                "model_34": "interest rate is low for zero quarters, low-debt and boom regime.",
+                "model_35": "interest rate is low for 16 quarters, low-debt and boom regime.",
+                "model_36": "null"
         }, 
         "figure": {
                 "model_1": 3,
@@ -66,7 +72,13 @@
                 "model_27": 7,
                 "model_28": 7,
                 "model_29": 7,
-                "model_30": 11
+                "model_30": 9,
+                "model_31": 9,
+                "model_32": 10,
+                "model_33": 10,
+                "model_34": 10,
+                "model_35": 10,
+                "model_36": 11
         },  
         "page": {
                 "model_1": 8,
@@ -98,7 +110,13 @@
                 "model_27": 15,
                 "model_28": 15,
                 "model_29": 15,
-                "model_30": 20
+                "model_30": 17,
+                "model_31": 17,
+                "model_32": 18,
+                "model_33": 18,
+                "model_34": 18,
+                "model_35": 18,
+                "model_36": 20
         },  
         "irf": true,
         "cum": false
@@ -134,7 +152,13 @@
                 "model_27": "lev_a_2_year_gov",
                 "model_28": "lev_a_ssr",
                 "model_29": "lev_a_ssr",
-                "model_30": "lev_a_ssr"
+                "model_30": "lev_a_ssr",
+                "model_31": "lev_a_ssr",
+                "model_32": "lev_a_ssr",
+                "model_33": "lev_a_ssr",
+                "model_34": "lev_a_ssr",
+                "model_35": "lev_a_ssr",
+                "model_36": "lev_a_ssr"
         } , 
         "size": "-100bp", 
         "axis_trans": false, 
@@ -168,7 +192,13 @@
                 "model_27": "log_q_rgdp",
                 "model_28": "lev_q_une_rate",
                 "model_29": "lev_q_une_rate",
-                "model_30": "lev_q_rgdp"
+                "model_30": "log_q_rgdp",
+                "model_31": "log_q_rgdp",
+                "model_32": "log_q_rgdp",
+                "model_33": "log_q_rgdp",
+                "model_34": "log_q_rgdp",
+                "model_35": "log_q_rgdp",
+                "model_36": "log_q_rgdp"
         },
         "conf": "90", 
         "main": "gdp", 
@@ -202,7 +232,13 @@
                 "model_27": false,
                 "model_28": false,
                 "model_29": false,
-                "model_30": false
+                "model_30": false,
+                "model_31": false,
+                "model_32": false,
+                "model_33": false,
+                "model_34": false,
+                "model_35": false,
+                "model_36": false
         } 
     }, 
     "identification_strategy": { 
@@ -240,7 +276,13 @@
                 "model_27": true,
                 "model_28": true,
                 "model_29": true,
-                "model_30": false
+                "model_30": true,
+                "model_31": true,
+                "model_32": true,
+                "model_33": true,
+                "model_34": true,
+                "model_35": true,
+                "model_36": false
         }, 
         "svar": false, 
         "signr": false, 
@@ -274,7 +316,13 @@
                 "model_27": false,
                 "model_28": false,
                 "model_29": false,
-                "model_30": true
+                "model_30": false,
+                "model_31": false,
+                "model_32": false,
+                "model_33": false,
+                "model_34": false,
+                "model_35": false,
+                "model_36": true
         }, 
         "heteroskedas": false, 
         "longrun": false, 
@@ -323,7 +371,13 @@
                 "model_27": false,
                 "model_28": false,
                 "model_29": false,
-                "model_30": false
+                "model_30": false,
+                "model_31": false,
+                "model_32": true,
+                "model_33": true,
+                "model_34": false,
+                "model_35": false,
+                "model_36": false
         }, 
         "upr": {
                 "model_1": false,
@@ -355,7 +409,13 @@
                 "model_27": false,
                 "model_28": false,
                 "model_29": false,
-                "model_30": false
+                "model_30": false,
+                "model_31": false,
+                "model_32": false,
+                "model_33": false,
+                "model_34": true,
+                "model_35": true,
+                "model_36": false
         }, 
         "scr": false, 
         "dcr": false, 
@@ -403,7 +463,13 @@
                 "model_27": "Q1-1985",
                 "model_28": "Q1-1985",
                 "model_29": "Q1-1985",
-                "model_30": "Q1-1985"
+                "model_30": "Q1-1985",
+                "model_31": "Q1-1985",
+                "model_32": "Q1-1985",
+                "model_33": "Q1-1985",
+                "model_34": "Q1-1985",
+                "model_35": "Q1-1985",
+                "model_36": "Q1-1985"
         },   
         "end": {
                 "model_1": "Q4-2019",
@@ -435,7 +501,13 @@
                 "model_27": "Q4-2019",
                 "model_28": "Q4-2019",
                 "model_29": "Q4-2019",
-                "model_30": "Q4-2019"
+                "model_30": "Q4-2019",
+                "model_31": "Q4-2019",
+                "model_32": "Q4-2019",
+                "model_33": "Q4-2019",
+                "model_34": "Q4-2019",
+                "model_35": "Q4-2019",
+                "model_36": "Q4-2019"
         },    
         "samplesize": "null" 
     }, 
@@ -483,7 +555,13 @@
                 "model_27": true,
                 "model_28": false,
                 "model_29": false,
-                "model_30": false
+                "model_30": false,
+                "model_31": false,
+                "model_32": false,
+                "model_33": false,
+                "model_34": false,
+                "model_35": false,
+                "model_36": false
         }, 
         "decomposition": false 
     }, 

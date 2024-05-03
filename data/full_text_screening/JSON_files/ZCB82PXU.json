@@ -5,9 +5,9 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-          "model_1": "Using as a policy instrument the overnight inedexed swap OIS 1 month rate.",
-          "model_2": "Using as a policy instrument the overnight inedexed swap OIS 6 months rate.",
-          "model_3": "Using as a policy instrument the Eonia; and high freqeuncy of (Jarociński& Karadi).",
+          "model_1": "Using as a policy instrument the overnight inedexed swap OIS 1 month rate.; cum: most likely cumulative IRFs are shown for the deflator responses.",
+          "model_2": "Using as a policy instrument the overnight inedexed swap OIS 6 months rate.; cum: most likely cumulative IRFs are shown for the deflator responses.",
+          "model_3": "Using as a policy instrument the Eonia; and high freqeuncy of (Jarociński& Karadi).; cum: most likely cumulative IRFs are shown for the deflator responses.",
           "model_4": "Using as a policy instrument the shadow rates by Krippner."
         },
         "figure": {

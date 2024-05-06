@@ -25,7 +25,7 @@
         "size": { 
                 "model_1": "53bp",
                 "model_2": "45bp",
-                "model_3": "43bp"
+                "model_3": "43bp",
                 "model_4": "48bp"
         }, 
         "axis_trans": "y*100 lev_a_fed_funds_false", 

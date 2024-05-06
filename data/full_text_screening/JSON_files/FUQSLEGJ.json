@@ -2,7 +2,7 @@
     "general": {
         "key": "FUQSLEGJ",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": "null",
         "figure": 6,
@@ -14,7 +14,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "50bp",
         "axis_trans": false,
-        "dep": "log_m_une_rate log_m_cpi",
+        "dep": "lev_m_une_rate log_m_cpi",
         "conf": "2_SE",
         "main": "other",
         "prefer": true

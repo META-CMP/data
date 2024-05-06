@@ -28,10 +28,20 @@
                 "model_3": "43bp",
                 "model_4": "48bp"
         }, 
-        "axis_trans": "y*100 lev_a_fed_funds_false", 
-        "dep": "logdiff_m_cpi logdiff_m_ip", 
+        "axis_trans": { 
+                "model_1": "y*100 lev_a_fed_funds_false",
+                "model_2": "y*100 lev_a_fed_funds_false",
+                "model_3": "y*100 lev_a_fed_funds_false",
+                "model_4": "y*100 lev_a_fed_funds_false lev_m_une_rate_false"
+        }, 
+        "dep": { 
+                "model_1": "logdiff_m_cpi logdiff_m_ip",
+                "model_2": "logdiff_m_cpi logdiff_m_ip",
+                "model_3": "logdiff_m_cpi logdiff_m_ip",
+                "model_4": "logdiff_m_cpi logdiff_m_ip lev_m_une_rate"
+        }, 
         "conf": "2_SE", 
-        "main": "gdp  inflation  other", 
+        "main": "gd inflation other", 
         "prefer": {
                 "model_1": false,
                 "model_2": false,
@@ -109,7 +119,12 @@
                 "model_3": true,
                 "model_4": true
         },    
-        "outpgap": false, 
+        "outpgap": { 
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true
+        }, 
         "find": { 
                 "model_1": false,
                 "model_2": true,

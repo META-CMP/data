@@ -10,7 +10,12 @@
                 "model_3": "the high-frequency series of Gertler and Karadi (2015) as monetary policy shocks.",
                 "model_4": "the hybrid series of Miranda-Agrippino and Ricco (2021) as monetary policy shocks." 
         }, 
-        "figure": 3, 
+        "figure": {
+                "model_1": "3-Column RR",
+                "model_2": "3-Column BC",
+                "model_3": "3-Column GK",
+                "model_4": "3-Column MAR"
+        }, 
         "page": 4, 
         "irf": true,
         "cum": false

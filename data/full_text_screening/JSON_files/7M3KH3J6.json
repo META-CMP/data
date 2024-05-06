@@ -3,29 +3,29 @@
         "key": "7M3KH3J6", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "iv: currency peg to isolate exogenous variation in Danish monetary policy and use this variation to estimate the effect of monetary policy on a range of macro aggregates.", 
         "model_notes": "null", 
         "figure": 2, 
         "page": 2961, 
         "irf": true,
-        "cum": false
+        "cum": true
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_policy_rate", 
         "size": "-100bp", 
-        "axis_trans": "y*100", 
-        "dep": "log_a_rgdp log_a_cpi", 
+        "axis_trans": "y*100 lev_a_policy_rate_false", 
+        "dep": "gr_a_rgdp gr_a_cpi", 
         "conf": "2_SE", 
         "main": "other", 
         "prefer": true 
     }, 
     "identification_strategy": { 
         "iv": true, 
-        "forecast_based": true, 
+        "forecast_based": false, 
         "nr": false, 
         "event": false, 
         "chol": false, 
-        "svar": true, 
+        "svar": false, 
         "signr": false, 
         "hf": false, 
         "heteroskedas": false, 
@@ -74,14 +74,14 @@
         "eglob": false, 
         "cbind": false, 
         "fexch": true, 
-        "inflexp": false, 
+        "inflexp": true, 
         "foreignir": false, 
         "fx": false, 
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": "true", 
-        "convent": "true", 
+        "pure_rate_shock": true, 
+        "convent": true, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

@@ -2,7 +2,7 @@
     "general": {
         "key": "2DFSJMTL",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "the IRF graphs have been annualized.",
         "model_notes": {
           "model_1": "null",
@@ -133,7 +133,14 @@
         "inflexp": false,
         "foreignir": false,
         "fx": false,
-        "lrir": false
+        "lrir": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false
+        }
     },
     "econometric_details": {
         "pure_rate_shock": true,

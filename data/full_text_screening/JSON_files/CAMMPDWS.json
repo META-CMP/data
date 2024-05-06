@@ -2,7 +2,7 @@
     "general": {
         "key": "CAMMPDWS",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
@@ -26,10 +26,7 @@
         "dep": "gr_a_rgdp gr_a_core",
         "conf": "95",
         "main": "other",
-        "prefer": {
-          "model_1": true,
-          "model_2": true
-        }
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,

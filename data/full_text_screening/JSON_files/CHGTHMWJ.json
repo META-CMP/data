@@ -2,7 +2,7 @@
     "general": {
         "key": "CHGTHMWJ",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "black line and a shaded area denote, respectively, posterior medians of IRFs and their 90% HPD intervals from the state-dependent pricing model; code only these lines.",
         "model_notes": "null",
         "figure": "6-row-2",

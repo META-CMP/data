@@ -2,7 +2,7 @@
     "general": {
         "key": "TTSTU35N",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
           "model_1": "the federal funds rate response indicated by the bold line; confidence bands are computed via a residual-based moving block bootstrap, resulting in relatively wide confidence intervals.",
@@ -42,7 +42,7 @@
         "size": "1SD",
         "axis_trans": false,
         "dep": "logdiff_m_ip logdiff_m_cpi",
-        "conf": "68 & 95",
+        "conf": "95",
         "main": "other",
         "prefer": {
           "model_1": true,
@@ -203,16 +203,7 @@
         "inflexp": false,
         "foreignir": false,
         "fx": false,
-        "lrir": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": false,
-          "model_5": true,
-          "model_6": false,
-          "model_7": false,
-          "model_8": false
-        }
+        "lrir": false
     },
     "econometric_details": {
         "pure_rate_shock": true,

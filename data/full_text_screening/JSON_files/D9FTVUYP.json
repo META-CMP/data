@@ -45,7 +45,13 @@
     },
     "identification_strategy": {
         "iv": true,
-        "forecast_based": false,
+        "forecast_based": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+          "model_4": false,
+          "model_5": true
+        },
         "nr": false,
         "event": false,
         "chol": false,
@@ -106,7 +112,7 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
@@ -116,8 +122,8 @@
         "lrir": true
     },
     "econometric_details": {
-        "pure_rate_shock": true,
-        "convent": true,
+        "pure_rate_shock": false,
+        "convent": false,
         "decomposition": true
     },
     "publication_characteristics": {

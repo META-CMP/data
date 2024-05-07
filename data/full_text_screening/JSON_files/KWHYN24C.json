@@ -2,9 +2,9 @@
     "general": {
         "key": "KWHYN24C",
         "rid1": "dr",
-        "rid2": "null",
-        "study_notes": "null",
-        "model_notes": "panel: how the transmission of monetary policy shocks to prices and employment differs across metropolitan areas in the United States. They use a panel of 28 US metropolitan areas.",
+        "rid2": "fp",
+        "study_notes": "panel: how the transmission of monetary policy shocks to prices and employment differs across metropolitan areas in the United States. They use a panel of 28 US metropolitan areas.",
+        "model_notes": "null",
         "figure": 2,
         "page": 12,
         "irf": true,
@@ -22,7 +22,7 @@
     "identification_strategy": {
         "iv": false,
         "forecast_based": true,
-        "nr": false,
+        "nr": true,
         "event": false,
         "chol": false,
         "svar": false,

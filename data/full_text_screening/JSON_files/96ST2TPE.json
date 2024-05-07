@@ -2,7 +2,7 @@
     "general": {
         "key": "96ST2TPE",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "sg",
         "study_notes": "only code Med-T responses by the dashed-dotted line, with the dark shaded region that is the 68% equal-tailed point-wise probability interval for the accepted responses.",
         "model_notes": {
           "model_1": "baseline.",
@@ -55,13 +55,13 @@
         },
         "axis_trans": false,
         "dep": {
-          "model_1": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
+          "model_1": "logdiff_q_rgdp logdiff_q_cpi",
           "model_2": "lev_q_gap logdiff_q_cpi lev_q_une_rate",
-          "model_3": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
-          "model_4": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
-          "model_5": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
-          "model_6": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate",
-          "model_7": "logdiff_q_rgdp logdiff_q_cpi levdiff_q_une_rate"
+          "model_3": "logdiff_q_rgdp logdiff_q_cpi",
+          "model_4": "logdiff_q_rgdp logdiff_q_cpi",
+          "model_5": "logdiff_q_rgdp logdiff_q_cpi",
+          "model_6": "logdiff_q_rgdp logdiff_q_cpi",
+          "model_7": "logdiff_q_rgdp logdiff_q_cpi"
         },
         "conf": "68",
         "main": "inflation emp",
@@ -134,14 +134,14 @@
     "control_variables": {
         "comprice": true,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
         "foreignir": true,
         "fx": true,
-        "lrir": true
+        "lrir": false
     },
     "econometric_details": {
         "pure_rate_shock": true,

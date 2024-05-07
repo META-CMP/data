@@ -50,7 +50,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_3_month_gov_us",
+        "inttype": "lev_a_3_month_gov",
         "size": "100bp",
         "axis_trans": false,
         "dep": {

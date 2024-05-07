@@ -21,7 +21,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_short_term_rate",
+        "inttype": "lev_q_3_month_gov",
         "size": "null",
         "axis_trans": false,
         "dep": "lev_q_gap gr_q_deflator",
@@ -50,7 +50,12 @@
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
-        "idother": false
+        "idother": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": true
+        }
     },
     "estimation_method": {
         "var": {

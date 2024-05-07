@@ -2,7 +2,7 @@
     "general": {
         "key": "TPWQ4JHS",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "sg",
         "study_notes": "null",
         "model_notes": {
           "model_1": "baseline.",
@@ -20,7 +20,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_fed_funds",
+        "inttype": "lev_a_3_month_short_rate",
         "size": "1SD",
         "axis_trans": false,
         "dep": "log_m_ip log_m_cpi",
@@ -35,7 +35,7 @@
         "iv": false,
         "forecast_based": false,
         "nr": false,
-        "event": true,
+        "event": false,
         "chol": false,
         "svar": true,
         "signr": true,
@@ -52,7 +52,7 @@
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": false,
+        "bayes": true,
         "dsge": false,
         "varother": false
     },
@@ -83,7 +83,7 @@
         "comprice": false,
         "outpgap": false,
         "find": false,
-        "eglob": true,
+        "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
@@ -92,7 +92,7 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": true,
+        "pure_rate_shock": false,
         "convent": true,
         "decomposition": false
     },

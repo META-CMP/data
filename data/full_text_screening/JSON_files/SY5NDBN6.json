@@ -83,22 +83,22 @@
     },
     "country_composition": {
         "list_of_countries": {
-          "model_1": "EA DE FR IT ES",
-          "model_2": "DE EA FR IT ES",
-          "model_3": "FR DE EA IT ES",
-          "model_4": "IT FR DE EA ES",
-          "model_5": "ES IT FR DE EA"
+          "model_1": "EA",
+          "model_2": "DE",
+          "model_3": "FR",
+          "model_4": "IT",
+          "model_5": "ES"
         },
         "n_of_countries": {
-          "model_1": 5,
-          "model_2": 5,
-          "model_3": 5,
-          "model_4": 5,
-          "model_5": 5
+          "model_1": 1,
+          "model_2": 1,
+          "model_3": 1,
+          "model_4": 1,
+          "model_5": 1
         }
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": false,
         "start": {
           "model_1": "Q1-1988",
           "model_2": "Q1-1988",
@@ -123,8 +123,8 @@
         "cbind": false,
         "fexch": false,
         "inflexp": false,
-        "foreignir": false,
-        "fx": false,
+        "foreignir": true,
+        "fx": true,
         "lrir": false
     },
     "econometric_details": {

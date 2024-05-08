@@ -5,9 +5,9 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-          "model_1": "Using as a policy instrument the overnight inedexed swap OIS 1 month rate.",
-          "model_2": "Using as a policy instrument the overnight inedexed swap OIS 6 months rate.",
-          "model_3": "Using as a policy instrument the Eonia; and high freqeuncy of (Jarociński& Karadi).",
+          "model_1": "Using as a policy instrument the overnight inedexed swap OIS 1 month rate.; cum: most likely cumulative IRFs are shown for the deflator responses.",
+          "model_2": "Using as a policy instrument the overnight inedexed swap OIS 6 months rate.; cum: most likely cumulative IRFs are shown for the deflator responses.",
+          "model_3": "Using as a policy instrument the Eonia; and high freqeuncy of (Jarociński& Karadi).; cum: most likely cumulative IRFs are shown for the deflator responses.",
           "model_4": "Using as a policy instrument the shadow rates by Krippner."
         },
         "figure": {
@@ -23,12 +23,17 @@
           "model_4": 52 
         },
         "irf": true,
-        "cum": false
+        "cum": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false
+        }
     },
     "impulse_and_response_variables": {
         "inttype": {
-          "model_1": "lev_a_overnight_lending",
-          "model_2": "lev_a_overnight_lending",
+          "model_1": "lev_a_1_month_overnight_lending",
+          "model_2": "lev_a_6_month_overnight_lending",
           "model_3": "lev_a_eonia",
           "model_4": "lev_a_ssr"
         },
@@ -59,7 +64,7 @@
         "signr": {
           "model_1": false,
           "model_2": false,
-          "model_3": false,
+          "model_3": true,
           "model_4": true
         },
         "hf": {
@@ -130,7 +135,7 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
@@ -140,11 +145,16 @@
         "lrir": true
     },
     "econometric_details": {
-        "pure_rate_shock": true,
+        "pure_rate_shock": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false
+        },
         "convent": {
           "model_1": true,
           "model_2": true,
-          "model_3": true,
+          "model_3": false,
           "model_4": false
         },
         "decomposition": false

@@ -86,34 +86,22 @@
         "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": false,
         "start": "01-1990",
         "end": "03-2009",
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
-        "outpgap": false,
-        "find": false,
-        "eglob": false,
+        "comprice": true,
+        "outpgap": true,
+        "find": true,
+        "eglob": true,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
-        "foreignir": {
-          "model_1": true,
-          "model_2": true,
-          "model_3": true,
-          "model_4": true,
-          "model_5": false
-        },
-        "fx": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": true,
-          "model_4": true,
-          "model_5": true
-        },
-        "lrir": false
+        "foreignir": true,
+        "fx": true,
+        "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,

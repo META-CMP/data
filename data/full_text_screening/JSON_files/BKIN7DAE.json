@@ -37,7 +37,7 @@
         "nr": false,
         "event": false,
         "chol": false,
-        "svar": false,
+        "svar": true,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
@@ -76,11 +76,11 @@
         "month": true
     },
     "country_composition": {
-        "list_of_countries": "MY US",
-        "n_of_countries": 2
+        "list_of_countries": "MY",
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": false,
         "start": "01-1985",
         "end": "12-2015",
         "samplesize": "null"
@@ -95,7 +95,7 @@
         "inflexp": false,
         "foreignir": true,
         "fx": true,
-        "lrir": true
+        "lrir": false
     },
     "econometric_details": {
         "pure_rate_shock": true,

@@ -20,7 +20,7 @@
         "prefer": true
     },
     "identification_strategy": {
-        "iv": true,
+        "iv": false,
         "forecast_based": false,
         "nr": false,
         "event": false,

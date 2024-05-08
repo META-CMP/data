@@ -17,7 +17,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_q_fedfunds",
+        "inttype": "lev_a_fedfunds",
         "size": "33bp",
         "axis_trans": false,
         "dep": "log_q_rgdp log_q_core",
@@ -80,7 +80,7 @@
         "eglob": false,
         "cbind": false,
         "fexch": false,
-        "inflexp": true,
+        "inflexp": false,
         "foreignir": false,
         "fx": false,
         "lrir": false

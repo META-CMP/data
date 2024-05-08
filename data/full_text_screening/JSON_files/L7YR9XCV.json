@@ -46,7 +46,7 @@
         "event": false,
         "chol": false,
         "svar": false,
-        "signr": false,
+        "signr": true,
         "hf": true,
         "heteroskedas": false,
         "longrun": false,
@@ -110,8 +110,8 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": true,
-        "convent": true,
+        "pure_rate_shock": false,
+        "convent": false,
         "decomposition": true
     },
     "publication_characteristics": {

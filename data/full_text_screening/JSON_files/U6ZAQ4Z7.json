@@ -99,7 +99,7 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
@@ -109,18 +109,12 @@
         "lrir": true
     },
     "econometric_details": {
-        "pure_rate_shock": {
-          "model_1": true,
-          "model_2": true 
-        },
+        "pure_rate_shock": false,
         "convent": {
           "model_1": true,
           "model_2": false 
         },
-        "decomposition": {
-          "model_1": false,
-          "model_2": true 
-        }
+        "decomposition": false
     },
     "publication_characteristics": {
         "cbanker": false

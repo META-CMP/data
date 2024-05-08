@@ -95,7 +95,7 @@
           "model_1": false,
           "model_2": false,
           "model_3": false,
-          "model_4": true
+          "model_4": false
         },
         "cbind": false,
         "fexch": false,

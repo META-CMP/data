@@ -18,7 +18,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_rate",
-        "size": "1%",
+        "size": "1SD",
         "axis_trans": false,
         "dep": "log_q_rgdp gr_a_deflator",
         "conf": "95",
@@ -76,7 +76,7 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,

@@ -93,7 +93,12 @@
         "samplesize": "null"
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": true,
+          "model_4": true
+        },
         "outpgap": false,
         "find": {
           "model_1": false,

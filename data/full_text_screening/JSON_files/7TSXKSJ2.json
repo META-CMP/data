@@ -134,7 +134,13 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": true,
+        "pure_rate_shock": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false,
+          "model_4": true,
+          "model_5": true
+        },
         "convent": true,
         "decomposition": false
     },

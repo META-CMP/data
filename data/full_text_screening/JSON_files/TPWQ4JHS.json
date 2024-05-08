@@ -20,7 +20,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_3_month_USrate",
+        "inttype": "lev_a_3_month_short_rate",
         "size": "1SD",
         "axis_trans": false,
         "dep": "log_m_ip log_m_cpi",
@@ -52,7 +52,7 @@
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": false,
+        "bayes": true,
         "dsge": false,
         "varother": false
     },
@@ -83,7 +83,7 @@
         "comprice": false,
         "outpgap": false,
         "find": false,
-        "eglob": true,
+        "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
@@ -92,7 +92,7 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": true,
+        "pure_rate_shock": false,
         "convent": true,
         "decomposition": false
     },

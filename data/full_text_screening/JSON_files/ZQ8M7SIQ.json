@@ -25,7 +25,7 @@
         "nr": false,
         "event": false,
         "chol": false,
-        "svar": true,
+        "svar": false,
         "signr": true,
         "hf": false,
         "heteroskedas": false,

@@ -35,11 +35,11 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_1_year_gov",
+        "inttype": "lev_a_1_year_gov",
         "size": "25bp",
         "axis_trans": false,
         "dep": "log_m_ip log_m_cpi",
-        "conf": "68 & 90",
+        "conf": "90",
         "main": "gdp inflation",
         "prefer":  {
           "model_1": false,

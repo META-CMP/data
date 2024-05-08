@@ -5,7 +5,7 @@
         "rid2": "null",
         "study_notes": "list_of_countries: they use euro-area as aggregate data.",
         "model_notes": {
-                "model_1": "axis_trans: the x-axis is in weeks, so we also need to divide by 4; model_1: report the responses obtained following an expansionary conventional monetary policy shock (second column) and a UMP announcement surprise (third column); main: the focus of the paper is UMP but I will only code 1 figure based on CMP; estimation_method: mixed-frequency VAR (MF-VAR). start: december 2008 and may 2014 have been included even tough the sample spans weekly data from December 18, 2008 until May 10, 2014."
+                "model_1": "axis_trans: the x-axis is in weeks, so we also need to divide by 4; model_1: report the responses obtained following an expansionary conventional monetary policy shock (second column) and a UMP announcement surprise (third column); main: the focus of the paper is UMP but I will only code 1 figure based on CMP; estimation_method: mixed-frequency VAR (MF-VAR). start: december 2008 and may 2014 have been included even tough the sample spans weekly data from December 18, 2008 until May 10, 2014.; The variables which have been used to construct the principal component control variable are coded as control variables."
         },
         "figure": {
                 "model_1": 2
@@ -74,16 +74,16 @@
         "samplesize": 262
     },
     "control_variables": {
-        "comprice": false,
+        "comprice": true,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
-        "foreignir": false,
+        "foreignir": true,
         "fx": true,
-        "lrir": true
+        "lrir": false
     },
     "econometric_details": {
         "pure_rate_shock": true,

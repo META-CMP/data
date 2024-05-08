@@ -3,7 +3,7 @@
         "key": "56RGH385",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "cum: No note in the paper whether cumulative responses are shown for gr_a_deflator. However, as the responses look strongly cumulative we set the dummy to true.",
         "model_notes": "null",
         "figure": {
           "model_1": "4.column-1",
@@ -24,7 +24,7 @@
           "model_7": 14
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_1_year_gov",
@@ -62,7 +62,15 @@
           "model_6": false,
           "model_7": false
         },
-        "nr": false,
+        "nr": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false
+        },
         "event": false,
         "chol": false,
         "svar": false,
@@ -120,7 +128,15 @@
         },
         "tvar": false,
         "gvar": false,
-        "bayes": false,
+        "bayes": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true,
+          "model_6": false,
+          "model_7": false
+        },
         "dsge": false,
         "varother": false
     },

@@ -65,7 +65,7 @@
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": false,
+        "bayes": true,
         "dsge": false,
         "varother": false
     },
@@ -122,7 +122,7 @@
         "inflexp": false,
         "foreignir": false,
         "fx": false,
-        "lrir": false
+        "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,

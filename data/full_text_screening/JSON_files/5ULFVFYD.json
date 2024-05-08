@@ -15,7 +15,7 @@
         "size": "null",
         "axis_trans": false,
         "dep": "logdiff_a_rip logdiff_a_deflator",
-        "conf": "68 & 95",
+        "conf": "95",
         "main": "gdp inflation",
         "prefer": true
     },

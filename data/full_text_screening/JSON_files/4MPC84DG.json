@@ -90,7 +90,7 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
@@ -100,7 +100,7 @@
         "lrir": false
     },
     "econometric_details": {
-        "pure_rate_shock": true,
+        "pure_rate_shock": false,
         "convent": false,
         "decomposition": false
     },

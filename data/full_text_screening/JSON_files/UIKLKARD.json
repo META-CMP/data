@@ -24,7 +24,7 @@
         "axis_trans": "y*100 lev_a_fed_funds_false",
         "dep": "logdiff_m_ip logdiff_m_cpi logdiff_m_emp",
         "conf": "68",
-        "main": "other",
+        "main": "gdp inflation",
         "prefer": {
           "model_1": false,
           "model_2": true,

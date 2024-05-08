@@ -21,15 +21,15 @@
     "impulse_and_response_variables": {
         "inttype": {
           "model_1": "lev_a_fed_funds",
-          "model_2": "lev_a_gov",
-          "model_3": "lev_a_gov"
+          "model_2": "lev_a_3_month_gov",
+          "model_3": "lev_a_3_month_gov"
         },
         "size": "1SD",
         "axis_trans": false,
         "dep": {
           "model_1": "log_m_rgdp log_m_deflator",
-          "model_2": "log_q_rgnp log_q_gnp_deflator",
-          "model_3": "log_q_rgnp log_q_gnp_deflator"
+          "model_2": "log_q_rgnp log_q_deflator",
+          "model_3": "log_q_rgnp log_q_deflator"
         },
         "conf": "68",
         "main": "gdp inflation",

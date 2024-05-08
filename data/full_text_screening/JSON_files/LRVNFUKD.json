@@ -7,7 +7,7 @@
         "model_notes": {
           "model_1": "null",
           "model_2": "null",
-          "model_3": "size: the responses of the variables in the baseline to a one standard devi- ation contractionary monetary policy surprise. The one-year rate increases roughly 20 basis points on impact.",
+          "model_3": "size: the responses of the variables in the baseline to a one standard deviation contractionary monetary policy surprise. The one-year rate increases roughly 20 basis points on impact.",
           "model_4": "black line is the response of the federal funds rate.",
           "model_5": "black line represents the response of 2_year_gov.",
           "model_6": "a sample that don't include the crisis period; black line represents the response without the crisis.",
@@ -86,7 +86,15 @@
           "model_6": false,
           "model_7": true
         },
-        "nr": false,
+        "nr": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true
+        },
         "event": false,
         "chol": {
           "model_1": true,
@@ -166,15 +174,7 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": true,
-          "model_4": true,
-          "model_5": true,
-          "model_6": true,
-          "model_7": true
-        },
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,

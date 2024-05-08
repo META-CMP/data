@@ -2,7 +2,7 @@
     "general": {
         "key": "VXG9V25W",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
@@ -147,18 +147,7 @@
           "model_10": true
         },
         "outpgap": false,
-        "find": {
-          "model_1": true,
-          "model_2": true,
-          "model_3": false,
-          "model_4": false,
-          "model_5": false,
-          "model_6": false,
-          "model_7": false,
-          "model_8": false,
-          "model_9": false,
-          "model_10": false
-        },
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,

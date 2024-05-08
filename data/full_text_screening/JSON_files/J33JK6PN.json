@@ -2,8 +2,8 @@
     "general": {
         "key": "J33JK6PN",
         "rid1": "dr",
-        "rid2": "null",
-        "study_notes": "null",
+        "rid2": "sg",
+        "study_notes": "dr: they use r = ln(1+i/100), no_comparable_effect_size but then interest impulse response resemble to a level variable",
         "model_notes": "null",
         "figure": {
           "model_1": "1.column-1",
@@ -20,12 +20,12 @@
         "inttype": "lev_a_short_term_rate",
         "size": "1SD",
         "axis_trans": "y*100",
-        "dep": "log_m_ip log_m_cpi",
+        "dep": "logdiff_m_ip logdiff_m_cpi",
         "conf": "95",
         "main": "other",
         "prefer": {
           "model_1": true,
-          "model_2": true
+          "model_2": false
         }
     },
     "identification_strategy": {

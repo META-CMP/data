@@ -2,7 +2,7 @@
     "general": {
         "key": "8X6MPCEX",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "signr: they identify US monetary shocks by placing sign restrictions on the federal funds rate and on prices in the dollarized countries only; they have annualizaed the impulses response functions despite using monthly frequency, no transformation.",
         "model_notes": {
           "model_1": "signr: they define a contractionary US monetary policy shock as a shock that does not lead to an increase in the price level in all dollarized countries, and does not lead to a decrease in the federal funds rate.",
@@ -74,11 +74,11 @@
         "month": true
     },
     "country_composition": {
-        "list_of_countries": "US EC SV PA PR",
-        "n_of_countries": 5
+        "list_of_countries": "US",
+        "n_of_countries": 1
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": false,
         "start": "01-1989",
         "end": "09-2013",
         "samplesize": "null"

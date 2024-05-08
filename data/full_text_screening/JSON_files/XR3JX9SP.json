@@ -2,7 +2,7 @@
     "general": {
         "key": "XR3JX9SP",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "all impulse responses graphs display .68 and .95 flat-prior probability intervals, they present the principal components of the impulse responses since uncertainty about these is not serially independent across time. The graphs report the first and second components of the impulse responses.",
         "model_notes": {
           "model_1": "monetary VAR, monetary variables as policy instrument; conf: first component of impulse response.",

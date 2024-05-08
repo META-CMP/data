@@ -102,18 +102,12 @@
     },
     "control_variables": {
         "comprice": false,
-        "outpgap": {
-          "model_1": false,
-          "model_2": true
-        },
+        "outpgap": false,
         "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
-        "inflexp": {
-          "model_1": false,
-          "model_2": true
-        },
+        "inflexp": false,
         "foreignir": false,
         "fx": false,
         "lrir": false

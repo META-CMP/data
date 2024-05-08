@@ -2,8 +2,8 @@
     "general": {
         "key": "5F7IJHQM",
         "rid1": "me",
-        "rid2": "null",
-        "study_notes": "quality_concern: not defined if real or nominal IP is used. quality_concern: not certain whether the CPI, IP, employment and the labor force enter the VAR log transformed and if the interest rate and the unemployment rate are in levels.",
+        "rid2": "sg",
+        "study_notes": "sg: appendix says that ip, cpi, employment enter logdiff transformed, but this is only for the factor augmentation, not for the VAR model itself, I guess. unemprate is in percent, interest rate in annualized percent",
         "model_notes": {
           "model_1": "null",
           "model_2": "null",
@@ -14,7 +14,7 @@
         },
         "figure": {
           "model_1": 5,
-          "model_2": 5,
+          "model_2": "5+6",
           "model_3": 6,
           "model_4": 6,
           "model_5": 10,
@@ -22,7 +22,7 @@
         },
         "page": {
           "model_1": 22,
-          "model_2": 22,
+          "model_2": "22+23",
           "model_3": 23,
           "model_4": 23,
           "model_5": 26,
@@ -37,11 +37,11 @@
         "axis_trans": false,
         "dep": {
           "model_1": "log_m_ip log_m_cpi",
-          "model_2": "log_m_ip log_m_cpi lev_m_une_rate",
+          "model_2": "logdiff_m_ip",
           "model_3": "log_m_emp",
           "model_4": "lev_m_une_rate",
           "model_5": "log_m_ip log_m_cpi",
-          "model_6": "log_m_ip log_m_cpi"
+          "model_6": "logdiff_m_ip"
         },
         "conf": "68",
         "main": "gdp  inflation",
@@ -79,8 +79,7 @@
         "lp": false,
         "vecm": false,
         "dyn_ols": false,
-        "fvar": false,
-        "tvar": {
+        "fvar": {
           "model_1": false,
           "model_2": true,
           "model_3": false,
@@ -88,6 +87,7 @@
           "model_5": false,
           "model_6": true
         },
+        "tvar": false,
         "gvar": false,
         "bayes": true,
         "dsge": false,

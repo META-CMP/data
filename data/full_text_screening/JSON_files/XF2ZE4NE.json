@@ -2,7 +2,7 @@
     "general": {
         "key": "XF2ZE4NE",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "They use a Markov Swithching VAR model, that's why I code varother as true.",
         "model_notes": {
           "model_1": "Constant parameter model, the whole period.",
@@ -180,7 +180,7 @@
         "fvar": false,
         "tvar": false,
         "gvar": false,
-        "bayes": false,
+        "bayes": true,
         "dsge": false,
         "varother": true
     },

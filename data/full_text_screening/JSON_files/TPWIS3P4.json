@@ -2,7 +2,7 @@
     "general": {
         "key": "TPWIS3P4",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "size: shock size is missing, but is an expansionary monetary policy shock.",
         "model_notes": {
           "model_1": "benchmark.",
@@ -116,7 +116,7 @@
         "comprice": false,
         "outpgap": false,
         "find": false,
-        "eglob": true,
+        "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,

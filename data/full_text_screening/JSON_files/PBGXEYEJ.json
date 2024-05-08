@@ -2,7 +2,7 @@
     "general": {
         "key": "PBGXEYEJ",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
           "model_1": "the number of factors in FAVAR is three and estimated by Principal Components with Two-Step Bootstrap.",

@@ -2,7 +2,7 @@
     "general": {
         "key": "K9PLNC4J",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
           "model_1": "equity bond premium included as a variable.",
@@ -168,28 +168,14 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": {
-          "model_1": false,
-          "model_2": true,
-          "model_3": false,
-          "model_4": false,
-          "model_5": false,
-          "model_6": false
-        },
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
         "fx": false,
-        "lrir": {
-          "model_1": true,
-          "model_2": false,
-          "model_3": true,
-          "model_4": true,
-          "model_5": true,
-          "model_6": true 
-        }
+        "lrir": true
     },
     "econometric_details": {
         "pure_rate_shock": true,

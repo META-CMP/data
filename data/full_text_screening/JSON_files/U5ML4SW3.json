@@ -2,8 +2,8 @@
     "general": {
         "key": "U5ML4SW3",
         "rid1": "dr",
-        "rid2": "null",
-        "study_notes": "null",
+        "rid2": "fp",
+        "study_notes": "varother: Heterogeneous-agent VAR (HAVAR)",
         "model_notes": "null",
         "figure": 1,
         "page": 561,
@@ -42,7 +42,7 @@
         "gvar": false,
         "bayes": false,
         "dsge": false,
-        "varother": false
+        "varother": true
     },
     "regime_dependence": {
         "lor": false,

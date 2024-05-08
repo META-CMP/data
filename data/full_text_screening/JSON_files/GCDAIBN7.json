@@ -2,7 +2,7 @@
     "general": {
         "key": "GCDAIBN7",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
@@ -42,7 +42,11 @@
           "model_2": false,
           "model_3": false
         },
-        "nr": false,
+        "nr": {
+          "model_1": true,
+          "model_2": false,
+          "model_3": false
+        },
         "event": false,
         "chol": {
           "model_1": false,
@@ -98,14 +102,14 @@
     "control_variables": {
         "comprice": true,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
         "foreignir": true,
         "fx": true,
-        "lrir": true
+        "lrir": false
     },
     "econometric_details": {
         "pure_rate_shock": true,

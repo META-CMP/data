@@ -30,14 +30,14 @@
           "model_2": false,
           "model_3": false,
           "model_4": false,
-          "model_5": "false log_a_rgdp_y*100"
+          "model_5": "log_q_rgdp_y*100"
         },
         "dep": {
           "model_1": "lev_q_une_rate gr_a_cpi",
           "model_2": "lev_q_une_rate gr_a_cpi",
           "model_3": "lev_q_une_rate gr_a_cpi",
           "model_4": "lev_q_une_rate gr_a_cpi",
-          "model_5": "log_a_rgdp gr_a_cpi"
+          "model_5": "log_q_rgdp gr_a_cpi"
         },
         "conf": "68",
         "main": "other",
@@ -54,8 +54,8 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": true,
-        "svar": false,
+        "chol": false,
+        "svar": true,
         "signr": true,
         "hf": false,
         "heteroskedas": false,

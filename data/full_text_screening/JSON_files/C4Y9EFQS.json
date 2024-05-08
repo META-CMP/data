@@ -3,7 +3,7 @@
         "key": "C4Y9EFQS", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "varother: threshold VAR, then varother set to true.", 
         "model_notes": "model 1 is regime uncertain times, model 2 is tranquil times. ", 
         "figure": {
                 "model_1": 2,
@@ -20,18 +20,18 @@
         "inttype": "lev_a_fed_funds", 
         "size": "-100bp", 
         "axis_trans": false, 
-        "dep": "gr_q_cpi logdiff_q_rgdp", 
+        "dep": "gr_q_deflator gr_q_rgdp", 
         "conf": "90", 
-        "main": "gdp  inflation  other", 
+        "main": "gdp inflation other", 
         "prefer": true 
     }, 
     "identification_strategy": { 
-        "iv": false, 
+        "iv": true, 
         "forecast_based": false, 
         "nr": false, 
         "event": false, 
         "chol": false, 
-        "svar": false, 
+        "svar": true, 
         "signr": false, 
         "hf": false, 
         "heteroskedas": false, 
@@ -44,11 +44,11 @@
         "vecm": false, 
         "dyn_ols": "false", 
         "fvar": false, 
-        "tvar": true, 
+        "tvar": false, 
         "gvar": false, 
         "bayes": false, 
         "dsge": false, 
-        "varother": false 
+        "varother": true 
     }, 
     "regime_dependence": { 
         "lor": false, 
@@ -74,8 +74,8 @@
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": false, 
-        "outpgap": false, 
+        "comprice": true, 
+        "outpgap": true, 
         "find": false, 
         "eglob": false, 
         "cbind": false, 

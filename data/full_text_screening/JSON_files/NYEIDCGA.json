@@ -123,7 +123,7 @@
     }, 
     "control_variables": { 
         "comprice": true, 
-        "outpgap": false, 
+        "outpgap": true, 
         "find": true, 
         "eglob": false, 
         "cbind": false, 

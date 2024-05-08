@@ -4,7 +4,17 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "Figure 7 not coded because of problems with the confidence bands. PPI impulse responses not included.", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "null",
+                "model_4": "Bayeasian Proxy VAR estimated under the high relevance prior on σ_ν.",
+                "model_5": "varother: hybrid VAR means standard VAR, by replacing the federal funds rate with the cumulated series of narrative shocks, then varother set to false.",
+                "model_6": "varother: hybrid VAR means standard VAR, by replacing the federal funds rate with the cumulated series of narrative shocks, then varother set to false.",
+                "model_7": "frequentist approach.",
+                "model_8": "frequentist approach.",
+                "model_9": "large Bayeasian Proxy VAR."
+        }, 
         "figure": {
                 "model_1": 1,
                 "model_2": 1,
@@ -12,7 +22,9 @@
                 "model_4": 5,
                 "model_5": 6,
                 "model_6": 6,
-                "model_7": 8
+                "model_7": 7,
+                "model_8": 7,
+                "model_9": 8
         }, 
         "page": {
                 "model_1": 168,
@@ -21,24 +33,18 @@
                 "model_4": 176,
                 "model_5": 179,
                 "model_6": 179,
-                "model_7": 184
+                "model_7": 183,
+                "model_8": 183,
+                "model_9": 184
         },  
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_fed_funds", 
-        "size": {
-                "model_1": "24bp",
-                "model_2": "24bp",
-                "model_3": "24bp",
-                "model_4": "24bp",
-                "model_5": "8bp",
-                "model_6": "8bp",
-                "model_7": "16bp"
-        }, 
-        "axis_trans": "y/100 log_m_ip_false", 
-        "dep": "log_m_ip lev_m_une_rate", 
+        "size": "1SD", 
+        "axis_trans": "y/100 log_m_ip_false log_m_wpi_false", 
+        "dep": "log_m_ip lev_m_une_rate log_m_wpi", 
         "conf": "90", 
         "main": "gdp emp other", 
         "prefer": {
@@ -48,11 +54,23 @@
                 "model_4": false,
                 "model_5": false,
                 "model_6": false,
-                "model_7": false
+                "model_7": false,
+                "model_8": false,
+                "model_9": false
         } 
     }, 
     "identification_strategy": { 
-        "iv": false, 
+        "iv": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": false,
+                "model_7": true,
+                "model_8": true,
+                "model_9": true
+        }, 
         "forecast_based": {
                 "model_1": false,
                 "model_2": false,
@@ -60,7 +78,9 @@
                 "model_4": false,
                 "model_5": true,
                 "model_6": true,
-                "model_7": false
+                "model_7": false,
+                "model_8": false,
+                "model_9": false
         },  
         "nr": {
                 "model_1": false,
@@ -69,7 +89,9 @@
                 "model_4": false,
                 "model_5": true,
                 "model_6": true,
-                "model_7": false
+                "model_7": false,
+                "model_8": false,
+                "model_9": false
         }, 
         "event": false, 
         "chol": {
@@ -79,33 +101,29 @@
                 "model_4": false,
                 "model_5": false,
                 "model_6": false,
-                "model_7": false
+                "model_7": false,
+                "model_8": false,
+                "model_9": false
         }, 
-        "svar": {
+        "svar": false,
+        "signr": false, 
+        "hf": {
                 "model_1": true,
                 "model_2": true,
                 "model_3": false,
                 "model_4": true,
                 "model_5": false,
                 "model_6": false,
-                "model_7": true
-        },
-        "signr": false, 
-        "hf": false, 
+                "model_7": true,
+                "model_8": true,
+                "model_9": true
+        }, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": true,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false,
-                "model_7": false
-        },
+        "var": true,
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
@@ -116,21 +134,15 @@
                 "model_1": true,
                 "model_2": true,
                 "model_3": false,
-                "model_4": false,
+                "model_4": true,
                 "model_5": false,
                 "model_6": false,
-                "model_7": true
+                "model_7": false,
+                "model_8": false,
+                "model_9": true
         }, 
         "dsge": false, 
-        "varother": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false,
-                "model_5": true,
-                "model_6": true,
-                "model_7": false
-        } 
+        "varother": false
     }, 
     "regime_dependence": { 
         "lor": false, 
@@ -165,7 +177,9 @@
                 "model_4": false,
                 "model_5": false,
                 "model_6": false,
-                "model_7": true
+                "model_7": false,
+                "model_8": false,
+                "model_9": true
         },  
         "eglob": false, 
         "cbind": false, 
@@ -179,7 +193,10 @@
                 "model_3": true,
                 "model_4": true,
                 "model_5": false,
-                "model_6": true
+                "model_6": true,
+                "model_7": false,
+                "model_8": true,
+                "model_9": true
         }  
     }, 
     "econometric_details": { 

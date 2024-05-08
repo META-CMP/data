@@ -29,7 +29,7 @@
                 "model_1": true,
                 "model_2": false,
                 "model_3": false
-        },   
+        }   
     }, 
     "identification_strategy": { 
         "iv": false, 

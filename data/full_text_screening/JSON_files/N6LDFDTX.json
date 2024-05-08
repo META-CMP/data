@@ -35,7 +35,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_2_year_bond_yield", 
+        "inttype": "lev_a_2_year_gov", 
         "size": "25bp", 
         "axis_trans": false, 
         "dep": {
@@ -213,7 +213,7 @@
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": false, 
+        "convent": true, 
         "decomposition": false
     }, 
     "publication_characteristics": { 

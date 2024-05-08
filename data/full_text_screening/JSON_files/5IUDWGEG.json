@@ -2,7 +2,7 @@
     "general": {
         "key": "5IUDWGEG",
         "rid1": "me",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "dep: In the UK the RPI (retail price index) is used instead of the cpi for all models except model_6 & 8. axis_trans: UK ip and cpi responses should probably be multiplied by 100 but the information is not stated in the paper.",
         "model_notes": "null",
         "figure": {
@@ -58,7 +58,16 @@
                 "model_7": true,
                 "model_8": true
         },
-        "nr": false,
+        "nr": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true
+        },
         "event": false,
         "chol": false,
         "svar": false,

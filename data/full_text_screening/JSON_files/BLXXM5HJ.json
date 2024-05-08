@@ -20,7 +20,11 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_repo",
-        "size": "100bp",
+        "size": {
+          "model_1": "100bp",
+          "model_2": "100bp",
+          "model_3": "-100bp"
+        }
         "axis_trans": false,
         "dep": {
           "model_1": "log_q_rgdp lev_q_une_rate gr_q_deflator",

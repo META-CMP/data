@@ -4,28 +4,49 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "did not code figure 2 because there is something wrong with the scale/transformation of the interest rate IRF", 
-        "figure": 1, 
-        "page": 96, 
+        "model_notes": "null", 
+        "figure": {
+          "model_1": 1,
+          "model_2": 2
+        }, 
+        "page": {
+          "model_1": 96,
+          "model_2": 97
+        }, 
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
         "size": "null", 
-        "axis_trans": "y*100 lev_a_short_term_rate_false", 
-        "dep": "log_q_gdp log_q_deflator", 
+        "axis_trans": {
+          "model_1": "y*100 lev_a_short_term_rate_false",
+          "model_2": "y*100 lev_q_une_rate_false"
+        }, 
+        "dep": {
+          "model_1": "log_q_gdp log_q_deflator",
+          "model_2": "log_q_gdp log_q_deflator lev_q_une_rate"
+        }, 
         "conf": "68", 
         "main": "other",
-        "prefer": true 
+        "prefer": {
+          "model_1": true,
+          "model_2": false
+        } 
     }, 
     "identification_strategy": { 
         "iv": false, 
         "forecast_based": false, 
         "nr": false, 
         "event": false, 
-        "chol": true, 
-        "svar": false, 
+        "chol": {
+          "model_1": true,
+          "model_2": false
+        }, 
+        "svar": {
+          "model_1": false,
+          "model_2": true
+        }, 
         "signr": false, 
         "hf": false, 
         "heteroskedas": false, 
@@ -68,16 +89,22 @@
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": true, 
+        "comprice": {
+          "model_1": true,
+          "model_2": false
+        }, 
         "outpgap": false, 
         "find": false, 
         "eglob": false, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
-        "foreignir": false, 
+        "foreignir": {
+          "model_1": false,
+          "model_2": true
+        }, 
         "fx": false, 
-        "lrir": false 
+        "lrir": false
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 

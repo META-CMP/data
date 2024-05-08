@@ -5,19 +5,31 @@
         "rid2": "null", 
         "study_notes": "null", 
         "model_notes": "null", 
-        "figure": 4, 
-        "page": 696, 
+        "figure": {
+          "model_1": 4,
+          "model_2": 5
+        }, 
+        "page": {
+          "model_1": 696,
+          "model_2": 697
+        }, 
         "irf": true,
         "cum": true
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_fed_funds", 
+        "inttype": {
+          "model_1": "lev_a_fed_funds",
+          "model_2": "lev_a_ssr"
+        }, 
         "size": "100bp", 
         "axis_trans": false, 
         "dep": "gr_a_ip gr_a_cpi", 
         "conf": "90", 
-        "main": "gdp  inflation", 
-        "prefer": true 
+        "main": "gdp inflation", 
+        "prefer": {
+          "model_1": false,
+          "model_2": true
+        } 
     }, 
     "identification_strategy": { 
         "iv": false, 
@@ -64,7 +76,10 @@
     "further_data_characteristics": { 
         "panel": false, 
         "start": "07-1955", 
-        "end": "12-2016", 
+        "end": {
+          "model_1": "12-2008",
+          "model_2": "12-2016"
+        }, 
         "samplesize": "null" 
     }, 
     "control_variables": { 
@@ -81,7 +96,10 @@
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": true, 
+        "convent": {
+          "model_1": true,
+          "model_2": false
+        }, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

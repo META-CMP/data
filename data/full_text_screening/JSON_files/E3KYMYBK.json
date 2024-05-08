@@ -22,13 +22,13 @@
         "inttype": "lev_a_short_term_rate", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "log_q_cpi log_q_rgdp", 
+        "dep": "log_q_deflator log_q_gap", 
         "conf": "68", 
-        "main": "gdp  inflation  other", 
+        "main": "gdp inflation other", 
         "prefer": {
-                "model_1": false,
+                "model_1": true,
                 "model_2": false,
-                "model_3": true
+                "model_3": false
         }
     }, 
     "identification_strategy": { 
@@ -42,14 +42,18 @@
                 "model_3": false
         },  
         "svar": false, 
-        "signr": true, 
+        "signr": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": true
+        }, 
         "hf": false, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": false, 
+        "var": true, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
@@ -76,10 +80,14 @@
     "country_composition": { 
         "list_of_countries": {
                 "model_1": "BE DK FI FR DE IE IT NL PT ES SE GB",
-                "model_2": "BE DK FI FR DE IE IT NL PT ES SE GB",
-                "model_3": "FI FR DE IT PT ES"
+                "model_2": "FI FR DE IT PT ES",
+                "model_3": "BE DK FI FR DE IE IT NL PT ES SE GB"
         }, 
-        "n_of_countries": 12 
+        "n_of_countries": {
+                "model_1": 12,
+                "model_2": 6,
+                "model_3": 12
+        } 
     }, 
     "further_data_characteristics": { 
         "panel": true, 

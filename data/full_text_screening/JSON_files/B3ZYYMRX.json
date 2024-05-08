@@ -3,20 +3,26 @@
         "key": "B3ZYYMRX", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
-        "model_notes": "model 1: non-ZLB regime, model 2: ZLB regime; figure 4 not coded because it focuses on unconventional monetary policy.", 
-        "figure": 3, 
+        "study_notes": "varother: markov switching VAR model, varother set to true; figure 4 not coded because it focuses on unconventional monetary policy.", 
+        "model_notes": {
+                "model_1": "non-ZLB regime.",
+                "model_2": "ZLB regime."
+        }, 
+        "figure": {
+                "model_1": "3-left",
+                "model_2": "3-right"
+        }, 
         "page": 286, 
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_call_money_rate", 
+        "inttype": "lev_a_call_rate", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "log_q_rgdp log_q_cpi", 
+        "dep": "log_q_gap logdiff_a_cpi", 
         "conf": "95 ", 
-        "main": "gdp  inflation", 
+        "main": "gdp inflation", 
         "prefer": true
     }, 
     "identification_strategy": { 
@@ -33,7 +39,7 @@
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": true, 
+        "var": false, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
@@ -42,7 +48,7 @@
         "gvar": false, 
         "bayes": false, 
         "dsge": false, 
-        "varother": false 
+        "varother": true 
     }, 
     "regime_dependence": { 
         "lor": false, 
@@ -63,8 +69,14 @@
     }, 
     "further_data_characteristics": { 
         "panel": false, 
-        "start": "Q1-1980", 
-        "end": "Q4-2003", 
+        "start": {
+                "model_1": "Q1-1980",
+                "model_2": "Q1-1994"
+        }, 
+        "end": {
+                "model_1": "Q4-1993",
+                "model_2": "Q4-2003"
+        }, 
         "samplesize": "null" 
     }, 
     "control_variables": { 

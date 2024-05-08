@@ -2,7 +2,7 @@
     "general": {
         "key": "NBR7WTIT",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes":  "they include a linear trend as a variable.",
         "model_notes": {
           "model_1": "black line is narrative monetary policy surprises.",
@@ -88,11 +88,11 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,
-        "inflexp": true,
+        "inflexp": false,
         "foreignir": false,
         "fx": false,
         "lrir": false

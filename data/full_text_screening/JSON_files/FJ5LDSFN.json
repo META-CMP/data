@@ -2,7 +2,7 @@
     "general": {
         "key": "FJ5LDSFN",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": "null",
         "figure": 1,
@@ -70,7 +70,7 @@
     "control_variables": {
         "comprice": false,
         "outpgap": false,
-        "find": true,
+        "find": false,
         "eglob": false,
         "cbind": false,
         "fexch": false,

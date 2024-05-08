@@ -2,7 +2,7 @@
     "general": {
         "key": "F7EUWDXG",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": "null",
         "figure": {
@@ -64,7 +64,13 @@
           "model_4": false,
           "model_5": true
         },
-        "nr": false,
+        "nr": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": true
+        },
         "event": false,
         "chol": false,
         "svar": false,

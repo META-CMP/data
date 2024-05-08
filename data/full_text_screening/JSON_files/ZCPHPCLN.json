@@ -2,7 +2,7 @@
     "general": {
         "key": "ZCPHPCLN",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
           "model_1": "aggregate variables included as variables.",
@@ -13,7 +13,7 @@
           "model_6": "disaggregated insdustrial production index together with aggregate inflation; excluding the GFC period in the sample.",
           "model_7": "including in the disaggregated model oil price inflation and food price inflation in disaggregated model; excluding the GFC period in the sample.",
           "model_8": "core inflation instead of WPI inflation as dependent variable in disaggregated model; excluding the GFC period in the sample.",
-          "model_9": "core inflation instead of WPI inflation as dependent variable and including exchange rate as explanatory variable in disaggregated model; excluding the GFC period in the sample.".
+          "model_9": "core inflation instead of WPI inflation as dependent variable and including exchange rate as explanatory variable in disaggregated model; excluding the GFC period in the sample."
         },
         "figure": {
           "model_1": "Annex 3",
@@ -41,7 +41,7 @@
         "cum": true
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a-overnight_callrate",
+        "inttype": "lev_a_overnight_callrate",
         "size": "1SD",
         "axis_trans": false,
         "dep": {
@@ -54,7 +54,7 @@
           "model_7": "logdiff_a_wpi",
           "model_8": "logdiff_a_core",
           "model_9": "logdiff_a_core"
-        }
+        },
         "conf": "2_SE",
         "main": "other",
         "prefer": {
@@ -63,7 +63,10 @@
           "model_3": false,
           "model_4": false,
           "model_5": false,
-          "model_6": false
+          "model_6": false,
+          "model_7": false,
+          "model_8": false,
+          "model_9": false
         }
     },
     "identification_strategy": {

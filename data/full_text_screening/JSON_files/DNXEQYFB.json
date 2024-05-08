@@ -2,7 +2,7 @@
     "general": {
         "key": "DNXEQYFB",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
           "model_1": "null",
@@ -126,8 +126,8 @@
     "control_variables": {
         "comprice": true,
         "outpgap": false,
-        "find": true,
-        "eglob": true,
+        "find": false,
+        "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,

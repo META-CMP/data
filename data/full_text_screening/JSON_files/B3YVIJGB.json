@@ -2,7 +2,7 @@
     "general": {
         "key": "B3YVIJGB",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "they apply Graphical Modeling (GM) theory to a small-scale VAR converting it Directed Acyclic Graph to identify MP shocks; that's why I set idother to true; GM methodology has the distinctive feature that the variable ordering and any further restrictions come from statistical properties of the data",
         "model_notes": {
           "model_1": "cum: accumulated impulse response only for output.",
@@ -40,7 +40,10 @@
           "model_1": true,
           "model_2": false
         },
-        "svar": false,
+        "svar": {
+          "model_1": false,
+          "model_2": true
+        },
         "signr": false,
         "hf": false,
         "heteroskedas": false,

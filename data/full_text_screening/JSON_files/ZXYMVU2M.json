@@ -2,7 +2,7 @@
     "general": {
         "key": "ZXYMVU2M",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "It includes data from the Euro-area, Germany, France, Finland, Spain, Italy, Portugal and Greece, as the group of countries in which it is expected to find heterogeneous effects.",
         "model_notes": "null",
         "figure": {
@@ -26,7 +26,7 @@
           "model_8": "15, 18 & 21"
         },
         "irf": true,
-        "cum": true
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_MRO_rate",
@@ -35,16 +35,7 @@
         "dep": "logdiff_m_ip logdiff_m_cpi lev_m_une_rate",
         "conf": "68",
         "main": "gdp emp inflation",
-        "prefer": {
-          "model_1": true,
-          "model_2": true,
-          "model_3": true,
-          "model_4": true,
-          "model_5": true,
-          "model_6": true,
-          "model_7": true,
-          "model_8": true
-        }
+        "prefer": true
     },
     "identification_strategy": {
         "iv": false,

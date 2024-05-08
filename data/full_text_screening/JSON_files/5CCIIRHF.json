@@ -2,7 +2,7 @@
     "general": {
         "key": "5CCIIRHF",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
           "model_1": "cut: response of an expansionary monetary policy shock differenciating using a dummy variable.",
@@ -47,7 +47,7 @@
     "identification_strategy": {
         "iv": false,
         "forecast_based": true,
-        "nr": false,
+        "nr": true,
         "event": false,
         "chol": false,
         "svar": false,

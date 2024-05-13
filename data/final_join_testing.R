@@ -1,137 +1,75 @@
-# Final join testing 
-
-##### Only JSON files not compiling after recoding. 
 error_jsons <- c(
+  "example_file",
   "V2A8ZH66",# no IRFs
-  "Q5FHEZNE" # contains table estimates as well. 
-  "4IVTIREB"# additional IRFs need to be added. 
+  "Q5FHEZNE", # contains table estimates as well. 
+  "QBQF4W6S",# missing core responses
+  "JHWGNGLX",
+  "XB3JCPV7",
+  "UGLCD22A",
+  "V3YGD4RH",
+  "L2TKIG44",
+  "4WHAJ9ZC",
+  "XE2RQA97",
+  "Q9S2TXAI",
+  "C87JBMDH",
+  "DIKT4VT6",
+  "AUUW3HH4",
+  "5PA5TJLY",
+  "P85XBWGQ",
+  "4TYJQZIQ",
+  "T6EA38XY",
+  "8YK8NZTN",
+  "7M3KH3J6",
+  "87DL3IY2",
+  "ZC9X48WY"# missing IRF data for many models. 
 )
-
-
-##### Only JSON
-error_jsons <- c(
-  "36YHG5BV", 
-  "5GIIT7D9", 
-  "73ASB2YH", 
-  "8YK8NZTN", 
-  "9DXGZWHB", 
-  "A29KEVTA", 
-  "AQPBXPMK", 
-  "BZXQ7YNW", 
-  "D48S8FM8", 
-  "DG5TQDSF", 
-  "DMN9K3YP", 
-  "EV8Q8FDG", 
-  "example_file", 
-  "KM43WFQ8", 
-  "NWBLK738", 
-  "RETUUVG3", 
-  "RNA92QK4", 
-  "T3EZK9JC", 
-  "UQPS6SGJ", 
-  "V2A8ZH66", 
-  "VE5FTFS7", 
-  "WCBHBMQM", 
-  "WEU39TYK", 
-  "WRZ8Q2N8", 
-  "Z2EIFGK7", 
-  "ZCPHPCLN", 
-  "ZMG2ZQ5V", 
-  "ZV28P9HY",
-  "8WECXHE5",
-  "MAHYZFHF"
-  
-  # Add further problem studies above
-  )
-json.join <- MetaExtractR::final_join(json_path = "data/full_text_screening/JSON_files", irf_path = NULL, only_json = TRUE, ignore = error_jsons)
-# Get unique entries for JSON variables:
-## JSON_VARIABLE_HERE
-# all.JSON_VARIABLE_HERE <- as.data.frame(unique(json.join$JSON_VARIABLE_HERE)) #Replace JSON_VARIABLE_HERE with a specific variable code
-all.size <- as.data.frame(unique(json.join$size)) # size
-all.axis_trans <- as.data.frame(unique(json.join$axis_trans)) # axis_trans
-all.inttype <- as.data.frame(unique(json.join$inttype)) # inttype
-# ...
-
-
-
-
-##### JSON and IRFs
-assigned_irfs <- readr::read_csv("data/effect_sizes/assigned_irfs.csv")
-extracted_irfs <- assigned_irfs$irf[complete.cases(assigned_irfs$included_in_dataset==1)]
-# Ignore unextracted IRFs and erroneus JSON or IRF
-keys <- sub("\\.json$", "", list.files("data/full_text_screening/JSON_files", pattern = "\\.json$"))
-unextracted <- keys[!(keys %in% extracted_irfs)]
-ignore <- c(error_jsons, unextracted, 
-            "2LWMVPV7",  # IRF not extracted
-            "34N9UJAA", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. 34N9UJAA model_2 Shock variable: lev_a_fed_funds Outcome: lev_q_rgap
-            "3X48J8NE", # Probably issue with the csv format
-            "4D2E8ML7", # Probably issue with the csv format
-            "5F7IJHQM", # csv format 
-            "5IUDWGEG", # model_2 lev_m_une_rate Check IRF data extraction in WebPlotDigitizer. Number of observations inconsistent: mean:49 upper:51 lower:49
-            "5ULFVFYD", # 5ULFVFYD model_1 Shock variable: lev_a_ssr Outcome: logdiff_a_rip  Error in if (confidence_level <= 0 | confidence_level >= 1) { : missing value where TRUE/FALSE needed
-            "652CDYWY", # Shock size in JSON unclear
-            "6H5EMS5T", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. 6H5EMS5T model_1 Shock variable: fed_funds Outcome: lev_a_une
-            "6INJPFY6", # Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency.
-            "6YZLATYA", # Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency.
-            "76SZ52IN", # Error in if (confidence_level <= 0 | confidence_level >= 1) { :   missing value where TRUE/FALSE needed
-            "8LENTN8I", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. 8LENTN8I model_1 Shock variable: lev_a_fed_funds Outcome: log_q_gap
-            "8VBXRY3I", # JSON periodicity inconsistent with IRF folder periodicity
-            "96ST2TPE", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. 96ST2TPE model_1 Shock variable: lev_a_overnight_cashrate Outcome: levdiff_q_une_rate
-            "9ACV5ELW", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. 9ACV5ELW model_1 Shock variable: lev_a_1_year_gov Outcome: lev_m_une_rate
-            "9ECXEKL2", # Not exctracted
-            "BJK49CEK", # Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency.
-            "BKIN7DAE", # Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency.
-            "BLXXM5HJ", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. BLXXM5HJ model_1 Shock variable: lev_a_repo Outcome: lev_q_une_rate
-            "BWHKQVPU", # Error in if (confidence_level <= 0 | confidence_level >= 1) { : missing value where TRUE/FALSE needed
-            "BXRNZWTJ", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. BXRNZWTJ model_1 Shock variable: 1_year_eonia Outcome: levdiff_q_une_rate
-            "C5CP8A9I", # Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency.
-            "C6UVA3Z2", # Error in if (confidence_level <= 0 | confidence_level >= 1) { :  missing value where TRUE/FALSE needed
-            "CHGTHMWJ", # Error in d$CI.upper/shock_size : non-numeric argument to binary operator
-            "FJ5LDSFN", # Error in d$CI.upper/shock_size : non-numeric argument to binary operator
-            "FSUG2XYE", # JSON periodicity inconsistent with IRF folder periodicity
-            "G968JAHL", # Error in FUN(left, right) : non-numeric argument to binary operator
-            "GABJZ6WP", # JSON periodicity inconsistent with IRF folder periodicity
-            "GBAXG3YQ", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. GBAXG3YQ model_11 Shock variable: lev_a_overnight_cashrate Outcome: lev_q_une_rate
-            "GH5JFJE9", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. GH5JFJE9 model_1 Shock variable: lev_a_short_term_rate Outcome: lev_q_gap
-            "GLY278ZB", # Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency.
-            "GM9NF3YK", # Error in d$CI.upper/shock_size : non-numeric argument to binary operator
-            "GXNQRTJ2", # Error in if (confidence_level <= 0 | confidence_level >= 1) { : missing value where TRUE/FALSE needed
-            "GYW3RH4N", # JSON periodicity inconsistent with IRF folder periodicity
-            "H55AC755", # JSON periodicity inconsistent with IRF folder periodicity
-            "HB9TGTCM", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. HB9TGTCM model_1 Shock variable: lev_a_short_term_rate Outcome: lev_a_une_rate
-            "I64723KV", # model_3 gr_m_cpi Check IRF data extraction in WebPlotDigitizer. Number of observations inconsistent: mean:48 upper:28 lower:48
-            "IU3RD54B", # Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency.
-            "LRVNFUKD", # model_7 log_m_ip Check IRF data extraction in WebPlotDigitizer. Number of observations inconsistent: mean:48 upper:47 lower:48
-            "TTSTU35N", # Error in if (confidence_level <= 0 | confidence_level >= 1) { : missing value where TRUE/FALSE needed
-            "VQXARSCQ", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. VQXARSCQ model_1 Shock variable: lev_a_ssr Outcome: lev_m_gap
-            "WEL4CM26", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. WEL4CM26 model_1 Shock variable: lev_a_overnight_callrate Outcome: lev_q_une_rate
-            "D9FTVUYP", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. D9FTVUYP model_1 Shock variable: lev_a_1_year_gov Outcome: lev_m_une_rate
-            "DL3VAHYT", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. DL3VAHYT model_1 Shock variable: lev_a_fed_funds Outcome: lev_q_une_rate
-            "DVZIAEVW", # Probably issue with the csv format
-            "DWP2IL6B", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. DWP2IL6B model_1 Shock variable: lev_a_fed_funds Outcome: lev_q_une_rate
-            "EN4JZ2YG", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. EN4JZ2YG model_1 Shock variable: lev_a_fed_funds Outcome: lev_q_une_rate
-            "EPZD5AC9", # Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency. 
-            "F7EUWDXG", # Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency. 
-            "GGFP6GZF", # Check IRF data extraction in WebPlotDigitizer. Number of observations inconsistent: mean:49 upper:49 lower:48
-            "IXUTM9DP", # Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency. 
-            "J7MUSSTN", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. J7MUSSTN model_1 Shock variable: lev_a_fed_funds Outcome: lev_m_une_rate
-            "JHWGNGLX", # 
-            "JLZI3XBA", # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. JLZI3XBA model_1 Shock variable: lev_a_1_year_gov Outcome: lev_m_une_rate
-            "JRBEAXPE", # Check IRF data extraction in WebPlotDigitizer. Number of observations inconsistent: mean:60 upper:59 lower:60
-            "JT86GWFE" # Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. JT86GWFE model_2 Shock variable: lev_a_short_term_rate Outcome: lev_q_une
-            
-            # Add further problem studies above, ideally, paste the error message as a comment
-)
-json.irf.join <- MetaExtractR::final_join(json_path = "data/full_text_screening/JSON_files", irf_path = "data/effect_sizes/IRFs/", only_json = FALSE, ignore = ignore)
 
 setwd("~/data")
 
-investi<-c("BXRNZWTJ", "BWHKQVPU", "73ASB2YH", "36YHG5BV", "XVM9IL7N", "9PDAMY8I", "IXUTM9DP", "GYW3RH4N", "S75ANYR5", "JSZBWME9", "FSUG2XYE", "9QQCIRDD", "GGFP6GZF", "AG7MDU48", "CUBSD64Z", "JRBEAXPE", "QSKR5KKX", "C52KHMM8", "NWBEIT6B", "PXSAVP36", "YGXXMLZW", "T5DWFC89", "UMCDXATY", "VJRJTPK4", "CCK34ZXY", "QW8JGMFF", "KR577QCR", "6D8BE2G2", "EMHXGXZY", "5F7IJHQM", "W25NX2TX", "4D2E8ML7", "239CUCWA", "XZXTJS8C", "XC8AEBJE", "VQT8R3WD", "FAQ4GGD6", "R9CN8EVZ", "7WXVU6GZ", "RWBKEAHR", "N9RWFA8W", "PNDPXSPT", "7GPW4AJA", "AUSLPCF8", "MBFN4YHD", "CJS462EL", "YV49X4W8", "SB346SWH", "U22U6S8Q", "46SF2QRW", "SWFH3ZNN", "WTKGYQLC", "9EK2YXQ8", "NIR977M8", "UH3VVUHF", "GABJZ6WP", "2W88HAFZ", "8DE3Y3IM", "SBUKV3GN", "UZCDYDYB", "T4GZZ7CU", "TNC575HK", "6H5EMS5T", "7CYH9ZJ2", "JA3CTUD6", "JT86GWFE", "EPZD5AC9", "6INJPFY6", "D48S8FM8", "RHLPTTB5", "LMPXJU7S", "IVFLBKV2", "4I9VK6KB", "MWPVIA8P", "ZXKTI2RB", "H55AC755", "AUG4VRY4", "MBFJDGHM", "G3VVY52H", "ZACALRX5", "6E32E9WJ", "LS4AE8YU", "FI95JJ2I", "HVX5TYD7", "QQDUEBQE", "27IEJ2RF", "SPDFFDRN", "KK2NJRFB", "68ZTZG63", "M45Z8TVL", "XNSJVPDY", "VWMPZEF5", "SE77RKD5", "Y8TCAZLY", "3X48J8NE", "YAL9JMQ7", "SDPVGWGT", "RVPNMC49", "HB9TGTCM", "WYYFGGTY", "AMK9T25K", "VF3XTYYQ", "UDETUM6U", "3WZLJ92M", "USPU774D", "XWV9U77U", "EN4JZ2YG", "GS29TRL6", "ZR6BLXTL", "BALWK5RQ", "MR5H28J9", "2NX372H2", "6VIAGIQY", "RRWR358E", "K3KLYTYD", "LKBQBLD8", "W47AUQLG", "PDPDPHK6", "S8JZ5N3H", "Y87M2MP5", "RXE6JHUM", "F52VV29F", "RETUUVG3", "HVWL78RI", "WEU39TYK", "RUDTNHLG", "QKW5B56D", "XI9CU38V", "A8EK28F6", "WV9YATYF", "H46WIXAY", "PF8IA8Z4", "DMN9K3YP", "Q3HBV384", "XZRKIWZ4", "S88PJBJ9", "9VEMH9MN", "87Z49TMV", "UQPS6SGJ", "BZXQ7YNW", "MAHYZFHF", "CVV46BQN", "WTEBR9S9", "652CDYWY", "CL5M62K2", "E2XP83ZZ", "UK7TMZYB", "DVZIAEVW", "46LUI9BQ", "AQPBXPMK", "C6UVA3Z2", "SU3IFG3P", "CTS6MQJC", "ZMG2ZQ5V", "QKHQZ3ZG", "B3G77CCC", "ZQDQFVAY", "NGBUF6NG", "DRELBLR3", "TZSAPVGN", "IB375YPV", "SPFNXCNA", "Y57MEX6L", "WU39GWY7", "WRZ8Q2N8", "35NRL3TH", "NGBIAVBB", "DXCIPCIB", "XRSJRAHJ", "XVFN2LAU")
+json.irf.join <- MetaExtractR::final_join(json_path = "data/full_text_screening/JSON_files", irf_path = "data/effect_sizes/IRFs/", only_json = FALSE, ignore = error_jsons)
 
-library(MetaExtractR)
-json.irf.join <- MetaExtractR::final_join(json_path = "data/full_text_screening/JSON_files", irf_path = "data/effect_sizes/IRFs/", only_json = FALSE, investigate=investi)
+#save(data,file = "preliminary_data.RData")
 
 
-# Get IRF assignee:
-# Get assignee (replace the key below)
-assigned_irfs$assigned_to[assigned_irfs$irf=="GBAXG3YQ"]
+data<-json.irf.join
+
+
+rate<-data %>% dplyr::filter(data$outcome_var=="rate")
+other<-data %>% dplyr::filter(data$outcome_var!="rate")
+
+rate<-rate %>% dplyr::select(key,model_id,period:SE.lower) %>% dplyr::select(-outcome_var)
+#save(rate,file = "preliminary_rate_data.RData")
+
+colnames(rate)[4:ncol(rate)] <- paste("rate_",colnames(rate)[4:ncol(rate)],sep="")
+
+data<-other %>% dplyr::left_join(rate, by=c("key","model_id","period"))
+
+
+
+library(stringi)
+
+split_list<-stri_split_fixed(str = data$outcome_var, pattern = "_", n = 3)
+
+# Extract nth element from each split list
+data$transformation <- sapply(split_list, function(x) ifelse(1 <= length(x), x[1], NA))
+
+
+split_list <- sapply(split_list, function(x) ifelse(3 <= length(x), x[3], NA))
+
+data$real_output<-ifelse(split_list %in% c("rgdp","ip","rip","rgnp","rgap"),TRUE,NA)
+data$real_output<-ifelse(split_list %in% c("gdp","gnp","gap"),FALSE,data$real_output)
+
+# remove r from the outcome measure
+split_list<-sub("^r", "", split_list)
+
+data$outcome_measure<-split_list
+
+data$outcome<-ifelse(data$outcome_measure %in% c("gdp","ip","gap","gnp"),"gdp",ifelse(data$outcome_measure %in% c("cpi","deflator","wpi","core","price_level"),"inflation","emp"))
+
+
+#generate main research question dummy
+fun <- function(x, y) {
+  grepl(x, y, fixed = TRUE)
+}
+
+data$main_research_q<-mapply(fun, data$outcome, data$main)

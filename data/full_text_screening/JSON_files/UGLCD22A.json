@@ -4,7 +4,12 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "null", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "changing the order of the variables.",
+                "model_4": "changing the order of the variables."
+        }, 
         "figure": {
                 "model_1": 6,
                 "model_2": 6,
@@ -22,7 +27,7 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_money_market_rate", 
-        "size": "null", 
+        "size": "1SD", 
         "axis_trans": false, 
         "dep": "log_q_deflator log_q_rgdp", 
         "conf": "68", 
@@ -39,12 +44,7 @@
         "forecast_based": false, 
         "nr": false, 
         "event": false, 
-        "chol": {
-                "model_1": true,
-                "model_2": true,
-                "model_3": false,
-                "model_4": false
-        },  
+        "chol": false,  
         "svar": false, 
         "signr": true, 
         "hf": false, 
@@ -60,7 +60,7 @@
         "fvar": false, 
         "tvar": false, 
         "gvar": false, 
-        "bayes": false, 
+        "bayes": true, 
         "dsge": false, 
         "varother": false 
     }, 

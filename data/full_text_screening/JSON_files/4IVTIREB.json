@@ -9,8 +9,8 @@
                 "model_2": "null",
                 "model_3": "null",
                 "model_4": "quality_concern: the authors state that it is a short and special period",
-                "model_5": "Fig 13 additionally. Has recession and other scenario",
-                "model_6": "Fig 13 additionally. Has recession and other scenario"
+                "model_5": "regime: high-debt state and recession.",
+                "model_6": "regime: low-debt state or not recession."
         }, 
         "figure": {
                 "model_1": 2,
@@ -35,12 +35,12 @@
         "inttype": "lev_a_fed_funds",
         "size": "-100bp",
         "axis_trans": {
-                "model_1": "y*100",
-                "model_2": "y*100",
-                "model_3": "y*100",
-                "model_4": "false logdiff_a_deflator_y*100",
-                "model_5": "false logdiff_a_deflator_y*100",
-                "model_6": "false logdiff_a_deflator_y*100"
+                "model_1": "y/10 lev_a_fed_funds_false",
+                "model_2": "y/10 lev_a_fed_funds_false",
+                "model_3": "y/10 lev_a_fed_funds_false",
+                "model_4": "logdiff_a_deflator_y/10 log_q_rgdp_y*100",
+                "model_5": "y*100 lev_a_fed_funds_false",
+                "model_6": "y*100 lev_a_fed_funds_false"
         },        
         "dep": "log_q_rgdp logdiff_a_deflator",
         "conf": "90",
@@ -122,7 +122,7 @@
                 "model_3": false,
                 "model_4": false,
                 "model_5": false, 
-                "model_6": true
+                "model_6": false
         },    
         "scr": false,
         "dcr": false,
@@ -151,9 +151,9 @@
         "end": {
                 "model_1": "Q1-2007",
                 "model_2": "Q1-2007",
-                "model_3": "Q1-2007",
+                "model_3": "Q3-2015",
                 "model_4": "Q3-2015",
-                 "model_5": "Q3-2015",
+                "model_5": "Q3-2015",
                 "model_6": "Q3-2015"
        }, 
         "samplesize": "null" 
@@ -162,12 +162,12 @@
         "comprice": false,
         "outpgap": false, 
         "find": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
                 "model_4": true,
-                "model_5": false,
-                "model_6": false
+                "model_5": true,
+                "model_6": true
         },  
         "eglob": false, 
         "cbind": false, 
@@ -182,17 +182,17 @@
                 "model_1": true,
                 "model_2": true,
                 "model_3": true,
-                "model_4": false, 
-                "model_5": false,
-                "model_6": false
+                "model_4": true, 
+                "model_5": true,
+                "model_6": true
         },  
         "convent": {
                 "model_1": true,
                 "model_2": true,
                 "model_3": true,
-                "model_4": false,
-                "model_5": false,
-                "model_6": false
+                "model_4": true,
+                "model_5": true,
+                "model_6": true
         },  
         "decomposition": false
     },

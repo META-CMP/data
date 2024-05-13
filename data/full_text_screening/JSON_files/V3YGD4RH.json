@@ -40,7 +40,7 @@
         "fvar": true, 
         "tvar": false, 
         "gvar": false, 
-        "bayes": false, 
+        "bayes": true, 
         "dsge": false, 
         "varother": false 
     }, 
@@ -71,7 +71,7 @@
         "comprice": true, 
         "outpgap": false, 
         "find": false, 
-        "eglob": false, 
+        "eglob": true, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 

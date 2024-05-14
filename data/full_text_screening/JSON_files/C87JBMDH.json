@@ -19,13 +19,16 @@
     "impulse_and_response_variables": { 
         "inttype": {
                 "model_1": "lev_a_fed_funds",
-                "model_2": "lev_a_90_day_government_bond_yield"
+                "model_2": "lev_a_3_month_gov"
         },   
         "size": {
                 "model_1": "46bp",
                 "model_2": "51bp"
         },   
-        "axis_trans": "y*100", 
+        "axis_trans": {
+                "model_1": "y*100 lev_a_fed_funds_false",
+                "model_2": "y*100 lev_a_3_month_gov_false"
+        }, 
         "dep": "log_m_cpi log_m_ip", 
         "conf": "2_SE", 
         "main": "gdp  inflation  other", 
@@ -78,8 +81,14 @@
     }, 
     "further_data_characteristics": { 
         "panel": false, 
-        "start": "02-1993", 
-        "end": "12-2006", 
+        "start": {
+          "model_1": "01-1959",
+          "model_2": "02-1993"
+        }, 
+        "end": {
+          "model_1": "09-2007",
+          "model_2": "12-2006"
+        }, 
         "samplesize": "null" 
     }, 
     "control_variables": { 

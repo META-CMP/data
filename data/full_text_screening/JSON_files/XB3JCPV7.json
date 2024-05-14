@@ -16,7 +16,7 @@
         "axis_trans": false, 
         "dep": "log_m_rgdp log_m_cpi", 
         "conf": "95", 
-        "main": "gdp  inflation", 
+        "main": "gdp inflation", 
         "prefer": true
     }, 
     "identification_strategy": { 
@@ -68,7 +68,7 @@
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": false, 
+        "comprice": true, 
         "outpgap": false, 
         "find": false, 
         "eglob": false, 

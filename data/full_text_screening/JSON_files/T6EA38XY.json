@@ -4,19 +4,29 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "null", 
-        "figure": 3, 
+        "model_notes": {
+                "model_1": "the narrative series of Romer and Romer (2004) as monetary policy shocks.",
+                "model_2": "the high-frequency series of Barakchian and Crowe (2013) as monetary policy shocks.",
+                "model_3": "the high-frequency series of Gertler and Karadi (2015) as monetary policy shocks.",
+                "model_4": "the hybrid series of Miranda-Agrippino and Ricco (2021) as monetary policy shocks." 
+        }, 
+        "figure": {
+                "model_1": "3-Column RR",
+                "model_2": "3-Column BC",
+                "model_3": "3-Column GK",
+                "model_4": "3-Column MAR"
+        }, 
         "page": 4, 
         "irf": true,
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_fed_funds", 
+        "inttype": "lev_a_ssr", 
         "size": "100bp", 
         "axis_trans": false, 
         "dep": "log_m_ip log_m_cpi", 
         "conf": "68", 
-        "main": "gdp  inflation", 
+        "main": "gdp inflation", 
         "prefer": {
                 "model_1": false,
                 "model_2": false,
@@ -25,18 +35,18 @@
         } 
     }, 
     "identification_strategy": { 
-        "iv": false, 
+        "iv": true, 
         "forecast_based": {
-                "model_1": false,
-                "model_2": true,
-                "model_3": true,
-                "model_4": false
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": true
         },  
         "nr": {
                 "model_1": true,
                 "model_2": false,
                 "model_3": false,
-                "model_4": true
+                "model_4": false
         },   
         "event": false, 
         "chol": false, 
@@ -53,7 +63,7 @@
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": false, 
+        "var": true, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
@@ -62,7 +72,7 @@
         "gvar": false, 
         "bayes": false, 
         "dsge": false, 
-        "varother": true 
+        "varother": false 
     }, 
     "regime_dependence": { 
         "lor": false, 
@@ -97,7 +107,7 @@
         "inflexp": false, 
         "foreignir": false, 
         "fx": false, 
-        "lrir": true 
+        "lrir": false 
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 

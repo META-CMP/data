@@ -3,8 +3,7 @@ setwd("~/data")
 
 load("preliminary_data.RData")
 
-library(dplyr)
-library(tidyverse)
+
 rate<-data %>% dplyr::filter(data$outcome_var=="rate")
 other<-data %>% dplyr::filter(data$outcome_var!="rate")
 
@@ -60,9 +59,9 @@ create_funnel_plot <- function(data, period, winsorize = FALSE) {
   plot_funnel <- ggplot(data = data,
                         aes_string(x = x, y = y)) +
     geom_point(size = 0.5) +
-    xlab("Mean effect size\n %-change of output in response to 100bp monetary policy shock") +
+    xlab("Mean effect size\n %-change of the price level in response to 100bp monetary policy shock") +
     ylab("Inverse of standard error (precision)") +
-    ggtitle(paste("Funnel plots of effect of monetary policy on output\n", "(", period, "months after the shock)", plot_title)) +
+    ggtitle(paste("Funnel plots of effect of monetary policy on inflation\n", "(", period, "months after the shock)", plot_title)) +
     theme(title = element_text(size = 10, face = 'bold')) +
     theme(panel.background = element_rect(fill = "white")) +
     theme(legend.position = "bottom") +
@@ -111,7 +110,7 @@ create_funnel_plot_grid <- function(data, period, winsorize = FALSE) {
 
 data<-data_back
 
-out<-'gdp'
+out<-'inflation'
 data <- subset(data, outcome %in% out)
 
 
@@ -151,113 +150,16 @@ for (x in periods) {
 
 library(gridExtra)
 library(grid)
-all_month<-grid.arrange(grobs = plot_list, ncol = 4,top = textGrob("Funnel plots of effect of monetary policy on output",gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob("%-change of output in response to 100bp monetary policy shock",gp=gpar(fontsize=16,font=3)))
+all_month<-grid.arrange(grobs = plot_list, ncol = 4,top = textGrob("Funnel plots of effect of monetary policy on inflation",gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob("%-change of the price level in response to 100bp monetary policy shock",gp=gpar(fontsize=16,font=3)))
 ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months.png"), all_month, width = 30, height = 20, units = "cm")
-all_month_winsor<-grid.arrange(grobs = plot_list_winsor, ncol = 4,top = textGrob("Funnel plots of effect of monetary policy on output (with Winsorization)",gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob("%-change of output in response to 100bp monetary policy shock",gp=gpar(fontsize=16,font=3)))
+all_month_winsor<-grid.arrange(grobs = plot_list_winsor, ncol = 4,top = textGrob("Funnel plots of effect of monetary policy on inflation (with Winsorization)",gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob("%-change of the price level in response to 100bp monetary policy shock",gp=gpar(fontsize=16,font=3)))
 ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months_winsor.png"), all_month_winsor, width = 30, height = 20, units = "cm")
 
 
 
 
-###  Baseline Regression and baseline WLS by precicion. 
-
-# Create empty lists to store the results
-results_list <- list()
-
-library(clubSandwich)# for coef test results
-
-# Loop through periods
-for (x in periods) {
-  print(paste("Processing period:", x))
-  
-  # Subset data for the current period
-  data_period <- subset(data, period.month %in% x)
-  
-  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
-  data_period$StandardError <- ifelse(data_period$StandardError == 0, NA, data_period$StandardError)
-  data_period$precision <- 1 / data_period$StandardError
-  
-  # Winsorize data
-  data_period_winsor <- data_period
-  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
-  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
-  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
-  
-  # Store the winsorized data
-  
-  
-  # Calculate variance winsorised
-  data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
-  
-  # Calculate PrecVariance winsorised
-  data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
-  
-  # Calculate (precision-weighted) average
-  regwa <- lm(mean.effect_winsor ~ 1, data = data_period_winsor)
-  results_list[[paste0(x, ".ols")]] <- regwa
-  
-  
-  
-  # Baseline WLS
-  wls_pbias <- lm(mean.effect_winsor ~ standarderror_winsor, weights = precvariance_winsor, data = data_period_winsor)
-  results_list[[paste0(x, ".wls")]] <- wls_pbias
-}
 
 
-summary(regwa)
-test<-coef_test(regwa, vcov = "CR0", 
-          cluster = data_period_winsor$key, test = "naive-t")
-
-
-confint(regwa, level=0.95)
-
-#baseline WLS
-wls_pbias_3_month_gdp <- lm(mean.effect_winsor ~ standarderror_winsor, weights=precvariance_winsor, data=data_3_month_gdp)
-summary(wls_pbias_3_month_gdp)
-
-
-coef_test(wls_pbias_3_month_gdp, vcov = "CR0", 
-          cluster = data_3_month_gdp$key, test = "naive-t")
-
-
-
-
-library(ivreg)
-data(mtcars)
-
-models <- c("mpg", "disp", "hp")
-
-regressions <- list()
-
-for (i in models) {
-  formula1 <- paste(i, "~ cyl + qsec + carb + drat")
-  formula2 <- paste(i, "~ cyl + qsec + carb | drat | wt")
-  
-  linear_model <- lm(formula = formula1, data = mtcars)
-  iv_model <- ivreg(formula = formula2, data = mtcars)
-  
-  regressions[[paste0(i, ".linear")]] <- linear_model
-  regressions[[paste0(i, ".iv")]] <- iv_model
-}
-
-library(modelsummary)
-modelsummary(results_list, output = "gt")
-
-
-
-
-
-
-  data_period <- data %>% dplyr::filter(period.month == 3)
-  
-  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
-  data_period$StandardError <- ifelse(data_period$StandardError == 0, NA, data_period$StandardError)
-  data_period$precision <- 1 / data_period$StandardError
-  
-  data_period_winsor <- data_period
-  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
-  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
-  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
 
 #Variance winsorised
 data_3_month_gdp$variance_winsor <- data_3_month_gdp$standarderror_winsor^2

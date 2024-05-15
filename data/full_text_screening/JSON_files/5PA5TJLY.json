@@ -16,8 +16,8 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_3_month_government_bond_yield", 
-        "size": "9bp", 
+        "inttype": "lev_a_3_month_gov", 
+        "size": "10bp", 
         "axis_trans": false, 
         "dep": "logdiff_q_cpi logdiff_q_rgdp", 
         "conf": "68", 
@@ -45,7 +45,7 @@
         "fvar": false, 
         "tvar": false, 
         "gvar": false, 
-        "bayes": false, 
+        "bayes": true, 
         "dsge": false, 
         "varother": false 
     }, 
@@ -69,7 +69,7 @@
     "further_data_characteristics": { 
         "panel": false, 
         "start": "Q1-1969", 
-        "end": "Q4-2012", 
+        "end": "Q4-2008", 
         "samplesize": "null" 
     }, 
     "control_variables": { 
@@ -86,7 +86,7 @@
     }, 
     "econometric_details": { 
         "pure_rate_shock": true, 
-        "convent": false, 
+        "convent": true, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

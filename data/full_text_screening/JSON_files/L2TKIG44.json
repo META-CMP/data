@@ -4,14 +4,20 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "null", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "impulse responses for the euro area excluding Germany."
+        },
         "figure": {
                 "model_1": 7,
-                "model_2": 8
+                "model_2": 8,
+                "model_3": 9
         },  
         "page": {
                 "model_1": 3027,
-                "model_2": 3029
+                "model_2": 3029,
+                "model_3": 3031
         },  
         "irf": true,
         "cum": false
@@ -23,7 +29,11 @@
         "dep": "log_q_cpi", 
         "conf": "68", 
         "main": "other", 
-        "prefer": true 
+        "prefer": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false
+        } 
     }, 
     "identification_strategy": { 
         "iv": false, 
@@ -46,7 +56,7 @@
         "fvar": false, 
         "tvar": false, 
         "gvar": false, 
-        "bayes": false, 
+        "bayes": true, 
         "dsge": false, 
         "varother": false 
     }, 
@@ -66,7 +76,8 @@
     "country_composition": { 
         "list_of_countries": {
                 "model_1": "US",
-                "model_2": "EA"
+                "model_2": "EA",
+                "model_3": "EA"
         },  
         "n_of_countries": 1 
     }, 

@@ -3,7 +3,7 @@
         "key": "P85XBWGQ", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "axis_trans: probably gr_q_deflator responses should be divided by 100 as the interest rate as they are pretty large compared to the gdp responses. Moreover, interest rates and inflation rates could be used in the same way in the model.", 
+        "study_notes": "axis_trans: probably gr_q_deflator responses should be divided by 100 as the interest rate as they are pretty large compared to the gdp responses. Moreover, interest rates and inflation rates could be used in the same way in the model; DR: this probably is because gr_a_deflator instead of gr_q_deflator is used; figure 13: The units on the y-axis are in percent, except the responses in interest rate (rt), which are in basis points. They include a time trend as in Rossi and Zubairy (2011).", 
         "model_notes": "null", 
         "figure": {
                 "model_1": 3,
@@ -19,11 +19,14 @@
     "impulse_and_response_variables": { 
         "inttype": {
                 "model_1": "lev_a_fed_funds",
-                "model_2": "lev_a_shadow_rate"
+                "model_2": "lev_a_ssr"
         }, 
         "size": "25bp", 
-        "axis_trans": "y/100 log_q_rgdp_false",  
-        "dep": "gr_q_deflator log_q_rgdp", 
+        "axis_trans": {
+                "model_1": "lev_a_fed_funds_y/100",
+                "model_2": "lev_a_ssr_y/100"
+        },  
+        "dep": "gr_a_deflator log_q_rgdp log_q_emp", 
         "conf": "68", 
         "main": "gdp", 
         "prefer": {

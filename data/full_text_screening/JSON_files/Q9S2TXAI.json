@@ -3,7 +3,7 @@
         "key": "Q9S2TXAI", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "also contains a constant a linear time trend.", 
         "model_notes": "null", 
         "figure": {
                 "model_1": 1,
@@ -72,7 +72,7 @@
                 "model_2": false,
                 "model_3": false,
                 "model_4": true,
-                "model_5": false,
+                "model_5": true,
                 "model_6": false
         },   
         "signr": false, 
@@ -131,15 +131,36 @@
         "samplesize": "null" 
     }, 
     "control_variables": { 
-        "comprice": true, 
+        "comprice": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }, 
         "outpgap": false, 
         "find": false, 
         "eglob": false, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
-        "foreignir": true, 
-        "fx": true, 
+        "foreignir": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }, 
+        "fx": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": false
+        }, 
         "lrir": false 
     }, 
     "econometric_details": { 

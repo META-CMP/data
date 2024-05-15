@@ -107,7 +107,7 @@ data$observations<-ifelse(is.na(data$samplesize), data$observations_calc, as.num
 # set logical values to dummies.
 data<-data %>% mutate_if(is.logical, as.numeric)  
 
-summary(data)
+#summary(data)
 head(data)
 
 #test<-data %>% filter(observations==1)
@@ -119,3 +119,8 @@ data$quality_concern<-grepl("quality_concern",data$study_notes)
 data$quality_concern<-ifelse(grepl("quality_concern",data$model_notes),TRUE, data$quality_concern)
 
 
+data$regime<-grepl("regime",data$study_notes)
+
+data$regime<-ifelse(grepl("regime",data$model_notes),TRUE, data$regime)
+
+sum(data$regime)

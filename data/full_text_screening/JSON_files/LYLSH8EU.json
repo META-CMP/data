@@ -95,7 +95,10 @@
         "lrir": false 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
+        "pure_rate_shock": {
+          "model_1": true,
+          "model_2": false
+        }, 
         "convent": {
           "model_1": true,
           "model_2": false

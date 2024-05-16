@@ -80,10 +80,7 @@
         "comprice": false, 
         "outpgap": false, 
         "find": false, 
-        "eglob": {
-          "model_1": false,
-          "model_2": true
-        }, 
+        "eglob": false, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 

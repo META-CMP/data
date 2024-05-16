@@ -83,15 +83,15 @@
         "comprice": true,
         "outpgap": false,
         "find": false,
-        "eglob": {
-          "model_1": false,
-          "model_2": true
-        },
+        "eglob": false,
         "cbind": false,
         "fexch": false,
         "inflexp": false,
         "foreignir": false,
-        "fx": false,
+        "fx": {
+          "model_1": false,
+          "model_2": true
+        },
         "lrir": false
     },
     "econometric_details": {

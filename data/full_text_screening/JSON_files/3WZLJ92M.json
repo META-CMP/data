@@ -106,7 +106,7 @@
     "control_variables": { 
         "comprice": true, 
         "outpgap": false, 
-        "find": true, 
+        "find": false, 
         "eglob": true, 
         "cbind": false, 
         "fexch": false, 
@@ -116,8 +116,8 @@
         "lrir": true 
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
-        "convent": true, 
+        "pure_rate_shock": false, 
+        "convent": false, 
         "decomposition": false 
     }, 
     "publication_characteristics": { 

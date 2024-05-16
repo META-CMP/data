@@ -71,7 +71,7 @@
         "comprice": false, 
         "outpgap": false, 
         "find": false, 
-        "eglob": true, 
+        "eglob": false, 
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 

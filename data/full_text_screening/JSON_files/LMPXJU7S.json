@@ -122,7 +122,7 @@
         "find": {
                 "model_1": false,
                 "model_2": false,
-                "model_3": true,
+                "model_3": false,
                 "model_4": true,
                 "model_5": true
         }, 

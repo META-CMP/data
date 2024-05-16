@@ -375,7 +375,21 @@
         }
     },
     "econometric_details": {
-        "pure_rate_shock": true,
+        "pure_rate_shock": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": true,
+          "model_8": true,
+          "model_9": false,
+          "model_10": false,
+          "model_11": false,
+          "model_12": false,
+          "model_13": false
+          },
         "convent": {
           "model_1": true,
           "model_2": true,

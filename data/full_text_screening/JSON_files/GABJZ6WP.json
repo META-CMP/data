@@ -286,7 +286,7 @@
                 "model_11": false
         }, 
         "outpgap": false, 
-        "find": true, 
+        "find": false, 
         "eglob": false, 
         "cbind": false, 
         "fexch": false, 
@@ -320,7 +320,19 @@
         "lrir": false
     }, 
     "econometric_details": { 
-        "pure_rate_shock": true, 
+        "pure_rate_shock": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": true,
+                "model_10": false,
+                "model_11": false
+        }, 
         "convent": {
                 "model_1": false,
                 "model_2": false,

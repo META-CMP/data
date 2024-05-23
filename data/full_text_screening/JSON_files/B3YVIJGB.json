@@ -48,10 +48,7 @@
         "hf": false,
         "heteroskedas": false,
         "longrun": false,
-        "idother": {
-          "model_1": false,
-          "model_2": true
-        }
+        "idother": false
     },
     "estimation_method": {
         "var": true,

@@ -24,6 +24,8 @@ split_list<-stri_split_fixed(str = data$outcome_var, pattern = "_", n = 3)
 # Extract nth element from each split list
 data$transformation <- sapply(split_list, function(x) ifelse(1 <= length(x), x[1], NA))
 
+data$periodicity <- sapply(split_list, function(x) ifelse(2 <= length(x), x[2], NA))
+
 
 split_list <- sapply(split_list, function(x) ifelse(3 <= length(x), x[3], NA))
 
@@ -1072,7 +1074,56 @@ all_month_winsor<-grid.arrange(grobs = plot_list_winsor, ncol = 4,top = textGrob
 ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months_winsor_cum.png"), all_month_winsor, width = 30, height = 20, units = "cm")
 
 
-data_period_winsor<- save
+
+
+library(ggplot2)
+library(JWileymisc)
+library(tidyr)
+library(dplyr)
+library(RColorBrewer)
+myColors <- brewer.pal(3,"Set1")
+names(myColors) <- levels(data$periodicity)
+
+data$periodicity<- as.factor(data$periodicity)
+
+plot_list_winsor <- list()
+
+############################################## Loop through periods and create plots
+
+for (x in periods) {
+  print(paste("Processing period:", x))  # Debugging
+  data_period <- data %>% dplyr::filter(period.month == x) %>%  dplyr::filter(growth == 1)
+  print(paste("Number of observations for period", x, ":", nrow(data_period)))  # Debugging
+  
+  if (nrow(data_period) == 0) {
+    next  # Skip to the next iteration if there are no observations
+  }
+  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+  data_period$StandardError <- ifelse(data_period$StandardError == 0, NA, data_period$StandardError)
+  data_period$precision <- 1 / data_period$StandardError
+  
+  data_period_winsor <- data_period
+  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
+  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
+  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
+  
+  #plot_funnel <- create_funnel_plot(data_period, x)
+  #ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_", x, "_months.png"), plot_funnel)
+  #plot_funnel <- create_funnel_plot_grid(data_period, x)
+  #plot_list[[length(plot_list) + 1]]<-plot_funnel
+  
+  #plot_funnel_winsor <- create_funnel_plot(data_period_winsor, x, winsorize = TRUE)
+  #ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_", x, "_months_winsor.png"), plot_funnel_winsor)
+  plot_funnel_winsor <- create_funnel_plot_grid(data_period_winsor, x, "periodicity", winsorize = TRUE)
+  plot_list_winsor[[length(plot_list_winsor) + 1]]<-plot_funnel_winsor
+}
+
+library(gridExtra)
+library(grid)
+
+all_month_winsor<-grid.arrange(grobs = plot_list_winsor, ncol = 4,top = textGrob("Funnel plots of effect of monetary policy on output (with Winsorization)",gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob("%-change of output in response to 100bp monetary policy shock",gp=gpar(fontsize=16,font=3)))
+ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months_winsor_periodicity.png"), all_month_winsor, width = 30, height = 20, units = "cm")
+
 
 
 #Create a custom color scale

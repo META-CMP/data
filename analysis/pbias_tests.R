@@ -924,7 +924,7 @@ create_funnel_plot_grid <- function(data, period, group_color, winsorize = FALSE
 
 data<-data_back
 
-out<-'gdp'
+out<-'inflation'
 data <- subset(data, outcome %in% out)
 
 

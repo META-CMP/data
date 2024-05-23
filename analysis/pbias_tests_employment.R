@@ -112,7 +112,7 @@ create_funnel_plot_grid <- function(data, period, winsorize = FALSE) {
 periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
 
 out<-'emp'
-out_measure<-'une_rate'
+out_measure<-'emp'
 data <- subset(data, outcome_measure %in% out_measure)
 
 unique(data$period.month)

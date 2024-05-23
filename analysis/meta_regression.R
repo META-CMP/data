@@ -1,28 +1,10 @@
-library(MetaExtractR)
-
-error_jsons <- c(
-  "example_file",
-  "V2A8ZH66",# no IRFs
-  "Q5FHEZNE", # contains table estimates as well. 
-  #"QBQF4W6S",# missing core responses, responses are now added
-  "ZC9X48WY"# missing IRF data for many models. 
-)
-
+#Load data
 setwd("~/data")
 
-
-library(MetaExtractR)
-json.irf.join <- MetaExtractR::final_join(json_path = "data/full_text_screening/JSON_files", irf_path = "data/effect_sizes/IRFs/", only_json = FALSE, ignore = error_jsons)
-
-
-
+load("preliminary_data.RData")
 
 library(dplyr)
 library(tidyverse)
-
-data<-json.irf.join
-#save(data,file = "preliminary_data.RData")
-
 rate<-data %>% dplyr::filter(data$outcome_var=="rate")
 other<-data %>% dplyr::filter(data$outcome_var!="rate")
 
@@ -110,3 +92,62 @@ data$regime<-grepl("regime",data$study_notes)
 data$regime<-ifelse(grepl("regime",data$model_notes),TRUE, data$regime)
 
 sum(data$regime)
+
+
+data_back<-data
+
+###############################################################################  reg #################################################################################
+
+
+data<-data_back
+
+out<-'gdp'
+data <- subset(data, outcome %in% out)
+
+
+plot_list <- list()
+plot_list_winsor <- list()
+
+periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
+
+
+data<-data %>% mutate_if(is.logical, as.numeric)  
+summary(data)
+
+
+for (x in periods) {
+  print(paste("Processing period:", x))
+  
+  # Subset data for the current period
+  data_period <- subset(data, period.month %in% x)
+  
+  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+  data_period$precision <- 1 / data_period$StandardError
+  
+  # Winsorize data
+  data_period_winsor <- data_period
+  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
+  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
+  
+  # Store the winsorized data
+  
+  
+  # Calculate variance winsorised
+  data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
+  
+  # Calculate PrecVariance winsorised
+  data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
+  
+  # Calculate (precision-weighted) average
+  regwa <- lm(mean.effect_winsor ~standarderror_winsor, data = data_period_winsor)#, weights = precvariance_winsor
+  results_list[[paste0(x, ".ols")]] <- regwa
+  
+  coef_test_data[[paste0(x, ".ols")]]<-coef_test(regwa, vcov = "CR0", 
+                                                 cluster = data_period_winsor$key, test = "naive-t")
+  
+  
+  confint_data[[paste0(x, ".ols")]]<-confint(regwa, level=0.95)
+}
+
+
+

@@ -5,39 +5,23 @@ error_jsons <- c(
   "V2A8ZH66",# no IRFs
   "Q5FHEZNE", # contains table estimates as well. 
   #"QBQF4W6S",# missing core responses, responses are now added
-  "JHWGNGLX",
-  "XB3JCPV7",
-  "UGLCD22A",
-  "V3YGD4RH",
-  "L2TKIG44",
-  "4WHAJ9ZC",
-  "XE2RQA97",
-  "Q9S2TXAI",
-  "C87JBMDH",
-  "DIKT4VT6",
-  "AUUW3HH4",
-  "5PA5TJLY",
-  "P85XBWGQ",
-  "4TYJQZIQ",
-  "T6EA38XY",
-  "8YK8NZTN",
-  "7M3KH3J6",
-  "87DL3IY2",
   "ZC9X48WY"# missing IRF data for many models. 
 )
 
 setwd("~/data")
 
+
+library(MetaExtractR)
 json.irf.join <- MetaExtractR::final_join(json_path = "data/full_text_screening/JSON_files", irf_path = "data/effect_sizes/IRFs/", only_json = FALSE, ignore = error_jsons)
 
-#save(data,file = "preliminary_data.RData")
+
 
 
 library(dplyr)
 library(tidyverse)
 
 data<-json.irf.join
-
+#save(data,file = "preliminary_data.RData")
 
 rate<-data %>% dplyr::filter(data$outcome_var=="rate")
 other<-data %>% dplyr::filter(data$outcome_var!="rate")

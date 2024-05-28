@@ -93,9 +93,9 @@
         "vecm": false,
         "dyn_ols": {
           "model_1": false,
-          "model_2": true,
+          "model_2": "ardl",
           "model_3": false,
-          "model_4": true
+          "model_4": "ardl"
         },
         "fvar": false,
         "tvar": false,

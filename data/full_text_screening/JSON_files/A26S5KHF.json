@@ -23,7 +23,7 @@
         "dep": "log_q_gap logdiff_q_cpi",
         "conf": "90",
         "main": "gdp inflation",
-        "prefer": "null"
+        "prefer": false
     },
     "identification_strategy": {
         "iv": false,

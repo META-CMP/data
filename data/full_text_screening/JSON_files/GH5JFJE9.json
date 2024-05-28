@@ -66,7 +66,7 @@
         },
         "lp": false,
         "vecm": false,
-        "dyn_ols": "ardl  ecm false",
+        "dyn_ols": false,
         "fvar": false,
         "tvar": false,
         "gvar": false,

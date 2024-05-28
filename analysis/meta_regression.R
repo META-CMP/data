@@ -93,11 +93,45 @@ data$regime<-ifelse(grepl("regime",data$model_notes),TRUE, data$regime)
 
 sum(data$regime)
 
+remove(other)
+########################################################################## merge external data #######################################################################
 
-data_back<-data
+data<-data %>%
+  mutate(start_year= as.numeric(case_when(substr(start,1,1)=="Q" ~ format(as.Date(as.yearqtr(start, format = "Q%q-%Y")),"%Y"),
+                                       substr(start,1,1)!="Q" & grepl("-", start) == TRUE ~ format(as.Date(as.yearmon(start, format = "%m-%Y")),"%Y"),
+                                       nchar(start)==4 ~ format(as.Date(start, format = "%Y"),"%Y"))),
+         end_year= as.numeric(case_when(substr(end,1,1)=="Q" ~ format(as.Date(as.yearqtr(end, format = "Q%q-%Y")),"%Y"),
+                               substr(end,1,1)!="Q" & grepl("-", end) == TRUE ~ format(as.Date(as.yearmon(end, format = "%m-%Y")),"%Y"),
+                               nchar(end)==4 ~ format(as.Date(end, format = "%Y"),"%Y"))),
+         mean_year=(start_year+end_year)/2
+         )
+
+
+data_merged<-read.csv("~/data/data/merge_external_data/external-data.csv") %>% select(-X)
+
+data_merged$year<-as.numeric(data_merged$year)
+
+data<-data %>% unnest(list_of_countries)
+
+data$list_of_countries<-strsplit(data$list_of_countries, " ")
+
+data_merged<-data %>% select(list_of_countries,key,model_id,start_year,end_year) %>% 
+  mutate(year = map2(start_year, end_year, seq, by = 1)) %>%
+  unnest(year) %>% unnest(list_of_countries) %>%
+  left_join(data_merged, by = c('year',"list_of_countries"="ccode")) %>%
+  filter(year >= start_year & year <= end_year) %>%
+  select(-list_of_countries) %>% 
+  group_by(key, model_id,start_year,end_year) %>%
+  summarise(across(everything(),~ mean(., na.rm = TRUE)))
+data_merged
+
+data<-data %>% ungroup() %>% left_join(data_merged %>% ungroup %>% select(key, model_id,tradegl:exrate), by=c("key","model_id"))
+
+
+
 
 ###############################################################################  reg #################################################################################
-
+data_back<-data
 
 data<-data_back
 
@@ -105,15 +139,20 @@ out<-'gdp'
 data <- subset(data, outcome %in% out)
 
 
-plot_list <- list()
-plot_list_winsor <- list()
-
 periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
 
+# can be deleted later on. Just to recode one NA in the prelimnary dataset which is later set to false. 
+data<-data %>% mutate(prefer=ifelse(is.na(prefer),FALSE,prefer))
 
-data<-data %>% mutate_if(is.logical, as.numeric)  
+data<-data %>% mutate(dyn_ols=ifelse(dyn_ols=="TRUE" | dyn_ols=="ardl",TRUE,FALSE))
+
+data<-data %>% unnest(n_of_countries) %>% unnest(chol) %>% unnest(bayes) %>% unnest(dsge) %>% unnest(idother) %>% unnest(var) %>% unnest(model_notes) %>% unnest(prefer) %>% mutate_if(is.logical, as.numeric) 
 summary(data)
+#data %>% unnest(figure)  %>% unnest(page) #data %>% filter(is.na(figure)) is.na figure set to figure Appendix D1.
 
+unique(data$dyn_ols)
+
+test<-data %>% filter(dyn_ols=="TRUE")
 
 for (x in periods) {
   print(paste("Processing period:", x))

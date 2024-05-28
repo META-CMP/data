@@ -39,7 +39,75 @@ data$outcome_measure<-split_list
 
 data$outcome<-ifelse(data$outcome_measure %in% c("gdp","ip","gap","gnp"),"gdp",ifelse(data$outcome_measure %in% c("cpi","deflator","wpi","core","price_level"),"inflation","emp"))
 
+
+
+#generate main research question dummy
+fun <- function(x, y) {
+  grepl(x, y, fixed = TRUE)
+}
+
+data$main_research_q<-mapply(fun, data$outcome, data$main)
+
+
+library(zoo)
+
+
+#data %>% filter(end=="Q4–2015")
+
+data$start<-ifelse(data$start=="Q4–2000","Q4-2000",data$start)
+data$end<-ifelse(data$end=="Q4–2015","Q4-2015",data$end)
+
+
+data<-data %>%
+  mutate(observations_calc = case_when(substr(start,1,1)=="Q" ~ ((as.yearqtr(end, format = "Q%q-%Y")-as.yearqtr(start, format = "Q%q-%Y"))*4+1)*as.numeric(n_of_countries),
+                                       substr(start,1,1)!="Q" & grepl("-", start) == TRUE ~ ((as.yearmon(end, format = "%m-%Y")-as.yearmon(start, format = "%m-%Y"))*12+1)*as.numeric(n_of_countries),
+                                       nchar(data$start)==4 ~ (as.numeric(end)-as.numeric(start)+1)*as.numeric(n_of_countries)))
+
+
+data$samplesize<-as.numeric(data$samplesize)
+
+unique(data$samplesize)
+
+data$observations<-ifelse(is.na(data$samplesize), data$observations_calc, as.numeric(data$samplesize))
+
+
+
+
+# set logical values to dummies.
+data<-data %>% mutate_if(is.logical, as.numeric)  
+
+#summary(data)
+head(data)
+
+#test<-data %>% filter(observations==1)
+unique(data$study_notes)
+unique(data$model_notes)
+
+data$quality_concern<-grepl("quality_concern",data$study_notes)
+
+data$quality_concern<-ifelse(grepl("quality_concern",data$model_notes),TRUE, data$quality_concern)
+
+
+data$regime<-grepl("regime",data$study_notes)
+
+data$regime<-ifelse(grepl("regime",data$model_notes),TRUE, data$regime)
+
+sum(data$regime)
+
+
+
 data_back<-data
+
+# test<-data_back %>% group_by(outcome,period.month,key) %>% summarise(lor=sum(lor),upr=sum(upr))#,hike=sum(hike),cut=sum(cut)
+# 
+# 
+# 
+# test<-test[apply(test[,-c(1,2,3)], 1, function(x) !all(x==0)),]
+# 
+# test<-test %>% filter(period.month %in% c(3,6,9,12,15,18,21,24))
+# 
+# test<-test %>% group_by(outcome,period.month) %>% summarise(count=dplyr::n())
+
 
 ############################################################### create funnel plots ####################################################################
 
@@ -117,6 +185,7 @@ data<-data_back
 
 out<-'gdp'
 data <- subset(data, outcome %in% out)
+
 
 
 plot_list <- list()

@@ -23,7 +23,7 @@
           "model_4": 30
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_1_year_gov",

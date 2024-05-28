@@ -89,6 +89,9 @@ AllExchangerate$year <- as.character(AllExchangerate$year)
 data_merged <- left_join(data_merged, AllExchangerate, by=c("ccode" = "ccode", "year" = "year"))
 
 colnames(data_merged)<-c('ccode', 'year', 'tradegl', 'infl', 'fingl', 'findev', 'cbi', 'gdppc', 'exrate')
-#write.csv(data_merged, file = "external-data.csv")
+
 
 data_merged$ccode <- countrycode(data_merged$ccode, 'iso3c', 'iso2c') 
+
+#getwd()
+#write.csv(data_merged, file = "~/data/data/merge_external_data/external-data.csv")

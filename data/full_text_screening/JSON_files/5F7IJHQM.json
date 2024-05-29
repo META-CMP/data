@@ -37,11 +37,11 @@
         "axis_trans": false,
         "dep": {
           "model_1": "log_m_ip log_m_cpi",
-          "model_2": "logdiff_m_ip",
+          "model_2": "log_m_ip",
           "model_3": "log_m_emp",
           "model_4": "lev_m_une_rate",
           "model_5": "log_m_ip log_m_cpi",
-          "model_6": "logdiff_m_ip"
+          "model_6": "log_m_ip"
         },
         "conf": "68",
         "main": "gdp  inflation",

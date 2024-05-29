@@ -255,3 +255,4 @@ coef_test_data<-data.table::rbindlist(coef_test_data, fill = T,idcol = ".id")
 coef_test_data
 
 
+test<-data %>% filter(key=="NBR7WTIT")

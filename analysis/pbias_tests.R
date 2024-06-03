@@ -1,87 +1,250 @@
+rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
+gc() #free up memory and report the memory usage.
 
 
-#Load data
-dat <- fread(here("pbias_data/test_data.csv"))
+setwd("~/data")
+#Load data by running data_prep script
+source("analysis/data_prep.R")
 
-#subset 3-month
-dat_3_month <- subset(dat, period.month %in% c('3'))
-#subset gdp
-dat_3_month_gdp <- subset(dat_3_month, outcome_var %in% c('log_q_rgdp'))
-#mean standard error
-dat_3_month_gdp$StandardError <- (dat_3_month_gdp$SE.upper+dat_3_month_gdp$SE.lower)/2
 
-#set all zero standard errors to NA
-dat_3_month_gdp$StandardError <- ifelse(dat_3_month_gdp$StandardError == 0, NA, dat_3_month_gdp$StandardError)
+############################################################### create funnel plots ####################################################################
 
-#precision
-dat_3_month_gdp$precision <- 1 / dat_3_month_gdp$StandardError
+########################################## Functions
 
-#Funnel plot
-plot_funnel_3_month_gdp <- ggplot(data=dat_3_month_gdp,
-                                         aes(x=mean.effect, y=precision)) +
-  geom_point(size=0.5) +
-  xlab("Mean effect size\n %-change of output in response to 100bp monetary policy shock") +
-  ylab("Inverse of standard error (precision)") +
-  ggtitle("Funnel plot of effect of monetary policy on output\n (3 months after the shock)")+
-  theme(title=element_text(size=10, face='bold'))+
-  theme(panel.background = element_rect(fill = "white")) +
-  theme(legend.position="bottom")+
-  theme(legend.title=element_blank()) +
-  geom_vline(xintercept=0, colour="black", linetype=2)+
-  theme(legend.text = element_text(colour="black", size = 4))+
-  theme(axis.text.x=element_text(size=11))+
-  theme(axis.title.x=element_text(size=11)) +
-  theme(axis.text.y=element_text(size=11))+
-  theme(axis.title.y=element_text(size=11))
-plot_funnel_3_month_gdp
 
-#winsorise
-dat_3_month_gdp$standarderror_winsor <- winsorizor(dat_3_month_gdp$StandardError, c(0.10), na.rm=TRUE)
-dat_3_month_gdp$mean.effect_winsor <- winsorizor(dat_3_month_gdp$mean.effect, c(0.02), na.rm=TRUE)
+library(ggplot2)
+library(JWileymisc)
 
-#Precision
-dat_3_month_gdp$precision_winsor <- 1 / dat_3_month_gdp$standarderror_winsor
+# Function to create funnel plots
+create_funnel_plot <- function(data, period, winsorize = FALSE) {
+  if (winsorize) {
+    plot_title <- "(with Winsorization)"
+    x <- "mean.effect_winsor"
+    y <- "precision_winsor"
+  } else {
+    plot_title <- ""
+    x <- "mean.effect"
+    y <- "precision"
+  }
+  
+  plot_funnel <- ggplot(data = data,
+                        aes_string(x = x, y = y)) +
+    geom_point(size = 0.5) +
+    xlab("Mean effect size\n %-change of output in response to 100bp monetary policy shock") +
+    ylab("Inverse of standard error (precision)") +
+    ggtitle(paste("Funnel plots of effect of monetary policy on output\n", "(", period, "months after the shock)", plot_title)) +
+    theme(title = element_text(size = 10, face = 'bold')) +
+    theme(panel.background = element_rect(fill = "white")) +
+    theme(legend.position = "bottom") +
+    theme(legend.title = element_blank()) +
+    geom_vline(xintercept = 0, colour = "black", linetype = 2) +
+    theme(legend.text = element_text(colour = "black", size = 4)) +
+    theme(axis.text.x = element_text(size = 11)) +
+    theme(axis.title.x = element_text(size = 11)) +
+    theme(axis.text.y = element_text(size = 11)) +
+    theme(axis.title.y = element_text(size = 11))
+  
+  return(plot_funnel)
+}
 
-#Funnel plot
-plot_funnel_3_month_gdp_winsor <- ggplot(data=dat_3_month_gdp,
-                                  aes(x=mean.effect_winsor, y=precision_winsor)) +
-  geom_point(size=0.5) +
-  xlab("Mean effect size\n %-change of output in response to 100bp monetary policy shock") +
-  ylab("Inverse of standard error (precision)") +
-  ggtitle("Funnel plot of effect of monetary policy on output\n (3 months after the shock)")+
-  theme(title=element_text(size=10, face='bold'))+
-  theme(panel.background = element_rect(fill = "white")) +
-  theme(legend.position="bottom")+
-  theme(legend.title=element_blank()) +
-  geom_vline(xintercept=0, colour="black", linetype=2)+
-  theme(legend.text = element_text(colour="black", size = 4))+
-  theme(axis.text.x=element_text(size=11))+
-  theme(axis.title.x=element_text(size=11)) +
-  theme(axis.text.y=element_text(size=11))+
-  theme(axis.title.y=element_text(size=11))
-plot_funnel_3_month_gdp_winsor
+create_funnel_plot_grid <- function(data, period, winsorize = FALSE) {
+  if (winsorize) {
+    plot_title <- " (with Winsorization)"
+    x <- "mean.effect_winsor"
+    y <- "precision_winsor"
+  } else {
+    plot_title <- ""
+    x <- "mean.effect"
+    y <- "precision"
+  }
+  
+  plot_funnel <- ggplot(data = data,
+                        aes_string(x = x, y = y)) +
+    geom_point(size = 0.5) +
+    xlab("Mean effect size") +
+    ylab("Inverse of standard error (precision)") +
+    ggtitle(paste(period, "months after the shock")) +
+    theme(title = element_text(size = 10, face = 'bold')) +
+    theme(panel.background = element_rect(fill = "white")) +
+    theme(legend.position = "bottom") +
+    theme(legend.title = element_blank()) +
+    geom_vline(xintercept = 0, colour = "black", linetype = 2) +
+    theme(legend.text = element_text(colour = "black", size = 4)) +
+    theme(axis.text.x = element_text(size = 11)) +
+    theme(axis.title.x = element_text(size = 11)) +
+    theme(axis.text.y = element_text(size = 11)) +
+    theme(axis.title.y = element_text(size = 11))
+  
+  return(plot_funnel)
+}
 
-#Variance winsorised
-dat_3_month_gdp$variance_winsor <- dat_3_month_gdp$standarderror_winsor^2
 
-#PrecVariance winsorised
-dat_3_month_gdp$precvariance_winsor <- 1 / dat_3_month_gdp$variance_winsor
+data<-data_back
 
-#(precision-weighted) average
-regwa_3_month_gdp <- lm(mean.effect_winsor~1, data=dat_3_month_gdp)
-summary(regwa_3_month_gdp)
-coef_test(regwa_3_month_gdp, vcov = "CR0", 
-          cluster = dat_3_month_gdp$key, test = "naive-t")
-confint(regwa_3_month_gdp, level=0.95)
+out<-'gdp'
+data <- subset(data, outcome %in% out)
 
-#baseline WLS
-wls_pbias_3_month_gdp <- lm(mean.effect_winsor ~ standarderror_winsor, weights=precvariance_winsor, data=dat_3_month_gdp)
-summary(wls_pbias_3_month_gdp)
-coef_test(wls_pbias_3_month_gdp, vcov = "CR0", 
-          cluster = dat_3_month_gdp$key, test = "naive-t")
 
-#Furukawa
-#code for stem function
+
+plot_list <- list()
+plot_list_winsor <- list()
+
+periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
+
+
+
+############################################## Loop through periods and create plots
+
+for (x in periods) {
+  print(paste("Processing period:", x))  # Debugging
+  data_period <- data %>% dplyr::filter(period.month == x)
+  print(paste("Number of observations for period", x, ":", nrow(data_period)))  # Debugging
+  
+  if (nrow(data_period) == 0) {
+    next  # Skip to the next iteration if there are no observations
+  }
+  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+  data_period$StandardError <- ifelse(data_period$StandardError == 0, NA, data_period$StandardError)
+  data_period$precision <- 1 / data_period$StandardError
+  
+  data_period_winsor <- data_period
+  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
+  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
+  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
+  
+  plot_funnel <- create_funnel_plot(data_period, x)
+  ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_", x, "_months.png"), plot_funnel)
+  plot_funnel <- create_funnel_plot_grid(data_period, x)
+  plot_list[[length(plot_list) + 1]]<-plot_funnel
+  
+  plot_funnel_winsor <- create_funnel_plot(data_period_winsor, x, winsorize = TRUE)
+  ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_", x, "_months_winsor.png"), plot_funnel_winsor)
+  plot_funnel_winsor <- create_funnel_plot_grid(data_period_winsor, x, winsorize = TRUE)
+  plot_list_winsor[[length(plot_list_winsor) + 1]]<-plot_funnel_winsor
+}
+
+library(gridExtra)
+library(grid)
+all_month<-grid.arrange(grobs = plot_list, ncol = 4,top = textGrob("Funnel plots of effect of monetary policy on output",gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob("%-change of output in response to 100bp monetary policy shock",gp=gpar(fontsize=16,font=3)))
+ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months.png"), all_month, width = 30, height = 20, units = "cm")
+all_month_winsor<-grid.arrange(grobs = plot_list_winsor, ncol = 4,top = textGrob("Funnel plots of effect of monetary policy on output (with Winsorization)",gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob("%-change of output in response to 100bp monetary policy shock",gp=gpar(fontsize=16,font=3)))
+ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months_winsor.png"), all_month_winsor, width = 30, height = 20, units = "cm")
+
+
+
+
+
+##############################################  Baseline Regression and baseline WLS by precicion ###############################################################
+
+# Create empty lists to store the results
+results_list <- list()
+coef_test_data <- list()
+confint_data <- list()
+cluster_var <- list()
+
+library(clubSandwich)# for coef test results
+
+# Loop through periods
+for (x in periods) {
+  print(paste("Processing period:", x))
+  
+  # Subset data for the current period
+  data_period <- subset(data, period.month %in% x)
+  
+  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+  data_period$StandardError <- ifelse(data_period$StandardError == 0, NA, data_period$StandardError)
+  data_period$precision <- 1 / data_period$StandardError
+  
+  # Winsorize data
+  data_period_winsor <- data_period
+  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
+  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
+  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
+  
+  # Store the winsorized data
+  
+  
+  # Calculate variance winsorised
+  data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
+  
+  # Calculate PrecVariance winsorised
+  data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
+  
+  # Calculate (precision-weighted) average
+  regwa <- lm(mean.effect_winsor ~ 1, weights = precvariance_winsor, data = data_period_winsor)
+  results_list[[paste0(x, ".ols")]] <- regwa
+  
+  coef_test_data[[paste0(x, ".ols")]]<-coef_test(regwa, vcov = "CR0", 
+                                                 cluster = data_period_winsor$key, test = "naive-t")
+  
+  cluster_var[[paste0(x, ".ols")]]<-data_period_winsor$key
+  
+  confint_data[[paste0(x, ".ols")]]<-confint(regwa, level=0.95)
+  
+  # Baseline WLS
+  wls_pbias <- lm(mean.effect_winsor ~ standarderror_winsor, weights = precvariance_winsor, data = data_period_winsor)
+  results_list[[paste0(x, ".wls")]] <- wls_pbias
+  
+  coef_test_data[[paste0(x, ".wls")]]<-coef_test(wls_pbias, vcov = "CR0", 
+                                                 cluster = data_period_winsor$key, test = "naive-t")
+  
+  cluster_var[[paste0(x, ".wls")]]<-data_period_winsor$key
+  
+  confint_data[[paste0(x, ".wls")]]<-confint(wls_pbias, level=0.95)
+  
+}
+
+# weighted average noch ergänzen. 
+
+
+
+
+# naive T and CRO already fixed? 
+
+
+library(modelsummary)
+#modelsummary(results_list, output = "gt",vcov = 'cr0', cluster = data_period_winsor$key,stars = TRUE) # only works if cluster variable has the same number of observations across lists. 
+modelsummary(results_list, output = "gt",stars = TRUE)
+
+coef_test_data<-data.table::rbindlist(coef_test_data, fill = T,idcol = ".id")
+coef_test_data
+
+# library(estimatr)
+# 
+# 
+# regwa <- lm(mean.effect_winsor ~ 1, data = data_period_winsor)
+# summary(regwa)
+# 
+# coef_test(regwa, vcov = "CR0", cluster = data_period_winsor$key, test = "naive-t")
+# 
+# regwa_robust <- lm_robust(mean.effect_winsor ~ 1, data = data_period_winsor,clusters = data_period_winsor$key,se_type = "CR0")
+# summary(regwa_robust)
+# 
+# 
+# 
+# wls_pbias <- lm(mean.effect_winsor ~ standarderror_winsor, weights = precvariance_winsor, data = data_period_winsor)
+# summary(wls_pbias)
+# 
+# coef_test(wls_pbias, vcov = "CR0",cluster = data_period_winsor$key, test = "naive-t")
+# 
+# regwa_robust_wls <- lm_robust(mean.effect_winsor ~ standarderror_winsor, weights = precvariance_winsor, data = data_period_winsor,clusters = data_period_winsor$key,se_type = "CR0")
+# summary(regwa_robust_wls)
+# 
+# 
+# results_list <- list()
+# results_list[[1]]<-regwa
+# results_list[[2]]<-wls_pbias
+
+
+
+
+#################################################################### Furukawa (2021) stem function ############################################################
+
+
+##################################################################### Functions ############
+
+# we could also directly run the source code source("stem_method.R") if we install it in our repository. would probably be the cleaner way. 
+
 ##0 set stem parameter
 tolerance = 10^(-4) #set level of sufficiently small stem to determine convergence
 max_N_count = 10^3 #set maximum number of iteration before termination
@@ -258,10 +421,6 @@ weighted_mean_squared <- function(beta, se, sigma){
   return(Y)
 }
 
-##3. figures
-#install.packages("ggplot2")
-library(ggplot2)
-
 se_rescale <- function(se){
   Y <- -log10(se)
   return(Y)
@@ -395,46 +554,129 @@ data_median <- function(data, id_var, main_var, additional_var){
   return(Y)
 }
 
+##################################################################### run functions ############
+
 #Furukawa (2021) results
 #dataset without NAs, because the stem function only works without NAs
-dat_3_month_gdp_Furukawa <- select(dat_3_month_gdp, mean.effect_winsor, standarderror_winsor)
-dat_3_month_gdp_Furukawa <- dat_3_month_gdp_Furukawa[complete.cases(dat_3_month_gdp_Furukawa), ]
 
-stem_results_3_month_gdp <- stem(dat_3_month_gdp_Furukawa$mean.effect_winsor, dat_3_month_gdp_Furukawa$standarderror_winsor, param)
-View(stem_results_3_month_gdp$estimates)
 
-#Ioannidis et al. (2017)
+stem_results<-list()
+
+# Loop through periods
+for (x in periods) {
+  print(paste("Processing period:", x))
+  
+  # Subset data for the current period
+  data_period <- subset(data, period.month %in% x)
+  
+  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+  #data_period$StandardError <- ifelse(data_period$StandardError == 0, NA, data_period$StandardError)
+  data_period$precision <- 1 / data_period$StandardError
+  
+  # Winsorize data
+  data_period_winsor <- data_period
+  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
+  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
+  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
+  
+  # Store the winsorized data
+  
+  data_period_Furukawa <- data_period_winsor %>%  select(mean.effect_winsor, standarderror_winsor)
+  
+  stem_results[[paste0(x, ".stem")]] <- stem(data_period_Furukawa$mean.effect_winsor, data_period_Furukawa$standarderror_winsor, param)
+  
+}
+
+lapply(stem_results, `[[`, 1)
+
+data.table::rbindlist(lapply(stem_results, `[[`, 1), fill = T,idcol = ".id")
+
+
+
+stem_funnel(data_period_Furukawa$mean.effect_winsor, data_period_Furukawa$standarderror_winsor, stem_results[[8]]$estimates)
+
+
+
+median_data <- data_median(data_period_winsor, "key", "mean.effect_winsor", "standarderror_winsor") # some error in this code if we look at the data median. 
+test <- stem(median_data$coefficient, median_data$standard_error, param)
+
+
+
+
+#####################################################################   #Ioannidis et al. (2017) ######################################################################
 #Top 10% of estimates with the smallest standard error
-topten_3_month_gdp <- dat_3_month_gdp %>%
-  dplyr::mutate(rank = rank(desc(standarderror_winsor))) %>%
-  dplyr::filter(rank >= 235) %>%
-  dplyr::arrange(rank)
 
-#result in Gechert and Heimberger (2022): Table 3, column (5)
-#weighted-average
-regwa_topten_3_month_gdp <- lm(mean.effect_winsor~1, data=topten_3_month_gdp, weights=precvariance_winsor)
-summary(regwa_topten_3_month_gdp)
-#confidence interval
-confint(regwa_topten_3_month_gdp, level=0.95)
 
-#WAAP (weighted average of the adequately powered)
-#powered
-dat_3_month_gdp$powered <- abs(dat_3_month_gdp$mean.effect/2.8)
-#Non-linear tests
-dat_3_month_gdp$WAAP <- ifelse(dat_3_month_gdp$standarderror_winsor < dat_3_month_gdp$powered, 1, 0)
-dat_3_month_gdp_WAAP <- dat_3_month_gdp
-dat_3_month_gdp_WAAP <- subset(dat_3_month_gdp, WAAP %in% c('1'))
 
-#weighted average of the adequately powered
-regwa_3_month_gdp_WAAP <- lm(mean.effect_winsor~1, data=dat_3_month_gdp_WAAP, weights=precvariance_winsor)
-summary(regwa_3_month_gdp_WAAP)
-#confidence interval
-confint(regwa_3_month_gdp_WAAP, level=0.95)
+# Create empty lists to store the results
+results_list_regwa_topten <- list()
+confint_data_regwa_topten <- list()
 
-#Bom-Rachinger (2019)
 
-#functions
-data <- dat_3_month_gdp_Furukawa
+# Loop through periods
+for (x in periods) {
+  print(paste("Processing period:", x))
+  
+  # Subset data for the current period
+  data_period <- subset(data, period.month %in% x)
+  
+  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+  data_period$StandardError <- ifelse(data_period$StandardError == 0, NA, data_period$StandardError)
+  data_period$precision <- 1 / data_period$StandardError
+  
+  # Winsorize data
+  data_period_winsor <- data_period
+  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
+  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
+  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
+  
+  # Store the winsorized data
+  
+  
+  # Calculate variance winsorised
+  data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
+  
+  # Calculate PrecVariance winsorised
+  data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
+  
+  
+  topten_data_period <- data_period_winsor %>% dplyr::mutate(rank = rank(desc(standarderror_winsor))) %>%
+    dplyr::filter(rank > quantile(rank, .9)) %>%
+    dplyr::arrange(rank)
+  
+  print(paste("Observations top 10% ", nrow(topten_data_period)))
+  # Calculate (precision-weighted) average
+  #result in Gechert and Heimberger (2022): Table 3, column (5)
+  #weighted-average
+  regwa_topten <- lm(mean.effect_winsor~1, data=topten_data_period, weights=precvariance_winsor)
+  results_list_regwa_topten[[paste0(x, ".top_10")]]<-regwa_topten
+  #confidence interval
+  confint_data_regwa_topten[[paste0(x, ".top_10")]]<-confint(regwa_topten, level=0.95)
+  
+  
+  #WAAP (weighted average of the adequately powered)
+  #powered
+  data_period_winsor$powered <- abs(data_period_winsor$mean.effect/2.8) # why 2.8?
+  #Non-linear tests
+  data_period_winsor$WAAP <- ifelse(data_period_winsor$standarderror_winsor < data_period_winsor$powered, 1, 0)
+  data_period_winsor_WAAP <- data_period_winsor
+  data_period_winsor_WAAP <- subset(data_period_winsor, WAAP %in% c('1'))
+  
+  #weighted average of the adequately powered
+  regwa_data_period_WAAP <- lm(mean.effect_winsor~1, data=data_period_winsor_WAAP, weights=precvariance_winsor)
+  results_list_regwa_topten[[paste0(x, ".waap")]]<-regwa_data_period_WAAP
+  #confidence interval
+  confint_data_regwa_topten[[paste0(x, ".waap")]]<-confint(regwa_data_period_WAAP, level=0.95)
+}
+
+modelsummary(results_list_regwa_topten, output = "gt",stars = TRUE)
+
+confint_data_regwa_topten
+
+######################################################################## Bom-Rachinger (2019) ################################################################
+
+
+
 EK <- function(data, verbose = T){
   
   # install missing packages
@@ -533,17 +775,17 @@ EK <- function(data, verbose = T){
     b1_ek <- NA
     sd1_ek <- NA
   }
-  # Print results to console if desired
-  if (verbose){
-    cat("EK's mean effect estimate (alpha1) and standard error:   ")
-    cat(b0_ek) # Mean effect estimate
-    cat(",  ")
-    cat(sd0_ek) # Mean effect standard error
-    cat("\n EK's publication bias estimate (delta) and standard error:   ")
-    cat(b1_ek) # Pub bias estimate
-    cat(",  ")
-    cat(sd1_ek) # Pub bias standard error
-  }
+  # # Print results to console if desired
+  # if (verbose){
+  #   cat("EK's mean effect estimate (alpha1) and standard error:   ")
+  #   cat(b0_ek) # Mean effect estimate
+  #   cat(",  ")
+  #   cat(sd0_ek) # Mean effect standard error
+  #   cat("\n EK's publication bias estimate (delta) and standard error:   ")
+  #   cat(b1_ek) # Pub bias estimate
+  #   cat(",  ")
+  #   cat(sd1_ek) # Pub bias standard error
+  # }
   # Return the four coefficients
   
   # return (c(b0_ek, sd0_ek, b1_ek, sd1_ek))
@@ -551,14 +793,48 @@ EK <- function(data, verbose = T){
   return(my_list)
 }
 
-# executes the R function EK
-data_BomRachinger <- dat_3_month_gdp_Furukawa
 
-EK=EK(data=data_BomRachinger,verbose=T)
 
-# reports the EK results
-object<-c("EK's mean effect estimate (alpha1)","standard error","EK's publication bias estimate (delta)","standard error")
-value<-c(EK$effect, EK$SE_effect,EK$pubbias, EK$SE_pubbias)
-EKresults<-data.frame(object,value)
-cat("\f")
-EKresults
+EKresults_list<-list()
+
+# Loop through periods
+for (x in periods) {
+  print(paste("Processing period:", x))
+  
+  # Subset data for the current period
+  data_period <- subset(data, period.month %in% x)
+  
+  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+  data_period$StandardError <- ifelse(data_period$StandardError == 0, NA, data_period$StandardError)
+  data_period$precision <- 1 / data_period$StandardError
+  
+  # Winsorize data
+  data_period_winsor <- data_period
+  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
+  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
+  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
+  
+  # Store the winsorized data
+  
+  data_period_Furukawa <- data_period_winsor %>%  select(mean.effect_winsor, standarderror_winsor)
+  
+  
+  # executes the R function EK
+  data_BomRachinger <- data_period_Furukawa
+  
+  est_EK<-EK(data=data_BomRachinger,verbose=T)
+  
+  # reports the EK results
+  object<-c("EK's mean effect estimate (alpha1)","standard error","EK's publication bias estimate (delta)","standard error")
+  
+  EKresults<-data.frame(t(c(est_EK$effect, est_EK$SE_effect,est_EK$pubbias, est_EK$SE_pubbias)))
+  colnames(EKresults)<-object
+  
+  EKresults_list[[paste0(x)]] <- EKresults
+}
+
+
+data.table::rbindlist(EKresults_list, fill = T,idcol = ".id")
+
+
+

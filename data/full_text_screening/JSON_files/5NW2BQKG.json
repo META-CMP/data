@@ -17,7 +17,7 @@
         "inttype": "lev_a_3_month_fed_funds",
         "size": "null",
         "axis_trans": "log_q_rgdp_y*100",
-        "dep": "log_q_rgdp gr_q_cpi",
+        "dep": "log_q_rgdp log_q_cpi",
         "conf": "95",
         "main": "inflation",
         "prefer": true

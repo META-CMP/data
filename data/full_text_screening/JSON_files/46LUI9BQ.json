@@ -7,68 +7,50 @@
         "model_notes": "null",
         "figure": {
           "model_1": 1,
-          "model_2": 2,
-          "model_3": 4,
-          "model_4": 5
+          "model_2": 4
         },
         "page": {
           "model_1": 644,
-          "model_2": 649,
-          "model_3": 652,
-          "model_4": 654
+          "model_2": 652
         },
         "irf": true,
         "cum": {
           "model_1": false,
-          "model_2": true,
-          "model_3": true,
-          "model_4": true
+          "model_2": true
         }
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_3_month_gov",
         "size": {
           "model_1": "1SD",
-          "model_2": "null",
-          "model_3": "null",
-          "model_4": "null"
+          "model_2": "null"
         },
         "axis_trans": false,
         "dep": {
           "model_1": "log_m_ip log_m_cpi",
-          "model_2": "logdiff_m_ip logdiff_m_cpi",
-          "model_3": "logdiff_m_ip logdiff_m_cpi",
-          "model_4": "logdiff_m_ip logdiff_m_cpi"
+          "model_2": "logdiff_m_ip logdiff_m_cpi"
         },
         "conf": "68",
         "main": "gdp inflation",
         "prefer": {
           "model_1": false,
-          "model_2": true,
-          "model_3": false,
-          "model_4": false
+          "model_2": false
         }
     },
     "identification_strategy": {
         "iv": false,
         "forecast_based": {
           "model_1": false,
-          "model_2": true,
-          "model_3": true,
-          "model_4": false
+          "model_2": true
         },
         "nr": {
           "model_1": false,
-          "model_2": true,
-          "model_3": true,
-          "model_4": false
+          "model_2": true
         },
         "event": false,
         "chol": {
           "model_1": true,
-          "model_2": false,
-          "model_3": false,
-          "model_4": false
+          "model_2": false
         },
         "svar": false,
         "signr": false,
@@ -77,25 +59,19 @@
         "longrun": false,
         "idother": {
           "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": true
+          "model_2": false
         }
     },
     "estimation_method": {
         "var": {
           "model_1": true,
-          "model_2": false,
-          "model_3": true,
-          "model_4": false
+          "model_2": true
         },
         "lp": false,
         "vecm": false,
         "dyn_ols": {
           "model_1": false,
-          "model_2": "ardl",
-          "model_3": false,
-          "model_4": "ardl"
+          "model_2": false
         },
         "fvar": false,
         "tvar": false,
@@ -125,9 +101,7 @@
         "panel": false,
         "start": {
           "model_1": "07-1948",
-          "model_2": "01-1949",
-          "model_3": "01-1949",
-          "model_4": "01-1949"
+          "model_2": "01-1949"
         },
         "end": "06-1996",
         "samplesize": "null"

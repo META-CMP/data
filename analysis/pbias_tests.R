@@ -1,112 +1,10 @@
-#Load data
+rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
+gc() #free up memory and report the memory usage.
+
+
 setwd("~/data")
-
-load("preliminary_data.RData")
-
-library(dplyr)
-library(tidyverse)
-rate<-data %>% dplyr::filter(data$outcome_var=="rate")
-other<-data %>% dplyr::filter(data$outcome_var!="rate")
-
-rate<-rate %>% dplyr::select(key,model_id,period:SE.lower) %>% dplyr::select(-outcome_var)
-#save(rate,file = "preliminary_rate_data.RData")
-
-colnames(rate)[4:ncol(rate)] <- paste("rate_",colnames(rate)[4:ncol(rate)],sep="")
-
-data<-other %>% dplyr::left_join(rate, by=c("key","model_id","period"))
-
-
-
-library(stringi)
-
-split_list<-stri_split_fixed(str = data$outcome_var, pattern = "_", n = 3)
-
-# Extract nth element from each split list
-data$transformation <- sapply(split_list, function(x) ifelse(1 <= length(x), x[1], NA))
-
-data$periodicity <- sapply(split_list, function(x) ifelse(2 <= length(x), x[2], NA))
-
-
-split_list <- sapply(split_list, function(x) ifelse(3 <= length(x), x[3], NA))
-
-data$real_output<-ifelse(split_list %in% c("rgdp","ip","rip","rgnp","rgap"),TRUE,NA)
-data$real_output<-ifelse(split_list %in% c("gdp","gnp","gap"),FALSE,data$real_output)
-
-# remove r from the outcome measure
-split_list<-sub("^r", "", split_list)
-
-data$outcome_measure<-split_list
-
-data$outcome<-ifelse(data$outcome_measure %in% c("gdp","ip","gap","gnp"),"gdp",ifelse(data$outcome_measure %in% c("cpi","deflator","wpi","core","price_level"),"inflation","emp"))
-
-
-
-#generate main research question dummy
-fun <- function(x, y) {
-  grepl(x, y, fixed = TRUE)
-}
-
-data$main_research_q<-mapply(fun, data$outcome, data$main)
-
-
-library(zoo)
-
-
-#data %>% filter(end=="Q4–2015")
-
-data$start<-ifelse(data$start=="Q4–2000","Q4-2000",data$start)
-data$end<-ifelse(data$end=="Q4–2015","Q4-2015",data$end)
-
-
-data<-data %>%
-  mutate(observations_calc = case_when(substr(start,1,1)=="Q" ~ ((as.yearqtr(end, format = "Q%q-%Y")-as.yearqtr(start, format = "Q%q-%Y"))*4+1)*as.numeric(n_of_countries),
-                                       substr(start,1,1)!="Q" & grepl("-", start) == TRUE ~ ((as.yearmon(end, format = "%m-%Y")-as.yearmon(start, format = "%m-%Y"))*12+1)*as.numeric(n_of_countries),
-                                       nchar(data$start)==4 ~ (as.numeric(end)-as.numeric(start)+1)*as.numeric(n_of_countries)))
-
-
-data$samplesize<-as.numeric(data$samplesize)
-
-unique(data$samplesize)
-
-data$observations<-ifelse(is.na(data$samplesize), data$observations_calc, as.numeric(data$samplesize))
-
-
-
-
-# set logical values to dummies.
-data<-data %>% mutate_if(is.logical, as.numeric)  
-
-#summary(data)
-head(data)
-
-#test<-data %>% filter(observations==1)
-unique(data$study_notes)
-unique(data$model_notes)
-
-data$quality_concern<-grepl("quality_concern",data$study_notes)
-
-data$quality_concern<-ifelse(grepl("quality_concern",data$model_notes),TRUE, data$quality_concern)
-
-
-data$regime<-grepl("regime",data$study_notes)
-
-data$regime<-ifelse(grepl("regime",data$model_notes),TRUE, data$regime)
-
-sum(data$regime)
-
-
-
-data_back<-data
-
-# test<-data_back %>% group_by(outcome,period.month,key) %>% summarise(lor=sum(lor),upr=sum(upr))#,hike=sum(hike),cut=sum(cut)
-# 
-# 
-# 
-# test<-test[apply(test[,-c(1,2,3)], 1, function(x) !all(x==0)),]
-# 
-# test<-test %>% filter(period.month %in% c(3,6,9,12,15,18,21,24))
-# 
-# test<-test %>% group_by(outcome,period.month) %>% summarise(count=dplyr::n())
+#Load data by running data_prep script
+source("analysis/data_prep.R")
 
 
 ############################################################### create funnel plots ####################################################################
@@ -120,7 +18,7 @@ library(JWileymisc)
 # Function to create funnel plots
 create_funnel_plot <- function(data, period, winsorize = FALSE) {
   if (winsorize) {
-    plot_title <- " (with Winsorization)"
+    plot_title <- "(with Winsorization)"
     x <- "mean.effect_winsor"
     y <- "precision_winsor"
   } else {
@@ -347,7 +245,7 @@ coef_test_data
 # we could also directly run the source code source("stem_method.R") if we install it in our repository. would probably be the cleaner way. 
 
 ##0 set stem parameter
-tolerance = 10^(-3) #set level of sufficiently small stem to determine convergence
+tolerance = 10^(-4) #set level of sufficiently small stem to determine convergence
 max_N_count = 10^3 #set maximum number of iteration before termination
 param <- c(tolerance, max_N_count)
 
@@ -671,7 +569,7 @@ for (x in periods) {
   data_period <- subset(data, period.month %in% x)
   
   data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
-  data_period$StandardError <- ifelse(data_period$StandardError == 0, NA, data_period$StandardError)
+  #data_period$StandardError <- ifelse(data_period$StandardError == 0, NA, data_period$StandardError)
   data_period$precision <- 1 / data_period$StandardError
   
   # Winsorize data

@@ -63,7 +63,8 @@ data$outcome_measure<-split_list
 data$outcome<-ifelse(data$outcome_measure %in% c("gdp","ip","gap","gnp"),"gdp",ifelse(data$outcome_measure %in% c("cpi","deflator","wpi","core","price_level"),"inflation","emp"))
 
 
-
+# Splitting emp and unemp
+data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
 
 
 ################################################################### prepare variables for regression analysis #############################################################

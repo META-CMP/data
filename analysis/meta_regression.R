@@ -1,25 +1,43 @@
+rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
+gc() #free up memory and report the memory usage.
+
+
+setwd("~/data")
+#Load data by running data_prep script
+source("analysis/data_prep.R")
+
+
 data_back<-data
+
+# load packages
+library(tidyverse)# for data manipulation
+library(dplyr)# for data manipulation
+library(JWileymisc) # for Winsorization
+library(clubSandwich)# for coef test results
+library(modelsummary)# to nicely print results
+
 
 data<-data_back
 
-out<-'gdp'
+out<-'inflation'#c(gdp, inflation)
+outcome<-"the price level" # c("output", "the price level")
 data <- subset(data, outcome %in% out)
 
+# out_measure<-'emp' #c(emp,une_rate)
+# outcome<-"employment" #c(unemployment, employment)
+# data <- subset(data, outcome_measure %in% out_measure)
 
-periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
-
-summary(data)
-
-equation<-mean.effect_winsor ~standarderror_winsor+exrate+gdppc+cbi+findev+fingl+infl+tradegl+mean_year+regime+quality_concern+observations+main_research_q+real_output+outcome_measure+as.factor(periodicity)+as.factor(transformation)+rate_mean.effect+cbanker+decomposition+convent+pure_rate_shock+lrir+fx+foreignir+inflexp+eglob+find+outpgap+comprice+panel+n_of_countries+us+month+quarter+upr+lor+varother+dsge+bayes+gvar+tvar+fvar+dyn_ols+vecm+lp+idother+longrun+heteroskedas+hf+signr+svar+chol+event+nr+forecast_based+iv+prefer+shock_size+interest_rate_short+as.factor(rid1)+model_id
-
-# +fexch
 
 results_list<-list()
 coef_test_data<-list()
 confint_data<-list()
 
-library(JWileymisc)# to winsorisze data
-library(clubSandwich)# for coef test results
+summary(data)
+equation<-mean.effect_winsor ~standarderror_winsor+exrate+gdppc+cbi+findev+fingl+infl+tradegl+mean_year+regime+quality_concern+observations+main_research_q+outcome_measure+as.factor(periodicity)+as.factor(transformation)+rate_mean.effect+cbanker+decomposition+convent+pure_rate_shock+lrir+fx+foreignir+inflexp+eglob+find+outpgap+comprice+panel+n_of_countries+us+month+quarter+upr+lor+varother+dsge+bayes+gvar+tvar+fvar+dyn_ols+vecm+lp+idother+longrun+heteroskedas+hf+signr+svar+chol+event+nr+forecast_based+iv+prefer+shock_size+interest_rate_short+as.factor(rid1)+model_id
+# +fexch#+real_output # only for output regression
+
+periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
+
 
 for (x in periods) {
   print(paste("Processing period:", x))
@@ -58,37 +76,8 @@ for (x in periods) {
 
 
 
-dataspeed<-data_period_winsor %>% ungroup() %>% select(mean.effect_winsor, standarderror_winsor, exrate, gdppc, cbi, findev, fingl, infl, tradegl, mean_year, regime, quality_concern, observations, main_research_q, real_output, outcome_measure, periodicity,transformation, rate_mean.effect, cbanker, decomposition, convent, pure_rate_shock, lrir, fx, foreignir, inflexp, eglob, find, outpgap, comprice, panel, n_of_countries, us, month, quarter, upr, lor, varother, dsge, bayes, gvar, tvar, fvar, dyn_ols, vecm, lp, idother, longrun, heteroskedas, hf, signr, svar, chol, event, nr, forecast_based, iv, prefer, shock_size, interest_rate_short,rid1, model_id)
-
-library(fastDummies)
-
-dataspeed<-fastDummies::dummy_cols(dataspeed) %>% select(-rid1,-us,-transformation,-periodicity,-outcome_measure,-rid1_me,-us_other, -transformation_log,-periodicity_a,-outcome_measure_ip)
 
 
-dataspeed %>% 
-  summarise(across(everything(), ~ sum(is.infinite(.x))))
-
-dataspeed<-na.omit(dataspeed)
-
-#dataspeed<-dataspeed[,1:10]
-
-
-library(car)
-
-
-# Calculate VIF for each variable
-vif_values <- car::vif(lm(dataspeed))
-test<-cor(dataspeed)
-# Print the VIF values
-print(vif_values)
-
-
-#//Starts estimation
-library(BMS)
-speed <- bms(dataspeed, g="UIP", mprior="uniform", user.int=FALSE,nmodel = 1000, mcmc="bd")
-
-
-library(modelsummary)
 #modelsummary(results_list, output = "gt",vcov = 'cr0', cluster = data_period_winsor$key,stars = TRUE) # only works if cluster variable has the same number of observations across lists. 
 modelsummary(results_list, output = "gt",stars = TRUE)
 

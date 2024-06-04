@@ -32,7 +32,7 @@
         "inttype": "lev_a_eonia",
         "size": "25bp",
         "axis_trans": false,
-        "dep": "logdiff_m_gdp logdiff_m_emp logdiff_m_cpi",
+        "dep": "log_q_gdp log_q_emp log_q_cpi",
         "conf": "90",
         "main": "inflation gdp emp",
         "prefer": {

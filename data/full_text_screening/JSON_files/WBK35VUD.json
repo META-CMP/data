@@ -22,8 +22,8 @@
     "identification_strategy": {
         "iv": false,
         "forecast_based": false,
-        "nr": true,
-        "event": false,
+        "nr": false,
+        "event": true,
         "chol": false,
         "svar": false,
         "signr": true,

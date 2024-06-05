@@ -5,15 +5,15 @@ library(dplyr)
 library(stringr)
 library(here)
 
-# Load the data
-data_path <- here("data/preliminary_data.RData")
+# Load the data 
+# data_path <- here("data/preliminary_data.RData")
+data_path <- here("data/data_test.RData")
 load(data_path)
 
-# setwd("~/data")
-# #Load data by running data_prep script
-# source("analysis/data_prep.R")
-# remove(rate)
-
+# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
+# Splitting emp and unemp
+data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
+data$outcome <- ifelse(is.na(data$outcome_measure), "rate", data$outcome)
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Calculate new confidence bounds for 68%, 90%, and 95% intervals
 crit_val_68 <- qnorm(0.84)  # crit_val for 68% confidence interval
@@ -47,19 +47,26 @@ data$end_year <- as.numeric(data$end_year)
 data$end_year
 
 ui <- fluidPage(
-  titlePanel("Data Explorer"),
+  titlePanel("META CMP Data Explorer"),
   sidebarLayout(
     sidebarPanel(
-      checkboxInput("filter_month", "Filter to show only monthly data", value = FALSE),
-      checkboxInput("filter_quarter", "Filter to show only quarterly data", value = FALSE),
-      checkboxInput("filter_annual", "Filter to show only annual data", value = FALSE),
-      selectInput("filter_outcome", "Filter to show specific outcome", choices = c("All", unique(data$outcome)), selected = "All"),
-      sliderInput("filter_years", "Filter for study sample years",
+      h4("Filter response variable"),
+      selectInput("filter_outcome", "Show data for specific response variable", choices = c("All", unique(data$outcome)), selected = "All"),
+      hr(),
+      h4("Filter data frequency"),
+      checkboxInput("filter_month", "Show monthly data", value = TRUE),
+      checkboxInput("filter_quarter", "Show quarterly data", value = TRUE),
+      checkboxInput("filter_annual", "Show annual data", value = TRUE),
+      hr(),
+      h4("Filter sample years"),
+      sliderInput("filter_years", "",
                   min = min(data$start_year, na.rm = TRUE),
                   max = max(data$end_year, na.rm = TRUE),
                   value = c(min(data$start_year, na.rm = TRUE), max(data$end_year, na.rm = TRUE)),
                   sep = ""),
-      selectInput("country_filter_type", "Country Filter Type:",
+      hr(),
+      h4("Filter countries"),
+      selectInput("country_filter_type", "Country filter type:",
                   choices = c("All countries" = "all",
                               "Unique combinations in primary studies" = "specific_country",
                               "One country only" = "one_country",
@@ -82,76 +89,96 @@ ui <- fluidPage(
       
       conditionalPanel(
         condition = "input.country_filter_type == 'country_in_sample'",
-        textInput("country_in_sample", "Filter models with a specific country in their sample")
+        textInput("country_in_sample", "Filter models with a specific country in their sample. Specify country:")
       ),
       
       conditionalPanel(
         condition = "input.country_filter_type == 'country_group_only'",
-        textInput("country_group_only", "Filter models with only a specific group of countries (comma-separated)")
+        textInput("country_group_only", "Filter models with only a specific group of countries. Specify countries (comma-separated):")
       ),
       
       conditionalPanel(
         condition = "input.country_filter_type == 'country_group_in_sample'",
-        textInput("country_group_in_sample", "Filter models with a specific group of countries in their sample (comma-separated)")
+        textInput("country_group_in_sample", "Filter models with a specific group of countries in their sample. Specify countries (comma-separated):")
       ),
       
       conditionalPanel(
         condition = "input.country_filter_type == 'exclude_countries'",
-        textInput("exclude_countries", "Filter models excluding specific countries (comma-separated)")
+        textInput("exclude_countries", "Filter models excluding specific countries. Specify countries (comma-separated):")
       ),
       hr(),
-      textInput("filter_exclude_keys", "Excluding specific studies (comma-separated keys)", value = "")
+      h4("Exclude studies"),
+      textInput("filter_exclude_keys", "Specify studies (comma-separated keys):", value = "")
     ),
     mainPanel(
       tabsetPanel(
-        tabPanel("Basic plot of effects",
-                 fluidRow(
-                   # Add a new input for selecting the x-axis variable
-                   selectInput("x_axis_var", "X-Axis Variable:",
-                               choices = c("In order of models" = "model_index",
-                                           "In order of IRF periods" = "period_month"),
-                               selected = "model_index"),
-                   column(12, plotlyOutput("meanEffectPlot")),
-                   column(12, checkboxInput("show_extreme_table", "Show table of extreme value IRFs", value = FALSE)),
-                   column(12, conditionalPanel(
-                     condition = "input.show_extreme_table == true",
-                     numericInput("filter_value", "Filter mean.effect greater than:", value = 100, min = 0),
-                     dataTableOutput("extremeValueTable")
-                   ))
+        tabPanel("Plots",
+                 tabsetPanel(
+                   tabPanel("Basic plot of effects",
+                            fluidRow(
+                              # Add a new input for selecting the x-axis variable
+                              selectInput("x_axis_var", "X-Axis Variable:",
+                                          choices = c("In order of models" = "model_index",
+                                                      "In order of IRF periods" = "period_month"),
+                                          selected = "model_index"),
+                              column(12, plotlyOutput("meanEffectPlot")),
+                              column(12, checkboxInput("show_extreme_table", "Show table of extreme value IRFs", value = FALSE)),
+                              column(12, conditionalPanel(
+                                condition = "input.show_extreme_table == true",
+                                numericInput("filter_value", "Filter mean.effect greater than:", value = 100, min = 0),
+                                dataTableOutput("extremeValueTable")
+                              ))
+                            )
+                   ),
+                   tabPanel("Study IRFs",
+                            fluidRow(
+                              column(12,
+                                     textInput("study_keys", "Enter study keys (comma-separated)", value = "")
+                              ),
+                              column(12,
+                                     checkboxInput("show_approx_bounds", "Show approximated CI bounds", value = FALSE)
+                              ),
+                              column(12,
+                                     selectInput("selected_model", "Select a specific model", choices = NULL)
+                              )
+                            ),
+                            plotlyOutput("studyIRFsPlot"),
+                            checkboxInput("show_moderators", "Show study characteristics", value = FALSE),
+                            conditionalPanel(
+                              condition = "input.show_moderators == true",
+                              dataTableOutput("moderatorTable")
+                            )
+                   ),
+                   tabPanel("Average IRFs",
+                            fluidRow(
+                              column(12,
+                                     numericInput("period_limit", "Restrict period (months):", value = max(data$period.month), min = 1)
+                              ),
+                              column(12,
+                                     selectInput("selected_outcome_var", "Select outcome_var:", choices = c("All", unique(data$outcome_var)))
+                              ),
+                              column(12,
+                                     checkboxInput("random_model", "Include one random model per study", value = FALSE)
+                              ),
+                              column(12,
+                                     actionButton("redo_random", "Redo Random Selection")
+                              )
+                            ),
+                            plotlyOutput("averageIRFsPlot")
+                  )
+                )
+                ),
+        tabPanel("Stats",
+                 tabsetPanel(
+                   tabPanel("Descriptive statistics",
+                            # ...
+                            ),
+                   tabPanel("Meta-analysis",
+                            # ...
+                            )
+                   )
                  )
-        ),
-        tabPanel("Study IRFs",
-                 fluidRow(
-                   column(12,
-                          textInput("study_keys", "Enter study keys (comma-separated)", value = "")
-                   ),
-                   column(12,
-                          checkboxInput("show_approx_bounds", "Show approximated CI bounds", value = FALSE)
-                   ),
-                   column(12,
-                          selectInput("selected_model", "Select a specific model", choices = NULL)
-                   )
-                 ),
-                 plotlyOutput("studyIRFsPlot")
-        ),
-        tabPanel("Average IRFs",
-                 fluidRow(
-                   column(12,
-                          numericInput("period_limit", "Restrict period (months):", value = max(data$period.month), min = 1)
-                   ),
-                   column(12,
-                          selectInput("selected_outcome_var", "Select outcome_var:", choices = c("All", unique(data$outcome_var)))
-                   ),
-                   column(12,
-                          checkboxInput("random_model", "Include one random model per study", value = FALSE)
-                   ),
-                   column(12,
-                          actionButton("redo_random", "Redo Random Selection")
-                   )
-                 ),
-                 plotlyOutput("averageIRFsPlot")
-        )
-      )
+      ),
     )
   )
 )
@@ -273,12 +300,24 @@ server <- function(input, output, session) {
   }, options = list(pageLength = 10))
   
   # Study-specific IRFs 
-  observe({
-    study_keys <- strsplit(input$study_keys, ",")[[1]]
-    study_keys <- trimws(study_keys)
-    
+  # Reactive expression to filter data based on study keys and selected model
+  study_data <- reactive({
+    study_keys <- strsplit(input$study_keys, ",")[[1]] %>% trimws()
     if (length(study_keys) > 0 && study_keys != "") {
-      filtered_data <- filtered_data() %>% filter(key %in% study_keys)
+      data_filtered <- data %>% filter(key %in% study_keys)
+      if (input$selected_model != "All" && !is.null(input$selected_model)) {
+        data_filtered <- data_filtered %>% filter(model_id == input$selected_model)
+      }
+      return(data_filtered)
+    }
+    return(data.frame())
+  })
+  
+  # Update the selectInput for models when study keys change
+  observe({
+    study_keys <- strsplit(input$study_keys, ",")[[1]] %>% trimws()
+    if (length(study_keys) > 0 && study_keys != "") {
+      filtered_data <- data %>% filter(key %in% study_keys)
       model_ids <- unique(filtered_data$model_id)
       updateSelectInput(session, "selected_model", choices = c("All", model_ids))
     } else {
@@ -286,22 +325,36 @@ server <- function(input, output, session) {
     }
   })
   
+  # Render the plot for study IRFs
   output$studyIRFsPlot <- renderPlotly({
-    study_keys <- strsplit(input$study_keys, ",")[[1]]
-    study_keys <- trimws(study_keys)
+    plot_data <- study_data()
+    if (nrow(plot_data) == 0) return(NULL)
     
-    if (length(study_keys) == 0 || study_keys == "") {
-      return(NULL)
-    }
-    
-    filtered_data <- filtered_data() %>% filter(key %in% study_keys)
-    
-    if (input$selected_model != "All") {
-      filtered_data <- filtered_data %>% filter(model_id == input$selected_model)
-    }
-    
-    plot_study_irfs(filtered_data, study_keys, selected_model = input$selected_model, show_approx_bounds = input$show_approx_bounds)
+    plot_study_irfs(plot_data, input$study_keys, selected_model = input$selected_model, show_approx_bounds = input$show_approx_bounds)
   })
+  
+  # Render the table for moderator variables
+  output$moderatorTable <- renderDataTable({
+    table_data <- study_data()
+    if (nrow(table_data) == 0) return(NULL)
+    
+    # Select unique rows for each model
+    table_data <- table_data %>% distinct(model_id, .keep_all = TRUE)
+    
+    # Columns to exclude
+    columns_to_exclude <- c("period", "CI.upper.raw", "mean.effect.raw", "CI.lower.raw", "CI.upper",
+                            "mean.effect", "CI.lower", "SE.upper", "SE.lower", "period.month",
+                            "rate_CI.upper.raw", "rate_mean.effect.raw", "rate_CI.lower.raw",
+                            "rate_CI.upper", "rate_mean.effect", "rate_CI.lower", "rate_SE.upper",
+                            "rate_SE.lower", "approx.CI.lower_68", "approx.CI.upper_68", 
+                            "approx.CI.lower_90", "approx.CI.upper_90", "approx.CI.lower_95", 
+                            "approx.CI.upper_95")
+    
+    # Select all columns except the ones to exclude
+    table_data <- table_data %>% select(-all_of(columns_to_exclude))
+    
+    table_data
+  }, options = list(pageLength = 10))
   
   # Average IRF
   observe({

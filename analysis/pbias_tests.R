@@ -81,7 +81,8 @@ create_funnel_plot_grid <- function(data, period, winsorize = FALSE) {
 
 data<-data_back
 
-out<-'gdp'
+out<-'inflation'#c("gdp", "inflation", "unemp", "emp")
+outcome<-"the price level" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
 
 
@@ -129,6 +130,7 @@ all_month<-grid.arrange(grobs = plot_list, ncol = 4,top = textGrob("Funnel plots
 ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months.png"), all_month, width = 30, height = 20, units = "cm")
 all_month_winsor<-grid.arrange(grobs = plot_list_winsor, ncol = 4,top = textGrob("Funnel plots of effect of monetary policy on output (with Winsorization)",gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob("%-change of output in response to 100bp monetary policy shock",gp=gpar(fontsize=16,font=3)))
 ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months_winsor.png"), all_month_winsor, width = 30, height = 20, units = "cm")
+
 
 
 

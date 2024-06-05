@@ -21,8 +21,7 @@ library(zoo) # for easier manipulation of date format
 
 # filter date responses
 rate<-data %>% dplyr::filter(data$outcome_var=="rate")
-# filter outcome variables responses
-other<-data %>% dplyr::filter(data$outcome_var!="rate")
+
 
 # select only the necessary variables of the rate dataset
 rate<-rate %>% dplyr::select(key,model_id,period:SE.lower) %>% dplyr::select(-outcome_var)
@@ -31,8 +30,8 @@ rate<-rate %>% dplyr::select(key,model_id,period:SE.lower) %>% dplyr::select(-ou
 colnames(rate)[4:ncol(rate)] <- paste("rate_",colnames(rate)[4:ncol(rate)],sep="")
 
 # merge to main dataset
-data<-other %>% dplyr::left_join(rate, by=c("key","model_id","period"))
-remove(other)
+data<-data %>% dplyr::left_join(rate, by=c("key","model_id","period"))
+remove(rate)
 
 
 ###### create transformation, periodicity, real_output dummy, outcome_measure and outcome variable
@@ -58,12 +57,14 @@ split_list<-sub("^r", "", split_list)
 
 # create outcome measure variable one of c("gdp","cpi","ip", "deflator","une_rate","emp_rate","gap","emp","wpi","core","price_level","gnp")
 data$outcome_measure<-split_list
+data$outcome_measure<-ifelse(data$outcome_var=="rate","rate",data$outcome_measure)
 
 # create outcome variable one of c("gdp","inflation","emp")
-data$outcome<-ifelse(data$outcome_measure %in% c("gdp","ip","gap","gnp"),"gdp",ifelse(data$outcome_measure %in% c("cpi","deflator","wpi","core","price_level"),"inflation","emp"))
+data$outcome<-ifelse(data$outcome_measure=="rate","rate",ifelse(data$outcome_measure %in% c("gdp","ip","gap","gnp"),"gdp",ifelse(data$outcome_measure %in% c("cpi","deflator","wpi","core","price_level"),"inflation","emp")))
 
 
-
+# Splitting emp and unemp
+data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
 
 
 ################################################################### prepare variables for regression analysis #############################################################

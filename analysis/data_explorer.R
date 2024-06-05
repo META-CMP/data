@@ -5,13 +5,14 @@ library(dplyr)
 library(stringr)
 library(here)
 
-# Load the data 
+# Load the data
 data_path <- here("data/preliminary_data.RData")
 load(data_path)
 
-# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
-# Splitting emp and unemp
-data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
+# setwd("~/data")
+# #Load data by running data_prep script
+# source("analysis/data_prep.R")
+# remove(rate)
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Calculate new confidence bounds for 68%, 90%, and 95% intervals

@@ -332,13 +332,9 @@ data_median <- function(data, id_var, main_var, additional_var){
 
 data<-data_back
 
-out<-'inflation'#c(gdp, inflation)
-outcome<-"the price level" # c("output", "the price level")
+out<-'inflation'#c("gdp", "inflation", "unemp", "emp")
+outcome<-"the price level" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
-
-# out_measure<-'emp' #c(emp,une_rate)
-# outcome<-"employment" #c(unemployment, employment)
-# data <- subset(data, outcome_measure %in% out_measure)
 
 
 

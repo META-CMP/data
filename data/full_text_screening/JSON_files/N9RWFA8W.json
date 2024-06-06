@@ -3,10 +3,10 @@
         "key": "N9RWFA8W",
         "rid1": "ph",
         "rid2": "null",
-        "study_notes": "Shows different IRFs based on different ways of identifying monetary policy shocks in the literature, e.g. Nakamura/Steinsson, Swanson. Results from appendix C not included, because the underlying differences to earlier IRFs are not clear. Effects are pretty strong, axis_trans maybe wrongly coded or because the cumulative shock?",
+        "study_notes": "null",
         "model_notes": {
-                "model_1": "decomposition: Jarocinski-Karadi decompostion.",
-                "model_2": "decomposition: Jarocinski-Karadi decompostion."
+                "model_1": "decomposition: Jarocinski-Karadi (2018) decompostion.",
+                "model_2": "decomposition: Jarocinski-Karadi (2018) decompostion."
         },
         "figure": {
                 "model_1": "A8",
@@ -44,39 +44,27 @@
         },
         "forecast_based": {
                 "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": true
+                "model_2": false
         },
         "nr": {
                 "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false
+                "model_2": false
         },
         "event": {
                 "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false
+                "model_2": false
         },
         "chol": {
                 "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false
+                "model_2": false
         },
         "svar": {
                 "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false
+                "model_2": false
         },
         "signr": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false
+                "model_1": true,
+                "model_2": true
         },
         "hf": true,
         "heteroskedas": true,
@@ -84,8 +72,14 @@
         "idother": false
     },
     "estimation_method": {
-        "var": true,
-        "lp": false,
+        "var": {
+                "model_1": true,
+                "model_2": false
+        },
+        "lp": {
+                "model_1": false,
+                "model_2": true
+        },
         "vecm": false,
         "dyn_ols": false,
         "fvar": false,
@@ -116,15 +110,11 @@
         "panel": false,
         "start": {
                 "model_1": "01-1994",
-                "model_2": "01-2008",
-                "model_3": "01-1994",
-                "model_4": "01-2008"
+                "model_2": "01-1994"
         },
         "end": {
-                "model_1": "12-2015",
-                "model_2": "12-2015",
-                "model_3": "12-2015",
-                "model_4": "12-2015"
+                "model_1": "12-2017",
+                "model_2": "12-2017"
         },
         "samplesize": "null"
     },
@@ -143,12 +133,7 @@
     "econometric_details": {
         "pure_rate_shock": false,
         "convent": false,
-        "decomposition": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": true,
-                "model_4": false
-        }
+        "decomposition": true
     },
     "publication_characteristics": {
         "cbanker": true

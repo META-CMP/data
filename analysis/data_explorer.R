@@ -4,8 +4,11 @@ library(plotly)
 library(dplyr)
 library(stringr)
 library(here)
+library(JWileymisc)
+library(viridis)
 
 # Load the data 
+# data_path <- here("preliminary_data.RData")
 # data_path <- here("data/preliminary_data.RData")
 data_path <- here("data/data_test.RData")
 load(data_path)
@@ -45,6 +48,13 @@ data$start_year <- as.numeric(data$start_year)
 data$end_year <- as.numeric(data$end_year)
 # Check the result
 data$end_year
+
+# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
+# Calculate the average standard error and precision options
+data$SE.avg <- (data$SE.upper + data$SE.lower) / 2
+data$precision.avg <- 1 / data$SE.avg
+data$precision.lower <- 1 / data$SE.lower
+data$precision.upper <- 1 / data$SE.upper
 
 ui <- fluidPage(
   titlePanel("META CMP Data Explorer"),
@@ -107,8 +117,22 @@ ui <- fluidPage(
         textInput("exclude_countries", "Filter models excluding specific countries. Specify countries (comma-separated):")
       ),
       hr(),
-      h4("Exclude studies"),
-      textInput("filter_exclude_keys", "Specify studies (comma-separated keys):", value = "")
+      h4("Include or exclude specific studies"),
+      selectInput("study_filter_type", "Select filter type:",
+                  choices = c("No filter" = "no_filter",
+                              "Include specific studies" = "include_studies",
+                              "Exclude specific studies" = "exclude_studies"),
+                  selected = "no_filter"),
+      
+      conditionalPanel(
+        condition = "input.study_filter_type == 'include_studies'",
+        textInput("filter_include_keys", "Specify studies to include (comma-separated keys):", value = "")
+      ),
+      
+      conditionalPanel(
+        condition = "input.study_filter_type == 'exclude_studies'",
+        textInput("filter_exclude_keys", "Specify studies to exclude (comma-separated keys):", value = "")
+      )
     ),
     mainPanel(
       tabsetPanel(
@@ -126,7 +150,12 @@ ui <- fluidPage(
                               column(12, conditionalPanel(
                                 condition = "input.show_extreme_table == true",
                                 numericInput("filter_value", "Filter mean.effect greater than:", value = 100, min = 0),
-                                dataTableOutput("extremeValueTable")
+                                dataTableOutput("extremeValueTable"),
+                                h5("Studies with extreme values:"),
+                                verbatimTextOutput("studyKeys_extreme"),
+                                dataTableOutput("maxLastPeriodTable"),
+                                h5("Studies with max values in last period (potentially explosive):"),
+                                verbatimTextOutput("studyKeys_explosive")
                               ))
                             )
                    ),
@@ -164,7 +193,28 @@ ui <- fluidPage(
                                      actionButton("redo_random", "Redo Random Selection")
                               )
                             ),
-                            plotlyOutput("averageIRFsPlot")
+                            plotlyOutput("averageIRFsPlot"),
+                            checkboxInput("show_counts_plot", "Show Model/Study Counts Plot", value = FALSE),
+                            conditionalPanel(
+                              condition = "input.show_counts_plot == true",
+                              selectInput("plot_type", "Select Plot Type:",
+                                          choices = c("Model Counts" = "model", "Study Counts" = "study"),
+                                          selected = "model"),
+                              plotlyOutput("countsPlot")
+                            )
+                  ),
+                  tabPanel("Funnel Plot",
+                           fluidRow(
+                             column(4,
+                                    numericInput("funnel_prd", "Period (Months):", value = 3, min = 0),
+                                    selectInput("funnel_se_option", "Standard Error Option:",
+                                                choices = c("avg", "lower", "upper")),
+                                    numericInput("funnel_wins", "Winsorization Parameter:", value = 0.02, min = 0, max = 1, step = 0.01)
+                             ),
+                             column(8,
+                                    plotlyOutput("funnel_plot")
+                             )
+                           )
                   )
                 )
                 ),
@@ -235,10 +285,17 @@ server <- function(input, output, session) {
       filter(start_year >= input$filter_years[1]) %>%
       filter(end_year <= input$filter_years[2])
     
-    # Excluding specific studies
-    if (input$filter_exclude_keys != "") {
-      exclude_keys <- strsplit(input$filter_exclude_keys, ",")[[1]]
-      data_filtered <- data_filtered %>% filter(!(key %in% exclude_keys))
+    # Include or exclude specific studies based on the selected study filter type
+    if (input$study_filter_type == "include_studies") {
+      if (input$filter_include_keys != "") {
+        include_keys <- strsplit(input$filter_include_keys, ",")[[1]]
+        data_filtered <- data_filtered %>% filter(key %in% include_keys)
+      }
+    } else if (input$study_filter_type == "exclude_studies") {
+      if (input$filter_exclude_keys != "") {
+        exclude_keys <- strsplit(input$filter_exclude_keys, ",")[[1]]
+        data_filtered <- data_filtered %>% filter(!(key %in% exclude_keys))
+      }
     }
     
     # Option for one randomly selected model per study
@@ -298,6 +355,27 @@ server <- function(input, output, session) {
   output$extremeValueTable <- renderDataTable({
     extreme_data()
   }, options = list(pageLength = 10))
+  
+  # Study keys for extreme data
+  output$studyKeys_extreme <- renderText({
+    study_keys_extreme <- unique(extreme_data()$key)
+    paste(paste(study_keys_extreme, collapse = ","))
+  })
+  
+  # Table with potentially explosive models
+  explosive_data <- reactive({
+    find_max_last_period_models(filtered_data())
+  })
+  
+  output$maxLastPeriodTable <- renderDataTable({
+    explosive_data()
+  }, options = list(pageLength = 10))
+  
+  # Study keys for porentially explosive IRFs
+  output$studyKeys_explosive <- renderText({
+    study_keys_explosive <- unique(explosive_data()$key)
+    paste(paste(study_keys_explosive, collapse = ","))
+  })
   
   # Study-specific IRFs 
   # Reactive expression to filter data based on study keys and selected model
@@ -368,6 +446,21 @@ server <- function(input, output, session) {
   
   output$averageIRFsPlot <- renderPlotly({
     plot_average_irfs(filtered_data(), selected_outcome_var = input$selected_outcome_var, period_limit = input$period_limit)
+  })
+  
+  # Model/Study counts plot
+  output$countsPlot <- renderPlotly({
+    req(input$show_counts_plot)
+    plot_model_study_counts(filtered_data(), plot_type = input$plot_type)
+  })
+  
+  # Funnel plot
+  output$funnel_plot <- renderPlotly({
+    create_funnel_plot(filtered_data(),
+                       outvar = input$filter_outcome,
+                       prd = input$funnel_prd,
+                       se_option = input$funnel_se_option,
+                       wins = input$funnel_wins)
   })
 }
 

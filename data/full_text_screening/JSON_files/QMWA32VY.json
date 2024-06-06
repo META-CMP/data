@@ -3,12 +3,12 @@
         "key": "QMWA32VY", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "cum: set to true because of shape of the IRF.", 
         "model_notes": "null", 
         "figure": 2, 
         "page": 21, 
         "irf": true,
-        "cum": false
+        "cum": true
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_interbank_call_money_rate", 

@@ -11,10 +11,10 @@
           "model_4": "Constant parameter model, the whole period.",
           "model_5": "European Monetary System (EMS) regime from 1993 related to low volatility of output and inflation.",
           "model_6": "Non European Monetary System (EMS) regime from 1993 related to high volatility of output and inflation.",
-          "model_7": "Constant parameter model, the whole period.",
-          "model_8": "Transitional non European Monetary System (EMS) regime to EMS regim  from 1980 to 1993.",
-          "model_9": "European Monetary System (EMS) regime from 1993 related to low volatility of output and inflation.",
-          "model_10": "Non European Monetary System (EMS) regime from 1993 related to high volatility of output and inflation.",
+          "model_7": "Constant parameter model, the whole period.; cum: set to true because of shape of the IRF.",
+          "model_8": "Transitional non European Monetary System (EMS) regime to EMS regim  from 1980 to 1993.; cum: set to true because of shape of the IRF.",
+          "model_9": "European Monetary System (EMS) regime from 1993 related to low volatility of output and inflation.; cum: set to true because of shape of the IRF.",
+          "model_10": "Non European Monetary System (EMS) regime from 1993 related to high volatility of output and inflation.; cum: set to true because of shape of the IRF.",
           "model_11": "Constant parameter model, the whole period.",
           "model_12": "European Monetary System (EMS) regime from 1993 related to low volatility of output and inflation.",
           "model_13": "Non European Monetary System (EMS) regime from 1993 related to high volatility of output and inflation."
@@ -50,7 +50,21 @@
           "model_13": 28
         },
         "irf": true,
-        "cum": false
+        "cum": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": true,
+          "model_9": true,
+          "model_10": true,
+          "model_11": false,
+          "model_12": false,
+          "model_13": false
+        }
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",
@@ -62,10 +76,10 @@
           "model_4": "y*100",
           "model_5": "y*100",
           "model_6": "y*100",
-          "model_7": "y*100 log_q_deflator_false",
-          "model_8": "y*100 log_q_deflator_false",
-          "model_9": "y*100 log_q_deflator_false",
-          "model_10": "y*100 log_q_deflator_false",
+          "model_7": "y*100",
+          "model_8": "y*100",
+          "model_9": "y*100",
+          "model_10": "y*100",
           "model_11": "y*100",
           "model_12": "y*100",
           "model_13": "y*100"

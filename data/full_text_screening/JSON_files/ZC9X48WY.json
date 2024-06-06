@@ -3,7 +3,7 @@
         "key": "ZC9X48WY",
         "rid1": "dr",
         "rid2": "fp",
-        "study_notes": "null",
+        "study_notes": "cum: is set to true because the IRFs of production in construction sector are cumulated and have the same shape as the ones for industrial production.",
         "model_notes": {
           "model_1": "a time trend is included.",
           "model_2": "a time trend is included.",
@@ -95,7 +95,7 @@
           "model_28": 2923
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_MRO_rate",

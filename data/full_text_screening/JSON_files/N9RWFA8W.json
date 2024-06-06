@@ -3,24 +3,18 @@
         "key": "N9RWFA8W",
         "rid1": "ph",
         "rid2": "null",
-        "study_notes": "Shows different IRFs based on different ways of identifying monetary policy shocks in the literature, e.g. Nakamura/Steinsson, Swanson. Results from appendix C not included, because the underlying differences to earlier IRFs are not clear. Effects are pretty strong, axis_trans maybe wrongly coded or because because the cumulative shock?",
+        "study_notes": "Shows different IRFs based on different ways of identifying monetary policy shocks in the literature, e.g. Nakamura/Steinsson, Swanson. Results from appendix C not included, because the underlying differences to earlier IRFs are not clear. Effects are pretty strong, axis_trans maybe wrongly coded or because the cumulative shock?",
         "model_notes": {
-                "model_1": "null",
-                "model_2": "null",
-                "model_3": "decomposition: Jarocinski-Karadi decompostion.",
-                "model_4": "null"
+                "model_1": "decomposition: Jarocinski-Karadi decompostion.",
+                "model_2": "decomposition: Jarocinski-Karadi decompostion."
         },
         "figure": {
-                "model_1": 5,
-                "model_2": 5,
-                "model_3": 6,
-                "model_4": "A2"
+                "model_1": "A8",
+                "model_2": "A9"
         },
         "page": {
-                "model_1": 27,
-                "model_2": 27,
-                "model_3": 28,
-                "model_4": 37
+                "model_1": "A10",
+                "model_2": "A11"
         },
         "irf": true,
         "cum": false
@@ -28,33 +22,25 @@
     "impulse_and_response_variables": {
         "inttype": {
                 "model_1": "lev_a_short_term_rate",
-                "model_2": "lev_a_short_term_rate",
-                "model_3": "lev_a_short_term_rate",
-                "model_4": "lev_a_short_term_rate"
+                "model_2": "lev_a_short_term_rate"
         },
         "size": "100bp",
         "axis_trans": false,
         "dep": {
                 "model_1": "log_a_ip log_a_cpi",
-                "model_2": "log_a_ip log_a_cpi",
-                "model_3": "log_a_ip log_a_cpi",
-                "model_4": "log_a_ip log_a_cpi"
+                "model_2": "log_a_ip log_a_cpi"
         },
         "conf": "90",
         "main": "gdp  inflation",
         "prefer": {
                 "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false
+                "model_2": false
         }
     },
     "identification_strategy": {
         "iv": {
                 "model_1": false,
-                "model_2": false,
-                "model_3": false,
-                "model_4": false
+                "model_2": false
         },
         "forecast_based": {
                 "model_1": false,

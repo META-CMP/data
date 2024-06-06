@@ -20,8 +20,12 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
-        "size": "40bp", 
-        "axis_trans": "y*10^(-3)", 
+        "size": {
+                "model_1": "40bp",
+                "model_2": "45bp",
+                "model_3": "17bp"
+        }, 
+        "axis_trans": "y*100 lev_a_short_term_rate_false", 
         "dep": "log_q_deflator log_q_rgdp", 
         "conf": "95", 
         "main": "gdp  inflation", 

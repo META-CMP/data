@@ -38,11 +38,11 @@
           "model_5": "14bp"
         },
         "axis_trans": {
-          "model_1": "y*100 lev_a_overnight_lending_false",
-          "model_2": "y*100 lev_a_short_term_rate_false",
-          "model_3": "y*100 lev_a_overnight_lending_false",
-          "model_4": "y*100 lev_a_overnight_lending_false",
-          "model_5": "y*100 lev_a_short_term_rate_false"
+          "model_1": "y*100 log_q_rgdp_false lev_a_overnight_lending_false",
+          "model_2": "y*100 log_q_rgdp_false lev_a_short_term_rate_false",
+          "model_3": "y*100 log_q_rgdp_false lev_a_overnight_lending_false",
+          "model_4": "y*100 log_q_rgdp_false lev_a_overnight_lending_false",
+          "model_5": "y*100 log_q_rgdp_false lev_a_short_term_rate_false"
         },
         "dep": "log_q_rgdp log_q_cpi",
         "conf": "95",

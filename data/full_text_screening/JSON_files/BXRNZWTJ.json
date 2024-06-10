@@ -51,7 +51,21 @@
           "model_13": "appendix p. 6"
           },
         "irf": true,
-        "cum": false
+        "cum": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true,
+          "model_8": true,
+          "model_9": false,
+          "model_10": false,
+          "model_11": false,
+          "model_12": false,
+          "model_13": false
+          }
     },
     "impulse_and_response_variables": {
         "inttype": {
@@ -101,13 +115,13 @@
           },
         "dep": {
           "model_1": "log_q_rgdp logdiff_q_cpi",
-          "model_2": "log_q_rgdp",
-          "model_3": "log_q_rgdp",
+          "model_2": "logdiff_q_rgdp",
+          "model_3": "logdiff_q_rgdp",
           "model_4": "logdiff_q_cpi",
           "model_5": "logdiff_q_cpi",
           "model_6": "log_q_rgdp logdiff_q_cpi",
-          "model_7": "log_q_rgdp log_q_cpi lev_q_une_rate",
-          "model_8": "log_q_rgdp log_q_cpi lev_q_une_rate",
+          "model_7": "logdiff_q_rgdp logdiff_q_cpi lev_q_une_rate",
+          "model_8": "logdiff_q_rgdp logdiff_q_cpi lev_q_une_rate",
           "model_9": "logdiff_m_rip log_m_cpi",
           "model_10": "logdiff_m_rip logdiff_m_cpi",
           "model_11": "logdiff_q_rgdp log_q_cpi",

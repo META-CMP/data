@@ -29,7 +29,7 @@
                 "model_4": "null"
         },
         "axis_trans": false,
-        "dep": "logdiff_q_rgdp logdiff_q_cpi",
+        "dep": "log_q_rgdp log_q_cpi",
         "conf": "90",
         "main": "gdp inflation",
         "prefer": {

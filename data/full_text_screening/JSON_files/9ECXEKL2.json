@@ -3,7 +3,7 @@
         "key": "9ECXEKL2",
         "rid1": "fp",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "they include a trend in the model.",
         "model_notes": "null",
         "figure": {
           "model_1": 1,
@@ -22,7 +22,7 @@
         "inttype": "lev_a_3_month_short_term_rate",
         "size": "100bp",
         "axis_trans": false,
-        "dep": "logdiff_q_rgdp logdiff_a_cpi",
+        "dep": "log_q_rgdp logdiff_a_cpi",
         "conf": "68",
         "main": "gdp inflation",
         "prefer": true
@@ -37,7 +37,7 @@
         "signr": false,
         "hf": false,
         "heteroskedas": false,
-        "longrun": false,
+        "longrun": true,
         "idother": false
     },
     "estimation_method": {

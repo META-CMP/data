@@ -3,7 +3,7 @@
         "key": "A5FJMLQV",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "The identified monetary policy shocks for both Norway and Sweden have a standard deviation of roughly five basis points, which is quite modest compared to what is typically found using more conventional identification strategies.",
         "model_notes": {
           "model_1": "decomposition: decomposition into traget, forward guidance, and information shock. Only the target shock is extracted.; not coded activity: because to  obtain a monthly series on activity, they use a factor extraction, the principal component of a data set consisting of three frequently used monthly economic activity indicators (industrial production, retail sales and unemployment), and label this the ‘‘activity factor”. This factor is rescaled to have approximately the same variance as an HP-filter of (log) GDP with lambda equal 40000.", 
           "model_2": "decomposition: decomposition into traget, forward guidance, and information shock. Only the target shock is extracted.; not coded activity: because to  obtain a monthly series on activity, they use a factor extraction, the principal component of a data set consisting of three frequently used monthly economic activity indicators (industrial production, retail sales and unemployment), and label this the ‘‘activity factor”. This factor is rescaled to have approximately the same variance as an HP-filter of (log) GDP with lambda equal 40000."
@@ -17,11 +17,11 @@
           "model_2": 8
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_short_rate",
-        "size": "null",
+        "inttype": "lev_a_policy_rate",
+        "size": "1SD",
         "axis_trans": false,
         "dep": "gr_m_core",
         "conf": "68",

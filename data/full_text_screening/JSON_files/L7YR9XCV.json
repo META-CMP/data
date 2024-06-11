@@ -27,7 +27,7 @@
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_eonia",
-        "size": "-3bp",
+        "size": "-100bp",
         "axis_trans": "y*100",
         "dep": "log_m_ip logdiff_m_wpi",
         "conf": "2_SE",

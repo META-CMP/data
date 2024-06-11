@@ -26,14 +26,7 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
-        "size": {
-                "model_1": "7bp",
-                "model_2": "4bp",
-                "model_3": "7bp",
-                "model_4": "2bp",
-                "model_5": "11bp",
-                "model_6": "8bp"
-        },   
+        "size": "1SD",   
         "axis_trans": "y*100", 
         "dep": "logdiff_a_cpi log_q_rgdp", 
         "conf": "1_SE", 

@@ -16,14 +16,14 @@
                 "model_3": 806
         },   
         "irf": true,
-        "cum": false
+        "cum": true
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_call_rate", 
         "size": "25bp", 
         "axis_trans": false, 
         "dep": {
-                "model_1": "log_m_ip log_m_core",
+                "model_1": "logdiff_m_ip logdiff_m_core",
                 "model_2": "logdiff_m_ip logdiff_m_core",
                 "model_3": "logdiff_m_ip logdiff_m_core"
         }, 

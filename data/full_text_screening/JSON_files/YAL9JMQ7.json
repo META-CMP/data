@@ -3,12 +3,12 @@
         "key": "YAL9JMQ7",
         "rid1": "me",
         "rid2": "fp",
-        "study_notes": "dep: in the paper they calculate the annualized output gap, therefore coded as logdiff_a_rgap.",
+        "study_notes": "dep: in the paper they calculate the annualized output gap, therefore coded as logdiff_a_rgap.; cum: set to true because of shape of the IRF.",
         "model_notes": "null",
         "figure": 1,
         "page": 650,
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_7_day_chibor",

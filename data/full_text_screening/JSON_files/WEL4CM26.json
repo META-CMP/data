@@ -3,7 +3,7 @@
         "key": "WEL4CM26",
         "rid1": "dr",
         "rid2": "me",
-        "study_notes": "The solid gray line represents the response in 1985.I–2000.IV, that corresponds to the conventional monetary policy period, the one will I code; the solid black line is the response in 2001.I–2014.IV which corresponds to unconventional monetary policy period, which is not coded.",
+        "study_notes": "The solid gray line represents the response in 1985.I–2000.IV, that corresponds to the conventional monetary policy period, the one will I code; the solid black line is the response in 2001.I–2014.IV which corresponds to unconventional monetary policy period, which is not coded.; cum: set to true because of shape of the IRF.",
         "model_notes": {
           "model_1": "baseline. dep: lev_q_une_rate assumed because of the shape of the IRF and it is usually used in the literature, even though stated differently in A1.",
           "model_2": "setting the starting point to Q4-1988.",
@@ -29,7 +29,7 @@
           "model_6": 132 
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_overnight_callrate",

@@ -4,7 +4,7 @@ gc() #free up memory and report the memory usage.
 
 setwd("~/data")
 #Load data by running data_prep script
-source("analysis/data_prep.R")
+source("data/data_prep.R")
 
 
 ############################################################### create funnel plots ####################################################################
@@ -78,6 +78,8 @@ create_funnel_plot_grid <- function(data, period, winsorize = FALSE) {
   return(plot_funnel)
 }
 
+data_back<-data
+
 
 data<-data_back
 
@@ -85,6 +87,7 @@ out<-'inflation'#c("gdp", "inflation", "unemp", "emp")
 outcome<-"the price level" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
 
+data<-data %>% filter(transformation=="log")
 
 
 plot_list <- list()
@@ -127,9 +130,9 @@ for (x in periods) {
 library(gridExtra)
 library(grid)
 all_month<-grid.arrange(grobs = plot_list, ncol = 4,top = textGrob("Funnel plots of effect of monetary policy on output",gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob("%-change of output in response to 100bp monetary policy shock",gp=gpar(fontsize=16,font=3)))
-ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months.png"), all_month, width = 30, height = 20, units = "cm")
+ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months_log.png"), all_month, width = 30, height = 20, units = "cm")
 all_month_winsor<-grid.arrange(grobs = plot_list_winsor, ncol = 4,top = textGrob("Funnel plots of effect of monetary policy on output (with Winsorization)",gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob("%-change of output in response to 100bp monetary policy shock",gp=gpar(fontsize=16,font=3)))
-ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months_winsor.png"), all_month_winsor, width = 30, height = 20, units = "cm")
+ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months_winsor_log.png"), all_month_winsor, width = 30, height = 20, units = "cm")
 
 
 
@@ -172,7 +175,7 @@ for (x in periods) {
   data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
   
   # Calculate (precision-weighted) average
-  regwa <- lm(mean.effect_winsor ~ 1, weights = precvariance_winsor, data = data_period_winsor)
+  regwa <- lm(mean.effect_winsor ~ 1, data = data_period_winsor)
   results_list[[paste0(x, ".ols")]] <- regwa
   
   coef_test_data[[paste0(x, ".ols")]]<-coef_test(regwa, vcov = "CR0", 

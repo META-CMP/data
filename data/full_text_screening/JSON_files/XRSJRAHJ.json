@@ -4,7 +4,16 @@
         "rid1": "fp",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "null",
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "null",
+          "model_3": "null",
+          "model_4": "null",
+          "model_5": "null",
+          "model_6": "null",
+          "model_7": "null",
+          "model_8": "cum: set to true because of shape of the IRF."
+        },
         "figure": {
           "model_1": 1,
           "model_2": 2,
@@ -26,7 +35,16 @@
           "model_8": 12
         },
         "irf": true,
-        "cum": false
+        "cum": {
+          "model_1": false,
+          "model_2": false,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": false,
+          "model_8": true
+        }
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",

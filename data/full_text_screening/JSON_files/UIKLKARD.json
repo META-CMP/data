@@ -3,7 +3,7 @@
         "key": "UIKLKARD",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "cum: set to true because of shape of the IRF.",
         "model_notes": "null",
         "figure": {
           "model_1": "3-A",
@@ -16,7 +16,7 @@
           "model_3": 10
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",

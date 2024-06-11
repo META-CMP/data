@@ -3,12 +3,12 @@
         "key": "U5B2LUWW",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "quality_concern: study is not consistent in explaining the applied variable transformation.; cum: set to true because of shape of the IRF.",
         "model_notes": "null",
         "figure": "1.row-1, 3.row-1 & 6.row-1",
         "page": "9, 12 & 15",
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",

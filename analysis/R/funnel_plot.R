@@ -7,6 +7,7 @@
 #' @param prd A numeric value specifying the period (in months) to filter the data.
 #' @param se_option A string specifying the standard error option to use. Can be "avg", "lower", or "upper".
 #' @param wins A numeric value specifying the Winsorization parameter.
+#' @param legend If TRUE (default), the legend will be shown.
 #'
 #' @return A plotly scatter plot of the funnel plot.
 #'
@@ -37,7 +38,7 @@
 #' print(funnel_plot)
 #'
 #' @export
-create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02) {
+create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02, legend = TRUE) {
   # Filter the data for the specific period and outcome variable
   data_filtered <- data %>%
     filter(period.month == prd, outcome == outvar)
@@ -66,18 +67,24 @@ create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02
   palette_colors <- setNames(viridis(length(unique_outcomes)), unique_outcomes)
   
   # Create the funnel plot with Winsorized data and color points based on outcome_var
-  plot_funnel <- plot_ly(data = data_filtered, x = ~mean.effect_winsor, y = ~precision_winsor,
-                         color = ~outcome_var, colors = palette_colors, type = "scatter", mode = "markers",
+  plot_funnel <- plot_ly(data = data_filtered, 
+                         x = ~mean.effect_winsor, 
+                         y = ~precision_winsor,
+                         color = ~outcome_var, 
+                         colors = palette_colors, 
+                         type = "scatter", 
+                         mode = "markers",
                          marker = list(size = 10, opacity = 0.15),
                          hoverinfo = "text",
                          hovertext = ~paste("Key:", key,
                                             "<br>Model ID:", model_id,
                                             "<br>Outcome Var:", outcome_var)) %>%
-    layout(title = paste("Funnel plot for", outvar, "at", prd, "months after the shock (Winsorized)"),
-           xaxis = list(title = "Winsorized Effect Size"),
-           yaxis = list(title = "Winsorized Inverse of Standard Error (Precision)"),
+    layout(title = paste(outvar, ",", prd, "months after shock"),
+           xaxis = list(title = "Effect size"),
+           yaxis = list(title = " Precision"),
            shapes = list(type = "line", x0 = 0, x1 = 0, y0 = 0, y1 = 1, yref = "paper",
-                         line = list(color = "black", width = 1, dash = "dash")))
+                         line = list(color = "black", width = 1, dash = "dash")),
+           showlegend = legend)
   
   # Return the funnel plot
   return(plot_funnel)

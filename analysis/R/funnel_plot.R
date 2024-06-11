@@ -8,6 +8,7 @@
 #' @param se_option A string specifying the standard error option to use. Can be "avg", "lower", or "upper".
 #' @param wins A numeric value specifying the Winsorization parameter.
 #' @param legend If TRUE (default), the legend will be shown.
+#' @param opac A numeric value specifying the opacity parameter for the plot.
 #'
 #' @return A plotly scatter plot of the funnel plot.
 #'
@@ -33,12 +34,12 @@
 #' data$precision.lower <- 1 / data$SE.lower
 #' data$precision.upper <- 1 / data$SE.upper
 #'
-#' # Create a funnel plot for the "emp" outcome variable at period 3, using average standard error and Winsorization of 0.1
-#' funnel_plot <- create_funnel_plot(data, outvar = "emp", prd = 3, se_option = "avg", wins = 0.1)
+#' # Create a funnel plot for the "gdp" outcome variable at period 3, using average standard error and Winsorization of 0.1 and opacity of 0.12
+#' funnel_plot <- create_funnel_plot(data, outvar = "gdp", prd = 3, se_option = "avg", wins = 0.1, opac = 0.12)
 #' print(funnel_plot)
 #'
 #' @export
-create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02, legend = TRUE) {
+create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02, legend = TRUE, opac = 0.15) {
   # Filter the data for the specific period and outcome variable
   data_filtered <- data %>%
     filter(period.month == prd, outcome == outvar)
@@ -74,7 +75,7 @@ create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02
                          colors = palette_colors, 
                          type = "scatter", 
                          mode = "markers",
-                         marker = list(size = 10, opacity = 0.15),
+                         marker = list(size = 10, opacity = opac),
                          hoverinfo = "text",
                          hovertext = ~paste("Key:", key,
                                             "<br>Model ID:", model_id,
@@ -89,3 +90,4 @@ create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02
   # Return the funnel plot
   return(plot_funnel)
 }
+

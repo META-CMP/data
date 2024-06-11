@@ -13,6 +13,7 @@ library(viridis)
 # data_path <- here("data/data_test.RData")
 data_path <- here("data/data_test_new.RData")
 load(data_path)
+rm(data_path)
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Splitting emp and unemp
@@ -256,7 +257,8 @@ ui <- fluidPage(
                                                          choices = c("avg", "lower", "upper"))
                                       ),
                                       column(4,
-                                             numericInput("funnel_wins", "Winsorization Parameter:", value = 0.02, min = 0, max = 1, step = 0.01)
+                                             numericInput("funnel_wins", "Winsorization Parameter:", value = 0.02, min = 0, max = 1, step = 0.01),
+                                             sliderInput("funnel_opac", "Opacity Parameter:", value = 0.12, min = 0.01, max = 0.5, step = 0.01)
                                       )
                                     ),
                                     checkboxInput("show_additional_plots", "Show additional plots", value = FALSE),
@@ -672,7 +674,8 @@ server <- function(input, output, session) {
                        outvar = input$filter_outcome,
                        prd = input$funnel_prd,
                        se_option = input$funnel_se_option,
-                       wins = input$funnel_wins)
+                       wins = input$funnel_wins,
+                       opac = input$funnel_opac)
   })
   output$funnel_plot_1 <- renderPlotly({
     create_funnel_plot(filtered_data(),
@@ -680,6 +683,7 @@ server <- function(input, output, session) {
                        prd = input$funnel_prd,
                        se_option = input$funnel_se_option,
                        wins = input$funnel_wins,
+                       opac = input$funnel_opac,
                        legend = FALSE)
   })
   output$funnel_plot_2 <- renderPlotly({
@@ -688,6 +692,7 @@ server <- function(input, output, session) {
                        prd = input$funnel_prd*2,
                        se_option = input$funnel_se_option,
                        wins = input$funnel_wins,
+                       opac = input$funnel_opac,
                        legend = FALSE)
   })
   output$funnel_plot_3 <- renderPlotly({
@@ -696,6 +701,7 @@ server <- function(input, output, session) {
                        prd = input$funnel_prd*3,
                        se_option = input$funnel_se_option,
                        wins = input$funnel_wins,
+                       opac = input$funnel_opac,
                        legend = FALSE)
   })
   
@@ -705,6 +711,7 @@ server <- function(input, output, session) {
                        prd = input$funnel_prd*4,
                        se_option = input$funnel_se_option,
                        wins = input$funnel_wins,
+                       opac = input$funnel_opac,
                        legend = FALSE)
   })
   
@@ -714,6 +721,7 @@ server <- function(input, output, session) {
                        prd = input$funnel_prd*5,
                        se_option = input$funnel_se_option,
                        wins = input$funnel_wins,
+                       opac = input$funnel_opac,
                        legend = FALSE)
   })
   
@@ -723,6 +731,7 @@ server <- function(input, output, session) {
                        prd = input$funnel_prd*6,
                        se_option = input$funnel_se_option,
                        wins = input$funnel_wins,
+                       opac = input$funnel_opac,
                        legend = FALSE)
   })
 }

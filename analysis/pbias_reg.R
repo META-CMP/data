@@ -63,8 +63,8 @@ for (x in periods) {
   # Calculate PrecVariance winsorised
   data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
   
-  # Calculate (precision-weighted) average
-  regwa <- lm(mean.effect_winsor ~ 1, weights = precvariance_winsor, data = data_period_winsor)
+  # Calculate (precision-weighted) average - Unweighted Mean
+  regwa <- lm(mean.effect_winsor ~ 1, data = data_period_winsor)
   results_list[[paste0(x, ".ols")]] <- regwa
   
   coef_test_data[[paste0(x, ".ols")]]<-coef_test(regwa, vcov = "CR0", 
@@ -74,7 +74,7 @@ for (x in periods) {
   
   confint_data[[paste0(x, ".ols")]]<-confint(regwa, level=0.95)
   
-  # Baseline WLS
+  # Baseline WLS - FAT-PET
   wls_pbias <- lm(mean.effect_winsor ~ standarderror_winsor, weights = precvariance_winsor, data = data_period_winsor)
   results_list[[paste0(x, ".wls")]] <- wls_pbias
   

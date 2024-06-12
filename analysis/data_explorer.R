@@ -6,6 +6,7 @@ library(stringr)
 library(here)
 library(JWileymisc)
 library(viridis)
+library(modelsummary)
 
 # Load the data 
 # data_path <- here("preliminary_data.RData")
@@ -14,6 +15,7 @@ library(viridis)
 data_path <- here("data/data_test_new.RData")
 load(data_path)
 rm(data_path)
+# data <- data[1:1000,] # For testing
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Splitting emp and unemp
@@ -93,13 +95,13 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Response variable",
                  selectInput("filter_outcome", "Show data for specific response variable", choices = c("All", unique(data$outcome)), selected = "All"),
+                 selectInput("filter_transformation", "Select the transformation of the response variable", choices = c("All", unique(data$transformation)), selected = "All"),
+                 selectInput("filter_periodicity", "Select the periodicity of the response variable", choices = c("All", unique(data$periodicity)), selected = "All"),
                  conditionalPanel(
                    condition = "input.filter_outcome != 'All'",
                    selectInput("filter_outcome_measure", "Select the outcome measure of the response variable", 
                                choices = c("All", unique(data$outcome_measure)), selected = "All")
-                 ),
-                 selectInput("filter_transformation", "Select the transformation of the response variable", choices = c("All", unique(data$transformation)), selected = "All"),
-                 selectInput("filter_periodicity", "Select the periodicity of the response variable", choices = c("All", unique(data$periodicity)), selected = "All")
+                 )
         ),
         tabPanel("Countries", 
                  selectInput("country_filter_type", "Country filter type:",
@@ -171,6 +173,15 @@ ui <- fluidPage(
                  conditionalPanel(
                    condition = "input.study_filter_type == 'exclude_studies'",
                    textInput("filter_exclude_keys", "Specify studies to exclude (comma-separated keys):", value = "")
+                 )
+        ),
+        tabPanel("Precision",
+                 h1("Needs rework. only Precision.avg is used here."),
+                 selectInput("precision_filter", "Precision Filter:",
+                                    choices = c("None", "Above", "Below", "Top 10%", "Bottom 10%")),
+                 conditionalPanel(
+                   condition = "input.precision_filter == 'Above' || input.precision_filter == 'Below'",
+                   numericInput("precision_threshold", "Precision Threshold:", value = 0, min = 0)
                  )
         )
       )
@@ -290,7 +301,28 @@ ui <- fluidPage(
                             # ...
                             ),
                    tabPanel("Meta-analysis",
-                            # ...
+                            selectInput("estimation", "Meta model:",
+                                        choices = c("Mean", "FAT-PET", "PEESE"),
+                                        selected = "Mean"),
+                            checkboxInput("prec_weighted", "Precision weighted (weights = 1/SE^2)", value = FALSE),
+                            htmlOutput("meta_analysis_table"),
+                            selectInput("stats", "Statistics:",
+                                        choices = list("Standard Error" = "se = {std.error}", 
+                                                       "Confidence Interval" = "conf.int"),
+                                        multiple = TRUE,
+                                        selected = c("se = {std.error}", "conf.int")),
+                            numericInput("conf_level", "Confidence Level:", value = 0.80, min = 0, max = 1, step = 0.01),
+                            selectInput("diagn", "Diagnostics:",
+                                        choices = list("Num.Obs" = "nobs",
+                                                       "All" = "all",
+                                                       "None" = "none"),
+                                        selected = "Num.Obs"),
+                            checkboxInput("stargaze", "Stargaze?", value = FALSE),
+                            checkboxInput("meta_modelplot", "Show model plot", value = FALSE),
+                            conditionalPanel(
+                              condition = "input.meta_modelplot == true",
+                              plotOutput("meta_analysis_plot")
+                            )
                             )
                    )
                  )
@@ -394,6 +426,21 @@ server <- function(input, output, session) {
       data_filtered <- random_data()
     }
     
+    # Precision filtering for funnel plot
+    if (input$precision_filter != "None") {
+      if (input$precision_filter == "Above") {
+        data_filtered <- data_filtered[data_filtered$precision.avg > input$precision_threshold, ]
+      } else if (input$precision_filter == "Below") {
+        data_filtered <- data_filtered[data_filtered$precision.avg < input$precision_threshold, ]
+      } else if (input$precision_filter == "Top 10%") {
+        precision_threshold <- quantile(data_filtered$precision.avg, 0.9)
+        data_filtered <- data_filtered[data_filtered$precision.avg >= precision_threshold, ]
+      } else if (input$precision_filter == "Bottom 10%") {
+        precision_threshold <- quantile(data_filtered$precision.avg, 0.1)
+        data_filtered <- data_filtered[data_filtered$precision.avg <= precision_threshold, ]
+      }
+    }
+    
     return(data_filtered)
   })
   
@@ -477,15 +524,15 @@ server <- function(input, output, session) {
   
   # Update years filter values
   observe({
-    if (input$filter_years[1] < min(filtered_data()$start_year, na.rm = TRUE)) {
+    if (input$filter_years[1] < min(filtered_data()$start_year)) {
       updateSliderInput(session, "filter_years",
-                        value = c(min(filtered_data()$start_year, na.rm = TRUE),
+                        value = c(min(filtered_data()$start_year),
                                   input$filter_years[2]))
     }
-    if (input$filter_years[2] > max(filtered_data()$end_year, na.rm = TRUE)) {
+    if (input$filter_years[2] > max(filtered_data()$end_year)) {
       updateSliderInput(session, "filter_years",
                         value = c(input$filter_years[1],
-                                  max(filtered_data()$end_year, na.rm = TRUE)))
+                                  max(filtered_data()$end_year)))
     }
   })
   
@@ -734,6 +781,39 @@ server <- function(input, output, session) {
                        opac = input$funnel_opac,
                        legend = FALSE)
   })
+  
+  # Meta-analyses
+  # Estimation
+  reg_results <- reactive({
+    meta_analysis(data = filtered_data(),
+                  outvar = input$filter_outcome,
+                  se_option = input$funnel_se_option,
+                  periods = input$funnel_prd*1:16,
+                  wins = input$funnel_wins,
+                  prec_weighted = input$prec_weighted,
+                  estimation = input$estimation)
+  })
+  # Table 
+  output$meta_analysis_table <- renderUI({
+    
+    diagnostics <- if (input$diagn == "ALL") NULL else input$diagn
+    
+    modelsummary(reg_results(),
+                 output = "gt", 
+                 stars = input$stargaze, 
+                 statistic = input$stats, 
+                 conf_level = input$conf_level, 
+                 title = "Meta-Analysis", 
+                 gof_map = diagnostics)
+  })
+  # Plot
+  output$meta_analysis_plot <- renderPlot({
+    
+    modelplot(reg_results(),
+              conf_level = input$conf_level,
+              title = "Meta-Analysis Plot")
+  })
+  
 }
 
 shinyApp(ui = ui, server = server)

@@ -57,9 +57,9 @@ create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02
   }
   
   # Apply Winsorization to the standard error, mean effect, and precision
-  data_filtered$standarderror_winsor <- winsorizor(data_filtered$StandardError, c(wins), na.rm = TRUE)
-  data_filtered$mean.effect_winsor <- winsorizor(data_filtered$mean.effect, c(wins), na.rm = TRUE)
-  data_filtered$precision_winsor <- 1 / data_filtered$standarderror_winsor
+  data_filtered$standarderror_winsor <- winsorizor(data_filtered$StandardError, percentile = wins)
+  data_filtered$mean.effect_winsor <- winsorizor(data_filtered$mean.effect, percentile = wins)
+  data_filtered$precision_winsor <- winsorizor(data_filtered$precision, percentile = wins)
   
   # Get the unique outcome variable values
   unique_outcomes <- unique(data_filtered$outcome_var)

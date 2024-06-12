@@ -3,12 +3,12 @@
         "key": "RETUUVG3", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "cum: set to true because of IRF pattern", 
         "model_notes": "null", 
         "figure": 4, 
         "page": 20, 
         "irf": true,
-        "cum": false
+        "cum": true
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_fed_funds", 

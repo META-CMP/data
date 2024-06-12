@@ -11,7 +11,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_short_term_rate", 
+        "inttype": "lev_a_3_month_money_market", 
         "size": "null", 
         "axis_trans": "log_q_rgdp_y*100", 
         "dep": "logdiff_q_deflator log_q_rgdp", 

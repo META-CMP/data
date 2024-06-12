@@ -3,18 +3,18 @@
         "key": "QSJMFDPZ",
         "rid1": "dr",
         "rid2": "fp",
-        "study_notes": "null",
-        "model_notes": "cum: only accumulated impulse response for logdiff_m_ip.",
+        "study_notes": "cum: only accumulated impulse response for logdiff_m_ip. For that reason it was coded as log_m_ip to treat the IRF cumulative.",
+        "model_notes": "null",
         "figure": "Appendix 3",
         "page": 20,
         "irf": true,
-        "cum": true
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_3_month_interbank",
         "size": "1%",
-        "axis_trans": "logdiff_m_ip_y*100",
-        "dep": "logdiff_m_ip gr_m_cpi",
+        "axis_trans": "log_m_ip_y*100",
+        "dep": "log_m_ip gr_m_cpi",
         "conf": "68",
         "main": "other",
         "prefer": true

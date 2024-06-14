@@ -91,7 +91,7 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
     weights <- if (prec_weighted) data_period$precvariance_winsor else NULL
     reg_result <- lm(equation, data = data_period, weights = weights)
     
-    results_list[[paste0(x, ".ols")]] <- reg_result
+    results_list[[paste0(x)]] <- reg_result
   }
   
   return(results_list)

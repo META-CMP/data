@@ -7,15 +7,18 @@ library(here)
 library(JWileymisc)
 library(viridis)
 library(modelsummary)
+library(ggplot2)
 
 # Load the data 
 # data_path <- here("preliminary_data.RData")
 # data_path <- here("data/preliminary_data.RData")
 # data_path <- here("data/data_test.RData")
-data_path <- here("data/data_test_new.RData")
+
+# data_path <- here("data/data_test_new.RData")
+data_path <- here("data/preliminary_data_12062024.RData")
 load(data_path)
 rm(data_path)
-# data <- data[1:1000,] # For testing
+# data <- data[1:10000,] # For testing
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Splitting emp and unemp
@@ -81,9 +84,8 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       wellPanel(
-        h4("Current Selection"),
+        h4("Current selection"),
         tableOutput("filteredDataSummary"),
-        h5("Required:"),
         verbatimTextOutput("filterSummary")
       ),
       h4("Filters"),
@@ -176,12 +178,11 @@ ui <- fluidPage(
                  )
         ),
         tabPanel("Precision",
-                 h1("Needs rework. only Precision.avg is used here."),
                  selectInput("precision_filter", "Precision Filter:",
-                                    choices = c("None", "Above", "Below", "Top 10%", "Bottom 10%")),
+                                    choices = c("None", "Above", "Below", "Top Percentile", "Bottom Percentile")),
                  conditionalPanel(
-                   condition = "input.precision_filter == 'Above' || input.precision_filter == 'Below'",
-                   numericInput("precision_threshold", "Precision Threshold:", value = 0, min = 0)
+                   condition = "input.precision_filter == 'Above' || input.precision_filter == 'Below' || input.precision_filter == 'Top Percentile' || input.precision_filter == 'Bottom Percentile'",
+                   numericInput("precision_threshold", "Precision Threshold:", value = 0, min = 1)
                  )
         )
       )
@@ -268,7 +269,7 @@ ui <- fluidPage(
                                                          choices = c("avg", "lower", "upper"))
                                       ),
                                       column(4,
-                                             numericInput("funnel_wins", "Winsorization Parameter:", value = 0.02, min = 0, max = 1, step = 0.01),
+                                             numericInput("funnel_wins", "Winsorization Parameter:", value = 0, min = 0, max = 1, step = 0.01),
                                              sliderInput("funnel_opac", "Opacity Parameter:", value = 0.12, min = 0.01, max = 0.5, step = 0.01)
                                       )
                                     ),
@@ -288,6 +289,22 @@ ui <- fluidPage(
                                         column(4, plotlyOutput("funnel_plot_4")),
                                         column(4, plotlyOutput("funnel_plot_5")),
                                         column(4, plotlyOutput("funnel_plot_6"))
+                                      ),
+                                      fluidRow(
+                                        column(4, plotlyOutput("funnel_plot_7")),
+                                        column(4, plotlyOutput("funnel_plot_8")),
+                                        column(4, plotlyOutput("funnel_plot_9"))
+                                      ),
+                                      fluidRow(
+                                        column(4, plotlyOutput("funnel_plot_10")),
+                                        column(4, plotlyOutput("funnel_plot_11")),
+                                        column(4, plotlyOutput("funnel_plot_12"))
+                                      ),
+                                      fluidRow(
+                                        column(4, plotlyOutput("funnel_plot_13")),
+                                        column(4, plotlyOutput("funnel_plot_14")),
+                                        column(4, plotlyOutput("funnel_plot_15")),
+                                        column(4, plotlyOutput("funnel_plot_16"))
                                       )
                                     )
                              )
@@ -298,8 +315,8 @@ ui <- fluidPage(
         tabPanel("Stats",
                  tabsetPanel(
                    tabPanel("Descriptive statistics",
-                            # ...
-                            ),
+                            htmlOutput("moderator_summary")
+                   ),
                    tabPanel("Meta-analysis",
                             selectInput("estimation", "Meta model:",
                                         choices = c("Mean", "FAT-PET", "PEESE"),
@@ -310,8 +327,8 @@ ui <- fluidPage(
                                         choices = list("Standard Error" = "se = {std.error}", 
                                                        "Confidence Interval" = "conf.int"),
                                         multiple = TRUE,
-                                        selected = c("se = {std.error}", "conf.int")),
-                            numericInput("conf_level", "Confidence Level:", value = 0.80, min = 0, max = 1, step = 0.01),
+                                        selected = ""),
+                            numericInput("conf_level", "Confidence Level:", value = 0.89, min = 0, max = 0.99, step = 0.01),
                             selectInput("diagn", "Diagnostics:",
                                         choices = list("Num.Obs" = "nobs",
                                                        "All" = "all",
@@ -321,7 +338,11 @@ ui <- fluidPage(
                             checkboxInput("meta_modelplot", "Show model plot", value = FALSE),
                             conditionalPanel(
                               condition = "input.meta_modelplot == true",
-                              plotOutput("meta_analysis_plot")
+                              plotOutput("meta_analysis_plot_effect"),
+                              conditionalPanel(
+                                condition = "input.estimation != 'Mean'",
+                                plotOutput("meta_analysis_plot_pbias")
+                              )
                             )
                             )
                    )
@@ -334,7 +355,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   # Sidebar filters
-  filtered_data <- reactive({
+  filtered_data_no_years <- reactive({
     data_filtered <- data
     
     # Country filters
@@ -385,11 +406,6 @@ server <- function(input, output, session) {
       data_filtered <- data_filtered %>% filter(periodicity == input$filter_periodicity)
     }
     
-    # Sample start / end filter
-    data_filtered <- data_filtered %>%
-      filter(start_year >= input$filter_years[1]) %>%
-      filter(end_year <= input$filter_years[2])
-    
     # Include or exclude specific studies based on the selected study filter type
     if (input$study_filter_type == "include_studies") {
       if (input$filter_include_keys != "") {
@@ -428,18 +444,43 @@ server <- function(input, output, session) {
     
     # Precision filtering for funnel plot
     if (input$precision_filter != "None") {
-      if (input$precision_filter == "Above") {
-        data_filtered <- data_filtered[data_filtered$precision.avg > input$precision_threshold, ]
-      } else if (input$precision_filter == "Below") {
-        data_filtered <- data_filtered[data_filtered$precision.avg < input$precision_threshold, ]
-      } else if (input$precision_filter == "Top 10%") {
-        precision_threshold <- quantile(data_filtered$precision.avg, 0.9)
-        data_filtered <- data_filtered[data_filtered$precision.avg >= precision_threshold, ]
-      } else if (input$precision_filter == "Bottom 10%") {
-        precision_threshold <- quantile(data_filtered$precision.avg, 0.1)
-        data_filtered <- data_filtered[data_filtered$precision.avg <= precision_threshold, ]
+      precision_col <- switch(input$funnel_se_option,
+                              "avg" = "precision.avg",
+                              "lower" = "precision.lower",
+                              "upper" = "precision.upper")
+      
+      if (input$precision_filter %in% c("Above", "Below")) {
+        if (!is.na(as.numeric(input$precision_threshold))) {
+          threshold <- as.numeric(input$precision_threshold)
+          if (input$precision_filter == "Above") {
+            data_filtered <- data_filtered[data_filtered[[precision_col]] > threshold, ]
+          } else if (input$precision_filter == "Below") {
+            data_filtered <- data_filtered[data_filtered[[precision_col]] < threshold, ]
+          }
+        }
+      } else if (input$precision_filter %in% c("Top Percentile", "Bottom Percentile")) {
+        if (!is.na(as.numeric(input$precision_threshold)) && as.numeric(input$precision_threshold) >= 0 && as.numeric(input$precision_threshold) <= 100) {
+          percentile <- as.numeric(input$precision_threshold) / 100
+          if (input$precision_filter == "Top Percentile") {
+            precision_threshold <- quantile(data_filtered[[precision_col]], 1 - percentile)
+            data_filtered <- data_filtered[data_filtered[[precision_col]] >= precision_threshold, ]
+          } else if (input$precision_filter == "Bottom Percentile") {
+            precision_threshold <- quantile(data_filtered[[precision_col]], percentile)
+            data_filtered <- data_filtered[data_filtered[[precision_col]] <= precision_threshold, ]
+          }
+        }
       }
     }
+    
+    return(data_filtered)
+  })
+  
+  # Apply sample start & end filter after other filtering
+  filtered_data <- reactive({
+
+      data_filtered <- filtered_data_no_years() %>%
+      filter(start_year >= input$filter_years[1]) %>%
+      filter(end_year <= input$filter_years[2])
     
     return(data_filtered)
   })
@@ -450,40 +491,40 @@ server <- function(input, output, session) {
     }, align = "l")
   # Filter summary
   filterSummary <- reactive({
-    summary <- ""
+    summary <- "Filter summary:\n"
     
-    # Response variable filters
+    # Response variable filters summary
     if (input$filter_outcome != "All") {
       summary <- paste0(summary, "Response Variable: ", input$filter_outcome, "\n")
-      if (input$filter_outcome_measure != "All") {
-        summary <- paste0(summary, "  Outcome Measure: ", input$filter_outcome_measure, "\n")
-      }
       if (input$filter_transformation != "All") {
         summary <- paste0(summary, "  Transformation: ", input$filter_transformation, "\n")
       }
       if (input$filter_periodicity != "All") {
         summary <- paste0(summary, "  Periodicity: ", input$filter_periodicity, "\n")
       }
+      if (input$filter_outcome_measure != "All") {
+        summary <- paste0(summary, "  Outcome Measure: ", input$filter_outcome_measure, "\n")
+      }
     }
 
-    # Country filters
+    # Country filters summary
     if (input$country_filter_type != "all") {
       if (input$country_filter_type == "specific_country" && input$filter_country != "All") {
-        summary <- paste0(summary, "Countries: ", input$filter_country, "\n")
+        summary <- paste0(summary, "\nCountries: ", input$filter_country, "\n")
       } else if (input$country_filter_type == "one_country" && input$one_country != "") {
-        summary <- paste0(summary, "One Country: ", input$one_country, "\n")
+        summary <- paste0(summary, "\nOne Country: ", input$one_country, "\n")
       } else if (input$country_filter_type == "country_in_sample" && input$country_in_sample != "") {
-        summary <- paste0(summary, "Country in Sample: ", input$country_in_sample, "\n")
+        summary <- paste0(summary, "\nCountry in Sample: ", input$country_in_sample, "\n")
       } else if (input$country_filter_type == "country_group_only" && input$country_group_only != "") {
-        summary <- paste0(summary, "Country Group Only: ", input$country_group_only, "\n")
+        summary <- paste0(summary, "\nCountry Group Only: ", input$country_group_only, "\n")
       } else if (input$country_filter_type == "country_group_in_sample" && input$country_group_in_sample != "") {
-        summary <- paste0(summary, "Country Group in Sample: ", input$country_group_in_sample, "\n")
+        summary <- paste0(summary, "\nCountry Group in Sample: ", input$country_group_in_sample, "\n")
       } else if (input$country_filter_type == "exclude_countries" && input$exclude_countries != "") {
-        summary <- paste0(summary, "Excluded Countries: ", input$exclude_countries, "\n")
+        summary <- paste0(summary, "\nExcluded Countries: ", input$exclude_countries, "\n")
       }
     }
     
-    # Moderator filters
+    # Moderator filters summary
     # Include summary
     if (length(input$include_filter) > 0) {
       summary <- paste0(summary, "\nRequired Moderators:\n")
@@ -497,7 +538,7 @@ server <- function(input, output, session) {
     }
     # Exclude summary
     if (length(input$exclude_filter) > 0) {
-      summary <- paste0(summary, "Excluded Moderators:\n")
+      summary <- paste0(summary, "\nExcluded Moderators:\n")
       
       for (group in names(moderator_groups)) {
         excluded_moderators <- intersect(input$exclude_filter, moderator_groups[[group]])
@@ -507,15 +548,46 @@ server <- function(input, output, session) {
       }
     }
     
-    # Study filters
-    if (input$study_filter_type != "no_filter") {
-      if (input$study_filter_type == "include_studies" && input$filter_include_keys != "") {
-        summary <- paste0(summary, "\nSelected Studies: ", length(input$filter_include_keys), "\n")
-      } else if (input$study_filter_type == "exclude_studies" && input$filter_exclude_keys != "") {
-        summary <- paste0(summary, "\nExcluded Studies: ", length(input$filter_exclude_keys), "\n")
+    # Precision filter summary
+    if (input$precision_filter != "None") {
+      precision_col <- switch(input$funnel_se_option,
+                              "avg" = "precision (avg)",
+                              "lower" = "precision (lower)",
+                              "upper" = "precision (upper)")
+      
+      if (input$precision_filter == "Above") {
+        if (!is.na(as.numeric(input$precision_threshold))) {
+          threshold <- as.numeric(input$precision_threshold)
+          summary <- paste0(summary, "\nPrecision Filter: ", precision_col, " > ", threshold, "\n")
+        }
+      } else if (input$precision_filter == "Below") {
+        if (!is.na(as.numeric(input$precision_threshold))) {
+          threshold <- as.numeric(input$precision_threshold)
+          summary <- paste0(summary, "\nPrecision Filter: ", precision_col, " < ", threshold, "\n")
+        }
+      } else if (input$precision_filter == "Top Percentile") {
+        if (!is.na(as.numeric(input$precision_threshold)) && as.numeric(input$precision_threshold) >= 0 && as.numeric(input$precision_threshold) <= 100) {
+          percentile <- as.numeric(input$precision_threshold)
+          summary <- paste0(summary, "\nPrecision Filter: Top ", percentile, "% of ", precision_col, "\n")
+        }
+      } else if (input$precision_filter == "Bottom Percentile") {
+        if (!is.na(as.numeric(input$precision_threshold)) && as.numeric(input$precision_threshold) >= 0 && as.numeric(input$precision_threshold) <= 100) {
+          percentile <- as.numeric(input$precision_threshold)
+          summary <- paste0(summary, "\nPrecision Filter: Bottom ", percentile, "% of ", precision_col, "\n")
+        }
       }
     }
     
+    # Available start and end year summary based on current filter selection (excluding year filter)
+    min_start_year <- min(filtered_data_no_years()$start_year)
+    max_start_year <- max(filtered_data_no_years()$start_year)
+    min_end_year <- min(filtered_data_no_years()$end_year)
+    max_end_year <- max(filtered_data_no_years()$end_year)
+    # Selected start and end year summary
+    selected_start_year <- input$filter_years[1]
+    selected_end_year <- input$filter_years[2]
+    summary <- paste0(summary, "\nSelected year range: ", selected_start_year, "(min ", min_start_year, ", max ", max_start_year, ")", " - ", selected_end_year, "(min ", min_end_year, ", max ", max_end_year, ")")
+
     summary
   })
   output$filterSummary <- renderText({
@@ -605,6 +677,27 @@ server <- function(input, output, session) {
     }
     if (input$country_filter_type != "exclude_countries") {
       updateTextInput(session, "exclude_countries", value = "")
+    }
+  })
+  
+  # Update precision_threshold input based on selection in precision_filter
+  observe({
+    if (input$precision_filter == "Above") {
+      updateNumericInput(session, "precision_threshold",
+                         label = "Precision Threshold (Minimum):",
+                         value = 0, min = 1)
+    } else if (input$precision_filter == "Below") {
+      updateNumericInput(session, "precision_threshold",
+                         label = "Precision Threshold (Maximum):",
+                         value = 10000, min = 1)
+    } else if (input$precision_filter == "Top Percentile") {
+      updateNumericInput(session, "precision_threshold",
+                         label = "Top Percentile (%):",
+                         value = 10, min = 0, max = 100)
+    } else if (input$precision_filter == "Bottom Percentile") {
+      updateNumericInput(session, "precision_threshold",
+                         label = "Bottom Percentile (%):",
+                         value = 90, min = 0, max = 100)
     }
   })
   
@@ -724,63 +817,22 @@ server <- function(input, output, session) {
                        wins = input$funnel_wins,
                        opac = input$funnel_opac)
   })
-  output$funnel_plot_1 <- renderPlotly({
-    create_funnel_plot(filtered_data(),
-                       outvar = input$filter_outcome,
-                       prd = input$funnel_prd,
-                       se_option = input$funnel_se_option,
-                       wins = input$funnel_wins,
-                       opac = input$funnel_opac,
-                       legend = FALSE)
-  })
-  output$funnel_plot_2 <- renderPlotly({
-    create_funnel_plot(filtered_data(),
-                       outvar = input$filter_outcome,
-                       prd = input$funnel_prd*2,
-                       se_option = input$funnel_se_option,
-                       wins = input$funnel_wins,
-                       opac = input$funnel_opac,
-                       legend = FALSE)
-  })
-  output$funnel_plot_3 <- renderPlotly({
-    create_funnel_plot(filtered_data(),
-                       outvar = input$filter_outcome,
-                       prd = input$funnel_prd*3,
-                       se_option = input$funnel_se_option,
-                       wins = input$funnel_wins,
-                       opac = input$funnel_opac,
-                       legend = FALSE)
-  })
-  
-  output$funnel_plot_4 <- renderPlotly({
-    create_funnel_plot(filtered_data(),
-                       outvar = input$filter_outcome,
-                       prd = input$funnel_prd*4,
-                       se_option = input$funnel_se_option,
-                       wins = input$funnel_wins,
-                       opac = input$funnel_opac,
-                       legend = FALSE)
-  })
-  
-  output$funnel_plot_5 <- renderPlotly({
-    create_funnel_plot(filtered_data(),
-                       outvar = input$filter_outcome,
-                       prd = input$funnel_prd*5,
-                       se_option = input$funnel_se_option,
-                       wins = input$funnel_wins,
-                       opac = input$funnel_opac,
-                       legend = FALSE)
-  })
-  
-  output$funnel_plot_6 <- renderPlotly({
-    create_funnel_plot(filtered_data(),
-                       outvar = input$filter_outcome,
-                       prd = input$funnel_prd*6,
-                       se_option = input$funnel_se_option,
-                       wins = input$funnel_wins,
-                       opac = input$funnel_opac,
-                       legend = FALSE)
-  })
+  for (i in 1:16) {
+    local({
+      i <- i
+      output_name <- paste0("funnel_plot_", i)
+      
+      output[[output_name]] <- renderPlotly({
+        create_funnel_plot(filtered_data(),
+                           outvar = input$filter_outcome,
+                           prd = input$funnel_prd * i,
+                           se_option = input$funnel_se_option,
+                           wins = input$funnel_wins,
+                           opac = input$funnel_opac,
+                           legend = FALSE)
+      })
+    })
+  }
   
   # Meta-analyses
   # Estimation
@@ -807,13 +859,56 @@ server <- function(input, output, session) {
                  gof_map = diagnostics)
   })
   # Plot
-  output$meta_analysis_plot <- renderPlot({
+  output$meta_analysis_plot_effect <- renderPlot({
+    
+    if (input$estimation == "Mean") {
+      omit <- NULL
+    } else if (input$estimation == "FAT-PET") {
+      omit <- "standarderror_winsor"
+    } else if (input$estimation == "PEESE") {
+      omit <- "variance_winsor"
+    }
+    
+    b <- list(geom_vline(xintercept = 0, color = 'orange'))
     
     modelplot(reg_results(),
+              coef_omit = omit,
               conf_level = input$conf_level,
-              title = "Meta-Analysis Plot")
+              title = "Meta-Analysis Plot", 
+              background = b)
+  })
+  output$meta_analysis_plot_pbias <- renderPlot({
+    
+    b <- list(geom_vline(xintercept = 0, color = 'orange'))
+    
+    modelplot(reg_results(),
+              coef_omit = 'Interc',
+              conf_level = input$conf_level,
+              title = "Meta-Analysis Plot", 
+              background = b)
   })
   
+  # Moderator summary table
+  output$moderator_summary <- renderUI({
+    mod_vars_list <- c("cum","prefer","iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "idother","var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge", "varother","lor", "upr", "scr", "dcr", "hike", "cut","annual", "quarter", "month","panel","comprice", "outpgap", "find", "eglob", "cbind", "fexch", "inflexp", "foreignir", "fx", "lrir","pure_rate_shock", "convent", "decomposition","cbanker")
+    
+    # Remove excluded variables from mod_vars_list
+    mod_vars_list <- setdiff(mod_vars_list, input$exclude_filter)
+    
+    # Subset filtered_data based on the updated mod_vars_list
+    mod_vars <- filtered_data()[, mod_vars_list, drop = FALSE]
+    
+    # Generate the datasummary_skim output and save it as an HTML document
+    datasummary_skim(mod_vars, output = "gt", type = "categorical", title = "Moderator variables in current selection")
+  })
+  # Moderator summary table
+  output$moderator_summary <- renderUI({
+    mod_vars <- filtered_data()[, c("cum","prefer","iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "idother","var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge", "varother","lor", "upr", "scr", "dcr", "hike", "cut","annual", "quarter", "month","panel","comprice", "outpgap", "find", "eglob", "cbind", "fexch", "inflexp", "foreignir", "fx", "lrir","pure_rate_shock", "convent", "decomposition","cbanker"), drop = FALSE]
+    
+    # Generate the datasummary_skim output and save it as an HTML document
+    datasummary_skim(mod_vars, output = "gt", type = "categorical", title = "Moderator variables in current selection")
+
+  })
 }
 
 shinyApp(ui = ui, server = server)

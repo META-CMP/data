@@ -10,12 +10,8 @@ library(modelsummary)
 library(ggplot2)
 
 # Load the data 
-# data_path <- here("preliminary_data.RData")
-# data_path <- here("data/preliminary_data.RData")
-# data_path <- here("data/data_test.RData")
-
-# data_path <- here("data/data_test_new.RData")
-data_path <- here("data/preliminary_data_12062024.RData")
+data_path <- here("data/preliminary_data_14062024.RData")
+# data_path <- here("data/preliminary_data_12062024.RData")
 load(data_path)
 rm(data_path)
 # data <- data[1:10000,] # For testing

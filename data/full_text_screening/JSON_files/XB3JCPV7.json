@@ -12,7 +12,7 @@
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_short_term_rate", 
-        "size": "25bp", 
+        "size": "1SD", 
         "axis_trans": false, 
         "dep": "log_m_rgdp log_m_cpi", 
         "conf": "95", 

@@ -4,7 +4,7 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "distinguishes between two regimes (low confidence and high confidence in terms of economic sentiments); model 1 and 3: low; model 2 an 4: high", 
+        "model_notes": "regime: distinguishes between two regimes (low confidence and high confidence in terms of economic sentiments); model 1 and 3: low; model 2 an 4: high", 
         "figure": {
                 "model_1": 3,
                 "model_2": 3,

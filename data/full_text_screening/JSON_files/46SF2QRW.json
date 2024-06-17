@@ -33,14 +33,14 @@
         "size": "100bp",
         "axis_trans": "y*100",
         "dep": {
-                "model_1": "log_a_ip log_a_cpi",
-                "model_2": "log_a_ip",
-                "model_3": "log_a_ip",
-                "model_4": "log_a_cpi",
-                "model_5": "log_a_cpi",
-                "model_6": "log_a_ip log_a_cpi",
-                "model_7": "log_a_ip log_a_cpi",
-                "model_8": "log_a_ip"
+                "model_1": "log_m_ip log_m_cpi",
+                "model_2": "log_m_ip",
+                "model_3": "log_m_ip",
+                "model_4": "log_m_cpi",
+                "model_5": "log_m_cpi",
+                "model_6": "log_m_ip log_m_cpi",
+                "model_7": "log_m_ip log_m_cpi",
+                "model_8": "log_m_ip"
         },
         "conf": "95",
         "main": "gdp inflation",

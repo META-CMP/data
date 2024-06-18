@@ -3,7 +3,7 @@ gc() #free up memory and report the memory usage.
 ## version.string R version 4.2.1 (2022-06-23 ucrt)
 
 #setwd and load dataset
-setwd("~/data")
+# setwd("~/data")
 load("preliminary_data.RData")
 
 
@@ -65,6 +65,9 @@ data$outcome<-ifelse(data$outcome_measure=="rate","rate",ifelse(data$outcome_mea
 
 # Splitting emp and unemp
 data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
+
+# Store data for use in app
+save(data,file = "data/preliminary_data_test.RData")
 
 
 ################################################################### prepare variables for regression analysis #############################################################

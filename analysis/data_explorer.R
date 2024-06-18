@@ -10,20 +10,17 @@ library(modelsummary)
 library(ggplot2)
 
 # Load the data 
-data_path <- here("data/preliminary_data_test.RData")
+data_path <- here("data/preliminary_data_14062024.RData")
 # data_path <- here("data/preliminary_data_12062024.RData")
 load(data_path)
 rm(data_path)
 # data <- data[1:10000,] # For testing
 
-# # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
-# # Splitting emp and unemp
-# data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
-# data$outcome <- ifelse(is.na(data$outcome_measure), "rate", data$outcome)
-# # Renaming gdp to output
-# data$outcome <- ifelse(data$outcome == "gdp", "output", data$outcome)
-# # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
-# # Calculate new confidence bounds for 68%, 90%, and 95% intervals
+# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
+# Renaming gdp to output
+data$outcome <- ifelse(data$outcome == "gdp", "output", data$outcome)
+# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
+# Calculate new confidence bounds for 68%, 90%, and 95% intervals
 # crit_val_68 <- qnorm(0.84)  # crit_val for 68% confidence interval
 # crit_val_90 <- qnorm(0.95)  # crit_val for 90% confidence interval
 # crit_val_95 <- qnorm(0.975)  # crit_val for 95% confidence interval
@@ -51,8 +48,6 @@ data$end_year <- sapply(data$end, extract_year)
 # Convert the extracted years to numeric
 data$start_year <- as.numeric(data$start_year)
 data$end_year <- as.numeric(data$end_year)
-# Check the result
-data$end_year
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Calculate the average standard error and precision options
@@ -85,11 +80,14 @@ ui <- fluidPage(
         verbatimTextOutput("filterSummary")
       ),
       h4("Filters"),
-      sliderInput("filter_years", "Sample years",
-                  min = min(data$start_year, na.rm = TRUE),
-                  max = max(data$end_year, na.rm = TRUE),
-                  value = c(min(data$start_year, na.rm = TRUE), max(data$end_year, na.rm = TRUE)),
-                  sep = ""),
+      wellPanel(
+        uiOutput("reset_button"),
+        sliderInput("filter_years", "Sample years",
+                    min = min(data$start_year, na.rm = TRUE),
+                    max = max(data$end_year, na.rm = TRUE),
+                    value = c(min(data$start_year, na.rm = TRUE), max(data$end_year, na.rm = TRUE)),
+                    sep = "")
+      ),
       tabsetPanel(
         tabPanel("Response variable",
                  selectInput("filter_outcome", "Show data for specific response variable", choices = c("All", unique(data$outcome)), selected = "All"),
@@ -592,16 +590,57 @@ server <- function(input, output, session) {
   
   # Update years filter values
   observe({
-    if (input$filter_years[1] < min(filtered_data()$start_year)) {
+    if (input$filter_years[1] < min(filtered_data_no_years()$start_year, na.rm = TRUE)) {
       updateSliderInput(session, "filter_years",
-                        value = c(min(filtered_data()$start_year),
+                        value = c(min(filtered_data_no_years()$start_year, na.rm = TRUE),
                                   input$filter_years[2]))
     }
-    if (input$filter_years[2] > max(filtered_data()$end_year)) {
+    if (input$filter_years[2] > max(filtered_data_no_years()$end_year, na.rm = TRUE)) {
       updateSliderInput(session, "filter_years",
                         value = c(input$filter_years[1],
-                                  max(filtered_data()$end_year)))
+                                  max(filtered_data_no_years()$end_year, na.rm = TRUE)))
     }
+  })
+  
+  # Show a message for year range 
+  observe({
+
+    if (input$filter_years[1] > min(filtered_data_no_years()$start_year, na.rm = TRUE) | input$filter_years[2] < max(filtered_data_no_years()$end_year, na.rm = TRUE)) {
+      
+      showNotification(
+        "Restricted sample years",
+        type = "warning",
+        closeButton = TRUE,
+        duration = 5
+      )
+      
+    } else if (input$filter_years[1] == min(filtered_data_no_years()$start_year, na.rm = TRUE) | input$filter_years[2] == max(filtered_data_no_years()$end_year, na.rm = TRUE)) {
+      
+      showNotification(
+        "Unrestricted sample years.",
+        type = "message",
+        closeButton = TRUE,
+        duration = 5
+      )
+      
+    }
+    
+  })
+  # Add filter_years reset button
+  output$reset_button <- renderUI({
+    min_start_year <- min(filtered_data_no_years()$start_year, na.rm = TRUE)
+    max_end_year <- max(filtered_data_no_years()$end_year, na.rm = TRUE)
+    
+    if (input$filter_years[1] > min_start_year || input$filter_years[2] < max_end_year) {
+      actionButton("reset_years", "Reset to maximal range")
+    }
+  })
+  observeEvent(input$reset_years, {
+    min_start_year <- min(filtered_data_no_years()$start_year, na.rm = TRUE)
+    max_end_year <- max(filtered_data_no_years()$end_year, na.rm = TRUE)
+    
+    updateSliderInput(session, "filter_years",
+                      value = c(min_start_year, max_end_year))
   })
   
   # Update exclude_filter when include_filter changes

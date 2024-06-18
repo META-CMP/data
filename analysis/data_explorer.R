@@ -10,24 +10,26 @@ library(modelsummary)
 library(ggplot2)
 
 # Load the data 
-data_path <- here("data/preliminary_data_test.RData")
-# data_path <- here("data/preliminary_data_14062024.RData")
+data_path <- here("data/preliminary_data_14062024.RData")
 # data_path <- here("data/preliminary_data_12062024.RData")
 load(data_path)
 rm(data_path)
 # data <- data[1:10000,] # For testing
-# Papers data test
-papers_path <- here("data/papers_test.RData")
-load(papers_path)
-rm(papers_path)
-# Add publication year to data
-data <- data %>%
-  left_join(papers %>% select(key, type = `item type`, pub_year = `publication year`),
-            by = "key")
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Renaming gdp to output
 data$outcome <- ifelse(data$outcome == "gdp", "output", data$outcome)
+# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
+# Calculate new confidence bounds for 68%, 90%, and 95% intervals
+# crit_val_68 <- qnorm(0.84)  # crit_val for 68% confidence interval
+# crit_val_90 <- qnorm(0.95)  # crit_val for 90% confidence interval
+# crit_val_95 <- qnorm(0.975)  # crit_val for 95% confidence interval
+# data$approx.CI.lower_68 <- data$mean.effect - crit_val_68 * data$SE.lower
+# data$approx.CI.upper_68 <- data$mean.effect + crit_val_68 * data$SE.upper
+# data$approx.CI.lower_90 <- data$mean.effect - crit_val_90 * data$SE.lower
+# data$approx.CI.upper_90 <- data$mean.effect + crit_val_90 * data$SE.upper
+# data$approx.CI.lower_95 <- data$mean.effect - crit_val_95 * data$SE.lower
+# data$approx.CI.upper_95 <- data$mean.effect + crit_val_95 * data$SE.upper
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Extracting start and end year
@@ -69,7 +71,6 @@ moderator_groups <- list(
 )
 
 ui <- fluidPage(
-  withMathJax(),
   titlePanel("META CMP Data Explorer"),
   sidebarLayout(
     sidebarPanel(
@@ -177,15 +178,6 @@ ui <- fluidPage(
                    condition = "input.precision_filter == 'Above' || input.precision_filter == 'Below' || input.precision_filter == 'Top Percentile' || input.precision_filter == 'Bottom Percentile'",
                    numericInput("precision_threshold", "Precision Threshold:", value = 0, min = 1)
                  )
-        ),
-        tabPanel("Publication Characteristics",
-                 sliderInput("pub_year", "Publication Year",
-                             min = min(data$pub_year, na.rm = TRUE),
-                             max = max(data$pub_year, na.rm = TRUE),
-                             value = c(min(data$year, na.rm = TRUE), max(data$year, na.rm = TRUE)),
-                             step = 1,
-                             sep = ""),
-                 checkboxInput("journal_article", "Journal Article Only", value = FALSE)
         )
       )
     ),
@@ -249,26 +241,6 @@ ui <- fluidPage(
                               )
                             ),
                             plotlyOutput("averageIRFsPlot"),
-                            checkboxInput("IRF_wins", "Winsorize?", value = FALSE),
-                            checkboxInput("show_corrected_irf", "Show Corrected IRF", value = FALSE),
-                            conditionalPanel(
-                              condition = "input.show_corrected_irf == true",
-                              h6("Quick selection"),
-                              fluidRow(
-                                column(12,
-                                       actionButton("unweighted_avg_irf", "Unweighted average"),
-                                       actionButton("uwls_irf", "UWLS"),
-                                       actionButton("waap_irf", "WAAP"),
-                                       actionButton("fat_pet_irf", "FAT-PET"),
-                                       actionButton("peese_irf", "PEESE"),
-                                       actionButton("ioannidis_irf", "Top 10% precision"),
-                                       actionButton("furukawa_irf", "Furukawa (2021) - stem", disabled = TRUE),
-                                       actionButton("bom_rachinger_irf", "Bom and Rachinger (2019) - endogenous kink", disabled = TRUE),
-                                       actionButton("andrews_kasy_irf", "Andrews and Kasy (2019)", disabled = TRUE),
-                                       style = "margin-bottom: 15px;"
-                                )
-                              )
-                            ),
                             checkboxInput("show_counts_plot", "Show Model/Study Counts Plot", value = FALSE),
                             conditionalPanel(
                               condition = "input.show_counts_plot == true",
@@ -292,7 +264,6 @@ ui <- fluidPage(
                                       ),
                                       column(4,
                                              numericInput("funnel_wins", "Winsorization Parameter:", value = 0, min = 0, max = 1, step = 0.01),
-                                             checkboxInput("ap", "Adequately powered (80% or more)", value = FALSE),
                                              sliderInput("funnel_opac", "Opacity Parameter:", value = 0.12, min = 0.01, max = 0.5, step = 0.01)
                                       )
                                     ),
@@ -341,27 +312,10 @@ ui <- fluidPage(
                             htmlOutput("moderator_summary")
                    ),
                    tabPanel("Meta-analysis",
-                            h6("Quick selection"),
-                            fluidRow(
-                              column(12,
-                                     actionButton("unweighted_avg", "Unweighted average"),
-                                     actionButton("uwls", "UWLS"),
-                                     actionButton("waap", "WAAP"),
-                                     actionButton("fat_pet", "FAT-PET"),
-                                     actionButton("peese", "PEESE"),
-                                     actionButton("ioannidis", "Top 10% precision"),
-                                     actionButton("furukawa", "Furukawa (2021) - stem", disabled = TRUE),
-                                     actionButton("bom_rachinger", "Bom and Rachinger (2019) - endogenous kink", disabled = TRUE),
-                                     actionButton("andrews_kasy", "Andrews and Kasy (2019)", disabled = TRUE),
-                                     style = "margin-bottom: 15px;"
-                              )
-                            ),
-                            h6("Customize"),
                             selectInput("estimation", "Meta model:",
-                                        choices = c("Mean", "UWLS", "FAT-PET", "PEESE"),
+                                        choices = c("Mean", "FAT-PET", "PEESE"),
                                         selected = "Mean"),
-                            checkboxInput("prec_weighted", "Precision weighted", value = FALSE),
-                            uiOutput("equation_display"),
+                            checkboxInput("prec_weighted", "Precision weighted (weights = 1/SE^2)", value = FALSE),
                             htmlOutput("meta_analysis_table"),
                             selectInput("stats", "Statistics:",
                                         choices = list("Standard Error" = "se = {std.error}", 
@@ -380,7 +334,7 @@ ui <- fluidPage(
                               condition = "input.meta_modelplot == true",
                               plotOutput("meta_analysis_plot_effect"),
                               conditionalPanel(
-                                condition = "input.estimation != 'Mean' && input.estimation != 'UWLS'",
+                                condition = "input.estimation != 'Mean'",
                                 plotOutput("meta_analysis_plot_pbias")
                               )
                             )
@@ -512,11 +466,6 @@ server <- function(input, output, session) {
       }
     }
     
-    # Journal filter
-    if (input$journal_article) {
-      data_filtered <- data_filtered %>% filter(type == "journalArticle")
-    }
-    
     return(data_filtered)
   })
   
@@ -541,15 +490,15 @@ server <- function(input, output, session) {
     # Response variable filters summary
     if (input$filter_outcome != "All") {
       summary <- paste0(summary, "Response Variable: ", input$filter_outcome, "\n")
-    }
-    if (input$filter_transformation != "All") {
-      summary <- paste0(summary, "  Transformation: ", input$filter_transformation, "\n")
-    }
-    if (input$filter_periodicity != "All") {
-      summary <- paste0(summary, "  Periodicity: ", input$filter_periodicity, "\n")
-    }
-    if (input$filter_outcome_measure != "All") {
-      summary <- paste0(summary, "  Outcome Measure: ", input$filter_outcome_measure, "\n")
+      if (input$filter_transformation != "All") {
+        summary <- paste0(summary, "  Transformation: ", input$filter_transformation, "\n")
+      }
+      if (input$filter_periodicity != "All") {
+        summary <- paste0(summary, "  Periodicity: ", input$filter_periodicity, "\n")
+      }
+      if (input$filter_outcome_measure != "All") {
+        summary <- paste0(summary, "  Outcome Measure: ", input$filter_outcome_measure, "\n")
+      }
     }
 
     # Country filters summary
@@ -624,10 +573,10 @@ server <- function(input, output, session) {
     }
     
     # Available start and end year summary based on current filter selection (excluding year filter)
-    min_start_year <- min(filtered_data_no_years()$start_year, na.rm = TRUE)
-    max_start_year <- max(filtered_data_no_years()$start_year, na.rm = TRUE)
-    min_end_year <- min(filtered_data_no_years()$end_year, na.rm = TRUE)
-    max_end_year <- max(filtered_data_no_years()$end_year, na.rm = TRUE)
+    min_start_year <- min(filtered_data_no_years()$start_year)
+    max_start_year <- max(filtered_data_no_years()$start_year)
+    min_end_year <- min(filtered_data_no_years()$end_year)
+    max_end_year <- max(filtered_data_no_years()$end_year)
     # Selected start and end year summary
     selected_start_year <- input$filter_years[1]
     selected_end_year <- input$filter_years[2]
@@ -683,7 +632,7 @@ server <- function(input, output, session) {
     max_end_year <- max(filtered_data_no_years()$end_year, na.rm = TRUE)
     
     if (input$filter_years[1] > min_start_year || input$filter_years[2] < max_end_year) {
-      actionButton("reset_years", "Reset to maximal range", class = "btn-warning")
+      actionButton("reset_years", "Reset to maximal range")
     }
   })
   observeEvent(input$reset_years, {
@@ -726,7 +675,7 @@ server <- function(input, output, session) {
     } else {
       outcome_measures <- c("All", unique(data$outcome_measure))
     }
-    updateSelectInput(session, "filter_outcome_measure", choices = outcome_measures, selected = input$filter_outcome_measure)
+    updateSelectInput(session, "filter_outcome_measure", choices = outcome_measures, selected = "All")
   })
   # Updating filter_transformation
   observe({
@@ -735,7 +684,7 @@ server <- function(input, output, session) {
     } else {
       transformations <- c("All", unique(data$transformation))
     }
-    updateSelectInput(session, "filter_transformation", choices = transformations, selected = input$filter_transformation)
+    updateSelectInput(session, "filter_transformation", choices = transformations, selected = "All")
   })
   
   random_data <- reactiveVal(NULL)
@@ -885,16 +834,7 @@ server <- function(input, output, session) {
   
   # Average IRF
   output$averageIRFsPlot <- renderPlotly({
-    if (input$show_corrected_irf) {
-      corrected <- intercept_estimates()
-    } else {
-      corrected <- NULL
-    }
-    plot_average_irfs(filtered_data(), 
-                      period_limit = input$period_limit, 
-                      winsor = input$IRF_wins, 
-                      wins_par = input$funnel_wins,
-                      corrected_irf = corrected)
+    plot_average_irfs(filtered_data(), period_limit = input$period_limit)
   })
   
   # Model/Study counts plot
@@ -910,8 +850,7 @@ server <- function(input, output, session) {
                        prd = input$funnel_prd,
                        se_option = input$funnel_se_option,
                        wins = input$funnel_wins,
-                       opac = input$funnel_opac,
-                       ap = input$ap)
+                       opac = input$funnel_opac)
   })
   for (i in 1:16) {
     local({
@@ -925,7 +864,6 @@ server <- function(input, output, session) {
                            se_option = input$funnel_se_option,
                            wins = input$funnel_wins,
                            opac = input$funnel_opac,
-                           ap = input$ap,
                            legend = FALSE)
       })
     })
@@ -937,23 +875,10 @@ server <- function(input, output, session) {
     meta_analysis(data = filtered_data(),
                   outvar = input$filter_outcome,
                   se_option = input$funnel_se_option,
-                  periods = input$funnel_prd*1:20,
+                  periods = input$funnel_prd*1:16,
                   wins = input$funnel_wins,
-                  ap = input$ap,
                   prec_weighted = input$prec_weighted,
                   estimation = input$estimation)
-  })
-  # Equation display
-  equation <- reactive({
-    display_equation(input$estimation, input$prec_weighted)
-  })
-  output$equation_display <- renderUI({
-    withMathJax(
-      HTML(paste0(
-        "<p>Estimated equation:</p>",
-        equation()
-      ))
-    )
   })
   # Table 
   output$meta_analysis_table <- renderUI({
@@ -971,7 +896,7 @@ server <- function(input, output, session) {
   # Plot
   output$meta_analysis_plot_effect <- renderPlot({
     
-    if (input$estimation %in% c("Mean", "UWLS")) {
+    if (input$estimation == "Mean") {
       omit <- NULL
     } else if (input$estimation == "FAT-PET") {
       omit <- "standarderror_winsor"
@@ -997,49 +922,6 @@ server <- function(input, output, session) {
               title = "Meta-Analysis Plot", 
               background = b)
   })
-  # Estimation presets
-  # Unweighted average
-  observeEvent(list(input$unweighted_avg, input$unweighted_avg_irf), {
-    updateSelectInput(session, "estimation", selected = "Mean")
-    updateCheckboxInput(session, "prec_weighted", value = FALSE)
-    updateCheckboxInput(session, "ap", value = FALSE)
-    updateCheckboxInput(session, "precision_filter", value = "None")
-  })
-  # UWLS
-  observeEvent(list(input$uwls, input$uwls_irf), {
-    updateSelectInput(session, "estimation", selected = "UWLS")
-    updateCheckboxInput(session, "prec_weighted", value = FALSE)
-    updateCheckboxInput(session, "ap", value = FALSE)
-    updateCheckboxInput(session, "precision_filter", value = "None")
-  })
-  # WAAP
-  observeEvent(list(input$waap, input$waap_irf), {
-    updateSelectInput(session, "estimation", selected = "UWLS")
-    updateCheckboxInput(session, "prec_weighted", value = FALSE)
-    updateCheckboxInput(session, "ap", value = TRUE)
-    updateCheckboxInput(session, "precision_filter", value = "None")
-  })
-  # FAT-PET
-  observeEvent(list(input$fat_pet, input$fat_pet_irf), {
-    updateSelectInput(session, "estimation", selected = "FAT-PET")
-    updateCheckboxInput(session, "prec_weighted", value = TRUE)
-    updateCheckboxInput(session, "ap", value = FALSE)
-    updateCheckboxInput(session, "precision_filter", value = "None")
-  })
-  # PEESE
-  observeEvent(list(input$peese, input$peese_irf), {
-    updateSelectInput(session, "estimation", selected = "PEESE")
-    updateCheckboxInput(session, "prec_weighted", value = TRUE)
-    updateCheckboxInput(session, "ap", value = FALSE)
-    updateCheckboxInput(session, "precision_filter", value = "None")
-  })
-  # Ioannidis et al. (2017) - top 10% precision
-  observeEvent(list(input$ioannidis, input$ioannidis_irf), {
-    updateSelectInput(session, "estimation", selected = "Mean")
-    updateCheckboxInput(session, "prec_weighted", value = TRUE)
-    updateCheckboxInput(session, "ap", value = FALSE)
-    updateCheckboxInput(session, "precision_filter", value = "Top Percentile")
-  })
   
   # Moderator summary table
   output$moderator_summary <- renderUI({
@@ -1062,30 +944,6 @@ server <- function(input, output, session) {
     datasummary_skim(mod_vars, output = "gt", type = "categorical", title = "Moderator variables in current selection")
 
   })
-  
-  # Corrected IRF
-  intercept_estimates <- reactive({
-    results <- reg_results()
-    
-    extract_intercepts <- function(results) {
-      intercepts <- lapply(results, function(model) {
-        ci <- confint(model, level = input$conf_level)
-        c(estimate = coef(model)[1],
-          lower = ci[1, 1],
-          upper = ci[1, 2])
-      })
-      
-      data.frame(
-        period = as.numeric(names(results)),
-        estimate = sapply(intercepts, function(x) x["estimate"]),
-        lower = sapply(intercepts, function(x) x["lower"]),
-        upper = sapply(intercepts, function(x) x["upper"])
-      )
-    }
-    
-    extract_intercepts(results)
-  })
-  
 }
 
 shinyApp(ui = ui, server = server)

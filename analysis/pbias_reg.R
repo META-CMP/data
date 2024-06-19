@@ -4,7 +4,7 @@ gc() #free up memory and report the memory usage.
 
 setwd("~/data")
 #Load data by running data_prep script
-source("analysis/data_prep.R")
+source("data/data_prep.R")
 
 
 data_back<-data

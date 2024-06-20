@@ -12,6 +12,6 @@ json.irf.join <- final_join(json_path = "data/full_text_screening/JSON_files", i
 data<-json.irf.join
 
 save(data,file = "preliminary_data.RData")
-save(data,file = "data/preliminary_data_18062024.RData")
+save(data,file = "data/preliminary_data_20062024.RData")
 
 

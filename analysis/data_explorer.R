@@ -10,29 +10,29 @@ library(modelsummary)
 library(ggplot2)
 
 # Load the data 
-data_path <- here("data/preliminary_data_14062024.RData")
+data_path <- here("data/preliminary_data_test.RData")
 # data_path <- here("data/preliminary_data_12062024.RData")
 load(data_path)
 rm(data_path)
 # data <- data[1:10000,] # For testing
 
-# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
-# Splitting emp and unemp
-data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
-data$outcome <- ifelse(is.na(data$outcome_measure), "rate", data$outcome)
-# Renaming gdp to output
-data$outcome <- ifelse(data$outcome == "gdp", "output", data$outcome)
-# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
-# Calculate new confidence bounds for 68%, 90%, and 95% intervals
-crit_val_68 <- qnorm(0.84)  # crit_val for 68% confidence interval
-crit_val_90 <- qnorm(0.95)  # crit_val for 90% confidence interval
-crit_val_95 <- qnorm(0.975)  # crit_val for 95% confidence interval
-data$approx.CI.lower_68 <- data$mean.effect - crit_val_68 * data$SE.lower
-data$approx.CI.upper_68 <- data$mean.effect + crit_val_68 * data$SE.upper
-data$approx.CI.lower_90 <- data$mean.effect - crit_val_90 * data$SE.lower
-data$approx.CI.upper_90 <- data$mean.effect + crit_val_90 * data$SE.upper
-data$approx.CI.lower_95 <- data$mean.effect - crit_val_95 * data$SE.lower
-data$approx.CI.upper_95 <- data$mean.effect + crit_val_95 * data$SE.upper
+# # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
+# # Splitting emp and unemp
+# data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
+# data$outcome <- ifelse(is.na(data$outcome_measure), "rate", data$outcome)
+# # Renaming gdp to output
+# data$outcome <- ifelse(data$outcome == "gdp", "output", data$outcome)
+# # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
+# # Calculate new confidence bounds for 68%, 90%, and 95% intervals
+# crit_val_68 <- qnorm(0.84)  # crit_val for 68% confidence interval
+# crit_val_90 <- qnorm(0.95)  # crit_val for 90% confidence interval
+# crit_val_95 <- qnorm(0.975)  # crit_val for 95% confidence interval
+# data$approx.CI.lower_68 <- data$mean.effect - crit_val_68 * data$SE.lower
+# data$approx.CI.upper_68 <- data$mean.effect + crit_val_68 * data$SE.upper
+# data$approx.CI.lower_90 <- data$mean.effect - crit_val_90 * data$SE.lower
+# data$approx.CI.upper_90 <- data$mean.effect + crit_val_90 * data$SE.upper
+# data$approx.CI.lower_95 <- data$mean.effect - crit_val_95 * data$SE.lower
+# data$approx.CI.upper_95 <- data$mean.effect + crit_val_95 * data$SE.upper
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Extracting start and end year

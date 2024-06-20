@@ -19,17 +19,6 @@ rm(data_path)
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Renaming gdp to output
 data$outcome <- ifelse(data$outcome == "gdp", "output", data$outcome)
-# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
-# Calculate new confidence bounds for 68%, 90%, and 95% intervals
-# crit_val_68 <- qnorm(0.84)  # crit_val for 68% confidence interval
-# crit_val_90 <- qnorm(0.95)  # crit_val for 90% confidence interval
-# crit_val_95 <- qnorm(0.975)  # crit_val for 95% confidence interval
-# data$approx.CI.lower_68 <- data$mean.effect - crit_val_68 * data$SE.lower
-# data$approx.CI.upper_68 <- data$mean.effect + crit_val_68 * data$SE.upper
-# data$approx.CI.lower_90 <- data$mean.effect - crit_val_90 * data$SE.lower
-# data$approx.CI.upper_90 <- data$mean.effect + crit_val_90 * data$SE.upper
-# data$approx.CI.lower_95 <- data$mean.effect - crit_val_95 * data$SE.lower
-# data$approx.CI.upper_95 <- data$mean.effect + crit_val_95 * data$SE.upper
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Extracting start and end year
@@ -490,15 +479,15 @@ server <- function(input, output, session) {
     # Response variable filters summary
     if (input$filter_outcome != "All") {
       summary <- paste0(summary, "Response Variable: ", input$filter_outcome, "\n")
-      if (input$filter_transformation != "All") {
-        summary <- paste0(summary, "  Transformation: ", input$filter_transformation, "\n")
-      }
-      if (input$filter_periodicity != "All") {
-        summary <- paste0(summary, "  Periodicity: ", input$filter_periodicity, "\n")
-      }
-      if (input$filter_outcome_measure != "All") {
-        summary <- paste0(summary, "  Outcome Measure: ", input$filter_outcome_measure, "\n")
-      }
+    }
+    if (input$filter_transformation != "All") {
+      summary <- paste0(summary, "  Transformation: ", input$filter_transformation, "\n")
+    }
+    if (input$filter_periodicity != "All") {
+      summary <- paste0(summary, "  Periodicity: ", input$filter_periodicity, "\n")
+    }
+    if (input$filter_outcome_measure != "All") {
+      summary <- paste0(summary, "  Outcome Measure: ", input$filter_outcome_measure, "\n")
     }
 
     # Country filters summary
@@ -573,10 +562,10 @@ server <- function(input, output, session) {
     }
     
     # Available start and end year summary based on current filter selection (excluding year filter)
-    min_start_year <- min(filtered_data_no_years()$start_year)
-    max_start_year <- max(filtered_data_no_years()$start_year)
-    min_end_year <- min(filtered_data_no_years()$end_year)
-    max_end_year <- max(filtered_data_no_years()$end_year)
+    min_start_year <- min(filtered_data_no_years()$start_year, na.rm = TRUE)
+    max_start_year <- max(filtered_data_no_years()$start_year, na.rm = TRUE)
+    min_end_year <- min(filtered_data_no_years()$end_year, na.rm = TRUE)
+    max_end_year <- max(filtered_data_no_years()$end_year, na.rm = TRUE)
     # Selected start and end year summary
     selected_start_year <- input$filter_years[1]
     selected_end_year <- input$filter_years[2]
@@ -675,7 +664,7 @@ server <- function(input, output, session) {
     } else {
       outcome_measures <- c("All", unique(data$outcome_measure))
     }
-    updateSelectInput(session, "filter_outcome_measure", choices = outcome_measures, selected = "All")
+    updateSelectInput(session, "filter_outcome_measure", choices = outcome_measures, selected = input$filter_outcome_measure)
   })
   # Updating filter_transformation
   observe({
@@ -684,7 +673,7 @@ server <- function(input, output, session) {
     } else {
       transformations <- c("All", unique(data$transformation))
     }
-    updateSelectInput(session, "filter_transformation", choices = transformations, selected = "All")
+    updateSelectInput(session, "filter_transformation", choices = transformations, selected = input$filter_transformation)
   })
   
   random_data <- reactiveVal(NULL)

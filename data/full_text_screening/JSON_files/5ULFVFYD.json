@@ -14,7 +14,7 @@
         "inttype": "lev_a_ssr",
         "size": "null",
         "axis_trans": false,
-        "dep": "logdiff_a_rip logdiff_a_deflator",
+        "dep": "logdiff_a_rip log_m_deflator",
         "conf": "95",
         "main": "gdp inflation",
         "prefer": true

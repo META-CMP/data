@@ -230,6 +230,7 @@ ui <- fluidPage(
                               )
                             ),
                             plotlyOutput("averageIRFsPlot"),
+                            checkboxInput("IRF_wins", "Winsorize?", value = FALSE),
                             checkboxInput("show_counts_plot", "Show Model/Study Counts Plot", value = FALSE),
                             conditionalPanel(
                               condition = "input.show_counts_plot == true",
@@ -823,7 +824,7 @@ server <- function(input, output, session) {
   
   # Average IRF
   output$averageIRFsPlot <- renderPlotly({
-    plot_average_irfs(filtered_data(), period_limit = input$period_limit)
+    plot_average_irfs(filtered_data(), period_limit = input$period_limit, winsor = input$IRF_wins, wins_par = input$funnel_wins)
   })
   
   # Model/Study counts plot

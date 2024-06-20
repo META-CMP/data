@@ -34,12 +34,12 @@
         "axis_trans": {
                 "model_1": false,
                 "model_2": false,
-                "model_3": "log_m_cpi_y*100",
+                "model_3": "y*100 lev_m_une_rate_false lev_a_1_year_gov_false",
                 "model_4": false,
                 "model_5": false,
-                "model_6": "log_m_cpi_y*100",
-                "model_7": "log_m_cpi_y*100",
-                "model_8": "log_m_cpi_y*100"
+                "model_6": "y*100 lev_m_une_rate_false lev_a_1_year_gov_false",
+                "model_7": "y*100 lev_m_une_rate_false lev_a_1_year_gov_false",
+                "model_8": "y*100 lev_m_une_rate_false lev_a_1_year_gov_false"
         },
         "dep": "log_m_ip lev_m_une_rate log_m_cpi",
         "conf": "90",

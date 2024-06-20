@@ -3,12 +3,12 @@
         "key": "SPFNXCNA", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "cum: set to true because of IRF pattern", 
         "model_notes": "null", 
         "figure": 2, 
         "page": 524, 
         "irf": true,
-        "cum": false
+        "cum": true
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_3_month_money_market", 

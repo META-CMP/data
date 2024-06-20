@@ -19,11 +19,11 @@
     "impulse_and_response_variables": { 
         "inttype": "lev_a_fed_funds", 
         "size": {
-          "model_1": "-62bp",
-          "model_2": "-53bp"
+          "model_1": "-50bp",
+          "model_2": "-50bp"
         }, 
         "axis_trans": false, 
-        "dep": "logdiff_q_rgdp logdiff_a_deflator", 
+        "dep": "log_q_rgdp logdiff_a_deflator", 
         "conf": "95", 
         "main": "gdp inflation", 
         "prefer": {

@@ -26,7 +26,7 @@
           "model_5": "93, 94, 95 & 95"
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",

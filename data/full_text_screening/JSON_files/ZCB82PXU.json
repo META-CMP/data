@@ -37,7 +37,12 @@
           "model_3": "lev_a_eonia",
           "model_4": "lev_a_ssr"
         },
-        "size": "-100bp",
+        "size": {
+          "model_1": "-100bp",
+          "model_2": "-100bp",
+          "model_3": "-100bp",
+          "model_4": "null"
+        },
         "axis_trans": false,
         "dep": {
           "model_1": "log_q_rgdp logdiff_a_deflator log_q_emp",

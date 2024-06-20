@@ -5,8 +5,8 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-                "model_1": "decomposition: decomposition between central bank information shock and pure monetary policy surprises, onle the pure monetary policy surprise is used.; results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.", 
-                "model_2": "decomposition: decomposition between central bank information shock and pure monetary policy surprises, onle the pure monetary policy surprise is used.; results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.",
+                "model_1": "cum: has been set to false to account for the fact that logdiff_q_cpi is most likely non-cumulative according to the shape of the IRF. logdiff_q_rgdp has been coded as log_q_rgdp because the authors report the cumulative IRF for gdp.; decomposition: decomposition between central bank information shock and pure monetary policy surprises, onle the pure monetary policy surprise is used.; results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.", 
+                "model_2": "cum: has been set to false to account for the fact that logdiff_q_cpi is most likely non-cumulative according to the shape of the IRF. logdiff_q_rgdp has been coded as log_q_rgdp because the authors report the cumulative IRF for gdp.; decomposition: decomposition between central bank information shock and pure monetary policy surprises, onle the pure monetary policy surprise is used.; results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.",
                 "model_3": "decomposition: decomposition between central bank information shock and pure monetary policy surprises, onle the pure monetary policy surprise is used.; results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds.",
                 "model_4": "decomposition: decomposition between central bank information shock and pure monetary policy surprises, onle the pure monetary policy surprise is used.; results for dep logdiff_q_rgdp logdiff_q_cpi are cumulative impulse response, except for lev_a_fed_funds."
         },
@@ -24,17 +24,22 @@
         },
         "irf": true,
         "cum": {
-                "model_1": true,
-                "model_2": true,
-                "model_3": true,
-                "model_4": true
+                "model_1": false,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false
         }
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
         "size": "25bp",
         "axis_trans": false,
-        "dep": "logdiff_q_rgdp logdiff_q_cpi",
+        "dep": {
+                "model_1": "log_q_rgdp logdiff_q_cpi",
+                "model_2": "log_q_rgdp logdiff_q_cpi",
+                "model_3": "logdiff_q_rgdp logdiff_q_cpi",
+                "model_4": "logdiff_q_rgdp logdiff_q_cpi"
+        },
         "conf": "68",
         "main": "other",
         "prefer": {

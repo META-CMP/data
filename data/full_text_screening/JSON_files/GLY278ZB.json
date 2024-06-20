@@ -26,7 +26,7 @@
         "inttype": "lev_a_3_month_interbank",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "logdiff_q_gap logdiff_a_deflator",
+        "dep": "logdiff_q_rgdp logdiff_a_deflator",
         "conf": "90",
         "main": "other gdp inflation",
         "prefer": {

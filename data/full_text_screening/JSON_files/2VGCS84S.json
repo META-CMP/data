@@ -3,7 +3,7 @@
         "key": "2VGCS84S",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "they consider here that the three-month money market rate (i.e., the three-month PIBOR before 1999 and the three-month EURIBOR afterwards) is an appropriate measure of the monetary policy stance in France over the period from 1993 to 2009; then I will code in inttype euribor.",
+        "study_notes": "cum: set to true because of IRF pattern; they consider here that the three-month money market rate (i.e., the three-month PIBOR before 1999 and the three-month EURIBOR afterwards) is an appropriate measure of the monetary policy stance in France over the period from 1993 to 2009; then I will code in inttype euribor.",
         "model_notes": {
           "model_1": "they include Macro factors + LIQ Factors",
           "model_2": "they include Macro factors + LEV1 Factors",
@@ -20,7 +20,7 @@
           "model_3": 101
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_1_month_euribor",

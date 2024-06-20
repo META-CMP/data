@@ -9,6 +9,8 @@ error_jsons <- c(
 
 json.irf.join <- final_join(json_path = "data/full_text_screening/JSON_files", irf_path = "data/effect_sizes/IRFs/", only_json = FALSE, ignore = error_jsons)
 
-save(json.irf.join,file = "data/preliminary_data_14062024.RData")
+data<-json.irf.join
+
+save(data,file = "preliminary_data.RData")
 
 

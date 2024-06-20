@@ -3,7 +3,7 @@
         "key": "MBFJDGHM",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "lrir: is the forward rate agreement rate. dep: the authors use the cpi excluding regulated prices. conf: confidence bounds for models 9 and 10 are not explicitly defined as 95%, but most probably represent 95%",
+        "study_notes": "lrir: is the forward rate agreement. dep: the authors use the cpi excluding regulated prices. conf: confidence bounds for models 9 and 10 are not explicitly defined as 95%, but most probably represent 95%",
         "model_notes": "null",
         "figure": {
           "model_1": 1,

@@ -25,22 +25,21 @@ We detailed our search strategy for potentially relevant literature in [Sec. 3.3
 
 [^1]: See Sec. 3.3 of the pre-registration for details.
 
-- The raw results and procedural details of our EconLit search can be accessed [here](data/study search/database search/raw/EconLit search/README.md).
-- The raw results and procedural details of our Google Scholar search can be accessed [here](data/study search/database search/raw/Google Scholar search//README.md).
+- The raw results and procedural details of our EconLit search can be accessed [here](data/study_search/database_search/raw/EconLit_search).
+- The raw results and procedural details of our Google Scholar search can be accessed [here](data/study_search/database_search/raw/Google_Scholar_search).
 
+This yielded 7455 bibliographic entries from our EconLit search and 10810 bibliographic entries from our Google scholar search. The merged file can be accessed [here](). After de-duplication, checks for the availability of abstracts and the inclusion of additional studies from related existing meta-studies[^2], our consolidated dataset of primary studies with available abstracts totaled at 10714 entries.
 
-This yielded 7455 bibliographic entries from our EconLit search and 10810 bibliographic entries from our Google scholar search.  After deduplication of these entries and checks for the availablity of abstracts, our consolidated dataset of primary studies able to enter abstract screening totaled at 10714 entries.
-
+[^2]: See [here](https://github.com/META-CMP/data/tree/main/data/study%20search/database%20search/processed/preparation%20for%20abstract%20screening#3) for details on the additions from existing meta-studies.
 ...
 
 
 
-- outline steps to get to our dataset
-- refer to folder and files
-- refer to more detailed documentation therin
-- 
-- check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
-- check if something important in quarto docs
+- [ ] outline steps to get to our dataset
+- [ ] refer to folder and files
+- [ ] refer to more detailed documentation therin
+- [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
+- [ ] check if something important in quarto docs
 
 
 ### Abstract screening

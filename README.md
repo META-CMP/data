@@ -1,3 +1,9 @@
+
+# TO DOs:
+
+- [ ] All links working correctly?
+
+
 # Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy
 
 This repository contains all raw and transformed data for our [pre-registered meta-study on the macroeconomic effects of conventional monetary policy](https://osf.io/cduq4). Below, we refer to the documentation of our data collection, management and transformation, as well as scripts for our data analyses.
@@ -14,7 +20,16 @@ The pre-registration and the pre-analysis plan for our meta-study can be found a
 
 ### Literature data base search
 
-We detailed our literature search strategy in [Sec. 3.4](https://osf.io/4jxk3) of our pre-registration. 
+As a first step, we conducted a comprehensive search for literature that estimates effects of monetary policy shocks on output, (un)employment or the price level.
+We detailed our search strategy for potentially relevant literature in [Sec. 3.3 and 3.4 of our pre-registration](https://osf.io/4jxk3). We used the [EconLit](https://www.aeaweb.org/econlit/) and the [Google Scholar](https://scholar.google.com/) databases for our search of primary studies. Due to differences in their search behaviour[^1], we decided to use one comprehensive query for EconLit and multiple simpler search queries for Google Scholar.
+
+[^1]: See Sec. 3.3 of the pre-registration for details.
+
+- The raw results and procedural details of our EconLit search can be accessed [here](data/study search/database search/raw/EconLit search/README.md).
+- The raw results and procedural details of our Google Scholar search can be accessed [here](data/study search/database search/raw/Google Scholar search//README.md).
+
+
+This yielded 7455 bibliographic entries from our EconLit search and 10810 bibliographic entries from our Google scholar search.  After deduplication of these entries and checks for the availablity of abstracts, our consolidated dataset of primary studies able to enter abstract screening totaled at 10714 entries.
 
 ...
 

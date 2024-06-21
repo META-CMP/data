@@ -28,23 +28,26 @@ We detailed our search strategy for potentially relevant literature in [Sec. 3.3
 - The raw results and procedural details of our EconLit search can be accessed [here](data/study_search/database_search/raw/EconLit_search).
 - The raw results and procedural details of our Google Scholar search can be accessed [here](data/study_search/database_search/raw/Google_Scholar_search).
 
-This yielded 7455 bibliographic entries from our EconLit search and 10810 bibliographic entries from our Google scholar search. The merged file can be accessed [here](). After de-duplication, checks for the availability of abstracts and the inclusion of additional studies from related existing meta-studies[^2], our consolidated dataset of primary studies with available abstracts totaled at 10714 entries.
+This yielded 7455 bibliographic entries from our EconLit search and 10810 bibliographic entries from our Google scholar search. After de-duplication, checks for the availability of abstracts and the inclusion of additional studies from related existing meta-studies (see [here](data/study_search/database_search/processed
+/preparation_for_abstract_screening) for detailed documentation of these steps and related files), our consolidated dataset of primary studies with available abstracts totaled at 10714 entries.
 
-[^2]: See [here](https://github.com/META-CMP/data/tree/main/data/study%20search/database%20search/processed/preparation%20for%20abstract%20screening#3) for details on the additions from existing meta-studies.
-...
+- [x] outline steps to get to our dataset
+- [x] refer to folder and files
+- [x] refer to more detailed documentation therin
+- [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
+- [ ] check if something important in quarto docs
 
+### Abstract screening
 
+Our dataset of 10714 studies then entered into the artificial intelligence-supported abstract screening to excluded clearly ineligible studies according our eligibility criteria as defined in [Sec. 3.5 of our pre-registration](https://osf.io/4jxk3). The title and abstract screening was conducted independently by two researchers using [ASReview](https://asreview.nl/). [Sec. 3.6.1 of our pre-registration](https://osf.io/4jxk3) presents the details of the abstract screening process. [Sec. 3.7.1 of our pre-registration](https://osf.io/4jxk3) defines the stopping rules for the abstract screening phase. See [here](data/study search/database search/processed/abstract_screening) for documentation and related files of the abstract screening.
 
+- [ ] Store final ASReview files
+- [ ] Refer to AS rules and criteria in pre-reg
 - [ ] outline steps to get to our dataset
 - [ ] refer to folder and files
 - [ ] refer to more detailed documentation therin
 - [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
 - [ ] check if something important in quarto docs
-
-
-### Abstract screening
-
-...
 
 ### Full text screening
 

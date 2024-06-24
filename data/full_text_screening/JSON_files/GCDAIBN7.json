@@ -3,7 +3,7 @@
         "key": "GCDAIBN7",
         "rid1": "dr",
         "rid2": "fp",
-        "study_notes": "null",
+        "study_notes": "axis_trans: set to interpretation in the papers text. ",
         "model_notes": "null",
         "figure": {
           "model_1": "A.7-row 1",
@@ -21,7 +21,11 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
         "size": "1%",
-        "axis_trans": false,
+        "axis_trans": {
+          "model_1": "y*100 lev_a_fed_funds_false",
+          "model_2": "y*100 lev_a_fed_funds_false",
+          "model_3": "y*10 lev_a_fed_funds_false"
+        },
         "dep": "log_m_ip logdiff_a_cpi",
         "conf": "95",
         "main": "other",

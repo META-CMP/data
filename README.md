@@ -1,5 +1,5 @@
 
-# TO DOs:
+__TO DOs:__
 
 - [ ] Renaming of paths with spaces " "
 - [ ] Rework of folder structure? Does it all make sense?
@@ -7,7 +7,10 @@
 - [ ] Make consistent throughout repe: 10714 vs 10,714
 - [ ] Delete outdated or irrelevant files
 - [ ] All sub-README.md's mentioned in main README.md?
-
+- [ ] Die `packages_for_full_text_download` aus der Nextcloud in den post-AS Ordner überschreiben? 
+- [ ] Codebook aktuell?
+- [ ] How to Issues aktuell?
+- [ ] Alle variablen (auch die aus xlsx files etc.) definiert (idealerweise im codebook)?
 
 # Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy
 
@@ -25,7 +28,7 @@ This repository contains all raw and transformed data for our [pre-registered me
 As a first step, we conducted a comprehensive search for literature that estimates effects of monetary policy shocks on output, (un)employment or the price level.
 We detailed our search strategy for potentially relevant literature in [Sec. 3.3 and 3.4 of our pre-registration](https://osf.io/4jxk3). We used the [EconLit](https://www.aeaweb.org/econlit/) and the [Google Scholar](https://scholar.google.com/) databases for our search of primary studies. Due to differences in their search behaviour[^1], we decided to use one comprehensive query for EconLit and multiple simpler search queries for Google Scholar.
 
-[^1]: See Sec. 3.3 of the pre-registration for details.
+[^1]: Check [Sec. 3.3 of the pre-registration](https://osf.io/4jxk3) for details.
 
 - The raw results and procedural details of our EconLit search can be accessed [here](data/study_search/database_search/raw/EconLit_search).
 - The raw results and procedural details of our Google Scholar search can be accessed [here](data/study_search/database_search/raw/Google_Scholar_search).
@@ -43,19 +46,38 @@ This yielded 7455 bibliographic entries from our EconLit search and 10810 biblio
 
 Our dataset of 10714 studies then entered into the artificial intelligence-supported abstract screening to excluded clearly ineligible studies according to our eligibility criteria as defined in [Sec. 3.5 of our pre-registration](https://osf.io/4jxk3). The title and abstract screening was conducted independently by two researchers using [ASReview](https://asreview.nl/). [Sec. 3.6.1 of our pre-registration](https://osf.io/4jxk3) presents the details of the abstract screening process. [Sec. 3.7.1 of our pre-registration](https://osf.io/4jxk3) defines the stopping rules for the abstract screening phase. See [here](data/study_search/database_search/processed/abstract_screening) for further documentation and related files of the abstract screening.
 
+After the abstract screening we conducted some validity tests as well as agreement and overlap analysis on the merged abstract screening data of both screeners. We then randomized the order of the potentially relevant studies and prepared files to assist and document the full text download.[^2] See [here](data/study_search/database_search/processed/post_AS/testing_merging_dowload_prep.pdf) for the documentation and [here](data/study_search/database_search/processed/post_AS/testing_and_merging_of_AS_data.R) for the R code for these steps. 
+
+[^2]: See [here](data/study_search/database_search/processed/post_AS/full_text_download_HIWI_sheet.pdf) for the guidance for the full text download.
+
 - [x] Store final ASReview files
 - [x] Refer to AS rules and criteria in pre-reg
-- [ ] outline steps to get to our dataset
+- [X] outline steps to get to our dataset
 - [ ] refer to folder and files
 - [ ] refer to more detailed documentation therin
 - [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
 - [ ] check if something important in quarto docs
 
+
 ### Full text screening
+
 
 ...
 
+- [ ] Study download
+- [ ] Refer to stopping rules and criteria in pre-reg
+- [ ] outline steps to get to our dataset
+- [ ] refer to folder and files, also JSONs
+- [ ] refer to more detailed documentation therin
+- [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
+- [ ] check if something important in quarto docs
+- [ ] Refer to data extraction with webplotdigit
+- [ ] Refer to doublechecks?
+
+
 ### Snowballing
+
+### Diagramm
 
 ### External data
 

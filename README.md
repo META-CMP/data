@@ -1,18 +1,20 @@
 
 # TO DOs:
 
+- [ ] Renaming of paths with spaces " "
+- [ ] Rework of folder structure? Does it all make sense?
 - [ ] All links working correctly?
+- [ ] Make consistent throughout repe: 10714 vs 10,714
+- [ ] Delete outdated or irrelevant files
+- [ ] All sub-README.md's mentioned in main README.md?
 
 
 # Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy
 
 This repository contains all raw and transformed data for our [pre-registered meta-study on the macroeconomic effects of conventional monetary policy](https://osf.io/cduq4). Below, we refer to the documentation of our data collection, management and transformation, as well as scripts for our data analyses.
 
----
-
-## Pre-registration and pre-analysis plan
-
-The pre-registration and the pre-analysis plan for our meta-study can be found at [https://osf.io/cduq4](https://osf.io/cduq4).
+> [!IMPORTANT]
+> The pre-registration and the pre-analysis plan for our meta-study can be found at [https://osf.io/cduq4](https://osf.io/cduq4).
 
 ---
 
@@ -39,10 +41,10 @@ This yielded 7455 bibliographic entries from our EconLit search and 10810 biblio
 
 ### Abstract screening
 
-Our dataset of 10714 studies then entered into the artificial intelligence-supported abstract screening to excluded clearly ineligible studies according our eligibility criteria as defined in [Sec. 3.5 of our pre-registration](https://osf.io/4jxk3). The title and abstract screening was conducted independently by two researchers using [ASReview](https://asreview.nl/). [Sec. 3.6.1 of our pre-registration](https://osf.io/4jxk3) presents the details of the abstract screening process. [Sec. 3.7.1 of our pre-registration](https://osf.io/4jxk3) defines the stopping rules for the abstract screening phase. See [here](data/study search/database search/processed/abstract_screening) for documentation and related files of the abstract screening.
+Our dataset of 10714 studies then entered into the artificial intelligence-supported abstract screening to excluded clearly ineligible studies according to our eligibility criteria as defined in [Sec. 3.5 of our pre-registration](https://osf.io/4jxk3). The title and abstract screening was conducted independently by two researchers using [ASReview](https://asreview.nl/). [Sec. 3.6.1 of our pre-registration](https://osf.io/4jxk3) presents the details of the abstract screening process. [Sec. 3.7.1 of our pre-registration](https://osf.io/4jxk3) defines the stopping rules for the abstract screening phase. See [here](data/study_search/database_search/processed/abstract_screening) for further documentation and related files of the abstract screening.
 
-- [ ] Store final ASReview files
-- [ ] Refer to AS rules and criteria in pre-reg
+- [x] Store final ASReview files
+- [x] Refer to AS rules and criteria in pre-reg
 - [ ] outline steps to get to our dataset
 - [ ] refer to folder and files
 - [ ] refer to more detailed documentation therin
@@ -52,6 +54,8 @@ Our dataset of 10714 studies then entered into the artificial intelligence-suppo
 ### Full text screening
 
 ...
+
+### Snowballing
 
 ### External data
 
@@ -68,5 +72,10 @@ Our dataset of 10714 studies then entered into the artificial intelligence-suppo
 ---
 
 ## Data analyses
+
+
+> [!IMPORTANT]
+> At the moment, this repo also contains our analysis scripts and results. But we should think about creating a separate repo for this within our organization.
+
 
 ...

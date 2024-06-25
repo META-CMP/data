@@ -3,12 +3,12 @@
         "key": "BJK49CEK",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "dr: quality concern because of the plots; set cum to true because IRF pattern.",
         "model_notes": "dep: output gap is estimated using industrial production.",
         "figure": 2,
         "page": 11,
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_1_year_gov",

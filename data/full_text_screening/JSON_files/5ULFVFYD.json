@@ -3,18 +3,18 @@
         "key": "5ULFVFYD",
         "rid1": "fp",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "cum: set cum to true because IRF pattern.",
         "model_notes": "null",
         "figure": 9,
         "page": 325,
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_ssr",
         "size": "null",
         "axis_trans": false,
-        "dep": "logdiff_a_rip logdiff_a_deflator",
+        "dep": "logdiff_a_rip logdiff_m_deflator",
         "conf": "95",
         "main": "gdp inflation",
         "prefer": true

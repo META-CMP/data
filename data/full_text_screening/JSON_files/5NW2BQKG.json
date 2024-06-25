@@ -3,7 +3,7 @@
         "key": "5NW2BQKG",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "dep: inflation response does not look as if the non-cumulative IRF of quarterly inflation is displayed (maybe through long run structure implied).",
+        "study_notes": "set cum to true because IRF pattern; dep: inflation response does not look as if the non-cumulative IRF of quarterly inflation is displayed (maybe through long run structure implied); Page 149 the paper stated: to obtain the impulse responses of the price level, we accumulate responses of the inflation rate to the monetary shock.",
         "model_notes": "null",
         "figure": {
                 "model_1": 1,

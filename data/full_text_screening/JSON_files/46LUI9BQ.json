@@ -25,7 +25,7 @@
           "model_1": "1SD",
           "model_2": "null"
         },
-        "axis_trans": false,
+        "axis_trans": "y*100 lev_a_3_month_gov_false",
         "dep": {
           "model_1": "log_m_ip log_m_cpi",
           "model_2": "logdiff_m_ip logdiff_m_cpi"

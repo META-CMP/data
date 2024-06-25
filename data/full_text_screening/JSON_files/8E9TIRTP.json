@@ -3,7 +3,7 @@
         "key": "8E9TIRTP",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "cum: set cum to true because IRF pattern.",
         "model_notes": {
           "model_1": "estimated response functions with the number of leads of the VAR residuals included in the regression of the proxy equal to 0 (standard method).",
           "model_2": "estimated response functions with the number of leads of the VAR residuals included in the regression of the proxy equal to 6 (proposed method).",

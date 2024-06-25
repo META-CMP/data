@@ -9,23 +9,26 @@
                 "model_1": 2,
                 "model_2": 3,
                 "model_3": 4,
-                "model_4": 5,
-                "model_5": 5
+                "model_4": 4,
+                "model_5": 5,
+                "model_6": 5
         },   
         "page": {
                 "model_1": 6,
                 "model_2": 8,
-                "model_3": 9,
-                "model_4": 10,
-                "model_5": 10
+                "model_3": 8,
+                "model_4": 9,
+                "model_5": 10,
+                "model_6": 10
         },   
         "irf": true,
         "cum": {
-                "model_1": false,
+                "model_1": true,
                 "model_2": true,
                 "model_3": true,
-                "model_4": false,
-                "model_5": false
+                "model_4": true,
+                "model_5": false,
+                "model_6": false
         }
     }, 
     "impulse_and_response_variables": { 
@@ -33,11 +36,12 @@
         "size": "100bp", 
         "axis_trans": false,  
         "dep": {
-                "model_1": "log_m_ip log_m_cpi lev_m_une_rate",
+                "model_1": "logdiff_m_ip logdiff_m_cpi lev_m_une_rate",
                 "model_2": "logdiff_m_ip logdiff_m_cpi",
-                "model_3": "logdiff_m_rgdp logdiff_m_deflator",
-                "model_4": "log_m_ip log_m_cpi",
-                "model_5": "log_m_ip log_m_cpi"
+                "model_3": "logdiff_m_ip logdiff_m_cpi",
+                "model_4": "logdiff_m_rgdp logdiff_m_deflator",
+                "model_5": "log_m_ip log_m_cpi",
+                "model_6": "log_m_ip log_m_cpi"
         }, 
         "conf": "1_SE", 
         "main": "gdp inflation", 
@@ -46,7 +50,8 @@
                 "model_2": false,
                 "model_3": false,
                 "model_4": false,
-                "model_5": false
+                "model_5": false,
+                "model_6": false
         }    
     }, 
     "identification_strategy": { 
@@ -56,22 +61,25 @@
                 "model_2": false,
                 "model_3": true,
                 "model_4": true,
-                "model_5": false
+                "model_5": true,
+                "model_6": false
         }, 
         "nr": {
                 "model_1": true,
                 "model_2": false,
                 "model_3": true,
                 "model_4": true,
-                "model_5": false
+                "model_5": true,
+                "model_6": false
         }, 
         "event": false, 
         "chol": {
                 "model_1": false,
                 "model_2": true,
                 "model_3": false,
-                "model_4": true,
-                "model_5": true
+                "model_4": false,
+                "model_5": false,
+                "model_6": true
         },     
         "svar": false, 
         "signr": false, 
@@ -85,15 +93,17 @@
                 "model_1": false,
                 "model_2": false,
                 "model_3": false,
-                "model_4": true,
-                "model_5": true
+                "model_4": false,
+                "model_5": true,
+                "model_6": true
         },    
         "lp": {
                 "model_1": true,
                 "model_2": true,
                 "model_3": true,
-                "model_4": false,
-                "model_5": false
+                "model_4": true,
+                "model_5": false,
+                "model_6": false
         },    
         "vecm": false, 
         "dyn_ols": "false", 
@@ -138,22 +148,25 @@
                 "model_1": true,
                 "model_2": true,
                 "model_3": true,
-                "model_4": false,
-                "model_5": false
+                "model_4": true,
+                "model_5": false,
+                "model_6": false
         }, 
         "foreignir": {
                 "model_1": true,
                 "model_2": true,
                 "model_3": true,
-                "model_4": false,
-                "model_5": false
+                "model_4": true,
+                "model_5": false,
+                "model_6": false
         }, 
         "fx": {
                 "model_1": true,
                 "model_2": true,
                 "model_3": true,
                 "model_4": true,
-                "model_5": true
+                "model_5": true,
+                "model_6": true
         }, 
         "lrir": false 
     }, 

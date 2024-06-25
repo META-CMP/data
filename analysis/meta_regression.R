@@ -82,16 +82,15 @@ coef_test_data
 
 
 ######################## search for explaining factors of high precision: 
-library(car)
+
 #equation<-precvariance_winsor ~mean_year+regime+quality_concern+observations+main_research_q+outcome_measure+as.factor(periodicity)+as.factor(transformation)+cbanker+decomposition+convent+pure_rate_shock+lrir+fx+foreignir+inflexp+eglob+find+outpgap+comprice+panel+n_of_countries+us+month+quarter+upr+lor+varother+dsge+bayes+gvar+tvar+fvar+dyn_ols+vecm+lp+idother+longrun+heteroskedas+hf+signr+svar+chol+event+nr+forecast_based+iv+prefer+interest_rate_short+as.factor(rid1)+model_id
 
-equation<-precvariance_winsor ~mean_year+quality_concern+observations+main_research_q+relevel(as.factor(outcome_measure), ref = "gdp")+as.factor(periodicity)+relevel(as.factor(transformation), ref = "log")+cbanker+panel+n_of_countries+us+month+dsge+lp+prefer+as.factor(rid1)+model_id
+equation<-precvariance_winsor ~mean_year+quality_concern+observations+main_research_q+relevel(as.factor(transformation), ref = "log")+cbanker+panel+us+month+dsge+lp+signr+prefer
 # +fexch#+real_output # only for output regression
 
 periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
 results_list<-list()
-vif<-list()
-
+vif_list<-list()
 for (x in periods) {
   print(paste("Processing period:", x))
   
@@ -117,7 +116,7 @@ data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
 # Calculate PrecVariance winsorised
 data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
 
-dataspeed<-data_period_winsor %>% ungroup() %>% select(precvariance_winsor, mean_year, regime, quality_concern, observations, main_research_q, outcome_measure, periodicity,transformation, cbanker, decomposition, convent, pure_rate_shock, lrir, fx, foreignir, inflexp, eglob, find, outpgap, comprice, panel, n_of_countries, us, month, quarter, upr, lor, varother, dsge, bayes, gvar, tvar, fvar, dyn_ols, vecm, lp, idother, longrun, heteroskedas, hf, signr, svar, chol, event, nr, forecast_based, iv, prefer, interest_rate_short,rid1, model_id)
+dataspeed<-data_period_winsor %>% ungroup() %>% select(precvariance_winsor, mean_year,quality_concern,observations,main_research_q,transformation,cbanker,panel,us,month,dsge,lp,signr,prefer)
 
 anyNA(dataspeed)
 
@@ -127,8 +126,7 @@ test<-dataspeed %>%
 dataspeed<-na.omit(dataspeed)
 
 vif_values <- car::vif(lm(dataspeed))
-vif[[paste0(x, ".vif")]]<-vif_values
-
+vif_list[[paste0(x, ".vif")]] <- vif_values
 # Calculate (precision-weighted) average
 regwa <- lm(equation, data = data_period_winsor)#, weights = precvariance_winsor
 both_model <- step(regwa, direction = "both")
@@ -137,3 +135,5 @@ results_list[[paste0(x, ".ols")]] <- both_model
 
 
 modelsummary(results_list, output = "gt",stars = TRUE)
+
+vif_list

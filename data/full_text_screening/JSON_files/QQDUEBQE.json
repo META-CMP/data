@@ -3,12 +3,11 @@
         "key": "QQDUEBQE",
         "rid1": "me",
         "rid2": "ph",
-        "study_notes": "cum: set to true because of shape of the IRF.",
+        "study_notes": "cum: set to true because of shape of the IRF.; model_4 has been deleted as the authors state that they are not interested in the mean effect estimate in this case but just in the general shape of the IRF.",
         "model_notes": {
           "model_1": "signr: agnostic sign restrictions",
           "model_2": "signr: fully sign restricted",
-          "model_3": "null",
-          "model_4": "null"
+          "model_3": "null"
           },
         "figure": 3,
         "page": 109,
@@ -20,8 +19,7 @@
         "size": {
           "model_1": "1SD",
           "model_2": "1SD",
-          "model_3": "1SD",
-          "model_4": "null"
+          "model_3": "1SD"
         },
         "axis_trans": false,
         "dep": "logdiff_q_rgap gr_a_deflator",
@@ -37,22 +35,19 @@
         "chol": {
           "model_1": false,
           "model_2": false,
-          "model_3": true,
-          "model_4": false
+          "model_3": true
         },
         "svar": false,
         "signr": {
           "model_1": true,
           "model_2": true,
-          "model_3": false,
-          "model_4": false
+          "model_3": false
         },
         "hf": false,
         "heteroskedas": {
           "model_1": false,
           "model_2": false,
-          "model_3": false,
-          "model_4": true
+          "model_3": false
         },
         "longrun": false,
         "idother": false

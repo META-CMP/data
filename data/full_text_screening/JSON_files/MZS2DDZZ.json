@@ -5,14 +5,14 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-          "model_1": "estimate their baseline VAR with the new monetary policy measure ordered last in the recursive ordering.",
-          "model_2": "estimate our baseline VAR with the new monetary policy measure ordered first in the recursive ordering. This implies that contemporaneous macro economic fluctuations do not affect the policy decision other than via the forecasts.",
-          "model_3": "impulse response function from online Appendix B.B3, IRF shows that their results are to a larger specification, including adding unemployment and the actual policy rate.",
-          "model_4": "they estimate a quarterly VAR with GDP instead of industrial production.",
-          "model_5": "hybrid VAR based on inlation targeting sample: 1993-2007.",
-          "model_6": "they show the response of inflation in recursive VAR (Cholesky).",
+          "model_1": "cum: set to true because of IRF pattern.; estimate their baseline VAR with the new monetary policy measure ordered last in the recursive ordering.",
+          "model_2": "cum: set to true because of IRF pattern.; estimate our baseline VAR with the new monetary policy measure ordered first in the recursive ordering. This implies that contemporaneous macro economic fluctuations do not affect the policy decision other than via the forecasts.",
+          "model_3": "cum: set to true because of IRF pattern.; impulse response function from online Appendix B.B3, IRF shows that their results are to a larger specification, including adding unemployment and the actual policy rate.",
+          "model_4": "cum: set to true because of IRF pattern.; they estimate a quarterly VAR with GDP instead of industrial production.",
+          "model_5": "cum: set to true because of IRF pattern.; hybrid VAR based on inlation targeting sample: 1993-2007.",
+          "model_6": "cum: set to true because of IRF pattern.; they show the response of inflation in recursive VAR (Cholesky).",
           "model_7": "they show the response of unemployment using the single equation approach estimated using local projections in a quaterly frequency.",
-          "model_8": "conventional VAR using Bank Rate (Cholesky) after 1992."
+          "model_8": "cum: set to true because of IRF pattern.; conventional VAR using Bank Rate (Cholesky) after 1992."
         },
         "figure": {
           "model_1": 2,
@@ -35,7 +35,16 @@
           "model_8": "Appendix 18"
         },
         "irf": true,
-        "cum": false
+        "cum": {
+          "model_1": true,
+          "model_2": true,
+          "model_3": true,
+          "model_4": true,
+          "model_5": true,
+          "model_6": true,
+          "model_7": false,
+          "model_8": true
+        }
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_bank_rate",

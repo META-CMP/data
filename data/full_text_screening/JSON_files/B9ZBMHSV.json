@@ -6,18 +6,15 @@
         "study_notes": "the dependent variable is detrended using the Hodrick-Prescott (1997) filter with the proportionate deviations from the trend.",
         "model_notes": {
           "model_1": "they fixed the intertemporal elasticity of substitution equal to 1 (logarithmic utility), and the average real rate of return on financial assets equal to 7%, the average real rate of return of the S&P500 over the sample period; segmented markets where the households are all traders.",
-          "model_2": "An experiment where they allowed all parameters of the model to be estimated without fixing it to a specefic value; segmented market where the households are all traders.",
-          "model_3": "An experiment where they allowed all parameters of the model to be estimated without fixing it to a specefic value; full participation market where the households are traders and non-traders."
+          "model_2": "An experiment where they allowed all parameters of the model to be estimated without fixing it to a specefic value; segmented market where the households are all traders."
         },
         "figure": {
           "model_1": "1-row 2-left",
-          "model_2": "2-row 2-left",
-          "model_3": "2-row 2-right"
+          "model_2": "2-row 2-left"
         },
         "page": {
           "model_1": 27,
-          "model_2": 29,
-          "model_3": 29
+          "model_2": 29
         },
         "irf": true,
         "cum": false
@@ -31,8 +28,7 @@
         "main": "other",
         "prefer": {
           "model_1": true,
-          "model_2": false,
-          "model_3": false
+          "model_2": false
         }
     },
     "identification_strategy": {

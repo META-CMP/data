@@ -14,7 +14,7 @@
         "inttype": "lev_a_short_term_rate", 
         "size": "55bp", 
         "axis_trans": "y*100 lev_a_short_term_rate_false", 
-        "dep": "log_m_cpi logdiff_a_gap", 
+        "dep": "log_m_cpi lev_m_gap", 
         "conf": "95", 
         "main": "gdp  inflation", 
         "prefer": true 
@@ -75,7 +75,7 @@
         "cbind": false, 
         "fexch": false, 
         "inflexp": false, 
-        "foreignir": false, 
+        "foreignir": true, 
         "fx": true, 
         "lrir": false 
     }, 

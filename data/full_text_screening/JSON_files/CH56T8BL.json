@@ -3,7 +3,7 @@
         "key": "CH56T8BL",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "all models are estimated with a constant and a linear trend; in the FAVAR models 10 basis points in our specification and nine basis points in both alternative ones; then they standardize the monetary policy shock to correspond to a 25-basis-point innovation (hike) in the official interest rate; ",
+        "study_notes": "cum: set cum to true because IRF pattern; all models are estimated with a constant and a linear trend; in the FAVAR models 10 basis points in our specification and nine basis points in both alternative ones; then they standardize the monetary policy shock to correspond to a 25-basis-point innovation (hike) in the official interest rate.",
         "model_notes": {
           "model_1": "only observable variable is the policy instrument. Included 7 factors in FAVAR.",
           "model_2": "the policy instrument, the output (GDP) and the inflation (HICP) are the observables variables. Included 7 factors.", 

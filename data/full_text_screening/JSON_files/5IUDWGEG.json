@@ -31,7 +31,16 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_1_year_gov",
         "size": "100bp",
-        "axis_trans": false,
+        "axis_trans": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": "y*100 lev_m_une_rate_false lev_a_1_year_gov_false",
+                "model_4": false,
+                "model_5": false,
+                "model_6": "y*100 lev_m_une_rate_false lev_a_1_year_gov_false",
+                "model_7": "y*100 lev_m_une_rate_false lev_a_1_year_gov_false",
+                "model_8": "y*100 lev_m_une_rate_false lev_a_1_year_gov_false"
+        },
         "dep": "log_m_ip lev_m_une_rate log_m_cpi",
         "conf": "90",
         "main": "gdp emp inflation",

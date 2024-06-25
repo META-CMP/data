@@ -3,7 +3,7 @@
         "key": "BXRNZWTJ",
         "rid1": "fp",
         "rid2": "sg",
-        "study_notes": "For model_1, model_2, model_3, model_4, model_5, model_6, model_7, model_8 and model_9 they include data for many EA countries for the joint estimation and present EA-wide and country-specific IRFs. So we distinguish these country-specific IRFs as 'models_x' even though they all come from the same jointly estimated FAVAR model.",
+        "study_notes": "cum: set cum to true because IRF pattern and use log for variables inside models (to treat it as cumulative); for model_1, model_2, model_3, model_4, model_5, model_6, model_7, model_8 and model_9 they include data for many EA countries for the joint estimation and present EA-wide and country-specific IRFs. So we distinguish these country-specific IRFs as 'models_x' even though they all come from the same jointly estimated FAVAR model.",
         "model_notes": {
           "model_1": "start: Sample start and end vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",
           "model_2": "start: Sample start and end vary across (many) variables, but Q1-2000 and Q4-2016 is true for most.",

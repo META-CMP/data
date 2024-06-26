@@ -44,7 +44,7 @@
 #' modelsummary(results, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "Title here", gof_map = NULL)
 #'
 #' @export
-meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean") {
+meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE) {
   # Subset data for the specified outcome variable
   data <- subset(data, outcome %in% outvar)
   
@@ -54,6 +54,8 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
   # Define the equation to be estimated
   if (estimation == "Mean") {
     equation <- mean.effect_winsor ~ 1
+  } else if (estimation == "UWLS") {
+    equation <- t.stat_winsor ~ precision_winsor - 1
   } else if (estimation == "FAT-PET") {
     equation <- mean.effect_winsor ~ standarderror_winsor
   } else if (estimation == "PEESE") {
@@ -80,6 +82,18 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
     data_period$standarderror_winsor <- winsorizor(data_period$StandardError, percentile = wins)
     data_period$mean.effect_winsor <- winsorizor(data_period$mean.effect, percentile = wins)
     data_period$precision_winsor <- winsorizor(data_period$precision, percentile = wins)
+    
+    # Filter adequately powered if ap == TRUE
+    if (ap == TRUE) {
+      data_period$ap <- ifelse(data_period$standarderror_winsor <= abs(data_period$mean.effect_winsor)/2.8, 1, 0)
+      data_period <- data_period %>% 
+        filter(ap == 1)
+    }
+    
+    # Calculate t.stat_winsor for UWLS
+    if (estimation == "UWLS") {
+      data_period$t.stat_winsor <- data_period$mean.effect_winsor / data_period$standarderror_winsor
+    }
     
     # Calculate variance winsorized
     data_period$variance_winsor <- data_period$standarderror_winsor^2

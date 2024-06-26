@@ -39,7 +39,7 @@
 #' print(funnel_plot)
 #'
 #' @export
-create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02, legend = TRUE, opac = 0.15) {
+create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02, legend = TRUE, opac = 0.15, ap = FALSE) {
   # Filter the data for the specific period and outcome variable
   data_filtered <- data %>%
     filter(period.month == prd, outcome == outvar)
@@ -60,6 +60,13 @@ create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02
   data_filtered$standarderror_winsor <- winsorizor(data_filtered$StandardError, percentile = wins)
   data_filtered$mean.effect_winsor <- winsorizor(data_filtered$mean.effect, percentile = wins)
   data_filtered$precision_winsor <- winsorizor(data_filtered$precision, percentile = wins)
+  
+  # Filter adequately powered if ap == TRUE
+  if (ap == TRUE) {
+    data_filtered$ap <- ifelse(data_filtered$standarderror_winsor <= abs(data_filtered$mean.effect_winsor)/2.8, 1, 0)
+    data_filtered <- data_filtered %>% 
+      filter(ap == 1)
+  }
   
   # Get the unique outcome variable values
   unique_outcomes <- unique(data_filtered$outcome_var)

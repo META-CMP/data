@@ -5,52 +5,35 @@
         "rid2": "dr",
         "study_notes": "null",
         "model_notes": "null",
-        "figure": {
-          "model_1": 1,
-          "model_2": 4
-        },
-        "page": {
-          "model_1": 644,
-          "model_2": 652
-        },
+        "figure": 1,
+        "page": 644,
         "irf": true,
-        "cum": {
-          "model_1": false,
-          "model_2": true
-        }
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_3_month_gov",
-        "size": {
-          "model_1": "1SD",
-          "model_2": "null"
-        },
+        "size": "1SD",
         "axis_trans": "y*100 lev_a_3_month_gov_false",
         "dep": {
-          "model_1": "log_m_ip log_m_cpi",
-          "model_2": "logdiff_m_ip logdiff_m_cpi"
+          "model_1": "log_m_ip log_m_cpi"
         },
         "conf": "68",
         "main": "gdp inflation",
         "prefer": {
-          "model_1": false,
-          "model_2": false
+          "model_1": false
         }
     },
     "identification_strategy": {
         "iv": false,
         "forecast_based": {
-          "model_1": false,
-          "model_2": true
+          "model_1": false
         },
         "nr": {
-          "model_1": false,
-          "model_2": true
+          "model_1": false
         },
         "event": false,
         "chol": {
-          "model_1": true,
-          "model_2": false
+          "model_1": true
         },
         "svar": false,
         "signr": false,
@@ -58,20 +41,17 @@
         "heteroskedas": false,
         "longrun": false,
         "idother": {
-          "model_1": false,
-          "model_2": false
+          "model_1": false
         }
     },
     "estimation_method": {
         "var": {
-          "model_1": true,
-          "model_2": true
+          "model_1": true
         },
         "lp": false,
         "vecm": false,
         "dyn_ols": {
-          "model_1": false,
-          "model_2": false
+          "model_1": false
         },
         "fvar": false,
         "tvar": false,
@@ -100,8 +80,7 @@
     "further_data_characteristics": {
         "panel": false,
         "start": {
-          "model_1": "07-1948",
-          "model_2": "01-1949"
+          "model_1": "07-1948"
         },
         "end": "06-1996",
         "samplesize": "null"

@@ -61,6 +61,7 @@ moderator_groups <- list(
 )
 
 ui <- fluidPage(
+  withMathJax(),
   titlePanel("META CMP Data Explorer"),
   sidebarLayout(
     sidebarPanel(
@@ -255,6 +256,7 @@ ui <- fluidPage(
                                       ),
                                       column(4,
                                              numericInput("funnel_wins", "Winsorization Parameter:", value = 0, min = 0, max = 1, step = 0.01),
+                                             checkboxInput("ap", "Adequately powered (80% or more)", value = FALSE),
                                              sliderInput("funnel_opac", "Opacity Parameter:", value = 0.12, min = 0.01, max = 0.5, step = 0.01)
                                       )
                                     ),
@@ -303,10 +305,27 @@ ui <- fluidPage(
                             htmlOutput("moderator_summary")
                    ),
                    tabPanel("Meta-analysis",
+                            h6("Quick selection"),
+                            fluidRow(
+                              column(12,
+                                     actionButton("unweighted_avg", "Unweighted average"),
+                                     actionButton("uwls", "UWLS"),
+                                     actionButton("waap", "WAAP"),
+                                     actionButton("fat_pet", "FAT-PET"),
+                                     actionButton("peese", "PEESE"),
+                                     actionButton("ioannidis", "Top 10% precision"),
+                                     actionButton("furukawa", "Furukawa (2021) - stem", disabled = TRUE),
+                                     actionButton("bom_rachinger", "Bom and Rachinger (2019) - endogenous kink", disabled = TRUE),
+                                     actionButton("andrews_kasy", "Andrews and Kasy (2019)", disabled = TRUE),
+                                     style = "margin-bottom: 15px;"
+                              )
+                            ),
+                            h6("Customize"),
                             selectInput("estimation", "Meta model:",
-                                        choices = c("Mean", "FAT-PET", "PEESE"),
+                                        choices = c("Mean", "UWLS", "FAT-PET", "PEESE"),
                                         selected = "Mean"),
-                            checkboxInput("prec_weighted", "Precision weighted (weights = 1/SE^2)", value = FALSE),
+                            checkboxInput("prec_weighted", "Precision weighted", value = FALSE),
+                            uiOutput("equation_display"),
                             htmlOutput("meta_analysis_table"),
                             selectInput("stats", "Statistics:",
                                         choices = list("Standard Error" = "se = {std.error}", 
@@ -325,7 +344,7 @@ ui <- fluidPage(
                               condition = "input.meta_modelplot == true",
                               plotOutput("meta_analysis_plot_effect"),
                               conditionalPanel(
-                                condition = "input.estimation != 'Mean'",
+                                condition = "input.estimation != 'Mean' && input.estimation != 'UWLS'",
                                 plotOutput("meta_analysis_plot_pbias")
                               )
                             )
@@ -623,7 +642,7 @@ server <- function(input, output, session) {
     max_end_year <- max(filtered_data_no_years()$end_year, na.rm = TRUE)
     
     if (input$filter_years[1] > min_start_year || input$filter_years[2] < max_end_year) {
-      actionButton("reset_years", "Reset to maximal range")
+      actionButton("reset_years", "Reset to maximal range", class = "btn-warning")
     }
   })
   observeEvent(input$reset_years, {
@@ -841,7 +860,8 @@ server <- function(input, output, session) {
                        prd = input$funnel_prd,
                        se_option = input$funnel_se_option,
                        wins = input$funnel_wins,
-                       opac = input$funnel_opac)
+                       opac = input$funnel_opac,
+                       ap = input$ap)
   })
   for (i in 1:16) {
     local({
@@ -855,6 +875,7 @@ server <- function(input, output, session) {
                            se_option = input$funnel_se_option,
                            wins = input$funnel_wins,
                            opac = input$funnel_opac,
+                           ap = input$ap,
                            legend = FALSE)
       })
     })
@@ -868,8 +889,21 @@ server <- function(input, output, session) {
                   se_option = input$funnel_se_option,
                   periods = input$funnel_prd*1:16,
                   wins = input$funnel_wins,
+                  ap = input$ap,
                   prec_weighted = input$prec_weighted,
                   estimation = input$estimation)
+  })
+  # Equation display
+  equation <- reactive({
+    display_equation(input$estimation, input$prec_weighted)
+  })
+  output$equation_display <- renderUI({
+    withMathJax(
+      HTML(paste0(
+        "<p>Estimated equation:</p>",
+        equation()
+      ))
+    )
   })
   # Table 
   output$meta_analysis_table <- renderUI({
@@ -887,7 +921,7 @@ server <- function(input, output, session) {
   # Plot
   output$meta_analysis_plot_effect <- renderPlot({
     
-    if (input$estimation == "Mean") {
+    if (input$estimation %in% c("Mean", "UWLS")) {
       omit <- NULL
     } else if (input$estimation == "FAT-PET") {
       omit <- "standarderror_winsor"
@@ -912,6 +946,49 @@ server <- function(input, output, session) {
               conf_level = input$conf_level,
               title = "Meta-Analysis Plot", 
               background = b)
+  })
+  # Estimation presets
+  # Unweighted average
+  observeEvent(input$unweighted_avg, {
+    updateSelectInput(session, "estimation", selected = "Mean")
+    updateCheckboxInput(session, "prec_weighted", value = FALSE)
+    updateCheckboxInput(session, "ap", value = FALSE)
+    updateCheckboxInput(session, "precision_filter", value = "None")
+  })
+  # UWLS
+  observeEvent(input$uwls, {
+    updateSelectInput(session, "estimation", selected = "UWLS")
+    updateCheckboxInput(session, "prec_weighted", value = FALSE)
+    updateCheckboxInput(session, "ap", value = FALSE)
+    updateCheckboxInput(session, "precision_filter", value = "None")
+  })
+  # WAAP
+  observeEvent(input$waap, {
+    updateSelectInput(session, "estimation", selected = "UWLS")
+    updateCheckboxInput(session, "prec_weighted", value = FALSE)
+    updateCheckboxInput(session, "ap", value = TRUE)
+    updateCheckboxInput(session, "precision_filter", value = "None")
+  })
+  # FAT-PET
+  observeEvent(input$fat_pet, {
+    updateSelectInput(session, "estimation", selected = "FAT-PET")
+    updateCheckboxInput(session, "prec_weighted", value = TRUE)
+    updateCheckboxInput(session, "ap", value = FALSE)
+    updateCheckboxInput(session, "precision_filter", value = "None")
+  })
+  # PEESE
+  observeEvent(input$peese, {
+    updateSelectInput(session, "estimation", selected = "PEESE")
+    updateCheckboxInput(session, "prec_weighted", value = TRUE)
+    updateCheckboxInput(session, "ap", value = FALSE)
+    updateCheckboxInput(session, "precision_filter", value = "None")
+  })
+  # Ioannidis et al. (2017) - top 10% precision
+  observeEvent(input$ioannidis, {
+    updateSelectInput(session, "estimation", selected = "Mean")
+    updateCheckboxInput(session, "prec_weighted", value = TRUE)
+    updateCheckboxInput(session, "ap", value = FALSE)
+    updateCheckboxInput(session, "precision_filter", value = "Top Percentile")
   })
   
   # Moderator summary table

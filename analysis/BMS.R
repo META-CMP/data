@@ -4,7 +4,7 @@ gc() #free up memory and report the memory usage.
 
 setwd("~/data")
 #Load data by running data_prep script
-source("analysis/data_prep.R")
+source("data/data_prep.R")
 
 
 data_back<-data
@@ -28,73 +28,73 @@ results_list<-list()
 coef_test_data<-list()
 confint_data<-list()
 
-summary(data)
-equation<-mean.effect_winsor ~standarderror_winsor+exrate+gdppc+cbi+findev+fingl+infl+tradegl+mean_year+regime+quality_concern+observations+main_research_q+outcome_measure+as.factor(periodicity)+as.factor(transformation)+rate_mean.effect+cbanker+decomposition+convent+pure_rate_shock+lrir+fx+foreignir+inflexp+eglob+find+outpgap+comprice+panel+n_of_countries+us+month+quarter+upr+lor+varother+dsge+bayes+gvar+tvar+fvar+dyn_ols+vecm+lp+idother+longrun+heteroskedas+hf+signr+svar+chol+event+nr+forecast_based+iv+prefer+shock_size+interest_rate_short+as.factor(rid1)+model_id
+
 # +fexch#+real_output # only for output regression
 
-periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
 
 
-for (x in periods) {
-  print(paste("Processing period:", x))
+
+periods <- 3
+
+
+
+# Subset data for the current period
+data_period <- subset(data, period.month == periods)
   
-  # Subset data for the current period
-  data_period <- subset(data, period.month %in% x)
-  
-  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
-  data_period$precision <- 1 / data_period$StandardError
+data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+data_period$precision <- 1 / data_period$StandardError
   
   # Winsorize data
-  data_period_winsor <- data_period
-  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
-  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
-  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
+data_period_winsor <- data_period
+data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
+data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
+data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
   
-  # Store the winsorized data
-  
-  
-  # Calculate variance winsorised
-  data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
-  
-  # Calculate PrecVariance winsorised
-  data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
-  
-  # Calculate (precision-weighted) average
-  regwa <- lm(equation, data = data_period_winsor)#, weights = precvariance_winsor
-  results_list[[paste0(x, ".ols")]] <- regwa
-  
-  coef_test_data[[paste0(x, ".ols")]]<-coef_test(regwa, vcov = "CR0", 
-                                                 cluster = data_period_winsor$key, test = "naive-t")
+# Store the winsorized data
   
   
-  confint_data[[paste0(x, ".ols")]]<-confint(regwa, level=0.95)
-}
+# Calculate variance winsorised
+data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
+  
+# Calculate PrecVariance winsorised
+data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
+  
+# Calculate (precision-weighted) average
+regwa <- lm(equation, data = data_period_winsor)#, weights = precvariance_winsor
+ 
 
 
 
 
 
-
-dataspeed<-data_period_winsor %>% ungroup() %>% select(mean.effect_winsor, standarderror_winsor, exrate, gdppc, cbi, findev, fingl, infl, tradegl, mean_year, regime, quality_concern, observations, main_research_q, outcome_measure, periodicity,transformation, rate_mean.effect, cbanker, decomposition, convent, pure_rate_shock, lrir, fx, foreignir, inflexp, eglob, find, outpgap, comprice, panel, n_of_countries, us, month, quarter, upr, lor, varother, dsge, bayes, gvar, tvar, fvar, dyn_ols, vecm, lp, idother, longrun, heteroskedas, hf, signr, svar, chol, event, nr, forecast_based, iv, prefer, shock_size, interest_rate_short,rid1, model_id)
+data_bms<-data_period_winsor %>% select(mean.effect_winsor,standarderror_winsor, mean_year, regime, quality_concern, observations, main_research_q, outcome_measure, rate_mean.effect, cbanker, decomposition, convent, lrir, fx, foreignir, inflexp, eglob, find, comprice, us, month, upr, lor, dsge, bayes, fvar, lp, signr, svar, chol, nr, prefer,iv,forecast_based)
 
 library(fastDummies)
 
-dataspeed<-fastDummies::dummy_cols(dataspeed) %>% select(-rid1,-us,-transformation,-periodicity,-outcome_measure,-rid1_me,-us_other, -transformation_log,-periodicity_a,-outcome_measure_deflator,-outcome_measure_price_level,-us_EA,-periodicity_q,-outcome_measure_core,-dyn_ols )
+data_bms<-fastDummies::dummy_cols(data_bms) %>% select(-outcome_measure_price_level,-outcome_measure_cpi,-outcome_measure,-rate_mean.effect,-us,-us_US)
 
+#data_bms<-data_bms %>% select(mean.effect_winsor,standarderror_winsor, mean_year, regime, quality_concern, observations, main_research_q)
 
-test<-dataspeed %>% 
+#head(fastDummies::dummy_cols(data_bms))
+test<-data_bms %>% 
   summarise(across(everything(), ~ sum(is.infinite(.x))))
 
-dataspeed<-na.omit(dataspeed)
+dataspeed<-na.omit(data_bms)
 
-#dataspeed<-dataspeed[,1:10]
 
+
+
+# ## build the model matrix
+# X <- model.matrix(mean.effect_winsor ~ ., data = data_bms)
+# ## check for *multi*collinear combinations
+# library(caret)
+# (lc <- caret::findLinearCombos(X))
 
 library(car)
 
 
 # Calculate VIF for each variable
-vif_values <- car::vif(lm(dataspeed))
+vif_values <- car::vif(lm(data_bms))
 #test<-cor(dataspeed)
 # Print the VIF values
 print(vif_values)
@@ -102,11 +102,25 @@ print(vif_values)
 
 #//Starts estimation
 library(BMS)
-speed <- bms(dataspeed, g="UIP", mprior="uniform", user.int=FALSE,nmodel = 1000000, mcmc="bd",burn = 50000)
+speed <- bms(data_bms, g="UIP", mprior="uniform", user.int=FALSE,nmodel = 200000, mcmc="bd")#,start.value = c(1:35)
+
+undebug(topmodels.bma)
+topmodels.bma(speed)[,1:3]
+(speed$arguments$X.data[,1],na.rm = T)
+
+colMeans(speed$arguments$X.data[,1], na.rm = TRUE)
+
+print(speed$arguments$X.data[,1],n=1749)
+
+bmao$arguments$X.data[, 1])
 
 plot(speed)
 summary(speed)
+plotConv(speed)
 
 #//Results
-coef(speed, order.by.pip = F, exact=T, include.constant=F)
-image(speed[1:5], include.constant=F, cex.axis=0.7, order.by.pip = F, yprop2pip=F,col=c("black","lightgrey"))
+coef(speed, order.by.pip = T, exact=T, include.constant=F)
+image(speed, include.constant=F, cex.axis=0.7, order.by.pip = F, yprop2pip=F,col=c("black","lightgrey"))
+image(speed,yprop2pip=TRUE,col=c("black","lightgrey"))
+
+density(speed, reg="dsge")

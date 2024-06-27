@@ -91,8 +91,8 @@
           "model_84": "SVAR impulse responses in a three-sector SVAR model.",
           "model_85": "SVAR impulse responses in a three-sector SVAR model.",
           "model_86": "SVAR impulse responses in a three-sector SVAR model.",
-          "model_87": "DSGE model.",
-          "model_88": "DSGE model."
+          "model_87": "dep: GDP coded as log beause of the pattern of the IRF and most likely the IRF reports cumulative values for GDP but not for inflation.; DSGE model.",
+          "model_88": "dep: GDP coded as log beause of the pattern of the IRF and most likely the IRF reports cumulative values for GDP but not for inflation.; DSGE model."
         },
         "figure": {          
           "model_1": "1-1",

@@ -233,6 +233,7 @@ ui <- fluidPage(
                             ),
                             plotlyOutput("averageIRFsPlot"),
                             checkboxInput("IRF_wins", "Winsorize?", value = FALSE),
+                            checkboxInput("show_corrected_irf", "Show Corrected IRF", value = FALSE),
                             checkboxInput("show_counts_plot", "Show Model/Study Counts Plot", value = FALSE),
                             conditionalPanel(
                               condition = "input.show_counts_plot == true",
@@ -844,7 +845,16 @@ server <- function(input, output, session) {
   
   # Average IRF
   output$averageIRFsPlot <- renderPlotly({
-    plot_average_irfs(filtered_data(), period_limit = input$period_limit, winsor = input$IRF_wins, wins_par = input$funnel_wins)
+    if (input$show_corrected_irf) {
+      corrected <- intercept_estimates()
+    } else {
+      corrected <- NULL
+    }
+    plot_average_irfs(filtered_data(), 
+                      period_limit = input$period_limit, 
+                      winsor = input$IRF_wins, 
+                      wins_par = input$funnel_wins,
+                      corrected_irf = corrected)
   })
   
   # Model/Study counts plot
@@ -887,7 +897,7 @@ server <- function(input, output, session) {
     meta_analysis(data = filtered_data(),
                   outvar = input$filter_outcome,
                   se_option = input$funnel_se_option,
-                  periods = input$funnel_prd*1:16,
+                  periods = input$funnel_prd*1:20,
                   wins = input$funnel_wins,
                   ap = input$ap,
                   prec_weighted = input$prec_weighted,
@@ -1012,6 +1022,30 @@ server <- function(input, output, session) {
     datasummary_skim(mod_vars, output = "gt", type = "categorical", title = "Moderator variables in current selection")
 
   })
+  
+  # Corrected IRF
+  intercept_estimates <- reactive({
+    results <- reg_results()
+    
+    extract_intercepts <- function(results) {
+      intercepts <- lapply(results, function(model) {
+        ci <- confint(model, level = 0.95)  # 95% confidence interval
+        c(estimate = coef(model)[1],
+          lower = ci[1, 1],
+          upper = ci[1, 2])
+      })
+      
+      data.frame(
+        period = as.numeric(names(results)),
+        estimate = sapply(intercepts, function(x) x["estimate"]),
+        lower = sapply(intercepts, function(x) x["lower"]),
+        upper = sapply(intercepts, function(x) x["upper"])
+      )
+    }
+    
+    extract_intercepts(results)
+  })
+  
 }
 
 shinyApp(ui = ui, server = server)

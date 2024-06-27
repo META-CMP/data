@@ -3,7 +3,7 @@
         "key": "GLY278ZB",
         "rid1": "dr",
         "rid2": "fp",
-        "study_notes": "null",
+        "study_notes": "quality_concern: some IRFs appear to be cumulative vs other do not and the authors do not provide an explanation on that.",
         "model_notes": {
           "model_1": "AM/PF regime is when the monetary authority respects the Taylor principle and the fiscal authority adjusts taxes in order to keep debt on a stable path.",
           "model_2": "PM/AF regime corresponds to the case in which the fiscal authority is not committed to ensure debt stability, while the monetary authority passively accommodates the behavior of the fiscal authority, disregarding the Taylor principle and allowing inflation to move in order to stabilize debt.",
@@ -20,7 +20,11 @@
           "model_3": 133
         },
         "irf": true,
-        "cum": false
+        "cum": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": true
+        }
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_3_month_interbank",

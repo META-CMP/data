@@ -27,7 +27,7 @@
 #' print(plot_period_limit)
 #'
 #' @export
-plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0) {
+plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf) {
   
   # Apply winsorization (if selected) to the CIs and mean effect
   if (winsor == TRUE) {
@@ -94,6 +94,30 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
       yaxis = list(title = "Effect"),
       hovermode = "compare"
     )
+  
+  # Add corrected IRF with confidence bounds if provided
+  if (!is.null(corrected_irf)) {
+    plot <- plot %>%
+      add_ribbons(
+        data = corrected_irf,
+        x = ~period,
+        ymin = ~lower,
+        ymax = ~upper,
+        name = "Meta analysis CI",
+        line = list(color = 'rgba(0,0,0,0)'),
+        fillcolor = 'rgba(255,0,0,0.2)'
+      )
+    
+    plot <- plot %>% 
+      add_lines(
+        data = corrected_irf,
+        x = ~period,
+        y = ~estimate,
+        name = "Meta analysis",
+        line = list(color = 'red', width = 3, dash = 'dash')
+      )
+    
+  }
   
   plot
 }

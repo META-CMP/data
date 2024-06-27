@@ -27,7 +27,7 @@
 #' library(modelsummary)
 #'
 #' # Load the data
-#' data_path <- "data/data_test_new.RData"
+#' data_path <- "data/preliminary_data_test.RData"
 #' load(data_path)
 #'
 #' # Calculate the average standard error and precision options

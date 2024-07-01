@@ -115,13 +115,67 @@ data <- data %>%
   mutate(start = ifelse(start == "Q4–2000", "Q4-2000", start),
          end = ifelse(end == "Q4–2015", "Q4-2015", end))
 
-# Calculate `observations_calc`
+# # Calculate `observations_calc`
+
+
+# data <- data %>%
+#   mutate(observations_calc = case_when(
+#     substr(start, 1, 1) == "Q" ~ ((as.yearqtr(end, format = "Q%q-%Y") - as.yearqtr(start, format = "Q%q-%Y")) * 4 + 1) * n_of_countries,
+#     substr(start, 1, 1) != "Q" & grepl("-", start) ~ ((as.yearmon(end, format = "%m-%Y") - as.yearmon(start, format = "%m-%Y")) * 12 + 1) * n_of_countries,
+#     nchar(start) == 4 ~ (as.numeric(end) - as.numeric(start) + 1) * n_of_countries
+#   ))
+
+
+
+convert_quarter <- function(quarter_str) {
+  # Extract quarter and year
+  qtr <- as.numeric(substring(quarter_str, 2, 2))
+  year <- as.numeric(substring(quarter_str, 4))
+  
+  # Convert to date (first day of the quarter)
+  return(ymd(paste0(year, "-", (qtr - 1) * 3 + 1, "-01")))
+}
+
+# Apply transformations
 data <- data %>%
-  mutate(observations_calc = case_when(
-    substr(start, 1, 1) == "Q" ~ ((as.yearqtr(end, format = "Q%q-%Y") - as.yearqtr(start, format = "Q%q-%Y")) * 4 + 1) * n_of_countries,
-    substr(start, 1, 1) != "Q" & grepl("-", start) ~ ((as.yearmon(end, format = "%m-%Y") - as.yearmon(start, format = "%m-%Y")) * 12 + 1) * n_of_countries,
-    nchar(start) == 4 ~ (as.numeric(end) - as.numeric(start) + 1) * n_of_countries
-  ))
+  mutate(
+    # Determine date type
+    start_type = case_when(
+      substr(start, 1, 1) == "Q" ~ "quarter",
+      grepl("-", start) ~ "month",
+      nchar(start) == 4 ~ "year",
+      TRUE ~ "unknown"
+    ),
+    end_type = case_when(
+      substr(end, 1, 1) == "Q" ~ "quarter",
+      grepl("-", end) ~ "month",
+      nchar(end) == 4 ~ "year",
+      TRUE ~ "unknown"
+    ),
+    # Convert start dates
+    start_date = case_when(
+      start_type == "quarter" ~ convert_quarter(start),
+      start_type == "month" ~ as.Date(my(start)),
+      start_type == "year" ~ ymd(paste0(start, "-01-01"))
+    ),
+    # Convert end dates
+    end_date = case_when(
+      end_type == "quarter" ~ convert_quarter(end),
+      end_type == "month" ~ as.Date(my(end)),
+      end_type == "year" ~ ymd(paste0(end, "-12-31"))
+    ),
+    # Calculate observations
+    observations_calc = case_when(
+      start_type == "quarter" ~ ((year(end_date) - year(start_date)) * 4 + (quarter(end_date) - quarter(start_date)) + 1) * n_of_countries,
+      start_type == "month" ~ ((year(end_date) - year(start_date)) * 12 + (month(end_date) - month(start_date)) + 1) * n_of_countries,
+      start_type == "year" ~ (year(end_date) - year(start_date) + 1) * n_of_countries
+    )
+  ) %>%
+  select(-start_type, -end_type)
+
+print(data)
+
+
 
 # set samplesize to numeric
 data$samplesize<-as.numeric(data$samplesize)
@@ -130,7 +184,7 @@ data$samplesize<-as.numeric(data$samplesize)
 data$observations<-ifelse(is.na(data$samplesize), data$observations_calc, data$samplesize)
 #anyNA(data$observations) # no nas. 
 
-
+#summary(data$observations)
 
 ##### Generate factor indicating whether the estimates are obtained by using an US, EA, or other region. 
 data$us<-as.factor(ifelse(data$list_of_countries=="US","US",ifelse(data$list_of_countries=="EA","EA","other")))
@@ -159,15 +213,27 @@ data<-data %>% unnest(n_of_countries) %>% unnest(chol) %>% unnest(bayes) %>% unn
 
 
 # create start and end year of the sample based on start and end information in the dataset and calculate the mean year of the sample
-data<-data %>%
-  mutate(start_year= as.numeric(case_when(substr(start,1,1)=="Q" ~ format(as.Date(as.yearqtr(start, format = "Q%q-%Y")),"%Y"),
-                                          substr(start,1,1)!="Q" & grepl("-", start) == TRUE ~ format(as.Date(as.yearmon(start, format = "%m-%Y")),"%Y"),
-                                          nchar(start)==4 ~ format(as.Date(start, format = "%Y"),"%Y"))),
-         end_year= as.numeric(case_when(substr(end,1,1)=="Q" ~ format(as.Date(as.yearqtr(end, format = "Q%q-%Y")),"%Y"),
-                                        substr(end,1,1)!="Q" & grepl("-", end) == TRUE ~ format(as.Date(as.yearmon(end, format = "%m-%Y")),"%Y"),
-                                        nchar(end)==4 ~ format(as.Date(end, format = "%Y"),"%Y"))),
-         mean_year=(start_year+end_year)/2
-  )
+# data<-data %>%
+#   mutate(start_year= as.numeric(case_when(substr(start,1,1)=="Q" ~ format(as.Date(as.yearqtr(start, format = "Q%q-%Y")),"%Y"),
+#                                           substr(start,1,1)!="Q" & grepl("-", start) == TRUE ~ format(as.Date(as.yearmon(start, format = "%m-%Y")),"%Y"),
+#                                           nchar(start)==4 ~ format(as.Date(start, format = "%Y"),"%Y"))),
+#          end_year= as.numeric(case_when(substr(end,1,1)=="Q" ~ format(as.Date(as.yearqtr(end, format = "Q%q-%Y")),"%Y"),
+#                                         substr(end,1,1)!="Q" & grepl("-", end) == TRUE ~ format(as.Date(as.yearmon(end, format = "%m-%Y")),"%Y"),
+#                                         nchar(end)==4 ~ format(as.Date(end, format = "%Y"),"%Y"))),
+#          mean_year=(start_year+end_year)/2
+#   )
+
+
+data <- data %>%
+  mutate(
+    # Extract year from start and end dates
+    start_year = year(start_date),
+    end_year = year(end_date),
+    mean_year = (start_year + end_year) / 2
+  ) %>%
+  select(-start_date, -end_date)
+
+summary(data$mean_year)
 
 # read in the external-data.csv file and drop the unnecessary column
 data_merged<-read.csv("~/data/data/merge_external_data/external-data.csv") %>% select(-X)

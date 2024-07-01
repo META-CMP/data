@@ -3,7 +3,7 @@
         "key": "XZXTJS8C",
         "rid1": "ph",
         "rid2": "me",
-        "study_notes": "estimated DSGE model (IRFs with standard errors)",
+        "study_notes": "inttype: quarterly interest rate due to information of the authors. estimated DSGE model (IRFs with standard errors)",
         "model_notes": "null",
         "figure": 6,
         "page": 601,
@@ -11,7 +11,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_fed_funds",
+        "inttype": "lev_q_fed_funds",
         "size": "24bp",
         "axis_trans": false,
         "dep": "logdiff_q_rgdp logdiff_q_deflator",

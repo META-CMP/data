@@ -24,8 +24,8 @@
         },
         "irf": true,
         "cum": {
-          "model_1": false,
-          "model_2": false,
+          "model_1": true,
+          "model_2": true,
           "model_3": true,
           "model_4": true
         }

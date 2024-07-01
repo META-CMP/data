@@ -66,8 +66,6 @@ data$outcome<-ifelse(data$outcome_measure=="rate","rate",ifelse(data$outcome_mea
 # Splitting emp and unemp
 data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
 
-# Store data for use in app
-save(data,file = "data/preliminary_data_test.RData")
 
 
 ################################################################### prepare variables for regression analysis #############################################################
@@ -97,12 +95,24 @@ data <- data %>%
   group_by(key, model_id) %>%
   mutate(shock_size = first(rate_mean.effect[period.month == 0], default = NA)) %>% ungroup()
 
+# If basis point shock is directly available.
+data$shock_size <- ifelse(grepl("bp", data$size),as.double(sub("bp", "", data$size))/100,data$shock_size)
+
+
+# If % shock is available, transform to basis points
+data$shock_size <-  ifelse(grepl("%", data$size),as.double(sub("%", "", data$size)),data$shock_size)
+
+summary(data$shock_size)
+
 
 
 ##### generate dummy if ARDL model has been used 
 data<-data %>% mutate(dyn_ols=ifelse(dyn_ols=="ARDL" | dyn_ols=="ardl",TRUE,FALSE))
 
+#data<-data %>% filter(quality_concern==FALSE)
 
+# Store data for use in app
+save(data,file = "data/preliminary_data_test.RData")
 
 ##### generate number of observations used for a specific model
 

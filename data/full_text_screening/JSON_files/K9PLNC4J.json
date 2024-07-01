@@ -5,12 +5,12 @@
         "rid2": "fp",
         "study_notes": "null",
         "model_notes": {
-          "model_1": "equity bond premium included as a variable.",
-          "model_2": "replacing equity bond premium by bank equity.",
+          "model_1": "quality_concern: implausibly large estimates because of small initial shock size.; equity bond premium included as a variable.",
+          "model_2": "quality_concern: implausibly large estimates because of small initial shock size.; replacing equity bond premium by bank equity.",
           "model_3": "quaterly frequency including the log of the consumption deflator, the log of investment, the log of consumption; GDP is expressed in real per capita terms.",
           "model_4": "using sign restrictions in the quarterly VAR.",
-          "model_5": "using monthly VAR and instead of 1_year_gov, they use fed_funds.",
-          "model_6": "extending to include the period of ZLB."
+          "model_5": "quality_concern: implausibly large estimates because of small initial shock size.; using monthly VAR and instead of 1_year_gov, they use fed_funds.",
+          "model_6": "quality_concern: implausibly large estimates because of small initial shock size.; extending to include the period of ZLB."
         },
         "figure": {
           "model_1": 1,

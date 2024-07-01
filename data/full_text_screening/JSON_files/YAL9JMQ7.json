@@ -3,7 +3,7 @@
         "key": "YAL9JMQ7",
         "rid1": "me",
         "rid2": "fp",
-        "study_notes": "dep: in the paper they calculate the annualized output gap, therefore coded as logdiff_a_rgap.; cum: set to true because of shape of the IRF.",
+        "study_notes": "quality_concern: implausibly precise estimates probably due to the usage of the output gap.; dep: in the paper they calculate the annualized output gap, therefore coded as logdiff_a_rgap.; cum: set to true because of shape of the IRF.",
         "model_notes": "null",
         "figure": 1,
         "page": 650,

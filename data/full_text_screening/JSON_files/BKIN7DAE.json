@@ -5,7 +5,7 @@
         "rid2": "null",
         "study_notes": "null",
         "model_notes": {
-          "model_1": "they use a structural vector autoregressive moving average (SVARMA) model, that's the reason why I set varother to true.",
+          "model_1": "quality_concern: implausibly precise estimates compared to the other model.; they use a structural vector autoregressive moving average (SVARMA) model, that's the reason why I set varother to true.",
           "model_2": "null"
         },
         "figure": {

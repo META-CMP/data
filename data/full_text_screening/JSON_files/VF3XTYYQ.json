@@ -4,7 +4,14 @@
         "rid1": "ph", 
         "rid2": "null", 
         "study_notes": "null", 
-        "model_notes": "null", 
+        "model_notes": {
+                "model_1": "null",
+                "model_2": "null",
+                "model_3": "quality_concern: implausibly precise estimates compared to the other models.; ",
+                "model_4": "null",
+                "model_5": "null",
+                "model_6": "quality_concern: implausibly precise estimates compared to the other models.; "
+        },    
         "figure": {
                 "model_1": 5,
                 "model_2": 5,

@@ -3,7 +3,7 @@
         "key": "ED3GLB9F",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "cum: set to true because of IRF pattern.; regime_dependence: they differenciate two different regimes, Great Inflation between 1960 and 1984, and Great Moderation between 1984 and 2008; more time-periods considered in robustness checks. inttype: The authors state in their paper that “the interest rates are quarterly rates”. But as they use FRED data and out of context of the paper, we still code the inttype as lev_a_fed_funds.",
+        "study_notes": "quality_concern: implausibly precise estimates.; cum: set to true because of IRF pattern.; regime_dependence: they differenciate two different regimes, Great Inflation between 1960 and 1984, and Great Moderation between 1984 and 2008; more time-periods considered in robustness checks. inttype: The authors state in their paper that “the interest rates are quarterly rates”. But as they use FRED data and out of context of the paper, we still code the inttype as lev_a_fed_funds.",
         "model_notes": {
                 "model_1": "they employ non-recursive SVAR with break (SVAR-WB henceforth).",
                 "model_2": "they employ non-recursive SVAR with break (SVAR-WB henceforth).",

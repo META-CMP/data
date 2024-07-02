@@ -172,10 +172,20 @@ ui <- fluidPage(
         ),
         tabPanel("Precision",
                  selectInput("precision_filter", "Precision Filter:",
-                                    choices = c("None", "Above", "Below", "Top Percentile", "Bottom Percentile")),
+                             choices = c("None", "Above", "Below", "Top Percentile", "Bottom Percentile")),
                  conditionalPanel(
-                   condition = "input.precision_filter == 'Above' || input.precision_filter == 'Below' || input.precision_filter == 'Top Percentile' || input.precision_filter == 'Bottom Percentile'",
-                   numericInput("precision_threshold", "Precision Threshold:", value = 0, min = 1)
+                   condition = "input.precision_filter != 'None'",
+                   numericInput("precision_threshold", "Precision Threshold:", value = 0, min = 1),
+                   selectInput("precision_filter_method", "Precision Filter Method:",
+                               choices = c("All Data Points" = "all",
+                                           "By Period" = "by_period",
+                                           "By Model" = "by_model"))
+                 ),
+                 conditionalPanel(
+                   condition = "input.precision_filter != 'None' && input$precision_filter_method == 'by_model'",
+                   selectInput("model_precision", "Model Precision:",
+                               choices = c("Minimum" = "min", "Maximum" = "max", "Average" = "avg"),
+                               selected = "min")
                  )
         ),
         tabPanel("Publication Characteristics",
@@ -482,34 +492,19 @@ server <- function(input, output, session) {
       data_filtered <- random_data()
     }
     
-    # Precision filtering for funnel plot
+    # Precision filtering
     if (input$precision_filter != "None") {
-      precision_col <- switch(input$funnel_se_option,
-                              "avg" = "precision.avg",
-                              "lower" = "precision.lower",
-                              "upper" = "precision.upper")
-      
-      if (input$precision_filter %in% c("Above", "Below")) {
-        if (!is.na(as.numeric(input$precision_threshold))) {
-          threshold <- as.numeric(input$precision_threshold)
-          if (input$precision_filter == "Above") {
-            data_filtered <- data_filtered[data_filtered[[precision_col]] > threshold, ]
-          } else if (input$precision_filter == "Below") {
-            data_filtered <- data_filtered[data_filtered[[precision_col]] < threshold, ]
-          }
-        }
-      } else if (input$precision_filter %in% c("Top Percentile", "Bottom Percentile")) {
-        if (!is.na(as.numeric(input$precision_threshold)) && as.numeric(input$precision_threshold) >= 0 && as.numeric(input$precision_threshold) <= 100) {
-          percentile <- as.numeric(input$precision_threshold) / 100
-          if (input$precision_filter == "Top Percentile") {
-            precision_threshold <- quantile(data_filtered[[precision_col]], 1 - percentile)
-            data_filtered <- data_filtered[data_filtered[[precision_col]] >= precision_threshold, ]
-          } else if (input$precision_filter == "Bottom Percentile") {
-            precision_threshold <- quantile(data_filtered[[precision_col]], percentile)
-            data_filtered <- data_filtered[data_filtered[[precision_col]] <= precision_threshold, ]
-          }
-        }
-      }
+      data_filtered <- precision_filter(
+        data = data_filtered,
+        precision_filter = input$precision_filter,
+        precision_col = switch(input$funnel_se_option,
+                               "avg" = "precision.avg",
+                               "lower" = "precision.lower",
+                               "upper" = "precision.upper"),
+        threshold = input$precision_threshold,
+        method = input$precision_filter_method,
+        model_precision = input$model_precision
+      )
     }
     
     # Journal filter
@@ -595,31 +590,11 @@ server <- function(input, output, session) {
     
     # Precision filter summary
     if (input$precision_filter != "None") {
-      precision_col <- switch(input$funnel_se_option,
-                              "avg" = "precision (avg)",
-                              "lower" = "precision (lower)",
-                              "upper" = "precision (upper)")
-      
-      if (input$precision_filter == "Above") {
-        if (!is.na(as.numeric(input$precision_threshold))) {
-          threshold <- as.numeric(input$precision_threshold)
-          summary <- paste0(summary, "\nPrecision Filter: ", precision_col, " > ", threshold, "\n")
-        }
-      } else if (input$precision_filter == "Below") {
-        if (!is.na(as.numeric(input$precision_threshold))) {
-          threshold <- as.numeric(input$precision_threshold)
-          summary <- paste0(summary, "\nPrecision Filter: ", precision_col, " < ", threshold, "\n")
-        }
-      } else if (input$precision_filter == "Top Percentile") {
-        if (!is.na(as.numeric(input$precision_threshold)) && as.numeric(input$precision_threshold) >= 0 && as.numeric(input$precision_threshold) <= 100) {
-          percentile <- as.numeric(input$precision_threshold)
-          summary <- paste0(summary, "\nPrecision Filter: Top ", percentile, "% of ", precision_col, "\n")
-        }
-      } else if (input$precision_filter == "Bottom Percentile") {
-        if (!is.na(as.numeric(input$precision_threshold)) && as.numeric(input$precision_threshold) >= 0 && as.numeric(input$precision_threshold) <= 100) {
-          percentile <- as.numeric(input$precision_threshold)
-          summary <- paste0(summary, "\nPrecision Filter: Bottom ", percentile, "% of ", precision_col, "\n")
-        }
+      summary <- paste0(summary, "\nPrecision Filter: ", input$precision_filter, "\n")
+      summary <- paste0(summary, "  Threshold: ", input$precision_threshold, "\n")
+      summary <- paste0(summary, "  Method: ", input$precision_filter_method, "\n")
+      if (input$precision_filter_method == "by_model") {
+        summary <- paste0(summary, "  Model Precision: ", input$model_precision, "\n")
       }
     }
     
@@ -1000,6 +975,7 @@ server <- function(input, output, session) {
   # Estimation presets
   # Unweighted average
   observeEvent(list(input$unweighted_avg, input$unweighted_avg_irf), {
+    req(input$unweighted_avg || input$unweighted_avg_irf)
     updateSelectInput(session, "estimation", selected = "Mean")
     updateCheckboxInput(session, "prec_weighted", value = FALSE)
     updateCheckboxInput(session, "ap", value = FALSE)
@@ -1007,6 +983,7 @@ server <- function(input, output, session) {
   })
   # UWLS
   observeEvent(list(input$uwls, input$uwls_irf), {
+    req(input$uwls || input$uwls_irf)
     updateSelectInput(session, "estimation", selected = "UWLS")
     updateCheckboxInput(session, "prec_weighted", value = FALSE)
     updateCheckboxInput(session, "ap", value = FALSE)
@@ -1014,6 +991,7 @@ server <- function(input, output, session) {
   })
   # WAAP
   observeEvent(list(input$waap, input$waap_irf), {
+    req(input$waap || input$waap_irf)
     updateSelectInput(session, "estimation", selected = "UWLS")
     updateCheckboxInput(session, "prec_weighted", value = FALSE)
     updateCheckboxInput(session, "ap", value = TRUE)
@@ -1021,6 +999,7 @@ server <- function(input, output, session) {
   })
   # FAT-PET
   observeEvent(list(input$fat_pet, input$fat_pet_irf), {
+    req(input$fat_pet || input$fat_pet_irf)
     updateSelectInput(session, "estimation", selected = "FAT-PET")
     updateCheckboxInput(session, "prec_weighted", value = TRUE)
     updateCheckboxInput(session, "ap", value = FALSE)
@@ -1028,6 +1007,7 @@ server <- function(input, output, session) {
   })
   # PEESE
   observeEvent(list(input$peese, input$peese_irf), {
+    req(input$peese || input$peese_irf)
     updateSelectInput(session, "estimation", selected = "PEESE")
     updateCheckboxInput(session, "prec_weighted", value = TRUE)
     updateCheckboxInput(session, "ap", value = FALSE)
@@ -1035,6 +1015,7 @@ server <- function(input, output, session) {
   })
   # Ioannidis et al. (2017) - top 10% precision
   observeEvent(list(input$ioannidis, input$ioannidis_irf), {
+    req(input$ioannidis || input$ioannidis_irf)
     updateSelectInput(session, "estimation", selected = "Mean")
     updateCheckboxInput(session, "prec_weighted", value = TRUE)
     updateCheckboxInput(session, "ap", value = FALSE)

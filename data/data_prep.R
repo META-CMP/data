@@ -4,7 +4,7 @@ gc() #free up memory and report the memory usage.
 
 #setwd and load dataset
 # setwd("~/data")
-load("data/preliminary_data_20062024.RData")
+load("data/preliminary_data_03072024.RData")
 
 
 # load packackages 

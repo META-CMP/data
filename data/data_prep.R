@@ -197,7 +197,81 @@ data$observations<-ifelse(is.na(data$samplesize), data$observations_calc, data$s
 #summary(data$observations)
 
 ##### Generate factor indicating whether the estimates are obtained by using an US, EA, or other region. 
-data$us<-as.factor(ifelse(data$list_of_countries=="US","US",ifelse(data$list_of_countries=="EA","EA","other")))
+
+data$list_of_countries<-ifelse(data$list_of_countries=="UK","GB",data$list_of_countries)
+
+# Recode the list_of_countries into a proper list of countries
+# first unlist the current list
+data<-data %>% unnest(list_of_countries)
+# create a new list, where each country of a Panel corresponds to an item of the new list. 
+data$list_of_countries<-strsplit(data$list_of_countries, " ")
+
+
+# Define the Euro area 12 (EA12) countries
+ea12_countries <- c("BE", "DE", "ES", "FR", "IE", "IT", "LU", "NL", "AT", "PT", "FI", "GR")
+
+# Example list of vectors (replace with your actual list)
+
+# Function to create dummy variable
+in_ea12 <- function(vec) {
+  all(vec %in% ea12_countries)
+}
+
+# Apply the function to each vector in the list
+data$ea12 <- sapply(data$list_of_countries, in_ea12)
+data$ea12<-ifelse(data$list_of_countries=="EA",TRUE,data$ea12)
+
+#sum(data$ea12)
+
+
+# test<-data %>% 
+#   group_by(list_of_countries) %>% 
+#   summarise(n = n())
+
+
+
+high_income <- c("AU", "AT", "BE", "CA", "DK", "FI", "FR", "DE", "GR", "HK", "IE", 
+                 "IL", "IT", "JP", "KR", "NL", "NZ", "NO", "PT", "SG", "ES", "SE", 
+                 "CH", "TW", "GB", "US","EA","CY","LU","MT","IS","UK")
+
+upper_middle_income <- c("AR", "BG", "BR", "CN", "CO", "CZ", "EE", "HU", "ID", 
+                         "IN", "LV", "LT", "MY", "MX", "PE", "PL", "RO", "RU", 
+                         "SA", "SI", "SK", "ZA", "TH", "TR","HR","MK","CL",
+                         
+                         "BD", "BI", "EG", "GT", "KE", "MN", "OM", "PH", "PK", 
+                         "RW", "TZ", "UA", "UG", "VN","AM", "BH", "KH", "KW", "QA", "SG", "LK")
+
+#lower_middle_income_low <- c()
+
+
+
+# Function to classify each vector
+classify_vector <- function(vec) {
+  all_advanced <- all(vec %in% high_income)
+  all_upper_middle <- all(vec %in% upper_middle_income)
+  #all_lower_middle <- all(vec %in% lower_middle_income_low)
+  
+  if (all_advanced) {
+    return("Advanced")
+  } else if (all_upper_middle) {
+    return("upper_middle")
+  # } else if (all_lower_middle) {
+  #   return("lower_middle")
+  } else {
+    return("Mixed or Unclassified")
+  }
+}
+
+# Apply the function to each vector in the list and create a factor variable
+data$country_dev <- sapply(data$list_of_countries, classify_vector)
+#data$country_dev <- factor(classification, levels = c("Advanced", "Emerging", "Frontier", "Mixed or Unclassified"))
+# 
+# test<-data %>%
+#   group_by(country_dev) %>%
+#   summarise(n = n())
+
+
+
 
 
 
@@ -252,11 +326,6 @@ data_merged<-read.csv("~/data/data/merge_external_data/external-data.csv") %>% s
 data_merged$year<-as.numeric(data_merged$year)
 
 
-# Recode the list_of_countries into a proper list of countries
-# first unlist the current list
-data<-data %>% unnest(list_of_countries)
-# create a new list, where each country of a Panel corresponds to an item of the new list. 
-data$list_of_countries<-strsplit(data$list_of_countries, " ")
 
 
 # unnest year and list of countries and merge the respective external data in a first step. Secondly calculate the average of the external data for each model and study. 

@@ -3,7 +3,7 @@
         "key": "J33JK6PN",
         "rid1": "dr",
         "rid2": "sg",
-        "study_notes": "dr: they use r = ln(1+i/100), no_comparable_effect_size but then interest impulse response resemble to a level variable",
+        "study_notes": "quality_concern: implausibly large esitmates for IP.; dr: they use r = ln(1+i/100), no_comparable_effect_size but then interest impulse response resemble to a level variable",
         "model_notes": "null",
         "figure": {
           "model_1": "1.column-1",

@@ -4,7 +4,15 @@
         "rid1": "fp",
         "rid2": "null",
         "study_notes": "null",
-        "model_notes": "null",
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "quality_concern: implausibly different axis scaling and IRF pattern compared to the other models of the paper.; cum: set to true because of IRF pattern",
+          "model_3": "null",
+          "model_4": "null",
+          "model_5": "null",
+          "model_6": "null",
+          "model_7": "quality_concern: implausibly different axis scaling and IRF pattern compared to the other models of the paper.; cum: set to true because of IRF pattern"
+        },
         "figure": {
           "model_1": 1,
           "model_2": 9,
@@ -24,7 +32,15 @@
           "model_7": 16
         },
         "irf": true,
-        "cum": false
+        "cum": {
+          "model_1": false,
+          "model_2": true,
+          "model_3": false,
+          "model_4": false,
+          "model_5": false,
+          "model_6": false,
+          "model_7": true
+        }
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_policy_rate",
@@ -38,7 +54,7 @@
           "model_6": "log_q_rgdp_y*100",
           "model_7": false
         },
-        "dep": "log_q_rgdp gr_q_price_level",
+        "dep": "log_q_rgdp gr_q_cpi",
         "conf": "68",
         "main": "gdp inflation other",
         "prefer": {

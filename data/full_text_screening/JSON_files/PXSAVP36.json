@@ -3,7 +3,7 @@
         "key": "PXSAVP36",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "quality_concern: no information if real or nominal IP is used. Log of outcome variable is used because of the interpretation provided by the authors for figure 1, 2, and 3. The size of the interest rate shock is taken from figure 1 because it shows the same median response as figure 3",
+        "study_notes": "Log of outcome variable is used because of the interpretation provided by the authors for figure 1, 2, and 3. The size of the interest rate shock is taken from figure 1 because it shows the same median response as figure 3",
         "model_notes": "null",
         "figure": 3,
         "page": 35,

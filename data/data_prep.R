@@ -287,7 +287,7 @@ remove(split_list)
 
 
 ##### unlist all the variables which are still lists and use 0/1 coding instead of TRUE/FALSE coding.
-data<-data %>% unnest(n_of_countries) %>% unnest(chol) %>% unnest(bayes) %>% unnest(dsge) %>% unnest(idother) %>% unnest(var) %>% unnest(model_notes) %>% unnest(prefer) %>% mutate_if(is.logical, as.numeric) 
+data<-data %>% unnest(n_of_countries) %>% unnest(chol) %>% unnest(bayes) %>% unnest(dsge) %>% unnest(idother) %>% unnest(var) %>% unnest(model_notes) %>% unnest(prefer) %>% unnest(nr) %>% unnest(forecast_based) %>% mutate_if(is.logical, as.numeric) 
 #  %>% unnest(page) %>% unnest(figure) 
 
 

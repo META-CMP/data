@@ -20,30 +20,29 @@ library(modelsummary)# to nicely print results
 data<-data_back
 
 out<-'inflation'#c("gdp", "inflation", "unemp", "emp")
-outcome<-"the price level" # c("output", "the price level", "employment", "unemployment")
+outcome<-"output" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
 
 
-results_list<-list()
-coef_test_data<-list()
-confint_data<-list()
-
-
-# +fexch#+real_output # only for output regression
+unique(data$outcome)
 
 
 
 
-periods <- 3
 
 
+
+#periods <- 6
+
+periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
+
+for (x in periods) {
 
 # Subset data for the current period
-data_period <- subset(data, period.month == periods)
+data_period <- subset(data, period.month == x)
   
 data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
-data_period$precision <- 1 / data_period$StandardError
-  
+
   # Winsorize data
 data_period_winsor <- data_period
 data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
@@ -58,20 +57,17 @@ data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
   
 # Calculate PrecVariance winsorised
 data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
-  
-# Calculate (precision-weighted) average
-regwa <- lm(equation, data = data_period_winsor)#, weights = precvariance_winsor
- 
 
 
 
 
 
-data_bms<-data_period_winsor %>% select(mean.effect_winsor,standarderror_winsor, mean_year, regime, quality_concern, observations, main_research_q, outcome_measure, rate_mean.effect, cbanker, decomposition, convent, lrir, fx, foreignir, inflexp, eglob, find, comprice, us, month, upr, lor, dsge, bayes, fvar, lp, signr, svar, chol, nr, prefer,iv,forecast_based)
+
+data_bms<-data_period_winsor %>% select(mean.effect_winsor,standarderror_winsor, mean_year, regime, quality_concern, observations, main_research_q, outcome_measure, rate_mean.effect, cbanker, decomposition, convent, lrir, fx, foreignir, inflexp, eglob, find, comprice, country_dev, month, upr, lor, dsge, bayes, fvar, lp, signr, svar, chol, nr, prefer,iv,forecast_based)
 
 library(fastDummies)
 
-data_bms<-fastDummies::dummy_cols(data_bms) %>% select(-outcome_measure_price_level,-outcome_measure_cpi,-outcome_measure,-rate_mean.effect,-us,-us_US)
+data_bms<-fastDummies::dummy_cols(data_bms) %>% select(-outcome_measure_cpi,-outcome_measure,-rate_mean.effect,-country_dev,-`country_dev_Mixed or Unclassified`)
 
 #data_bms<-data_bms %>% select(mean.effect_winsor,standarderror_winsor, mean_year, regime, quality_concern, observations, main_research_q)
 
@@ -93,34 +89,46 @@ dataspeed<-na.omit(data_bms)
 library(car)
 
 
-# Calculate VIF for each variable
-vif_values <- car::vif(lm(data_bms))
-#test<-cor(dataspeed)
-# Print the VIF values
-print(vif_values)
+# # Calculate VIF for each variable
+# vif_values <- car::vif(lm(data_bms))
+# #test<-cor(dataspeed)
+# # Print the VIF values
+# print(vif_values)
 
+data_bms<-as.data.frame(data_bms)
 
 #//Starts estimation
 library(BMS)
-speed <- bms(data_bms, g="UIP", mprior="uniform", user.int=FALSE,nmodel = 200000, mcmc="bd")#,start.value = c(1:35)
+speed <- bms(data_bms, g="UIP", mprior="uniform", user.int=FALSE,nmodel = 200000,burn = 50000, iter=10000, mcmc="bd")#,start.value = c(1:35)
 
-undebug(topmodels.bma)
-topmodels.bma(speed)[,1:3]
-(speed$arguments$X.data[,1],na.rm = T)
 
-colMeans(speed$arguments$X.data[,1], na.rm = TRUE)
 
-print(speed$arguments$X.data[,1],n=1749)
+#undebug(topmodels.bma)
 
-bmao$arguments$X.data[, 1])
 
-plot(speed)
-summary(speed)
+# speed$arguments$X.data[, 1]
+# test$arguments$X.data[, 1]
+
+# plot(speed)
+# summary(speed)
 plotConv(speed)
 
 #//Results
-coef(speed, order.by.pip = T, exact=T, include.constant=F)
-image(speed, include.constant=F, cex.axis=0.7, order.by.pip = F, yprop2pip=F,col=c("black","lightgrey"))
-image(speed,yprop2pip=TRUE,col=c("black","lightgrey"))
+print(coef(speed, order.by.pip = T, exact=T, include.constant=T))
 
-density(speed, reg="dsge")
+#image(speed,yprop2pip=TRUE,col=c("black","lightgrey"))
+
+png(file=paste0("./results/",out,"/plots/bma/bma_plot_", x, "_months_winsor.png"),
+    width     = 8.25,
+    height    = 5.25,
+    units     = "in",
+    res       = 150,
+    pointsize = 10)
+image(speed, cex.axis=.5, order.by.pip = T, yprop2pip=F)#,col=c("orange","lightgrey"), main=paste0("BMA image ",outcome," ",x," months")
+dev.off()
+}
+
+
+parameters::parameters(speed)
+modelsummary(as.data.frame(coef(speed)), output = "gt",stars = TRUE)
+#density(speed, reg="dsge")

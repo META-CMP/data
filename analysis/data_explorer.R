@@ -8,6 +8,9 @@ library(JWileymisc)
 library(viridis)
 library(modelsummary)
 library(ggplot2)
+library(sandwich)
+library(clubSandwich)
+library(lmtest)
 
 # Load the data 
 data_path <- here("data/preliminary_data_test.RData")
@@ -371,6 +374,9 @@ ui <- fluidPage(
                                         choices = c("Mean", "UWLS", "FAT-PET", "PEESE"),
                                         selected = "Mean"),
                             checkboxInput("prec_weighted", "Precision weighted", value = FALSE),
+                            selectInput("cluster_se", "Cluster SEs by study", 
+                                        choices = c("FALSE", "sandwich", "clubSandwich"),
+                                        selected = "FALSE"),
                             uiOutput("equation_display"),
                             htmlOutput("meta_analysis_table"),
                             selectInput("stats", "Statistics:",
@@ -916,7 +922,8 @@ server <- function(input, output, session) {
                   wins = input$funnel_wins,
                   ap = input$ap,
                   prec_weighted = input$prec_weighted,
-                  estimation = input$estimation)
+                  estimation = input$estimation,
+                  cluster_se = input$cluster_se)
   })
   # Equation display
   equation <- reactive({

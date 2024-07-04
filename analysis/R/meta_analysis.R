@@ -11,19 +11,16 @@
 #' @param prec_weighted A logical value indicating whether to use precision weighting.
 #' @param estimation String specifying the meta analysis model, one of "Mean", "FAT-PAT" and "PEESE".
 #'
-#' @return A list of model summary objects for each period.
+#' @return A list of model objects for each period.
 #'
 #' @import tidyverse
 #' @import dplyr
 #' @import JWileymisc
-#' @import clubSandwich
-#' @import modelsummary
 #'
 #' @examples
 #' library(tidyverse)
 #' library(dplyr)
 #' library(JWileymisc)
-#' library(clubSandwich)
 #' library(modelsummary)
 #'
 #' # Load the data
@@ -37,14 +34,14 @@
 #' data$precision.upper <- 1 / data$SE.upper
 #'
 #' # Perform meta-analysis
-#' results <- meta_analysis(data, outvar = "gdp", se_option = "avg", periods = c(3, 6, 12),
-#'                          wins = 0.02, prec_weighted = FALSE)
+#' results <- meta_analysis(data, outvar = "gdp", se_option = "avg", periods = 1:60,
+#'                          wins = 0.02, prec_weighted = FALSE, estimation = "PEESE", cluster_se = "sandwich")
 #'
 #' # Display the results
 #' modelsummary(results, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "Title here", gof_map = NULL)
-#'
+#' 
 #' @export
-meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE) {
+meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = NULL) {
   # Subset data for the specified outcome variable
   data <- subset(data, outcome %in% outvar)
   
@@ -78,10 +75,8 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
       data_period$precision <- data_period$precision.upper
     }
     
-    # Apply Winsorization to the standard error, mean effect, and precision
-    data_period$standarderror_winsor <- winsorizor(data_period$StandardError, percentile = wins)
-    data_period$mean.effect_winsor <- winsorizor(data_period$mean.effect, percentile = wins)
-    data_period$precision_winsor <- winsorizor(data_period$precision, percentile = wins)
+    # Apply winsorization to the standard error, mean effect, and precision
+    data_period <- apply_winsorization(data_period, wins)
     
     # Filter adequately powered if ap == TRUE
     if (ap == TRUE) {
@@ -104,6 +99,30 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
     # Run regression
     weights <- if (prec_weighted) data_period$precvariance_winsor else NULL
     reg_result <- lm(equation, data = data_period, weights = weights)
+    
+    # Correction of SEs - clustered by study (key)
+    if (!is.null(cluster_se)) {
+      if (cluster_se == "sandwich") {
+        vcov_cluster <- vcovCL(reg_result, cluster = ~key)
+        reg_result <- coeftest(reg_result, vcov. = vcov_cluster)
+      }
+      if (cluster_se == "clubSandwich") {
+        # Ensure 'key' is a factor
+        data_period$key <- as.factor(data_period$key)
+        
+        # Apply clubSandwich correction
+        corrected_results <- coef_test(reg_result, 
+                                vcov = "CR0", 
+                                cluster = data_period$key, 
+                                test = "naive-t")
+        
+        # Update the reg_result object with corrected values
+        reg_result$coefficients <- corrected_results$beta
+        reg_result$std.error <- corrected_results$SE
+        reg_result$t.value <- corrected_results$tstat
+        reg_result$p.value <- corrected_results$p_val
+      }
+    }
     
     results_list[[paste0(x)]] <- reg_result
   }

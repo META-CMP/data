@@ -57,9 +57,7 @@ create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02
   }
   
   # Apply Winsorization to the standard error, mean effect, and precision
-  data_filtered$standarderror_winsor <- winsorizor(data_filtered$StandardError, percentile = wins)
-  data_filtered$mean.effect_winsor <- winsorizor(data_filtered$mean.effect, percentile = wins)
-  data_filtered$precision_winsor <- winsorizor(data_filtered$precision, percentile = wins)
+  data_filtered <- apply_winsorization(data_filtered, wins)
   
   # Filter adequately powered if ap == TRUE
   if (ap == TRUE) {

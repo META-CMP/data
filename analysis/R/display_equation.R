@@ -13,6 +13,7 @@
 #' display_equation("UWLS", FALSE)
 #' display_equation("FAT-PET", TRUE)
 #' display_equation("PEESE", FALSE)
+#' display_equation("EK", FALSE)
 #'
 #' @export
 display_equation <- function(model, weighted) {
@@ -21,6 +22,7 @@ display_equation <- function(model, weighted) {
                "UWLS" = "t = y/SE = \\beta (1/SE) + \\epsilon",
                "FAT-PET" = "y = \\beta_0 + \\beta_1 SE + \\epsilon",
                "PEESE" = "y = \\beta_0 + \\beta_1 SE^2 + \\epsilon",
+               "EK" = "y = \\beta_0 + \\beta_1 (SE - a) I_{SE - a} + \\epsilon",
                stop("Invalid model specified")
   )
   
@@ -30,3 +32,12 @@ display_equation <- function(model, weighted) {
   
   paste0("$$", eq, "$$")
 }
+
+#			bs = alpha1 + delta*(sebs-a)*I(sebs-a) + epsilon, 
+#
+#    	where 	bs = estimates
+#			alpha1 = mean true effect
+#			sebs = standard errors
+#			a = estimated kink
+#			I(sebs-a) = dummy variable that is 1 when sebs>a and 0 otherwise
+#			delta = publication bias parameter

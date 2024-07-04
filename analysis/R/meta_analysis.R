@@ -9,7 +9,7 @@
 #' @param periods A numeric vector specifying the periods (in months) for which to perform the analysis.
 #' @param wins A numeric value specifying the winsorization parameter.
 #' @param prec_weighted A logical value indicating whether to use precision weighting.
-#' @param estimation String specifying the meta analysis model, one of "Mean", "FAT-PAT" and "PEESE".
+#' @param estimation String specifying the meta analysis model, one of "Mean", "UWLS", "FAT-PAT", "PEESE", "EK".
 #'
 #' @return A list of model objects for each period.
 #'
@@ -34,11 +34,14 @@
 #' data$precision.upper <- 1 / data$SE.upper
 #'
 #' # Perform meta-analysis
-#' results <- meta_analysis(data, outvar = "gdp", se_option = "avg", periods = 1:60,
+#' results1 <- meta_analysis(data, outvar = "gdp", se_option = "avg", periods = 1:60,
 #'                          wins = 0.02, prec_weighted = FALSE, estimation = "PEESE", cluster_se = "sandwich")
+#' results2 <- meta_analysis(data, outvar = "gdp", se_option = "avg", periods = 1:60,
+#'                          wins = 0.02, prec_weighted = FALSE, estimation = "EK", cluster_se = "sandwich")
 #'
 #' # Display the results
-#' modelsummary(results, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "Title here", gof_map = NULL)
+#' modelsummary(results1, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "PEESE", gof_map = NULL)
+#' modelsummary(results2, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "EK", gof_map = NULL)
 #' 
 #' @export
 meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = NULL) {
@@ -48,7 +51,7 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
   # Create empty lists for results
   results_list <- list()
   
-  # Define the equation to be estimated
+  # Define the equation to be estimated (not relevant for EK)
   if (estimation == "Mean") {
     equation <- mean.effect_winsor ~ 1
   } else if (estimation == "UWLS") {
@@ -97,10 +100,20 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
     data_period$precvariance_winsor <- 1 / data_period$variance_winsor
     
     # Run regression
-    weights <- if (prec_weighted) data_period$precvariance_winsor else NULL
-    reg_result <- lm(equation, data = data_period, weights = weights)
+    if (estimation != "EK") {
+      
+      weights <- if (prec_weighted) data_period$precvariance_winsor else NULL
+      reg_result <- lm(equation, data = data_period, weights = weights)
+      
+    } else if (estimation == "EK") {
+      
+      data_EK <- data_period %>%  select(mean.effect_winsor, standarderror_winsor, key)
+      est_EK <- EK(data=data_EK,verbose = FALSE)
+      reg_result <- est_EK$model
+      
+    }
     
-    # Correction of SEs - clustered by study (key)
+    # Correction of SEs - clustered by study (by key)
     if (!is.null(cluster_se)) {
       if (cluster_se == "sandwich") {
         vcov_cluster <- vcovCL(reg_result, cluster = ~key)

@@ -18,7 +18,7 @@ data_path <- here("data/preliminary_data_test.RData")
 # data_path <- here("data/preliminary_data_12062024.RData")
 load(data_path)
 rm(data_path)
-# data <- data[1:10000,] # For testing
+data <- data[1:10000,] # For testing
 # Papers data test
 papers_path <- here("data/papers_test.RData")
 load(papers_path)
@@ -276,7 +276,7 @@ ui <- fluidPage(
                                        actionButton("peese_irf", "PEESE"),
                                        actionButton("ioannidis_irf", "Top 10% precision"),
                                        actionButton("furukawa_irf", "Furukawa (2021) - stem", disabled = TRUE),
-                                       actionButton("bom_rachinger_irf", "Bom and Rachinger (2019) - endogenous kink", disabled = TRUE),
+                                       actionButton("bom_rachinger_irf", "Bom and Rachinger (2019) - endogenous kink"),
                                        actionButton("andrews_kasy_irf", "Andrews and Kasy (2019)", disabled = TRUE),
                                        style = "margin-bottom: 15px;"
                                 )
@@ -364,14 +364,14 @@ ui <- fluidPage(
                                      actionButton("peese", "PEESE"),
                                      actionButton("ioannidis", "Top 10% precision"),
                                      actionButton("furukawa", "Furukawa (2021) - stem", disabled = TRUE),
-                                     actionButton("bom_rachinger", "Bom and Rachinger (2019) - endogenous kink", disabled = TRUE),
+                                     actionButton("bom_rachinger", "Bom and Rachinger (2019) - endogenous kink"),
                                      actionButton("andrews_kasy", "Andrews and Kasy (2019)", disabled = TRUE),
                                      style = "margin-bottom: 15px;"
                               )
                             ),
                             h6("Customize"),
                             selectInput("estimation", "Meta model:",
-                                        choices = c("Mean", "UWLS", "FAT-PET", "PEESE"),
+                                        choices = c("Mean", "UWLS", "FAT-PET", "PEESE", "EK"),
                                         selected = "Mean"),
                             checkboxInput("prec_weighted", "Precision weighted", value = FALSE),
                             selectInput("cluster_se", "Cluster SEs by study", 
@@ -950,7 +950,7 @@ server <- function(input, output, session) {
                  title = "Meta-Analysis", 
                  gof_map = diagnostics)
   })
-  # Plot
+  # Model Plot
   output$meta_analysis_plot_effect <- renderPlot({
     
     if (input$estimation %in% c("Mean", "UWLS")) {
@@ -959,6 +959,8 @@ server <- function(input, output, session) {
       omit <- "standarderror_winsor"
     } else if (input$estimation == "PEESE") {
       omit <- "variance_winsor"
+    } else if (input$estimation == "EK") {
+      omit <- "pub_bias"
     }
     
     b <- list(geom_vline(xintercept = 0, color = 'orange'))
@@ -973,8 +975,9 @@ server <- function(input, output, session) {
     
     b <- list(geom_vline(xintercept = 0, color = 'orange'))
     
+    omit <- ifelse(input$estimation == "EK", "constant", "Interc")
     modelplot(reg_results(),
-              coef_omit = 'Interc',
+              coef_omit = omit,
               conf_level = input$conf_level,
               title = "Meta-Analysis Plot", 
               background = b)
@@ -1027,6 +1030,14 @@ server <- function(input, output, session) {
     updateCheckboxInput(session, "prec_weighted", value = TRUE)
     updateCheckboxInput(session, "ap", value = FALSE)
     updateCheckboxInput(session, "precision_filter", value = "Top Percentile")
+  })
+  # Bom and Rachinger (2019) - endogenous kink
+  observeEvent(list(input$bom_rachinger, input$bom_rachinger_irf), {
+    req(input$bom_rachinger || input$bom_rachinger_irf)
+    updateSelectInput(session, "estimation", selected = "EK")
+    updateCheckboxInput(session, "prec_weighted", value = FALSE)
+    updateCheckboxInput(session, "ap", value = FALSE)
+    updateCheckboxInput(session, "precision_filter", value = "None")
   })
   
   # Moderator summary table

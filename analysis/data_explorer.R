@@ -13,12 +13,13 @@ library(clubSandwich)
 library(lmtest)
 
 # Load the data 
+# data_path <- here("data/preliminary_data_test_old.RData")
 data_path <- here("data/preliminary_data_test.RData")
-# data_path <- here("data/preliminary_data_14062024.RData")
+# data_path <- here("data/preliminary_data_03072024.RData")
 # data_path <- here("data/preliminary_data_12062024.RData")
 load(data_path)
 rm(data_path)
-data <- data[1:10000,] # For testing
+# data <- data[1:10000,] # For testing
 # Papers data test
 papers_path <- here("data/papers_test.RData")
 load(papers_path)
@@ -278,6 +279,8 @@ ui <- fluidPage(
                                        actionButton("furukawa_irf", "Furukawa (2021) - stem", disabled = TRUE),
                                        actionButton("bom_rachinger_irf", "Bom and Rachinger (2019) - endogenous kink"),
                                        actionButton("andrews_kasy_irf", "Andrews and Kasy (2019)", disabled = TRUE),
+                                       actionButton("brodeur_2020_files", "Brodeur (2020)", disabled = TRUE),
+                                       actionButton("maive", "MAIVE", disabled = TRUE),
                                        style = "margin-bottom: 15px;"
                                 )
                               )

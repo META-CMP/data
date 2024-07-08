@@ -23,7 +23,7 @@
         "inttype": "lev_a_eonia",
         "size": "-20bp",
         "axis_trans": false,
-        "dep": "logdiff_a_ip logdiff_a_cpi lev_a_une_rate",
+        "dep": "logdiff_a_ip logdiff_a_cpi lev_m_une_rate",
         "conf": "68",
         "main": "inflation",
         "prefer": {

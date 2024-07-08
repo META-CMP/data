@@ -3,12 +3,12 @@
         "key": "FI95JJ2I",
         "rid1": "me",
         "rid2": "fp",
-        "study_notes": "pure_rate_shock: set to true because the MP shock is normalized to a 50 bp increase in the ff, but since the interest rate factor also consists of long run interest rates it could probably be set to false as well.",
+        "study_notes": "cum: set cum to true because IRF pattern; pure_rate_shock: set to true because the MP shock is normalized to a 50 bp increase in the ff, but since the interest rate factor also consists of long run interest rates it could probably be set to false as well.",
         "model_notes": "null",
         "figure": 1,
         "page": 205,
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",

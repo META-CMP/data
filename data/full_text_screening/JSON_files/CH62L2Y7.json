@@ -14,7 +14,10 @@
           "model_2": 122
         },
         "irf": true,
-        "cum": false
+        "cum": {
+          "model_1": false,
+          "model_2": true
+        }
     },
     "impulse_and_response_variables": {
         "inttype": {
@@ -25,7 +28,7 @@
         "axis_trans": false,
         "dep": {
           "model_1": "log_q_rgdp log_q_deflator",
-          "model_2": "log_q_rgdp log_q_deflator"
+          "model_2": "log_q_gap logdiff_q_deflator"
         },
         "conf": {
           "model_1": "2_SE",

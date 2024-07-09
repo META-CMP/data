@@ -36,7 +36,7 @@
 #' "sd0_ek": the standard error of the estimated mean effect size
 #' "b1_ek": the estimated publication bias coefficient by the Endo-Kink method, if applicable
 #' "sd1_ek": the standard error of the estimated publication bias coefficient, if applicable
-EK <- function(data, verbose = T){
+EK <- function(data, verbose = T, sig_threshold = 1.96){
 
     # install missing packages
   if (!require('lmtest')) install.packages('lmtest'); library('lmtest')
@@ -100,8 +100,8 @@ EK <- function(data, verbose = T){
   sighhat <- sqrt(sigh2hat)
   
   # Cutoff value for EK
-  if (combreg > 1.96 * sighhat) {
-    a1 <- (combreg - 1.96 * sighhat) * (combreg + 1.96 * sighhat) / (2 * 1.96 * combreg)
+  if (combreg > sig_threshold * sighhat) {
+    a1 <- (combreg - sig_threshold * sighhat) * (combreg + sig_threshold * sighhat) / (2 * sig_threshold * combreg)
   } else {
     a1 <- 0
   }

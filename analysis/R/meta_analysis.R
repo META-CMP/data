@@ -15,13 +15,14 @@
 #'
 #' @import tidyverse
 #' @import dplyr
-#' @import JWileymisc
 #'
 #' @examples
 #' library(tidyverse)
 #' library(dplyr)
 #' library(JWileymisc)
 #' library(modelsummary)
+#' library(sandwich)
+#' library(clubSandwich)
 #'
 #' # Load the data
 #' data_path <- "data/preliminary_data_test.RData"
@@ -35,7 +36,7 @@
 #'
 #' # Perform meta-analysis
 #' results1 <- meta_analysis(data, outvar = "gdp", se_option = "avg", periods = 1:60,
-#'                          wins = 0.02, prec_weighted = FALSE, estimation = "PEESE", cluster_se = "sandwich")
+#'                          wins = 0.02, prec_weighted = TRUE, estimation = "FAT-PET", cluster_se = "sandwich")
 #' results2 <- meta_analysis(data, outvar = "gdp", se_option = "avg", periods = 1:60,
 #'                          wins = 0.02, prec_weighted = FALSE, estimation = "EK", cluster_se = "sandwich")
 #'
@@ -44,9 +45,22 @@
 #' modelsummary(results2, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "EK", gof_map = NULL)
 #' 
 #' @export
-meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = NULL) {
+meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = NULL, EK_sig_threshold = 1.96) {
   # Subset data for the specified outcome variable
   data <- subset(data, outcome %in% outvar)
+
+  # Check which periods have data
+  available_periods <- unique(data$period.month)
+  valid_periods <- periods[periods %in% available_periods]
+
+  if (length(valid_periods) == 0) {
+    stop("No data available for any of the specified periods.")
+  }
+
+  if (length(valid_periods) < length(periods)) {
+    warning(paste("Data is only available for the following periods:", 
+                  paste(valid_periods, collapse = ", ")))
+  }
   
   # Create empty lists for results
   results_list <- list()
@@ -62,10 +76,10 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
     equation <- mean.effect_winsor ~ variance_winsor
   }
   
-  for (x in periods) {
+  for (x in valid_periods) {
     # Subset data for the current period
     data_period <- subset(data, period.month %in% x)
-    
+
     # Select the corresponding standard error and precision columns based on the se_option
     if (se_option == "avg") {
       data_period$StandardError <- data_period$SE.avg
@@ -107,8 +121,8 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
       
     } else if (estimation == "EK") {
       
-      data_EK <- data_period %>%  select(mean.effect_winsor, standarderror_winsor, key)
-      est_EK <- EK(data=data_EK,verbose = FALSE)
+      data_EK <- data_period %>% select(mean.effect_winsor, standarderror_winsor, key)
+      est_EK <- EK(data=data_EK,verbose = FALSE, sig_threshold = EK_sig_threshold)
       reg_result <- est_EK$model
       
     }
@@ -116,15 +130,15 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
     # Correction of SEs - clustered by study (by key)
     if (!is.null(cluster_se)) {
       if (cluster_se == "sandwich") {
-        vcov_cluster <- vcovCL(reg_result, cluster = ~key)
-        reg_result <- coeftest(reg_result, vcov. = vcov_cluster)
+        vcov_cluster <- sandwich::vcovCL(reg_result, cluster = ~key)
+        reg_result <- lmtest::coeftest(reg_result, vcov. = vcov_cluster)
       }
       if (cluster_se == "clubSandwich") {
         # Ensure 'key' is a factor
         data_period$key <- as.factor(data_period$key)
         
         # Apply clubSandwich correction
-        corrected_results <- coef_test(reg_result, 
+        corrected_results <- clubSandwich::coef_test(reg_result, 
                                 vcov = "CR0", 
                                 cluster = data_period$key, 
                                 test = "naive-t")

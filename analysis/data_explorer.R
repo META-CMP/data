@@ -11,6 +11,7 @@ library(ggplot2)
 library(sandwich)
 library(clubSandwich)
 library(lmtest)
+library(shinyjs)
 
 # Load the data 
 # data_path <- here("data/preliminary_data_test_old.RData")
@@ -19,7 +20,7 @@ data_path <- here("data/preliminary_data_test.RData")
 # data_path <- here("data/preliminary_data_12062024.RData")
 load(data_path)
 rm(data_path)
-# data <- data[1:10000,] # For testing
+data <- data[1:20000,] # For testing
 # Papers data test
 papers_path <- here("data/papers_test.RData")
 load(papers_path)
@@ -60,7 +61,7 @@ data$precision.upper <- 1 / data$SE.upper
 
 # Define choices for moderator filters
 moderator_groups <- list(
-  "General" = list("cum"),
+  "General" = list("cum", "quality_concern"),
   "Impulse and Response Variables" = list("prefer"),
   "Identification Strategy" = list("iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "idother"),
   "Estimation Method" = list("var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge", "varother"),
@@ -69,11 +70,12 @@ moderator_groups <- list(
   "Further Data Characteristics" = list("panel"),
   "Control Variables" = list("comprice", "outpgap", "find", "eglob", "cbind", "fexch", "inflexp", "foreignir", "fx", "lrir"),
   "Econometric Details" = list("pure_rate_shock", "convent", "decomposition"),
-  "Publication Characteristics" = list("cbanker")
+  "Publication Characteristics" = list("cbanker", "is_top_5", "is_top_tier")
 )
 
 ui <- fluidPage(
   withMathJax(),
+  shinyjs::useShinyjs(),
   titlePanel("META CMP Data Explorer"),
   sidebarLayout(
     sidebarPanel(
@@ -196,9 +198,10 @@ ui <- fluidPage(
                  sliderInput("pub_year", "Publication Year",
                              min = min(data$pub_year, na.rm = TRUE),
                              max = max(data$pub_year, na.rm = TRUE),
-                             value = c(min(data$year, na.rm = TRUE), max(data$year, na.rm = TRUE)),
+                             value = c(min(data$pub_year, na.rm = TRUE), max(data$pub_year, na.rm = TRUE)),
                              step = 1,
                              sep = ""),
+                 plotOutput("pub_year_plot"),
                  checkboxInput("journal_article", "Journal Article Only", value = FALSE)
         )
       )
@@ -279,8 +282,8 @@ ui <- fluidPage(
                                        actionButton("furukawa_irf", "Furukawa (2021) - stem", disabled = TRUE),
                                        actionButton("bom_rachinger_irf", "Bom and Rachinger (2019) - endogenous kink"),
                                        actionButton("andrews_kasy_irf", "Andrews and Kasy (2019)", disabled = TRUE),
-                                       actionButton("brodeur_2020_files", "Brodeur (2020)", disabled = TRUE),
-                                       actionButton("maive", "MAIVE", disabled = TRUE),
+                                       actionButton("brodeur_2020_files_irf", "Brodeur (2020)", disabled = TRUE),
+                                       actionButton("maive_irf", "MAIVE", disabled = TRUE),
                                        style = "margin-bottom: 15px;"
                                 )
                               )
@@ -369,6 +372,8 @@ ui <- fluidPage(
                                      actionButton("furukawa", "Furukawa (2021) - stem", disabled = TRUE),
                                      actionButton("bom_rachinger", "Bom and Rachinger (2019) - endogenous kink"),
                                      actionButton("andrews_kasy", "Andrews and Kasy (2019)", disabled = TRUE),
+                                     actionButton("brodeur_2020_files", "Brodeur (2020)", disabled = TRUE),
+                                     actionButton("maive", "MAIVE", disabled = TRUE),
                                      style = "margin-bottom: 15px;"
                               )
                             ),
@@ -377,6 +382,10 @@ ui <- fluidPage(
                                         choices = c("Mean", "UWLS", "FAT-PET", "PEESE", "EK"),
                                         selected = "Mean"),
                             checkboxInput("prec_weighted", "Precision weighted", value = FALSE),
+                            conditionalPanel(
+                              condition = "input.estimation == 'EK'",
+                              selectInput("EK_sig", "Confidence band threshold", choices = c("68 %", "90 %", "95 %", "99 %"), selected = "95")
+                            ),
                             selectInput("cluster_se", "Cluster SEs by study", 
                                         choices = c("FALSE", "sandwich", "clubSandwich"),
                                         selected = "FALSE"),
@@ -516,6 +525,10 @@ server <- function(input, output, session) {
       )
     }
     
+    # Publication year filter
+    data_filtered <- data_filtered %>%
+      filter(pub_year >= input$pub_year[1] & pub_year <= input$pub_year[2])
+    
     # Journal filter
     if (input$journal_article) {
       data_filtered <- data_filtered %>% filter(type == "journalArticle")
@@ -616,6 +629,14 @@ server <- function(input, output, session) {
     selected_start_year <- input$filter_years[1]
     selected_end_year <- input$filter_years[2]
     summary <- paste0(summary, "\nSelected year range: ", selected_start_year, "(min ", min_start_year, ", max ", max_start_year, ")", " - ", selected_end_year, "(min ", min_end_year, ", max ", max_end_year, ")")
+    
+    # Publication year summary
+    full_min_year <- min(data$pub_year, na.rm = TRUE)
+    full_max_year <- max(data$pub_year, na.rm = TRUE)
+    
+    if (input$pub_year[1] > full_min_year || input$pub_year[2] < full_max_year) {
+      summary <- paste0(summary, "\nPublication Years: ", input$pub_year[1], " - ", input$pub_year[2], "\n")
+    }
 
     summary
   })
@@ -916,6 +937,15 @@ server <- function(input, output, session) {
   }
   
   # Meta-analyses
+  # EK_sig for Endogenous Kink method
+  EK_sig <- reactive({
+    switch(input$EK_sig,
+                  "68 %" = 1.0,
+                  "90 %" = 1.645,
+                  "95 %" = 1.96,
+                  "99 %" = 2.576,
+                  stop("Invalid confidence level. Choose from 68, 90, 95, or 99 %."))
+  })
   # Estimation
   reg_results <- reactive({
     meta_analysis(data = filtered_data(),
@@ -926,7 +956,8 @@ server <- function(input, output, session) {
                   ap = input$ap,
                   prec_weighted = input$prec_weighted,
                   estimation = input$estimation,
-                  cluster_se = input$cluster_se)
+                  cluster_se = input$cluster_se,
+                  EK_sig_threshold = 10)
   })
   # Equation display
   equation <- reactive({
@@ -1038,9 +1069,16 @@ server <- function(input, output, session) {
   observeEvent(list(input$bom_rachinger, input$bom_rachinger_irf), {
     req(input$bom_rachinger || input$bom_rachinger_irf)
     updateSelectInput(session, "estimation", selected = "EK")
-    updateCheckboxInput(session, "prec_weighted", value = FALSE)
+    updateCheckboxInput(session, "prec_weighted", value = TRUE)
     updateCheckboxInput(session, "ap", value = FALSE)
     updateCheckboxInput(session, "precision_filter", value = "None")
+  })
+  observe({
+    if (input$estimation == "EK") {
+      shinyjs::disable("prec_weighted")
+    } else {
+      shinyjs::enable("prec_weighted")
+    }
   })
   
   # Moderator summary table
@@ -1086,6 +1124,35 @@ server <- function(input, output, session) {
     }
     
     extract_intercepts(results)
+  })
+  
+  # pub_year_plot
+  output$pub_year_plot <- renderPlot({
+    req(filtered_data())
+    pub_year_counts <- table(filtered_data()$pub_year)
+    barplot(pub_year_counts, 
+            main="# obs for each publication year",
+            xlab="Year",
+            ylab="Count",
+            col="skyblue",
+            border="white")
+  })
+  # Update pub_year slider values
+  observe({
+    full_min_year <- min(data$pub_year, na.rm = TRUE)
+    full_max_year <- max(data$pub_year, na.rm = TRUE)
+    
+    filtered_min_year <- min(filtered_data()$pub_year, na.rm = TRUE)
+    filtered_max_year <- max(filtered_data()$pub_year, na.rm = TRUE)
+    
+    current_min <- input$pub_year[1]
+    current_max <- input$pub_year[2]
+    
+    updateSliderInput(session, "pub_year",
+                      min = full_min_year,
+                      max = full_max_year,
+                      value = c(max(current_min, filtered_min_year),
+                                min(current_max, filtered_max_year)))
   })
   
 }

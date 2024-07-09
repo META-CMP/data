@@ -88,8 +88,6 @@ create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02
     layout(title = paste(outvar, ",", prd, "months after shock"),
            xaxis = list(title = "Effect size"),
            yaxis = list(title = " Precision"),
-           shapes = list(type = "line", x0 = 0, x1 = 0, y0 = 0, y1 = 1, yref = "paper",
-                         line = list(color = "black", width = 1, dash = "dash")),
            showlegend = legend)
   
   # Return the funnel plot

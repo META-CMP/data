@@ -3,7 +3,7 @@
         "key": "DRELBLR3",
         "rid1": "fp",
         "rid2": "dr",
-        "study_notes": "cum: set cum to true because IRF pattern.",
+        "study_notes": "null",
         "model_notes": "null",
         "figure": {
           "model_1": 1,
@@ -30,18 +30,7 @@
           "model_10": 209
         },
         "irf": true,
-        "cum": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": true,
-          "model_5": false,
-          "model_6": false,
-          "model_7": false,
-          "model_8": true,
-          "model_9": true,
-          "model_10": false
-        }
+        "cum": false
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_short_term_rate",

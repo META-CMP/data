@@ -3,12 +3,12 @@
         "key": "THKSNXJL",
         "rid1": "fp",
         "rid2": "null",
-        "study_notes": "fvar: The paper uses a multi-country structural dynamic factor model, which we code as fvar.",
+        "study_notes": "cum: set cum to true because IRF pattern; fvar: The paper uses a multi-country structural dynamic factor model, which we code as fvar.",
         "model_notes": "null",
         "figure": 1,
         "page": 83,
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_ssr",
@@ -16,7 +16,7 @@
         "axis_trans": false,
         "dep": "logdiff_q_rgdp logdiff_q_cpi lev_q_une_rate",
         "conf": "84",
-        "main": "gdp  emp  inflation  other",
+        "main": "other gdp",
         "prefer": true
     },
     "identification_strategy": {

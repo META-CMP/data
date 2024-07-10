@@ -378,17 +378,26 @@ ui <- fluidPage(
                               )
                             ),
                             h6("Customize"),
-                            selectInput("estimation", "Meta model:",
-                                        choices = c("Mean", "UWLS", "FAT-PET", "PEESE", "EK"),
-                                        selected = "Mean"),
-                            checkboxInput("prec_weighted", "Precision weighted", value = FALSE),
-                            conditionalPanel(
-                              condition = "input.estimation == 'EK'",
-                              selectInput("EK_sig", "Confidence band threshold", choices = c("68 %", "90 %", "95 %", "99 %"), selected = "95")
+                            fluidRow(
+                              column(3,
+                                     selectInput("estimation", "Meta model:",
+                                                 choices = c("Mean", "UWLS", "FAT-PET", "PEESE", "EK"),
+                                                 selected = "Mean"),
+                                     checkboxInput("prec_weighted", "Precision weighted", value = FALSE),
+                                     conditionalPanel(
+                                       condition = "input.estimation == 'EK'",
+                                       selectInput("EK_sig", "Confidence band threshold", choices = c("68 %", "90 %", "95 %", "99 %"), selected = "95")
+                                     ),
+                                     selectInput("cluster_se", "Cluster SEs by study", 
+                                                 choices = c("FALSE", "sandwich", "clubSandwich"),
+                                                 selected = "FALSE")
+                              ),
+                              column(9,
+                                     selectInput("mod_reg", "Select Moderators:",
+                                                 choices = moderator_groups,
+                                                 multiple = TRUE)
+                              )
                             ),
-                            selectInput("cluster_se", "Cluster SEs by study", 
-                                        choices = c("FALSE", "sandwich", "clubSandwich"),
-                                        selected = "FALSE"),
                             uiOutput("equation_display"),
                             htmlOutput("meta_analysis_table"),
                             selectInput("stats", "Statistics:",
@@ -946,6 +955,10 @@ server <- function(input, output, session) {
                   "99 %" = 2.576,
                   stop("Invalid confidence level. Choose from 68, 90, 95, or 99 %."))
   })
+  # Get moderators for multivariate regression
+  mods_reg <- reactive({
+    unlist(input$mod_reg)
+  })
   # Estimation
   reg_results <- reactive({
     meta_analysis(data = filtered_data(),
@@ -957,7 +970,8 @@ server <- function(input, output, session) {
                   prec_weighted = input$prec_weighted,
                   estimation = input$estimation,
                   cluster_se = input$cluster_se,
-                  EK_sig_threshold = 10)
+                  EK_sig_threshold = 10,
+                  mods = mods_reg())
   })
   # Equation display
   equation <- reactive({

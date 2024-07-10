@@ -3,7 +3,7 @@
         "key": "NIR977M8", 
         "rid1": "ph", 
         "rid2": "dr", 
-        "study_notes": "size: expansionary monetary policy shock.", 
+        "study_notes": "dep: use log for gdp (to treat it as cumulative) because IRF patter of real GDP; size: expansionary monetary policy shock.", 
         "model_notes": {
                 "model_1": "IRFs based on standard measure of mark-up.",
                 "model_2": "IRFs based on overhead labor-adjusted measure of mark-up.",
@@ -26,7 +26,7 @@
         "inttype": "lev_q_fed_funds", 
         "size": "-1SD", 
         "axis_trans": false, 
-        "dep": "logdiff_q_rgdp logdiff_q_cpi", 
+        "dep": "log_q_rgdp logdiff_q_deflator", 
         "conf": "95", 
         "main": "other", 
         "prefer": {

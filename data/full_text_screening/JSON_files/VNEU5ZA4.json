@@ -3,7 +3,7 @@
         "key": "VNEU5ZA4", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "null", 
+        "study_notes": "cum: set cum to true because IRF pattern and usual in local projections.", 
         "model_notes": {
                 "model_1": "high excess bond premium regime",
                 "model_2": "low excess bond premium regime."
@@ -17,15 +17,15 @@
                 "model_2": 58
         },  
         "irf": true,
-        "cum": false
+        "cum": true
     }, 
     "impulse_and_response_variables": { 
         "inttype": "lev_a_fed_funds", 
         "size": "25bp", 
         "axis_trans": false, 
-        "dep": "gr_q_cpi log_q_rgdp", 
+        "dep": "logdiff_a_deflator log_q_rgdp", 
         "conf": "95", 
-        "main": "gdp  inflation  other", 
+        "main": "gdp inflation other", 
         "prefer": true 
     }, 
     "identification_strategy": { 

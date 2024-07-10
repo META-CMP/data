@@ -22,7 +22,7 @@
     "impulse_and_response_variables": {
         "inttype": "lev_a_cashrate",
         "size": "100bp",
-        "axis_trans": "y*100",
+        "axis_trans": false,
         "dep": "logdiff_q_rgdp",
         "conf": "1_SE",
         "main": "gdp",

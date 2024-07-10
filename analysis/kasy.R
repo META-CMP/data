@@ -1,4 +1,6 @@
 rm(list = ls())
+gc() #free up memory and report the memory usage.
+
 
 setwd("~/data")
 #Load data by running data_prep script
@@ -37,15 +39,19 @@ cutoffs<-c(1,1.960)#(1,1.645, 1.960, 2.576)
 symmetric<-FALSE#TRUE
 modelmu<-"normal"#"t"
 
-
+# set elements in list to defined values 
 v$cutoffs=as.numeric(unlist(cutoffs))
 v$symmetric=symmetric
 v$modelmu=modelmu
 
+# if non-symetric set cut offs to - x, 0, and + x
 if (!v$symmetric) v$cutoffs= c(-rev(v$cutoffs), 0 ,v$cutoffs)
 
+# Estimate Kasy test staistics
 v$estimates=metastudies_estimation(v$X,v$sigma,v$cutoffs, v$symmetric, model= v$modelmu)
 
+# Plot Kasy test statistics
 estimates_plot(v$X,v$sigma,v$cutoffs, v$symmetric,v$estimates, model= v$modelmu)
 
+# Print Kasy test staistics
 estimatestable(v$estimates$Psihat, v$estimates$SE, v$cutoffs, v$symmetric, v$modelmu)

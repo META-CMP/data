@@ -12,10 +12,8 @@
           "model_4": "2-right",
           "model_5": "3-left",
           "model_6": "3-right",
-          "model_7": "4-left",
-          "model_8": "4-right",
-          "model_9": "5-left",
-          "model_10": "5-right"
+          "model_7": "5-left",
+          "model_8": "5-right"
         },
         "page": {
           "model_1": 9,
@@ -24,10 +22,8 @@
           "model_4": 10,
           "model_5": 11,
           "model_6": 11,
-          "model_7": 12,
-          "model_8": 12,
-          "model_9": 13,
-          "model_10": 13 
+          "model_7": 13,
+          "model_8": 13 
         },
         "irf": true,
         "cum": false
@@ -46,10 +42,8 @@
           "model_4": true,
           "model_5": true,
           "model_6": true,
-          "model_7": false,
-          "model_8": false,
-          "model_9": true,
-          "model_10": true 
+          "model_7": true,
+          "model_8": true 
         }
     },
     "identification_strategy": {
@@ -57,30 +51,8 @@
         "forecast_based": false,
         "nr": false,
         "event": false,
-        "chol": {
-          "model_1": true,
-          "model_2": true,
-          "model_3": true,
-          "model_4": true,
-          "model_5": true,
-          "model_6": true,
-          "model_7": false,
-          "model_8": false,
-          "model_9": true,
-          "model_10": true
-        },
-        "svar": {
-          "model_1": false,
-          "model_2": false,
-          "model_3": false,
-          "model_4": false,
-          "model_5": false,
-          "model_6": false,
-          "model_7": true,
-          "model_8": true,
-          "model_9": false,
-          "model_10": false
-        },
+        "chol": true,
+        "svar": false,
         "signr": false,
         "hf": false,
         "heteroskedas": false,
@@ -127,9 +99,7 @@
           "model_5": "Q1-1996",
           "model_6": "Q3-2003",
           "model_7": "Q1-1996",
-          "model_8": "Q3-2003",
-          "model_9": "Q1-1996",
-          "model_10": "Q3-2003"
+          "model_8": "Q3-2003"
         },
         "samplesize": "null"
     },
@@ -142,9 +112,7 @@
           "model_5": true,
           "model_6": true,
           "model_7": true,
-          "model_8": true,
-          "model_9": true,
-          "model_10": true
+          "model_8": true
         },
         "outpgap": false,
         "find": false,
@@ -159,10 +127,8 @@
           "model_4": false,
           "model_5": false,
           "model_6": false,
-          "model_7": false,
-          "model_8": false,
-          "model_9": true,
-          "model_10": true
+          "model_7": true,
+          "model_8": true
         },
         "fx":  {
           "model_1": false,
@@ -171,10 +137,8 @@
           "model_4": false,
           "model_5": false,
           "model_6": false,
-          "model_7": false,
-          "model_8": false,
-          "model_9": true,
-          "model_10": true 
+          "model_7": true,
+          "model_8": true 
         },
         "lrir": {
           "model_1": false,
@@ -184,9 +148,7 @@
           "model_5": true,
           "model_6": true,
           "model_7": false,
-          "model_8": false,
-          "model_9": false,
-          "model_10": false
+          "model_8": false
         }
     },
     "econometric_details": {

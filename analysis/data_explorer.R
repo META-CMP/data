@@ -20,7 +20,7 @@ data_path <- here("data/preliminary_data_test.RData")
 # data_path <- here("data/preliminary_data_12062024.RData")
 load(data_path)
 rm(data_path)
-data <- data[1:20000,] # For testing
+# data <- data[1:20000,] # For testing
 # Papers data test
 papers_path <- here("data/papers_test.RData")
 load(papers_path)
@@ -281,7 +281,6 @@ ui <- fluidPage(
                                        actionButton("ioannidis_irf", "Top 10% precision"),
                                        actionButton("furukawa_irf", "Furukawa (2021) - stem", disabled = TRUE),
                                        actionButton("bom_rachinger_irf", "Bom and Rachinger (2019) - endogenous kink"),
-                                       actionButton("andrews_kasy_irf", "Andrews and Kasy (2019)", disabled = TRUE),
                                        actionButton("brodeur_2020_files_irf", "Brodeur (2020)", disabled = TRUE),
                                        actionButton("maive_irf", "MAIVE", disabled = TRUE),
                                        style = "margin-bottom: 15px;"
@@ -371,7 +370,6 @@ ui <- fluidPage(
                                      actionButton("ioannidis", "Top 10% precision"),
                                      actionButton("furukawa", "Furukawa (2021) - stem", disabled = TRUE),
                                      actionButton("bom_rachinger", "Bom and Rachinger (2019) - endogenous kink"),
-                                     actionButton("andrews_kasy", "Andrews and Kasy (2019)", disabled = TRUE),
                                      actionButton("brodeur_2020_files", "Brodeur (2020)", disabled = TRUE),
                                      actionButton("maive", "MAIVE", disabled = TRUE),
                                      style = "margin-bottom: 15px;"
@@ -421,7 +419,57 @@ ui <- fluidPage(
                                 plotOutput("meta_analysis_plot_pbias")
                               )
                             )
+                            ),
+                   tabPanel("Andrews and Kasy (2019)",
+                            h2("Estimating publication bias using meta-studies", align = "center"),
+                            fluidRow(
+                              column(12,
+                                     wellPanel(
+                                       fluidRow(
+                                         column(3,
+                                                numericInput("kasy_prd", "Select period (months):", value = 3, min = 1)
+                                         ),
+                                         column(3,
+                                                checkboxInput("symmetric", "Symmetric p(.)", value = FALSE),
+                                                checkboxGroupInput("cutoffs", "Cutoffs for p(.)",
+                                                                   choiceNames = c("1.65", "1.96","2.58"),
+                                                                   choiceValues = c(1.645, 1.960, 2.576),
+                                                                   selected = 1.960)
+                                         ),
+                                         column(3,
+                                                radioButtons("modelmu", "Model for the distribution of effects",
+                                                             choices = c("Normal" = "normal",
+                                                                         "Student-t" = "t"),
+                                                             selected = "normal")
+                                         ),
+                                         column(3,
+                                                br(),
+                                                actionButton(inputId = "estimatebutton", label = "Estimate model", class = "btn-primary"),
+                                                br(),
+                                                br(),
+                                                uiOutput("kasy_data_info")
+                                         )
+                                       )
+                                     )
+                              )
+                            ),
+                            fluidRow(
+                              column(4,
+                                     h4("Funnel plot", align = "center"),
+                                     plotOutput("kasy_funnel", height = "400px")
+                              ),
+                              column(4,
+                                     h4("Histogram of z-stats", align = "center"),
+                                     plotOutput("kasy_hist", height = "400px")
+                              ),
+                              column(4,
+                                     h4("Model estimates", align = "center"),
+                                     h5("Distribution of true effects, conditional publication probabilities", align = "center"),
+                                     tableOutput("kasy_estimatestable"),
+                                     plotOutput("kasy_estplot", height = "300px")
+                              )
                             )
+                   )
                    )
                  )
       ),
@@ -1167,6 +1215,107 @@ server <- function(input, output, session) {
                       max = full_max_year,
                       value = c(max(current_min, filtered_min_year),
                                 min(current_max, filtered_max_year)))
+  })
+  
+  # Kasy tab
+  # Reactive values for Kasy tab
+  kasy_v <- reactiveValues()
+  
+  # Prepare data for Kasy tab
+  kasy_data <- reactive({
+    req(filtered_data())
+    data <- filtered_data() %>% 
+      filter(period.month == input$kasy_prd)
+    
+    list(
+      X = data$mean.effect,
+      sigma = data$SE.avg,
+      n_obs = nrow(data),
+      n_studies = length(unique(data$key))
+    )
+  })
+  
+  # Display info about the selected data
+  output$kasy_data_info <- renderUI({
+    req(kasy_data())
+    HTML(paste("Selected period:", input$kasy_prd, "months",
+               "<br>Number of observations:", kasy_data()$n_obs,
+               "<br>Number of studies:", kasy_data()$n_studies))
+  })
+  
+  # Funnel plot for Kasy tab
+  output$kasy_funnel <- renderPlot({
+    req(kasy_data())
+    if(kasy_data()$n_obs > 0) {
+      metastudies_plot(kasy_data()$X, kasy_data()$sigma)
+    } else {
+      plot.new()
+      text(0.5, 0.5, "No data available for selected period", cex = 1.2)
+    }
+  })
+  
+  # Histogram for Kasy tab
+  output$kasy_hist <- renderPlot({
+    req(kasy_data())
+    if(kasy_data()$n_obs > 0) {
+      z_histogram(kasy_data()$X, kasy_data()$sigma)
+    } else {
+      plot.new()
+      text(0.5, 0.5, "No data available for selected period", cex = 1.2)
+    }
+  })
+  
+  # Estimation logic for Kasy tab
+  observeEvent(input$estimatebutton, {
+    req(kasy_data())
+    
+    if(kasy_data()$n_obs > 0) {
+      kasy_v$cutoffs <- as.numeric(unlist(input$cutoffs))
+      kasy_v$symmetric <- input$symmetric
+      kasy_v$modelmu <- input$modelmu
+      
+      if (!kasy_v$symmetric) {
+        kasy_v$cutoffs <- c(-rev(kasy_v$cutoffs), 0, kasy_v$cutoffs)
+      }
+      
+      kasy_v$estimates <- metastudies_estimation(
+        kasy_data()$X,
+        kasy_data()$sigma,
+        kasy_v$cutoffs,
+        kasy_v$symmetric,
+        model = kasy_v$modelmu
+      )
+      
+      output$kasy_estplot <- renderPlot({
+        estimates_plot(
+          kasy_data()$X,
+          kasy_data()$sigma,
+          kasy_v$cutoffs,
+          kasy_v$symmetric,
+          kasy_v$estimates,
+          model = kasy_v$modelmu
+        )
+      })
+      
+      output$kasy_estimatestable <- renderTable({
+        estimatestable(
+          kasy_v$estimates$Psihat,
+          kasy_v$estimates$SE,
+          kasy_v$cutoffs,
+          kasy_v$symmetric,
+          kasy_v$modelmu
+        )
+      }, rownames = TRUE, hover = TRUE, digits = 3)
+    } else {
+      output$kasy_estplot <- renderPlot({
+        plot.new()
+        text(0.5, 0.5, "No data available for selected period", cex = 1.2)
+      })
+      
+      output$kasy_estimatestable <- renderTable({
+        data.frame(Message = "No data available for selected period")
+      })
+    }
   })
   
 }

@@ -13,8 +13,8 @@
                 "model_2": "A9"
         },
         "page": {
-                "model_1": "A10",
-                "model_2": "A11"
+                "model_1": "A-10",
+                "model_2": "A-11"
         },
         "irf": true,
         "cum": false
@@ -27,8 +27,8 @@
         "size": "100bp",
         "axis_trans": false,
         "dep": {
-                "model_1": "log_a_ip log_a_cpi",
-                "model_2": "log_a_ip log_a_cpi"
+                "model_1": "log_m_ip log_m_cpi",
+                "model_2": "log_m_ip log_m_cpi"
         },
         "conf": "90",
         "main": "gdp  inflation",
@@ -39,8 +39,8 @@
     },
     "identification_strategy": {
         "iv": {
-                "model_1": false,
-                "model_2": false
+                "model_1": true,
+                "model_2": true
         },
         "forecast_based": {
                 "model_1": false,
@@ -63,8 +63,8 @@
                 "model_2": false
         },
         "signr": {
-                "model_1": true,
-                "model_2": true
+                "model_1": false,
+                "model_2": false
         },
         "hf": true,
         "heteroskedas": true,

@@ -3,7 +3,7 @@
         "key": "NGBIAVBB", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "pure_rate_shock: false because weighted call money rate is used and India used several convenational monetary policy tools in the corresponding time period; dep: periodicity could also be _a_ according to figure 1 plots.", 
+        "study_notes": "pure_rate_shock: false because weighted call money rate is used and India used several convenational monetary policy tools in the corresponding time period.", 
         "model_notes": "model 1: low uncertainty regime; model 2: high uncertaintly regime", 
         "figure": {
                 "model_1": 7,
@@ -20,7 +20,7 @@
         "inttype": "lev_a_callrate", 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "gr_m_ip gr_m_cpi", 
+        "dep": "logdiff_a_ip logdiff_a_wpi", 
         "conf": "95", 
         "main": "gdp inflation", 
         "prefer": true 
@@ -39,16 +39,16 @@
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": true, 
+        "var": false, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
         "fvar": false, 
         "tvar": false, 
         "gvar": false, 
-        "bayes": false, 
+        "bayes": true, 
         "dsge": false, 
-        "varother": false 
+        "varother": true 
     }, 
     "regime_dependence": { 
         "lor": false, 

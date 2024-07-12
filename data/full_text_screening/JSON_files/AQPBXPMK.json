@@ -3,17 +3,17 @@
         "key": "AQPBXPMK",
         "rid1": "fp",
         "rid2": "dr",
-        "study_notes": "null",
+        "study_notes": "cum: set cum to true because IRF pattern.",
         "model_notes": "null",
         "figure": 3,
         "page": 840,
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",
         "size": "100bp",
-        "axis_trans": "y*100 lev_a_fed_funds",
+        "axis_trans": "y*100 lev_a_fed_funds_false",
         "dep": "logdiff_q_rgdp logdiff_q_deflator",
         "conf": "90",
         "main": "other",

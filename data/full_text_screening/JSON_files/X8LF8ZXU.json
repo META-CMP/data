@@ -3,7 +3,7 @@
         "key": "X8LF8ZXU",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "null",
+        "study_notes": "cum: set cum to true because IRF pattern; varother: set varother to true because the authors use an interacted VAR.",
         "model_notes": {
                 "model_1": "regime: low capital ratio of primary dealers regime.",
                 "model_2": "regime: high capital ratio of primary dealers regime.",
@@ -65,7 +65,7 @@
                 "model_18": 21
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_1_year_gov",
@@ -147,7 +147,7 @@
         "idother": false
     },
     "estimation_method": {
-        "var": true,
+        "var": false,
         "lp": false,
         "vecm": false,
         "dyn_ols": false,
@@ -156,7 +156,7 @@
         "gvar": false,
         "bayes": false,
         "dsge": false,
-        "varother": false
+        "varother": true
     },
     "regime_dependence": {
         "lor": false,

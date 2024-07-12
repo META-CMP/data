@@ -3,7 +3,7 @@
         "key": "C4Y9EFQS", 
         "rid1": "ph", 
         "rid2": "null", 
-        "study_notes": "varother: threshold VAR, then varother set to true.", 
+        "study_notes": "dep: use log for gdp (to treat it as cumulative) because IRF pattern.; varother: threshold VAR, then varother set to true.", 
         "model_notes": "model 1 is regime uncertain times, model 2 is tranquil times. ", 
         "figure": {
                 "model_1": 2,
@@ -20,7 +20,7 @@
         "inttype": "lev_a_fed_funds", 
         "size": "-100bp", 
         "axis_trans": false, 
-        "dep": "gr_q_deflator gr_q_rgdp", 
+        "dep": "gr_q_deflator log_q_rgdp", 
         "conf": "90", 
         "main": "gdp inflation other", 
         "prefer": true 

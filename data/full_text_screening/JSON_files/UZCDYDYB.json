@@ -30,9 +30,9 @@
         }, 
         "size": "100bp", 
         "axis_trans": false, 
-        "dep": "gr_a_ip gr_a_cpi", 
+        "dep": "gr_a_ip gr_a_core", 
         "conf": "68", 
-        "main": "gdp  inflation  other", 
+        "main": "gdp inflation other", 
         "prefer":  {
                 "model_1": true,
                 "model_2": false,
@@ -69,12 +69,7 @@
         "idother": false 
     }, 
     "estimation_method": { 
-        "var": {
-                "model_1": false,
-                "model_2": false,
-                "model_3": true,
-                "model_4": true
-        }, 
+        "var": true, 
         "lp": false, 
         "vecm": false, 
         "dyn_ols": "false", 
@@ -83,12 +78,7 @@
         "gvar": false, 
         "bayes": false, 
         "dsge": false, 
-        "varother": {
-                "model_1": true,
-                "model_2": true,
-                "model_3": false,
-                "model_4": false
-        } 
+        "varother": false
     }, 
     "regime_dependence": { 
         "lor": false, 

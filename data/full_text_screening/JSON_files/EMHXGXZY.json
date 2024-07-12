@@ -4,7 +4,18 @@
         "rid1": "me",
         "rid2": "null",
         "study_notes": "dr: quality concern because of the graphs; the black line represnts the modal model estimates instead of the mean/median estimate",
-        "model_notes": "null",
+        "model_notes": {
+          "model_1": "null",
+          "model_2": "null",
+          "model_3": "null",
+          "model_4": "quality_concern: implausibly large estimates because of small initial shock size.",
+          "model_5": "null",
+          "model_6": "null",
+          "model_7": "null",
+          "model_8": "null",
+          "model_9": "null",
+          "model_10": "null" 
+        },
         "figure": {
           "model_1": 2,
           "model_2": 3,

@@ -3,7 +3,7 @@
         "key": "8VBXRY3I",
         "rid1": "dr",
         "rid2": "null",
-        "study_notes": "In this model 1SD corresponds to a rise in interest rate of 24bp; they report the SD of monetary policy shock which is equal to 0.24%.",
+        "study_notes": "quality_concern: implausibly precise estimates probably due to the usage of the output gap.; cum: set to true because of IRF pattern; In this model 1SD corresponds to a rise in interest rate of 24bp; they report the SD of monetary policy shock which is equal to 0.24%.",
         "model_notes": "null",
         "figure": {
           "model_1": 2
@@ -12,7 +12,7 @@
           "model_1": 163
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_overnight_cashrate",

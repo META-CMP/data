@@ -29,9 +29,10 @@
           "model_22": "a time trend is included; the number of factors is 7.",
           "model_23": "a time trend is included; the number of lags is 2.",
           "model_24": "a time trend is included; the number of lags is 6.",
-          "model_25": "a time trend is included; using the data from May 2009 to July 2017; the number of factors is 2.",
-          "model_26": "a time trend is included; using the data from May 2009 to July 2017; the number of lags is 2.",
-          "model_27": "a time trend is included; using the data from May 2009 to July 2017; the number of lags is 4."
+          "model_25": "a time trend is included; using the data from May 2009 to July 2017; the number of factors is 4.",
+          "model_26": "a time trend is included; using the data from May 2009 to July 2017; the number of factors is 2.",
+          "model_27": "a time trend is included; using the data from May 2009 to July 2017; the number of lags is 2.",
+          "model_28": "a time trend is included; using the data from May 2009 to July 2017; the number of lags is 4."
         },
         "figure": {
           "model_1": "2 & 5",
@@ -58,9 +59,10 @@
           "model_22": 19,
           "model_23": 20,
           "model_24": 21,
-          "model_25": 23,
-          "model_26": 24,
-          "model_27": 25
+          "model_25": 22,
+          "model_26": 23,
+          "model_27": 24,
+          "model_28": 25
         },
         "page": {
           "model_1": "2906 & 2913",
@@ -87,9 +89,10 @@
           "model_22": 2920,
           "model_23": 2920,
           "model_24": 2921,
-          "model_25": 2922,
+          "model_25": 2921,
           "model_26": 2922,
-          "model_27": 2923
+          "model_27": 2922,
+          "model_28": 2923
         },
         "irf": true,
         "cum": true
@@ -123,9 +126,10 @@
           "model_22": "logdiff_m_ip lev_m_une_rate",
           "model_23": "logdiff_m_ip lev_m_une_rate",
           "model_24": "logdiff_m_ip lev_m_une_rate",
-          "model_25": "logdiff_m_ip lev_m_une_rate",
+          "model_25": "lev_m_une_rate",
           "model_26": "logdiff_m_ip lev_m_une_rate",
-          "model_27": "logdiff_m_ip lev_m_une_rate"
+          "model_27": "logdiff_m_ip lev_m_une_rate",
+          "model_28": "logdiff_m_ip lev_m_une_rate"
         },
         "conf": {
           "model_1": "95",
@@ -152,9 +156,10 @@
           "model_22": "95",
           "model_23": "95",
           "model_24": "68",
-          "model_25": "95",
+          "model_25": "68",
           "model_26": "95",
-          "model_27": "95"
+          "model_27": "95",
+          "model_28": "95"
         },
         "main": "emp gdp",
         "prefer": {
@@ -184,7 +189,8 @@
           "model_24": false,
           "model_25": false,
           "model_26": false,
-          "model_27": false
+          "model_27": false,
+          "model_28": false
         }
     },
     "identification_strategy": {
@@ -258,7 +264,8 @@
           "model_24": "01-1999",
           "model_25": "05-2009",
           "model_26": "05-2009",
-          "model_27": "05-2009"
+          "model_27": "05-2009",
+          "model_28": "05-2009"
         },
         "end": {
           "model_1": "07-2017",
@@ -287,7 +294,8 @@
           "model_24": "07-2017",
           "model_25": "07-2017",
           "model_26": "07-2017",
-          "model_27": "07-2017"
+          "model_27": "07-2017",
+          "model_28": "07-2017"
         },
         "samplesize": "null"
     },

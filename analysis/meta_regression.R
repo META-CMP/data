@@ -30,6 +30,8 @@ confint_data<-list()
 
 summary(data)
 equation<-mean.effect_winsor ~standarderror_winsor+exrate+gdppc+cbi+findev+fingl+infl+tradegl+mean_year+regime+quality_concern+observations+main_research_q+outcome_measure+as.factor(periodicity)+as.factor(transformation)+rate_mean.effect+cbanker+decomposition+convent+pure_rate_shock+lrir+fx+foreignir+inflexp+eglob+find+outpgap+comprice+panel+n_of_countries+us+month+quarter+upr+lor+varother+dsge+bayes+gvar+tvar+fvar+dyn_ols+vecm+lp+idother+longrun+heteroskedas+hf+signr+svar+chol+event+nr+forecast_based+iv+prefer+shock_size+interest_rate_short+as.factor(rid1)+model_id
+
+equation<-mean.effect_winsor ~standarderror_winsor+group_ident_broad
 # +fexch#+real_output # only for output regression
 
 periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
@@ -60,7 +62,7 @@ for (x in periods) {
   data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
   
   # Calculate (precision-weighted) average
-  regwa <- lm(equation, data = data_period_winsor)#, weights = precvariance_winsor
+  regwa <- lm(equation, data = data_period_winsor, weights = precvariance_winsor)#
   results_list[[paste0(x, ".ols")]] <- regwa
   
   coef_test_data[[paste0(x, ".ols")]]<-coef_test(regwa, vcov = "CR0", 

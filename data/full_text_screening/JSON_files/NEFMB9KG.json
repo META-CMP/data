@@ -3,7 +3,7 @@
         "key": "NEFMB9KG",
         "rid1": "me",
         "rid2": "ph",
-        "study_notes": "estimation_method: they use smooth transition structural VAR model, that's the reason why varother is set to true.",
+        "study_notes": "estimation_method: they use a smooth transition structural VAR model, that's the reason why varother is set to true.",
         "model_notes": "null",
         "figure": {
                 "model_1": "3a",
@@ -69,7 +69,7 @@
         "idother": false
     },
     "estimation_method": {
-        "var": true,
+        "var": false,
         "lp": false,
         "vecm": false,
         "dyn_ols": false,

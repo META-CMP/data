@@ -119,8 +119,8 @@
           "model_3": true,
           "model_4": true,
           "model_5": true,
-          "model_6": true,
-          "model_7": true,
+          "model_6": false,
+          "model_7": false,
           "model_8": false,
           "model_9": false
         },

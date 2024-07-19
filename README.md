@@ -3,14 +3,16 @@ __TO DOs:__
 
 - [ ] Renaming of paths with spaces " "
 - [ ] Rework of folder structure? Does it all make sense?
-- [ ] All links working correctly?
-- [ ] Make consistent throughout repe: 10714 vs 10,714
+- [ ] All links working correctly? (after final update of folder names)
+- [ ] Make consistent throughout repo: 10714 vs 10,714
 - [ ] Delete outdated or irrelevant files
 - [ ] All sub-README.md's mentioned in main README.md?
-- [ ] Die `packages_for_full_text_download` aus der Nextcloud in den post-AS Ordner überschreiben? 
+- [ ] Die `packages_for_full_text_download` aus der Nextcloud in den post-AS Ordner überschreiben?
+- [ ] rankings und citations data aus nextcloud hier her
 - [ ] Codebook aktualisieren
 - [ ] How to Issues aktualisieren
 - [ ] Alle variablen (auch die aus xlsx files etc.) definiert (idealerweise im codebook)?
+- [ ] all R code should be properly documented
 
 # Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy
 
@@ -69,19 +71,32 @@ After the abstract screening we conducted some validity tests as well as agreeme
 - [ ] outline steps to get to our dataset
 - [ ] refer to folder and files, also JSONs
 - [ ] refer to more detailed documentation therin
+- [ ] refer to "How to code ..." issues.
 - [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
 - [ ] check if something important in quarto docs
-- [ ] Refer to data extraction with webplotdigit
-- [ ] Refer to doublechecks?
+- [ ] Refer to data extraction with webplotdigit and add detailed documentation
+- [ ] Refer to doublechecking and add more detailed documentation
 
 
 ### Snowballing
 
-### Diagramm
+- [ ] Refer to procedure
+- [ ] outline steps to get to our dataset
+- [ ] refer to folder and files
+- [ ] refer to more detailed documentation therin
+- [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
+
+### PRISMA Diagramm
+
+
 
 ### External data
 
-...
+- [ ] refer to folder and files
+- [ ] macroeconoimc data
+- [ ] publication data (citations, rankings)
+- [ ] refer to pre-registration
+- [ ] refer to sources
 
 ---
 
@@ -97,7 +112,7 @@ After the abstract screening we conducted some validity tests as well as agreeme
 
 
 > [!IMPORTANT]
-> At the moment, this repo also contains our analysis scripts and results. But we should think about creating a separate repo for this within our organization.
+> At the moment, this repo also contains our analysis scripts and results. But we should think about creating a separate repo for this within our GitHub organization.
 
 
 ...

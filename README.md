@@ -8,8 +8,8 @@ __TO DOs:__
 - [ ] Delete outdated or irrelevant files
 - [ ] All sub-README.md's mentioned in main README.md?
 - [ ] Die `packages_for_full_text_download` aus der Nextcloud in den post-AS Ordner überschreiben? 
-- [ ] Codebook aktuell?
-- [ ] How to Issues aktuell?
+- [ ] Codebook aktualisieren
+- [ ] How to Issues aktualisieren
 - [ ] Alle variablen (auch die aus xlsx files etc.) definiert (idealerweise im codebook)?
 
 # Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy

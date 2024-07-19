@@ -9,7 +9,7 @@ __TO DOs:__
 - [ ] All sub-README.md's mentioned in main README.md?
 - [ ] Die `packages_for_full_text_download` aus der Nextcloud in den post-AS Ordner überschreiben?
 - [ ] rankings und citations data aus nextcloud hier her
-- [ ] Codebook aktualisieren
+- [ ] Codebook aktualisieren - [dieses R-File](https://github.com/META-CMP/data/blob/documentation_fts/edit_codebook.R) dazu benutzen, damit Änderungen leicht einsehbar bleiben 
 - [ ] How to Issues aktualisieren
 - [ ] Alle variablen (auch die aus xlsx files etc.) definiert (idealerweise im codebook)?
 - [ ] all R code should be properly documented

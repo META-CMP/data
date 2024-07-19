@@ -1,33 +1,55 @@
+#' Create equation for meta-analysis
+#'
+#' This helper function creates a formula object for use in meta-analysis models.
+#' It combines a base formula with additional moderator variables if provided.
+#'
+#' @param base_formula A character string representing the base formula.
+#' @param mods A character vector of moderator variable names, or NULL if no moderators.
+#'
+#' @return A formula object.
+#'
+#' @examples
+#' create_equation("y ~ x", NULL)
+#' create_equation("y ~ x", c("mod1", "mod2"))
+#' create_equation("mean.effect_winsor ~ 1", c("cum", "iv"))
+#'
+#' @export
+create_equation <- function(base_formula, mods) {
+  if (is.null(mods)) {
+    return(as.formula(base_formula))
+  } else {
+    return(as.formula(paste(base_formula, "+", paste(mods, collapse = " + "))))
+  }
+}
+
 #' Perform meta-analysis
 #'
 #' This function performs meta-analysis on the filtered data for a specified outcome variable,
 #' standard error option, periods, winsorization parameter, and precision weighting option.
-#'
+#' It also supports multiple meta-regression with moderator variables.
+#' 
 #' @param data A data frame containing the necessary columns for analysis.
 #' @param outvar A string specifying the outcome variable to filter the data.
 #' @param se_option A string specifying the standard error option to use. Can be "avg", "lower", or "upper".
 #' @param periods A numeric vector specifying the periods (in months) for which to perform the analysis.
 #' @param wins A numeric value specifying the winsorization parameter.
 #' @param prec_weighted A logical value indicating whether to use precision weighting.
-#' @param estimation String specifying the meta analysis model, one of "Mean", "FAT-PAT" and "PEESE".
-#'
-#' @return A list of model summary objects for each period.
+#' @param estimation String specifying the meta analysis model, one of "Mean", "UWLS", "FAT-PAT", "PEESE", "EK", or "AK".
+#' @param mods A character vector of moderator variable names to include in the multiple meta-regression. If NULL, no moderators are included.
+#' 
+#' @return A list of model objects for each period.
 #'
 #' @import tidyverse
 #' @import dplyr
-#' @import JWileymisc
-#' @import clubSandwich
-#' @import modelsummary
 #'
 #' @examples
 #' library(tidyverse)
 #' library(dplyr)
 #' library(JWileymisc)
-#' library(clubSandwich)
-#' library(modelsummary)
+#' library(sandwich)
 #'
 #' # Load the data
-#' data_path <- "data/data_test_new.RData"
+#' data_path <- "data/preliminary_data_test_11072024.RData"
 #' load(data_path)
 #'
 #' # Calculate the average standard error and precision options
@@ -35,35 +57,66 @@
 #' data$precision.avg <- 1 / data$SE.avg
 #' data$precision.lower <- 1 / data$SE.lower
 #' data$precision.upper <- 1 / data$SE.upper
-#'
+#' # Renaming gdp to output
+#' data$outcome <- ifelse(data$outcome == "gdp", "output", data$outcome)
 #' # Perform meta-analysis
-#' results <- meta_analysis(data, outvar = "gdp", se_option = "avg", periods = c(3, 6, 12),
-#'                          wins = 0.02, prec_weighted = FALSE)
-#'
+#' results1 <- meta_analysis(data, outvar = "output", se_option = "avg", periods = 1:20,
+#'                          wins = 0.02, prec_weighted = TRUE, estimation = "FAT-PET", cluster_se = TRUE, mods = NULL)
+#' results2 <- meta_analysis(data, outvar = "output", se_option = "avg", periods = 1:20,
+#'                          wins = 0.02, prec_weighted = FALSE, estimation = "EK", cluster_se = TRUE)
+#' AK_results <- meta_analysis(data, outvar = "output", se_option = "upper", periods = 1:3,
+#'                          wins = 0, prec_weighted = FALSE, estimation = "AK", cluster_se = FALSE, AK_conf_level = 0.90)
+#' # Example with moderators
+#' result_with_mods <- meta_analysis(data, outvar = "output", se_option = "avg", 
+#'                                   periods = 1:20, wins = 0.02, prec_weighted = TRUE, 
+#'                                   estimation = "PEESE", cluster_se = TRUE, mods = c("cum", "iv"))
 #' # Display the results
-#' modelsummary(results, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "Title here", gof_map = NULL)
-#'
+#' modelsummary::modelsummary(results1, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "PEESE", gof_map = NULL)
+#' modelsummary::modelsummary(results2, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "EK", gof_map = NULL)
+#' modelsummary::modelsummary(result_with_mods, output = "gt", stars = TRUE, title = "PEESE with moderators", gof_map = NULL)
+#' modelsummary::modelsummary(AK_results, output = "gt", statistic = c("se = {std.error}", "conf.int"))
 #' @export
-meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean") {
+meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = FALSE, EK_sig_threshold = 1.96, mods = NULL, cutoff_val = c(1.960), AK_symmetric = FALSE, AK_modelmu = "normal", AK_conf_level = 0.95) {
   # Subset data for the specified outcome variable
   data <- subset(data, outcome %in% outvar)
+
+  # Check which periods have data
+  available_periods <- unique(data$period.month)
+  valid_periods <- periods[periods %in% available_periods]
+
+  if (length(valid_periods) == 0) {
+    stop("No data available for any of the specified periods.")
+  }
+
+  if (length(valid_periods) < length(periods)) {
+    warning(paste("Data is only available for the following periods:", 
+                  paste(valid_periods, collapse = ", ")))
+  }
   
   # Create empty lists for results
   results_list <- list()
   
-  # Define the equation to be estimated
-  if (estimation == "Mean") {
-    equation <- mean.effect_winsor ~ 1
-  } else if (estimation == "FAT-PET") {
-    equation <- mean.effect_winsor ~ standarderror_winsor
-  } else if (estimation == "PEESE") {
-    equation <- mean.effect_winsor ~ variance_winsor
+  # Lookup table for base formulas
+  base_formulas <- list(
+    Mean = "mean.effect_winsor ~ 1",
+    UWLS = "t.stat_winsor ~ precision_winsor - 1",
+    "FAT-PET" = "mean.effect_winsor ~ standarderror_winsor",
+    PEESE = "mean.effect_winsor ~ variance_winsor"
+  )
+  
+  # Define the equation to be estimated (not relevant for EK & AK)
+  if (!(estimation %in% c("EK", "AK"))) {
+    base_formula <- base_formulas[[estimation]]
+    if (is.null(base_formula)) {
+      stop(paste("Unknown estimation method:", estimation))
+    }
+    equation <- create_equation(base_formula, mods)
   }
   
-  for (x in periods) {
+  for (x in valid_periods) {
     # Subset data for the current period
     data_period <- subset(data, period.month %in% x)
-    
+
     # Select the corresponding standard error and precision columns based on the se_option
     if (se_option == "avg") {
       data_period$StandardError <- data_period$SE.avg
@@ -76,23 +129,112 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
       data_period$precision <- data_period$precision.upper
     }
     
-    # Apply Winsorization to the standard error, mean effect, and precision
-    data_period$standarderror_winsor <- winsorizor(data_period$StandardError, percentile = wins)
-    data_period$mean.effect_winsor <- winsorizor(data_period$mean.effect, percentile = wins)
-    data_period$precision_winsor <- winsorizor(data_period$precision, percentile = wins)
-    
+    # Apply winsorization to the standard error, mean effect, and precision
+    data_period <- apply_winsorization(data_period, wins)
+
+    # Filter adequately powered if ap == TRUE
+    if (ap == TRUE) {
+      data_period$ap <- ifelse(data_period$standarderror_winsor <= abs(data_period$mean.effect_winsor)/2.8, 1, 0)
+      data_period <- data_period %>%
+        filter(ap == 1)
+    }
+
+    # Calculate t.stat_winsor for UWLS
+    if (estimation == "UWLS") {
+      data_period$t.stat_winsor <- data_period$mean.effect_winsor / data_period$standarderror_winsor
+    }
+
     # Calculate variance winsorized
     data_period$variance_winsor <- data_period$standarderror_winsor^2
-    
+
     # Calculate PrecVariance winsorized
     data_period$precvariance_winsor <- 1 / data_period$variance_winsor
-    
+
     # Run regression
-    weights <- if (prec_weighted) data_period$precvariance_winsor else NULL
-    reg_result <- lm(equation, data = data_period, weights = weights)
+    if (estimation == "EK") { # Bom & Rachinger (2019) EK method
+      
+      data_EK <- data_period %>% select(mean.effect_winsor, standarderror_winsor, key)
+      est_EK <- EK(data=data_EK,verbose = FALSE, sig_threshold = EK_sig_threshold)
+      reg_result <- est_EK$model
+      
+    } else if (estimation == "AK") { # Andrews & Kasy method
+      
+      data_AK <- data_period %>% select(mean.effect_winsor, standarderror_winsor, key)
+      
+      # AK cutoffs configuration
+      AK_cutoffs <- as.numeric(unlist(cutoff_val))
+      
+      if (!AK_symmetric) {
+        AK_cutoffs <- c(-rev(AK_cutoffs), 0, AK_cutoffs)
+      }
+      
+      # Prepare clustering, if cluster_se == TRUE
+      if (cluster_se == FALSE) {
+        AK_cluster_ID <- NULL
+      } else if (cluster_se == TRUE) {
+        AK_cluster_ID <- data_AK$key
+      }
+      
+      est_AK <- metastudies_estimation(X = data_AK$mean.effect_winsor, sigma = data_AK$standarderror_winsor, cutoffs = AK_cutoffs, symmetric = AK_symmetric, model = AK_modelmu, study_ID = AK_cluster_ID)
+      
+      # Storing results for modelsummary() compatibility
+      table_AK <- estimatestable(est_AK$Psihat, est_AK$SE, AK_cutoffs, AK_symmetric, AK_modelmu)
+      ti <- data.frame(
+        term = colnames(table_AK),
+        estimate = table_AK[1,],
+        std.error = table_AK[2,])
+      
+      # Calculate confidence intervals using AK_conf_level (approximation of CIs with normality assumption)
+      z_score <- qnorm((1 + AK_conf_level) / 2)
+      ci_lower <- ti$estimate - z_score * ti$std.error
+      ci_upper <- ti$estimate + z_score * ti$std.error
+      ti$conf.low <- ci_lower
+      ti$conf.high <- ci_upper
+      
+      # Calculate p-values
+      ti$statistic <- ti$estimate / ti$std.error
+      ti$p.value <- 2 * (1 - pnorm(abs(ti$statistic)))
+      
+      plot_AK <- estimates_plot(cutoffs = AK_cutoffs, symmetric = AK_symmetric, estimates = est_AK, model = AK_modelmu)
+      
+      gl <- data.frame(Num.Obs. = nrow(data_AK))
+      reg_result <- list(
+        tidy = ti,
+        glance = gl,
+        plot = plot_AK)
+      class(reg_result) <- "modelsummary_list"
+      
+      warning("Note our custom calculation of confidence intervalls and p-values under normality assumptions for the AK method. We may want to check if this is adequate for their method.")
+      
+    } else { # Other methods
+
+      reg_weights <<- if (prec_weighted) data_period$precvariance_winsor else NULL
+      # Note the use of "<<-". Defining reg_weights in the global environment here is necessary, otherwise 
+      # it cannot be found by lm(). The reason is unclear. To avoid 
+      # unintended effects, we remove it from the environment immediately after it 
+      # was used by lm().
+      reg_result <- lm(equation, data = data_period, weights = reg_weights)
+      rm(reg_weights, envir = .GlobalEnv)
+      
+    } 
+    
+    # Correction of SEs - clustered by study (by key)
+    if (cluster_se == TRUE & estimation != "AK") {
+      data_period <<- data_period # Defining data_period in the global environment 
+      # here is necessary, otherwise it cannot be found by sandwich::vcovCL(). The 
+      # reason is unclear. To avoid unintended effects, we remove it from the environment 
+      # immediately after it was used by sandwich::vcovCL. It is important that data_period 
+      # is NOT defined globally before this point (specifically before the use of lm() above)!
+      
+      vcov_cluster <- sandwich::vcovCL(reg_result, cluster = ~key)
+      rm(data_period, envir = .GlobalEnv)
+      reg_result <- lmtest::coeftest(reg_result, vcov. = vcov_cluster)
+        
+    }
     
     results_list[[paste0(x)]] <- reg_result
+    
   }
-  
+
   return(results_list)
 }

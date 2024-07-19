@@ -27,7 +27,19 @@
 #' print(plot_period_limit)
 #'
 #' @export
-plot_average_irfs <- function(data, period_limit = NULL) {
+plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf) {
+  
+  # Apply winsorization (if selected) to the CIs and mean effect
+  if (winsor == TRUE) {
+    data$approx.CI.lower_68 <- winsorizor(data$approx.CI.lower_68, percentile = wins_par)
+    data$approx.CI.upper_68 <- winsorizor(data$approx.CI.upper_68, percentile = wins_par)
+    data$approx.CI.lower_90 <- winsorizor(data$approx.CI.lower_90, percentile = wins_par)
+    data$approx.CI.upper_90 <- winsorizor(data$approx.CI.upper_90, percentile = wins_par)
+    data$approx.CI.lower_95 <- winsorizor(data$approx.CI.lower_95, percentile = wins_par)
+    data$approx.CI.upper_95 <- winsorizor(data$approx.CI.upper_95, percentile = wins_par)
+    data$mean.effect <- winsorizor(data$mean.effect, percentile = wins_par)
+  }
+  
   average_irf <- data %>%
     group_by(period.month) %>%
     summarise(
@@ -82,6 +94,30 @@ plot_average_irfs <- function(data, period_limit = NULL) {
       yaxis = list(title = "Effect"),
       hovermode = "compare"
     )
+  
+  # Add corrected IRF with confidence bounds if provided
+  if (!is.null(corrected_irf)) {
+    plot <- plot %>%
+      add_ribbons(
+        data = corrected_irf,
+        x = ~period,
+        ymin = ~lower,
+        ymax = ~upper,
+        name = "Meta analysis CI",
+        line = list(color = 'rgba(0,0,0,0)'),
+        fillcolor = 'rgba(255,0,0,0.2)'
+      )
+    
+    plot <- plot %>% 
+      add_lines(
+        data = corrected_irf,
+        x = ~period,
+        y = ~estimate,
+        name = "Meta analysis",
+        line = list(color = 'red', width = 3, dash = 'dash')
+      )
+    
+  }
   
   plot
 }

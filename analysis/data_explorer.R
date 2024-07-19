@@ -9,15 +9,14 @@ library(viridis)
 library(modelsummary)
 library(ggplot2)
 library(sandwich)
-library(clubSandwich)
 library(lmtest)
 library(shinyjs)
 
 # Load the data 
 # data_path <- here("data/preliminary_data_test_old.RData")
-data_path <- here("data/preliminary_data_test.RData")
+# data_path <- here("data/preliminary_data_test.RData") # works
 # data_path <- here("data/preliminary_data_03072024.RData")
-# data_path <- here("data/preliminary_data_12062024.RData")
+data_path <- here("data/preliminary_data_test_11072024.RData")
 load(data_path)
 rm(data_path)
 # data <- data[1:20000,] # For testing
@@ -59,18 +58,26 @@ data$precision.avg <- 1 / data$SE.avg
 data$precision.lower <- 1 / data$SE.lower
 data$precision.upper <- 1 / data$SE.upper
 
+# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
+# Join top 5 and top tier
+data$top_5_or_tier <- ifelse(data$is_top_5 == 1 | data$is_top_tier == 1, TRUE, FALSE)
+# Get advanced and emerigin as dummy
+data$advanced <- ifelse(data$country_dev == "Advanced", TRUE, FALSE)
+data$upper_middle <- ifelse(data$country_dev == "upper_middle", TRUE, FALSE)
+data$mixed_unclass <- ifelse(data$country_dev == "Mixed or Unclassified", TRUE, FALSE)
+
 # Define choices for moderator filters
 moderator_groups <- list(
   "General" = list("cum", "quality_concern"),
-  "Impulse and Response Variables" = list("prefer"),
+  "Impulse and Response Variables" = list("prefer", "interest_rate_short", "shock_size"),
   "Identification Strategy" = list("iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "idother"),
   "Estimation Method" = list("var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge", "varother"),
-  "Regime Dependence" = list("lor", "upr", "scr", "dcr", "hike", "cut"),
+  "Regime Dependence" = list("regime", "lor", "upr", "scr", "dcr", "hike", "cut"),
   "Data Frequency" = list("annual", "quarter", "month"),
-  "Further Data Characteristics" = list("panel"),
+  "Further Data Characteristics" = list("panel", "country_dev", "advanced", "upper_middle", "mixed_unclass", "ea12"),
   "Control Variables" = list("comprice", "outpgap", "find", "eglob", "cbind", "fexch", "inflexp", "foreignir", "fx", "lrir"),
   "Econometric Details" = list("pure_rate_shock", "convent", "decomposition"),
-  "Publication Characteristics" = list("cbanker", "is_top_5", "is_top_tier")
+  "Publication Characteristics" = list("cbanker", "is_top_5", "is_top_tier", "top_5_or_tier")
 )
 
 ui <- fluidPage(
@@ -281,6 +288,7 @@ ui <- fluidPage(
                                        actionButton("ioannidis_irf", "Top 10% precision"),
                                        actionButton("furukawa_irf", "Furukawa (2021) - stem", disabled = TRUE),
                                        actionButton("bom_rachinger_irf", "Bom and Rachinger (2019) - endogenous kink"),
+                                       actionButton("andrews_kasy_irf", "Andrews and Kasy (2019)"),
                                        actionButton("brodeur_2020_files_irf", "Brodeur (2020)", disabled = TRUE),
                                        actionButton("maive_irf", "MAIVE", disabled = TRUE),
                                        style = "margin-bottom: 15px;"
@@ -313,6 +321,17 @@ ui <- fluidPage(
                                              checkboxInput("ap", "Adequately powered (80% or more)", value = FALSE),
                                              sliderInput("funnel_opac", "Opacity Parameter:", value = 0.12, min = 0.01, max = 0.5, step = 0.01)
                                       )
+                                    ),
+                                    radioButtons("funnel_type", "Funnel type",
+                                                 choices = c("Standard" = "standard",
+                                                             "Andrews and Kasy" = "AK"),
+                                                 selected = "standard"),
+                                    conditionalPanel(
+                                      condition = "input.funnel_type == 'AK'",
+                                      checkboxGroupInput("AK_funnel_critvals", "Cutoffs for statistical significance",
+                                                         choices = list("68% CI" = 1, "90% CI" = 1.645, "95% CI" = 1.960, "99% CI" = 2.576),
+                                                         selected = 1),
+                                      checkboxInput("AK_outliers", "Andrews and Kasy outlier exclusion", value = FALSE)
                                     ),
                                     checkboxInput("show_additional_plots", "Show additional plots", value = FALSE),
                                     conditionalPanel(
@@ -348,10 +367,48 @@ ui <- fluidPage(
                                         column(4, plotlyOutput("funnel_plot_16"))
                                       )
                                     )
+                                   )
+                             )
+                           ),
+                  tabPanel("Histogramm",
+                           br(),
+                           wellPanel(helpText("Same options as in funnel plot tab")),
+                           conditionalPanel(
+                             condition = "input.show_additional_plots == false",
+                             plotlyOutput("AK_density")
+                           ),
+                           conditionalPanel(
+                             condition = "input.show_additional_plots == true",
+                             fluidRow(
+                               column(4, plotlyOutput("AK_density_1")),
+                               column(4, plotlyOutput("AK_density_2")),
+                               column(4, plotlyOutput("AK_density_3"))
+                             ),
+                             fluidRow(
+                               column(4, plotlyOutput("AK_density_4")),
+                               column(4, plotlyOutput("AK_density_5")),
+                               column(4, plotlyOutput("AK_density_6"))
+                             ),
+                             fluidRow(
+                               column(4, plotlyOutput("AK_density_7")),
+                               column(4, plotlyOutput("AK_density_8")),
+                               column(4, plotlyOutput("AK_density_9"))
+                             ),
+                             fluidRow(
+                               column(4, plotlyOutput("AK_density_10")),
+                               column(4, plotlyOutput("AK_density_11")),
+                               column(4, plotlyOutput("AK_density_12"))
+                             ),
+                             fluidRow(
+                               column(4, plotlyOutput("AK_density_13")),
+                               column(4, plotlyOutput("AK_density_14")),
+                               column(4, plotlyOutput("AK_density_15")),
+                               column(4, plotlyOutput("AK_density_16"))
                              )
                            )
+
                   )
-                )
+                  )
                 ),
         tabPanel("Stats",
                  tabsetPanel(
@@ -370,33 +427,59 @@ ui <- fluidPage(
                                      actionButton("ioannidis", "Top 10% precision"),
                                      actionButton("furukawa", "Furukawa (2021) - stem", disabled = TRUE),
                                      actionButton("bom_rachinger", "Bom and Rachinger (2019) - endogenous kink"),
+                                     actionButton("andrews_kasy", "Andrews and Kasy (2019)"),
                                      actionButton("brodeur_2020_files", "Brodeur (2020)", disabled = TRUE),
                                      actionButton("maive", "MAIVE", disabled = TRUE),
                                      style = "margin-bottom: 15px;"
                               )
                             ),
-                            h6("Customize"),
-                            fluidRow(
-                              column(3,
-                                     selectInput("estimation", "Meta model:",
-                                                 choices = c("Mean", "UWLS", "FAT-PET", "PEESE", "EK"),
-                                                 selected = "Mean"),
-                                     checkboxInput("prec_weighted", "Precision weighted", value = FALSE),
-                                     conditionalPanel(
-                                       condition = "input.estimation == 'EK'",
-                                       selectInput("EK_sig", "Confidence band threshold", choices = c("68 %", "90 %", "95 %", "99 %"), selected = "95")
-                                     ),
-                                     selectInput("cluster_se", "Cluster SEs by study", 
-                                                 choices = c("FALSE", "sandwich", "clubSandwich"),
-                                                 selected = "FALSE")
-                              ),
-                              column(9,
-                                     selectInput("mod_reg", "Select Moderators:",
-                                                 choices = moderator_groups,
-                                                 multiple = TRUE)
+                            wellPanel(
+                              h6("Customize"),
+                              fluidRow(
+                                column(3,
+                                       selectInput("estimation", "Meta model:",
+                                                   choices = c("Mean", "UWLS", "FAT-PET", "PEESE", "EK", "AK"),
+                                                   selected = "Mean"),
+                                       checkboxInput("prec_weighted", "Precision weighted", value = FALSE),
+                                       conditionalPanel(
+                                         condition = "input.estimation == 'AK'",
+                                         helpText("The Andrews and Kasy method inherently accounts for estimate precision through its likelihood function, so manual precision weighting is not applicable.")
+                                       ),
+                                       selectInput("cluster_se", "Cluster SEs by study", 
+                                                   choices = c(FALSE, TRUE),
+                                                   selected = FALSE)
+                                ),
+                                column(9,
+                                       selectInput("mod_reg", "Select Moderators:",
+                                                   choices = moderator_groups,
+                                                   multiple = TRUE),
+                                       conditionalPanel(
+                                         condition = "input.estimation == 'EK'",
+                                         wellPanel(
+                                           selectInput("EK_sig", "Confidence band threshold", choices = c("68 %", "90 %", "95 %", "99 %"), selected = "95")
+                                         )
+                                       ),
+                                       conditionalPanel(
+                                         condition = "input.estimation == 'AK'",
+                                         wellPanel(
+                                           checkboxInput("symmetric", "Symmetric p(.)", value = FALSE),
+                                           radioButtons("modelmu", "Model for the distribution of effects",
+                                                        choices = c("Normal" = "normal",
+                                                                    "Student-t" = "t"),
+                                                        selected = "normal"),
+                                           checkboxGroupInput("cutoff_vals", "Cutoffs for statistical significance",
+                                                              choices = list("68% CI" = 1, "90% CI" = 1.645, "95% CI" = 1.960, "99% CI" = 2.576),
+                                                              selected = 1)
+                                         )
+                                       )
+                                )
                               )
                             ),
                             uiOutput("equation_display"),
+                            conditionalPanel(
+                              condition = "input.estimation == 'AK'",
+                                wellPanel(helpText("We apply a custom calculation of confidence intervalls and p-values under normality assumptions for the AK method. We may want to check if this is adequate for their method."))
+                            ),
                             htmlOutput("meta_analysis_table"),
                             selectInput("stats", "Statistics:",
                                         choices = list("Standard Error" = "se = {std.error}", 
@@ -417,59 +500,18 @@ ui <- fluidPage(
                               conditionalPanel(
                                 condition = "input.estimation != 'Mean' && input.estimation != 'UWLS'",
                                 plotOutput("meta_analysis_plot_pbias")
+                              ),
+                              conditionalPanel(
+                                condition = "input.estimation == 'AK'",
+                                plotOutput("meta_analysis_plot_AK_extra_coeff"),
+                              ),
+                              conditionalPanel(
+                                condition = "input.estimation == 'AK'",
+                                h4("Andrews & Kasy (2019) Plots"),
+                                uiOutput("ak_plots")
                               )
                             )
-                            ),
-                   tabPanel("Andrews and Kasy (2019)",
-                            h2("Estimating publication bias using meta-studies", align = "center"),
-                            fluidRow(
-                              column(12,
-                                     wellPanel(
-                                       fluidRow(
-                                         column(3,
-                                                numericInput("kasy_prd", "Select period (months):", value = 3, min = 1)
-                                         ),
-                                         column(3,
-                                                checkboxInput("symmetric", "Symmetric p(.)", value = FALSE),
-                                                checkboxGroupInput("cutoffs", "Cutoffs for p(.)",
-                                                                   choiceNames = c("1.65", "1.96","2.58"),
-                                                                   choiceValues = c(1.645, 1.960, 2.576),
-                                                                   selected = 1.960)
-                                         ),
-                                         column(3,
-                                                radioButtons("modelmu", "Model for the distribution of effects",
-                                                             choices = c("Normal" = "normal",
-                                                                         "Student-t" = "t"),
-                                                             selected = "normal")
-                                         ),
-                                         column(3,
-                                                br(),
-                                                actionButton(inputId = "estimatebutton", label = "Estimate model", class = "btn-primary"),
-                                                br(),
-                                                br(),
-                                                uiOutput("kasy_data_info")
-                                         )
-                                       )
-                                     )
-                              )
-                            ),
-                            fluidRow(
-                              column(4,
-                                     h4("Funnel plot", align = "center"),
-                                     plotOutput("kasy_funnel", height = "400px")
-                              ),
-                              column(4,
-                                     h4("Histogram of z-stats", align = "center"),
-                                     plotOutput("kasy_hist", height = "400px")
-                              ),
-                              column(4,
-                                     h4("Model estimates", align = "center"),
-                                     h5("Distribution of true effects, conditional publication probabilities", align = "center"),
-                                     tableOutput("kasy_estimatestable"),
-                                     plotOutput("kasy_estplot", height = "300px")
-                              )
                             )
-                   )
                    )
                  )
       ),
@@ -973,7 +1015,10 @@ server <- function(input, output, session) {
                        se_option = input$funnel_se_option,
                        wins = input$funnel_wins,
                        opac = input$funnel_opac,
-                       ap = input$ap)
+                       ap = input$ap,
+                       type = input$funnel_type, 
+                       AK_critvals = as.numeric(input$AK_funnel_critvals), 
+                       AK_exclude_outliers = input$AK_outliers)
   })
   for (i in 1:16) {
     local({
@@ -988,11 +1033,40 @@ server <- function(input, output, session) {
                            wins = input$funnel_wins,
                            opac = input$funnel_opac,
                            ap = input$ap,
+                           type = input$funnel_type, 
+                           AK_critvals = as.numeric(input$AK_funnel_critvals), 
+                           AK_exclude_outliers = input$AK_outliers,
                            legend = FALSE)
       })
     })
   }
-  
+  # Binned density 
+  output$AK_density <- renderPlotly({
+    create_z_histogram(filtered_data(),
+                      outvar = input$filter_outcome, 
+                      prd = input$funnel_prd, 
+                      se_option = input$funnel_se_option, 
+                      wins = input$funnel_wins, 
+                      ap = input$ap, 
+                      critvals = as.numeric(input$AK_funnel_critvals))
+  })
+  for (i in 1:16) {
+    local({
+      i <- i
+      output_name <- paste0("AK_density_", i)
+      
+      output[[output_name]] <- renderPlotly({
+        create_z_histogram(filtered_data(),
+                           outvar = input$filter_outcome,
+                           prd = input$funnel_prd * i,
+                           se_option = input$funnel_se_option,
+                           wins = input$funnel_wins,
+                           ap = input$ap,
+                           critvals = as.numeric(input$AK_funnel_critvals))
+      })
+    })
+  }
+    
   # Meta-analyses
   # EK_sig for Endogenous Kink method
   EK_sig <- reactive({
@@ -1019,7 +1093,11 @@ server <- function(input, output, session) {
                   estimation = input$estimation,
                   cluster_se = input$cluster_se,
                   EK_sig_threshold = 10,
-                  mods = mods_reg())
+                  mods = mods_reg(),
+                  cutoff_val = input$cutoff_vals,
+                  AK_symmetric = input$symmetric,
+                  AK_modelmu = input$modelmu,
+                  AK_conf_level = input$conf_level)
   })
   # Equation display
   equation <- reactive({
@@ -1057,6 +1135,8 @@ server <- function(input, output, session) {
       omit <- "variance_winsor"
     } else if (input$estimation == "EK") {
       omit <- "pub_bias"
+    } else if (input$estimation == "AK") {
+      omit <- 2:nrow(reg_results()[[1]]$tidy[1])
     }
     
     b <- list(geom_vline(xintercept = 0, color = 'orange'))
@@ -1071,12 +1151,30 @@ server <- function(input, output, session) {
     
     b <- list(geom_vline(xintercept = 0, color = 'orange'))
     
-    omit <- ifelse(input$estimation == "EK", "constant", "Interc")
+    if (input$estimation == "EK") {
+      omit <- "constant"
+    } else if (input$estimation == "AK") {
+      omit <- c(1,3:nrow(reg_results()[[1]]$tidy[1]))
+    } else {
+      omit <- "Interc"
+    }
     modelplot(reg_results(),
               coef_omit = omit,
               conf_level = input$conf_level,
               title = "Meta-Analysis Plot", 
               background = b)
+  })
+  # Only for AK
+  output$meta_analysis_plot_AK_extra_coeff <- renderPlot({
+    if (input$estimation == "AK") {
+      b <- list(geom_vline(xintercept = 0, color = 'orange'))
+      omit <- 1:2
+      modelplot(reg_results(),
+                coef_omit = omit,
+                conf_level = input$conf_level,
+                title = "Meta-Analysis Plot", 
+                background = b)
+    }
   })
   # Estimation presets
   # Unweighted average
@@ -1135,11 +1233,26 @@ server <- function(input, output, session) {
     updateCheckboxInput(session, "ap", value = FALSE)
     updateCheckboxInput(session, "precision_filter", value = "None")
   })
+  # Andrews & Kasy (2019)
+  observeEvent(list(input$andrews_kasy, input$andrews_kasy_irf), {
+    req(input$andrews_kasy || input$andrews_kasy_irf)
+    updateSelectInput(session, "estimation", selected = "AK")
+    updateCheckboxInput(session, "prec_weighted", value = FALSE)
+    updateCheckboxInput(session, "ap", value = FALSE)
+    updateCheckboxInput(session, "precision_filter", value = "None")
+    updateCheckboxInput(session, "precision_filter", value = "None")
+  })
+  # Dis-/enable specific options for specific estimation methods
   observe({
     if (input$estimation == "EK") {
       shinyjs::disable("prec_weighted")
+      shinyjs::disable("mod_reg")
+    } else if (input$estimation == "AK") {
+      shinyjs::disable("prec_weighted") # The Andrews and Kasy method inherently accounts for estimate precision through its likelihood function, so manual precision weighting is not applicable.
+      shinyjs::disable("mod_reg") # Including moderators is not possible at the moment for the AK method.
     } else {
       shinyjs::enable("prec_weighted")
+      shinyjs::enable("mod_reg")
     }
   })
   
@@ -1166,16 +1279,28 @@ server <- function(input, output, session) {
   })
   
   # Corrected IRF
+  # Corrected IRF
   intercept_estimates <- reactive({
     results <- reg_results()
     
     extract_intercepts <- function(results) {
-      intercepts <- lapply(results, function(model) {
-        ci <- confint(model, level = input$conf_level)
-        c(estimate = coef(model)[1],
-          lower = ci[1, 1],
-          upper = ci[1, 2])
-      })
+      if (input$estimation == "AK") {
+        # For AK estimation method, extract the precomputed confidence intervals
+        intercepts <- lapply(results, function(model) {
+          # Assuming the first row contains the intercept estimates
+          c(estimate = model$tidy$estimate[1],
+            lower = model$tidy$conf.low[1],
+            upper = model$tidy$conf.high[1])
+        })
+      } else {
+        # For other estimation methods, use confint
+        intercepts <- lapply(results, function(model) {
+          ci <- confint(model, level = input$conf_level)
+          c(estimate = coef(model)[1],
+            lower = ci[1, 1],
+            upper = ci[1, 2])
+        })
+      }
       
       data.frame(
         period = as.numeric(names(results)),
@@ -1199,125 +1324,54 @@ server <- function(input, output, session) {
             col="skyblue",
             border="white")
   })
-  # Update pub_year slider values
+  # Update pub_year slider values # DEACTIVATED BECAUSE IT HAS UNINTENDED EFFECTS
+  # observe({
+  #   full_min_year <- min(data$pub_year, na.rm = TRUE)
+  #   full_max_year <- max(data$pub_year, na.rm = TRUE)
+  #   
+  #   filtered_min_year <- min(filtered_data()$pub_year, na.rm = TRUE)
+  #   filtered_max_year <- max(filtered_data()$pub_year, na.rm = TRUE)
+  #   
+  #   current_min <- input$pub_year[1]
+  #   current_max <- input$pub_year[2]
+  #   
+  #   updateSliderInput(session, "pub_year",
+  #                     min = full_min_year,
+  #                     max = full_max_year,
+  #                     value = c(max(current_min, filtered_min_year),
+  #                               min(current_max, filtered_max_year)))
+  # })
+  
+  
+  # New output for AK estimation plots
+  output$ak_plots <- renderUI({
+    req(input$estimation == "AK")
+    results <- reg_results()
+    
+    plot_outputs <- lapply(seq_along(results), function(i) {
+      plotOutput(paste0("ak_plot_", i), height = "400px")
+    })
+    
+    do.call(tagList, plot_outputs)
+  })
+  
+  # Render individual AK estimation plots
   observe({
-    full_min_year <- min(data$pub_year, na.rm = TRUE)
-    full_max_year <- max(data$pub_year, na.rm = TRUE)
+    req(input$estimation == "AK")
+    results <- reg_results()
     
-    filtered_min_year <- min(filtered_data()$pub_year, na.rm = TRUE)
-    filtered_max_year <- max(filtered_data()$pub_year, na.rm = TRUE)
-    
-    current_min <- input$pub_year[1]
-    current_max <- input$pub_year[2]
-    
-    updateSliderInput(session, "pub_year",
-                      min = full_min_year,
-                      max = full_max_year,
-                      value = c(max(current_min, filtered_min_year),
-                                min(current_max, filtered_max_year)))
-  })
-  
-  # Kasy tab
-  # Reactive values for Kasy tab
-  kasy_v <- reactiveValues()
-  
-  # Prepare data for Kasy tab
-  kasy_data <- reactive({
-    req(filtered_data())
-    data <- filtered_data() %>% 
-      filter(period.month == input$kasy_prd)
-    
-    list(
-      X = data$mean.effect,
-      sigma = data$SE.avg,
-      n_obs = nrow(data),
-      n_studies = length(unique(data$key))
-    )
-  })
-  
-  # Display info about the selected data
-  output$kasy_data_info <- renderUI({
-    req(kasy_data())
-    HTML(paste("Selected period:", input$kasy_prd, "months",
-               "<br>Number of observations:", kasy_data()$n_obs,
-               "<br>Number of studies:", kasy_data()$n_studies))
-  })
-  
-  # Funnel plot for Kasy tab
-  output$kasy_funnel <- renderPlot({
-    req(kasy_data())
-    if(kasy_data()$n_obs > 0) {
-      metastudies_plot(kasy_data()$X, kasy_data()$sigma)
-    } else {
-      plot.new()
-      text(0.5, 0.5, "No data available for selected period", cex = 1.2)
-    }
-  })
-  
-  # Histogram for Kasy tab
-  output$kasy_hist <- renderPlot({
-    req(kasy_data())
-    if(kasy_data()$n_obs > 0) {
-      z_histogram(kasy_data()$X, kasy_data()$sigma)
-    } else {
-      plot.new()
-      text(0.5, 0.5, "No data available for selected period", cex = 1.2)
-    }
-  })
-  
-  # Estimation logic for Kasy tab
-  observeEvent(input$estimatebutton, {
-    req(kasy_data())
-    
-    if(kasy_data()$n_obs > 0) {
-      kasy_v$cutoffs <- as.numeric(unlist(input$cutoffs))
-      kasy_v$symmetric <- input$symmetric
-      kasy_v$modelmu <- input$modelmu
-      
-      if (!kasy_v$symmetric) {
-        kasy_v$cutoffs <- c(-rev(kasy_v$cutoffs), 0, kasy_v$cutoffs)
-      }
-      
-      kasy_v$estimates <- metastudies_estimation(
-        kasy_data()$X,
-        kasy_data()$sigma,
-        kasy_v$cutoffs,
-        kasy_v$symmetric,
-        model = kasy_v$modelmu
-      )
-      
-      output$kasy_estplot <- renderPlot({
-        estimates_plot(
-          kasy_data()$X,
-          kasy_data()$sigma,
-          kasy_v$cutoffs,
-          kasy_v$symmetric,
-          kasy_v$estimates,
-          model = kasy_v$modelmu
-        )
+    lapply(seq_along(results), function(i) {
+      output[[paste0("ak_plot_", i)]] <- renderPlot({
+        # Extract the period from the name of the result
+        period <- names(results)[i]
+        
+        # Add title to the plot
+        results[[i]]$plot + 
+          ggplot2::labs(title = paste(period, "months"))
       })
-      
-      output$kasy_estimatestable <- renderTable({
-        estimatestable(
-          kasy_v$estimates$Psihat,
-          kasy_v$estimates$SE,
-          kasy_v$cutoffs,
-          kasy_v$symmetric,
-          kasy_v$modelmu
-        )
-      }, rownames = TRUE, hover = TRUE, digits = 3)
-    } else {
-      output$kasy_estplot <- renderPlot({
-        plot.new()
-        text(0.5, 0.5, "No data available for selected period", cex = 1.2)
-      })
-      
-      output$kasy_estimatestable <- renderTable({
-        data.frame(Message = "No data available for selected period")
-      })
-    }
+    })
   })
-  
+
 }
 
 shinyApp(ui = ui, server = server)

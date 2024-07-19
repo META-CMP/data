@@ -69,7 +69,7 @@ if (is.nan(LLH)){
 
 
 
-metastudies_estimation=function(X,sigma, cutoffs,symmetric, model="normal"){
+metastudies_estimation=function(X,sigma, cutoffs,symmetric, model="normal", study_ID = NULL){
     
   nn=length(X)
   #%regressors for step function p
@@ -96,8 +96,15 @@ metastudies_estimation=function(X,sigma, cutoffs,symmetric, model="normal"){
   findmin<-nlminb(objective=LLH_only, start=Psihat0,lower=lower.b,upper=upper.b,control = list(eval.max = MaxEval, iter.max = MaxIter, abs.tol = Tol));
   Psihat<-findmin$par
   LLHmax<-findmin$objective
+  
+  # Prepare clustering, if study_ID is provided:
+  if (is.null(study_ID)) {
+    cluster_ID <- 1:nn # Each observation is own cluster, i.e. no clustering.
+  } else {
+    cluster_ID <- study_ID # Clustering at study level
+  }
 
-  Var_robust<-RobustVariance(stepsize, nn, Psihat, LLH,1:nn);
+  Var_robust<-RobustVariance(stepsize, nn, Psihat, LLH, cluster_ID);
   se_robust<-sqrt(diag(Var_robust));
 
   list(Psihat=Psihat, SE=se_robust)

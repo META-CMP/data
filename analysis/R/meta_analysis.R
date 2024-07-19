@@ -34,7 +34,7 @@ create_equation <- function(base_formula, mods) {
 #' @param periods A numeric vector specifying the periods (in months) for which to perform the analysis.
 #' @param wins A numeric value specifying the winsorization parameter.
 #' @param prec_weighted A logical value indicating whether to use precision weighting.
-#' @param estimation String specifying the meta analysis model, one of "Mean", "UWLS", "FAT-PAT", "PEESE", "EK".
+#' @param estimation String specifying the meta analysis model, one of "Mean", "UWLS", "FAT-PAT", "PEESE", "EK", or "AK".
 #' @param mods A character vector of moderator variable names to include in the multiple meta-regression. If NULL, no moderators are included.
 #' 
 #' @return A list of model objects for each period.
@@ -46,12 +46,10 @@ create_equation <- function(base_formula, mods) {
 #' library(tidyverse)
 #' library(dplyr)
 #' library(JWileymisc)
-#' library(modelsummary)
 #' library(sandwich)
-#' library(clubSandwich)
 #'
 #' # Load the data
-#' data_path <- "data/preliminary_data_test.RData"
+#' data_path <- "data/preliminary_data_test_11072024.RData"
 #' load(data_path)
 #'
 #' # Calculate the average standard error and precision options
@@ -59,23 +57,26 @@ create_equation <- function(base_formula, mods) {
 #' data$precision.avg <- 1 / data$SE.avg
 #' data$precision.lower <- 1 / data$SE.lower
 #' data$precision.upper <- 1 / data$SE.upper
-#'
+#' # Renaming gdp to output
+#' data$outcome <- ifelse(data$outcome == "gdp", "output", data$outcome)
 #' # Perform meta-analysis
-#' results1 <- meta_analysis(data, outvar = "gdp", se_option = "avg", periods = 1:20,
-#'                          wins = 0.02, prec_weighted = TRUE, estimation = "FAT-PET", cluster_se = "sandwich", mods = NULL)
-#' results2 <- meta_analysis(data, outvar = "gdp", se_option = "avg", periods = 1:20,
-#'                          wins = 0.02, prec_weighted = FALSE, estimation = "EK", cluster_se = "sandwich")
+#' results1 <- meta_analysis(data, outvar = "output", se_option = "avg", periods = 1:20,
+#'                          wins = 0.02, prec_weighted = TRUE, estimation = "FAT-PET", cluster_se = TRUE, mods = NULL)
+#' results2 <- meta_analysis(data, outvar = "output", se_option = "avg", periods = 1:20,
+#'                          wins = 0.02, prec_weighted = FALSE, estimation = "EK", cluster_se = TRUE)
+#' AK_results <- meta_analysis(data, outvar = "output", se_option = "upper", periods = 1:3,
+#'                          wins = 0, prec_weighted = FALSE, estimation = "AK", cluster_se = FALSE, AK_conf_level = 0.90)
 #' # Example with moderators
-#' result_with_mods <- meta_analysis(data, outvar = "gdp", se_option = "avg", 
+#' result_with_mods <- meta_analysis(data, outvar = "output", se_option = "avg", 
 #'                                   periods = 1:20, wins = 0.02, prec_weighted = TRUE, 
-#'                                   estimation = "PEESE", cluster_se = "sandwich", mods = c("cum", "iv"))
+#'                                   estimation = "PEESE", cluster_se = TRUE, mods = c("cum", "iv"))
 #' # Display the results
-#' modelsummary(results1, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "PEESE", gof_map = NULL)
-#' modelsummary(results2, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "EK", gof_map = NULL)
-#' modelsummary(result_with_mods, output = "gt", stars = TRUE, title = "PEESE with moderators", gof_map = NULL)
-#' 
+#' modelsummary::modelsummary(results1, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "PEESE", gof_map = NULL)
+#' modelsummary::modelsummary(results2, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "EK", gof_map = NULL)
+#' modelsummary::modelsummary(result_with_mods, output = "gt", stars = TRUE, title = "PEESE with moderators", gof_map = NULL)
+#' modelsummary::modelsummary(AK_results, output = "gt", statistic = c("se = {std.error}", "conf.int"))
 #' @export
-meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = NULL, EK_sig_threshold = 1.96, mods = NULL) {
+meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = FALSE, EK_sig_threshold = 1.96, mods = NULL, cutoff_val = c(1.960), AK_symmetric = FALSE, AK_modelmu = "normal", AK_conf_level = 0.95) {
   # Subset data for the specified outcome variable
   data <- subset(data, outcome %in% outvar)
 
@@ -103,16 +104,13 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
     PEESE = "mean.effect_winsor ~ variance_winsor"
   )
   
-  # Define the equation to be estimated (not relevant for EK)
-  if (estimation != "EK") {
+  # Define the equation to be estimated (not relevant for EK & AK)
+  if (!(estimation %in% c("EK", "AK"))) {
     base_formula <- base_formulas[[estimation]]
     if (is.null(base_formula)) {
       stop(paste("Unknown estimation method:", estimation))
     }
     equation <- create_equation(base_formula, mods)
-  } else {
-    # EK doesn't use the standard equation format
-    equation <- NULL
   }
   
   for (x in valid_periods) {
@@ -153,7 +151,62 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
     data_period$precvariance_winsor <- 1 / data_period$variance_winsor
 
     # Run regression
-    if (estimation != "EK") {
+    if (estimation == "EK") { # Bom & Rachinger (2019) EK method
+      
+      data_EK <- data_period %>% select(mean.effect_winsor, standarderror_winsor, key)
+      est_EK <- EK(data=data_EK,verbose = FALSE, sig_threshold = EK_sig_threshold)
+      reg_result <- est_EK$model
+      
+    } else if (estimation == "AK") { # Andrews & Kasy method
+      
+      data_AK <- data_period %>% select(mean.effect_winsor, standarderror_winsor, key)
+      
+      # AK cutoffs configuration
+      AK_cutoffs <- as.numeric(unlist(cutoff_val))
+      
+      if (!AK_symmetric) {
+        AK_cutoffs <- c(-rev(AK_cutoffs), 0, AK_cutoffs)
+      }
+      
+      # Prepare clustering, if cluster_se == TRUE
+      if (cluster_se == FALSE) {
+        AK_cluster_ID <- NULL
+      } else if (cluster_se == TRUE) {
+        AK_cluster_ID <- data_AK$key
+      }
+      
+      est_AK <- metastudies_estimation(X = data_AK$mean.effect_winsor, sigma = data_AK$standarderror_winsor, cutoffs = AK_cutoffs, symmetric = AK_symmetric, model = AK_modelmu, study_ID = AK_cluster_ID)
+      
+      # Storing results for modelsummary() compatibility
+      table_AK <- estimatestable(est_AK$Psihat, est_AK$SE, AK_cutoffs, AK_symmetric, AK_modelmu)
+      ti <- data.frame(
+        term = colnames(table_AK),
+        estimate = table_AK[1,],
+        std.error = table_AK[2,])
+      
+      # Calculate confidence intervals using AK_conf_level (approximation of CIs with normality assumption)
+      z_score <- qnorm((1 + AK_conf_level) / 2)
+      ci_lower <- ti$estimate - z_score * ti$std.error
+      ci_upper <- ti$estimate + z_score * ti$std.error
+      ti$conf.low <- ci_lower
+      ti$conf.high <- ci_upper
+      
+      # Calculate p-values
+      ti$statistic <- ti$estimate / ti$std.error
+      ti$p.value <- 2 * (1 - pnorm(abs(ti$statistic)))
+      
+      plot_AK <- estimates_plot(cutoffs = AK_cutoffs, symmetric = AK_symmetric, estimates = est_AK, model = AK_modelmu)
+      
+      gl <- data.frame(Num.Obs. = nrow(data_AK))
+      reg_result <- list(
+        tidy = ti,
+        glance = gl,
+        plot = plot_AK)
+      class(reg_result) <- "modelsummary_list"
+      
+      warning("Note our custom calculation of confidence intervalls and p-values under normality assumptions for the AK method. We may want to check if this is adequate for their method.")
+      
+    } else { # Other methods
 
       reg_weights <<- if (prec_weighted) data_period$precvariance_winsor else NULL
       # Note the use of "<<-". Defining reg_weights in the global environment here is necessary, otherwise 
@@ -163,43 +216,20 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
       reg_result <- lm(equation, data = data_period, weights = reg_weights)
       rm(reg_weights, envir = .GlobalEnv)
       
-    } else if (estimation == "EK") {
-
-      data_EK <- data_period %>% select(mean.effect_winsor, standarderror_winsor, key)
-      est_EK <- EK(data=data_EK,verbose = FALSE, sig_threshold = EK_sig_threshold)
-      reg_result <- est_EK$model
-
-    }
+    } 
     
     # Correction of SEs - clustered by study (by key)
-    if (!is.null(cluster_se)) {
+    if (cluster_se == TRUE & estimation != "AK") {
       data_period <<- data_period # Defining data_period in the global environment 
       # here is necessary, otherwise it cannot be found by sandwich::vcovCL(). The 
       # reason is unclear. To avoid unintended effects, we remove it from the environment 
       # immediately after it was used by sandwich::vcovCL. It is important that data_period 
-      # is NOT defined globally before this point (secifically before the use of lm() above)!
+      # is NOT defined globally before this point (specifically before the use of lm() above)!
       
-      if (cluster_se == "sandwich") {
-        vcov_cluster <- sandwich::vcovCL(reg_result, cluster = ~key)
-        rm(data_period, envir = .GlobalEnv)
-        reg_result <- lmtest::coeftest(reg_result, vcov. = vcov_cluster)
-      }
-      if (cluster_se == "clubSandwich") {
-        # Ensure 'key' is a factor
-        data_period$key <- as.factor(data_period$key)
-
-        # Apply clubSandwich correction
-        corrected_results <- clubSandwich::coef_test(reg_result,
-                                vcov = "CR0",
-                                cluster = data_period$key,
-                                test = "naive-t")
-
-        # Update the reg_result object with corrected values
-        reg_result$coefficients <- corrected_results$beta
-        reg_result$std.error <- corrected_results$SE
-        reg_result$t.value <- corrected_results$tstat
-        reg_result$p.value <- corrected_results$p_val
-      }
+      vcov_cluster <- sandwich::vcovCL(reg_result, cluster = ~key)
+      rm(data_period, envir = .GlobalEnv)
+      reg_result <- lmtest::coeftest(reg_result, vcov. = vcov_cluster)
+        
     }
     
     results_list[[paste0(x)]] <- reg_result

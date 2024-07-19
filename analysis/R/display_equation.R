@@ -23,6 +23,7 @@ display_equation <- function(model, weighted) {
                "FAT-PET" = "y = \\beta_0 + \\beta_1 SE + \\epsilon",
                "PEESE" = "y = \\beta_0 + \\beta_1 SE^2 + \\epsilon",
                "EK" = "y = \\beta_0 + \\beta_1 (SE - a) I_{SE - a} + \\epsilon",
+               "AK" = "NULL",
                stop("Invalid model specified")
   )
   

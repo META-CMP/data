@@ -63,8 +63,8 @@
     }, 
     "further_data_characteristics": { 
         "panel": false, 
-        "start": "01-1980", 
-        "end": "01-1980", 
+        "start": "02-1960", 
+        "end": "07-2020", 
         "samplesize": "null" 
     }, 
     "control_variables": { 

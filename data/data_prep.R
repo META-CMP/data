@@ -12,6 +12,7 @@ library(dplyr) # for data manipulation
 library(tidyverse) # for data manipulation
 library(stringi) # for advanced str_split 
 library(zoo) # for easier manipulation of date format 
+library(readxl) # to read excel file
 
 
 ################################################################### prepare variables for publication bias tests #############################################################
@@ -386,6 +387,25 @@ data<-data %>% unnest(n_of_countries) %>% unnest(chol) %>% unnest(bayes) %>% unn
 
 
 
+######################################################################### merge publication characteristics ###########################################################
+
+# correct wrong publication title
+data$`publication title` <- ifelse(data$`publication title` == "International Journal of …", "International Journal of Finance & Economics", data$`publication title`)
+
+# read in data
+ranking_impact<-read_excel("~/data/data/study_characteristics/journals_ranking_impact.xlsx")
+citations<-read_excel("~/data/data/study_characteristics/citations_for_included_studies.xlsx")
+
+# merge num_cit (number of citations) using the study key. 
+data<-data %>% left_join(citations %>% select(key,num_cit),by="key")
+
+data<-data %>% left_join(ranking_impact %>% select(publication.title, journal_ranking,journal_impact), by=c("publication title"="publication.title"))
+
+remove(citations)
+remove(ranking_impact)
+
+
+
 ########################################################################## merge external data #######################################################################
 
 
@@ -415,10 +435,29 @@ summary(data$mean_year)
 # read in the external-data.csv file and drop the unnecessary column
 data_merged<-read.csv("~/data/data/merge_external_data/external-data.csv") %>% select(-X)
 
+
 # recode year as numeric
 data_merged$year<-as.numeric(data_merged$year)
 
+ea_membership <- data.frame(
+  country = c("BE", "DE", "FI", "FR", "GR", "IE", "IT", "LU", "NL", "AT", "PT", "ES", "SI", "MT", "CY", "SK", "EE", "LV", "LT"),
+  start_year = c(1970, 1970, 1970, 1970, 2001, 1970, 1970, 1970, 1970, 1970,
+                 1970, 1970, 2007, 2008, 2008, 2009, 2011, 2014, 2015)
+)
 
+data_merged<-data_merged  %>% left_join(ea_membership, by = c("ccode" = "country"))
+
+data_merged <- data_merged %>%
+  mutate(ea = ifelse(year >= start_year, TRUE, FALSE))
+
+
+ea_average <- data_merged %>%
+  filter(ea == TRUE) %>%
+  group_by(year) %>%
+  summarize(across(tradegl:exrate, ~ mean(.x, na.rm = TRUE))) %>% mutate(ccode="EA")
+
+
+data_merged<-data_merged %>% select(-ea,-start_year) %>% bind_rows(ea_average)
 
 
 # unnest year and list of countries and merge the respective external data in a first step. Secondly calculate the average of the external data for each model and study. 
@@ -437,6 +476,8 @@ data<-data %>% ungroup() %>% left_join(data_merged %>% ungroup %>% select(key, m
 
 
 remove(data_merged)
+remove(ea_average)
+remove(ea_membership)
 
 
 

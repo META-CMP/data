@@ -255,7 +255,19 @@
     }, 
     "further_data_characteristics": { 
         "panel": true, 
-        "start": "Q1-1999", 
+        "start": {
+                "model_1": "Q1-1999",
+                "model_2": "Q1-1999",
+                "model_3": "Q1-1999",
+                "model_4": "Q1-1999",
+                "model_5": "Q1-1999",
+                "model_6": "Q1-1999",
+                "model_7": "Q1-1999",
+                "model_8": "1999",
+                "model_9": "Q1-1999",
+                "model_10": "Q1-1999",
+                "model_11": "Q1-1999"
+        }, 
         "end": {
                 "model_1": "Q4-2014",
                 "model_2": "Q4-2014",
@@ -264,7 +276,7 @@
                 "model_5": "Q4-2014",
                 "model_6": "Q4-2014",
                 "model_7": "Q4-2014",
-                "model_8": "Q4-2014",
+                "model_8": "2014",
                 "model_9": "Q3-2008",
                 "model_10": "Q4-2014",
                 "model_11": "Q4-2014"

@@ -72,7 +72,7 @@
         }
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": false,
         "start": "Q1-1980",
         "end": "Q3-2006",
         "samplesize": "null"

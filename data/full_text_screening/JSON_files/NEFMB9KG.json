@@ -105,7 +105,7 @@
         "dcr": false,
         "hike": {
                 "model_1": false,
-                "model_2": true,
+                "model_2": false,
                 "model_3": false,
                 "model_4": true,
                 "model_5": false,
@@ -114,7 +114,7 @@
                 "model_8": false
         },
         "cut": {
-                "model_1": true,
+                "model_1": false,
                 "model_2": false,
                 "model_3": true,
                 "model_4": false,

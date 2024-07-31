@@ -62,7 +62,7 @@
         "n_of_countries": 1 
     }, 
     "further_data_characteristics": { 
-        "panel": true, 
+        "panel": false, 
         "start": "Q1-1978", 
         "end": "Q3-2008", 
         "samplesize": "null" 

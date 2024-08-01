@@ -14,57 +14,59 @@ library(shinyjs)
 
 # Load the data 
 # data_path <- here("data/preliminary_data_test_old.RData")
-# data_path <- here("data/preliminary_data_test.RData") # works
+data_path <- here("data/preliminary_data_test.RData") # works
 # data_path <- here("data/preliminary_data_03072024.RData")
-data_path <- here("data/preliminary_data_test_11072024.RData")
+# data_path <- here("data/preliminary_data_test_11072024.RData")
 load(data_path)
 rm(data_path)
 # data <- data[1:20000,] # For testing
 # Papers data test
-papers_path <- here("data/papers_test.RData")
-load(papers_path)
-rm(papers_path)
-# Add publication year to data
-data <- data %>%
-  left_join(papers %>% select(key, type = `item type`, pub_year = `publication year`),
-            by = "key")
+# papers_path <- here("data/papers_test.RData")
+# load(papers_path)
+# rm(papers_path)
+# # Add publication year to data
+# data <- data %>%
+#   left_join(papers %>% select(key, type = `item type`, pub_year = `publication year`),
+#             by = "key")
 
-# ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
-# Renaming gdp to output
-data$outcome <- ifelse(data$outcome == "gdp", "output", data$outcome)
+# necessary to remove list element of the list_of_countries vector. 
+data <- data %>%
+  mutate(list_of_countries = map_chr(list_of_countries, ~ paste(.x, collapse = " ")))
+
+
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Extracting start and end year
 # Create a function to extract the year from the start and end columns
-extract_year <- function(date_str) {
-  if (grepl("-", date_str)) {
-    year <- sub(".*-(\\d{4})$", "\\1", date_str)
-  } else {
-    year <- date_str
-  }
-  return(year)
-}
-# Apply the function to create the new columns
-data$start_year <- sapply(data$start, extract_year)
-data$end_year <- sapply(data$end, extract_year)
-# Convert the extracted years to numeric
-data$start_year <- as.numeric(data$start_year)
-data$end_year <- as.numeric(data$end_year)
+# extract_year <- function(date_str) {
+#   if (grepl("-", date_str)) {
+#     year <- sub(".*-(\\d{4})$", "\\1", date_str)
+#   } else {
+#     year <- date_str
+#   }
+#   return(year)
+# }
+# # Apply the function to create the new columns
+# data$start_year <- sapply(data$start, extract_year)
+# data$end_year <- sapply(data$end, extract_year)
+# # Convert the extracted years to numeric
+# data$start_year <- as.numeric(data$start_year)
+# data$end_year <- as.numeric(data$end_year)
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
-# Calculate the average standard error and precision options
-data$SE.avg <- (data$SE.upper + data$SE.lower) / 2
-data$precision.avg <- 1 / data$SE.avg
-data$precision.lower <- 1 / data$SE.lower
-data$precision.upper <- 1 / data$SE.upper
+# # Calculate the average standard error and precision options
+# data$SE.avg <- (data$SE.upper + data$SE.lower) / 2
+# data$precision.avg <- 1 / data$SE.avg
+# data$precision.lower <- 1 / data$SE.lower
+# data$precision.upper <- 1 / data$SE.upper
 
 # ---- THIS SHOULD SOON BE DONE DIRECTLY IN THE PACKAGE ----
 # Join top 5 and top tier
-data$top_5_or_tier <- ifelse(data$is_top_5 == 1 | data$is_top_tier == 1, TRUE, FALSE)
+# data$top_5_or_tier <- ifelse(data$is_top_5 == 1 | data$is_top_tier == 1, TRUE, FALSE)
 # Get advanced and emerigin as dummy
-data$advanced <- ifelse(data$country_dev == "Advanced", TRUE, FALSE)
-data$upper_middle <- ifelse(data$country_dev == "upper_middle", TRUE, FALSE)
-data$mixed_unclass <- ifelse(data$country_dev == "Mixed or Unclassified", TRUE, FALSE)
+# data$advanced <- ifelse(data$country_dev == "Advanced", TRUE, FALSE)
+# data$upper_middle <- ifelse(data$country_dev == "upper_middle", TRUE, FALSE)
+# data$mixed_unclass <- ifelse(data$country_dev == "Mixed or Unclassified", TRUE, FALSE)
 
 # Define choices for moderator filters
 moderator_groups <- list(

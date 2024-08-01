@@ -54,7 +54,12 @@
         "forecast_based": false, 
         "nr": false, 
         "event": false, 
-        "chol": true, 
+        "chol": { 
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false
+        }, 
         "svar": { 
                 "model_1": false,
                 "model_2": false,

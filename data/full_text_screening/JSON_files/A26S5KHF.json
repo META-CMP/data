@@ -39,9 +39,9 @@
         "idother": false
     },
     "estimation_method": {
-        "var": true,
+        "var": false,
         "lp": false,
-        "vecm": true,
+        "vecm": false,
         "dyn_ols": "false",
         "fvar": false,
         "tvar": false,
@@ -72,7 +72,7 @@
         }
     },
     "further_data_characteristics": {
-        "panel": true,
+        "panel": false,
         "start": "Q1-1980",
         "end": "Q3-2006",
         "samplesize": "null"

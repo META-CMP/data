@@ -4,7 +4,7 @@ gc() #free up memory and report the memory usage.
 
 #setwd and load dataset
 # setwd("~/data")
-load("data/preliminary_data_03072024.RData")
+load("data/preliminary_data_01082024.RData")
 
 
 # load packackages 
@@ -12,6 +12,7 @@ library(dplyr) # for data manipulation
 library(tidyverse) # for data manipulation
 library(stringi) # for advanced str_split 
 library(zoo) # for easier manipulation of date format 
+library(readxl) # to read excel file
 
 
 ################################################################### prepare variables for publication bias tests #############################################################
@@ -110,6 +111,99 @@ summary(data$shock_size)
 data<-data %>% mutate(dyn_ols=ifelse(dyn_ols=="ARDL" | dyn_ols=="ardl",TRUE,FALSE))
 
 #data<-data %>% filter(quality_concern==FALSE)
+
+data <- data %>%
+  mutate(group_ident_broad = case_when(
+    # Group 1: Chol, chol+SVAR
+    (chol == 1 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0 & svar == 0) ~ "chol",
+    (chol == 1 & svar == 1 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0) ~ "chol",
+    
+    # Group 2: signr, signr+SVAR, chol+signr, signr+IV
+    (signr == 1 & chol == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0 & svar == 0) ~ "signr",
+    (signr == 1 & svar == 1 & chol == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0) ~ "signr",
+    (chol == 1 & signr == 1 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0 & svar == 0) ~ "signr",
+    (signr == 1 & iv == 1 & chol == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0 & svar == 0) ~ "signr",
+    
+    # Group 3: chol
+    (svar == 1 & chol == 0 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0) ~ "chol",
+    
+    # Group 4: HF+IV, HF, HF+signr, HF+signr+iv, hf+chol, hf+signr+chol, hf+iv+svar, hf+iv+chol
+    (hf == 1 & iv == 1 & signr == 0 & chol == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0 & svar == 0) ~ "hf",
+    (hf == 1 & iv == 0 & signr == 0 & chol == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0 & svar == 0) ~ "hf",
+    (hf == 1 & signr == 1 & iv == 0 & chol == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0 & svar == 0) ~ "hf",
+    (hf == 1 & signr == 1 & iv == 1 & chol == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0 & svar == 0) ~ "hf",
+    (hf == 1 & chol == 1 & signr == 0 & iv == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0 & svar == 0) ~ "hf",
+    (hf == 1 & signr == 1 & chol == 1 & iv == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0 & svar == 0) ~ "hf",
+    (hf == 1 & iv == 1 & svar == 1 & chol == 0 & signr == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0) ~ "hf",
+    (hf == 1 & iv == 1 & chol == 1 & svar == 0 & signr == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0) ~ "hf",
+    
+    # Group 5: Forecast+NR, Forecast+nr+iv, forecast+nr+chol,
+    (forecast_based == 1 & nr == 1 & iv == 0 & chol == 0 & signr == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (forecast_based == 1 & nr == 1 & iv == 1 & chol == 0 & signr == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (forecast_based == 1 & nr == 1 & chol == 1 & iv == 0 & signr == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    
+    # Group6:  Forecast+chol, Forecast+Iv, forecast+svar+signr, forecast+chol+signr, forecast+signr, forecast+svar
+    (forecast_based == 1 & chol == 0 & nr == 0 & iv == 0 & signr == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (forecast_based == 1 & chol == 1 & nr == 0 & iv == 0 & signr == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (forecast_based == 1 & iv == 1 & nr == 0 & chol == 0 & signr == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (forecast_based == 1 & svar == 1 & signr == 1 & nr == 0 & chol == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (forecast_based == 1 & chol == 1 & signr == 1 & nr == 0 & iv == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (forecast_based == 1 & signr == 1 & nr == 0 & iv == 0 & chol == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (forecast_based == 1 & svar == 1 & nr == 0 & iv == 0 & chol == 0 & signr == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    
+    # Group 7: IV+SVAR, IV, IV+idother, IV+chol
+    (iv == 1 & svar == 1 & nr == 0 & chol == 0 & signr == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0) ~ "idother",
+    (iv == 1 & nr == 0 & chol == 0 & signr == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0) ~ "idother",
+    (iv == 1 & idother == 1 & nr == 0 & chol == 0 & signr == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0) ~ "idother",
+    (iv == 1 & chol == 1 & nr == 0 & signr == 0 & svar == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0 & idother == 0) ~ "idother",
+    
+    # Group 8: Idother, idother+svar, nr+svar, idother+svar+signr, idother+chol, nr
+    (idother == 1 & svar == 0 & nr == 0 & chol == 0 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0) ~ "idother",
+    (idother == 1 & svar == 1 & nr == 0 & chol == 0 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0) ~ "idother",
+    (nr == 1 & svar == 1 & idother == 0 & chol == 0 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0) ~ "nr",
+    (idother == 1 & svar == 1 & signr == 1 & nr == 0 & chol == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0) ~ "idother",
+    (idother == 1 & chol == 1 & svar == 0 & signr == 0 & nr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0) ~ "idother",
+    (nr == 1 & svar == 0 & idother == 0 & chol == 0 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0) ~ "nr",
+    
+    # Group 9: forecast+hf+iv, Forecast+nr+hf+iv, hf+nr+svar, hf+event+forecast+iv, forecast+chol+hf, Forecast+nr+hf, iv+forecast+nr+signr+svar, forecast+iv+chol+hf, forecast+iv+event+chol+hf, forecast+nr+chol+signr, forecast+hf
+    (forecast_based == 1 & hf == 1 & iv == 1 & nr == 0 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    (forecast_based == 1 & nr == 1 & hf == 1 & iv == 1 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    (hf == 1 & nr == 1 & svar == 1 & forecast_based == 0 & chol == 0 & signr == 0 & iv == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    (hf == 1 & event == 1 & forecast_based == 1 & iv == 1 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & longrun == 0 & idother == 0 & nr == 0) ~ "nr_hf",
+    (forecast_based == 1 & chol == 1 & hf == 1 & nr == 0 & signr == 0 & iv == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    (forecast_based == 1 & nr == 1 & hf == 1 & iv == 0 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    (iv == 1 & forecast_based == 1 & nr == 1 & signr == 1 & svar == 1 & chol == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (forecast_based == 1 & iv == 1 & chol == 1 & hf == 1 & nr == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    (forecast_based == 1 & iv == 1 & event == 1 & chol == 1 & hf == 1 & nr == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    (forecast_based == 1 & nr == 1 & chol == 1 & signr == 1 & hf == 0 & iv == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (forecast_based == 1 & hf == 1 & nr == 0 & chol == 0 & signr == 0 & iv == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    
+    # Group 10: Longrun, longrun+SVAR, longrun+chol, longrun+SVAR+iv
+    (longrun == 1 & svar == 0 & chol == 0 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & nr == 0 & idother == 0) ~ "idother",
+    (longrun == 1 & svar == 1 & chol == 0 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & nr == 0 & idother == 0) ~ "idother",
+    (longrun == 1 & chol == 1 & svar == 0 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & nr == 0 & idother == 0) ~ "idother",
+    (longrun == 1 & svar == 1 & iv == 1 & chol == 0 & signr == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & nr == 0 & idother == 0) ~ "idother",
+    
+    # Group 11: Event+signr, event+hf+iv, event+chol
+    (event == 1 & signr == 1 & hf == 0 & iv == 0 & chol == 0 & svar == 0 & heteroskedas == 0 & forecast_based == 0 & nr == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (event == 1 & hf == 1 & iv == 1 & signr == 0 & chol == 0 & svar == 0 & heteroskedas == 0 & forecast_based == 0 & nr == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (event == 1 & chol == 1 & signr == 0 & hf == 0 & iv == 0 & svar == 0 & heteroskedas == 0 & forecast_based == 0 & nr == 0 & longrun == 0 & idother == 0) ~ "nr",
+    
+    # Group 12: Heteroskedascticity, chol+Heteroskedascticity, svar+Heteroskedascticity, signr+hf+Heteroskedascticity, iv+forecast+nr+Heteroskedascticity
+    (heteroskedas == 1 & chol == 0 & svar == 0 & signr == 0 & hf == 0 & iv == 0 & forecast_based == 0 & event == 0 & nr == 0 & longrun == 0 & idother == 0) ~ "idother",
+    (heteroskedas == 1 & chol == 1 & svar == 0 & signr == 0 & hf == 0 & iv == 0 & forecast_based == 0 & event == 0 & nr == 0 & longrun == 0 & idother == 0) ~ "idother",
+    (heteroskedas == 1 & svar == 1 & chol == 0 & signr == 0 & hf == 0 & iv == 0 & forecast_based == 0 & event == 0 & nr == 0 & longrun == 0 & idother == 0) ~ "idother",
+    (heteroskedas == 1 & signr == 1 & hf == 1 & chol == 0 & iv == 0 & forecast_based == 0 & event == 0 & nr == 0 & svar == 0 & longrun == 0 & idother == 0) ~ "hf",
+    (heteroskedas == 1 & iv == 1 & forecast_based == 1 & nr == 1 & chol == 0 & signr == 0 & hf == 0 & event == 0 & svar == 0 & longrun == 0 & idother == 0) ~ "nr",
+    (heteroskedas == 1 & signr == 0 & hf == 1 & chol == 0 & iv == 1 & forecast_based == 0 & event == 0 & nr == 0 & svar == 0 & longrun == 0 & idother == 0) ~ "hf",
+    
+    # Default case
+    TRUE ~ "Other"
+  ))
+
+
+data$is_top_5<-ifelse(is.na(data$is_top_5),0,data$is_top_5)
+data$is_top_tier<-ifelse(is.na(data$is_top_tier),0,data$is_top_tier)
 
 # Store data for use in app
 save(data,file = "data/preliminary_data_test.RData")
@@ -293,6 +387,25 @@ data<-data %>% unnest(n_of_countries) %>% unnest(chol) %>% unnest(bayes) %>% unn
 
 
 
+######################################################################### merge publication characteristics ###########################################################
+
+# correct wrong publication title
+data$`publication title` <- ifelse(data$`publication title` == "International Journal of …", "International Journal of Finance & Economics", data$`publication title`)
+
+# read in data
+ranking_impact<-read_excel("~/data/data/study_characteristics/journals_ranking_impact.xlsx")
+citations<-read_excel("~/data/data/study_characteristics/citations_for_included_studies.xlsx")
+
+# merge num_cit (number of citations) using the study key. 
+data<-data %>% left_join(citations %>% select(key,num_cit),by="key")
+
+data<-data %>% left_join(ranking_impact %>% select(publication.title, journal_ranking,journal_impact), by=c("publication title"="publication.title"))
+
+remove(citations)
+remove(ranking_impact)
+
+
+
 ########################################################################## merge external data #######################################################################
 
 
@@ -322,10 +435,29 @@ summary(data$mean_year)
 # read in the external-data.csv file and drop the unnecessary column
 data_merged<-read.csv("~/data/data/merge_external_data/external-data.csv") %>% select(-X)
 
+
 # recode year as numeric
 data_merged$year<-as.numeric(data_merged$year)
 
+ea_membership <- data.frame(
+  country = c("BE", "DE", "FI", "FR", "GR", "IE", "IT", "LU", "NL", "AT", "PT", "ES", "SI", "MT", "CY", "SK", "EE", "LV", "LT"),
+  start_year = c(1970, 1970, 1970, 1970, 2001, 1970, 1970, 1970, 1970, 1970,
+                 1970, 1970, 2007, 2008, 2008, 2009, 2011, 2014, 2015)
+)
 
+data_merged<-data_merged  %>% left_join(ea_membership, by = c("ccode" = "country"))
+
+data_merged <- data_merged %>%
+  mutate(ea = ifelse(year >= start_year, TRUE, FALSE))
+
+
+ea_average <- data_merged %>%
+  filter(ea == TRUE) %>%
+  group_by(year) %>%
+  summarize(across(tradegl:exrate, ~ mean(.x, na.rm = TRUE))) %>% mutate(ccode="EA")
+
+
+data_merged<-data_merged %>% select(-ea,-start_year) %>% bind_rows(ea_average)
 
 
 # unnest year and list of countries and merge the respective external data in a first step. Secondly calculate the average of the external data for each model and study. 
@@ -344,6 +476,8 @@ data<-data %>% ungroup() %>% left_join(data_merged %>% ungroup %>% select(key, m
 
 
 remove(data_merged)
+remove(ea_average)
+remove(ea_membership)
 
 
 

@@ -1,5 +1,9 @@
 library(here)
 library(countrycode)
+library(data.table)
+library(WDI)
+library(dplyr)
+library(tidyverse)
 
 #trade globalisation
 koftradegl <- fread(here("~/data/data/merge_external_data/Trade globalisation KOF.csv"), check.names = FALSE, header=TRUE)
@@ -22,21 +26,28 @@ inflation <- melt(inflation, id.var="ccode")
 #inflation <- select(inflation, ccode, variable, value)
 colnames(inflation) <- c('ccode', 'year', 'inflation')
 
+koftradegl$ccode<-ifelse(koftradegl$ccode=="ROM","ROU",koftradegl$ccode)
 koftradegl$year <- as.character(koftradegl$year)
+
 inflation$year <- as.character(inflation$year)
 
 data_merged <- left_join(koftradegl, inflation, by=c("ccode" = "ccode", "year" = "year"))
 
+koffinancialgl$ccode<-ifelse(koffinancialgl$ccode=="ROM","ROU",koffinancialgl$ccode)
 koffinancialgl$year <- as.character(koffinancialgl$year)
 
 data_merged <- left_join(data_merged, koffinancialgl, by=c("ccode" = "ccode", "year" = "year"))
 
 #financial development (domestic credit to private sector)
-domesticcredit <- fread(here("~/data/data/merge_external_data/Domestic credit World Bank.csv"), check.names = FALSE, header=TRUE)
-domesticcredit <- melt(domesticcredit, id.var="ccode")
+# domesticcredit <- fread(here("~/data/data/merge_external_data/Domestic credit World Bank.csv"), check.names = FALSE, header=TRUE)
+# domesticcredit <- melt(domesticcredit, id.var="ccode")
+
+domesticcredit <- WDI(indicator = c("domesticcredit" = "FS.AST.PRVT.GD.ZS")) %>% select(-country,-iso2c)
+
 #domesticcredit$ccode <- countrycode(domesticcredit$Country, 'country.name', 'iso3c') #convert OECD name codes to three letter country codes (iso3n)
 #domesticcredit <- select(domesticcredit, ccode, variable, value)
 colnames(domesticcredit) <- c('ccode', 'year', 'domesticcredit')
+
 
 domesticcredit$year <- as.character(domesticcredit$year)
 
@@ -90,8 +101,13 @@ data_merged <- left_join(data_merged, AllExchangerate, by=c("ccode" = "ccode", "
 
 colnames(data_merged)<-c('ccode', 'year', 'tradegl', 'infl', 'fingl', 'findev', 'cbi', 'gdppc', 'exrate')
 
+data_merged$ccode<-ifelse(data_merged$ccode=="ROM","ROU",data_merged$ccode)
 
 data_merged$ccode <- countrycode(data_merged$ccode, 'iso3c', 'iso2c') 
+
+
+
+#data_merged %>% filter(ccode=="TW")
 
 #getwd()
 #write.csv(data_merged, file = "~/data/data/merge_external_data/external-data.csv")

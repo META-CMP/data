@@ -3,7 +3,7 @@
         "key": "9VEMH9MN",
         "rid1": "fp",
         "rid2": "ph",
-        "study_notes": "varother: interacted panel VAR (IPVAR).",
+        "study_notes": "null",
         "model_notes": {
           "model_1": "lor: coded as true because of proximity of these data points to recessions.",
           "model_2": "null",
@@ -63,7 +63,7 @@
         "gvar": false,
         "bayes": true,
         "dsge": false,
-        "varother": true
+        "varother": false
     },
     "regime_dependence": {
         "lor": {

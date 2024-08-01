@@ -133,8 +133,8 @@
     }, 
     "further_data_characteristics": { 
         "panel": false, 
-        "start": "Q1-2009", 
-        "end": "Q4-2018", 
+        "start": "01-2009", 
+        "end": "12-2018", 
         "samplesize": "null" 
     }, 
     "control_variables": { 

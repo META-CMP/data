@@ -9,7 +9,7 @@ rm(list = ls())
 setwd("~/data")
 
 
-source("data/data_prep.R")
+load("data/preliminary_data_test.RData")
 
 data_back<-data
 
@@ -26,11 +26,10 @@ library(lmtest)
 
 data<-data_back
 
-out<-'gdp'#c("gdp", "inflation", "unemp", "emp")
-outcome<-"output" # c("output", "the price level", "employment", "unemployment")
+out<-'output'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
-periods <- c(24)
+periods <- c(12)
 data<-data %>% filter(period.month %in% periods)# omit two studies which lead to issues if we use winsorized data
 
 
@@ -46,7 +45,7 @@ data<-data %>% group_by(period.month) %>%
 
 # Create dummy variables before for estimates before 2020.
 data<-data %>% 
-  mutate(before_2020=ifelse(`publication year`<2020,1,0))
+  mutate(before_2020=ifelse(pub_year<2020,1,0))
 
 # As in the original paper we use the inverse of the number of tests presented in the same article to weight observations. Therefore we obtain obs_weight by:
 ########### Maybe this should be done for the smaller datasets used for the estimation??
@@ -99,7 +98,7 @@ data$`publication title`
 
 # Example usage of the function
 # Assuming 'data' is your data frame
-results <- run_probit_analysis(data, delta = 0.5, threshold = 1, weights_col = "obs_weight", cluster_var = "key")
+results <- run_probit_analysis(data, delta = 0.1, threshold = 1.96, weights_col = "obs_weight", cluster_var = "key")
 
 
 library(DT)

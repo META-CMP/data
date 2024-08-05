@@ -8,7 +8,7 @@ rm(list = ls())
 setwd("~/data")
 
 
-source("data/data_prep.R")
+load("data/preliminary_data_test.RData")
 source("analysis/R/maivefunction.R")
 
 data_back<-data
@@ -21,7 +21,7 @@ library(JWileymisc) # for Winsorization
 
 data<-data_back
 
-out<-'gdp'#c("gdp", "inflation", "unemp", "emp")
+out<-'output'#c("gdp", "inflation", "unemp", "emp")
 outcome<-"output" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
 
@@ -80,7 +80,7 @@ for (x in periods) {
   # instrumenting (default 1)  1 yes, 0 no 
   instrument<-1
   # correlation at study level: none: 0 (default), fixed effects: 1, cluster: 2
-  studylevel<-0
+  studylevel<-1
   # Anderson-Rubin confidence interval for weak instruments (only for unweighted MAIVE -- PET, PEESE or PET-PEESE): 0 no, 1 yes
   AR<-0
   

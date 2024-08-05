@@ -5,6 +5,9 @@ gc() #free up memory and report the memory usage.
 #setwd and load dataset
 # setwd("~/data")
 load("data/preliminary_data_01082024.RData")
+load("data/papers_test.RData")# has been locally saved by ME
+
+
 
 
 # load packackages 
@@ -14,8 +17,19 @@ library(stringi) # for advanced str_split
 library(zoo) # for easier manipulation of date format 
 library(readxl) # to read excel file
 
+################################################################### join excle info dataset ##########################################################
+data<-data %>% left_join(df_full_bib %>% select(key,`publication title`,type = `item type`, pub_year = `publication year`,BibtexKey,is_top_tier,is_top_5),"key")
+# Join top 5 and top tier
+data$top_5_or_tier <- ifelse(data$is_top_5 == 1 | data$is_top_tier == 1, TRUE, FALSE)
 
 ################################################################### prepare variables for publication bias tests #############################################################
+
+
+###### Calculate the average standard error and precision options
+data$SE.avg <- (data$SE.upper + data$SE.lower) / 2
+data$precision.avg <- 1 / data$SE.avg
+data$precision.lower <- 1 / data$SE.lower
+data$precision.upper <- 1 / data$SE.upper
 
 
 ###### filter out rate response and merge it as an explanatory variable
@@ -61,7 +75,7 @@ data$outcome_measure<-split_list
 data$outcome_measure<-ifelse(data$outcome_var=="rate","rate",data$outcome_measure)
 
 # create outcome variable one of c("gdp","inflation","emp")
-data$outcome<-ifelse(data$outcome_measure=="rate","rate",ifelse(data$outcome_measure %in% c("gdp","ip","gap","gnp"),"gdp",ifelse(data$outcome_measure %in% c("cpi","deflator","wpi","core","price_level"),"inflation","emp")))
+data$outcome<-ifelse(data$outcome_measure=="rate","rate",ifelse(data$outcome_measure %in% c("gdp","ip","gap","gnp"),"output",ifelse(data$outcome_measure %in% c("cpi","deflator","wpi","core","price_level"),"inflation","emp")))
 
 
 # Splitting emp and unemp
@@ -77,9 +91,13 @@ data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome
 fun <- function(x, y) {
   grepl(x, y, fixed = TRUE)
 }
+# first replace gdp by output to have it in the same form as in data$outcome. 
+data$main<-gsub("gdp", "output", data$main)
 # apply function
 data$main_research_q<-mapply(fun, data$outcome, data$main)
 remove(fun)
+
+
 
 ##### generate dummy if model or study has quality_concern
 data$quality_concern<-grepl("quality_concern",data$study_notes)
@@ -206,7 +224,7 @@ data$is_top_5<-ifelse(is.na(data$is_top_5),0,data$is_top_5)
 data$is_top_tier<-ifelse(is.na(data$is_top_tier),0,data$is_top_tier)
 
 # Store data for use in app
-save(data,file = "data/preliminary_data_test.RData")
+# save(data,file = "data/preliminary_data_test.RData")
 
 ##### generate number of observations used for a specific model
 
@@ -364,7 +382,10 @@ data$country_dev <- sapply(data$list_of_countries, classify_vector)
 #   group_by(country_dev) %>%
 #   summarise(n = n())
 
-
+# Get advanced and emerigin as dummy
+data$advanced <- ifelse(data$country_dev == "Advanced", TRUE, FALSE)
+data$upper_middle <- ifelse(data$country_dev == "upper_middle", TRUE, FALSE)
+data$mixed_unclass <- ifelse(data$country_dev == "Mixed or Unclassified", TRUE, FALSE)
 
 
 
@@ -400,6 +421,9 @@ citations<-read_excel("~/data/data/study_characteristics/citations_for_included_
 data<-data %>% left_join(citations %>% select(key,num_cit),by="key")
 
 data<-data %>% left_join(ranking_impact %>% select(publication.title, journal_ranking,journal_impact), by=c("publication title"="publication.title"))
+
+data$journal_impact<-ifelse(is.na(data$journal_impact),0,data$journal_impact)
+data$journal_ranking<-ifelse(is.na(data$journal_ranking),0,data$journal_ranking)
 
 remove(citations)
 remove(ranking_impact)
@@ -439,24 +463,28 @@ data_merged<-read.csv("~/data/data/merge_external_data/external-data.csv") %>% s
 # recode year as numeric
 data_merged$year<-as.numeric(data_merged$year)
 
+# define EA membership 
 ea_membership <- data.frame(
   country = c("BE", "DE", "FI", "FR", "GR", "IE", "IT", "LU", "NL", "AT", "PT", "ES", "SI", "MT", "CY", "SK", "EE", "LV", "LT"),
   start_year = c(1970, 1970, 1970, 1970, 2001, 1970, 1970, 1970, 1970, 1970,
                  1970, 1970, 2007, 2008, 2008, 2009, 2011, 2014, 2015)
 )
 
+# join the ea_membership information to the external data
 data_merged<-data_merged  %>% left_join(ea_membership, by = c("ccode" = "country"))
 
+# dummy for each year whether a country is part of the EA in that year
 data_merged <- data_merged %>%
   mutate(ea = ifelse(year >= start_year, TRUE, FALSE))
 
-
+# build EA average where each country has the same weight and the set ccode for these observations as EA
 ea_average <- data_merged %>%
   filter(ea == TRUE) %>%
   group_by(year) %>%
   summarize(across(tradegl:exrate, ~ mean(.x, na.rm = TRUE))) %>% mutate(ccode="EA")
 
 
+# merge that information to the external data.
 data_merged<-data_merged %>% select(-ea,-start_year) %>% bind_rows(ea_average)
 
 
@@ -478,7 +506,14 @@ data<-data %>% ungroup() %>% left_join(data_merged %>% ungroup %>% select(key, m
 remove(data_merged)
 remove(ea_average)
 remove(ea_membership)
+remove(df_full_bib)
+remove(ea12_countries)
+remove(high_income)
+remove(upper_middle_income)
+remove(convert_quarter)
+remove(classify_vector)
+remove(in_ea12)
 
-
-
+# Store data for use in app
+save(data,file = "data/preliminary_data_test.RData")
 

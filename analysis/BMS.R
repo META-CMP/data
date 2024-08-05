@@ -4,7 +4,7 @@ gc() #free up memory and report the memory usage.
 
 setwd("~/data")
 #Load data by running data_prep script
-source("data/data_prep.R")
+load("data/preliminary_data_test.RData")
 
 
 data_back<-data
@@ -22,10 +22,16 @@ library(BMS)# BMS package for bayesian model averaging.
 data<-data_back
 
 # subset data for outcome variable of interest. 
-outvar<-'gdp'#c("gdp", "inflation", "unemp", "emp")
+outvar<-'output'#c("gdp", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% outvar)
 
 #x<-3
+
+data$us<-ifelse(data$list_of_countries=="US",1,0)
+
+# data <- data %>% 
+#   group_by(key,period.month) %>%
+#   sample_n(size = 1,replace = F) %>% ungroup()
 
 periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
 results_list <- list()
@@ -55,14 +61,14 @@ data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
 
 
 # Create dataset for BMS estimation
-data_bms<-data_period_winsor %>% select(mean.effect_winsor,standarderror_winsor, mean_year, regime, quality_concern, observations, main_research_q, outcome_measure, cbanker, decomposition, convent, lrir, fx, foreignir, inflexp, eglob, find, comprice, country_dev, month, upr, lor, dsge, bayes, fvar, lp, signr, svar, chol, nr, prefer,iv,forecast_based)# exclude rate mean effect
+data_bms<-data_period_winsor %>% mutate(observations=log(observations),infl=log(infl),gdppc=log(gdppc)) %>%  select(mean.effect_winsor,standarderror_winsor,group_ident_broad,lp,vecm,dyn_ols,fvar,tvar,gvar,dsge,varother,panel,bayes,regime,upr,lor,hike,cut,decomposition,convent,pure_rate_shock,lrir,fx,foreignir,inflexp,eglob,find,outpgap,comprice,month,main_research_q,prefer,mean_year,ea12,us,upper_middle,n_of_countries,outcome_measure,transformation,cum,interest_rate_short,cbanker,pub_year,is_top_tier,is_top_5,journal_impact,num_cit,rid1,infl,gdppc,tradegl,fingl,findev,cbi,exrate)# exclude rate mean effect
 
 # automatically create dummies for factor and character variables
 data_bms<-fastDummies::dummy_cols(data_bms,remove_most_frequent_dummy = TRUE,remove_selected_columns = TRUE)# maybe exclude -`country_dev_Mixed or Unclassified`
 
 # check if there are NA values in the dataset
-if (anyNA(data_bms)) {stop("some selected variables contain NA values")}
-
+if (anyNA(data_bms)) {warning("some selected variables contain NA values")}
+na.omit(data_bms)
 
 
 # Calculate VIF for each variable

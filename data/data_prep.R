@@ -91,9 +91,13 @@ data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome
 fun <- function(x, y) {
   grepl(x, y, fixed = TRUE)
 }
+# first replace gdp by output to have it in the same form as in data$outcome. 
+data$main<-gsub("gdp", "output", data$main)
 # apply function
 data$main_research_q<-mapply(fun, data$outcome, data$main)
 remove(fun)
+
+
 
 ##### generate dummy if model or study has quality_concern
 data$quality_concern<-grepl("quality_concern",data$study_notes)
@@ -417,6 +421,9 @@ citations<-read_excel("~/data/data/study_characteristics/citations_for_included_
 data<-data %>% left_join(citations %>% select(key,num_cit),by="key")
 
 data<-data %>% left_join(ranking_impact %>% select(publication.title, journal_ranking,journal_impact), by=c("publication title"="publication.title"))
+
+data$journal_impact<-ifelse(is.na(data$journal_impact),0,data$journal_impact)
+data$journal_ranking<-ifelse(is.na(data$journal_ranking),0,data$journal_ranking)
 
 remove(citations)
 remove(ranking_impact)

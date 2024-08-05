@@ -4,7 +4,7 @@ gc() #free up memory and report the memory usage.
 
 setwd("~/data")
 #Load data by running data_prep script
-source("data/data_prep.R")
+load("data/preliminary_data_test.RData")
 
 
 data_back<-data
@@ -19,8 +19,8 @@ library(modelsummary)# to nicely print results
 
 data<-data_back
 
-out<-'gdp'#c("gdp", "inflation", "unemp", "emp")
-outcome<-"output" # c("output", "the price level", "employment", "unemployment")
+out<-'output'#c("gdp", "inflation", "unemp", "emp")
+#outcome<-"output" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
 
 
@@ -35,15 +35,20 @@ unique(data$conf)
 ############ Full possible model without external data.
 
 
-equation<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+pure_rate_shock+lrir+fx+foreignir+inflexp+eglob+find+outpgap+comprice+month+main_research_q+prefer+mean_year+log(observations)+ea12+us+n_of_countries+outcome_measure+transformation+cum+interest_rate_short+cbanker+`publication year`+is_top_tier+is_top_5+model_id+rid1
+
+equation<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+pure_rate_shock+lrir+fx+foreignir+inflexp+eglob+find+outpgap+comprice+month+main_research_q+prefer+mean_year+log(observations)+ea12+us+upper_middle+n_of_countries+outcome_measure+transformation+cum+interest_rate_short+cbanker+pub_year+is_top_tier+is_top_5+journal_impact+num_cit+model_id+rid1+tradegl+log(infl)+fingl+findev+cbi+log(gdppc)+exrate
 
 # currently not included: rate_mean.effect (due to missing data),country_dev, conf, intrest_rate, external control variables. (periodicity does not really make sense the way it currently looks, we would need to replace the log a values) (real output does not make sense currently, we would need to check the non real ones again.) (initial shock size needs to be adjusted - size)
 
-small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+cbanker+is_top_tier+is_top_5+main_research_q
+small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+cbanker+is_top_tier+is_top_5+journal_impact+num_cit+main_research_q
 #colSums(is.na(data_period_winsor %>% select(standarderror_winsor,group_ident_broad,lp,vecm,dyn_ols,fvar,tvar,gvar,dsge,varother,cbanker,is_top_tier,is_top_5)))
+
+
 
 external<- mean.effect_winsor ~standarderror_winsor+tradegl+log(infl)+fingl+findev+cbi+log(gdppc)+exrate
 
+
+sum(is.na(data$main_research_q))
 
 data %>% select(key,model_id,tradegl:exrate) %>% group_by(key,model_id) %>% summarise(across(tradegl:exrate, ~ mean(.x, na.rm = TRUE))) %>% mutate(infl=log(infl),gdppc=log(gdppc)) %>% 
   pivot_longer(cols = tradegl:exrate, names_to = "variable", values_to = "value") %>% ggplot( aes(x = value)) +
@@ -89,13 +94,13 @@ for (x in periods) {
   
   
   # Calculate VIF for each variable
-  vif_values <- car::vif(lm(small,data=data_period_winsor))
+  vif_values <- car::vif(lm(equation,data=data_period_winsor))
   # Print the VIF values
   vif_list[[paste0(x)]] <- vif_values
   
   
   # Calculate (precision-weighted) average
-  regwa <- lm(small, data = data_period_winsor, weights = precvariance_winsor)#
+  regwa <- lm(equation, data = data_period_winsor, weights = precvariance_winsor)#
   results_list[[paste0(x, ".ols")]] <- regwa
   
   coef_test_data[[paste0(x, ".ols")]]<-coef_test(regwa, vcov = "CR0", 

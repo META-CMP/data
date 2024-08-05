@@ -8,7 +8,7 @@ rm(list = ls())
 setwd("~/data")
 
 
-source("data/data_prep.R")
+load("data/preliminary_data_test.RData")
 
 data_back<-data
 

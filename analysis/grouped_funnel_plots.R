@@ -71,7 +71,7 @@ periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
 
 
 
-data$a<-ifelse(data$cum==1 & data$periodicity=="a" & data$transformation %in% c("logdiff","gr"),1,0)
+data$a<-ifelse(data$cum==1 & data$periodicity=="a" & data$transformation %in% c("logdiff","gr"),"yes","no")
 
 #sum(data$a)
 group<-"a"

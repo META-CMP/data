@@ -6,6 +6,12 @@ codebook$Category <- tolower(codebook$Category)
 codebook$Variable <- tolower(codebook$Variable)
 
 # Update of description
+codebook$Description[codebook$Variable == "study_notes"] <- "General notes on the study that are relevant for all models within the study."
+codebook$Description[codebook$Variable == "model_notes"] <- "Model specific notes that are relevant only for a given model within the study."
+codebook$Description[codebook$Variable == "figure"] <- "Indicates the number of the figure from which the impulse response is taken"
+codebook$Description[codebook$Variable == "page"] <- "Indicates the page on which the impulse response (figure or table) is displayed."
+codebook$Description[codebook$Variable == "irf"] <- "Indicates if there is a graphical representation of the irf"
+codebook$Description[codebook$Variable == "cum"] <- "Indicates if the impulse responses have been cumulated."
 codebook$Description[codebook$Variable == "inttype"] <- "Type of short term interest rate variable which is shocked."
 codebook$Description[codebook$Variable == "size"] <- "Shock size in basis points."
 codebook$Description[codebook$Variable == "axis_trans"] <- "Note if the axis scale needs to be transformed to be a percentage scale."
@@ -44,6 +50,7 @@ codebook$Description[codebook$Variable == "annual"] <- "Annual data are used for
 codebook$Description[codebook$Variable == "quarter"] <- "Quarterly data are used for effect estimation."
 codebook$Description[codebook$Variable == "month"] <- "Monthly data are used for effect estimation."
 codebook$Description[codebook$Variable == "list_of_countries"] <- "Iso2 codes of the countries for which the effect is estimated."
+codebook$Description[codebook$Variable == "n_of_countries"] <- "Number of countries used in the estimation sample of the model."
 codebook$Description[codebook$Variable == "panel"] <- "Indicates if a panel data method (e.g. panel VAR) is used for estimation."
 codebook$Description[codebook$Variable == "start"] <- "Start date of the sample that is used for estimation."
 codebook$Description[codebook$Variable == "end"] <- "End date the sample that is used for estimation."
@@ -59,25 +66,22 @@ codebook$Description[codebook$Variable == "foreignir"] <- "Indicates that a fore
 codebook$Description[codebook$Variable == "fx"] <- "Indicates that a exchange rate is included as a control variable."
 codebook$Description[codebook$Variable == "lrir"] <- "Indicates that a long-run interest rate is included as a control variable."
 codebook$Description[codebook$Variable == "pure_rate_shock"] <- "Indicates that the monetary policy shock is explicitly defined in terms of the interest rate."
-codebook$Description[codebook$Variable == ""] <- ""
-codebook$Description[codebook$Variable == ""] <- ""
-codebook$Description[codebook$Variable == ""] <- ""
-codebook$Description[codebook$Variable == ""] <- ""
-codebook$Description[codebook$Variable == ""] <- ""
+codebook$Description[codebook$Variable == "convent"] <- "Indicates that the monetary policy shock is explicitly defined in terms of a conventional monetary policy shock."
+codebook$Description[codebook$Variable == "decomposition"] <- "Indicates that the monetary policy shocks have been decomposed into different components."
+codebook$Description[codebook$Variable == "cbanker"] <- "Indicates that there is an institutional affiliation of one of the authors and/or the publication format with central banks."
 
-codebook$Description[codebook$Variable == ""] <- ""
 
 View(codebook[,c("Variable", "Description")])
 
 
 # Coding instructions
 codebook$Coding_instruction <- NA
-codebook$Coding_instruction[codebook$Variable == "study_notes"] <- ""
-codebook$Coding_instruction[codebook$Variable == "model_notes"] <- ""
-codebook$Coding_instruction[codebook$Variable == "figure"] <- ""
-codebook$Coding_instruction[codebook$Variable == "page"] <- ""
-codebook$Coding_instruction[codebook$Variable == "irf"] <- ""
-codebook$Coding_instruction[codebook$Variable == "cum"] <- ""
+codebook$Coding_instruction[codebook$Variable == "study_notes"] <- "https://github.com/META-CMP/data/issues/9"
+codebook$Coding_instruction[codebook$Variable == "model_notes"] <- "https://github.com/META-CMP/data/issues/67"
+codebook$Coding_instruction[codebook$Variable == "figure"] <- "https://github.com/META-CMP/data/issues/46"
+codebook$Coding_instruction[codebook$Variable == "page"] <- "https://github.com/META-CMP/data/issues/97"
+codebook$Coding_instruction[codebook$Variable == "irf"] <- "https://github.com/META-CMP/data/issues/71"
+codebook$Coding_instruction[codebook$Variable == "cum"] <- "https://github.com/META-CMP/data/issues/72"
 codebook$Coding_instruction[codebook$Variable == "inttype"] <- "https://github.com/META-CMP/data/issues/6"
 codebook$Coding_instruction[codebook$Variable == "size"] <- "https://github.com/META-CMP/data/issues/52"
 codebook$Coding_instruction[codebook$Variable == "axis_trans"] <- "https://github.com/META-CMP/data/issues/62"
@@ -132,8 +136,9 @@ codebook$Coding_instruction[codebook$Variable == "foreignir"] <- "https://github
 codebook$Coding_instruction[codebook$Variable == "fx"] <- "https://github.com/META-CMP/data/issues/118"
 codebook$Coding_instruction[codebook$Variable == "lrir"] <- "https://github.com/META-CMP/data/issues/119"
 codebook$Coding_instruction[codebook$Variable == "pure_rate_shock"] <- "https://github.com/META-CMP/data/issues/70" 
-codebook$Coding_instruction[codebook$Variable == "convent"] <- ""
-codebook$Coding_instruction[codebook$Variable == "decomposition"] <- ""
+codebook$Coding_instruction[codebook$Variable == "convent"] <- "https://github.com/META-CMP/data/issues/80"
+codebook$Coding_instruction[codebook$Variable == "decomposition"] <- "https://github.com/META-CMP/data/issues/85"
+codebook$Coding_instruction[codebook$Variable == "cbanker"] <- "https://github.com/META-CMP/data/issues/58"
 
 # Update of type
 

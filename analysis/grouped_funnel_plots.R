@@ -4,7 +4,7 @@ gc() #free up memory and report the memory usage.
 
 setwd("~/data")
 #Load data by running data_prep script
-source("analysis/data_prep.R")
+load("data/preliminary_data_test.RData")
 
 
 data_back<-data
@@ -50,7 +50,7 @@ create_funnel_plot_grid <- function(data, period, group_color, winsorize = FALSE
     theme(axis.title.x = element_text(size = 11)) +
     theme(axis.text.y = element_text(size = 11)) +
     theme(axis.title.y = element_text(size = 11))+
-    scale_colour_manual(name = group_color,values = myColors)+ 
+    #scale_colour_manual(name = as.factor(group_color),values = myColors)+ 
     guides(color = guide_legend(override.aes = list(size = 2)))
   
   return(plot_funnel)
@@ -59,8 +59,8 @@ create_funnel_plot_grid <- function(data, period, group_color, winsorize = FALSE
 
 data<-data_back
 
-out<-'inflation'#c("gdp", "inflation", "unemp", "emp")
-outcome<-"the price level" # c("output", "the price level", "employment", "unemployment")
+out<-'output'#c("output", "inflation", "unemp", "emp")
+outcome<-"output" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
 
 
@@ -69,13 +69,17 @@ plot_list_winsor <- list()
 
 periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
 
-group<-"us"
 
 
+data$a<-ifelse(data$cum==1 & data$periodicity=="a" & data$transformation %in% c("logdiff","gr"),1,0)
+
+#sum(data$a)
+group<-"a"
 
 myColors <- brewer.pal(length(levels(as.factor(data %>% pull(all_of(group))))),"Set1")
 names(myColors) <- levels(as.factor(data %>% pull(all_of(group))))
 
+#myColors<-myColors[-3]
 ############################################## Loop through periods and create plots
 
 for (x in periods) {
@@ -104,4 +108,6 @@ for (x in periods) {
 
 # create funnel plots for winsorized data 
 all_month_winsor<-grid.arrange(grobs = plot_list_winsor, ncol = 4,top = textGrob(paste0("Funnel plots of effect of monetary policy on ", outcome," (with Winsorization) - ",group),gp=gpar(fontsize=20,font=2,lwd = 1.5)),bottom = textGrob(paste0("%-change of ", outcome," in response to 100bp monetary policy shock"),gp=gpar(fontsize=16,font=3)))
+
+
 ggsave(paste0("./results/",out,"/plots/pbias/funnel_plot_all_months_winsor",group,".png"), all_month_winsor, width = 30, height = 20, units = "cm")

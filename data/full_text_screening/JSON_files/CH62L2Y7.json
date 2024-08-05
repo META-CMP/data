@@ -19,7 +19,7 @@
     "impulse_and_response_variables": {
         "inttype": {
           "model_1": "lev_a_fed_funds",
-          "model_2": "lev_a_short_term"
+          "model_2": "lev_a_short_term_rate"
         },
         "size": "1SD",
         "axis_trans": false,

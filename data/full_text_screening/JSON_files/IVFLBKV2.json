@@ -116,7 +116,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_3_month_rate", 
+        "inttype": "lev_a_3_month_interbank", 
         "size": "25bp", 
         "axis_trans": "y*100 lev_a_3_month_rate_false", 
         "dep": "log_q_rgdp log_q_cpi", 

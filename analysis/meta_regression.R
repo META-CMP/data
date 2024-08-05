@@ -41,11 +41,16 @@ equation<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn
 # currently not included: rate_mean.effect (due to missing data),country_dev, conf, intrest_rate, external control variables. (periodicity does not really make sense the way it currently looks, we would need to replace the log a values) (real output does not make sense currently, we would need to check the non real ones again.) (initial shock size needs to be adjusted - size)
 
 small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+cbanker+is_top_tier+is_top_5+journal_impact+num_cit+main_research_q
+
+small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+decomposition+cbanker+is_top_tier+is_top_5
+
+#lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+convent+journal_impact+num_cit+main_research_q einstweilen raus
+
 #colSums(is.na(data_period_winsor %>% select(standarderror_winsor,group_ident_broad,lp,vecm,dyn_ols,fvar,tvar,gvar,dsge,varother,cbanker,is_top_tier,is_top_5)))
 
 
 
-external<- mean.effect_winsor ~standarderror_winsor+tradegl+log(infl)+fingl+findev+cbi+log(gdppc)+exrate
+external<- mean.effect_winsor ~tradegl+log(infl)+fingl+findev+cbi+log(gdppc)+exrate
 
 
 sum(is.na(data$main_research_q))
@@ -57,6 +62,13 @@ data %>% select(key,model_id,tradegl:exrate) %>% group_by(key,model_id) %>% summ
   labs(title = "Density Plots for All Variables", x = "Value", y = "Density") +
   theme_minimal()
 
+
+data %>% select(key,model_id,num_cit,journal_impact) %>% group_by(key,model_id) %>% summarise(across(num_cit:journal_impact, ~ mean(.x, na.rm = TRUE)))  %>% 
+  pivot_longer(cols = num_cit:journal_impact, names_to = "variable", values_to = "value") %>% ggplot( aes(x = value)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  facet_wrap(~ variable, scales = "free") +
+  labs(title = "Density Plots for All Variables", x = "Value", y = "Density") +
+  theme_minimal()
 
 # +fexch#+real_output # only for output regression
 
@@ -94,13 +106,13 @@ for (x in periods) {
   
   
   # Calculate VIF for each variable
-  vif_values <- car::vif(lm(equation,data=data_period_winsor))
+  vif_values <- car::vif(lm(small,data=data_period_winsor))
   # Print the VIF values
   vif_list[[paste0(x)]] <- vif_values
   
   
   # Calculate (precision-weighted) average
-  regwa <- lm(equation, data = data_period_winsor, weights = precvariance_winsor)#
+  regwa <- lm(small, data = data_period_winsor, weights = precvariance_winsor)#
   results_list[[paste0(x, ".ols")]] <- regwa
   
   coef_test_data[[paste0(x, ".ols")]]<-coef_test(regwa, vcov = "CR0", 

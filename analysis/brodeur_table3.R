@@ -25,7 +25,7 @@ library(rlang)# to get the sym function
 
 data<-data_back
 
-out<-'gdp'#c("gdp", "inflation", "unemp", "emp")
+out<-'output'#c("gdp", "inflation", "unemp", "emp")
 outcome<-"output" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
 
@@ -135,7 +135,7 @@ library(DT)
 datatable(results_period_long %>% mutate(across(is.numeric, signif, digits = 3)), rownames = FALSE, options = list(
   dom = 't',
   ordering=F,
-  pageLength = 20,
+  pageLength = 24,
   initComplete = JS(
     "function(settings, json) {",
     "$(this.api().table().header()).css({'background-color': '#eda698', 'color': '#fff'});",

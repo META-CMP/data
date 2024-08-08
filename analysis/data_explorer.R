@@ -11,6 +11,7 @@ library(ggplot2)
 library(sandwich)
 library(lmtest)
 library(shinyjs)
+library(purrr)
 
 # Load the data 
 # data_path <- here("data/preliminary_data_test_old.RData")
@@ -25,7 +26,7 @@ rm(data_path)
 
 # necessary to remove list element of the list_of_countries vector. 
 data <- data %>%
-  mutate(list_of_countries = map_chr(list_of_countries, ~ paste(.x, collapse = " ")))
+  mutate(list_of_countries = purrr::map_chr(list_of_countries, ~ paste(.x, collapse = " ")))
 
 
 

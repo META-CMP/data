@@ -20,11 +20,11 @@ library(JWileymisc) # for Winsorization
 
 data<-data_back
 
-out<-'gdp'#c("gdp", "inflation", "unemp", "emp")
+out<-'output'#c("gdp", "inflation", "unemp", "emp")
 outcome<-"output" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
 
-periods <- c(3, 6, 12, 18, 24, 30, 36,48)
+periods <- c(3, 6, 12,15, 18,21, 24, 30, 36,48)
 data<-data %>% filter(period.month %in% periods)# omit two studies which lead to issues if we use winsorized data
 
 
@@ -40,14 +40,23 @@ data<-data %>% group_by(period.month) %>% mutate(StandardError=(SE.upper+SE.lowe
 ###############################  some plots of the z_statistic across different sub-samples
 
 
-ggplot(data, aes(x = z_stat_winsor, ..density..)) +
-  geom_density(fill = "blue", alpha = 0.2,adjust = .7) +
-  geom_histogram(binwidth = 0.1, alpha = 0.2) + 
+
+
+p<-ggplot(data, aes(x = z_stat_winsor)) +
+  geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
+  geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.2) + 
   facet_wrap(~ period.month, scales = "free") +
   geom_vline(xintercept = c(1, 1.65, 1.96), linetype = "solid") +
+  stat_function(
+    fun = function(x) dt(x, df = 2, ncp = 1.4),
+    color = "red", linetype = "dashed", size = 1
+  ) +
   labs(title = "Density plot", x = "Value", y = "Density") +
-  xlim(-0.1, 10)+
-  theme_minimal()
+  xlim(-0.1, 10) +
+  theme_classic()
+
+p
+ggsave(filename = paste0("All_methods", ".png"), plot = p, bg = "white")
 
 ggplot(data %>% filter(is_top_tier==1), aes(x = z_stat_winsor, ..density..)) +
   geom_density(fill = "blue", alpha = 0.2,adjust = .7) +
@@ -100,8 +109,8 @@ ggplot(data %>% filter(`publication year`<2020), aes(x = z_stat_winsor)) +
 
 df_np <- data.frame(
   method = unique(data$group_ident_broad),
-  df = c(2, 2, 2,2,2,2),
-  np = c(1.4, 1.4, 1.4,1.4, 1.4, 1.4)
+  df = c(2, 2, 2,2,2),
+  np = c(1.4, 1.4,1.4, 1.4, 1.4)
 )
 
 # Sample methods for illustration
@@ -120,7 +129,8 @@ for (i in 1:length(methods)) {
   
   # Plot
   p <- ggplot(data_gg, aes(x = z_stat_winsor)) +
-    geom_density(fill = "blue", alpha = 0.5, adjust = 0.7) +
+    geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.2) + 
     facet_wrap(~ period.month, scales = "free") +
     geom_vline(xintercept = c(1, 1.65, 1.96), linetype = "dotted") +
     stat_function(
@@ -136,13 +146,55 @@ for (i in 1:length(methods)) {
 }
 
 
+######################################################## create plots with counterfactual distributions for different methods ################### 
+
+df_np <- data.frame(
+  method = unique(data$chol_ident),
+  df = c(2, 2),
+  np = c(1.4, 1.4)
+)
+
+# Sample methods for illustration
+methods <- df_np$method
+
+# Loop through each method and create density plots
+for (i in 1:length(methods)) {
+  method <- methods[i]
+  
+  # Filter data for the current method
+  data_gg <- data %>% filter(chol_ident == method)
+  
+  # Get degrees of freedom and non-centrality parameter for the current method
+  current_df <- df_np %>% filter(method == method) %>% pull(df)
+  current_np <- df_np %>% filter(method == method) %>% pull(np)
+  
+  # Plot
+  p <- ggplot(data_gg, aes(x = z_stat_winsor)) +
+    geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.2) + 
+    facet_wrap(~ period.month, scales = "free") +
+    geom_vline(xintercept = c(1, 1.65, 1.96), linetype = "dotted") +
+    stat_function(
+      fun = function(x) dt(x, df = current_df, ncp = current_np),
+      color = "red", linetype = "dashed", size = 1
+    ) +
+    labs(title = paste0("Density plot for ", method), x = "Value", y = "Density") +
+    xlim(-0.1, 10) +
+    theme_minimal()
+  
+  # Save the plot
+  ggsave(filename = paste0(method, ".png"), plot = p, bg = "white")
+}
+
+
+
 ############################################################ create plots with different counterfactual distributions for different time horizons #######################
 
 
 df_np <- data.frame(
   period.month = unique(data$period.month),
-  df = c(1.65, 1.8, 2,2,2,2,3,4),
-  np = c(1.5, 1.1, 1.4, 1.4, 1.4,1.6, 1.5, 1.2)
+  df = c(1.65, 1.8, 2,2,2,2,2,2,3,4),
+  np = c(1.5, 1.1, 1.4, 1.4, 1.4, 1.4, 1.4,1.6, 1.5, 1.2)
 )
 
 
@@ -162,8 +214,54 @@ for (i in 1:length(periods)) {
   
   # Plot
   p <- ggplot(data_gg, aes(x = z_stat_winsor)) +
-    geom_density(fill = "blue", alpha = 0.5, adjust = 0.7) +
-    #facet_wrap(~ group_ident_broad, scales = "free") +
+    geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
+    geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.2) + 
+    facet_wrap(~ group_ident_broad, scales = "free") +
+    geom_vline(xintercept = c(1, 1.65, 1.96), linetype = "dotted") +
+    stat_function(
+      fun = function(x) dt(x, df = current_df, ncp = current_np),
+      color = "red", linetype = "dashed", size = 1
+    ) +
+    labs(title = paste0("Density plot for period ", current_period), x = "Value", y = "Density") +
+    xlim(-0.1, 10) +
+    theme_minimal()
+  
+  # Save the plot
+  ggsave(filename = paste0(current_period, ".png"), plot = p, bg = "white")
+}
+
+
+############################################################ create plots with different counterfactual distributions for different time horizons #######################
+data$chol_ident<-ifelse(data$group_ident_broad=="chol",1,0)
+
+df_np <- data.frame(
+  period.month = unique(data$period.month),
+  df = c(1.65, 1.8, 2,2,2,2,2,2,3,4),
+  np = c(1.5, 1.1, 1.4, 1.4, 1.4, 1.4, 1.4,1.6, 1.5, 1.2)
+)
+
+
+# Extract unique periods for iteration
+periods <- unique(df_np$period.month)
+
+# Loop through each period and create density plots
+for (i in 1:length(periods)) {
+  current_period <- periods[i]
+  
+  # Filter data for the current period
+  data_gg <- data %>% filter(period.month == current_period)
+  
+  # Get degrees of freedom and non-centrality parameter for the current period
+  current_df <- df_np %>% filter(period.month == current_period) %>% pull(df)
+  current_np <- df_np %>% filter(period.month == current_period) %>% pull(np)
+  
+  # Plot
+  p <- ggplot(data_gg, aes(x = z_stat_winsor)) +
+    geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
+    geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.2) + 
+    facet_wrap(~ chol_ident, scales = "free") +
     geom_vline(xintercept = c(1, 1.65, 1.96), linetype = "dotted") +
     stat_function(
       fun = function(x) dt(x, df = current_df, ncp = current_np),

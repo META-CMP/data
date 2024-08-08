@@ -54,7 +54,7 @@
         "vecm": false,
         "dyn_ols": "false",
         "fvar": false,
-        "tvar": true,
+        "tvar": false,
         "gvar": true,
         "bayes": true,
         "dsge": false,

@@ -3,7 +3,7 @@
         "key": "IC2MMT6E",
         "rid1": "dr",
         "rid2": "fp",
-        "study_notes": "decomposition: decomposition into monetary policy shock and forward guidance shock, only MP shock extracted.; convent: true as authors argue that they identify a conventional MP shock. ",
+        "study_notes": "cum: set to true because of IRF pattern; decomposition: decomposition into monetary policy shock and forward guidance shock, only MP shock extracted.; convent: true as authors argue that they identify a conventional MP shock. ",
         "model_notes": {
           "model_1": "results for the euro-area as an aggregate.",
           "model_2": "results for Slovakia.",
@@ -20,7 +20,7 @@
           "model_3": 1095
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_3_month_interbank",

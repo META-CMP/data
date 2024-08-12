@@ -3,7 +3,7 @@
         "key": "QW8JGMFF",
         "rid1": "me",
         "rid2": "null",
-        "study_notes": "The other IRFs are based on simulated data",
+        "study_notes": "cum: set to true because of IRF pattern.; The other IRFs are based on simulated data",
         "model_notes": "null",
         "figure": {
                 "model_1": 1,
@@ -18,7 +18,7 @@
                 "model_4": "viii"
                 },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",

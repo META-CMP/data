@@ -81,6 +81,8 @@ data$outcome<-ifelse(data$outcome_measure=="rate","rate",ifelse(data$outcome_mea
 # Splitting emp and unemp
 data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
 
+## recode lev transforamtion to log transformation for output estimates
+data$transformation <- ifelse(data$outcome == "output" & data$transformation=="lev", "log", data$transformation)
 
 
 ################################################################### prepare variables for regression analysis #############################################################

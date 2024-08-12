@@ -11,6 +11,7 @@ library(ggplot2)
 library(sandwich)
 library(lmtest)
 library(shinyjs)
+library(purrr)
 
 # Load the data 
 # data_path <- here("data/preliminary_data_test_old.RData")

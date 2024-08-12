@@ -14,7 +14,7 @@
         "inttype": "lev_a_fed_funds",
         "size": "1SD",
         "axis_trans": false,
-        "dep": "gr_q_gdp gr_a_cpi",
+        "dep": "log_q_gdp gr_a_cpi",
         "conf": "1_SE",
         "main": "other",
         "prefer": true

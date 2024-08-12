@@ -124,7 +124,7 @@ datatable(results_ident_long %>% mutate(across(is.numeric, signif, digits = 3)),
     "}")
 ))%>%
   formatStyle(
-    4:9,
+    4:8,
     color = styleInterval(c(0.05,0.1), c('blue',"red", 'black'))
   )
 

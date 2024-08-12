@@ -21,7 +21,9 @@ library(readxl) # to read excel file
 data<-data %>% left_join(df_full_bib %>% select(key,`publication title`,type = `item type`, pub_year = `publication year`,BibtexKey,is_top_tier,is_top_5),"key")
 # Join top 5 and top tier
 data$top_5_or_tier <- ifelse(data$is_top_5 == 1 | data$is_top_tier == 1, TRUE, FALSE)
-
+data$top_5_or_tier <- ifelse(is.na(data$top_5_or_tier), FALSE, data$top_5_or_tier)
+#sum(data$top_5_or_tier,na.rm = FALSE)
+data<-data %>% mutate(pub_year=2024-pub_year)
 ################################################################### prepare variables for publication bias tests #############################################################
 
 
@@ -184,17 +186,17 @@ data <- data %>%
     (nr == 1 & svar == 0 & idother == 0 & chol == 0 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & longrun == 0) ~ "nr",
     
     # Group 9: forecast+hf+iv, Forecast+nr+hf+iv, hf+nr+svar, hf+event+forecast+iv, forecast+chol+hf, Forecast+nr+hf, iv+forecast+nr+signr+svar, forecast+iv+chol+hf, forecast+iv+event+chol+hf, forecast+nr+chol+signr, forecast+hf
-    (forecast_based == 1 & hf == 1 & iv == 1 & nr == 0 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
-    (forecast_based == 1 & nr == 1 & hf == 1 & iv == 1 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
-    (hf == 1 & nr == 1 & svar == 1 & forecast_based == 0 & chol == 0 & signr == 0 & iv == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
-    (hf == 1 & event == 1 & forecast_based == 1 & iv == 1 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & longrun == 0 & idother == 0 & nr == 0) ~ "nr_hf",
-    (forecast_based == 1 & chol == 1 & hf == 1 & nr == 0 & signr == 0 & iv == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
-    (forecast_based == 1 & nr == 1 & hf == 1 & iv == 0 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    (forecast_based == 1 & hf == 1 & iv == 1 & nr == 0 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "hf",
+    (forecast_based == 1 & nr == 1 & hf == 1 & iv == 1 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "hf",
+    (hf == 1 & nr == 1 & svar == 1 & forecast_based == 0 & chol == 0 & signr == 0 & iv == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "hf",
+    (hf == 1 & event == 1 & forecast_based == 1 & iv == 1 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & longrun == 0 & idother == 0 & nr == 0) ~ "hf",
+    (forecast_based == 1 & chol == 1 & hf == 1 & nr == 0 & signr == 0 & iv == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "hf",
+    (forecast_based == 1 & nr == 1 & hf == 1 & iv == 0 & chol == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "hf",
     (iv == 1 & forecast_based == 1 & nr == 1 & signr == 1 & svar == 1 & chol == 0 & hf == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
-    (forecast_based == 1 & iv == 1 & chol == 1 & hf == 1 & nr == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
-    (forecast_based == 1 & iv == 1 & event == 1 & chol == 1 & hf == 1 & nr == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    (forecast_based == 1 & iv == 1 & chol == 1 & hf == 1 & nr == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "hf",
+    (forecast_based == 1 & iv == 1 & event == 1 & chol == 1 & hf == 1 & nr == 0 & signr == 0 & svar == 0 & heteroskedas == 0 & longrun == 0 & idother == 0) ~ "hf",
     (forecast_based == 1 & nr == 1 & chol == 1 & signr == 1 & hf == 0 & iv == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr",
-    (forecast_based == 1 & hf == 1 & nr == 0 & chol == 0 & signr == 0 & iv == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "nr_hf",
+    (forecast_based == 1 & hf == 1 & nr == 0 & chol == 0 & signr == 0 & iv == 0 & svar == 0 & heteroskedas == 0 & event == 0 & longrun == 0 & idother == 0) ~ "hf",
     
     # Group 10: Longrun, longrun+SVAR, longrun+chol, longrun+SVAR+iv
     (longrun == 1 & svar == 0 & chol == 0 & signr == 0 & iv == 0 & hf == 0 & heteroskedas == 0 & forecast_based == 0 & event == 0 & nr == 0 & idother == 0) ~ "idother",

@@ -11,6 +11,7 @@ library(ggplot2)
 library(sandwich)
 library(lmtest)
 library(shinyjs)
+library(purrr)
 
 # Load the data 
 # data_path <- here("data/preliminary_data_test_old.RData")
@@ -33,16 +34,17 @@ data <- data %>%
 
 # Define choices for moderator filters
 moderator_groups <- list(
-  "General" = list("cum", "quality_concern"),
+  "General" = list("prefer","cum","transformation","periodicity", "quality_concern"),
   "Impulse and Response Variables" = list("prefer", "interest_rate_short", "shock_size"),
-  "Identification Strategy" = list("iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "idother"),
+  "Identification Strategy" = list("iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "idother","group_ident_broad"),
   "Estimation Method" = list("var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge", "varother"),
   "Regime Dependence" = list("regime", "lor", "upr", "scr", "dcr", "hike", "cut"),
   "Data Frequency" = list("annual", "quarter", "month"),
   "Further Data Characteristics" = list("panel", "country_dev", "advanced", "upper_middle", "mixed_unclass", "ea12"),
   "Control Variables" = list("comprice", "outpgap", "find", "eglob", "cbind", "fexch", "inflexp", "foreignir", "fx", "lrir"),
   "Econometric Details" = list("pure_rate_shock", "convent", "decomposition"),
-  "Publication Characteristics" = list("cbanker", "is_top_5", "is_top_tier", "top_5_or_tier")
+  "Publication Characteristics" = list("cbanker", "is_top_5", "is_top_tier", "top_5_or_tier","pub_year","log(1+journal_impact)","log(1+num_cit)","main_research_q"),
+  "External Variables" = list("tradegl","log(infl)","fingl","findev","cbi","log(gdppc)","exrate")
 )
 
 ui <- fluidPage(

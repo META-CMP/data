@@ -41,7 +41,7 @@
           "model_10": 40
         },
         "irf": true,
-        "cum": false
+        "cum": true
     },
     "impulse_and_response_variables": {
         "inttype": "lev_a_fed_funds",

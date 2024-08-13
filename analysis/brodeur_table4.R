@@ -45,7 +45,7 @@ data<-data %>% group_by(period.month) %>%
 
 # Create dummy variables before for estimates before 2020.
 data<-data %>% 
-  mutate(before_2020=ifelse(pub_year<2020,1,0))
+  mutate(before_2020=ifelse(pub_year>4,1,0))
 
 # As in the original paper we use the inverse of the number of tests presented in the same article to weight observations. Therefore we obtain obs_weight by:
 ########### Maybe this should be done for the smaller datasets used for the estimation??
@@ -67,7 +67,7 @@ run_probit_analysis <- function(data, delta, threshold, weights_col, cluster_var
   data <- data %>% filter(within_delta == TRUE)
   
   # Define the formula inside the function #### does not work outside the funciton due to whatever reason. 
-  formula <- as.formula("binomial ~ group_ident_broad + cbanker + is_top_tier + before_2020")
+  formula <- as.formula("binomial ~ group_ident_broad + cbanker + top_5_or_tier + before_2020")
   
   # Perform the probit regression with weights
   model <- glm(formula, data = data, family = binomial(link = "probit"), weights = data[[weights_col]])
@@ -98,7 +98,14 @@ data$`publication title`
 
 # Example usage of the function
 # Assuming 'data' is your data frame
-results <- run_probit_analysis(data, delta = 0.1, threshold = 1.96, weights_col = "obs_weight", cluster_var = "key")
+results <- run_probit_analysis(data, delta = 0.4, threshold = 1, weights_col = "obs_weight", cluster_var = "key")
+
+
+# threshold <- 1
+# delta <- 0.1
+# weights_col<-"obs_weight"
+# cluster_var<-"key"
+
 
 
 library(DT)

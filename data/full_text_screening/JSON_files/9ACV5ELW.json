@@ -9,7 +9,7 @@
                 "model_2": "null",
                 "model_3": "uses the cross-sectional data on earnings in addition to the aggregate variables in the model.",
                 "model_4": "null",
-                "model_5": "also includes real per capita consumption in the model. 25bp shock but due to quarterly data the shock size in the IRF looks much larger."
+                "model_5": "quality_concern: 25bp shock but due to a shock over an entire quarter, the impact on the IRFs looks much larger. Thus the magnitude of the shock is not totally comparable to a shock on the monthly level.; also includes real per capita consumption in the model."
         },
         "figure": {
                 "model_1": "1a",

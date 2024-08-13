@@ -4,7 +4,7 @@ gc() #free up memory and report the memory usage.
 
 #setwd and load dataset
 # setwd("~/data")
-load("data/preliminary_data_01082024.RData")
+load("data/preliminary_data_12082024.RData")
 load("data/papers_test.RData")# has been locally saved by ME
 
 
@@ -83,6 +83,8 @@ data$outcome<-ifelse(data$outcome_measure=="rate","rate",ifelse(data$outcome_mea
 # Splitting emp and unemp
 data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
 
+## recode lev transforamtion to log transformation for output estimates
+data$transformation <- ifelse(data$outcome == "output" & data$transformation=="lev", "log", data$transformation)
 
 
 ################################################################### prepare variables for regression analysis #############################################################

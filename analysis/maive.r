@@ -10,6 +10,7 @@ setwd("~/data")
 
 load("data/preliminary_data_test.RData")
 source("analysis/R/maivefunction.R")
+source("analysis/R/apply_winsorization.R")
 
 data_back<-data
 
@@ -34,6 +35,7 @@ data<-data %>% filter(observations>25)# omit two studies which lead to issues if
 
 periods <- c(3, 6, 12, 18, 24, 30, 36)
 
+
 object<-c("MAIVE coefficient","MAIVE standard error","F-test of first step in IV","Hausman-type test (to be used with caution)","Critical Value of Chi2(1)","AR Confidence interval")
 maive_df<-data.frame(object)
 maive_list<-list()
@@ -45,21 +47,12 @@ for (x in periods) {
   # Subset data for the current period
   data_period <- subset(data, period.month %in% x)
   
-  #   data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
-  #     dat<-data_period %>% select(mean.effect,StandardError,observations,key)
-  #
-  #   # Estimate maive:
-  #     MAIVE=maive(dat=dat,method=method,weight=weight,instrument=instrument,studylevel=studylevel,AR=AR)
-  #
-  # }
-  
-  data_period <- subset(data, period.month==x)
   data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
   
-  data_period_winsor <- data_period
-  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
-  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
+  data_period <- apply_winsorization(data_period, wins)
   
+  data_period <- subset(data, period.month==x)
+
   
   dat<-data_period_winsor %>% select(mean.effect_winsor,standarderror_winsor,observations,key)
   #dat$observations<-log(dat$observations)

@@ -964,7 +964,7 @@ server <- function(input, output, session) {
     }
     # Option to only show quarters in IRF
     if (input$irf_quarters_only == TRUE) {
-      average_irf_data <- filtered_data() %>% filter(quarter == TRUE)
+      average_irf_data <- filtered_data() %>% filter(period.month %in% seq(0,input$period_limit, by = 3))
     } else {
       average_irf_data <- filtered_data()
     }

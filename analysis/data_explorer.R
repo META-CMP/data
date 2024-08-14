@@ -240,6 +240,7 @@ ui <- fluidPage(
                               )
                             ),
                             plotlyOutput("averageIRFsPlot"),
+                            checkboxInput("irf_quarters_only", "Only show quarters", value = FALSE),
                             checkboxInput("IRF_wins", "Winsorize?", value = FALSE),
                             checkboxInput("show_corrected_irf", "Show Corrected IRF", value = FALSE),
                             conditionalPanel(
@@ -961,7 +962,13 @@ server <- function(input, output, session) {
     } else {
       corrected <- NULL
     }
-    plot_average_irfs(filtered_data(), 
+    # Option to only show quarters in IRF
+    if (input$irf_quarters_only == TRUE) {
+      average_irf_data <- filtered_data() %>% filter(quarter == TRUE)
+    } else {
+      average_irf_data <- filtered_data()
+    }
+    plot_average_irfs(average_irf_data, 
                       period_limit = input$period_limit, 
                       winsor = input$IRF_wins, 
                       wins_par = input$funnel_wins,
@@ -1338,6 +1345,9 @@ server <- function(input, output, session) {
       })
     })
   })
+  
+  # Storing publication bias estimation results
+  
 
 }
 

@@ -22,15 +22,14 @@ library(JWileymisc) # for Winsorization
 
 data<-data_back
 
-out<-'output'#c("gdp", "inflation", "unemp", "emp")
-outcome<-"output" # c("output", "the price level", "employment", "unemployment")
+out<-'unemp'#c("gdp", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
 
 
 #  Default option for MAIVE: MAIVE-PET-PEESE, unweighted, with instrumented SEs
 
-data<-data %>% filter(observations>25)# omit two studies which lead to issues if we use winsorized data
+data<-data %>% filter(observations>25 & quality_concern!=1)# omit two studies which lead to issues if we use winsorized data
 
 
 # data <- data %>%
@@ -44,6 +43,7 @@ object<-c("MAIVE coefficient","MAIVE standard error","F-test of first step in IV
 maive_df<-data.frame(object)
 maive_list<-list()
 
+wins<-0.02
 
 for (x in periods) {
   print(paste("Processing period:", x))
@@ -52,13 +52,12 @@ for (x in periods) {
   data_period <- subset(data, period.month %in% x)
   
   data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+  data_period$precision <- 1 / data_period$StandardError
   
+  # winsorize
   data_period <- apply_winsorization(data_period, wins)
   
-  data_period <- subset(data, period.month==x)
-
-  
-  dat<-data_period_winsor %>% select(mean.effect_winsor,standarderror_winsor,observations,key)
+  dat<-data_period %>% dplyr::select(mean.effect_winsor,standarderror_winsor,observations,key)
   #dat$observations<-log(dat$observations)
   #dat<-dat %>% filter(observations!=0)
   
@@ -71,7 +70,7 @@ for (x in periods) {
   
   # default options are method=3; weight=0; instrument=1; studylevel=0; AR=0 
   # method: PET:1, PEESE:2, PET-PEESE:3, EK:4 (default 3)
-  method<-1
+  method<-3
   # weighting: default no weight: 0 ; weights: 1, adjusted weights: 2 (default 0)
   weight<-0
   # instrumenting (default 1)  1 yes, 0 no 

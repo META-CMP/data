@@ -25,13 +25,14 @@ library(rlang)# to get the sym function
 
 data<-data_back
 
-out<-'output'#c("gdp", "inflation", "unemp", "emp")
-outcome<-"output" # c("output", "the price level", "employment", "unemployment")
+out<-'inflation'#c("gdp", "inflation", "unemp", "emp")
+#outcome<-"output" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
 
 periods <- c(3, 6, 12, 18, 24, 30, 36,48)
 data<-data %>% filter(period.month %in% periods)# omit two studies which lead to issues if we use winsorized data
 
+data<-data %>% filter(quality_concern!=1)
 
 data<-data %>% group_by(period.month) %>% mutate(StandardError=(SE.upper+SE.lower)/2) %>%
   mutate(standarderror_winsor=winsorizor(StandardError, c(0.02), na.rm = TRUE)) %>%

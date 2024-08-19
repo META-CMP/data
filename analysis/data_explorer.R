@@ -30,6 +30,8 @@ data <- data %>%
 
 
 
+data<-data %>% filter(period.month %in% seq(0,60,by=3))
+
 
 
 # Define choices for moderator filters
@@ -1316,7 +1318,7 @@ server <- function(input, output, session) {
     results <- reg_results()
     
     plot_outputs <- lapply(seq_along(results), function(i) {
-      plotOutput(paste0("ak_plot_", i), height = "400px")
+      plotOutput(paste0("ak_plot_", i), height = "400px",width = "200px")
     })
     
     do.call(tagList, plot_outputs)

@@ -20,11 +20,14 @@ library(JWileymisc) # for Winsorization
 
 data<-data_back
 
-out<-'output'#c("gdp", "inflation", "unemp", "emp")
-outcome<-"output" # c("output", "the price level", "employment", "unemployment")
+out<-'inflation'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
-periods <- c(3, 6, 12,15, 18,21, 24, 30, 36,48)
+
+data<-data %>% filter(quality_concern!=1)
+
+
+periods <- c(3, 12,24)#c(3, 6, 12,15, 18,21, 24, 30, 36,48)
 data<-data %>% filter(period.month %in% periods)# omit two studies which lead to issues if we use winsorized data
 
 
@@ -36,27 +39,30 @@ data<-data %>% group_by(period.month) %>% mutate(StandardError=(SE.upper+SE.lowe
                                     mutate(x=1:length(StandardError) / 100)
 
 
+data<-data %>% filter(mean.effect<=0)
+
+
 
 ###############################  some plots of the z_statistic across different sub-samples
 
 
 
 
-p<-ggplot(data, aes(x = z_stat_winsor)) +
+p<-ggplot(data, aes(x = z_stat)) +
   geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
-  geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.2) + 
+  geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.3) + 
   facet_wrap(~ period.month, scales = "free") +
   geom_vline(xintercept = c(1, 1.65, 1.96), linetype = "solid") +
-  stat_function(
-    fun = function(x) dt(x, df = 2, ncp = 1.4),
-    color = "red", linetype = "dashed", size = 1
-  ) +
-  labs(title = "Density plot", x = "Value", y = "Density") +
+  # stat_function(
+  #   fun = function(x) dt(x, df = 2, ncp = 1.4),
+  #   color = "red", linetype = "dashed", size = 1
+  # ) +
+  labs(title = "Density plot of Z-statistic - x months after the MP shock (Output)", x = "Z-statistic (absolute value)", y = "") +
   xlim(-0.1, 10) +
   theme_classic()
 
 p
-ggsave(filename = paste0("All_methods", ".png"), plot = p, bg = "white")
+ggsave(filename = paste0("All_methods_output_new_neg", ".png"), plot = p, bg = "white", width = 12, height = 7, dpi = 100)
 
 ggplot(data %>% filter(is_top_tier==1), aes(x = z_stat_winsor, ..density..)) +
   geom_density(fill = "blue", alpha = 0.2,adjust = .7) +
@@ -105,6 +111,26 @@ ggplot(data %>% filter(`publication year`<2020), aes(x = z_stat_winsor)) +
 
 
 
+############################################### inflation plots 
+
+p<-ggplot(data, aes(x = z_stat_winsor)) +
+  geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
+  geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.2) + 
+  facet_wrap(~ period.month, scales = "free") +
+  geom_vline(xintercept = c(1, 1.65, 1.96), linetype = "solid") +
+  stat_function(
+    fun = function(x) dt(x, df = 2, ncp = 1.2),
+    color = "red", linetype = "dashed", size = 1
+  ) +
+  labs(title = "Density plot", x = "Value", y = "Density") +
+  xlim(-0.1, 10) +
+  theme_classic()
+
+p
+ggsave(filename = paste0("All_methods_inflation", ".png"), plot = p, bg = "white")
+
+
+
 ######################################################## create plots with counterfactual distributions for different methods ################### 
 
 df_np <- data.frame(
@@ -147,11 +173,11 @@ for (i in 1:length(methods)) {
 
 
 ######################################################## create plots with counterfactual distributions for different methods ################### 
-
+data$chol_ident<-ifelse(data$group_ident_broad=="chol",1,0)
 df_np <- data.frame(
   method = unique(data$chol_ident),
   df = c(2, 2),
-  np = c(1.4, 1.4)
+  np = c(1.2, 1.2)
 )
 
 # Sample methods for illustration
@@ -178,7 +204,7 @@ for (i in 1:length(methods)) {
       fun = function(x) dt(x, df = current_df, ncp = current_np),
       color = "red", linetype = "dashed", size = 1
     ) +
-    labs(title = paste0("Density plot for ", method), x = "Value", y = "Density") +
+    labs(title = paste0("Density plot for inflation -", method), x = "Value", y = "Density") +
     xlim(-0.1, 10) +
     theme_minimal()
   
@@ -233,7 +259,7 @@ for (i in 1:length(periods)) {
 
 
 ############################################################ create plots with different counterfactual distributions for different time horizons #######################
-data$chol_ident<-ifelse(data$group_ident_broad=="chol",1,0)
+
 
 df_np <- data.frame(
   period.month = unique(data$period.month),
@@ -352,8 +378,8 @@ fit_all_periods <- function(data, threshold = 5) {
     mutate(
       df = map_dbl(params, "df"),
       ncp = map_dbl(params, "ncp")
-    ) %>%
-    select(-params)
+    )%>%
+    #select(-params)
   
   return(results)
 }

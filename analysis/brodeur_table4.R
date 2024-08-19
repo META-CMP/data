@@ -26,13 +26,13 @@ library(lmtest)
 
 data<-data_back
 
-out<-'output'#c("output", "inflation", "unemp", "emp")
+out<-'inflation'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
 periods <- c(12)
 data<-data %>% filter(period.month %in% periods)# omit two studies which lead to issues if we use winsorized data
 
-
+data<-data %>% filter(quality_concern!=1)
 
 # calculate z_statistic and winsoirzised z-statistic. Probably the winzorized one is irrelevant. 
 data<-data %>% group_by(period.month) %>% 

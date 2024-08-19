@@ -80,9 +80,6 @@ data$outcome_measure<-ifelse(data$outcome_var=="rate","rate",data$outcome_measur
 data$outcome<-ifelse(data$outcome_measure=="rate","rate",ifelse(data$outcome_measure %in% c("gdp","ip","gap","gnp"),"output",ifelse(data$outcome_measure %in% c("cpi","deflator","wpi","core","price_level"),"inflation","emp")))
 
 
-# Splitting emp and unemp
-data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
-
 ## recode lev transforamtion to log transformation for output estimates
 data$transformation <- ifelse(data$outcome == "output" & data$transformation=="lev", "log", data$transformation)
 
@@ -101,6 +98,9 @@ data$main<-gsub("gdp", "output", data$main)
 data$main_research_q<-mapply(fun, data$outcome, data$main)
 remove(fun)
 
+
+# Splitting emp and unemp # this postion because we want to get the main research question dummy also for unemp. 
+data$outcome <- ifelse(data$outcome_measure == "une_rate", "unemp", data$outcome)
 
 
 ##### generate dummy if model or study has quality_concern
@@ -321,6 +321,10 @@ data$list_of_countries<-ifelse(data$list_of_countries=="UK","GB",data$list_of_co
 data<-data %>% unnest(list_of_countries)
 # create a new list, where each country of a Panel corresponds to an item of the new list. 
 data$list_of_countries<-strsplit(data$list_of_countries, " ")
+
+
+# create us dummy
+data$us<-ifelse(data$list_of_countries=="US",1,0)
 
 
 # Define the Euro area 12 (EA12) countries

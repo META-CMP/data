@@ -5,6 +5,8 @@ gc() #free up memory and report the memory usage.
 setwd("~/data")
 #Load data by running data_prep script
 load("data/preliminary_data_test.RData")
+source("analysis/R/meta_analysis.R")
+source("analysis/R/apply_winsorization.R")
 
 
 data_back<-data
@@ -19,41 +21,35 @@ library(modelsummary)# to nicely print results
 
 data<-data_back
 
-out<-'output'#c("gdp", "inflation", "unemp", "emp")
-#outcome<-"output" # c("output", "the price level", "employment", "unemployment")
-data <- subset(data, outcome %in% out)
-
 
 #summary(data)
 
-#data$size<-ifelse(is.na(data$size)|data$size=="1SD",data$shock_size,data$size)
-data$us<-ifelse(data$list_of_countries=="US",1,0)
+data<-data %>% filter(quality_concern!=1)
 
-names(data)
-unique(data$conf)
 
 ############ Full possible model without external data.
 
 
 
-equation<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+pure_rate_shock+lrir+fx+foreignir+inflexp+eglob+find+outpgap+comprice+month+main_research_q+prefer+mean_year+log(observations)+ea12+us+upper_middle+n_of_countries+outcome_measure+transformation+cum+interest_rate_short+cbanker+pub_year+is_top_tier+is_top_5+journal_impact+num_cit+model_id+rid1+tradegl+log(infl)+fingl+findev+cbi+log(gdppc)+exrate
+# equation<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+pure_rate_shock+lrir+fx+foreignir+inflexp+eglob+find+outpgap+comprice+month+main_research_q+prefer+mean_year+log(observations)+ea12+us+upper_middle+n_of_countries+outcome_measure+transformation+cum+interest_rate_short+cbanker+pub_year+is_top_tier+is_top_5+journal_impact+num_cit+model_id+rid1+tradegl+log(infl)+fingl+findev+cbi+log(gdppc)+exrate
+# +fexch#+real_output # only for output regression
 
 # currently not included: rate_mean.effect (due to missing data),country_dev, conf, intrest_rate, external control variables. (periodicity does not really make sense the way it currently looks, we would need to replace the log a values) (real output does not make sense currently, we would need to check the non real ones again.) (initial shock size needs to be adjusted - size)
 
-small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+cbanker+is_top_tier+is_top_5+journal_impact+num_cit+main_research_q
+# small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+cbanker+is_top_tier+is_top_5+journal_impact+num_cit+main_research_q
+# 
+# small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+cbanker+is_top_tier+is_top_5+log(1+journal_impact)+log(1+num_cit)
+# 
+# #lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+convent+journal_impact+num_cit+main_research_q einstweilen raus
+# 
+# #colSums(is.na(data_period_winsor %>% select(standarderror_winsor,group_ident_broad,lp,vecm,dyn_ols,fvar,tvar,gvar,dsge,varother,cbanker,is_top_tier,is_top_5)))
+# 
+# 
+# 
+# external<- mean.effect_winsor ~tradegl+log(infl)+fingl+findev+cbi+log(gdppc)+exrate
 
-small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+cbanker+is_top_tier+is_top_5+log(1+journal_impact)+log(1+num_cit)
-
-#lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+convent+journal_impact+num_cit+main_research_q einstweilen raus
-
-#colSums(is.na(data_period_winsor %>% select(standarderror_winsor,group_ident_broad,lp,vecm,dyn_ols,fvar,tvar,gvar,dsge,varother,cbanker,is_top_tier,is_top_5)))
 
 
-
-external<- mean.effect_winsor ~tradegl+log(infl)+fingl+findev+cbi+log(gdppc)+exrate
-
-
-sum(is.na(data$main_research_q))
 
 data %>% select(key,model_id,tradegl:exrate) %>% group_by(key,model_id) %>% summarise(across(tradegl:exrate, ~ mean(.x, na.rm = TRUE))) %>% mutate(infl=log(infl),gdppc=log(gdppc)) %>% 
   pivot_longer(cols = tradegl:exrate, names_to = "variable", values_to = "value") %>% ggplot( aes(x = value)) +
@@ -73,153 +69,241 @@ data %>% select(key,model_id,num_cit,pub_year,journal_impact) %>% mutate(num_cit
   labs(title = "Density Plots for All Variables", x = "Value", y = "Density") +
   theme_minimal()
 
-# +fexch#+real_output # only for output regression
 
-periods <- c(3, 6, 12, 18, 24, 30, 36)
+chosen_periods<-c(3, 6, 12, 18, 24, 30, 36)
+
+#data$top_5_or_tier
+
+results1 <- meta_analysis(data, outvar = "output", se_option = "avg", periods = chosen_periods,
+                          wins = 0.02, prec_weighted = TRUE, estimation = "FAT-PET", cluster_se = TRUE, mods = c("group_ident_broad", "decomposition","cbanker","top_5_or_tier"))
+
+modelsummary::modelsummary(results1, output = "gt", stars = TRUE, conf_level = 0.80, title = "FAT-PET", gof_map = NULL)
+
+
+
+
+#################################################################### different model comparison ################################################################
+
+###################################### Output
+
+# Explanatory variables for each formula (excluding "standarderror_winsor")
+equations <- list(c("group_ident_broad", "decomposition", "cbanker","top_5_or_tier"),
+                  c("group_ident_broad", "decomposition", "cbanker","top_5_or_tier", "pub_year", "convent", "main_research_q"),
+                  c("group_ident_broad", "decomposition", "cbanker", "log(1 + journal_impact)", "log(1 + num_cit)"),
+                  c("group_ident_broad", "decomposition", "cbanker","top_5_or_tier", "pub_year", "transformation", "cum"),
+                  c("group_ident_broad", "decomposition", "cbanker","top_5_or_tier", "pub_year", "tradegl", "log(infl)", "fingl", "findev", "cbi", "log(gdppc)", "exrate"),
+                  c("group_ident_broad", "decomposition", "cbanker","top_5_or_tier",  "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice"),
+                  c("group_ident_broad", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes", "decomposition", "cbanker","top_5_or_tier"),
+                  c("group_ident_broad", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes", "upr", "lor", "hike", "cut", "decomposition", "cbanker","top_5_or_tier"),
+                  c("group_ident_broad", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes", "upr", "lor", "hike", "cut", "decomposition", "cbanker","top_5_or_tier", "convent", "main_research_q"))
+
 
 results_list<-list()
-coef_test_data<-list()
-confint_data<-list()
-vif_list <- list()
 
-
-for (x in periods) {
-  print(paste("Processing period:", x))
-  
-  # Subset data for the current period
-  data_period <- subset(data, period.month %in% x)
-  
-  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
-  data_period$precision <- 1 / data_period$StandardError
-  
-  # Winsorize data
-  data_period_winsor <- data_period
-  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
-  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
-  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
-  
-  # Store the winsorized data
-  
-  
-  # Calculate variance winsorised
-  data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
-  
-  # Calculate PrecVariance winsorised
-  data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
-  
-  
-  # Calculate VIF for each variable
-  vif_values <- car::vif(lm(small,data=data_period_winsor))
-  # Print the VIF values
-  vif_list[[paste0(x)]] <- vif_values
-  
-  
-  # Calculate (precision-weighted) average
-  regwa <- lm(small, data = data_period_winsor, weights = precvariance_winsor)#
-  results_list[[paste0(x, ".ols")]] <- regwa
-  
-  coef_test_data[[paste0(x, ".ols")]]<-coef_test(regwa, vcov = "CR0", 
-                                                 cluster = data_period_winsor$key, test = "naive-t")
-  
-  
-  confint_data[[paste0(x, ".ols")]]<-confint(regwa, level=0.95)
+for (i in 1:length(equations)) {
+    model <- meta_analysis(data, outvar = "output", se_option = "avg", periods = chosen_periods,
+                           wins = 0.02, prec_weighted = TRUE, estimation = "FAT-PET", cluster_se = TRUE, mods = equations[[i]])
+    results_list[[paste0("equation.", i)]] <- model
 }
 
-#modelsummary(results_list, output = "gt",vcov = 'cr0', cluster = data_period_winsor$key,stars = TRUE) # only works if cluster variable has the same number of observations across lists. 
-modelsummary(results_list, output = "gt",stars = TRUE)
 
-create_modelsummary_list_vif <- function(vif_element) {
-  ti <- data.frame(
-    term = rownames(vif_element),
-    estimate = unname(vif_element)[,1],
-    std.error = rep(NA, length(unname(vif_element)[,1]))
-  )
-  
-  gl <- data.frame(
-    stat1 = "VIF values",
-    stat2 = "NA"
-  )
-  
-  mod <- list(
-    tidy = ti,
-    glance = gl
-  )
-  
-  class(mod) <- "modelsummary_list"
-  return(mod)
-}
-
-# Apply the function to each element in vif_list
-mod_list <- lapply(vif_list, create_modelsummary_list_vif)
-
-modelsummary(mod_list)
-
-
-coef_test_data<-data.table::rbindlist(coef_test_data, fill = T,idcol = ".id")
-coef_test_data
-
-
-
-
-library(modelsummary)
-
-# Define the list of periods and initialize results list
-periods <- c(3, 6, 12, 18, 24, 30, 36)
-results_list <- list()
-
-# Define the equations
-equations <- list(
-  small = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
-  small_alt = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + convent + main_research_q,
-  small2 = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + log(1 + journal_impact) + log(1 + num_cit) + pub_year,
-  small_check = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + transformation + cum,
-  ex = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + tradegl + log(infl) + fingl + findev + cbi + log(gdppc) + exrate,
-  int = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + lrir + fx + foreignir + inflexp + eglob + find + outpgap + comprice,
-  big = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
-  large = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + upr + lor + hike + cut + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
-  large_alt = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + upr + lor + hike + cut + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + convent + main_research_q
-)
-
-# Loop over periods and equations
-for (x in periods) {
-  print(paste("Processing period:", x))
-  
-  # Subset data for the current period
-  data_period <- subset(data, period.month %in% x)
-  
-  data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
-  data_period$precision <- 1 / data_period$StandardError
-  
-  # Winsorize data
-  data_period_winsor <- data_period
-  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
-  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
-  data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
-  
-  # Calculate variance winsorised
-  data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
-  
-  # Calculate PrecVariance winsorised
-  data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
-  
-  # Fit models for each equation
-  for (name in names(equations)) {
-    formula <- equations[[name]]
-    model <- lm(formula, data = data_period_winsor, weights = precvariance_winsor)
-    results_list[[paste0(x, ".", name)]] <- model
-  }
-}
-
-# Define the period you want to filter for
-desired_period <- 24
-
+desired_period <- 12
+index<-which(chosen_periods%in% desired_period)
+index
 # Filter the results_list for the specific period
-filtered_results <- results_list[grep(paste0("^", desired_period, "\\."), names(results_list))]
 
-# Summarize the filtered models
-modelsummary(filtered_results, output = "gt", stars = TRUE)
+modelsummary::modelsummary(lapply(results_list, `[[`, index), output = "gt", stars = TRUE, conf_level = 0.80, title = paste0("FAT-PET (Output) period - ",desired_period), gof_map = NULL)
+
+######################################################################## inflation ##########################################################
+
+results_list<-list()
+
+for (i in 1:length(equations)) {
+  model <- meta_analysis(data, outvar = "inflation", se_option = "avg", periods = chosen_periods,
+                         wins = 0.02, prec_weighted = TRUE, estimation = "FAT-PET", cluster_se = TRUE, mods = equations[[i]])
+  results_list[[paste0("equation.", i)]] <- model
+}
+
+
+desired_period <- 12
+index<-which(chosen_periods%in% desired_period)
+index
+# Filter the results_list for the specific period
+
+modelsummary::modelsummary(lapply(results_list, `[[`, index), output = "gt", stars = TRUE, conf_level = 0.80, title = paste0("FAT-PET (Inflation) period - ",desired_period), gof_map = NULL)
+
+
+####################################################################### unemployment ###########################################################
+
+equations <- list(c("group_ident_broad", "decomposition", "cbanker","top_5_or_tier"),
+                  c("group_ident_broad", "decomposition", "cbanker","top_5_or_tier", "pub_year", "convent", "main_research_q"),
+                  c("group_ident_broad", "decomposition", "cbanker", "log(1 + journal_impact)", "log(1 + num_cit)"),
+                  # c("group_ident_broad", "decomposition", "cbanker","top_5_or_tier", "pub_year", "transformation", "cum"),
+                  c("group_ident_broad", "decomposition", "cbanker","top_5_or_tier", "pub_year", "tradegl", "log(infl)", "fingl", "findev", "cbi", "log(gdppc)", "exrate"),
+                  c("group_ident_broad", "decomposition", "cbanker","top_5_or_tier",  "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice"),
+                  c("group_ident_broad", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes", "decomposition", "cbanker","top_5_or_tier"),
+                  c("group_ident_broad", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes", "upr", "lor", "hike", "cut", "decomposition", "cbanker","top_5_or_tier"),
+                  c("group_ident_broad", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes", "upr", "lor", "hike", "cut", "decomposition", "cbanker","top_5_or_tier", "convent", "main_research_q")
+                  )
+
+results_list<-list()
+
+for (i in 1:length(equations)) {
+  model <- meta_analysis(data, outvar = "unemp", se_option = "avg", periods = chosen_periods,
+                         wins = 0.02, prec_weighted = TRUE, estimation = "FAT-PET", cluster_se = TRUE, mods = equations[[i]])
+  results_list[[paste0("equation.", i)]] <- model
+}
+
+
+desired_period <- 12
+index<-which(chosen_periods%in% desired_period)
+index
+# Filter the results_list for the specific period
+
+modelsummary::modelsummary(lapply(results_list, `[[`, index), output = "gt", stars = TRUE, conf_level = 0.80, title = paste0("FAT-PET (Unemployment) period - ",desired_period), gof_map = NULL)
 
 
 
 
-sum(data$decomposition,na.rm = FALSE)
+
+
+################################################################# OLD CODE ####################################################################
+
+
+# periods <- c(3, 6, 12, 18, 24, 30, 36)
+# 
+# results_list<-list()
+# coef_test_data<-list()
+# confint_data<-list()
+# vif_list <- list()
+# 
+# 
+# for (x in periods) {
+#   print(paste("Processing period:", x))
+#   
+#   # Subset data for the current period
+#   data_period <- subset(data, period.month %in% x)
+#   
+#   data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+#   data_period$precision <- 1 / data_period$StandardError
+#   
+#   # Winsorize data
+#   data_period <- apply_winsorization(data_period, wins)
+#   
+#   # Store the winsorized data
+# 
+#   # Calculate VIF for each variable
+#   vif_values <- car::vif(lm(small,data=data_period))
+#   # Print the VIF values
+#   vif_list[[paste0(x)]] <- vif_values
+#   
+#   
+#   # Calculate (precision-weighted) average
+#   regwa <- lm(small, data = data_period, weights = precvariance_winsor)#
+#   results_list[[paste0(x, ".ols")]] <- regwa
+#   
+#   coef_test_data[[paste0(x, ".ols")]]<-coef_test(regwa, vcov = "CR0", 
+#                                                  cluster = data_period$key, test = "naive-t")
+#   
+#   
+#   confint_data[[paste0(x, ".ols")]]<-confint(regwa, level=0.95)
+# }
+# 
+# #modelsummary(results_list, output = "gt",vcov = 'cr0', cluster = data_period_winsor$key,stars = TRUE) # only works if cluster variable has the same number of observations across lists. 
+# modelsummary(results_list, output = "gt",stars = TRUE)
+# 
+# create_modelsummary_list_vif <- function(vif_element) {
+#   ti <- data.frame(
+#     term = rownames(vif_element),
+#     estimate = unname(vif_element)[,1],
+#     std.error = rep(NA, length(unname(vif_element)[,1]))
+#   )
+#   
+#   gl <- data.frame(
+#     stat1 = "VIF values",
+#     stat2 = "NA"
+#   )
+#   
+#   mod <- list(
+#     tidy = ti,
+#     glance = gl
+#   )
+#   
+#   class(mod) <- "modelsummary_list"
+#   return(mod)
+# }
+# 
+# # Apply the function to each element in vif_list
+# mod_list <- lapply(vif_list, create_modelsummary_list_vif)
+# 
+# modelsummary(mod_list)
+# 
+# 
+# coef_test_data<-data.table::rbindlist(coef_test_data, fill = T,idcol = ".id")
+# coef_test_data
+# 
+# 
+# 
+# 
+# library(modelsummary)
+# 
+# # Define the list of periods and initialize results list
+# periods <- c(3, 6, 12, 18, 24, 30, 36)
+# results_list <- list()
+# 
+# # Define the equations
+# equations <- list(
+#   small = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
+#   small_alt = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + convent + main_research_q,
+#   small2 = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + log(1 + journal_impact) + log(1 + num_cit) + pub_year,
+#   small_check = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + transformation + cum,
+#   ex = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + tradegl + log(infl) + fingl + findev + cbi + log(gdppc) + exrate,
+#   int = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + lrir + fx + foreignir + inflexp + eglob + find + outpgap + comprice,
+#   big = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
+#   large = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + upr + lor + hike + cut + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
+#   large_alt = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + upr + lor + hike + cut + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + convent + main_research_q
+# )
+# 
+# # Loop over periods and equations
+# for (x in periods) {
+#   print(paste("Processing period:", x))
+#   
+#   # Subset data for the current period
+#   data_period <- subset(data, period.month %in% x)
+#   
+#   data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
+#   data_period$precision <- 1 / data_period$StandardError
+#   
+#   # Winsorize data
+#   data_period_winsor <- data_period
+#   data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
+#   data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
+#   data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
+#   
+#   # Calculate variance winsorised
+#   data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
+#   
+#   # Calculate PrecVariance winsorised
+#   data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
+#   
+#   # Fit models for each equation
+#   for (name in names(equations)) {
+#     formula <- equations[[name]]
+#     model <- lm(formula, data = data_period_winsor, weights = precvariance_winsor)
+#     results_list[[paste0(x, ".", name)]] <- model
+#   }
+# }
+# 
+# # Define the period you want to filter for
+# desired_period <- 24
+# 
+# # Filter the results_list for the specific period
+# filtered_results <- results_list[grep(paste0("^", desired_period, "\\."), names(results_list))]
+# 
+# # Summarize the filtered models
+# modelsummary(filtered_results, output = "gt", stars = TRUE)
+# 
+# 
+# 
+# 
+# sum(data$decomposition,na.rm = FALSE)

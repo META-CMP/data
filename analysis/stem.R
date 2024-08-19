@@ -18,8 +18,7 @@ library(JWileymisc) # for Winsorization
 
 data<-data_back
 
-out<-'output'#c("gdp", "inflation", "unemp", "emp")
-outcome<-"output" # c("output", "the price level", "employment", "unemployment")
+out<-'unemp'#c("gdp", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
 
@@ -30,7 +29,7 @@ data<-data %>% group_by(period.month) %>% mutate(StandardError=(SE.upper+SE.lowe
   filter(quality_concern!=1)
 
 
-# #data <- data %>%
+# data <- data %>%
 #   group_by(key,period.month) %>%
 #   sample_n(size = 1,replace = F) %>% ungroup()
 
@@ -47,9 +46,9 @@ for (x in periods) {
   # Subset data for the current period
   data_period <- subset(data, period.month %in% x)
   
-  data_period_Furukawa <- data_period %>%  dplyr::select(mean.effect, StandardError)
+  data_period_Furukawa <- data_period %>%  dplyr::select(mean.effect_winsor, standarderror_winsor)
   
-  stem_results[[paste0(x, ".stem")]] <- stem(data_period_Furukawa$mean.effect, data_period_Furukawa$StandardError, param)
+  stem_results[[paste0(x, ".stem")]] <- stem(data_period_Furukawa$mean.effect_winsor, data_period_Furukawa$standarderror_winsor, param)
   
 }
 
@@ -57,14 +56,14 @@ lapply(stem_results, `[[`, 1)
 
 #data.table::rbindlist(lapply(stem_results, `[[`, 1), fill = T,idcol = ".id")
 
-plot_for_period<-12
+plot_for_period<-30
 
 entry<-which(periods == plot_for_period)
 
 
 #data$period.month==test
 
-stem_funnel(data %>% dplyr::filter(period.month==plot_for_period) %>% pull(mean.effect), data %>% filter(period.month %in% plot_for_period) %>% pull(StandardError), stem_results[[entry]]$estimates)
+stem_funnel(data %>% dplyr::filter(period.month==plot_for_period) %>% pull(mean.effect_winsor), data %>% filter(period.month %in% plot_for_period) %>% pull(standarderror_winsor), stem_results[[entry]]$estimates)
 
 stem_results[[entry]]$estimates
 

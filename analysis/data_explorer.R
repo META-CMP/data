@@ -30,7 +30,7 @@ data <- data %>%
 
 
 
-data<-data %>% filter(period.month %in% seq(0,60,by=3))
+#data<-data %>% filter(period.month %in% seq(0,60,by=3))
 
 
 

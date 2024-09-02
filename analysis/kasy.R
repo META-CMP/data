@@ -72,11 +72,11 @@ estimates_plot<-function(cutoffs, symmetric, estimates, model="normal"){
   dens$f=dt(((dens$z - Psihat[1])/ Psihat[2]), df=df)/Psihat[2]
   names(dens)[names(dens) == 'f'] <- 'density of true effect'
   names(dens)[names(dens) == 'p'] <- 'publication probability'
-  dens<-dens[,-3]
+  #dens<-dens[,-3] # uncomment if you only want to show the stairs. 
   
   dens=melt(dens, id="z")
   ggplot(dens, aes(x=z, y=value)) +
-    xlab("Z")+
+    xlab(paste("Z, ", intToUtf8(952)))+
     ylab("")+
     geom_line(size=2, color="blue") +
     facet_grid(variable ~ .,  scales = "free_y") +

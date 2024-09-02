@@ -18,8 +18,10 @@ library(JWileymisc) # for Winsorization
 
 data<-data_back
 
-out<-'unemp'#c("gdp", "inflation", "unemp", "emp")
-data <- subset(data, outcome %in% out)
+
+
+out<-'output'#c("output", "inflation", "unemp", "emp")
+data <- subset(data, outcome %in% out & transformation=="log")
 
 
 data<-data %>% group_by(period.month) %>% mutate(StandardError=(SE.upper+SE.lower)/2) %>%

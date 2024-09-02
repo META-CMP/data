@@ -22,7 +22,7 @@ library(JWileymisc) # for Winsorization
 
 data<-data_back
 
-out<-'unemp'#c("gdp", "inflation", "unemp", "emp")
+out<-'output'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
 

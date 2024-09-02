@@ -22,12 +22,10 @@ library(BMS)# BMS package for bayesian model averaging.
 data<-data_back
 
 # subset data for outcome variable of interest. 
-outvar<-'output'#c("gdp", "inflation", "unemp", "emp")
+outvar<-'output'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% outvar)
 
 #x<-3
-
-data$us<-ifelse(data$list_of_countries=="US",1,0)
 
 # data <- data %>% 
 #   group_by(key,period.month) %>%

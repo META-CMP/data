@@ -23,7 +23,7 @@ data<-data %>% left_join(df_full_bib %>% select(key,`publication title`,type = `
 data$top_5_or_tier <- ifelse(data$is_top_5 == 1 | data$is_top_tier == 1, TRUE, FALSE)
 data$top_5_or_tier <- ifelse(is.na(data$top_5_or_tier), FALSE, data$top_5_or_tier)
 #sum(data$top_5_or_tier,na.rm = FALSE)
-data<-data %>% mutate(pub_year=2024-pub_year)
+data<-data %>% mutate(pub_year=pub_year-mean(pub_year))
 ################################################################### prepare variables for publication bias tests #############################################################
 
 
@@ -49,6 +49,8 @@ colnames(rate)[4:ncol(rate)] <- paste("rate_",colnames(rate)[4:ncol(rate)],sep="
 # merge to main dataset
 data<-data %>% dplyr::left_join(rate, by=c("key","model_id","period"))
 remove(rate)
+
+
 
 
 ###### create transformation, periodicity, real_output dummy, outcome_measure and outcome variable
@@ -83,6 +85,8 @@ data$outcome<-ifelse(data$outcome_measure=="rate","rate",ifelse(data$outcome_mea
 ## recode lev transforamtion to log transformation for output estimates
 data$transformation <- ifelse(data$outcome == "output" & data$transformation=="lev", "log", data$transformation)
 
+
+data$transformed <- ifelse(data$transformation=="logdiff" | data$transformation=="gr", "yes", "no")
 
 ################################################################### prepare variables for regression analysis #############################################################
 
@@ -126,6 +130,19 @@ data$shock_size <- ifelse(grepl("bp", data$size),as.double(sub("bp", "", data$si
 data$shock_size <-  ifelse(grepl("%", data$size),as.double(sub("%", "", data$size)),data$shock_size)
 
 summary(data$shock_size)
+
+
+#### calculate rate persistence 
+test<-data %>% filter(outcome=="rate") %>% group_by(key,model_id) %>% 
+  mutate(rate_pers=if_else(period.month == 6 | period.month == 3 |period.month == 0, mean(rate_mean.effect), NA)) %>% select(rate_pers)
+
+test<-na.omit(test)
+
+test<-test %>% group_by(key,model_id) %>% summarise(rate_pers=mean(rate_pers)) %>% ungroup()
+
+data<-data %>% left_join(test, by=c("key","model_id"))
+remove(test)
+
 
 
 

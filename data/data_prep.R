@@ -528,6 +528,17 @@ data_merged
 data<-data %>% ungroup() %>% left_join(data_merged %>% ungroup %>% select(key, model_id,tradegl:exrate), by=c("key","model_id"))
 
 
+
+
+################################################################################### create additional EA dummies ##########################################################################
+
+
+data$ea12_before2000 <- ifelse(data$ea12==1 & data$end_year<1999,1,0)
+data$ea_agg<-ifelse(data$list_of_countries=="EA",1,0)
+data$ea_country<-ifelse(data$list_of_countries!="EA" & data$ea12==1 ,1,0)
+
+###########################################################################################################################################################################################
+
 remove(data_merged)
 remove(ea_average)
 remove(ea_membership)

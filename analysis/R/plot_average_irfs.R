@@ -27,7 +27,7 @@
 #' print(plot_period_limit)
 #'
 #' @export
-plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf) {
+plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf,show_legend = T) {
   
   # Apply winsorization (if selected) to the CIs and mean effect
   if (winsor == TRUE) {
@@ -57,7 +57,7 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
   }
   
   plot <- average_irf %>%
-    plot_ly() %>%
+    plot_ly(showlegend=show_legend) %>%
     add_ribbons(
       x = ~period.month,
       ymin = ~avg_CI.lower_68,
@@ -66,14 +66,14 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
       line = list(color = 'rgba(0,0,0,0)'),
       fillcolor = 'rgba(135,206,250,0.2)'
     ) %>%
-    add_ribbons(
-      x = ~period.month,
-      ymin = ~avg_CI.lower_90,
-      ymax = ~avg_CI.upper_90,
-      name = "90% CI",
-      line = list(color = 'rgba(0,0,0,0)'),
-      fillcolor = 'rgba(135,206,250,0.2)'
-    ) %>%
+    # add_ribbons(
+    #   x = ~period.month,
+    #   ymin = ~avg_CI.lower_90,
+    #   ymax = ~avg_CI.upper_90,
+    #   name = "90% CI",
+    #   line = list(color = 'rgba(0,0,0,0)'),
+    #   fillcolor = 'rgba(135,206,250,0.2)'
+    # ) %>%
     add_ribbons(
       x = ~period.month,
       ymin = ~avg_CI.lower_95,

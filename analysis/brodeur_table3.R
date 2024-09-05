@@ -25,11 +25,11 @@ library(rlang)# to get the sym function
 
 data<-data_back
 
-out<-'inflation'#c("gdp", "inflation", "unemp", "emp")
-#outcome<-"output" # c("output", "the price level", "employment", "unemployment")
+out<-'output'#c("output", "inflation", "unemp", "emp")
+
 data <- subset(data, outcome %in% out)
 
-periods <- c(3, 6, 12, 18, 24, 30, 36,48)
+periods <- c(3, 6, 12,15, 18,21, 24, 30, 36,48)
 data<-data %>% filter(period.month %in% periods)# omit two studies which lead to issues if we use winsorized data
 
 data<-data %>% filter(quality_concern!=1)
@@ -43,7 +43,16 @@ data<-data %>% group_by(period.month) %>% mutate(StandardError=(SE.upper+SE.lowe
 
 
 # look at data where most p-hacking happens propbably. 
-data_gg<-data %>% filter(period.month <=30,period.month >=12)
+data_gg<-data# %>% filter(period.month <=30 & period.month >=12)
+
+
+###### to filter out negative effects
+data_gg<-data_gg %>% filter(mean.effect<=0)#& transformation=="log"
+
+
+###### to filter out positive effefts
+#data_gg<-data_gg %>% filter(mean.effect>=0)
+
 
 
 ###### function to calculate share and binomial test p.value per group 
@@ -125,7 +134,7 @@ datatable(results_ident_long %>% mutate(across(is.numeric, signif, digits = 3)),
     "}")
 ))%>%
   formatStyle(
-    4:8,
+    4:ncol(results_period_long),
     color = styleInterval(c(0.05,0.1), c('blue',"red", 'black'))
   )
 
@@ -143,7 +152,7 @@ datatable(results_period_long %>% mutate(across(is.numeric, signif, digits = 3))
     "}")
 ))%>%
   formatStyle(
-    4:9,
+    4:ncol(results_period_long),
     color = styleInterval(c(0.05,0.1), c('blue',"red", 'black'))
   )
 

@@ -43,7 +43,7 @@
                 "model_5": "log_q_gdp logdiff_a_deflator",
                 "model_6": "log_q_emp"
         },
-        "conf": "68 ",
+        "conf": "68",
         "main": "gdp inflation",
         "prefer": {
                 "model_1": true,

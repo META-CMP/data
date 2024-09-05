@@ -26,11 +26,10 @@ library(lmtest)
 
 data<-data_back
 
-out<-'inflation'#c("output", "inflation", "unemp", "emp")
+out<-'output'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
-periods <- c(12)
-data<-data %>% filter(period.month %in% periods)# omit two studies which lead to issues if we use winsorized data
+
 
 data<-data %>% filter(quality_concern!=1)
 
@@ -47,14 +46,24 @@ data<-data %>% group_by(period.month) %>%
 data<-data %>% 
   mutate(before_2020=ifelse(pub_year>4,1,0))
 
+
+
+
+###### to filter out negative effects
+data<-data %>% filter(mean.effect<=0)
+
+
 # As in the original paper we use the inverse of the number of tests presented in the same article to weight observations. Therefore we obtain obs_weight by:
 ########### Maybe this should be done for the smaller datasets used for the estimation??
 data<-data %>% 
-  group_by(key) %>% mutate(obs_weight=1/n()) %>% ungroup()
+  group_by(key,period.month) %>% mutate(obs_weight=1/n()) %>% ungroup()
 
 
 
+###### to filter out positive effefts
+#data<-data %>% filter(mean.effect>=0)
 
+#threshold<-1
 run_probit_analysis <- function(data, delta, threshold, weights_col, cluster_var) {
   
   # Create binomial variable
@@ -94,22 +103,40 @@ run_probit_analysis <- function(data, delta, threshold, weights_col, cluster_var
   list(model = model, margins_summary = margins_summary, model_summary = model_summary[,1:5])
 }
 
-data$`publication title`
-
-# Example usage of the function
-# Assuming 'data' is your data frame
-results <- run_probit_analysis(data, delta = 0.4, threshold = 1, weights_col = "obs_weight", cluster_var = "key")
 
 
+periods <- c(3, 6, 12, 15, 18,21, 24, 30, 36)
+
+
+#object<-c("MAIVE coefficient","MAIVE standard error","F-test of first step in IV","Hausman-type test (to be used with caution)","Critical Value of Chi2(1)","AR Confidence interval")
+
+brodeur_list<-list()
+
+
+
+for (x in periods) {
+  print(paste("Processing period:", x))
+  
+  # Subset data for the current period
+  data_period <- subset(data, period.month %in% x)
+
+  # Example usage of the function
+  # Assuming 'data' is your data frame
+  results <- run_probit_analysis(data_period, delta = 0.5, threshold = 1, weights_col = "obs_weight", cluster_var = "key")
+
+  
+  brodeur_list[[paste0(x, ".brodeur")]]<-results
+}  
+  
 # threshold <- 1
 # delta <- 0.1
 # weights_col<-"obs_weight"
 # cluster_var<-"key"
 
-
+resulsts<-lapply(brodeur_list, `[[`, 3)
 
 library(DT)
-datatable(results$model_summary %>% mutate(across(is.numeric, signif, digits = 3)), rownames = FALSE, options = list(
+datatable(resulsts[[5]] %>% mutate(across(is.numeric, signif, digits = 3)), rownames = FALSE, options = list(
   dom = 't',
   ordering=F,
   pageLength = 9,
@@ -123,6 +150,29 @@ datatable(results$model_summary %>% mutate(across(is.numeric, signif, digits = 3
     color = styleInterval(c(0.05,0.1), c('blue',"red", 'black'))
   )
 
+
+
+############################################################################# plot some dependencies ##############################
+
+thresholds <- c(1,1.645, 1.96)
+deltas <- c(0.5, 0.4, 0.3, 0.2, 0.1, 0.075, 0.05)
+
+data <- data %>% 
+  mutate(binomial = ifelse(z_stat >= thresholds[1], 1, 0),
+         within_delta = abs(z_stat - thresholds[1]) < deltas[1]
+  )
+
+
+ggplot(data, aes(x =pub_year , y = binomial)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE) +
+  theme_classic()
+
+
+ggplot(data, aes(x =mean.effect , y = log(1/StandardError))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE) +
+  theme_classic()
 
 # ##################################################### brodeur regressopm results currently not replicaated #####################################################
 # 

@@ -20,7 +20,7 @@ library(JWileymisc) # for Winsorization
 
 data<-data_back
 
-out<-'output'#c("output", "inflation", "unemp", "emp")
+out<-'inflation'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
 
@@ -64,10 +64,10 @@ data$cbanker<-ifelse(data$cbanker==1,"cbanker","other")
 p<-ggplot(data, aes(x = z_stat)) +
   geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
   geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.3) + 
-  facet_wrap(~ period.month+transformed, scales = "free") +
+  facet_wrap(~ period.month, scales = "free") +
   geom_vline(xintercept = c(1, 1.65, 1.96), linetype = "solid") +
   stat_function(
-    fun = function(x) dt(x, df = 2, ncp = 1.4),
+    fun = function(x) dt(x, df = 2.5, ncp = 1.2),
     color = "red", linetype = "dashed", size = 1
   ) +
   labs(title = paste0("Density plot of Z-statistic - x months after the MP shock (",out,")"), x = "Z-statistic (negative values only)", y = "") +
@@ -75,7 +75,7 @@ p<-ggplot(data, aes(x = z_stat)) +
   theme_classic()
 
 p
-ggsave(filename = paste0("All_methods_transformed",out, ".png"), plot = p, bg = "white", width = 12, height = 7, dpi = 100)
+ggsave(filename = paste0("All_methods",out, ".png"), plot = p, bg = "white", width = 12, height = 7, dpi = 100)
 
 ggplot(data %>% filter(is_top_tier==1), aes(x = z_stat_winsor, ..density..)) +
   geom_density(fill = "blue", alpha = 0.2,adjust = .7) +
@@ -278,8 +278,8 @@ for (i in 1:length(periods)) {
 
 df_np <- data.frame(
   period.month = unique(data$period.month),
-  df = c(1.65, 1.8, 2,2,2,2,2,2,3,4),
-  np = c(1.5, 1.1, 1.4, 1.4, 1.4, 1.4, 1.4,1.6, 1.5, 1.2)
+  df = c(2, 2,2),
+  np = c(1.4, 1.4, 1.4)
 )
 
 
@@ -301,16 +301,16 @@ for (i in 1:length(periods)) {
   p <- ggplot(data_gg, aes(x = z_stat_winsor)) +
     geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
     geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
-    geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.2) + 
-    facet_wrap(~ chol_ident, scales = "free") +
-    geom_vline(xintercept = c(1, 1.65, 1.96), linetype = "dotted") +
+    geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.3) + 
+    #facet_wrap(~ chol_ident, scales = "free") +
+    geom_vline(xintercept = c(1, 1.96), linetype = "dotted") +
     stat_function(
       fun = function(x) dt(x, df = current_df, ncp = current_np),
       color = "red", linetype = "dashed", size = 1
     ) +
-    labs(title = paste0("Density plot for period ", current_period), x = "Value", y = "Density") +
+    labs(title = paste0("Density plot of Z-statistic - ",current_period," months after the MP shock (",out,")"), x = "Z-statistic (negative values only)", y = "") +
     xlim(-0.1, 10) +
-    theme_minimal()
+    theme_classic()
   
   # Save the plot
   ggsave(filename = paste0(current_period, ".png"), plot = p, bg = "white")
@@ -360,6 +360,11 @@ curve(dt(x, df = 2, ncp = 1.45), col = "blue", lwd = 2, add = TRUE)
 #############################################################################################################################################################################################################
 ########################################################################### fit distribution to all period.month observations ###############################################################################
 #############################################################################################################################################################################################################
+
+
+########### Try to fit distribution to period.month ==4: 
+library(fitdistrplus)
+library(stats4)
 
 
 log_likelihood_nct <- function(df, ncp, observed_tvalues) {

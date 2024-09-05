@@ -10,18 +10,26 @@ source("analysis//MetaStudiesApp-master/metastudiesplots.r")
 
 
 # define outfar and horizon 
-prd<-24
-outvar<-"output"
+prd<-36
+outvar<-"inflation"
 
 #filter data
 data_filtered <- data %>% filter(outcome==outvar & period.month==prd & !quality_concern)
 
 
+wins<-0.02
+
+data_filtered<-data_filtered %>% group_by(period.month) %>% mutate(StandardError=(SE.upper+SE.lower)/2) %>%
+  mutate(standarderror_winsor=winsorizor(StandardError, c(wins), na.rm = TRUE)) %>%
+  mutate(mean.effect_winsor=winsorizor(mean.effect, c(wins), na.rm = TRUE)) %>% 
+  mutate(z_stat=abs(mean.effect/StandardError)) %>% 
+  mutate(z_stat_winsor=abs(mean.effect_winsor/standarderror_winsor)) %>% 
+  mutate(x=1:length(StandardError) / 100) %>% ungroup()
 
 
 #create list for kasy test and plots
 v = list()
-metadata=as.data.frame(data_filtered %>% select(mean.effect,SE.upper,key))
+metadata=as.data.frame(data_filtered %>% select(mean.effect_winsor,standarderror_winsor,key))
 v$X=metadata[,1]
 v$sigma=metadata[,2]
 
@@ -54,7 +62,7 @@ if (!v$symmetric) v$cutoffs= c(-rev(v$cutoffs), 0 ,v$cutoffs)
 v$estimates=metastudies_estimation(v$X,v$sigma,v$cutoffs, v$symmetric, model= v$modelmu)
 
 
-estimates_plot<-function(cutoffs, symmetric, estimates, model="normal"){
+estimates_plot<-function(cutoffs, symmetric, estimates, model="t"){
   
   n=500
   Psihat=estimates$Psihat
@@ -72,11 +80,11 @@ estimates_plot<-function(cutoffs, symmetric, estimates, model="normal"){
   dens$f=dt(((dens$z - Psihat[1])/ Psihat[2]), df=df)/Psihat[2]
   names(dens)[names(dens) == 'f'] <- 'density of true effect'
   names(dens)[names(dens) == 'p'] <- 'publication probability'
-  #dens<-dens[,-3] # uncomment if you only want to show the stairs. 
+  dens<-dens[,-3] # uncomment if you only want to show the stairs. 
   
   dens=melt(dens, id="z")
   ggplot(dens, aes(x=z, y=value)) +
-    xlab(paste("Z, ", intToUtf8(952)))+
+    xlab(paste("Z"))+#, ", intToUtf8(952))
     ylab("")+
     geom_line(size=2, color="blue") +
     facet_grid(variable ~ .,  scales = "free_y") +
@@ -92,7 +100,7 @@ estimates_plot<-function(cutoffs, symmetric, estimates, model="normal"){
 # Plot Kasy test statistics
 p<-estimates_plot(v$cutoffs, v$symmetric,v$estimates, model= v$modelmu)
 
-ggsave(filename = paste0("kasy ",prd, ".png"), plot = p, bg = "white", width = 4, height = 4, dpi = 150)
+ggsave(filename = paste0("kasy_",outvar,"_",prd, ".png"), plot = p, bg = "white", width = 4, height = 4, dpi = 150)
 
 # Print Kasy test staistics
-estimatestable(v$estimates$Psihat, v$estimates$SE, v$cutoffs, v$symmetric, v$modelmu)
+#estimatestable(v$estimates$Psihat, v$estimates$SE, v$cutoffs, v$symmetric, v$modelmu)

@@ -259,7 +259,6 @@ model <- meta_analysis(data, outvar = "output", se_option = "avg", periods = cho
 
 modelsummary::modelsummary(model, output = "gt", stars = TRUE, conf_level = 0.80, title = paste0("PEESE output"), gof_map = NULL)
 
-
 # define best practice here
 best_pract<-c(1,0,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,1)
 
@@ -356,7 +355,7 @@ data %>% dplyr::select(key,model_id,num_cit,pub_year,journal_impact) %>% mutate(
 
 
 
-#########################################################################  correlation plot #########################################################################
+#########################################################################  correlation table #########################################################################
 
 
 
@@ -421,36 +420,9 @@ dev.off()
 
 
 
-
-
-
-
-
-
-
-
-
 ###################################################################################################################################################################################
-###################################################################################### vif and old code ###########################################################################
+###################################################################################### VIF ########################################################################################
 ###################################################################################################################################################################################
-
-
-# +fexch#+real_output # only for output regression
-
-# currently not included: rate_mean.effect (due to missing data),country_dev, conf, intrest_rate, external control variables. (periodicity does not really make sense the way it currently looks, we would need to replace the log a values) (real output does not make sense currently, we would need to check the non real ones again.) (initial shock size needs to be adjusted - size)
-
-# small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+cbanker+is_top_tier+is_top_5+journal_impact+num_cit+main_research_q
-# 
-# small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+cbanker+is_top_tier+is_top_5+log(1+journal_impact)+log(1+num_cit)
-# 
-# #lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+convent+journal_impact+num_cit+main_research_q einstweilen raus
-# 
-# #colSums(is.na(data_period_winsor %>% select(standarderror_winsor,group_ident_broad,lp,vecm,dyn_ols,fvar,tvar,gvar,dsge,varother,cbanker,is_top_tier,is_top_5)))
-# 
-# 
-# 
-# external<- mean.effect_winsor ~tradegl+log(infl)+fingl+findev+cbi+log(gdppc)+exrate
-
 
 
 data<-data %>% filter(outcome=="output" & quality_concern!=1)
@@ -548,67 +520,3 @@ coef_test_data<-data.table::rbindlist(coef_test_data, fill = T,idcol = ".id")
 coef_test_data
 
 
-# 
-# 
-# library(modelsummary)
-# 
-# # Define the list of periods and initialize results list
-# periods <- c(3, 6, 12, 18, 24, 30, 36)
-# results_list <- list()
-# 
-# # Define the equations
-# equations <- list(
-#   small = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
-#   small_alt = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + convent + main_research_q,
-#   small2 = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + log(1 + journal_impact) + log(1 + num_cit) + pub_year,
-#   small_check = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + transformation + cum,
-#   ex = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + tradegl + log(infl) + fingl + findev + cbi + log(gdppc) + exrate,
-#   int = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + lrir + fx + foreignir + inflexp + eglob + find + outpgap + comprice,
-#   big = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
-#   large = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + upr + lor + hike + cut + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
-#   large_alt = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + upr + lor + hike + cut + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + convent + main_research_q
-# )
-# 
-# # Loop over periods and equations
-# for (x in periods) {
-#   print(paste("Processing period:", x))
-#   
-#   # Subset data for the current period
-#   data_period <- subset(data, period.month %in% x)
-#   
-#   data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
-#   data_period$precision <- 1 / data_period$StandardError
-#   
-#   # Winsorize data
-#   data_period_winsor <- data_period
-#   data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
-#   data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
-#   data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
-#   
-#   # Calculate variance winsorised
-#   data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
-#   
-#   # Calculate PrecVariance winsorised
-#   data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
-#   
-#   # Fit models for each equation
-#   for (name in names(equations)) {
-#     formula <- equations[[name]]
-#     model <- lm(formula, data = data_period_winsor, weights = precvariance_winsor)
-#     results_list[[paste0(x, ".", name)]] <- model
-#   }
-# }
-# 
-# # Define the period you want to filter for
-# desired_period <- 24
-# 
-# # Filter the results_list for the specific period
-# filtered_results <- results_list[grep(paste0("^", desired_period, "\\."), names(results_list))]
-# 
-# # Summarize the filtered models
-# modelsummary(filtered_results, output = "gt", stars = TRUE)
-# 
-# 
-# 
-# 
-# sum(data$decomposition,na.rm = FALSE)

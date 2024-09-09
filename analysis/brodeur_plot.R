@@ -446,48 +446,103 @@ for (i in 1:length(periods)) {
 
 ################################################################################ replicate results of brodeuer ###########################################################
 
-# # Set the working directory
-# setwd("C:/Users/Enzinger/Downloads/R_brodeur/R/data")
-# 
-# # Load the necessary libraries
-# library(dplyr)
-# library(haven)
-# library(readr)
-# library(ggplot2)
-# 
-# 
-# # Load the data
-# data.frame <- read.csv("MM Data1.csv")
-# 
-# 
-# 
-# #Calculate the z-statistic 
-# #mean effect/SE
-# 
-# # Define the methods and their corresponding df and np values
-# methods <- c("DID", "IV", "RCT", "RDD")
-# df <- c(2, 2, 2, 2)
-# np <- c(1.81, 1.65, 1.16, 1.51)
-# 
-# # Generate x
-# data.frame$x <- 1:nrow(data.frame) / 100
-# data.frame$x[data.frame$x > 1000] <- NA
-# 
-# # Loop over each method
-# for (i in 1:length(methods)) {
-#   method <- methods[i]
-#   
-#   # Generate pdf_t
-#   data.frame$pdf_t <- dt(data.frame$x, df[i], np[i])
-#   
-#   # Plot
-#   plot(data.frame$pdf_t ~ data.frame$x, type = "l", lty = 2, xlab = "z-statistic", ylab = "Density",
-#        main = paste("Density plot for method", method), xlim = c(0, 10), ylim = c(0, 0.4))
-#   lines(density(data.frame$t[data.frame$method == method & data.frame$t < 10]), col = "black")
-#   abline(v = c(1,1.65, 1.96), lty = "dotted")
-#   
-#   # Save the plot
-#   dev.copy(png, filename = paste0(method, ".png"))
-#   dev.off()
-# }
-# 
+# Set the working directory
+setwd("C:/Users/Enzinger/Downloads/R_brodeur/R/data")
+
+# Load the necessary libraries
+library(dplyr)
+library(haven)
+library(readr)
+library(ggplot2)
+
+
+# Load the data
+data.frame <- read.csv("MM Data1.csv")
+
+
+
+#Calculate the z-statistic
+#mean effect/SE
+
+# Define the methods and their corresponding df and np values
+methods <- c("DID", "IV", "RCT", "RDD")
+df <- c(2, 2, 2, 2)
+np <- c(1.81, 1.65, 1.16, 1.51)
+
+# Generate x
+data.frame$x <- 1:nrow(data.frame) / 100
+data.frame$x[data.frame$x > 1000] <- NA
+
+# Loop over each method
+for (i in 1:length(methods)) {
+  method <- methods[i]
+
+  # Generate pdf_t
+  data.frame$pdf_t <- dt(data.frame$x, df[i], np[i])
+
+  # Plot
+  plot(data.frame$pdf_t ~ data.frame$x, type = "l", lty = 2, xlab = "z-statistic", ylab = "Density",
+       main = paste("Density plot for method", method), xlim = c(0, 10), ylim = c(0, 0.4))
+  lines(density(data.frame$t[data.frame$method == method & data.frame$t < 10]), col = "black")
+  abline(v = c(1,1.65, 1.96), lty = "dotted")
+
+  # Save the plot
+  dev.copy(png, filename = paste0(method, ".png"))
+  dev.off()
+}
+
+
+
+###################################################################### Estimate distribution for brodeur sampel ###########################################################
+library(fitdistrplus)
+library(stats4)
+
+
+test<-data.frame %>% filter(method=="IV")
+
+# set likelihood for non central t distribution
+log_likelihood_nct <- function(df, ncp, observed_tvalues) {
+  -sum(dt(observed_tvalues, df = df, ncp = ncp, log = TRUE))
+}
+
+
+# set function to optimize parameters
+optimize_parameters <- function(observed_tvalues, initial_df = 2, initial_ncp = 1.65) {
+  # Define the log-likelihood function for optimization
+  log_likelihood <- function(df, ncp) {
+    log_likelihood_nct(df, ncp, observed_tvalues)
+  }
+  
+  # Use optimization to estimate the parameters
+  fit <- mle(log_likelihood, start = list(df = initial_df, ncp = initial_ncp))
+  
+  # Extract the estimated parameters
+  df_est <- coef(fit)["df"]
+  ncp_est <- coef(fit)["ncp"]
+  
+  return(list(df = df_est, ncp = ncp_est))
+}
+
+
+###### estimate the parameters of the t distribution using all estimates with a z-Value larger than 5 as in Brodeur 2020. The threshold could be set to any particular value. Brodeur argues that over 5 there should be no p-hacking going on and therefore he uses that value. This way we obtain the estimate of the df (degrees of freedom) and ncp (non centrality) parameter. 
+
+fit_all_periods <- function(data, threshold = 5) {
+  results <- data %>%
+    filter(t > threshold) %>%
+   # group_by(period.month) %>%
+    summarise(
+      params = list(optimize_parameters(t - threshold)),
+      .groups = 'drop'
+    ) %>%
+    mutate(
+      df = map_dbl(params, "df"),
+      ncp = map_dbl(params, "ncp")
+    )%>%
+    #select(-params)
+    
+    return(results)
+}
+
+# fit distribution to our dataset
+results <- fit_all_periods(test)
+

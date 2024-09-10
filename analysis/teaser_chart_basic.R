@@ -2,8 +2,6 @@ rm(list = ls())
 
 
 
-setwd("~/data")
-
 # Load necessary libraries
 library(dplyr)
 library(here)
@@ -24,10 +22,6 @@ source(here("analysis/R/kasy_RobustVariance.R"))
 source(here("analysis/R/kasy_MetaStudiesPlots.R"))
 
 ################################################################################
-# Results for output
-# Filter the data
-filtered_data <- data %>%
-  filter(!quality_concern, period.month %in% seq(0,60, by = 3))#, us==1
 
 
 
@@ -41,7 +35,7 @@ conf_lev <- 0.89  # Confidence level
 
 # Filter the data
 filtered_data <- data %>%
-  filter(!quality_concern, period.month %in% seq(3,60, by = 3), outcome ==out)#, us==1
+  filter(!quality_concern, period.month %in% seq(0,60, by = 3), outcome ==out)#, us==1
 
 # Function to perform meta-analysis for a given wins_para
 perform_meta_analysis <- function(data, wins) {
@@ -76,7 +70,7 @@ perform_meta_analysis <- function(data, wins) {
         wins = wins,
         prec_weighted = FALSE,
         estimation = "AK",
-        cluster_se = FALSE,
+        cluster_se = TRUE,
         cutoff_val=1,
         AK_modelmu = "normal",
         AK_symmetric = FALSE,
@@ -145,24 +139,17 @@ analyze_subsample <- function(subsample_id) {#, us_value, group_value
 # Initialize a list to store results
 all_results <- list()
 
-# Loop over each combination
-#for (i in 1:nrow(combinations)) {
-  # us_value <- combinations$us_value[i]
-  # group_value <- combinations$group_value[i]
-  
-  # Perform analysis on 10 subsamples for the current combination of 'us' and 'group_ident_broad'
+
+########################## combute results using the functions from above
 results <- lapply(1:10, analyze_subsample)
   
 
-  
-  # Add the results to the list
-#  all_results[[paste(us_value, group_value, sep = "_")]] <- all_results_df
-
-
-  # Combine results for all subsamples
+# Combine results for all subsamples
 all_results_df <- do.call(rbind, results)
 
 
+
+#### use 95%  region of estimate per period. 
 min_max_per_period <- all_results_df %>%
   group_by(period) %>%
   summarise(
@@ -172,8 +159,14 @@ min_max_per_period <- all_results_df %>%
 
 
 
-
+# set winsorizatoin parameter for the average effect
 wins_para <- 0.02
+
+
+
+
+
+############################################################## plot graph
 
 # Generate the average IRF plot with PEESE correction
 out_avg_irf_plot <- plot_average_irfs(
@@ -208,16 +201,3 @@ out_avg_irf_plot <- plot_average_irfs(
 out_avg_irf_plot
 
 
-### old code to be added to meta_analysis code ####
-# save effect after publication bias correction
-# Set column name of the df to current horzion
-# new_col_name <- paste0("Horizon_", x)
-# 
-# coef_df[[new_col_name]]<-coef(reg_result)[1]
-# 
-# results_list<-list(results_list,coef_df)
-# 
-# 
-# # Create df list for coefficients
-# object<-c("coefficient")
-# coef_df<-data.frame(object)

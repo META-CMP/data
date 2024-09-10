@@ -247,7 +247,7 @@ data$transformed<-as.factor(data$transformed)
 
 
 # Explanatory variables for each formula (excluding "standarderror_winsor")
-equation <- list("group_ident_broad" ,"top_5_or_tier", "cbanker","pub_year", "main_research_q", "transformed", "cum", "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes","convent")
+equation <- list("group_ident_broad" ,"top_5_or_tier", "cbanker","pub_year", "main_research_q", "transformed", "cum", "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes","convent")#,"month","mean_year","ea12","us","upper_middle","cut","hike","lor","upr"
 
 ###Output
 

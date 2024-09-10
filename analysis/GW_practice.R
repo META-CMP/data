@@ -9,11 +9,12 @@
 rm(list = ls())
 
 
+library(here)
 
-setwd("~/data")
 
+data_path <- here("data/preliminary_data_test.RData") # works
+load(data_path)
 
-source("data/data_prep.R")
 
 data_back<-data
 
@@ -30,20 +31,21 @@ if (!require('writexl')) install.packages('writexl'); library('writexl')
 
 data<-data_back
 
-out<-'gdp'#c("gdp", "inflation", "unemp", "emp")
-outcome<-"output" # c("output", "the price level", "employment", "unemployment")
+out<-'output'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
-periods <- c(3, 6, 12, 18, 24, 30, 36,48)
+periods <- c(3, 12, 24,36,48)
 data<-data %>% filter(period.month %in% periods)#
 
+# winsorization level
+wins<-0.02
 
 data<-data %>% group_by(period.month) %>% mutate(StandardError=(SE.upper+SE.lower)/2) %>%
-  mutate(standarderror_winsor=winsorizor(StandardError, c(0.02), na.rm = TRUE)) %>%
-  mutate(mean.effect_winsor=winsorizor(mean.effect, c(0.02), na.rm = TRUE))
+  mutate(standarderror_winsor=winsorizor(StandardError, wins, na.rm = TRUE)) %>%
+  mutate(mean.effect_winsor=winsorizor(mean.effect, wins, na.rm = TRUE))
 
 
-#prepare columns - and select columns 
+##### prepare columns - and select columns 
 data$na<-NA
 data$na1<-NA
 data$na2<-NA
@@ -54,7 +56,9 @@ data$layer<-"N"
 data <- data %>%
   mutate(list_countries = sapply(list_of_countries, function(x) paste(x, collapse = " ")))
 
-data<-data %>% select(mean.effect_winsor,standarderror_winsor,na,na1,start_year,end_year,est,freq,layer,na2,na3,list_countries)
+
+#### select all necesarry variables 
+data<-data %>% dplyr::select(period.month,mean.effect_winsor,standarderror_winsor,na,na1,start_year,end_year,est,freq,layer,na2,na3,list_countries)
 
 # Set conservativeIV
 conservativeIV <- 1
@@ -62,7 +66,11 @@ conservativeIV <- 1
 # Rename variables
 colnames(data) <- c("period.month","beta", "se", "pcc", "se_pcc", "start", "end", "est", "freq", "layer", "list_regions", "numb_regions", "list_countries")
 
-data<-data %>% filter(period.month==12) %>% ungroup() %>% select(-period.month)
+
+
+
+##### select respective period
+data<-data %>% filter(period.month==12) %>% ungroup() %>% dplyr::select(-period.month)
 
 # Determine the number of moderators
 N_vars <- ncol(data)
@@ -72,10 +80,12 @@ M <- nrow(data)
 # Display information about the number of moderators
 cat("You work with", N_mods, "moderators\n")
 
-for (i in 13:N_vars) {
-  col_name <- paste("mod", i-12, sep = "")
-  colnames(data)[i] <- col_name
-}
+
+###### uncomment this if moderators are added
+# for (i in 13:N_vars) {
+#   col_name <- paste("mod", i-12, sep = "")
+#   colnames(data)[i] <- col_name
+# }
 
 
 # Check whether to analyze regression coefficients or PCCs
@@ -134,7 +144,8 @@ data$list[data$n_layer == 3] <- data$list_countries[data$n_layer == 3]
 data$n_list[data$n_layer == 2] <- lengths(strsplit(data$list_countries[data$n_layer == 2], " "))
 data$list[data$n_layer == 2] <- data$list_countries[data$n_layer == 2]
 
-data$n_list[data$n_layer == 1] <- lengths(strsplit(data$list_regions[data$n_layer == 1], " "))
+###### uncomment if regions are used. 
+#data$n_list[data$n_layer == 1] <- lengths(strsplit(data$list_regions[data$n_layer == 1], " "))
 data$list[data$n_layer == 1] <- data$list_regions[data$n_layer == 1]
 data$name_upper[data$n_layer == 1] <- data$list_countries[data$n_layer == 1]
 
@@ -378,8 +389,8 @@ for (i in 1:M) {
 Sigma_re <- Sigma + re_diag
 Omega_re <- Omega + re_diag
 
-# Save Omega_re to an Excel file
-write_xlsx(as.data.frame(Omega_re), path = "Omega_matrix.xlsx", col_names = FALSE)
+# Save Omega_re to an Excel file ######## do not save it to a excel file
+#write_xlsx(as.data.frame(Omega_re), path = "Omega_matrix.xlsx", col_names = FALSE)
 
 # Save results      
 Omega12 <- t(solve(chol(Omega_re)))        
@@ -441,3 +452,5 @@ if (N_mods > 0) {
    summary(fe_wls_model)
    
 }
+
+#summary(gw_model)

@@ -6,10 +6,10 @@ rm(list = ls())
 
 
 
-setwd("~/data")
+library(here)
 
-
-load("data/preliminary_data_test.RData")
+data_path <- here("data/preliminary_data_test.RData") # works
+load(data_path)
 
 data_back<-data
 
@@ -30,27 +30,33 @@ out<-'output'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
 
-
+# set quality concern
 data<-data %>% filter(quality_concern!=1)
 
+# set winsorization level
+wins<-0.02
 # calculate z_statistic and winsoirzised z-statistic. Probably the winzorized one is irrelevant. 
 data<-data %>% group_by(period.month) %>% 
   mutate(StandardError=(SE.upper+SE.lower)/2) %>%
-  mutate(standarderror_winsor=winsorizor(StandardError, c(0.02), na.rm = TRUE)) %>%
-  mutate(mean.effect_winsor=winsorizor(mean.effect, c(0.02), na.rm = TRUE)) %>% 
+  mutate(standarderror_winsor=winsorizor(StandardError, wins, na.rm = TRUE)) %>%
+  mutate(mean.effect_winsor=winsorizor(mean.effect, wins, na.rm = TRUE)) %>% 
   mutate(z_stat=abs(mean.effect/StandardError)) %>% 
   mutate(z_stat_winsor=abs(mean.effect_winsor/standarderror_winsor)) 
 
 
-# Create dummy variables before for estimates before 2020.
+# Create dummy variables for estimates before 2020.
 data<-data %>% 
   mutate(before_2020=ifelse(pub_year>4,1,0))
 
 
 
 
-###### to filter out negative effects
+###### to investigate only negative effects (since the kasy analysis shows that there is a difference in the likelihodd to publish negative significant or positive significant results.)
 data<-data %>% filter(mean.effect<=0)
+
+
+###### to filter out positive effefts
+#data<-data %>% filter(mean.effect>=0)
 
 
 # As in the original paper we use the inverse of the number of tests presented in the same article to weight observations. Therefore we obtain obs_weight by:
@@ -60,10 +66,8 @@ data<-data %>%
 
 
 
-###### to filter out positive effefts
-#data<-data %>% filter(mean.effect>=0)
 
-#threshold<-1
+# create function to run the probit analysis for a given delta and threhold using clustered standard errors and weights. #### HOWEVER the margInal effects do not properly consider the clustered standard errors. The marginal effects need to used to economically interepret the size of the coeffcients. The orginal coeffcients can not be interpreted in such a way, but only their sign. 
 run_probit_analysis <- function(data, delta, threshold, weights_col, cluster_var) {
   
   # Create binomial variable
@@ -120,23 +124,27 @@ for (x in periods) {
   # Subset data for the current period
   data_period <- subset(data, period.month %in% x)
 
-  # Example usage of the function
-  # Assuming 'data' is your data frame
+  # Use the function for delta =0.5 and the a threshold of 1 (representing the 68% confidence level). The delta and the threshold can be adjusted accordingly but probably this is already the most sensible cofiguration if look at the brodeur plots. 
   results <- run_probit_analysis(data_period, delta = 0.5, threshold = 1, weights_col = "obs_weight", cluster_var = "key")
 
   
   brodeur_list[[paste0(x, ".brodeur")]]<-results
 }  
-  
-# threshold <- 1
-# delta <- 0.1
-# weights_col<-"obs_weight"
-# cluster_var<-"key"
 
+
+# filter out the model_summary results for all periods (these are not the marginal effects)
 resulsts<-lapply(brodeur_list, `[[`, 3)
 
+
+# chose desired period for which the results should be shown  
+desired_period.month <- 12
+index<-which(periods%in% desired_period.month)
+index
+
+
+# print the table for the respective period chosen above. 
 library(DT)
-datatable(resulsts[[5]] %>% mutate(across(is.numeric, signif, digits = 3)), rownames = FALSE, options = list(
+datatable(resulsts[[index]] %>% mutate(across(is.numeric, signif, digits = 3)), rownames = FALSE, options = list(
   dom = 't',
   ordering=F,
   pageLength = 9,
@@ -152,27 +160,27 @@ datatable(resulsts[[5]] %>% mutate(across(is.numeric, signif, digits = 3)), rown
 
 
 
-############################################################################# plot some dependencies ##############################
+############################################################################# plot some descrpitives of the data ################################ ##############################
 
-thresholds <- c(1,1.645, 1.96)
-deltas <- c(0.5, 0.4, 0.3, 0.2, 0.1, 0.075, 0.05)
-
-data <- data %>% 
-  mutate(binomial = ifelse(z_stat >= thresholds[1], 1, 0),
-         within_delta = abs(z_stat - thresholds[1]) < deltas[1]
-  )
-
-
-ggplot(data, aes(x =pub_year , y = binomial)) +
-  geom_point() +
-  geom_smooth(method = "loess", se = FALSE) +
-  theme_classic()
-
-
-ggplot(data, aes(x =mean.effect , y = log(1/StandardError))) +
-  geom_point() +
-  geom_smooth(method = "loess", se = FALSE) +
-  theme_classic()
+# thresholds <- c(1,1.645, 1.96)
+# deltas <- c(0.5, 0.4, 0.3, 0.2, 0.1, 0.075, 0.05)
+# 
+# data <- data %>% 
+#   mutate(binomial = ifelse(z_stat >= thresholds[1], 1, 0),
+#          within_delta = abs(z_stat - thresholds[1]) < deltas[1]
+#   )
+# 
+# 
+# ggplot(data, aes(x =pub_year , y = binomial)) +
+#   geom_point() +
+#   geom_smooth(method = "loess", se = FALSE) +
+#   theme_classic()
+# 
+# 
+# ggplot(data, aes(x =mean.effect , y = log(1/StandardError))) +
+#   geom_point() +
+#   geom_smooth(method = "loess", se = FALSE) +
+#   theme_classic()
 
 # ##################################################### brodeur regressopm results currently not replicaated #####################################################
 # 

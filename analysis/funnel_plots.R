@@ -2,9 +2,10 @@ rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
 gc() #free up memory and report the memory usage.
 
 
-setwd("~/data")
-#Load data by running data_prep script
-source("analysis/data_prep.R")
+library(here)
+
+data_path <- here("data/preliminary_data_test.RData") # works
+load(data_path)
 
 
 data_back<-data
@@ -86,7 +87,7 @@ create_funnel_plot_grid <- function(data, period, winsorize = FALSE) {
 
 data<-data_back
 
-out<-'inflation'#c("gdp", "inflation", "unemp", "emp")
+out<-'inflation'#c("output", "inflation", "unemp", "emp")
 outcome<-"the price level" # c("output", "the price level", "employment", "unemployment")
 data <- subset(data, outcome %in% out)
 

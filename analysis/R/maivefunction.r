@@ -84,7 +84,7 @@ maive <- function(dat=dat,method=method,weight=weight,instrument=instrument,stud
     invNs<- 1/Ns
     sebs2<- sebs^2
     Xiv<-matrix(c(ones(M,1)[,1],invNs),nrow=M)
-    varreg1 <- lm(sebs2~ 0+Xiv) 
+    varreg1 <- lm(sebs2~ 0+Xiv) # needs to be discussed whether this add on would be valid: +data_period$month+data_period$cum+data_period$decomposition 
     dimiv<-2
   if (varreg1$coefficients[1]<0){
      Xiv<-invNs

@@ -28,11 +28,11 @@ data<-data %>% filter(quality_concern!=1)#  & transformation=="log"
 
 periods <- c(3, 12, 24,36,48)#c(3, 6, 12,15, 18,21, 24, 30, 36,48)
 data<-data %>% filter(period.month %in% periods)# omit two studies which lead to issues if we use winsorized data
-
+wins<-0.02
 
 data<-data %>% group_by(period.month) %>% mutate(StandardError=(SE.upper+SE.lower)/2) %>%
-                                    mutate(standarderror_winsor=winsorizor(StandardError, c(0.02), na.rm = TRUE)) %>%
-                                    mutate(mean.effect_winsor=winsorizor(mean.effect, c(0.02), na.rm = TRUE)) %>% 
+                                    mutate(standarderror_winsor=winsorizor(StandardError, wins, na.rm = TRUE)) %>%
+                                    mutate(mean.effect_winsor=winsorizor(mean.effect, wins, na.rm = TRUE)) %>% 
                                     mutate(z_stat=abs(mean.effect/StandardError)) %>% 
                                     mutate(z_stat_winsor=abs(mean.effect_winsor/standarderror_winsor)) %>% 
                                     mutate(x=1:length(StandardError) / 100)

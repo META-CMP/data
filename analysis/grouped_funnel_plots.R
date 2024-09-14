@@ -2,9 +2,10 @@ rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
 gc() #free up memory and report the memory usage.
 
 
-setwd("~/data")
-#Load data by running data_prep script
-load("data/preliminary_data_test.RData")
+library(here)
+
+data_path <- here("data/preliminary_data_test.RData") # works
+load(data_path)
 
 
 data_back<-data

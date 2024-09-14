@@ -5,12 +5,12 @@ rm(list = ls())
 
 
 
-setwd("~/data")
+library(here)
 
-
-load("data/preliminary_data_test.RData")
-source("analysis/R/maivefunction.R")
-source("analysis/R/apply_winsorization.R")
+data_path <- here("data/preliminary_data_test.RData") # works
+load(data_path)
+source(here("analysis/R/maivefunction.R"))
+source(here("analysis/R/apply_winsorization.R"))
 
 data_back<-data
 
@@ -72,7 +72,7 @@ for (x in periods) {
   # method: PET:1, PEESE:2, PET-PEESE:3, EK:4 (default 3)
   method<-3
   # weighting: default no weight: 0 ; weights: 1, adjusted weights: 2 (default 0)
-  weight<-0
+  weight<-1
   # instrumenting (default 1)  1 yes, 0 no 
   instrument<-1
   # correlation at study level: none: 0 (default), fixed effects: 1, cluster: 2
@@ -98,6 +98,8 @@ for (x in periods) {
   
 }
 
+
+# show table
 library(DT)
 datatable(maive_df, rownames = FALSE, options = list(
   dom = 't',ordering=F,initComplete = JS(

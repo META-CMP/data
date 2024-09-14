@@ -2,11 +2,12 @@ rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
 gc() #free up memory and report the memory usage.
 
 
-setwd("~/data")
-#Load data by running data_prep script
-load("data/preliminary_data_test.RData")
-source("analysis/R/meta_analysis.R")
-source("analysis/R/apply_winsorization.R")
+library(here)
+
+data_path <- here("data/preliminary_data_test.RData") # works
+load(data_path)
+source(here("analysis/R/meta_analysis.R"))
+source(here("analysis/R/apply_winsorization.R"))
 
 
 data_back<-data
@@ -29,30 +30,14 @@ data<-data_back
 data<-data %>% filter(quality_concern!=1)
 
 
-############ Full possible model without external data.
+
+chosen_periods<-c(3, 6, 12, 18, 24, 36,48)
 
 
 
-data %>% dplyr::select(key,model_id,tradegl:exrate) %>% group_by(key,model_id) %>% summarise(across(tradegl:exrate, ~ mean(.x, na.rm = TRUE))) %>% mutate(infl=infl,gdppc=log(gdppc)) %>% 
-  pivot_longer(cols = tradegl:exrate, names_to = "variable", values_to = "value") %>% ggplot( aes(x = value)) +
-  geom_density(fill = "blue", alpha = 0.5) +
-  facet_wrap(~ variable, scales = "free") +
-  labs(title = "Density Plots for All Variables", x = "Value", y = "Density") +
-  theme_minimal()
-
-min_max_norm <- function(x) {
-  (x - min(x)) / (max(x) - min(x))
-}
-
-data %>% dplyr::select(key,model_id,num_cit,pub_year,journal_impact) %>% mutate(num_cit=log(1+num_cit),journal_impact=log(1+journal_impact)) %>% group_by(key,model_id) %>% summarise(across(num_cit:journal_impact, ~ mean(.x, na.rm = TRUE)))  %>% 
-  pivot_longer(cols = num_cit:journal_impact, names_to = "variable", values_to = "value") %>% ggplot( aes(x = value)) +
-  geom_density(fill = "blue", alpha = 0.5) +
-  facet_wrap(~ variable, scales = "free") +
-  labs(title = "Density Plots for All Variables", x = "Value", y = "Density") +
-  theme_minimal()
-
-
-chosen_periods<-c(3, 6, 12, 18, 24, 30, 36,48)
+######################################################################################################################################################################################################
+############################################################################################ Regressions #############################################################################################
+######################################################################################################################################################################################################
 
 
 ###################
@@ -62,27 +47,19 @@ chosen_periods<-c(3, 6, 12, 18, 24, 30, 36,48)
 
 outv<-"output"
 results1 <- meta_analysis(data , outvar = outv, se_option = "avg", periods = chosen_periods,
-                          wins = 0.02, prec_weighted = TRUE, estimation = "PEESE", cluster_se = TRUE, mods = c("group_ident_broad","top_5_or_tier"))#,"rate_pers"
-
-test<-results1[[1]]
-
-test
-
-
-modelsummary::modelsummary(results1, output = "gt", stars = TRUE, conf_level = 0.80, title = paste0("PEESE ",outv), gof_map = NULL, coef_map = c("(Intercept)"="Intercept","variance_winsor"= "Variance",'group_ident_broadhf' = 'High frequency', 'group_ident_broadnr' = 'Narrative','group_ident_broadsignr' = 'Sign restrictions','group_ident_broadidother' = 'Other identificiation ','top_5_or_tier' = 'Top tier publication'))
-
-
-modelsummary::modelsummary(results1, output = "latex_tabular", stars = TRUE, conf_level = 0.80, title = paste0("PEESE ",outv), gof_map = NULL, coef_map = c("(Intercept)"="Intercept","variance_winsor"= "Variance",'group_ident_broadhf' = 'High frequency', 'group_ident_broadnr' = 'Narrative','group_ident_broadsignr' = 'Sign restrictions','group_ident_broadidother' = 'Other identificiation ','top_5_or_tier' = 'Top tier publication'))
+                          wins = 0.02, prec_weighted = TRUE, estimation = "PEESE", cluster_se = TRUE, mods = c("group_ident_broad","top_5_or_tier","cbanker"))#,"rate_pers"
 
 
 
+# Create html output
+modelsummary::modelsummary(results1, output = "gt", stars = TRUE, conf_level = 0.80, title = paste0("PEESE ",outv), gof_map = NULL, coef_map = c("(Intercept)"="Intercept","variance_winsor"= "Variance",'group_ident_broadhf' = 'High frequency', 'group_ident_broadnr' = 'Narrative','group_ident_broadsignr' = 'Sign restrictions','group_ident_broadidother' = 'Other identificiation ','top_5_or_tier' = 'Top tier publication','cbanker' = 'Central bank related'))
 
-# 4,4% of the output studies have the output gatp in the model 
 
-# share<-data %>% 
-#   filter(outcome=="output" & quality_concern!=1) %>% 
-#   group_by(period.month,outpgap) %>%
-#   summarise(n = n())
+# create latex table
+modelsummary::modelsummary(results1, output = "latex_tabular", stars = TRUE, conf_level = 0.80, title = paste0("PEESE ",outv), gof_map = NULL, coef_map = c("(Intercept)"="Intercept","variance_winsor"= "Variance",'group_ident_broadhf' = 'High frequency', 'group_ident_broadnr' = 'Narrative','group_ident_broadsignr' = 'Sign restrictions','group_ident_broadidother' = 'Other identificiation ','top_5_or_tier' = 'Top tier publication','cbanker' = 'Central bank related'))
+
+
+
 
 #################################################################### different model comparison ################################################################
 # as factor transformation and relevel to log is baseline
@@ -95,33 +72,37 @@ data$transformed<-as.factor(data$transformed)
 ###################################### Output
 
 # Explanatory variables for each formula (excluding "standarderror_winsor")
-equations <- list(c("group_ident_broad" ,"top_5_or_tier"),
+equations <- list(c("group_ident_broad" ,"top_5_or_tier","cbanker"),
                  # c("group_ident_broad" ,"top_5_or_tier","I(top_5_or_tier*standarderror_winsor)"),
                   c("group_ident_broad" ,"top_5_or_tier", "cbanker","pub_year", "main_research_q"),               
                   c("group_ident_broad" ,"top_5_or_tier", "cbanker","pub_year", "main_research_q", "transformed", "cum"),
                   c("group_ident_broad" ,"top_5_or_tier", "cbanker","pub_year", "main_research_q", "transformed", "cum", "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice"),
-                  c("group_ident_broad", "cbanker","pub_year", "main_research_q", "transformed", "cum", "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes" ,"top_5_or_tier"))#,
+                  c("group_ident_broad", "cbanker","pub_year", "main_research_q", "transformed", "cum", "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes" ,"top_5_or_tier","month","mean_year","ea12","us","upper_middle","cut","hike","lor","upr"))#,
                   #("group_ident_broad","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes" ,"top_5_or_tier","convent"))
 
 
 results_list<-list()
 
+# loop through the equations
 for (i in 1:length(equations)) {
-    model <- meta_analysis(data, outvar = "inflation", se_option = "avg", periods = chosen_periods,
+    model <- meta_analysis(data, outvar = "output", se_option = "avg", periods = chosen_periods,
                            wins = 0.02, prec_weighted = TRUE, estimation = "PEESE", cluster_se = TRUE, mods = equations[[i]])
     results_list[[paste0("equation.", i)]] <- model
 }
 
-
+######### chose period which should be shown in the output
 desired_period <- 12
 index<-which(chosen_periods%in% desired_period)
 index
 # Filter the results_list for the specific period
 
+
+# Create html output
 modelsummary::modelsummary(lapply(results_list, `[[`, index), output = "gt", stars = TRUE, conf_level = 0.80, title = paste0("PEESE (Output) period - ",desired_period), gof_map = NULL)
 
 
-latex_table<-modelsummary::modelsummary(lapply(results_list, `[[`, index), output = "latex_tabular", stars = TRUE, conf_level = 0.80, title = paste0("PEESE (Output) period - ",desired_period), gof_map = NULL, coef_map = c("(Intercept)"="Intercept","standarderror_winsor"= "Standard Error",'group_ident_broadhf' = 'High frequency', 'group_ident_broadnr' = 'Narrative','group_ident_broadsignr' = 'Sign restrictions','group_ident_broadidother' = 'Other identificiation ','top_5_or_tier' = 'Top tier publication'),colnames = c("test","Equation 1", "Equation 2", "Equation 3", "Equation 4", "Equation 5"))
+# create latex table
+latex_table<-modelsummary::modelsummary(lapply(results_list, `[[`, index), output = "latex_tabular", stars = TRUE, conf_level = 0.80, title = paste0("PEESE (Output) period - ",desired_period), gof_map = NULL, coef_map = c("(Intercept)"="Intercept","variance_winsor"= "Variance",'group_ident_broadhf' = 'High frequency', 'group_ident_broadnr' = 'Narrative','group_ident_broadsignr' = 'Sign restrictions','group_ident_broadidother' = 'Other identificiation ','top_5_or_tier' = 'Top tier publication','cbanker' = 'Central bank related'))
 
 latex_table <- gsub(
   "& equation\\.1 & equation\\.2 & equation\\.3 & equation\\.4 & equation\\.5",
@@ -184,13 +165,13 @@ modelsummary::modelsummary(lapply(results_list, `[[`, index), output = "gt", sta
 ###################################### Output
 
 # Explanatory variables for each formula (excluding "standarderror_winsor")
-equations <- list(c("group_ident_broad" ,"top_5_or_tier","us","ea12"),
+equations <- list(c("group_ident_broad" ,"top_5_or_tier","us","ea12", "cbanker"),
                   # c("group_ident_broad" ,"top_5_or_tier","I(top_5_or_tier*standarderror_winsor)"),
                   c("group_ident_broad" ,"top_5_or_tier","us","ea12", "cbanker","pub_year", "main_research_q"),               
-                  c("group_ident_broad" ,"top_5_or_tier","us","ea12", "transformed", "cum"),
-                  c("group_ident_broad" ,"top_5_or_tier","us","ea12", "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice"),
-                  c("group_ident_broad","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes" ,"top_5_or_tier","us","ea12"),
-                  c("group_ident_broad","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes" ,"top_5_or_tier","us","ea12","convent"))
+                  c("group_ident_broad" ,"top_5_or_tier","us","ea12", "cbanker", "transformed", "cum"),
+                  c("group_ident_broad" ,"top_5_or_tier","us","ea12", "cbanker", "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice"),
+                  c("group_ident_broad","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes" ,"top_5_or_tier","us","ea12", "cbanker"),
+                  c("group_ident_broad","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes" ,"top_5_or_tier","us","ea12", "cbanker","convent"))
 
 
 results_list<-list()
@@ -202,7 +183,7 @@ for (i in 1:length(equations)) {
 }
 
 
-desired_period <- 24
+desired_period <- 12
 index<-which(chosen_periods%in% desired_period)
 index
 # Filter the results_list for the specific period
@@ -266,7 +247,7 @@ data$transformed<-as.factor(data$transformed)
 
 
 # Explanatory variables for each formula (excluding "standarderror_winsor")
-equation <- list("group_ident_broad" ,"top_5_or_tier", "cbanker","pub_year", "main_research_q", "transformed", "cum", "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes","convent")
+equation <- list("group_ident_broad" ,"top_5_or_tier", "cbanker","pub_year", "main_research_q", "transformed", "cum", "lrir", "fx", "foreignir", "inflexp", "eglob", "find", "outpgap", "comprice","lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "dsge", "varother", "panel", "bayes","convent")#,"month","mean_year","ea12","us","upper_middle","cut","hike","lor","upr"
 
 ###Output
 
@@ -278,6 +259,7 @@ model <- meta_analysis(data, outvar = "output", se_option = "avg", periods = cho
 
 modelsummary::modelsummary(model, output = "gt", stars = TRUE, conf_level = 0.80, title = paste0("PEESE output"), gof_map = NULL)
 
+# define best practice here
 best_pract<-c(1,0,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,1)
 
 
@@ -303,6 +285,15 @@ print(results)
 
 df_results <- do.call(rbind, lapply(results, as.data.frame))
 row.names(df_results)<-seq(3,57, by = 3)
+
+
+
+
+######################################################################################################################################################################################################
+############################################################################ Background information for regressions ##################################################################################
+######################################################################################################################################################################################################
+
+
 
 ######################################################################### calculate mean and sd for Reg variables ###################################################
 
@@ -340,6 +331,27 @@ results <- selected_df %>%
 print(results,n=35)
 
 
+
+############################################################################ plot density for specific explanatory variables #########################################################################
+
+
+data %>% dplyr::select(key,model_id,tradegl:exrate) %>% group_by(key,model_id) %>% summarise(across(tradegl:exrate, ~ mean(.x, na.rm = TRUE))) %>% mutate(infl=infl,gdppc=log(gdppc)) %>% 
+  pivot_longer(cols = tradegl:exrate, names_to = "variable", values_to = "value") %>% ggplot( aes(x = value)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  facet_wrap(~ variable, scales = "free") +
+  labs(title = "Density Plots for All Variables", x = "Value", y = "Density") +
+  theme_minimal()
+
+min_max_norm <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+data %>% dplyr::select(key,model_id,num_cit,pub_year,journal_impact) %>% mutate(num_cit=log(1+num_cit),journal_impact=log(1+journal_impact)) %>% group_by(key,model_id) %>% summarise(across(num_cit:journal_impact, ~ mean(.x, na.rm = TRUE)))  %>% 
+  pivot_longer(cols = num_cit:journal_impact, names_to = "variable", values_to = "value") %>% ggplot( aes(x = value)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  facet_wrap(~ variable, scales = "free") +
+  labs(title = "Density Plots for All Variables", x = "Value", y = "Density") +
+  theme_minimal()
 
 
 
@@ -408,36 +420,9 @@ dev.off()
 
 
 
-
-
-
-
-
-
-
-
-
 ###################################################################################################################################################################################
-###################################################################################### vif and old code ###########################################################################
+###################################################################################### VIF ########################################################################################
 ###################################################################################################################################################################################
-
-
-# +fexch#+real_output # only for output regression
-
-# currently not included: rate_mean.effect (due to missing data),country_dev, conf, intrest_rate, external control variables. (periodicity does not really make sense the way it currently looks, we would need to replace the log a values) (real output does not make sense currently, we would need to check the non real ones again.) (initial shock size needs to be adjusted - size)
-
-# small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+regime+upr+lor+hike+cut+decomposition+convent+cbanker+is_top_tier+is_top_5+journal_impact+num_cit+main_research_q
-# 
-# small<-mean.effect_winsor ~standarderror_winsor+group_ident_broad+cbanker+is_top_tier+is_top_5+log(1+journal_impact)+log(1+num_cit)
-# 
-# #lp+vecm+dyn_ols+fvar+tvar+gvar+dsge+varother+panel+bayes+convent+journal_impact+num_cit+main_research_q einstweilen raus
-# 
-# #colSums(is.na(data_period_winsor %>% select(standarderror_winsor,group_ident_broad,lp,vecm,dyn_ols,fvar,tvar,gvar,dsge,varother,cbanker,is_top_tier,is_top_5)))
-# 
-# 
-# 
-# external<- mean.effect_winsor ~tradegl+log(infl)+fingl+findev+cbi+log(gdppc)+exrate
-
 
 
 data<-data %>% filter(outcome=="output" & quality_concern!=1)
@@ -535,67 +520,3 @@ coef_test_data<-data.table::rbindlist(coef_test_data, fill = T,idcol = ".id")
 coef_test_data
 
 
-# 
-# 
-# library(modelsummary)
-# 
-# # Define the list of periods and initialize results list
-# periods <- c(3, 6, 12, 18, 24, 30, 36)
-# results_list <- list()
-# 
-# # Define the equations
-# equations <- list(
-#   small = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
-#   small_alt = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + convent + main_research_q,
-#   small2 = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + log(1 + journal_impact) + log(1 + num_cit) + pub_year,
-#   small_check = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + transformation + cum,
-#   ex = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + tradegl + log(infl) + fingl + findev + cbi + log(gdppc) + exrate,
-#   int = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + lrir + fx + foreignir + inflexp + eglob + find + outpgap + comprice,
-#   big = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
-#   large = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + upr + lor + hike + cut + decomposition + cbanker + is_top_tier + is_top_5 + pub_year,
-#   large_alt = mean.effect_winsor ~ standarderror_winsor + group_ident_broad + lp + vecm + dyn_ols + fvar + tvar + gvar + dsge + varother + panel + bayes + upr + lor + hike + cut + decomposition + cbanker + is_top_tier + is_top_5 + pub_year + convent + main_research_q
-# )
-# 
-# # Loop over periods and equations
-# for (x in periods) {
-#   print(paste("Processing period:", x))
-#   
-#   # Subset data for the current period
-#   data_period <- subset(data, period.month %in% x)
-#   
-#   data_period$StandardError <- (data_period$SE.upper + data_period$SE.lower) / 2
-#   data_period$precision <- 1 / data_period$StandardError
-#   
-#   # Winsorize data
-#   data_period_winsor <- data_period
-#   data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
-#   data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
-#   data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
-#   
-#   # Calculate variance winsorised
-#   data_period_winsor$variance_winsor <- data_period_winsor$standarderror_winsor^2
-#   
-#   # Calculate PrecVariance winsorised
-#   data_period_winsor$precvariance_winsor <- 1 / data_period_winsor$variance_winsor
-#   
-#   # Fit models for each equation
-#   for (name in names(equations)) {
-#     formula <- equations[[name]]
-#     model <- lm(formula, data = data_period_winsor, weights = precvariance_winsor)
-#     results_list[[paste0(x, ".", name)]] <- model
-#   }
-# }
-# 
-# # Define the period you want to filter for
-# desired_period <- 24
-# 
-# # Filter the results_list for the specific period
-# filtered_results <- results_list[grep(paste0("^", desired_period, "\\."), names(results_list))]
-# 
-# # Summarize the filtered models
-# modelsummary(filtered_results, output = "gt", stars = TRUE)
-# 
-# 
-# 
-# 
-# sum(data$decomposition,na.rm = FALSE)

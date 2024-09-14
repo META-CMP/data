@@ -2,9 +2,11 @@ rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
 gc() #free up memory and report the memory usage.
 
 
-setwd("~/data")
-#Load data by running data_prep script
-source("analysis/data_prep.R")
+library(here)
+
+
+data_path <- here("data/preliminary_data_test.RData") # works
+load(data_path)
 
 
 data_back<-data
@@ -19,8 +21,7 @@ library(JWileymisc) # for Winsorization
 
 data<-data_back
 
-out<-'inflation'#c("gdp", "inflation", "unemp", "emp")
-outcome<-"the price level" # c("output", "the price level", "employment", "unemployment")
+out<-'inflation'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
 
@@ -34,7 +35,7 @@ confint_data_regwa_topten <- list()
 
 periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
 
-
+wins<-0.02
 # Loop through periods
 for (x in periods) {
   print(paste("Processing period:", x))
@@ -48,8 +49,8 @@ for (x in periods) {
   
   # Winsorize data
   data_period_winsor <- data_period
-  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, c(0.02), na.rm = TRUE)
-  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, c(0.02), na.rm = TRUE)
+  data_period_winsor$standarderror_winsor <- winsorizor(data_period$StandardError, wins, na.rm = TRUE)
+  data_period_winsor$mean.effect_winsor <- winsorizor(data_period$mean.effect, wins, na.rm = TRUE)
   data_period_winsor$precision_winsor <- 1 / data_period_winsor$standarderror_winsor
   
   # Store the winsorized data

@@ -5,10 +5,11 @@ rm(list = ls())
 
 
 
-setwd("~/data")
+library(here)
 
+data_path <- here("data/preliminary_data_test.RData") # works
+load(data_path)
 
-load("data/preliminary_data_test.RData")
 
 data_back<-data
 
@@ -30,20 +31,22 @@ out<-'output'#c("output", "inflation", "unemp", "emp")
 data <- subset(data, outcome %in% out)
 
 periods <- c(3, 6, 12,15, 18,21, 24, 30, 36,48)
-data<-data %>% filter(period.month %in% periods)# omit two studies which lead to issues if we use winsorized data
+data<-data %>% filter(period.month %in% periods)
 
 data<-data %>% filter(quality_concern!=1)
+wins<-0.02
+
 
 data<-data %>% group_by(period.month) %>% mutate(StandardError=(SE.upper+SE.lower)/2) %>%
-  mutate(standarderror_winsor=winsorizor(StandardError, c(0.02), na.rm = TRUE)) %>%
-  mutate(mean.effect_winsor=winsorizor(mean.effect, c(0.02), na.rm = TRUE)) %>% 
+  mutate(standarderror_winsor=winsorizor(StandardError, wins, na.rm = TRUE)) %>%
+  mutate(mean.effect_winsor=winsorizor(mean.effect, wins, na.rm = TRUE)) %>% 
   mutate(z_stat=abs(mean.effect/StandardError)) %>% 
   mutate(z_stat_winsor=abs(mean.effect_winsor/standarderror_winsor)) %>% 
   mutate(x=1:length(StandardError) / 100)
 
 
-# look at data where most p-hacking happens propbably. 
-data_gg<-data# %>% filter(period.month <=30 & period.month >=12)
+# save under a different name 
+data_gg<-data
 
 
 ###### to filter out negative effects
@@ -55,7 +58,7 @@ data_gg<-data_gg %>% filter(mean.effect<=0)#& transformation=="log"
 
 
 
-###### function to calculate share and binomial test p.value per group 
+###### function to calculate share and binomial test p.value per group for a respective threshold and delta
 summarize_results <- function(df, group_var, threshold, delta) {
   group_var <- sym(group_var)
   
@@ -74,15 +77,17 @@ summarize_results <- function(df, group_var, threshold, delta) {
 }
 
 # Define thresholds and deltas
+# Threshold set to 68%,90%, and 95% confidence region
 thresholds <- c(1,1.645, 1.96)
+# define deltas the same way as in the Brodeur paper
 deltas <- c(0.5, 0.4, 0.3, 0.2, 0.1, 0.075, 0.05)
 
 
 
-# Apply the function across all thresholds and deltas per identification strategy
+# Apply the function across all thresholds and deltas per identification strategy # however we ignore the period.month  horizon. Therefore the data should be filtered to only contain periods which behave similar. For example with # data_gg %>% filter(period.month <=30 & period.month >=12)
 results_ident <- expand.grid(threshold = thresholds, delta = deltas) %>%
   pmap_dfr(function(threshold, delta) {
-    summarize_results(data_gg, "group_ident_broad", threshold, delta)
+    summarize_results(data_gg %>% filter(period.month <=30 & period.month >=12), "group_ident_broad", threshold, delta)
   })
 
 # Apply the function across all thresholds and deltas per period.month
@@ -93,9 +98,9 @@ results_period <- expand.grid(threshold = thresholds, delta = deltas) %>%
 
 
 
-# Transform the data for presentation
+# manipulate the resutls to show it in a table as in brodeur for identification strategy groups. 
 results_ident_long <- results_ident %>%
-  filter(threshold==1) %>% 
+  filter(threshold==1) %>% ######## select here the significance threshold. Currently it is set to 1, which represents the 68% confidence level. 
   mutate(threshold_delta = paste0(threshold, "±", delta)) %>%
   pivot_longer(cols = c(proportion, pvalue, obs),
                names_to = "measure",
@@ -103,9 +108,9 @@ results_ident_long <- results_ident %>%
   unite(measure_threshold_delta, measure, threshold_delta, sep = "_") %>%
   pivot_wider(names_from = group_ident_broad, values_from = value)
 
-
+# manipulate the resutls to show it in a table as in brodeur for period.month groups. 
 results_period_long <- results_period %>%
-  filter(threshold==1) %>% 
+  filter(threshold==1) %>%  ######## select here the significance threshold. Currently it is set to 1, which represents the 68% confidence level. 
   mutate(threshold_delta = paste0(threshold, "±", delta)) %>%
   pivot_longer(cols = c(proportion, pvalue, obs),
                names_to = "measure",
@@ -114,14 +119,19 @@ results_period_long <- results_period %>%
   pivot_wider(names_from = period.month, values_from = value)
 
 
-# Create the text table using stargazer
-stargazer(results_ident_long, type = "text",
+
+###################### plot tables
+
+# Create the latex table using stargazer
+stargazer(results_ident_long, type = "latex",
           summary = FALSE,
           title = "Summary of Results",
           align = TRUE,
           column.sep.width = "1pt",
           no.space = TRUE)
 
+
+# plot dt table for identification strategies
 
 library(DT)
 datatable(results_ident_long %>% mutate(across(is.numeric, signif, digits = 3)), rownames = FALSE, options = list(
@@ -139,9 +149,8 @@ datatable(results_ident_long %>% mutate(across(is.numeric, signif, digits = 3)),
   )
 
 
+# plot dt table different period.month observations.
 
-
-library(DT)
 datatable(results_period_long %>% mutate(across(is.numeric, signif, digits = 3)), rownames = FALSE, options = list(
   dom = 't',
   ordering=F,

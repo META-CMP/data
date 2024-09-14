@@ -2,8 +2,6 @@ rm(list = ls())
 
 
 
-setwd("~/data")
-
 # Load necessary libraries
 library(dplyr)
 library(here)
@@ -64,7 +62,7 @@ perform_meta_analysis <- function(data, wins) {
       periods = prd,
       wins = wins,
       ap = TRUE,
-      prec_weighted = FALSE,
+      prec_weighted = TRUE,
       estimation = "UWLS",
       cluster_se = TRUE
     ),
@@ -76,7 +74,7 @@ perform_meta_analysis <- function(data, wins) {
       wins = wins,
       prec_weighted = FALSE,
       estimation = "AK",
-      cluster_se = FALSE,
+      cluster_se = TRUE,
       cutoff_val=1,
       AK_modelmu = "t",
       AK_symmetric = FALSE,

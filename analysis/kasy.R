@@ -2,16 +2,21 @@ rm(list = ls())
 gc() #free up memory and report the memory usage.
 
 
-setwd("~/data")
-#Load data by running data_prep script
-load("data/preliminary_data_test.RData")
-source("analysis//MetaStudiesApp-master/metastudiesfunctions.r")
-source("analysis//MetaStudiesApp-master/metastudiesplots.r")
+library(here)
 
+# Load the data 
+data_path <- here("data/preliminary_data_test.RData")
+load(data_path)
+rm(data_path)
+
+
+source(here("analysis/R/kasy_MetaStudiesFunctions.R"))
+source(here("analysis/R/kasy_RobustVariance.R"))
+source(here("analysis/R/kasy_MetaStudiesPlots.R"))
 
 # define outfar and horizon 
 prd<-36
-outvar<-"inflation"
+outvar<-"output"
 
 #filter data
 data_filtered <- data %>% filter(outcome==outvar & period.month==prd & !quality_concern)
@@ -29,7 +34,7 @@ data_filtered<-data_filtered %>% group_by(period.month) %>% mutate(StandardError
 
 #create list for kasy test and plots
 v = list()
-metadata=as.data.frame(data_filtered %>% select(mean.effect_winsor,standarderror_winsor,key))
+metadata=as.data.frame(data_filtered %>% dplyr::select(mean.effect_winsor,standarderror_winsor,key))
 v$X=metadata[,1]
 v$sigma=metadata[,2]
 
@@ -45,7 +50,7 @@ v$sigma=metadata[,2]
 #### results are not the same as in the paper but the same as in the app
 #### standard errors do not seem to be clustered during the estimation. 
 
-# DEFINE settings for estimation
+###### DEFINE settings for estimation
 cutoffs<-c(1)#(1,1.645, 1.960, 2.576)
 symmetric<-FALSE#TRUE
 modelmu<-"t"#"t"
@@ -99,7 +104,7 @@ estimates_plot<-function(cutoffs, symmetric, estimates, model="t"){
 
 # Plot Kasy test statistics
 p<-estimates_plot(v$cutoffs, v$symmetric,v$estimates, model= v$modelmu)
-
+p
 ggsave(filename = paste0("kasy_",outvar,"_",prd, ".png"), plot = p, bg = "white", width = 4, height = 4, dpi = 150)
 
 # Print Kasy test staistics

@@ -52,9 +52,9 @@ waap_results <- meta_analysis(
   periods = prd,
   wins = wins_para,
   ap = TRUE,
-  prec_weighted = FALSE,
+  prec_weighted = TRUE,
   estimation = "UWLS",
-  cluster_se = FALSE
+  cluster_se = TRUE
 )
 
 # Perform meta-analysis with WAAP estimation
@@ -200,9 +200,9 @@ waap_results <- meta_analysis(
   periods = prd,
   wins = wins_para,
   ap = TRUE,
-  prec_weighted = FALSE,
+  prec_weighted = TRUE,
   estimation = "UWLS",
-  cluster_se = FALSE
+  cluster_se = TRUE
 )
 
 # Perform meta-analysis with WAAP estimation

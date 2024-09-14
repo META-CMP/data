@@ -28,7 +28,7 @@ source(here("analysis/R/kasy_MetaStudiesPlots.R"))
 # Set up parameters for PEESE estimation
 prd <- seq(3, 60, by = 3)  # Periods to look at
 funnel_se_option <- "avg"  # Using average standard error
-out <- "rate"  # Output variable
+out <- "output"  # Output variable
 wins_para_levels <- c(0,0.01, 0.02, 0.03, 0.04)  # Winsorization levels#,0.05
 conf_lev <- 0.89  # Confidence level
 
@@ -58,7 +58,7 @@ perform_meta_analysis <- function(data, wins) {
       periods = prd,
       wins = wins,
       ap = TRUE,
-      prec_weighted = FALSE,
+      prec_weighted = TRUE,
       estimation = "UWLS",
       cluster_se = TRUE
       ),
@@ -72,7 +72,7 @@ perform_meta_analysis <- function(data, wins) {
         estimation = "AK",
         cluster_se = TRUE,
         cutoff_val=1,
-        AK_modelmu = "normal",
+        AK_modelmu = "t",
         AK_symmetric = FALSE,
         AK_conf_level = 0.68
     )
@@ -174,7 +174,8 @@ out_avg_irf_plot <- plot_average_irfs(
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = NULL
+  corrected_irf = NULL,
+  show_legend = T
 ) %>%
   add_ribbons(
     data = min_max_per_period,
@@ -192,9 +193,9 @@ out_avg_irf_plot <- plot_average_irfs(
   #   line = list(color = 'rgba(100,20,200,0.2)')
   # ) %>%
   layout(
-    title = "Rate response to 100 bp rate shock, average and p-bias corrected IRFs",
+    title = "Price level response to 100 bp rate shock, average and p-bias corrected IRFs",
     xaxis = list(title = "Period (Months)"),
-    yaxis = list(title = "Effect in p.p."),
+    yaxis = list(title = "Effect in %"),
     hovermode = "compare"
   )
 

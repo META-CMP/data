@@ -62,7 +62,7 @@ perform_meta_analysis <- function(data, wins) {
       periods = prd,
       wins = wins,
       ap = TRUE,
-      prec_weighted = FALSE,
+      prec_weighted = TRUE,
       estimation = "UWLS",
       cluster_se = TRUE
     ),

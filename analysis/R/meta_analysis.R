@@ -36,7 +36,9 @@ create_equation <- function(base_formula, mods) {
 #' @param prec_weighted A logical value indicating whether to use precision weighting.
 #' @param estimation String specifying the meta analysis model, one of "Mean", "UWLS", "FAT-PAT", "PEESE", "EK", or "AK".
 #' @param mods A character vector of moderator variable names to include in the multiple meta-regression. If NULL, no moderators are included.
-#' 
+#' @param hc_type A string specifying the type of Heteroskedasticity-Consistent (HC) Covariance Matrix Estimator to use. 
+#'        Options are "HC0", "HC1", "HC2", or "HC3". Default is NULL, which uses "HC1" for lm objects and "HC0" otherwise.
+#'
 #' @return A list of model objects for each period.
 #'
 #' @import tidyverse
@@ -76,7 +78,7 @@ create_equation <- function(base_formula, mods) {
 #' modelsummary::modelsummary(result_with_mods, output = "gt", stars = TRUE, title = "PEESE with moderators", gof_map = NULL)
 #' modelsummary::modelsummary(AK_results, output = "gt", statistic = c("se = {std.error}", "conf.int"))
 #' @export
-meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = FALSE, EK_sig_threshold = 1.96, mods = NULL, cutoff_val = c(1.960), AK_symmetric = FALSE, AK_modelmu = "normal", AK_conf_level = 0.95) {
+meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = FALSE, hc_type = NULL, EK_sig_threshold = 1.96, mods = NULL, cutoff_val = c(1.960), AK_symmetric = FALSE, AK_modelmu = "normal", AK_conf_level = 0.95) {
   # Subset data for the specified outcome variable
   data <- subset(data, outcome %in% outvar)
 
@@ -226,7 +228,7 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
       # immediately after it was used by sandwich::vcovCL. It is important that data_period 
       # is NOT defined globally before this point (specifically before the use of lm() above)!
       
-      vcov_cluster <- sandwich::vcovCL(reg_result, cluster = ~key)
+      vcov_cluster <- sandwich::vcovCL(reg_result, cluster = ~key, type = hc_type)
       rm(data_period, envir = .GlobalEnv)
       reg_result <- lmtest::coeftest(reg_result, vcov. = vcov_cluster)
         

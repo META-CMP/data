@@ -42,7 +42,7 @@ moderator_groups <- list(
   "Estimation Method" = list("var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge", "varother"),
   "Regime Dependence" = list("regime", "lor", "upr", "scr", "dcr", "hike", "cut"),
   "Data Frequency" = list("annual", "quarter", "month"),
-  "Further Data Characteristics" = list("panel", "country_dev", "advanced", "upper_middle", "mixed_unclass", "ea12"),
+  "Further Data Characteristics" = list("panel", "us", "country_dev", "advanced", "upper_middle", "mixed_unclass", "ea12"),
   "Control Variables" = list("comprice", "outpgap", "find", "eglob", "cbind", "fexch", "inflexp", "foreignir", "fx", "lrir"),
   "Econometric Details" = list("pure_rate_shock", "convent", "decomposition"),
   "Publication Characteristics" = list("cbanker", "is_top_5", "is_top_tier", "top_5_or_tier","pub_year","log(1+journal_impact)","log(1+num_cit)","main_research_q"),
@@ -229,7 +229,9 @@ ui <- fluidPage(
                    tabPanel("Average IRFs",
                             fluidRow(
                               column(12,
-                                     numericInput("period_limit", "Restrict period (months):", value = max(data$period.month), min = 1)
+                                     numericInput("period_limit", "Restrict period (months):", 
+                                                  value = max(data$period.month), 
+                                                  min = 1)
                               ),
                               column(12,
                                      selectInput("selected_outcome_var", "Select outcome_var:", choices = c("All", unique(data$outcome_var)))
@@ -340,7 +342,7 @@ ui <- fluidPage(
                                    )
                              )
                            ),
-                  tabPanel("Histogramm",
+                  tabPanel("Density plots",
                            br(),
                            wellPanel(helpText("Same options as in funnel plot tab")),
                            conditionalPanel(
@@ -417,7 +419,13 @@ ui <- fluidPage(
                                        ),
                                        selectInput("cluster_se", "Cluster SEs by study", 
                                                    choices = c(FALSE, TRUE),
-                                                   selected = FALSE)
+                                                   selected = FALSE),
+                                       conditionalPanel(
+                                         condition = "input.cluster_se == true",
+                                         selectInput("hc_type", "HC Type:",
+                                                   choices = c("HC0" = "HC0", "HC1" = NULL, "HC2" = "HC2", "HC3" = "HC3"),
+                                                   selected = "HC1")
+                                       )
                                 ),
                                 column(9,
                                        selectInput("mod_reg", "Select Moderators:",
@@ -595,13 +603,13 @@ server <- function(input, output, session) {
     }
     
     # Publication year filter
-    data_filtered <- data_filtered %>%
-      filter(pub_year >= input$pub_year[1] & pub_year <= input$pub_year[2])
+    # data_filtered <- data_filtered %>%
+    #   filter(pub_year >= input$pub_year[1] & pub_year <= input$pub_year[2])
     
     # Journal filter
-    if (input$journal_article) {
-      data_filtered <- data_filtered %>% filter(type == "journalArticle")
-    }
+    # if (input$journal_article) {
+    #   data_filtered <- data_filtered %>% filter(type == "journalArticle")
+    # }
     
     return(data_filtered)
   })
@@ -700,12 +708,12 @@ server <- function(input, output, session) {
     summary <- paste0(summary, "\nSelected year range: ", selected_start_year, "(min ", min_start_year, ", max ", max_start_year, ")", " - ", selected_end_year, "(min ", min_end_year, ", max ", max_end_year, ")")
     
     # Publication year summary
-    full_min_year <- min(data$pub_year, na.rm = TRUE)
-    full_max_year <- max(data$pub_year, na.rm = TRUE)
-    
-    if (input$pub_year[1] > full_min_year || input$pub_year[2] < full_max_year) {
-      summary <- paste0(summary, "\nPublication Years: ", input$pub_year[1], " - ", input$pub_year[2], "\n")
-    }
+    # full_min_year <- min(data$pub_year, na.rm = TRUE)
+    # full_max_year <- max(data$pub_year, na.rm = TRUE)
+    # 
+    # if (input$pub_year[1] > full_min_year || input$pub_year[2] < full_max_year) {
+    #   summary <- paste0(summary, "\nPublication Years: ", input$pub_year[1], " - ", input$pub_year[2], "\n")
+    # }
 
     summary
   })
@@ -1068,6 +1076,7 @@ server <- function(input, output, session) {
                   prec_weighted = input$prec_weighted,
                   estimation = input$estimation,
                   cluster_se = input$cluster_se,
+                  hc_type = input$hc_type,
                   EK_sig_threshold = 10,
                   mods = mods_reg(),
                   cutoff_val = input$cutoff_vals,
@@ -1160,6 +1169,7 @@ server <- function(input, output, session) {
     updateCheckboxInput(session, "prec_weighted", value = FALSE)
     updateCheckboxInput(session, "ap", value = FALSE)
     updateCheckboxInput(session, "precision_filter", value = "None")
+    updateSelectInput(session, "cluster_se", selected = FALSE)
   })
   # UWLS
   observeEvent(list(input$uwls, input$uwls_irf), {
@@ -1168,6 +1178,7 @@ server <- function(input, output, session) {
     updateCheckboxInput(session, "prec_weighted", value = FALSE)
     updateCheckboxInput(session, "ap", value = FALSE)
     updateCheckboxInput(session, "precision_filter", value = "None")
+    updateSelectInput(session, "cluster_se", selected = FALSE)
   })
   # WAAP
   observeEvent(list(input$waap, input$waap_irf), {
@@ -1176,6 +1187,7 @@ server <- function(input, output, session) {
     updateCheckboxInput(session, "prec_weighted", value = FALSE)
     updateCheckboxInput(session, "ap", value = TRUE)
     updateCheckboxInput(session, "precision_filter", value = "None")
+    updateSelectInput(session, "cluster_se", selected = FALSE)
   })
   # FAT-PET
   observeEvent(list(input$fat_pet, input$fat_pet_irf), {
@@ -1184,6 +1196,7 @@ server <- function(input, output, session) {
     updateCheckboxInput(session, "prec_weighted", value = TRUE)
     updateCheckboxInput(session, "ap", value = FALSE)
     updateCheckboxInput(session, "precision_filter", value = "None")
+    updateSelectInput(session, "cluster_se", selected = TRUE)
   })
   # PEESE
   observeEvent(list(input$peese, input$peese_irf), {
@@ -1192,6 +1205,7 @@ server <- function(input, output, session) {
     updateCheckboxInput(session, "prec_weighted", value = TRUE)
     updateCheckboxInput(session, "ap", value = FALSE)
     updateCheckboxInput(session, "precision_filter", value = "None")
+    updateSelectInput(session, "cluster_se", selected = TRUE)
   })
   # Ioannidis et al. (2017) - top 10% precision
   observeEvent(list(input$ioannidis, input$ioannidis_irf), {
@@ -1208,6 +1222,7 @@ server <- function(input, output, session) {
     updateCheckboxInput(session, "prec_weighted", value = TRUE)
     updateCheckboxInput(session, "ap", value = FALSE)
     updateCheckboxInput(session, "precision_filter", value = "None")
+    updateSelectInput(session, "cluster_se", selected = TRUE)
   })
   # Andrews & Kasy (2019)
   observeEvent(list(input$andrews_kasy, input$andrews_kasy_irf), {
@@ -1216,7 +1231,8 @@ server <- function(input, output, session) {
     updateCheckboxInput(session, "prec_weighted", value = FALSE)
     updateCheckboxInput(session, "ap", value = FALSE)
     updateCheckboxInput(session, "precision_filter", value = "None")
-    updateCheckboxInput(session, "precision_filter", value = "None")
+    updateSelectInput(session, "cluster_se", selected = TRUE)
+    updateRadioButtons(session, "modelmu", selected = "t")
   })
   # Dis-/enable specific options for specific estimation methods
   observe({
@@ -1293,13 +1309,14 @@ server <- function(input, output, session) {
   output$pub_year_plot <- renderPlot({
     req(filtered_data())
     pub_year_counts <- table(filtered_data()$pub_year)
-    barplot(pub_year_counts, 
+    barplot(pub_year_counts,
             main="# obs for each publication year",
             xlab="Year",
             ylab="Count",
             col="skyblue",
             border="white")
   })
+  
   # Update pub_year slider values # DEACTIVATED BECAUSE IT HAS UNINTENDED EFFECTS
   # observe({
   #   full_min_year <- min(data$pub_year, na.rm = TRUE)

@@ -1,0 +1,4678 @@
+---
+title: "Analysis and results of the research project “Do monetary policy shocks aﬀect output, employment, and prices? Meta-analyses on the eﬀects of conventional monetary policy”"
+author: "Matthias Enzinger, Sebastian Gechert, Philipp Heimberger, Franz Prante, Daniel F. Romero"
+date: last-modified
+date-format: full
+execute:
+  message: false
+  warning: false
+format: 
+  html:
+    toc: true
+    toc-depth: 5
+---
+
+::: {.callout-note}
+# About this document
+
+Here we collect all the relevant results of our research project in a reproducible form. This document can also serve as the general research report in which we document all our analysis steps connected to our pre-registration. In this regard, we should indicate which analyses are connected to our original hypotheses (H1-H9) and which analyses are of "exploratory" nature. Where relevant, we should also state where we deviated from our pre-analysis plan and provide the reasons. For specific research papers and journal submissions, we can then choose the results that we want to present in the papers.
+
+:::
+
+
+::: {.callout-important}
+## TO DO: Confirmatory and exploratory analyses, pre-reg deviations.
+
+- Connect H1-H9 and mark exploratory analyses.
+- State and justify pre-reg deviations.
+
+:::
+
+# Preparation
+
+::: {.callout-note}
+
+We do the following in the preparation
+
+- load libraries
+- load data
+- load our own functions (including Kasy functions)
+- define the function to extract corrected IRFs from estimations __(TO DO: we should define this function externally and source it too)__
+- filter out models with quality concerns
+- specify periods to estimate for `chosen_periods`
+- define global winsorization parameter `wins_para`
+- set a global confidence interval level for regression tables `conflevel`
+:::
+
+::: {.callout-important}
+## TO DO: Reporting of full sample results for transparency
+
+We would somewhere need to justify why we only look at studies without quality_concern, these specific periods, this winsorization level and also provide the results for the full dataset. For the html version, we could do this in collapsable callout blocks.
+:::
+
+```{r prep}
+# Load libraries
+library(here)
+library(tidyverse)# for data manipulation
+library(dplyr)# for data manipulation
+library(modelsummary)# to nicely print results
+library(plotly)
+library(JWileymisc)
+library(viridis) # Color palette used in funnel
+
+# Load our functions
+source(here("analysis/R/plot_mean_effect.R"))
+source(here("analysis/R/apply_winsorization.R"))
+source(here("analysis/R/plot_average_irfs.R"))
+source(here("analysis/R/funnel_plot.R"))
+source(here("analysis/R/display_equation.R"))
+source(here("analysis/R/meta_analysis.R"))
+# Function to extract intercept estimates (corrected IRF) # TO DO: Define this externally
+extract_intercepts <- function(model, method) {
+  if (method == "AK") {
+    estimate <- model$tidy[1, 2]
+    se <- model$tidy[1, 3]
+    ci_lower <- estimate - se * qnorm(1 - (1 - conflevel) / 2)
+    ci_upper <- estimate + se * qnorm(1 - (1 - conflevel) / 2)
+  } else {
+    ci <- confint(model, level = conflevel)
+    estimate <- unname(coef(model)[1])
+    ci_lower <- unname(ci[1, 1])
+    ci_upper <- unname(ci[1, 2])
+  }
+  return(c(estimate = estimate, lower = ci_lower, upper = ci_upper))
+}
+# Load AK functions
+source(here("analysis/R/kasy_MetaStudiesFunctions.R"))
+source(here("analysis/R/kasy_RobustVariance.R"))
+source(here("analysis/R/kasy_MetaStudiesPlots.R"))
+
+# Load data
+data_path <- here("data/preliminary_data_test.RData") # works
+load(data_path)
+
+# Filter out models with quality concerns
+data <- data %>% filter(quality_concern!=1)
+
+# Specify periods to estimate for
+chosen_periods <- c(seq(3, 60, by = 3))
+
+# Define global winsorization parameter
+wins_para <- 0.02
+
+# Set a global confidence interval level for regression tables
+conflevel <- 0.89
+
+```
+
+
+# Overall effects
+
+## Basic data plots
+
+These plots show the IRF data points from the selected primary studies, with colors indicating the details on the definition of the outcome variable.
+
+::: {.callout-important}
+### TO DOs: 
+
+- Plot median and mean line in these plots. 
+- Show winsorized versions of the plots, maybe next to each other 
+:::
+
+### Output
+```{r basic_plot_output}
+out_var <- "output"
+plot_mean_effect(data %>% filter(outcome == out_var), 
+                 filter_outcome = out_var, 
+                 x_axis = "period_month")
+```
+
+### Price level 
+```{r basic_plot_pricelevel}
+out_var <- "inflation"
+plot_mean_effect(data %>% filter(outcome == out_var), 
+                 filter_outcome = out_var, 
+                 x_axis = "period_month")
+```
+
+### (Un)employment 
+#### Unemployment rate
+```{r basic_plot_unemp}
+out_var <- "unemp"
+plot_mean_effect(data %>% filter(outcome == out_var), 
+                 filter_outcome = out_var, 
+                 x_axis = "period_month")
+```
+#### Employment
+```{r basic_plot_emp}
+out_var <- "emp"
+plot_mean_effect(data %>% filter(outcome == out_var), 
+                 filter_outcome = out_var, x_axis = "period_month")
+```
+
+### Interest rate 
+```{r basic_plot_rate}
+out_var <- "rate"
+plot_mean_effect(data %>% filter(outcome == out_var), 
+                 filter_outcome = out_var, x_axis = "period_month")
+```
+
+## Average IRFs
+
+::: {.callout-important}
+### TO DO: Median line
+
+Plot median line in these plots. 
+:::
+
+::: {.callout-important}
+### TO DO: Maybe explore subsample average IRFs?
+
+- High quality-only sample?
+- identifcation procedures
+- top journals
+- ...
+
+:::
+
+
+::: {.callout-important}
+### TO DO: What are the findings with respect to H1?
+:::
+
+### Output
+```{r avg_irf_output}
+
+out_var <- "output"
+
+avg_irf_output <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+)
+
+avg_irf_output
+```
+
+### Price level 
+```{r avg_irf_pricelevel}
+
+out_var <- "inflation"
+
+avg_irf_pricelevel <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+)
+
+avg_irf_pricelevel
+```
+
+### (Un)employment
+#### Unemployment rate
+```{r avg_irf_unemp}
+
+out_var <- "unemp"
+
+avg_irf_unemp <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+)
+
+avg_irf_unemp
+```
+
+#### Employment 
+```{r avg_irf_emp}
+
+out_var <- "emp"
+
+avg_irf_emp <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+)
+
+avg_irf_emp
+```
+
+### Interest rate
+```{r avg_irf_rate}
+
+out_var <- "rate"
+
+avg_irf_rate <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+)
+
+avg_irf_rate
+```
+
+### All variables
+
+#### With unemployment rate
+```{r avg_irf_all_4_unemp}
+subplot(avg_irf_output, avg_irf_pricelevel, avg_irf_unemp, avg_irf_rate, nrows = 2, margin = 0.1) %>% layout(
+  showlegend=FALSE,
+  title = 'Effects of conventional monetary policy',
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Output", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Price level", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.2, y = 0.45, text = "Unemployment rate", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 0.45, text = "Interest rate", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+#### With employment
+```{r avg_irf_all_4_emp}
+subplot(avg_irf_output, avg_irf_pricelevel, avg_irf_emp, avg_irf_rate, nrows = 2, margin = 0.1) %>% layout(
+  showlegend=FALSE,
+  title = 'Effects of conventional monetary policy',
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Output", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Price level", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.2, y = 0.45, text = "Employment", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 0.45, text = "Interest rate", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 80))
+```
+
+#### With both
+```{r avg_irf_all_4}
+
+irf_unemp_emp <- subplot(avg_irf_unemp, avg_irf_emp, nrows = 2, margin = 0.1) %>% layout(
+  title = "",
+  annotations = list(
+    list(x = 0.5, y = 1, text = "Unemployment rate", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom"),
+    list(x = 0.5, y = 0.4, text = "Employment", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 80))
+
+subplot(avg_irf_output, avg_irf_pricelevel, irf_unemp_emp, avg_irf_rate, nrows = 2, margin = 0.1) %>% layout(
+  showlegend=FALSE,
+  title = 'Effects of conventional monetary policy',
+  xaxis4 = list(title = "Month"), # x-axis for plot 3
+  xaxis5 = list(title = "Months")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Output", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Price level", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  # list(x = 0.2, y = 0.45, text = "Unemployment rate", showarrow = FALSE, xref = "paper", yref = "paper",
+  #      xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 0.45, text = "Interest rate", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 80))
+```
+
+# Publication bias and p-hacking 
+
+## Funnel plots
+
+
+::: {.callout-important}
+### TO DO: What are the findings with respect to H2?
+:::
+
+```{r funnel_periods}
+periods <- c(1,6,12,18,24,30,36)
+opacity <- 0.1
+```
+
+### Standard
+
+::: {.callout-important}
+#### TO DOs: 
+
+Externally define plotting function for multiple period funnels.
+
+:::
+
+#### Output
+```{r funnel_output}
+
+out_var <- "output"
+
+# For single period plot
+# create_funnel_plot(data %>% filter(outcome == out_var),
+#                        outvar = out_var,
+#                        prd = 3,
+#                        se_option = "avg",
+#                        wins = wins_para,
+#                        opac = 0.1,
+#                        ap = FALSE,
+#                        type = "standard")
+
+
+# Create a list of plots
+plot_list <- lapply(periods, function(prd) {
+  p <- create_funnel_plot(data %>% filter(outcome == out_var),
+                     outvar = out_var,
+                     prd = prd,
+                     se_option = "avg",
+                     wins = wins_para,
+                     opac = 0.05,
+                     ap = FALSE,
+                     type = "standard")
+  # Add annotation for period
+  p <- p %>% add_annotations(
+    text = paste("Period", prd),
+    x = 0.5,
+    y = 1,
+    xref = "paper",
+    yref = "paper",
+    xanchor = "center",
+    yanchor = "bottom",
+    showarrow = FALSE,
+    font = list(size = 14)
+  )
+  
+  return(p)
+})
+
+
+# Combine plots into a subplot
+subplot <- subplot(plot_list, nrows = 7, shareX = TRUE, shareY = TRUE) %>%
+  layout(title = "Funnel Plots for Multiple Periods")
+
+# Display the subplot
+subplot
+
+```
+
+#### Price level
+```{r funnel_pricelevel}
+out_var <- "inflation"
+
+# For single period plot
+# create_funnel_plot(data %>% filter(outcome == out_var),
+#                        outvar = out_var,
+#                        prd = 3,
+#                        se_option = "avg",
+#                        wins = wins_para,
+#                        opac = 0.1,
+#                        ap = FALSE,
+#                        type = "standard")
+
+
+# Create a list of plots
+plot_list <- lapply(periods, function(prd) {
+  p <- create_funnel_plot(data %>% filter(outcome == out_var),
+                     outvar = out_var,
+                     prd = prd,
+                     se_option = "avg",
+                     wins = wins_para,
+                     opac = 0.05,
+                     ap = FALSE,
+                     type = "standard")
+  # Add annotation for period
+  p <- p %>% add_annotations(
+    text = paste("Period", prd),
+    x = 0.5,
+    y = 1,
+    xref = "paper",
+    yref = "paper",
+    xanchor = "center",
+    yanchor = "bottom",
+    showarrow = FALSE,
+    font = list(size = 14)
+  )
+  
+  return(p)
+})
+
+
+# Combine plots into a subplot
+subplot <- subplot(plot_list, nrows = 7, shareX = TRUE, shareY = TRUE) %>%
+  layout(title = "Funnel Plots for Multiple Periods")
+
+# Display the subplot
+subplot
+
+```
+
+#### (Un)employment
+##### Unemployment rate
+```{r funnel_unemp}
+out_var <- "unemp"
+# For single period plot
+# create_funnel_plot(data %>% filter(outcome == out_var),
+#                        outvar = out_var,
+#                        prd = 3,
+#                        se_option = "avg",
+#                        wins = wins_para,
+#                        opac = 0.1,
+#                        ap = FALSE,
+#                        type = "standard")
+
+
+# Create a list of plots
+plot_list <- lapply(periods, function(prd) {
+  p <- create_funnel_plot(data %>% filter(outcome == out_var),
+                     outvar = out_var,
+                     prd = prd,
+                     se_option = "avg",
+                     wins = wins_para,
+                     opac = 0.05,
+                     ap = FALSE,
+                     type = "standard")
+  # Add annotation for period
+  p <- p %>% add_annotations(
+    text = paste("Period", prd),
+    x = 0.5,
+    y = 1,
+    xref = "paper",
+    yref = "paper",
+    xanchor = "center",
+    yanchor = "bottom",
+    showarrow = FALSE,
+    font = list(size = 14)
+  )
+  
+  return(p)
+})
+
+
+# Combine plots into a subplot
+subplot <- subplot(plot_list, nrows = 7, shareX = TRUE, shareY = TRUE) %>%
+  layout(title = "Funnel Plots for Multiple Periods")
+
+# Display the subplot
+subplot
+
+```
+##### Employment
+```{r funnel_emp}
+out_var <- "emp"
+# For single period plot
+# create_funnel_plot(data %>% filter(outcome == out_var),
+#                        outvar = out_var,
+#                        prd = 3,
+#                        se_option = "avg",
+#                        wins = wins_para,
+#                        opac = 0.1,
+#                        ap = FALSE,
+#                        type = "standard")
+
+
+# Create a list of plots
+plot_list <- lapply(periods, function(prd) {
+  p <- create_funnel_plot(data %>% filter(outcome == out_var),
+                     outvar = out_var,
+                     prd = prd,
+                     se_option = "avg",
+                     wins = wins_para,
+                     opac = 0.05,
+                     ap = FALSE,
+                     type = "standard")
+  # Add annotation for period
+  p <- p %>% add_annotations(
+    text = paste("Period", prd),
+    x = 0.5,
+    y = 1,
+    xref = "paper",
+    yref = "paper",
+    xanchor = "center",
+    yanchor = "bottom",
+    showarrow = FALSE,
+    font = list(size = 14)
+  )
+  
+  return(p)
+})
+
+
+# Combine plots into a subplot
+subplot <- subplot(plot_list, nrows = 7, shareX = TRUE, shareY = TRUE) %>%
+  layout(title = "Funnel Plots for Multiple Periods")
+
+# Display the subplot
+subplot
+
+```
+
+#### Interest rate
+
+::: {.callout-tip}
+##### Suggestion for a different winsorization level for the interest rate
+
+At the moment, the same global winsorization level is applied to all outcome variables. For the interest rate, the 2 % level is already quite strong (see funnel plots below). We should consider reducing it for the interest rate. 
+
+
+:::
+
+```{r funnel_rate}
+out_var <- "rate"
+# For single period plot
+# create_funnel_plot(data %>% filter(outcome == out_var),
+#                        outvar = out_var,
+#                        prd = 3,
+#                        se_option = "avg",
+#                        wins = wins_para,
+#                        opac = 0.1,
+#                        ap = FALSE,
+#                        type = "standard")
+
+
+# Create a list of plots
+plot_list <- lapply(periods, function(prd) {
+  p <- create_funnel_plot(data %>% filter(outcome == out_var),
+                     outvar = out_var,
+                     prd = prd,
+                     se_option = "avg",
+                     wins = wins_para,
+                     opac = 0.05,
+                     ap = FALSE,
+                     type = "standard")
+  # Add annotation for period
+  p <- p %>% add_annotations(
+    text = paste("Period", prd),
+    x = 0.5,
+    y = 1,
+    xref = "paper",
+    yref = "paper",
+    xanchor = "center",
+    yanchor = "bottom",
+    showarrow = FALSE,
+    font = list(size = 14)
+  )
+  
+  return(p)
+})
+
+
+# Combine plots into a subplot
+subplot <- subplot(plot_list, nrows = 7, shareX = TRUE, shareY = TRUE) %>%
+  layout(title = "Funnel Plots for Multiple Periods")
+
+# Display the subplot
+subplot
+
+```
+
+### AK style
+
+::: {.callout-important}
+#### TO DO 
+
+Maybe add AK style funnel plots.
+:::
+
+## Density plots
+
+### Brodeur density plots
+
+### AK density plots
+
+## Simple p-bias estimations & IRF corrections
+
+::: {.callout-tip}
+### Suggestion for `se_option`
+
+At the moment, we use `se_option = "avg"` in all estimations. 
+
+I (Franz) would be in favor of setting the se_option specifically to the outcome variable. I think it makes more sense, even if it does not change results dramatically.
+
+Suggestion: 
+
+- Output: `se_option = "upper"`
+- Price level: `se_option = "upper"`
+- Unemployment rate: `se_option = "lower"`
+- Employment: `se_option = "upper"`
+- Rate: `se_option = "avg"`
+:::
+
+::: {.callout-important}
+### TO DO: Other estimations
+
+- UWLS
+- FAT-PET
+- EK
+- AK estimation plots
+- Stem
+- MAIVE
+:::
+
+
+### Output 
+
+#### Estimation
+
+##### PEESE
+
+```{r peese_pub_bias_output}
+
+out_var <- "output"
+
+# Equation
+display_equation("PEESE", weighted = TRUE)
+
+# Estimation
+output_peese <- meta_analysis(data,
+                          outvar = out_var,
+                          se_option = "avg",
+                          periods = chosen_periods,
+                          wins = wins_para,
+                          prec_weighted = TRUE,
+                          estimation = "PEESE",
+                          cluster_se = TRUE)
+
+# Cleaner names in table
+coef_names_output_peese <- c(
+  "(Intercept)" = "Intercept",
+  "variance_winsor" = "Variance")
+
+# Create html table
+modelsummary::modelsummary(output_peese,
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel,
+                           statistic = c("se = {std.error}","conf.int"),
+                           title = paste("PEESE", out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_output_peese)
+
+# Model plot - intercept - corrected effect
+omit <- "variance_winsor"
+b <- list(geom_vline(xintercept = 0, color = 'orange'))
+modelsummary::modelplot(output_peese,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "PEESE output - corrected effect", 
+              background = b)
+
+# Model plot - variance - publication bias
+omit <- "Interc"
+modelplot(output_peese,
+          coef_omit = omit,
+          conf_level = conflevel,
+          title = "PEESE output - p-bias", 
+          background = b)
+  
+
+```
+
+##### WAAP 
+
+::: {.callout-warning}
+###### Correct WAAP implementation?
+
+- Estimated equation correct?
+
+$$t = y/SE = \beta (1/SE) + \epsilon$$
+- Correct to not cluster SEs and no precision weighting for WAAP?
+:::
+
+```{r waap_pub_bias_output}
+
+# Equation
+display_equation("UWLS", weighted = FALSE)
+
+# Estimation
+output_waap <- meta_analysis(data,
+                          outvar = out_var,
+                          se_option = "avg",
+                          periods = chosen_periods,
+                          wins = wins_para,
+                          ap = TRUE,
+                          prec_weighted = FALSE,
+                          estimation = "UWLS",
+                          cluster_se = FALSE)
+
+# Cleaner names in table
+coef_names_output_waap <- c(
+  "precision_winsor" = "Precision")
+
+# Create html table
+modelsummary::modelsummary(output_waap,
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel,
+                           statistic = c("se = {std.error}","conf.int"),
+                           title = paste("WAAP", out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_output_waap)
+
+# Model plot - intercept - corrected effect
+omit <- NULL
+modelsummary::modelplot(output_waap,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "WAAP output - corrected effect", 
+              background = b)
+
+```
+
+##### AK
+
+::: {.callout-warning}
+###### Correct interpretation of AK?
+
+Check if our interpretation of $\mu$ as corrected effect and $\tau$ as publication bias is correct. 
+
+:::
+
+```{r ak_pub_bias_output}
+
+# Estimation
+output_ak <- meta_analysis(data,
+                          outvar = out_var,
+                          se_option = "avg",
+                          periods = chosen_periods,
+                          wins = wins_para,
+                          prec_weighted = FALSE,
+                          estimation = "AK",
+                          cluster_se = TRUE,
+                          cutoff_val=1, # 68 % level as cutoff
+                          AK_modelmu = "t",
+                          AK_symmetric = FALSE,
+                          AK_conf_level = conflevel
+                          )
+
+# Create html table
+modelsummary::modelsummary(output_ak,
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel,
+                           statistic = c("se = {std.error}","conf.int"),
+                           title = paste("AK", out_var), 
+                           gof_map = NULL)
+
+# Model plot - intercept - corrected effect
+omit <- 2:nrow(output_ak[[1]]$tidy[1])
+modelsummary::modelplot(output_ak,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "AK output - corrected effect", 
+              background = b)
+
+# Model plot - publication bias
+omit <- c(1,3:nrow(output_ak[[1]]$tidy[1]))
+modelsummary::modelplot(output_ak,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "AK output - corrected effect", 
+              background = b)
+
+```
+
+#### IRF correction
+
+```{r corrected_irf_output}
+
+# Extract PEESE correction
+corrected_irf_output_peese <- as.data.frame(
+  do.call(
+    rbind,lapply(output_peese, extract_intercepts, method = "PESEE")
+    )
+  )
+corrected_irf_output_peese$period<-as.numeric(rownames(corrected_irf_output_peese))
+
+# Extract WAAP correction
+corrected_irf_output_waap <- as.data.frame(
+  do.call(
+    rbind,lapply(output_waap, extract_intercepts, method = "UWLS")
+    )
+  )
+corrected_irf_output_waap$period<-as.numeric(rownames(corrected_irf_output_waap))
+
+# Extract AK correction
+corrected_irf_output_ak <- as.data.frame(
+  do.call(
+    rbind,lapply(output_ak, extract_intercepts, method = "AK")
+    )
+  )
+corrected_irf_output_ak$period<-as.numeric(rownames(corrected_irf_output_ak))
+
+# Create corrected IRF plot
+corrected_irf_output <- avg_irf_output %>%
+  add_lines(
+    data = corrected_irf_output_peese,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  ) %>% 
+  add_ribbons(
+    data = corrected_irf_output_peese,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+    ) %>%
+  add_lines(
+    data = corrected_irf_output_waap,
+    x = ~period,
+    y = ~estimate,
+    name = "WAAP correction Mean",
+    line = list(color = 'rgba(125, 103, 138, 0.89)')
+  ) %>% 
+  add_ribbons(
+    data = corrected_irf_output_waap,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "WAAP correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(100,20,200,0.2)'
+    ) %>%
+  add_ribbons(
+    data = corrected_irf_output_ak,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "AK correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(118, 37, 166, 0.8)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_output_ak,
+    x = ~period,
+    y = ~estimate,
+    name = "AK correction Mean",
+    line = list(color = 'rgba(55, 13, 79, 0.89)')
+  )
+
+corrected_irf_output
+```
+
+### Price level
+
+#### Estimation
+
+##### PEESE
+
+```{r peese_pub_bias_pricelevel}
+
+out_var <- "inflation"
+
+# Equation
+display_equation("PEESE", weighted = TRUE)
+
+# Estimation
+pricelevel_peese <- meta_analysis(data,
+                          outvar = out_var,
+                          se_option = "avg",
+                          periods = chosen_periods,
+                          wins = wins_para,
+                          prec_weighted = TRUE,
+                          estimation = "PEESE",
+                          cluster_se = TRUE)
+
+# Cleaner names in table
+coef_names_pricelevel_peese <- c(
+  "(Intercept)" = "Intercept",
+  "variance_winsor" = "Variance")
+
+# Create html table
+modelsummary::modelsummary(pricelevel_peese,
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel,
+                           statistic = c("se = {std.error}","conf.int"),
+                           title = paste("PEESE", out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_pricelevel_peese)
+
+# Model plot - intercept - corrected effect
+omit <- "variance_winsor"
+b <- list(geom_vline(xintercept = 0, color = 'orange'))
+modelsummary::modelplot(pricelevel_peese,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "PEESE pricelevel - corrected effect", 
+              background = b)
+
+# Model plot - variance - publication bias
+omit <- "Interc"
+modelplot(pricelevel_peese,
+          coef_omit = omit,
+          conf_level = conflevel,
+          title = "PEESE pricelevel - p-bias", 
+          background = b)
+  
+
+```
+##### WAAP 
+
+::: {.callout-warning}
+###### Correct WAAP implementation?
+
+- Estimated equation correct?
+
+$$t = y/SE = \beta (1/SE) + \epsilon$$
+- Correct to not cluster SEs and no precision weighting for WAAP?
+:::
+
+```{r waap_pub_bias_pricelevel}
+
+# Equation
+display_equation("UWLS", weighted = FALSE)
+
+# Estimation
+pricelevel_waap <- meta_analysis(data,
+                          outvar = out_var,
+                          se_option = "avg",
+                          periods = chosen_periods,
+                          wins = wins_para,
+                          ap = TRUE,
+                          prec_weighted = FALSE,
+                          estimation = "UWLS",
+                          cluster_se = FALSE)
+
+# Cleaner names in table
+coef_names_pricelevel_waap <- c(
+  "precision_winsor" = "Precision")
+
+# Create html table
+modelsummary::modelsummary(pricelevel_waap,
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel,
+                           statistic = c("se = {std.error}","conf.int"),
+                           title = paste("WAAP", out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_pricelevel_waap)
+
+# Model plot - intercept - corrected effect
+omit <- NULL
+modelsummary::modelplot(pricelevel_waap,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "WAAP pricelevel - corrected effect", 
+              background = b)
+
+```
+
+##### AK
+
+::: {.callout-warning}
+###### Correct interpretation of AK?
+
+Check if our interpretation of $\mu$ as corrected effect and $\tau$ as publication bias is correct. 
+
+:::
+
+```{r ak_pub_bias_pricelevel}
+
+# Estimation
+pricelevel_ak <- meta_analysis(data,
+                          outvar = out_var,
+                          se_option = "avg",
+                          periods = chosen_periods,
+                          wins = wins_para,
+                          prec_weighted = FALSE,
+                          estimation = "AK",
+                          cluster_se = TRUE,
+                          cutoff_val = 1, # 68 % level as cutoff
+                          AK_modelmu = "t",
+                          AK_symmetric = FALSE,
+                          AK_conf_level = conflevel
+                          )
+
+# Create html table
+modelsummary::modelsummary(pricelevel_ak,
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel,
+                           statistic = c("se = {std.error}","conf.int"),
+                           title = paste("AK", out_var), 
+                           gof_map = NULL)
+
+# Model plot - intercept - corrected effect
+omit <- 2:nrow(pricelevel_ak[[1]]$tidy[1])
+modelsummary::modelplot(pricelevel_ak,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "AK pricelevel - corrected effect", 
+              background = b)
+
+# Model plot - publication bias
+omit <- c(1,3:nrow(pricelevel_ak[[1]]$tidy[1]))
+modelsummary::modelplot(pricelevel_ak,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "AK pricelevel - corrected effect", 
+              background = b)
+
+```
+
+#### IRF correction
+
+```{r corrected_irf_pricelevel}
+
+# Extract PEESE correction
+corrected_irf_pricelevel_peese <- as.data.frame(
+  do.call(
+    rbind,lapply(pricelevel_peese, extract_intercepts, method = "PESEE")
+    )
+  )
+corrected_irf_pricelevel_peese$period<-as.numeric(rownames(corrected_irf_pricelevel_peese))
+
+# Extract WAAP correction
+corrected_irf_pricelevel_waap <- as.data.frame(
+  do.call(
+    rbind,lapply(pricelevel_waap, extract_intercepts, method = "UWLS")
+    )
+  )
+corrected_irf_pricelevel_waap$period<-as.numeric(rownames(corrected_irf_pricelevel_waap))
+
+# Extract AK correction
+corrected_irf_pricelevel_ak <- as.data.frame(
+  do.call(
+    rbind,lapply(pricelevel_ak, extract_intercepts, method = "AK")
+    )
+  )
+corrected_irf_pricelevel_ak$period<-as.numeric(rownames(corrected_irf_pricelevel_ak))
+
+# Create corrected IRF plot
+corrected_irf_pricelevel <- avg_irf_pricelevel %>%
+  add_lines(
+    data = corrected_irf_pricelevel_peese,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  ) %>% 
+  add_ribbons(
+    data = corrected_irf_pricelevel_peese,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+    ) %>%
+  add_lines(
+    data = corrected_irf_pricelevel_waap,
+    x = ~period,
+    y = ~estimate,
+    name = "WAAP correction Mean",
+    line = list(color = 'rgba(125, 103, 138, 0.89)')
+  ) %>% 
+  add_ribbons(
+    data = corrected_irf_pricelevel_waap,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "WAAP correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(100,20,200,0.2)'
+    ) %>%
+  add_ribbons(
+    data = corrected_irf_pricelevel_ak,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "AK correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(118, 37, 166, 0.8)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_pricelevel_ak,
+    x = ~period,
+    y = ~estimate,
+    name = "AK correction Mean",
+    line = list(color = 'rgba(55, 13, 79, 0.89)')
+  )
+
+corrected_irf_pricelevel
+```
+
+
+### Unemploynment
+
+#### Estimation
+
+#### IRF correction
+
+### Employment 
+
+#### Estimation
+
+#### IRF correction
+
+### Interest rate
+
+#### Estimation
+
+##### PEESE
+
+```{r peese_pub_bias_rate}
+
+out_var <- "rate"
+
+# Equation
+display_equation("PEESE", weighted = TRUE)
+
+# Estimation
+rate_peese <- meta_analysis(data,
+                          outvar = out_var,
+                          se_option = "avg",
+                          periods = chosen_periods,
+                          wins = wins_para,
+                          prec_weighted = TRUE,
+                          estimation = "PEESE",
+                          cluster_se = TRUE)
+
+# Cleaner names in table
+coef_names_rate_peese <- c(
+  "(Intercept)" = "Intercept",
+  "variance_winsor" = "Variance")
+
+# Create html table
+modelsummary::modelsummary(rate_peese,
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel,
+                           statistic = c("se = {std.error}","conf.int"),
+                           title = paste("PEESE", out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_rate_peese)
+
+# Model plot - intercept - corrected effect
+omit <- "variance_winsor"
+b <- list(geom_vline(xintercept = 0, color = 'orange'))
+modelsummary::modelplot(rate_peese,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "PEESE rate - corrected effect", 
+              background = b)
+
+# Model plot - variance - publication bias
+omit <- "Interc"
+modelplot(rate_peese,
+          coef_omit = omit,
+          conf_level = conflevel,
+          title = "PEESE rate - p-bias", 
+          background = b)
+  
+
+```
+##### WAAP 
+
+::: {.callout-warning}
+###### Correct WAAP implementation?
+
+- Estimated equation correct?
+
+$$t = y/SE = \beta (1/SE) + \epsilon$$
+- Correct to not cluster SEs and no precision weighting for WAAP?
+:::
+
+```{r waap_pub_bias_rate}
+
+# Equation
+display_equation("UWLS", weighted = FALSE)
+
+# Estimation
+rate_waap <- meta_analysis(data,
+                          outvar = out_var,
+                          se_option = "avg",
+                          periods = chosen_periods,
+                          wins = wins_para,
+                          ap = TRUE,
+                          prec_weighted = FALSE,
+                          estimation = "UWLS",
+                          cluster_se = FALSE)
+
+# Cleaner names in table
+coef_names_rate_waap <- c(
+  "precision_winsor" = "Precision")
+
+# Create html table
+modelsummary::modelsummary(rate_waap,
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel,
+                           statistic = c("se = {std.error}","conf.int"),
+                           title = paste("WAAP", out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_rate_waap)
+
+# Model plot - intercept - corrected effect
+omit <- NULL
+modelsummary::modelplot(rate_waap,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "WAAP rate - corrected effect", 
+              background = b)
+
+```
+
+##### AK
+
+::: {.callout-warning}
+###### Correct interpretation of AK?
+
+Check if our interpretation of $\mu$ as corrected effect and $\tau$ as publication bias is correct. 
+
+:::
+
+```{r ak_pub_bias_rate}
+
+# Estimation
+rate_ak <- meta_analysis(data,
+                          outvar = out_var,
+                          se_option = "avg",
+                          periods = chosen_periods,
+                          wins = wins_para,
+                          prec_weighted = FALSE,
+                          estimation = "AK",
+                          cluster_se = TRUE,
+                          cutoff_val = 1, # 68 % level as cutoff
+                          AK_modelmu = "t",
+                          AK_symmetric = FALSE,
+                          AK_conf_level = conflevel
+                          )
+
+# Create html table
+modelsummary::modelsummary(rate_ak,
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel,
+                           statistic = c("se = {std.error}","conf.int"),
+                           title = paste("AK", out_var), 
+                           gof_map = NULL)
+
+# Model plot - intercept - corrected effect
+omit <- 2:nrow(rate_ak[[1]]$tidy[1])
+modelsummary::modelplot(rate_ak,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "AK rate - corrected effect", 
+              background = b)
+
+# Model plot - publication bias
+omit <- c(1,3:nrow(rate_ak[[1]]$tidy[1]))
+modelsummary::modelplot(rate_ak,
+              coef_omit = omit,
+              conf_level = conflevel,
+              title = "AK rate - corrected effect", 
+              background = b)
+
+```
+
+#### IRF correction
+
+```{r corrected_irf_rate}
+
+# Extract PEESE correction
+corrected_irf_rate_peese <- as.data.frame(
+  do.call(
+    rbind,lapply(rate_peese, extract_intercepts, method = "PESEE")
+    )
+  )
+corrected_irf_rate_peese$period<-as.numeric(rownames(corrected_irf_rate_peese))
+
+# Extract WAAP correction
+corrected_irf_rate_waap <- as.data.frame(
+  do.call(
+    rbind,lapply(rate_waap, extract_intercepts, method = "UWLS")
+    )
+  )
+corrected_irf_rate_waap$period<-as.numeric(rownames(corrected_irf_rate_waap))
+
+# Extract AK correction
+corrected_irf_rate_ak <- as.data.frame(
+  do.call(
+    rbind,lapply(rate_ak, extract_intercepts, method = "AK")
+    )
+  )
+corrected_irf_rate_ak$period<-as.numeric(rownames(corrected_irf_rate_ak))
+
+# Create corrected IRF plot
+corrected_irf_rate <- avg_irf_rate %>%
+  add_lines(
+    data = corrected_irf_rate_peese,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  ) %>% 
+  add_ribbons(
+    data = corrected_irf_rate_peese,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+    ) %>%
+  add_lines(
+    data = corrected_irf_rate_waap,
+    x = ~period,
+    y = ~estimate,
+    name = "WAAP correction Mean",
+    line = list(color = 'rgba(125, 103, 138, 0.89)')
+  ) %>% 
+  add_ribbons(
+    data = corrected_irf_rate_waap,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "WAAP correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(100,20,200,0.2)'
+    ) %>%
+  add_ribbons(
+    data = corrected_irf_rate_ak,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "AK correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(118, 37, 166, 0.8)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_rate_ak,
+    x = ~period,
+    y = ~estimate,
+    name = "AK correction Mean",
+    line = list(color = 'rgba(55, 13, 79, 0.89)')
+  )
+
+corrected_irf_rate
+```
+
+### IRF correction all variables
+
+::: {.callout-important}
+### TO DO: Corrections for other estimations
+
+- UWLS
+- FAT-PET
+- EK
+- AK estimation plots
+- Stem
+- MAIVE
+:::
+
+
+```{r corrected_irf_all_4}
+
+subplot(corrected_irf_output, corrected_irf_pricelevel, 
+        # corrected_irf_unemp_emp, 
+        corrected_irf_rate, nrows = 2, margin = 0.1) %>% layout(
+          showlegend=FALSE,
+          title = 'Corrected effects of conventional monetary policy',
+          xaxis4 = list(title = "Month"), # x-axis for plot 3
+          xaxis5 = list(title = "Months")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Output", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Price level", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  # list(x = 0.2, y = 0.45, text = "Unemployment rate", showarrow = FALSE, xref = "paper", yref = "paper",
+  #      xanchor = "center", yanchor = "bottom"),
+  list(x = 0.2, y = 0.45, text = "Interest rate", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 80))
+```
+
+# Moderator variables and study heterogeneity
+
+::: {.callout-important}
+## TO DO: This section needs clearer structure and connection to hypotheses
+
+:::
+
+
+## Baseline PEESE regression with moderators for `group_ident_broad`, `top_5_or_tier` and `cbanker`
+
+::: {.callout-note}
+
+This specification is motivated by our hypotheses about identification procedures (H7) and certain publication characteristics, like journal impact factors (H2) and central bank affiliation (H9).
+
+:::
+
+::: {.callout-important}
+### TO DO: Robustness
+
+Add different specifications for these hypotheses.
+
+Justifications for the baseline specification:
+
+- simplicity (parsimonious specification) / avoiding too many variables in regression
+- ...
+
+:::
+
+### Output
+
+```{r baseline_output}
+
+out_var <- "output"
+
+output_baseline <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = "PEESE", 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "top_5_or_tier",
+                                   "cbanker"))#,"rate_pers"
+
+
+coef_names_baseline <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'group_ident_broadhf' = 'High frequency', 
+  'group_ident_broadnr' = 'Narrative',
+  'group_ident_broadsignr' = 'Sign restrictions',
+  'group_ident_broadidother' = 'Other identificiation ',
+  'top_5_or_tier' = 'Top tier publication',
+  'cbanker' = 'Central bank related')
+
+# Create html output
+modelsummary::modelsummary(output_baseline, 
+                           output = "gt", stars = TRUE, conf_level = conflevel, title = paste0("PEESE ",out_var), gof_map = NULL, coef_map = coef_names_baseline)
+
+```
+
+
+### Price level
+
+```{r baseline_pricelevel}
+
+out_var<-"inflation"
+
+pricelevel_baseline <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = "PEESE", 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "top_5_or_tier",
+                                   "cbanker"))#,"rate_pers"
+
+# Create html output
+modelsummary::modelsummary(pricelevel_baseline, output = "gt", stars = TRUE, conf_level = conflevel, title = paste0("PEESE ",out_var), gof_map = NULL, coef_map = coef_names_baseline)
+
+```
+
+### Unemployment
+
+```{r baseline_unemployment}
+
+out_var<-"unemp"
+
+unemp_baseline <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = "PEESE", 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "top_5_or_tier",
+                                   "cbanker"))#,"rate_pers"
+
+# Create html output
+modelsummary::modelsummary(unemp_baseline, output = "gt", stars = TRUE, conf_level = conflevel, title = paste0("PEESE ",out_var), gof_map = NULL, coef_map = coef_names_baseline)
+
+```
+
+### Employment
+
+```{r baseline_employment}
+
+out_var<-"emp"
+
+emp_baseline <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = "PEESE", 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "top_5_or_tier",
+                                   "cbanker"))#,"rate_pers"
+
+# Create html output
+modelsummary::modelsummary(emp_baseline, output = "gt", stars = TRUE, conf_level = conflevel, title = paste0("PEESE ",out_var), gof_map = NULL, coef_map = coef_names_baseline)
+
+```
+
+
+
+## Robustness check for horizon 12 (PEESE)
+
+### PEESE with moderators
+
+```{r robustness_mods_prep}
+
+# # Transform data$transformation to factor variable
+# data$transformation <- as.factor(data$transformation)
+# # Make "log" the reference transformation
+# data <- within(data, transformation <- relevel(transformation, ref = 3))
+
+# Transform data$transformed to factor variable 
+data$transformed <- as.factor(data$transformed)
+
+# Define robustness regression moderator terms 
+# Baseline moderators
+baseline_vars <- c("group_ident_broad", 
+                   "top_5_or_tier", 
+                   "cbanker")
+# Interaction top journal & SE
+interaction_top_5_tier_SE <- c("I(top_5_or_tier*standarderror_winsor)")
+# Publication characteristics  
+pub_chars <- c("pub_year", 
+               "main_research_q")
+# Transformation
+transform_controls <- c("transformed", 
+                        "cum")
+# Model variables 
+model_vars <- c("lrir", 
+                "fx", 
+                "foreignir", 
+                "inflexp", 
+                "eglob", 
+                "find", 
+                "outpgap", 
+                "comprice")
+# Estimation methods and sample characteristics
+est_methods <- c("lp", 
+                 "vecm", 
+                 "dyn_ols", 
+                 "fvar", 
+                 "tvar", 
+                 "gvar", 
+                 "dsge", 
+                 "varother", 
+                 "panel", 
+                 "bayes", 
+                 "month", 
+                 "mean_year", 
+                 "ea12", 
+                 "us", 
+                 "upper_middle", 
+                 "cut", 
+                 "hike", 
+                 "lor", 
+                 "upr")
+
+
+# Create list of different moderator sets for baseline and robustness checks
+moderator_sets <- list(
+  # Equation 1: Baseline
+  baseline_vars,
+
+  # Equation 1b: Baseline + interaction term (TopJournal*SE) for test of higher publication bias for top journals 
+  c(baseline_vars, interaction_top_5_tier_SE),
+  
+  # Equation 2: Baseline + Publication characteristics
+  c(baseline_vars, pub_chars),
+  
+  # Equation 3: Baseline + Publication characteristics + Transformation controls
+  c(baseline_vars, pub_chars, transform_controls),
+  
+  # Equation 4: Baseline + Publication characteristics + Transformation controls + Model variables
+  c(baseline_vars, pub_chars, transform_controls, model_vars),
+  
+  # Equation 5: Baseline + Publication characteristics + Transformation controls + Model variables + Estimation methods and sample characteristics
+  c(baseline_vars, pub_chars, transform_controls, model_vars, est_methods)
+)
+
+```
+
+
+#### Output
+
+```{r robustness_output}
+
+output_results_list <- list()
+
+# Loop through the baseline and robustness moderator_sets
+for (i in 1:length(moderator_sets)) {
+    model <- meta_analysis(data, 
+                           outvar = "output", 
+                           se_option = "avg", # We should discuss this
+                           periods = chosen_periods,
+                           wins = wins_para, 
+                           prec_weighted = TRUE, 
+                           estimation = "PEESE", 
+                           cluster_se = TRUE, 
+                           mods = moderator_sets[[i]])
+    if (i == 1) {
+      output_results_list[[paste0("Baseline")]] <- model
+    } else {
+      output_results_list[[paste0("Robustness ", i-1)]] <- model
+    }
+    
+}
+
+# Define period for which all equations (baseline and robustness checks) should be shown
+desired_period <- 12
+index <- which(chosen_periods %in% desired_period)
+paste("Showing results for period ", chosen_periods[index])
+
+# Create html output
+modelsummary::modelsummary(
+  lapply(output_results_list, `[[`, index), 
+  output = "gt", 
+  stars = TRUE, 
+  conf_level = conflevel, 
+  title = paste0("PEESE (Output) period - ",desired_period), 
+  gof_map = NULL) 
+
+```
+
+#### Price level
+
+```{r robustness_pricelevel}
+
+pricelevel_results_list <- list()
+
+# Loop through the baseline and robustness moderator_sets
+for (i in 1:length(moderator_sets)) {
+    model <- meta_analysis(data, 
+                           outvar = "inflation", 
+                           se_option = "avg", # We should discuss this
+                           periods = chosen_periods,
+                           wins = wins_para, 
+                           prec_weighted = TRUE, 
+                           estimation = "PEESE", 
+                           cluster_se = TRUE, 
+                           mods = moderator_sets[[i]])
+    if (i == 1) {
+      pricelevel_results_list[[paste0("Baseline")]] <- model
+    } else {
+      pricelevel_results_list[[paste0("Robustness ", i-1)]] <- model
+    }
+    
+}
+
+# Define period for which all equations (baseline and robustness checks) should be shown
+desired_period <- 12
+index <- which(chosen_periods %in% desired_period)
+paste("Showing results for period ", chosen_periods[index])
+
+# Create html pricelevel
+modelsummary::modelsummary(
+  lapply(pricelevel_results_list, `[[`, index), 
+  output = "gt", 
+  stars = TRUE, 
+  conf_level = conflevel, 
+  title = paste0("PEESE (price level) period - ",desired_period), 
+  gof_map = NULL
+  ) 
+
+```
+
+
+#### Unemployment rate
+
+```{r robustness_unemployment}
+
+# For the unemployment, the data$transformed cannot be used as a moderator because there are only level estimations of the unemployment rate in our dataset:
+data_unemp <- data %>% filter(outcome == "unemp")
+unique(data_unemp$outcome_measure)
+unique(data_unemp$transformed) # Has only one value ("no")
+# Delete transformed from moderator list for unemployment
+moderator_sets_unemp <- lapply(moderator_sets, function(set) {
+  set[set != "transformed"]
+})
+
+unemployment_results_list <- list()
+
+# Loop through the baseline and robustness moderator_sets_unemp
+for (i in 1:length(moderator_sets_unemp)) {
+    model <- meta_analysis(data, 
+                           outvar = "unemp", 
+                           se_option = "avg", # We should discuss this
+                           periods = chosen_periods,
+                           wins = wins_para, 
+                           prec_weighted = TRUE, 
+                           estimation = "PEESE", 
+                           cluster_se = TRUE, 
+                           mods = moderator_sets_unemp[[i]])
+    if (i == 1) {
+      unemployment_results_list[[paste0("Baseline")]] <- model
+    } else {
+      unemployment_results_list[[paste0("Robustness ", i-1)]] <- model
+    }
+    
+}
+
+# Define period for which all equations (baseline and robustness checks) should be shown
+desired_period <- 12
+index <- which(chosen_periods %in% desired_period)
+paste("Showing results for period ", chosen_periods[index])
+
+# Create html unemployment
+modelsummary::modelsummary(
+  lapply(unemployment_results_list, `[[`, index), 
+  output = "gt", 
+  stars = TRUE, 
+  conf_level = conflevel, 
+  title = paste0("PEESE (unemployment) period - ",desired_period), 
+  gof_map = NULL
+  ) 
+
+```
+
+#### Employment
+
+```{r robustness_employment}
+
+employment_results_list <- list()
+
+# Loop through the baseline and robustness moderator_sets
+for (i in 1:length(moderator_sets)) {
+    model <- meta_analysis(data, 
+                           outvar = "emp", 
+                           se_option = "avg", # We should discuss this
+                           periods = chosen_periods,
+                           wins = wins_para, 
+                           prec_weighted = TRUE, 
+                           estimation = "PEESE", 
+                           cluster_se = TRUE, 
+                           mods = moderator_sets[[i]])
+    if (i == 1) {
+      employment_results_list[[paste0("Baseline")]] <- model
+    } else {
+      employment_results_list[[paste0("Robustness ", i-1)]] <- model
+    }
+    
+}
+
+# Define period for which all equations (baseline and robustness checks) should be shown
+desired_period <- 12
+index <- which(chosen_periods %in% desired_period)
+paste("Showing results for period ", chosen_periods[index])
+
+# Create html employment
+modelsummary::modelsummary(
+  lapply(employment_results_list, `[[`, index), 
+  output = "gt", 
+  stars = TRUE, 
+  conf_level = conflevel, 
+  title = paste0("PEESE (employment) period - ",desired_period), 
+  gof_map = NULL
+  ) 
+
+```
+
+## Bayesian model averaging 
+
+# Best practices and high quality estimation
+
+## High quality estimation
+
+### Conservative high quality PEESE
+
+
+::: {.callout-note}
+
+- No basic Cholecki/SVAR
+- no DSGE
+- only conventional MP
+- PEESE
+
+(try also inclusion of "outpgap", has strong effect on IRF)
+:::
+
+::: {.callout-warning}
+
+Note: DSGE models in our data never have effect sizes in period 0 or 1. Can this be true? We need to check this.
+
+```{r}
+
+dsge_1 <- data %>% filter(dsge == 1, period.month == 1)
+head(dsge_1)
+```
+
+:::
+
+#### Output
+
+```{r conservative_high_quality_output}
+
+# Create basic Cholecki/SVAR dummy
+data <- data %>%
+  mutate(basic_chol_svar = ifelse(group_ident_broad == "chol", 1, 0))
+out_var <- "output"
+method <- "PEESE" # try also FAT-PET
+# Estimate
+output_cons_hq <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c("basic_chol_svar",
+                                   # "outpgap", has strong effect on IRF
+                                   "dsge",
+                                   "convent"))
+
+coef_names_cons_hq <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'basic_chol_svar' = 'Basic Cholecki or SVAR', 
+  # "outpgap" = "outpgap", # has strong effect on IRF
+  'dsge' = 'DSGE',
+  'convent' = 'Conventional MP')
+
+cons_hq_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0, # Basic Cholecki or SVAR
+  # 1, # outpgap # has strong effect on IRF
+  0, # DSGE
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(output_cons_hq, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_cons_hq)
+
+output_cons_hq_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(output_cons_hq)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(output_cons_hq[[i]]))
+  
+  # Perform matrix multiplication
+  result <- cons_hq_coef_selection %*% betahat
+  
+  # Store the result in the list
+  output_cons_hq_results[[i]] <- result
+}
+
+output_cons_hq_results <- do.call(rbind, lapply(output_cons_hq_results, as.data.frame))
+output_cons_hq_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_cons_hq <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = output_cons_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Conservative high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_cons_hq
+```
+
+#### Price level
+
+```{r conservative_high_quality_pricelevel}
+
+out_var <- "inflation"
+method <- "PEESE" # try also FAT-PET
+# Estimate
+pricelevel_cons_hq <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c("basic_chol_svar",
+                                   "dsge",
+                                   # "outpgap", # has strong effect on IRF
+                                   "convent"))
+
+coef_names_cons_hq <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'basic_chol_svar' = 'Basic Cholecki or SVAR', 
+  'dsge' = 'DSGE',
+  # "outpgap", # has strong effect on IRF
+  'convent' = 'Conventional MP')
+
+cons_hq_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0, # Basic Cholecki or SVAR
+  0, # DSGE
+  # 1, # "outpgap", has strong effect on IRF
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(pricelevel_cons_hq, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_cons_hq)
+
+pricelevel_cons_hq_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(pricelevel_cons_hq)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(pricelevel_cons_hq[[i]]))
+  
+  # Perform matrix multiplication
+  result <- cons_hq_coef_selection %*% betahat
+  
+  # Store the result in the list
+  pricelevel_cons_hq_results[[i]] <- result
+}
+
+pricelevel_cons_hq_results <- do.call(rbind, lapply(pricelevel_cons_hq_results, as.data.frame))
+pricelevel_cons_hq_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_cons_hq <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = pricelevel_cons_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Conservative high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_cons_hq
+```
+
+
+#### Unemployment
+
+::: {.callout-note}
+
+For unemployment, including `basic_chol_svar` and `dsge` in the regression does not work. So conservative high quality here is only:
+
+- only conventional MP
+- PEESE
+
+:::
+
+```{r conservative_high_quality_unemp}
+
+out_var <- "unemp"
+method <- "PEESE"
+# Estimate
+unemp_cons_hq <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c(#"basic_chol_svar",
+                                   # "dsge",
+                                   "convent"))
+
+coef_names_cons_hq <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  # 'basic_chol_svar' = 'Basic Cholecki or SVAR', 
+  # 'dsge' = 'DSGE',
+  'convent' = 'Conventional MP')
+
+cons_hq_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  # 0, # Basic Cholecki or SVAR
+  # 0, # DSGE
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(unemp_cons_hq, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_cons_hq)
+
+unemp_cons_hq_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(unemp_cons_hq)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(unemp_cons_hq[[i]]))
+  
+  # Perform matrix multiplication
+  result <- cons_hq_coef_selection %*% betahat
+  
+  # Store the result in the list
+  unemp_cons_hq_results[[i]] <- result
+}
+
+unemp_cons_hq_results <- do.call(rbind, lapply(unemp_cons_hq_results, as.data.frame))
+unemp_cons_hq_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_cons_hq <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = unemp_cons_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Conservative high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_cons_hq
+```
+
+#### Employment
+
+::: {.callout-note}
+
+For unemployment, including `dsge` in the regression does not work. So conservative high quality here is only:
+
+- No basic Cholecki/SVAR
+- only conventional MP
+- PEESE
+
+:::
+
+```{r conservative_high_quality_emp}
+
+out_var <- "emp"
+method <- "PEESE"
+# Estimate
+emp_cons_hq <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c("basic_chol_svar",
+                                   # "dsge",
+                                   "convent"))
+
+coef_names_cons_hq <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'basic_chol_svar' = 'Basic Cholecki or SVAR', 
+  'dsge' = 'DSGE',
+  'convent' = 'Conventional MP')
+
+cons_hq_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0, # Basic Cholecki or SVAR
+  # 0, # DSGE
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(emp_cons_hq, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_cons_hq)
+
+emp_cons_hq_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(emp_cons_hq)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(emp_cons_hq[[i]]))
+  
+  # Perform matrix multiplication
+  result <- cons_hq_coef_selection %*% betahat
+  
+  # Store the result in the list
+  emp_cons_hq_results[[i]] <- result
+}
+
+emp_cons_hq_results <- do.call(rbind, lapply(emp_cons_hq_results, as.data.frame))
+emp_cons_hq_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_cons_hq <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = emp_cons_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Conservative high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_cons_hq
+```
+
+#### Interest rate
+
+```{r conservative_high_quality_rate}
+
+out_var <- "rate"
+method <- "PEESE"
+# Estimate
+rate_cons_hq <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c("basic_chol_svar",
+                                   "dsge",
+                                   "convent"))
+
+coef_names_cons_hq <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'basic_chol_svar' = 'Basic Cholecki or SVAR', 
+  'dsge' = 'DSGE',
+  'convent' = 'Conventional MP')
+
+cons_hq_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0, # Basic Cholecki or SVAR
+  0, # DSGE
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(rate_cons_hq, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL, 
+                           coef_map = coef_names_cons_hq)
+
+rate_cons_hq_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(rate_cons_hq)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(rate_cons_hq[[i]]))
+  
+  # Perform matrix multiplication
+  result <- cons_hq_coef_selection %*% betahat
+  
+  # Store the result in the list
+  rate_cons_hq_results[[i]] <- result
+}
+
+rate_cons_hq_results <- do.call(rbind, lapply(rate_cons_hq_results, as.data.frame))
+rate_cons_hq_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_cons_hq <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = rate_cons_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Conservative high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_cons_hq
+```
+
+### Broad high quality
+
+::: {.callout-note}
+
+- only hf and nr
+- only top_5_or_tier
+- latest publication year
+- only main research question
+- only log levels
+- no TVP-VAR
+- no DSGE
+- only conventional MP
+- PEESE
+
+:::
+
+#### Output
+
+```{r broad_high_quality_output}
+
+# Create non hf-non-nr dummy
+data <- data %>%
+  mutate(no_hf_no_nr = ifelse(!group_ident_broad %in% c("hf", "nr"), 1, 0))
+# Create publication year variable that implies most recent publication year if == 0
+data$pub_year_0 <- data$pub_year - max(data$pub_year)
+
+out_var <- "output"
+method <- "PEESE"
+# Estimate
+output_broad_hq <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c(
+                            "no_hf_no_nr", # 0
+                            "top_5_or_tier", # 1
+                            "pub_year_0", # 0
+                            "main_research_q", # 1
+                            "transformed", # 0
+                            "tvar", # 0 
+                            "dsge", # 0 
+                            # "outpgap", # has strong effect on IRF
+                            "convent") # 1 
+)
+
+broad_hq_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0, # no_hf_no_nr
+  1, # top_5_or_tier
+  0, # pub_year_0
+  1, # main_research_q
+  0, # transformed
+  0, # TVP-VAR
+  0, # DSGE
+  # 1, # "outpgap", # has strong effect on IRF
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(output_broad_hq, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL)
+
+output_broad_hq_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(output_broad_hq)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(output_broad_hq[[i]]))
+  
+  # Perform matrix multiplication
+  result <- broad_hq_coef_selection %*% betahat
+  
+  # Store the result in the list
+  output_broad_hq_results[[i]] <- result
+}
+
+output_broad_hq_results <- do.call(rbind, lapply(output_broad_hq_results, as.data.frame))
+output_broad_hq_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_broad_hq <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = output_broad_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_broad_hq
+```
+
+
+::: {.callout-note}
+
+Here, we drop the top_5_or_tier dummy from regression.
+
+- only hf and nr
+<!-- - only top_5_or_tier -->
+- latest publication year
+- only main research question
+- only log levels
+- no TVP-VAR
+- no DSGE
+- only conventional MP
+- PEESE
+
+:::
+
+```{r broad_high_quality_output_2}
+
+# Estimate
+output_broad_hq_2 <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c(
+                            "no_hf_no_nr", # 0
+                            # "top_5_or_tier", # 1
+                            "pub_year_0", # 0
+                            "main_research_q", # 1
+                            "transformed", # 0
+                            "tvar", # 0 
+                            "dsge", # 0 
+                            "convent") # 1 
+)
+
+broad_hq_2_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0, # no_hf_no_nr
+  # 1, # top_5_or_tier
+  0, # pub_year_0
+  1, # main_research_q
+  0, # transformed
+  0, # TVP-VAR
+  0, # DSGE
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(output_broad_hq_2, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL)
+
+output_broad_hq_2_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(output_broad_hq_2)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(output_broad_hq_2[[i]]))
+  
+  # Perform matrix multiplication
+  result <- broad_hq_2_coef_selection %*% betahat
+  
+  # Store the result in the list
+  output_broad_hq_2_results[[i]] <- result
+}
+
+output_broad_hq_2_results <- do.call(rbind, lapply(output_broad_hq_2_results, as.data.frame))
+output_broad_hq_2_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_broad_hq_2 <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = output_broad_hq_2_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without top_5_or_tier)",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_broad_hq_2
+```
+
+::: {.callout-note}
+
+Here, we drop the pub_year_0 dummy from regression.
+
+- only hf and nr
+- only top_5_or_tier
+<!-- - latest publication year -->
+- only main research question
+- only log levels
+- no TVP-VAR
+- no DSGE
+- only conventional MP
+- PEESE
+
+:::
+
+```{r broad_high_quality_output_3}
+
+# Estimate
+output_broad_hq_3 <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c(
+                            "no_hf_no_nr", # 0
+                            "top_5_or_tier", # 1
+                            # "pub_year_0", # 0
+                            "main_research_q", # 1
+                            "transformed", # 0
+                            "tvar", # 0 
+                            "dsge", # 0 
+                            "convent") # 1 
+)
+
+broad_hq_3_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0, # no_hf_no_nr
+  1, # top_5_or_tier
+  # 0, # pub_year_0
+  1, # main_research_q
+  0, # transformed
+  0, # TVP-VAR
+  0, # DSGE
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(output_broad_hq_3, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL)
+
+output_broad_hq_3_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(output_broad_hq_3)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(output_broad_hq_3[[i]]))
+  
+  # Perform matrix multiplication
+  result <- broad_hq_3_coef_selection %*% betahat
+  
+  # Store the result in the list
+  output_broad_hq_3_results[[i]] <- result
+}
+
+output_broad_hq_3_results <- do.call(rbind, lapply(output_broad_hq_3_results, as.data.frame))
+output_broad_hq_3_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_broad_hq_3 <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = output_broad_hq_3_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without pub_year_0)",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_broad_hq_3
+```
+
+::: {.callout-note}
+
+Here, we drop all except `no_hf_no_nr` from regression.
+
+- only hf and nr
+<!-- - only top_5_or_tier -->
+<!-- - latest publication year -->
+<!-- - only main research question -->
+<!-- - only log levels -->
+<!-- - no TVP-VAR -->
+<!-- - no DSGE -->
+<!-- - only conventional MP -->
+- PEESE
+
+:::
+
+```{r broad_high_quality_output_4}
+
+# Estimate
+output_broad_hq_4 <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c(
+                            "no_hf_no_nr")#, # 0
+                            # "top_5_or_tier", # 1
+                            # "pub_year_0", # 0
+                            # "main_research_q", # 1
+                            # "transformed", # 0
+                            # "tvar", # 0 
+                            # "dsge", # 0 
+                            # "convent") # 1 
+)
+
+broad_hq_4_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0)#, # no_hf_no_nr
+  # 1, # top_5_or_tier
+  # 0, # pub_year_0
+  # 1, # main_research_q
+  # 0, # transformed
+  # 0, # TVP-VAR
+  # 0, # DSGE
+  # 1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(output_broad_hq_4, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL)
+
+output_broad_hq_4_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(output_broad_hq_4)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(output_broad_hq_4[[i]]))
+  
+  # Perform matrix multiplication
+  result <- broad_hq_4_coef_selection %*% betahat
+  
+  # Store the result in the list
+  output_broad_hq_4_results[[i]] <- result
+}
+
+output_broad_hq_4_results <- do.call(rbind, lapply(output_broad_hq_4_results, as.data.frame))
+output_broad_hq_4_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_broad_hq_4 <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = output_broad_hq_4_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (only with no_hf_no_nr)",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_broad_hq_4
+```
+
+#### Price level 
+
+```{r broad_high_quality_pricelevel}
+
+# Create non hf-non-nr dummy
+data <- data %>%
+  mutate(no_hf_no_nr = ifelse(!group_ident_broad %in% c("hf", "nr"), 1, 0))
+# Create publication year variable that implies most recent publication year if == 0
+data$pub_year_0 <- data$pub_year - max(data$pub_year)
+
+out_var <- "inflation"
+method <- "PEESE"
+# Estimate
+pricelevel_broad_hq <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c(
+                            "no_hf_no_nr", # 0
+                            "top_5_or_tier", # 1
+                            "pub_year_0", # 0
+                            "main_research_q", # 1
+                            "transformed", # 0
+                            "tvar", # 0 
+                            "dsge", # 0 
+                            # "outpgap", # has strong effect on IRF
+                            "convent") # 1 
+)
+
+broad_hq_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0, # no_hf_no_nr
+  1, # top_5_or_tier
+  0, # pub_year_0
+  1, # main_research_q
+  0, # transformed
+  0, # TVP-VAR
+  0, # DSGE
+  # 1, # "outpgap", # has strong effect on IRF
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(pricelevel_broad_hq, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL)
+
+pricelevel_broad_hq_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(pricelevel_broad_hq)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(pricelevel_broad_hq[[i]]))
+  
+  # Perform matrix multiplication
+  result <- broad_hq_coef_selection %*% betahat
+  
+  # Store the result in the list
+  pricelevel_broad_hq_results[[i]] <- result
+}
+
+pricelevel_broad_hq_results <- do.call(rbind, lapply(pricelevel_broad_hq_results, as.data.frame))
+pricelevel_broad_hq_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_broad_hq <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = pricelevel_broad_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_broad_hq
+```
+
+
+::: {.callout-note}
+
+Here, we drop the top_5_or_tier dummy from regression.
+
+- only hf and nr
+<!-- - only top_5_or_tier -->
+- latest publication year
+- only main research question
+- only log levels
+- no TVP-VAR
+- no DSGE
+- only conventional MP
+- PEESE
+
+:::
+
+```{r broad_high_quality_pricelevel_2}
+
+# Estimate
+pricelevel_broad_hq_2 <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c(
+                            "no_hf_no_nr", # 0
+                            # "top_5_or_tier", # 1
+                            "pub_year_0", # 0
+                            "main_research_q", # 1
+                            "transformed", # 0
+                            "tvar", # 0 
+                            "dsge", # 0 
+                            "convent") # 1 
+)
+
+broad_hq_2_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0, # no_hf_no_nr
+  # 1, # top_5_or_tier
+  0, # pub_year_0
+  1, # main_research_q
+  0, # transformed
+  0, # TVP-VAR
+  0, # DSGE
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(pricelevel_broad_hq_2, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL)
+
+pricelevel_broad_hq_2_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(pricelevel_broad_hq_2)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(pricelevel_broad_hq_2[[i]]))
+  
+  # Perform matrix multiplication
+  result <- broad_hq_2_coef_selection %*% betahat
+  
+  # Store the result in the list
+  pricelevel_broad_hq_2_results[[i]] <- result
+}
+
+pricelevel_broad_hq_2_results <- do.call(rbind, lapply(pricelevel_broad_hq_2_results, as.data.frame))
+pricelevel_broad_hq_2_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_broad_hq_2 <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = pricelevel_broad_hq_2_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without top_5_or_tier)",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_broad_hq_2
+```
+
+::: {.callout-note}
+
+Here, we drop the pub_year_0 dummy from regression.
+
+- only hf and nr
+- only top_5_or_tier
+<!-- - latest publication year -->
+- only main research question
+- only log levels
+- no TVP-VAR
+- no DSGE
+- only conventional MP
+- PEESE
+
+:::
+
+```{r broad_high_quality_pricelevel_3}
+
+# Estimate
+pricelevel_broad_hq_3 <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c(
+                            "no_hf_no_nr", # 0
+                            "top_5_or_tier", # 1
+                            # "pub_year_0", # 0
+                            "main_research_q", # 1
+                            "transformed", # 0
+                            "tvar", # 0 
+                            "dsge", # 0 
+                            "convent") # 1 
+)
+
+broad_hq_3_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  0, # no_hf_no_nr
+  1, # top_5_or_tier
+  # 0, # pub_year_0
+  1, # main_research_q
+  0, # transformed
+  0, # TVP-VAR
+  0, # DSGE
+  1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(pricelevel_broad_hq_3, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL)
+
+pricelevel_broad_hq_3_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(pricelevel_broad_hq_3)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(pricelevel_broad_hq_3[[i]]))
+  
+  # Perform matrix multiplication
+  result <- broad_hq_3_coef_selection %*% betahat
+  
+  # Store the result in the list
+  pricelevel_broad_hq_3_results[[i]] <- result
+}
+
+pricelevel_broad_hq_3_results <- do.call(rbind, lapply(pricelevel_broad_hq_3_results, as.data.frame))
+pricelevel_broad_hq_3_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_broad_hq_3 <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = pricelevel_broad_hq_3_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without pub_year_0)",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_broad_hq_3
+```
+
+::: {.callout-note}
+
+Here, we drop all except `no_hf_no_nr` from regression.
+
+- only hf and nr
+<!-- - only top_5_or_tier -->
+<!-- - latest publication year -->
+<!-- - only main research question -->
+<!-- - only log levels -->
+<!-- - no TVP-VAR -->
+<!-- - no DSGE -->
+<!-- - only conventional MP -->
+- PEESE
+
+:::
+
+```{r broad_high_quality_pricelevel_4}
+
+# Estimate
+pricelevel_broad_hq_4 <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c(
+                            # "outpgap", # has strong effect on IRF
+                            "no_hf_no_nr")#, # 0
+                            # "top_5_or_tier", # 1
+                            # "pub_year_0", # 0
+                            # "main_research_q", # 1
+                            # "transformed", # 0
+                            # "tvar", # 0 
+                            # "dsge", # 0 
+                            # "convent") # 1 
+)
+
+broad_hq_4_coef_selection <-c(
+  1, # Intercept
+  0, # Variance
+  # 1, # "outpgap", # has strong effect on IRF
+  0)#, # no_hf_no_nr
+  # 1, # top_5_or_tier
+  # 0, # pub_year_0
+  # 1, # main_research_q
+  # 0, # transformed
+  # 0, # TVP-VAR
+  # 0, # DSGE
+  # 1) # Conventional MP
+
+# Create html output
+modelsummary::modelsummary(pricelevel_broad_hq_4, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL)
+
+pricelevel_broad_hq_4_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(pricelevel_broad_hq_4)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(pricelevel_broad_hq_4[[i]]))
+  
+  # Perform matrix multiplication
+  result <- broad_hq_4_coef_selection %*% betahat
+  
+  # Store the result in the list
+  pricelevel_broad_hq_4_results[[i]] <- result
+}
+
+pricelevel_broad_hq_4_results <- do.call(rbind, lapply(pricelevel_broad_hq_4_results, as.data.frame))
+pricelevel_broad_hq_4_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_broad_hq_4 <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = pricelevel_broad_hq_4_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (only with no_hf_no_nr)",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_broad_hq_4
+```
+
+
+#### Unemployment rate
+
+#### Employment
+
+#### Interest rate
+
+### ME best practice 1
+
+#### Output
+
+```{r me_bp_output}
+
+out_var <- "output"
+method <- "FAT-PET"
+# Estimate
+wins_para <- 0.02
+output_me_bp <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "top_5_or_tier", 
+                                   "cbanker",
+                                   "pub_year", 
+                                   "main_research_q", 
+                                   "transformed", 
+                                   "cum", 
+                                   "lrir", 
+                                   "fx", 
+                                   "foreignir", 
+                                   "inflexp", 
+                                   "eglob", 
+                                   "find", 
+                                   "outpgap", 
+                                   "comprice",
+                                   "lp", 
+                                   "vecm",
+                                   # "dyn_ols",
+                                   "fvar", 
+                                   "tvar", 
+                                   "gvar", 
+                                   "dsge", 
+                                   "varother", 
+                                   "panel", 
+                                   "bayes",
+                                   "convent"))
+
+coef_names_cons_hq <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'basic_chol_svar' = 'Basic Cholecki or SVAR', 
+  'dsge' = 'DSGE',
+  'convent' = 'Conventional MP')
+
+cons_hq_coef_selection <-
+me_best_pract <- c(1,0,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,1,0,1)
+
+
+# Create html output
+modelsummary::modelsummary(output_me_bp, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL)
+
+output_me_bp_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(output_me_bp)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(output_me_bp[[i]]))
+  
+  # Perform matrix multiplication
+  result <- cons_hq_coef_selection %*% betahat
+  
+  # Store the result in the list
+  output_me_bp_results[[i]] <- result
+}
+
+output_me_bp_results <- do.call(rbind, lapply(output_me_bp_results, as.data.frame))
+output_me_bp_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_output_me_bp <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = output_me_bp_results,
+    x = ~period,
+    y = ~V1,
+    name = "ME bp",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_output_me_bp
+```
+
+#### Price level
+
+```{r me_bp_pricelevel}
+
+out_var <- "inflation"
+method <- "FAT-PET"
+# Estimate
+wins_para <- 0.02
+pricelevel_me_bp <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = method, 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "top_5_or_tier", 
+                                   "cbanker",
+                                   "pub_year", 
+                                   "main_research_q", 
+                                   "transformed", 
+                                   "cum", 
+                                   "lrir", 
+                                   "fx", 
+                                   "foreignir", 
+                                   "inflexp", 
+                                   "eglob", 
+                                   "find", 
+                                   "outpgap", 
+                                   "comprice",
+                                   "lp", 
+                                   "vecm",
+                                   # "dyn_ols",
+                                   "fvar", 
+                                   "tvar", 
+                                   "gvar", 
+                                   "dsge", 
+                                   "varother", 
+                                   "panel", 
+                                   "bayes",
+                                   "convent"))
+
+coef_names_cons_hq <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'basic_chol_svar' = 'Basic Cholecki or SVAR', 
+  'dsge' = 'DSGE',
+  'convent' = 'Conventional MP')
+
+cons_hq_coef_selection <-
+me_best_pract <- c(1,0,1,0,0,0,1,0,0,1,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,1,0,1)
+
+
+# Create html output
+modelsummary::modelsummary(pricelevel_me_bp, 
+                           output = "gt", 
+                           stars = TRUE, 
+                           conf_level = conflevel, 
+                           title = paste0(method, out_var), 
+                           gof_map = NULL)
+
+pricelevel_me_bp_results <- list()
+
+# Loop through each period's model
+for (i in seq_along(pricelevel_me_bp)) {
+  # Extract coefficients as a matrix
+  betahat <- as.matrix(coef(pricelevel_me_bp[[i]]))
+  
+  # Perform matrix multiplication
+  result <- cons_hq_coef_selection %*% betahat
+  
+  # Store the result in the list
+  pricelevel_me_bp_results[[i]] <- result
+}
+
+pricelevel_me_bp_results <- do.call(rbind, lapply(pricelevel_me_bp_results, as.data.frame))
+pricelevel_me_bp_results$period <- seq(3, 60, by = 3)
+
+# Generate the average IRF plot with PEESE correction
+irf_pricelevel_me_bp <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL
+) %>%
+  add_lines(
+    data = pricelevel_me_bp_results,
+    x = ~period,
+    y = ~V1,
+    name = "ME bp",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) 
+
+irf_pricelevel_me_bp
+```
+
+#### Unemployment rate
+
+#### Employment
+
+#### Interest rate
+
+# Range of IRF corrections
+
+## Output
+
+### With sampling
+
+::: {.callout-warning}
+
+This version has unstable results due to drawing samples but much faster estimation.
+
+:::
+
+```{r output_irf_correction_range}
+
+# Filter the data
+out_var <- "output"
+filtered_data <- data %>%
+  filter(!quality_concern, period.month %in% seq(0,60, by = 3), outcome == out_var)#, us==1
+
+
+# Set up winsorization levels for estimations
+wins_para_levels <- c(0,0.01, 0.02, 0.03, 0.04)
+conf_lev <- 0.89
+
+# Function to perform meta-analysis for a given wins level
+perform_meta_analysis <- function(data, wins) {
+  list(
+    peese = meta_analysis(
+      data = data,
+      outvar = out_var,
+      se_option = "avg",
+      periods = chosen_periods,
+      wins = wins,
+      ap = FALSE,
+      prec_weighted = TRUE,
+      estimation = "PEESE",
+      cluster_se = TRUE
+    ),
+    waap = meta_analysis(
+      data = data,
+      outvar = out_var,
+      se_option = "avg",
+      periods = chosen_periods,
+      wins = wins,
+      ap = TRUE,
+      prec_weighted = FALSE,
+      estimation = "UWLS",
+      cluster_se = TRUE
+      ),
+    AK = meta_analysis(
+      data = data,
+      outvar = out_var,
+      se_option = "avg",
+      periods = chosen_periods,
+      wins = wins,
+      prec_weighted = FALSE,
+      estimation = "AK",
+      cluster_se = TRUE,
+      cutoff_val=1,
+      AK_modelmu = "t",
+      AK_symmetric = FALSE,
+      AK_conf_level = 0.68
+  )
+  )
+}
+
+
+# Function to extract intercepts
+extract_intercepts <- function(model, method) {
+  if (method == "AK") {
+    estimate <- model$tidy[1, 2]
+    se <- model$tidy[1, 3]
+    ci_lower <- estimate - se * qnorm(1 - (1 - conf_lev) / 2)
+    ci_upper <- estimate + se * qnorm(1 - (1 - conf_lev) / 2)
+  } else {
+    ci <- confint(model, level = conf_lev)
+    estimate <- unname(coef(model)[1])
+    ci_lower <- unname(ci[1, 1])
+    ci_upper <- unname(ci[1, 2])
+  }
+  return(c(estimate = estimate, lower = ci_lower, upper = ci_upper))
+}
+
+
+# Function to combine results
+combine_results <- function(results_list, method_name) {
+  lapply(names(results_list), function(wins_name) {
+    results <- results_list[[wins_name]][[method_name]]
+    intercepts <- lapply(results, extract_intercepts, method = method_name)
+    df <- do.call(rbind, intercepts)
+    df <- as.data.frame(df)
+    df$period <- as.numeric(rownames(df))
+    df$wins_para <- wins_name
+    df$method <- method_name
+    return(df)
+  })
+}
+
+
+analyze_subsample <- function(subsample_id) {#, us_value, group_value
+  # Filter data based on 'us' and 'group_ident_broad' values
+  subsample <- filtered_data %>%
+    #filter(us == us_value, group_ident_broad != group_value) %>%
+    group_by(key, period.month) %>%
+    sample_n(size = 1, replace = FALSE) %>%
+    ungroup()  # Adjust sample size as needed
+  
+  results_list <- lapply(wins_para_levels, function(wins) perform_meta_analysis(subsample, wins))
+  names(results_list) <- paste0("wins_", wins_para_levels)
+  
+  # Combine results for all methods
+  final_peese <- do.call(rbind, combine_results(results_list, "peese"))
+  final_waap <- do.call(rbind, combine_results(results_list, "waap"))
+  final_ak <- do.call(rbind, combine_results(results_list, "AK"))
+  
+  # Combine all method results into a single final data frame
+  final_df <- rbind(final_peese, final_waap, final_ak)
+  final_df$subsample <- subsample_id
+  # final_df$us <- us_value
+  # final_df$group_ident_broad <- group_value
+  
+  return(final_df)
+}
+
+# Initialize a list to store results
+all_results <- list()
+
+# Compute results using the functions from above
+results <- lapply(1:10, analyze_subsample)
+  
+
+# Combine results for all subsamples
+all_results_df <- do.call(rbind, results)
+
+# Use 95%  region of estimate per period. 
+min_max_per_period <- all_results_df %>%
+  group_by(period) %>%
+  summarise(
+    min_estimate = quantile(estimate,0.025, na.rm = TRUE),
+    max_estimate = quantile(estimate,0.975, na.rm = TRUE)
+  ) %>% ungroup()
+
+
+# Generate the average IRF plot with PEESE correction
+irf_range_correction <- plot_average_irfs(
+  filtered_data,
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = T
+)  %>%
+  add_ribbons(
+    data = min_max_per_period,
+    x = ~period,
+    ymin = ~min_estimate,
+    ymax = ~max_estimate,
+    name = "P-bias correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(100,20,200,0.2)'
+  ) %>%
+  layout(
+    title = "Output response to 100 bp rate shock, average and p-bias corrected range",
+    xaxis = list(title = "Month"),
+    yaxis = list(title = "Effect in %"),
+    hovermode = "compare"
+  )
+
+irf_range_correction
+
+irf_range_correction %>%
+  add_lines(
+    data = output_cons_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Conservative high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  )
+irf_range_correction%>%
+  add_lines(
+    data = output_me_bp_results,
+    x = ~period,
+    y = ~V1,
+    name = "ME bp",
+    line = list(color = 'rgba(200,100,100,1)')
+  )
+irf_range_correction %>%
+  add_lines(
+    data = output_broad_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality",
+    line = list(color = 'rgba(300,200,100,1)')
+  )
+irf_range_correction %>%
+  add_lines(
+    data = output_broad_hq_2_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without top_5_or_tier)",
+    line = list(color = 'rgba(400,200,300,1)')
+  )
+irf_range_correction %>%
+  add_lines(
+    data = output_broad_hq_3_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without pub_year_0)",
+    line = list(color = 'rgba(500,300,400,1)')
+  )
+irf_range_correction %>%
+  add_lines(
+    data = output_broad_hq_4_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (only with no_hf_no_nr)",
+    line = list(color = 'rgba(600,100,700,1)')
+  )
+
+irf_range_correction %>%
+  add_lines(
+    data = output_cons_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Conservative high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) %>%
+  add_lines(
+    data = output_me_bp_results,
+    x = ~period,
+    y = ~V1,
+    name = "ME bp",
+    line = list(color = 'rgba(200,100,100,1)')
+  ) %>%
+  add_lines(
+    data = output_broad_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality",
+    line = list(color = 'rgba(300,200,100,1)')
+  ) %>%
+  add_lines(
+    data = output_broad_hq_2_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without top_5_or_tier)",
+    line = list(color = 'rgba(400,200,300,1)')
+  ) %>%
+  add_lines(
+    data = output_broad_hq_3_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without pub_year_0)",
+    line = list(color = 'rgba(500,300,400,1)')
+  )  %>%
+  add_lines(
+    data = output_broad_hq_4_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (only with no_hf_no_nr)",
+    line = list(color = 'rgba(600,100,700,1)')
+  ) %>%
+  add_lines(
+    data = df_results,
+    x = ~period,
+    y = ~V1,
+    name = "Best practice 2",
+    line = list(color = 'rgba(100,100,100,1)')
+  )
+
+```
+
+### Without sampling 
+
+::: {.callout-warning}
+
+This version has stable results but estimation takes very long. Estimation is deactivated to prevent the document from rendering forever. Activate if you want to see results (we might then store them). 
+
+:::
+
+## Price level
+
+### With sampling
+
+::: {.callout-warning}
+
+This version has unstable results due to drawing samples but much faster estimation.
+
+:::
+
+```{r pricelevel_irf_correction_range}
+
+# Filter the data
+out_var <- "inflation"
+filtered_data <- data %>%
+  filter(!quality_concern, period.month %in% seq(0,60, by = 3), outcome == out_var)#, us==1
+
+
+# Set up winsorization levels for estimations
+wins_para_levels <- c(0,0.01, 0.02, 0.03, 0.04)
+conf_lev <- 0.89
+
+# Function to perform meta-analysis for a given wins level
+perform_meta_analysis <- function(data, wins) {
+  list(
+    peese = meta_analysis(
+      data = data,
+      outvar = out_var,
+      se_option = "avg",
+      periods = chosen_periods,
+      wins = wins,
+      ap = FALSE,
+      prec_weighted = TRUE,
+      estimation = "PEESE",
+      cluster_se = TRUE
+    ),
+    waap = meta_analysis(
+      data = data,
+      outvar = out_var,
+      se_option = "avg",
+      periods = chosen_periods,
+      wins = wins,
+      ap = TRUE,
+      prec_weighted = FALSE,
+      estimation = "UWLS",
+      cluster_se = TRUE
+      ),
+    AK = meta_analysis(
+      data = data,
+      outvar = out_var,
+      se_option = "avg",
+      periods = chosen_periods,
+      wins = wins,
+      prec_weighted = FALSE,
+      estimation = "AK",
+      cluster_se = TRUE,
+      cutoff_val=1,
+      AK_modelmu = "t",
+      AK_symmetric = FALSE,
+      AK_conf_level = 0.68
+  )
+  )
+}
+
+
+# Function to extract intercepts
+extract_intercepts <- function(model, method) {
+  if (method == "AK") {
+    estimate <- model$tidy[1, 2]
+    se <- model$tidy[1, 3]
+    ci_lower <- estimate - se * qnorm(1 - (1 - conf_lev) / 2)
+    ci_upper <- estimate + se * qnorm(1 - (1 - conf_lev) / 2)
+  } else {
+    ci <- confint(model, level = conf_lev)
+    estimate <- unname(coef(model)[1])
+    ci_lower <- unname(ci[1, 1])
+    ci_upper <- unname(ci[1, 2])
+  }
+  return(c(estimate = estimate, lower = ci_lower, upper = ci_upper))
+}
+
+
+# Function to combine results
+combine_results <- function(results_list, method_name) {
+  lapply(names(results_list), function(wins_name) {
+    results <- results_list[[wins_name]][[method_name]]
+    intercepts <- lapply(results, extract_intercepts, method = method_name)
+    df <- do.call(rbind, intercepts)
+    df <- as.data.frame(df)
+    df$period <- as.numeric(rownames(df))
+    df$wins_para <- wins_name
+    df$method <- method_name
+    return(df)
+  })
+}
+
+
+analyze_subsample <- function(subsample_id) {#, us_value, group_value
+  # Filter data based on 'us' and 'group_ident_broad' values
+  subsample <- filtered_data %>%
+    #filter(us == us_value, group_ident_broad != group_value) %>%
+    group_by(key, period.month) %>%
+    sample_n(size = 1, replace = FALSE) %>%
+    ungroup()  # Adjust sample size as needed
+  
+  results_list <- lapply(wins_para_levels, function(wins) perform_meta_analysis(subsample, wins))
+  names(results_list) <- paste0("wins_", wins_para_levels)
+  
+  # Combine results for all methods
+  final_peese <- do.call(rbind, combine_results(results_list, "peese"))
+  final_waap <- do.call(rbind, combine_results(results_list, "waap"))
+  final_ak <- do.call(rbind, combine_results(results_list, "AK"))
+  
+  # Combine all method results into a single final data frame
+  final_df <- rbind(final_peese, final_waap, final_ak)
+  final_df$subsample <- subsample_id
+  # final_df$us <- us_value
+  # final_df$group_ident_broad <- group_value
+  
+  return(final_df)
+}
+
+# Initialize a list to store results
+all_results <- list()
+
+# Compute results using the functions from above
+results <- lapply(1:10, analyze_subsample)
+  
+
+# Combine results for all subsamples
+all_results_df <- do.call(rbind, results)
+
+# Use 95%  region of estimate per period. 
+min_max_per_period <- all_results_df %>%
+  group_by(period) %>%
+  summarise(
+    min_estimate = quantile(estimate,0.025, na.rm = TRUE),
+    max_estimate = quantile(estimate,0.975, na.rm = TRUE)
+  ) %>% ungroup()
+
+
+# Generate the average IRF plot with PEESE correction
+irf_range_correction <- plot_average_irfs(
+  filtered_data,
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = T
+)  %>%
+  add_ribbons(
+    data = min_max_per_period,
+    x = ~period,
+    ymin = ~min_estimate,
+    ymax = ~max_estimate,
+    name = "P-bias correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(100,20,200,0.2)'
+  ) %>%
+  layout(
+    title = "pricelevel response to 100 bp rate shock, average and p-bias corrected range",
+    xaxis = list(title = "Month"),
+    yaxis = list(title = "Effect in %"),
+    hovermode = "compare"
+  )
+
+irf_range_correction
+
+irf_range_correction %>%
+  add_lines(
+    data = pricelevel_cons_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Conservative high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  )
+irf_range_correction %>%
+  add_lines(
+    data = pricelevel_me_bp_results,
+    x = ~period,
+    y = ~V1,
+    name = "ME bp",
+    line = list(color = 'rgba(200,100,100,1)')
+  )
+irf_range_correction %>%
+  add_lines(
+    data = pricelevel_broad_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality",
+    line = list(color = 'rgba(300,200,100,1)')
+  )
+irf_range_correction %>%
+  add_lines(
+    data = pricelevel_broad_hq_2_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without top_5_or_tier)",
+    line = list(color = 'rgba(400,200,300,1)')
+  )
+irf_range_correction %>%
+  add_lines(
+    data = pricelevel_broad_hq_3_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without pub_year_0)",
+    line = list(color = 'rgba(500,300,400,1)')
+  )
+irf_range_correction %>%
+  add_lines(
+    data = pricelevel_broad_hq_4_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (only with no_hf_no_nr)",
+    line = list(color = 'rgba(600,100,700,1)')
+  )
+
+irf_range_correction %>%
+  add_lines(
+    data = pricelevel_cons_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Conservative high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) %>%
+  add_lines(
+    data = pricelevel_me_bp_results,
+    x = ~period,
+    y = ~V1,
+    name = "ME bp",
+    line = list(color = 'rgba(200,100,100,1)')
+  ) %>%
+  add_lines(
+    data = pricelevel_broad_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality",
+    line = list(color = 'rgba(300,200,100,1)')
+  ) %>%
+  add_lines(
+    data = pricelevel_broad_hq_2_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without top_5_or_tier)",
+    line = list(color = 'rgba(400,200,300,1)')
+  ) %>%
+  add_lines(
+    data = pricelevel_broad_hq_3_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without pub_year_0)",
+    line = list(color = 'rgba(500,300,400,1)')
+  )  %>%
+  add_lines(
+    data = pricelevel_broad_hq_4_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (only with no_hf_no_nr)",
+    line = list(color = 'rgba(600,100,700,1)')
+  )
+
+```
+
+### Without sampling 
+
+::: {.callout-warning}
+
+This version has stable results but estimation takes very long. Estimation is deactivated to prevent the document from rendering forever. Activate if you want to see results (we might then store them). 
+
+:::
+
+## Unemployment rate
+
+## Employment 
+
+## Interest rate
+
+::: {.callout-important}
+
+Failed to run for rate. Try again.
+
+:::
+
+### With sampling
+
+::: {.callout-warning}
+
+This version has unstable results due to drawing samples but much faster estimation.
+
+:::
+
+```{r rate_irf_correction_range}
+#| eval: false
+
+# Filter the data
+out_var <- "rate"
+filtered_data <- data %>%
+  filter(!quality_concern, period.month %in% seq(0,60, by = 3), outcome == out_var)#, us==1
+
+
+# Set up winsorization levels for estimations
+wins_para_levels <- c(0,0.01, 0.02, 0.03, 0.04)
+conf_lev <- 0.89
+
+# Function to perform meta-analysis for a given wins level
+perform_meta_analysis <- function(data, wins) {
+  list(
+    peese = meta_analysis(
+      data = data,
+      outvar = out_var,
+      se_option = "avg",
+      periods = chosen_periods,
+      wins = wins,
+      ap = FALSE,
+      prec_weighted = TRUE,
+      estimation = "PEESE",
+      cluster_se = TRUE
+    ),
+    waap = meta_analysis(
+      data = data,
+      outvar = out_var,
+      se_option = "avg",
+      periods = chosen_periods,
+      wins = wins,
+      ap = TRUE,
+      prec_weighted = FALSE,
+      estimation = "UWLS",
+      cluster_se = TRUE
+      ),
+    AK = meta_analysis(
+      data = data,
+      outvar = out_var,
+      se_option = "avg",
+      periods = chosen_periods,
+      wins = wins,
+      prec_weighted = FALSE,
+      estimation = "AK",
+      cluster_se = TRUE,
+      cutoff_val=1,
+      AK_modelmu = "t",
+      AK_symmetric = FALSE,
+      AK_conf_level = 0.68
+  )
+  )
+}
+
+
+# Function to extract intercepts
+extract_intercepts <- function(model, method) {
+  if (method == "AK") {
+    estimate <- model$tidy[1, 2]
+    se <- model$tidy[1, 3]
+    ci_lower <- estimate - se * qnorm(1 - (1 - conf_lev) / 2)
+    ci_upper <- estimate + se * qnorm(1 - (1 - conf_lev) / 2)
+  } else {
+    ci <- confint(model, level = conf_lev)
+    estimate <- unname(coef(model)[1])
+    ci_lower <- unname(ci[1, 1])
+    ci_upper <- unname(ci[1, 2])
+  }
+  return(c(estimate = estimate, lower = ci_lower, upper = ci_upper))
+}
+
+
+# Function to combine results
+combine_results <- function(results_list, method_name) {
+  lapply(names(results_list), function(wins_name) {
+    results <- results_list[[wins_name]][[method_name]]
+    intercepts <- lapply(results, extract_intercepts, method = method_name)
+    df <- do.call(rbind, intercepts)
+    df <- as.data.frame(df)
+    df$period <- as.numeric(rownames(df))
+    df$wins_para <- wins_name
+    df$method <- method_name
+    return(df)
+  })
+}
+
+
+analyze_subsample <- function(subsample_id) {#, us_value, group_value
+  # Filter data based on 'us' and 'group_ident_broad' values
+  subsample <- filtered_data %>%
+    #filter(us == us_value, group_ident_broad != group_value) %>%
+    group_by(key, period.month) %>%
+    sample_n(size = 1, replace = FALSE) %>%
+    ungroup()  # Adjust sample size as needed
+  
+  results_list <- lapply(wins_para_levels, function(wins) perform_meta_analysis(subsample, wins))
+  names(results_list) <- paste0("wins_", wins_para_levels)
+  
+  # Combine results for all methods
+  final_peese <- do.call(rbind, combine_results(results_list, "peese"))
+  final_waap <- do.call(rbind, combine_results(results_list, "waap"))
+  final_ak <- do.call(rbind, combine_results(results_list, "AK"))
+  
+  # Combine all method results into a single final data frame
+  final_df <- rbind(final_peese, final_waap, final_ak)
+  final_df$subsample <- subsample_id
+  # final_df$us <- us_value
+  # final_df$group_ident_broad <- group_value
+  
+  return(final_df)
+}
+
+# Initialize a list to store results
+all_results <- list()
+
+# Compute results using the functions from above
+results <- lapply(1:10, analyze_subsample)
+  
+
+# Combine results for all subsamples
+all_results_df <- do.call(rbind, results)
+
+# Use 95%  region of estimate per period. 
+min_max_per_period <- all_results_df %>%
+  group_by(period) %>%
+  summarise(
+    min_estimate = quantile(estimate,0.025, na.rm = TRUE),
+    max_estimate = quantile(estimate,0.975, na.rm = TRUE)
+  ) %>% ungroup()
+
+
+# Generate the average IRF plot with PEESE correction
+irf_range_correction <- plot_average_irfs(
+  filtered_data,
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = T
+)  %>%
+  add_ribbons(
+    data = min_max_per_period,
+    x = ~period,
+    ymin = ~min_estimate,
+    ymax = ~max_estimate,
+    name = "P-bias correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(100,20,200,0.2)'
+  ) %>%
+  layout(
+    title = "rate response to 100 bp rate shock, average and p-bias corrected range",
+    xaxis = list(title = "Month"),
+    yaxis = list(title = "Effect in %"),
+    hovermode = "compare"
+  ) %>%
+  add_lines(
+    data = rate_cons_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Conservative high quality",
+    line = list(color = 'rgba(100,100,100,1)')
+  ) %>%
+  add_lines(
+    data = rate_me_bp_results,
+    x = ~period,
+    y = ~V1,
+    name = "ME bp",
+    line = list(color = 'rgba(200,100,100,1)')
+  ) %>%
+  add_lines(
+    data = rate_broad_hq_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality",
+    line = list(color = 'rgba(300,200,100,1)')
+  ) %>%
+  add_lines(
+    data = rate_broad_hq_2_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without top_5_or_tier)",
+    line = list(color = 'rgba(400,200,300,1)')
+  ) %>%
+  add_lines(
+    data = rate_broad_hq_3_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (without pub_year_0)",
+    line = list(color = 'rgba(500,300,400,1)')
+  )  %>%
+  add_lines(
+    data = rate_broad_hq_4_results,
+    x = ~period,
+    y = ~V1,
+    name = "Broad high quality (only with no_hf_no_nr)",
+    line = list(color = 'rgba(600,100,700,1)')
+  )
+
+irf_range_correction
+```
+
+### Without sampling 
+
+::: {.callout-warning}
+
+This version has stable results but estimation takes very long. Estimation is deactivated to prevent the document from rendering forever. Activate if you want to see results (we might then store them). 
+
+:::
+
+
+# Country and country group analysis
+
+## Average and PEESE-corrected IRFs
+
+### Output 
+
+```{r avg_irf_output_countries}
+
+out_var <- "output"
+
+# PEESE estimation for subsamples
+# US
+peese_results_output_us <- meta_analysis(
+  data = data %>% filter(us == 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+# EA12
+peese_results_output_ea12 <- meta_analysis(
+  data = data %>% filter(ea12 == 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+# Upper middle
+peese_results_output_upper_middle <- meta_analysis(
+  data = data %>% filter(upper_middle == 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+# Other advanced 
+peese_results_output_other_advanced <- meta_analysis(
+  data = data %>% filter(advanced == 1, ea12 != 1, us != 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+
+
+# Extract intercept estimates (corrected IRF)
+extract_intercepts <- function(results) {
+  intercepts <- lapply(results, function(model) {
+    ci <- confint(model, level = 0.89)  # Using 89% confidence interval as in the app
+    c(estimate = unname(coef(model)[1]),
+      lower = ci[1, 1],
+      upper = ci[1, 2])
+  })
+  
+  data.frame(
+    period = as.numeric(names(results)),
+    estimate = sapply(intercepts, function(x) x["estimate"]),
+    lower = sapply(intercepts, function(x) x["lower"]),
+    upper = sapply(intercepts, function(x) x["upper"])
+  )
+}
+
+# Extract corrected effects for subsamples
+corrected_irf_peese_output_us <- extract_intercepts(peese_results_output_us)
+corrected_irf_peese_output_ea12 <- extract_intercepts(peese_results_output_ea12)
+corrected_irf_peese_output_em <- extract_intercepts(peese_results_output_upper_middle)
+corrected_irf_peese_output_otheradv <- extract_intercepts(peese_results_output_other_advanced)
+
+# IRFs 
+# US
+avg_irf_output_us <- plot_average_irfs(
+  data %>% filter(us == 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_output_us,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_output_us,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+# EA12
+avg_irf_output_ea12 <- plot_average_irfs(
+  data %>% filter(ea12 == 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_output_ea12,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_output_ea12,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+# Upper middle
+avg_irf_output_upper_middle <- plot_average_irfs(
+  data %>% filter(upper_middle == 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_output_em,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_output_em,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+# Other advanced 
+avg_irf_output_other_advanced <- plot_average_irfs(
+  data %>% filter(advanced == 1, ea12 != 1, us != 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_output_otheradv,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_output_otheradv,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+#### Create overall plot
+subplot(avg_irf_output_us, avg_irf_output_ea12, avg_irf_output_upper_middle, avg_irf_output_other_advanced, nrows = 2, margin = 0.04) %>% layout(
+  showlegend = F,
+  title = 'Output response to 100 bp rate shock, average and p-bias corrected IRFs',
+  yaxis = list(title = "Effect"),
+  xaxis3 = list(title = "Month"),
+  yaxis3 = list(title = "Effect in %"), # y-axis for plot 3 ####### adjsut to p.p. for rate response
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "US", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16)),
+  list(x = 0.8, y = 1, text = "Euro Area", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16)),
+  list(x = 0.2, y = 0.45, text = "Emerging Economies", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16)),
+  list(x = 0.8, y = 0.45, text = "Other Advanced", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16))
+),
+margin = list(t = 80))
+
+```
+
+
+### Price level 
+
+```{r avg_irf_pricelevel_countries}
+
+out_var <- "inflation"
+
+# PEESE estimation for subsamples
+# US
+peese_results_pricelevel_us <- meta_analysis(
+  data = data %>% filter(us == 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+# EA12
+peese_results_pricelevel_ea12 <- meta_analysis(
+  data = data %>% filter(ea12 == 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+# Upper middle
+peese_results_pricelevel_upper_middle <- meta_analysis(
+  data = data %>% filter(upper_middle == 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+# Other advanced 
+peese_results_pricelevel_other_advanced <- meta_analysis(
+  data = data %>% filter(advanced == 1, ea12 != 1, us != 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+
+
+# Extract intercept estimates (corrected IRF)
+extract_intercepts <- function(results) {
+  intercepts <- lapply(results, function(model) {
+    ci <- confint(model, level = 0.89)  # Using 89% confidence interval as in the app
+    c(estimate = unname(coef(model)[1]),
+      lower = ci[1, 1],
+      upper = ci[1, 2])
+  })
+  
+  data.frame(
+    period = as.numeric(names(results)),
+    estimate = sapply(intercepts, function(x) x["estimate"]),
+    lower = sapply(intercepts, function(x) x["lower"]),
+    upper = sapply(intercepts, function(x) x["upper"])
+  )
+}
+
+# Extract corrected effects for subsamples
+corrected_irf_peese_pricelevel_us <- extract_intercepts(peese_results_pricelevel_us)
+corrected_irf_peese_pricelevel_ea12 <- extract_intercepts(peese_results_pricelevel_ea12)
+corrected_irf_peese_pricelevel_em <- extract_intercepts(peese_results_pricelevel_upper_middle)
+corrected_irf_peese_pricelevel_otheradv <- extract_intercepts(peese_results_pricelevel_other_advanced)
+
+# IRFs 
+# US
+avg_irf_pricelevel_us <- plot_average_irfs(
+  data %>% filter(us == 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_pricelevel_us,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_pricelevel_us,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+# EA12
+avg_irf_pricelevel_ea12 <- plot_average_irfs(
+  data %>% filter(ea12 == 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_pricelevel_ea12,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_pricelevel_ea12,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+# Upper middle
+avg_irf_pricelevel_upper_middle <- plot_average_irfs(
+  data %>% filter(upper_middle == 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_pricelevel_em,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_pricelevel_em,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+# Other advanced 
+avg_irf_pricelevel_other_advanced <- plot_average_irfs(
+  data %>% filter(advanced == 1, ea12 != 1, us != 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_pricelevel_otheradv,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_pricelevel_otheradv,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+#### Create overall plot
+subplot(avg_irf_pricelevel_us, avg_irf_pricelevel_ea12, avg_irf_pricelevel_upper_middle, avg_irf_pricelevel_other_advanced, nrows = 2, margin = 0.04) %>% layout(
+  showlegend = F,
+  title = 'pricelevel response to 100 bp rate shock, average and p-bias corrected IRFs',
+  yaxis = list(title = "Effect"),
+  xaxis3 = list(title = "Month"),
+  yaxis3 = list(title = "Effect in %"), # y-axis for plot 3 ####### adjsut to p.p. for rate response
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "US", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16)),
+  list(x = 0.8, y = 1, text = "Euro Area", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16)),
+  list(x = 0.2, y = 0.45, text = "Emerging Economies", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16)),
+  list(x = 0.8, y = 0.45, text = "Other Advanced", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16))
+),
+margin = list(t = 80))
+
+```
+
+
+### Interest rate
+
+```{r avg_irf_rate_countries}
+
+out_var <- "rate"
+
+# PEESE estimation for subsamples
+# US
+peese_results_rate_us <- meta_analysis(
+  data = data %>% filter(us == 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+# EA12
+peese_results_rate_ea12 <- meta_analysis(
+  data = data %>% filter(ea12 == 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+# Upper middle
+peese_results_rate_upper_middle <- meta_analysis(
+  data = data %>% filter(upper_middle == 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+# Other advanced 
+peese_results_rate_other_advanced <- meta_analysis(
+  data = data %>% filter(advanced == 1, ea12 != 1, us != 1),
+  outvar = out_var,
+  se_option = "avg",
+  periods = chosen_periods,
+  wins = wins_para,
+  ap = FALSE,
+  prec_weighted = TRUE,
+  estimation = "PEESE",
+  cluster_se = TRUE
+)
+
+
+# Extract intercept estimates (corrected IRF)
+extract_intercepts <- function(results) {
+  intercepts <- lapply(results, function(model) {
+    ci <- confint(model, level = 0.89)  # Using 89% confidence interval as in the app
+    c(estimate = unname(coef(model)[1]),
+      lower = ci[1, 1],
+      upper = ci[1, 2])
+  })
+  
+  data.frame(
+    period = as.numeric(names(results)),
+    estimate = sapply(intercepts, function(x) x["estimate"]),
+    lower = sapply(intercepts, function(x) x["lower"]),
+    upper = sapply(intercepts, function(x) x["upper"])
+  )
+}
+
+# Extract corrected effects for subsamples
+corrected_irf_peese_rate_us <- extract_intercepts(peese_results_rate_us)
+corrected_irf_peese_rate_ea12 <- extract_intercepts(peese_results_rate_ea12)
+corrected_irf_peese_rate_em <- extract_intercepts(peese_results_rate_upper_middle)
+corrected_irf_peese_rate_otheradv <- extract_intercepts(peese_results_rate_other_advanced)
+
+# IRFs 
+# US
+avg_irf_rate_us <- plot_average_irfs(
+  data %>% filter(us == 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_rate_us,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_rate_us,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+# EA12
+avg_irf_rate_ea12 <- plot_average_irfs(
+  data %>% filter(ea12 == 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_rate_ea12,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_rate_ea12,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+# Upper middle
+avg_irf_rate_upper_middle <- plot_average_irfs(
+  data %>% filter(upper_middle == 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_rate_em,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_rate_em,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+# Other advanced 
+avg_irf_rate_other_advanced <- plot_average_irfs(
+  data %>% filter(advanced == 1, ea12 != 1, us != 1, period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE
+) %>%
+  add_ribbons(
+    data = corrected_irf_peese_rate_otheradv,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE correction",
+    line = list(color = 'rgba(0,0,0,0)'),
+    fillcolor = 'rgba(255,0,0,0.2)'
+  ) %>%
+  add_lines(
+    data = corrected_irf_peese_rate_otheradv,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE correction Mean",
+    line = list(color = 'rgba(100,20,200,0.2)')
+  )
+
+#### Create overall plot
+subplot(avg_irf_rate_us, avg_irf_rate_ea12, avg_irf_rate_upper_middle, avg_irf_rate_other_advanced, nrows = 2, margin = 0.04) %>% layout(
+  showlegend = F,
+  title = 'rate response to 100 bp rate shock, average and p-bias corrected IRFs',
+  yaxis = list(title = "Effect"),
+  xaxis3 = list(title = "Month"),
+  yaxis3 = list(title = "Effect in %"), # y-axis for plot 3 ####### adjsut to p.p. for rate response
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "US", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16)),
+  list(x = 0.8, y = 1, text = "Euro Area", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16)),
+  list(x = 0.2, y = 0.45, text = "Emerging Economies", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16)),
+  list(x = 0.8, y = 0.45, text = "Other Advanced", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom", font = list(size = 16))
+),
+margin = list(t = 80))
+
+```
+
+

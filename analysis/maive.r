@@ -36,7 +36,7 @@ data<-data %>% filter(observations>25 & quality_concern!=1)# omit two studies wh
 #   group_by(key,period.month) %>%
 #   sample_n(size = 1,replace = F) %>% ungroup()
 
-periods <- c(3, 6, 12, 15, 18,21, 24, 30, 36)
+periods <- c(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60)
 
 
 object<-c("MAIVE coefficient","MAIVE standard error","F-test of first step in IV","Hausman-type test (to be used with caution)","Critical Value of Chi2(1)","AR Confidence interval")
@@ -72,13 +72,13 @@ for (x in periods) {
   # method: PET:1, PEESE:2, PET-PEESE:3, EK:4 (default 3)
   method<-3
   # weighting: default no weight: 0 ; weights: 1, adjusted weights: 2 (default 0)
-  weight<-1
+  weight<-0
   # instrumenting (default 1)  1 yes, 0 no 
   instrument<-1
   # correlation at study level: none: 0 (default), fixed effects: 1, cluster: 2
-  studylevel<-2
+  studylevel<-1
   # Anderson-Rubin confidence interval for weak instruments (only for unweighted MAIVE -- PET, PEESE or PET-PEESE): 0 no, 1 yes
-  AR<-0
+  AR<-1
   
   #Run maive function:
   MAIVE=maive(dat=dat,method=method,weight=weight,instrument=instrument,studylevel=studylevel,AR=AR) # if we set AR=1 the function runs for ever. # these inputs could also be determined in the package. 

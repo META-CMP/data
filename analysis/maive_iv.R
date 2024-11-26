@@ -40,7 +40,7 @@ data <- subset(data, outcome %in% out)
 data<-data %>% filter(observations>25 & quality_concern!=1)# omit two studies which lead to issues if we use winsorized data
 periods <- c(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60)
 
-object<-c("MAIVE constant","MAIVE coefficient","MAIVE standard error","F-test of first step in IV","Hausman-type test (to be used with caution)","Critical Value of Chi2(1)","AR Confidence interval")
+object<-c("MAIVE constant", "MAIVE cons SE","MAIVE coefficient","MAIVE SE","F-test of first stage in IV", "Observations")
 maive_df<-data.frame(object)
 maive_list<-list()
 
@@ -60,7 +60,9 @@ for (x in periods) {
   # winsorize
   data_period <- apply_winsorization(data_period, wins)
   
-  dat<-data_period %>% dplyr::select(mean.effect_winsor,standarderror_winsor,inv_obs,observations,key)
+  data_period$standarderror_sq_winsor<- (data_period$standarderror_winsor)^2 
+  
+  dat<-data_period %>% dplyr::select(mean.effect_winsor,standarderror_winsor,standarderror_sq_winsor,inv_obs,observations,key)
   #dat$observations<-log(dat$observations)
   #dat<-dat %>% filter(observations!=0)
   
@@ -70,9 +72,11 @@ for (x in periods) {
   # summary(data_period_winsor$StandardError)
   # summary(data_period_winsor$standarderror_winsor)
   
+  
+  
   MAIVE = 
     feols(
-      mean.effect_winsor ~ 1 | key | standarderror_winsor ~ inv_obs,
+      mean.effect_winsor ~ 1 | key | standarderror_sq_winsor ~ inv_obs,
       data = dat, cluster=dat[,c("key")]
     )
   

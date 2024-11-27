@@ -76,9 +76,9 @@ for (x in periods) {
   # instrumenting (default 1)  1 yes, 0 no 
   instrument<-1
   # correlation at study level: none: 0 (default), fixed effects: 1, cluster: 2
-  studylevel<-1
+  studylevel<-2
   # Anderson-Rubin confidence interval for weak instruments (only for unweighted MAIVE -- PET, PEESE or PET-PEESE): 0 no, 1 yes
-  AR<-1
+  AR<-0
   
   #Run maive function:
   MAIVE=maive(dat=dat,method=method,weight=weight,instrument=instrument,studylevel=studylevel,AR=AR) # if we set AR=1 the function runs for ever. # these inputs could also be determined in the package. 

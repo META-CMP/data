@@ -40,7 +40,7 @@ data <- subset(data, outcome %in% out)
 data<-data %>% filter(observations>25 & quality_concern!=1)# omit two studies which lead to issues if we use winsorized data
 periods <- c(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60)
 
-object<-c("MAIVE constant", "MAIVE cons SE","MAIVE coefficient","MAIVE SE","F-test of first stage in IV", "Observations")
+object<-c("MAIVE coefficient","MAIVE SE","F-stat first stage", "Observations")
 maive_df<-data.frame(object)
 maive_list<-list()
 
@@ -63,6 +63,7 @@ for (x in periods) {
   data_period$standarderror_sq_winsor<- (data_period$standarderror_winsor)^2 
   
   dat<-data_period %>% dplyr::select(mean.effect_winsor,standarderror_winsor,standarderror_sq_winsor,inv_obs,observations,key)
+
   #dat$observations<-log(dat$observations)
   #dat<-dat %>% filter(observations!=0)
   
@@ -77,13 +78,11 @@ for (x in periods) {
   MAIVE = 
     feols(
       mean.effect_winsor ~ 1 | key | standarderror_sq_winsor ~ inv_obs,
-      data = dat, cluster=dat[,c("key")]
-    )
+      data = dat, cluster= ~key) #%>% print(x,etable(fitstat = ~ivf + ivwald + kpr))  
   
   maive_list[[paste0(x, ".fixest")]]<-MAIVE
   
-  
-  value<-c(MAIVE$constant,MAIVE$beta,MAIVE$SE,MAIVE$`F-test`,MAIVE$Hausman,MAIVE$Chi2,paste(MAIVE$AR_CI, collapse = " "))
+  value<-c(MAIVE$coefficients,MAIVE$se,MAIVE$iv_wh["stat"],MAIVE$nobs)
   
   # Set column name of the df to current horzion
   new_col_name <- paste0("Horizon_", x)
@@ -93,12 +92,9 @@ for (x in periods) {
   
 }
 
+#the correct f-stat is fitstat kpr using print I can, but I cannot retrieve the table
+#I do not know how to obtain the constant in R feols. 
 
-# show table
-library(DT)
-datatable(maive_df, rownames = FALSE, options = list(
-  dom = 't',ordering=F,initComplete = JS(
-    "function(settings, json) {",
-    "$(this.api().table().header()).css({'background-color': '#eda698', 'color': '#fff'});",
-    "}")
-))
+
+view(maive_df)
+

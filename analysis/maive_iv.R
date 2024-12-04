@@ -72,17 +72,16 @@ for (x in periods) {
   # plot(density(dat$observations))
   # summary(data_period_winsor$StandardError)
   # summary(data_period_winsor$standarderror_winsor)
-  
-  
-  
+
   MAIVE = 
     feols(
       mean.effect_winsor ~ 1 | key | standarderror_sq_winsor ~ inv_obs,
-      data = dat, cluster= ~key) #%>% print(x,etable(fitstat = ~ivf + ivwald + kpr))  
+      dat, cluster = dat[, c("key")]) #%>% print(x,etable(fitstat = ~ivf + ivwald + kpr))  
+  
   
   maive_list[[paste0(x, ".fixest")]]<-MAIVE
   
-  value<-c(MAIVE$coefficients,MAIVE$se,MAIVE$iv_wh["stat"],MAIVE$nobs)
+  value<-c(MAIVE$coefficients,MAIVE$se,MAIVE_stat = fitstat(MAIVE, type = "kpr"), MAIVE$nobs)
   
   # Set column name of the df to current horzion
   new_col_name <- paste0("Horizon_", x)
@@ -92,9 +91,6 @@ for (x in periods) {
   
 }
 
-#the correct f-stat is fitstat kpr using print I can, but I cannot retrieve the table
-#I do not know how to obtain the constant in R feols. 
-
-
 view(maive_df)
+
 

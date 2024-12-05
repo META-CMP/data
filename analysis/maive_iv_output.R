@@ -40,9 +40,12 @@ data <- subset(data, outcome %in% out)
 data<-data %>% filter(observations>25 & quality_concern!=1)# omit two studies which lead to issues if we use winsorized data
 periods <- c(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60)
 
-object<-c("MAIVE coefficient","MAIVE SE","F-stat first stage", "Observations")
-maive_df<-data.frame(object)
+object<-c("MAIVE first coefficient","MAIVE first SE","F-stat first stage", "Observations")
+object2<-c("MAIVE second coefficient","MAIVE second SE","F-stat first stage", "Observations")
+maive_df_first_output<-data.frame(object)
+maive_df_second_output<-data.frame(object2)
 maive_list<-list()
+maive_first <- list()
 
 wins<-0.02
 
@@ -73,6 +76,14 @@ for (x in periods) {
   # summary(data_period_winsor$StandardError)
   # summary(data_period_winsor$standarderror_winsor)
   
+  MAIVE_first = 
+    feols(
+      standarderror_sq_winsor ~ inv_obs | key,
+      dat, cluster = dat[, c("key")]) #%>% print(x,etable(fitstat = ~ivf + ivwald + kpr))  
+  
+  
+  maive_first[[paste0(x, ".fixest")]]<-MAIVE_first
+  
   MAIVE = 
     feols(
       mean.effect_winsor ~ 1 | key | standarderror_sq_winsor ~ inv_obs,
@@ -81,14 +92,18 @@ for (x in periods) {
   
   maive_list[[paste0(x, ".fixest")]]<-MAIVE
   
-  value<-c(MAIVE$coefficients,MAIVE$se,MAIVE_stat = fitstat(MAIVE, type = "kpr"), MAIVE$nobs)
-  
+  value<-c(MAIVE_first$coefficients,MAIVE_first$se,MAIVE_stat = fitstat(MAIVE, type = "kpr.stat"), MAIVE_first$nobs)
+  value2<-c(MAIVE$coefficients,MAIVE$se,MAIVE_stat = fitstat(MAIVE, type = "kpr.stat"), MAIVE$nobs)
   # Set column name of the df to current horzion
   new_col_name <- paste0("Horizon_", x)
   # Calculate the new column (for example, cumulative sum with a different offset)
-  maive_df[[new_col_name]] <- value
+  maive_df_first_output[[new_col_name]] <- value
+  maive_df_second_output[[new_col_name]] <- value2
   
   
 }
 
-view(maive_df)
+view(maive_df_first_output)
+view(maive_df_second_output)
+
+

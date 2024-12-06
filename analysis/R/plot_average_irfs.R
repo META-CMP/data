@@ -27,7 +27,7 @@
 #' print(plot_period_limit)
 #'
 #' @export
-plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf,show_legend = T) {
+plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf, show_legend = TRUE, show_median = FALSE) {
   
   # Apply winsorization (if selected) to the CIs and mean effect
   if (winsor == TRUE) {
@@ -49,15 +49,24 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
       avg_CI.lower_90 = mean(approx.CI.lower_90, na.rm = TRUE),
       avg_CI.upper_90 = mean(approx.CI.upper_90, na.rm = TRUE),
       avg_CI.lower_95 = mean(approx.CI.lower_95, na.rm = TRUE),
-      avg_CI.upper_95 = mean(approx.CI.upper_95, na.rm = TRUE)
+      avg_CI.upper_95 = mean(approx.CI.upper_95, na.rm = TRUE),
+      median_mean.effect = median(mean.effect, na.rm = TRUE),
+      median_CI.lower_68 = median(approx.CI.lower_68, na.rm = TRUE),
+      median_CI.upper_68 = median(approx.CI.upper_68, na.rm = TRUE),
+      median_CI.lower_90 = median(approx.CI.lower_90, na.rm = TRUE),
+      median_CI.upper_90 = median(approx.CI.upper_90, na.rm = TRUE),
+      median_CI.lower_95 = median(approx.CI.lower_95, na.rm = TRUE),
+      median_CI.upper_95 = median(approx.CI.upper_95, na.rm = TRUE)
     )
+  
+  
 
   if (!is.null(period_limit)) {
     average_irf <- average_irf %>% filter(period.month <= period_limit)
   }
   
   plot <- average_irf %>%
-    plot_ly(showlegend=show_legend) %>%
+    plot_ly(showlegend = show_legend) %>%
     add_ribbons(
       x = ~period.month,
       ymin = ~avg_CI.lower_68,
@@ -94,6 +103,33 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
       yaxis = list(title = "Effect"),
       hovermode = "compare"
     )
+  
+  # Add median, if requested in function call
+  if (show_median == TRUE) {
+    plot <- plot %>%
+      add_lines(
+        x = ~period.month,
+        y = ~median_mean.effect,
+        name = "Median",
+        line = list(color = 'rgba(255,0,0,0.5)', width = 2)
+      ) %>%
+      add_ribbons(
+        x = ~period.month,
+        ymin = ~median_CI.lower_95,
+        ymax = ~median_CI.upper_95,
+        name = "Median 95% CI",
+        line = list(color = 'rgba(0,0,0,0)'),
+        fillcolor = 'rgba(255,0,0,0.1)'
+      ) %>%
+      add_ribbons(
+        x = ~period.month,
+        ymin = ~median_CI.lower_68,
+        ymax = ~median_CI.upper_68,
+        name = "Median 68% CI",
+        line = list(color = 'rgba(0,0,0,0)'),
+        fillcolor = 'rgba(255,0,0,0.1)'
+      )
+  }
   
   # Add corrected IRF with confidence bounds if provided
   if (!is.null(corrected_irf)) {

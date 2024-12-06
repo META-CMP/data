@@ -78,7 +78,8 @@ perform_meta_analysis <- function(data, wins) {
       cutoff_val=1,
       AK_modelmu = "t",
       AK_symmetric = FALSE,
-      AK_conf_level = 0.68
+      AK_conf_level = 0.68,
+      ak_plot = "both"
     )
   )
 }

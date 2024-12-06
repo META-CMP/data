@@ -78,7 +78,7 @@ create_equation <- function(base_formula, mods) {
 #' modelsummary::modelsummary(result_with_mods, output = "gt", stars = TRUE, title = "PEESE with moderators", gof_map = NULL)
 #' modelsummary::modelsummary(AK_results, output = "gt", statistic = c("se = {std.error}", "conf.int"))
 #' @export
-meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = FALSE, hc_type = NULL, EK_sig_threshold = 1.96, mods = NULL, cutoff_val = c(1.960), AK_symmetric = FALSE, AK_modelmu = "normal", AK_conf_level = 0.95) {
+meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = FALSE, hc_type = NULL, EK_sig_threshold = 1.96, mods = NULL, cutoff_val = c(1.960), AK_symmetric = FALSE, AK_modelmu = "normal", AK_conf_level = 0.95, ak_plot = NULL, AK_plot_prob_y_range = c(0, 40)) {
   # Subset data for the specified outcome variable
   data <- subset(data, outcome %in% outvar)
 
@@ -197,7 +197,11 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
       ti$statistic <- ti$estimate / ti$std.error
       ti$p.value <- 2 * (1 - pnorm(abs(ti$statistic)))
       
-      plot_AK <- estimates_plot(cutoffs = AK_cutoffs, symmetric = AK_symmetric, estimates = est_AK, model = AK_modelmu)
+      if (ak_plot == "pub_prob_only") {
+        plot_AK <- estimates_plot_prob(cutoffs = AK_cutoffs, symmetric = AK_symmetric, estimates = est_AK, model = AK_modelmu, y_range = AK_plot_prob_y_range)
+      } else {
+        plot_AK <- estimates_plot(cutoffs = AK_cutoffs, symmetric = AK_symmetric, estimates = est_AK, model = AK_modelmu)
+      }
       
       gl <- data.frame(Num.Obs. = nrow(data_AK))
       reg_result <- list(

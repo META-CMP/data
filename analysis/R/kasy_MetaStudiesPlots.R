@@ -119,6 +119,28 @@ estimates_plot<-function(cutoffs, symmetric, estimates, model="normal"){
 
 }
 
+# Plot only with 'publication probability'
+estimates_plot_prob <- function(cutoffs, symmetric, estimates, model="normal", y_range=c(0,40)){
+  n = 500
+  Psihat = estimates$Psihat
+  rangeZ = 3
+  dens = data.frame(z = seq(-rangeZ, rangeZ, length.out = n))
+  shift = as.integer(model == "t")
+  Tpowers = Tpowers_fun(dens$z, cutoffs, symmetric)
+  betap = as.vector(c(Psihat[-(1:(2+shift))],  1))
+  dens$p = Tpowers%*%betap
+  names(dens)[names(dens) == 'p'] <- 'publication probability'
+  
+  ggplot(dens, aes(x = z, y = `publication probability`)) +
+    xlab(latex2exp::TeX("Z")) +
+    geom_line(size = 2, color = "blue") +
+    # expand_limits(y = 0) +
+    scale_x_continuous(breaks = -3:3) +
+    scale_y_continuous(limits = y_range) +
+    theme(panel.background = element_rect(fill = "grey95", colour = NA))
+}
+
+
 # estimates_plot <- function(estimates, cutoffs, symmetric, model="normal") {
 #   n <- 500
 #   rangeZ <- 3

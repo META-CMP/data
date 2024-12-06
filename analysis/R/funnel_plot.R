@@ -52,7 +52,7 @@
 #' print(ak_plot_excluded)
 #'
 #' @export
-create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02, legend = TRUE, opac = 0.15, ap = FALSE, type = "standard", AK_critvals = c(1, 1.96, 2.58), AK_exclude_outliers = FALSE) {
+create_funnel_plot <- function(data, outvar, prd, color_by_outcome_var = TRUE, se_option = "avg", wins = 0.02, legend = TRUE, opac = 0.15, ap = FALSE, type = "standard", AK_critvals = c(1, 1.96, 2.58), AK_exclude_outliers = FALSE) {
   # Filter the data for the specific period and outcome variable
   data_filtered <- data %>%
     filter(period.month == prd, outcome == outvar)
@@ -91,11 +91,11 @@ create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02
     plot_funnel <- plot_ly(data = data_filtered,
                            x = ~mean.effect_winsor,
                            y = ~precision_winsor,
-                           color = ~outcome_var,
+                           color = if(color_by_outcome_var) ~outcome_var,
                            colors = palette_colors,
                            type = "scatter",
                            mode = "markers",
-                           marker = list(size = 10, opacity = opac),
+                           marker = list(size = 10, opacity = opac, color = '#1f77b4'),
                            hoverinfo = "text",
                            hovertext = ~paste("Effect Size:", round(mean.effect_winsor, 3),
                                               "<br>Precision:", round(precision_winsor, 3),
@@ -107,6 +107,7 @@ create_funnel_plot <- function(data, outvar, prd, se_option = "avg", wins = 0.02
              yaxis = list(title = "Precision"),
              showlegend = legend)
     
+
   } else if (type == "AK") {
     # Create the Andrews and Kasy style funnel plot
     # Calculate significance based on the smallest critical value

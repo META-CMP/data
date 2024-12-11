@@ -57,7 +57,6 @@ plot_counterfactual <- function(data,
                                 kernel_bw = 0.2,
                                 kernel_type = "epanechnikov"
 ) {
-  
   # Get relevant data
   if(is.null(group)) {
     plot_data <- data[[statistic]]
@@ -119,14 +118,42 @@ plot_counterfactual <- function(data,
           lty = 2, 
           lwd = 2)
   }
-
-  # Add an optional legend in the top right corner of the plot with the calibration parameters
-  if (show_params == TRUE & omit_cf == FALSE) {
-    legend("topright", 
-           legend = paste0("df = ", calibration$df, "\n", 
-                           "ncp = ", round(calibration$ncp, 2)),
-           bty = "n")
+  
+  # Create legend components
+  legend_items <- c("Histogram", "Empirical Density")
+  legend_colors <- c("grey", "black")
+  legend_lines <- c(NA, 1)
+  legend_pch <- c(22, NA)
+  legend_pt_bg <- c("grey", NA)
+  
+  # Add legend components for counterfactual and parameters if not omitted
+  if (!omit_cf) {
+    legend_items <- c(legend_items, "Counterfactual")
+    legend_colors <- c(legend_colors, "red")
+    legend_lines <- c(legend_lines, 2)
+    legend_pch <- c(legend_pch, NA)
+    legend_pt_bg <- c(legend_pt_bg, NA)
+    
+    if (show_params) {
+      legend_items <- c(legend_items,
+                        paste0("df = ", calibration$df),
+                        paste0("ncp = ", round(calibration$ncp, 2)))
+      legend_colors <- c(legend_colors, "black", "black")
+      legend_lines <- c(legend_lines, NA, NA)
+      legend_pch <- c(legend_pch, NA, NA)
+      legend_pt_bg <- c(legend_pt_bg, NA, NA)
+    }
   }
+  
+  # Add legend
+  legend("topright", 
+         legend = legend_items,
+         col = legend_colors,
+         lty = legend_lines,
+         pch = legend_pch,
+         pt.bg = legend_pt_bg,
+         bty = "n",
+         pt.cex = 1.2)
   
   # Return plot data invisibly
   invisible(list(

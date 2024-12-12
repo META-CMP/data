@@ -27,7 +27,7 @@
 #' print(plot_period_limit)
 #'
 #' @export
-plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf, show_legend = TRUE, show_median = FALSE) {
+plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf, show_legend = TRUE, show_median = FALSE, return_data = FALSE) {
   
   # Apply winsorization (if selected) to the CIs and mean effect
   if (winsor == TRUE) {
@@ -153,6 +153,11 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
         line = list(color = 'red', width = 3, dash = 'dash')
       )
     
+  }
+  
+  # Optionally return the data alongside the plot
+  if (return_data) {
+    return(list(plot = plot, data = average_irf))
   }
   
   plot

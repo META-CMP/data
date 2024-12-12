@@ -36,7 +36,14 @@ create_equation <- function(base_formula, mods) {
 #' @param prec_weighted A logical value indicating whether to use precision weighting.
 #' @param estimation String specifying the meta analysis model, one of "Mean", "UWLS", "FAT-PAT", "PEESE", "EK", or "AK".
 #' @param mods A character vector of moderator variable names to include in the multiple meta-regression. If NULL, no moderators are included.
-#' 
+#' @param hc_type A string specifying the type of Heteroskedasticity-Consistent (HC) Covariance Matrix Estimator to use. 
+#'        Options are "HC0", "HC1", "HC2", or "HC3". Default is NULL, which uses "HC1" for lm objects and "HC0" otherwise.
+#' @param return_lm A logical value indicating whether to store the original lm object as an attribute before applying clustered standard errors. Default is FALSE.
+#' @param pred_data Optional data frame containing predictor values for which to calculate predictions. 
+#'        Only works with estimation methods that use linear regression ("Mean", "UWLS", "FAT-PET", "PEESE").
+#'        If provided with "EK" or "AK" methods, the function will throw an error.
+#' @param pred_conf_level Confidence level for prediction intervals when pred_data is provided. Default is 0.89.
+#'
 #' @return A list of model objects for each period.
 #'
 #' @import tidyverse
@@ -75,8 +82,25 @@ create_equation <- function(base_formula, mods) {
 #' modelsummary::modelsummary(results2, output = "gt", stars = TRUE, statistic = c("se = {std.error}", "conf.int"), conf_level = 0.80, title = "EK", gof_map = NULL)
 #' modelsummary::modelsummary(result_with_mods, output = "gt", stars = TRUE, title = "PEESE with moderators", gof_map = NULL)
 #' modelsummary::modelsummary(AK_results, output = "gt", statistic = c("se = {std.error}", "conf.int"))
+#' 
 #' @export
-meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted, estimation = "Mean", ap = FALSE, cluster_se = FALSE, EK_sig_threshold = 1.96, mods = NULL, cutoff_val = c(1.960), AK_symmetric = FALSE, AK_modelmu = "normal", AK_conf_level = 0.95) {
+meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
+                          estimation = "Mean", ap = FALSE, cluster_se = FALSE, 
+                          hc_type = NULL, EK_sig_threshold = 1.96, mods = NULL, 
+                          cutoff_val = c(1.960), AK_symmetric = FALSE, 
+                          AK_modelmu = "normal", AK_conf_level = 0.95, 
+                          ak_plot = NULL, AK_plot_prob_y_range = c(0, 40), 
+                          ak_prob_plot_log_scale = FALSE, return_lm = FALSE, 
+                          pred_data = NULL, pred_conf_level = 0.89) {
+  
+  # Check pred_data for compatibility with estimation method
+  if (!is.null(pred_data)) {
+    if (estimation %in% c("EK", "AK")) {
+      stop("You specified pred_data but predictions are only available for methods using linear regression ('Mean', 'UWLS', 'FAT-PET', 'PEESE'). 
+                 The '", estimation, "' method is not supported for predictions.")
+    }
+  }
+  
   # Subset data for the specified outcome variable
   data <- subset(data, outcome %in% outvar)
 
@@ -195,7 +219,11 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
       ti$statistic <- ti$estimate / ti$std.error
       ti$p.value <- 2 * (1 - pnorm(abs(ti$statistic)))
       
-      plot_AK <- estimates_plot(cutoffs = AK_cutoffs, symmetric = AK_symmetric, estimates = est_AK, model = AK_modelmu)
+      if (ak_plot == "pub_prob_only") {
+        plot_AK <- estimates_plot_prob(cutoffs = AK_cutoffs, symmetric = AK_symmetric, estimates = est_AK, model = AK_modelmu, y_range = AK_plot_prob_y_range, log_scale = ak_prob_plot_log_scale)
+      } else {
+        plot_AK <- estimates_plot(cutoffs = AK_cutoffs, symmetric = AK_symmetric, estimates = est_AK, model = AK_modelmu)
+      }
       
       gl <- data.frame(Num.Obs. = nrow(data_AK))
       reg_result <- list(
@@ -226,15 +254,91 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
       # immediately after it was used by sandwich::vcovCL. It is important that data_period 
       # is NOT defined globally before this point (specifically before the use of lm() above)!
       
-      vcov_cluster <- sandwich::vcovCL(reg_result, cluster = ~key)
+      vcov_cluster <- sandwich::vcovCL(reg_result, cluster = ~key, type = hc_type)
       rm(data_period, envir = .GlobalEnv)
+      if (return_lm) {
+        # Store original lm object before replacing it
+        lm_object <- reg_result
+      }
       reg_result <- lmtest::coeftest(reg_result, vcov. = vcov_cluster)
+      if (return_lm) {
+        # Add lm object as attribute
+        attr(reg_result, "lm_object") <- lm_object
+      }
         
     }
     
     results_list[[paste0(x)]] <- reg_result
     
   }
-
-  return(results_list)
+  
+  # If predictions are requested, calculate them before returning
+  if (!is.null(pred_data)) {
+    predictions_list <- list()
+    
+    for (x in valid_periods) {
+      # Get the model for this period
+      reg_result <- results_list[[as.character(x)]]
+      
+      # Need to temporarily put data_period and reg_weights in global env for vcovCL
+      data_period <<- subset(data, period.month %in% x)
+      
+      # Calculate weights as in the original code
+      if (se_option == "avg") {
+        data_period$StandardError <- data_period$SE.avg
+        data_period$precision <- data_period$precision.avg
+      } else if (se_option == "lower") {
+        data_period$StandardError <- data_period$SE.lower
+        data_period$precision <- data_period$precision.lower
+      } else if (se_option == "upper") {
+        data_period$StandardError <- data_period$SE.upper
+        data_period$precision <- data_period$precision.upper
+      }
+      
+      # Apply winsorization
+      data_period <- apply_winsorization(data_period, wins)
+      data_period$variance_winsor <- data_period$standarderror_winsor^2
+      data_period$precvariance_winsor <- 1 / data_period$variance_winsor
+      
+      # Set up data_period and weights in global environment
+      data_period <<- data_period
+      reg_weights <<- if (prec_weighted) data_period$precvariance_winsor else NULL
+      
+      # Re-fit the model to get vcov
+      original_model <- lm(equation, data = data_period, weights = reg_weights)
+      vcov_cluster <- sandwich::vcovCL(original_model, cluster = ~key, type = hc_type)
+      
+      # Clean up global environment
+      rm(data_period, reg_weights, envir = .GlobalEnv)
+      
+      # Get model terms from the original model
+      X <- model.matrix(delete.response(terms(original_model)), data = pred_data)
+      
+      # Calculate prediction and SE
+      pred <- X %*% coef(reg_result)
+      pred_se <- sqrt(X %*% vcov_cluster %*% t(X))
+      
+      # Calculate CI
+      t_val <- qt((1 + pred_conf_level)/2, df = df.residual(original_model))
+      ci_lower <- pred - t_val * pred_se
+      ci_upper <- pred + t_val * pred_se
+      
+      predictions_list[[paste0(x)]] <- data.frame(
+        period = x,
+        predicted_value = as.numeric(pred),
+        std_error = as.numeric(pred_se),
+        ci_lower = as.numeric(ci_lower),
+        ci_upper = as.numeric(ci_upper)
+        
+      )
+    }
+    
+    return(list(
+      models = results_list,
+      predictions = predictions_list
+    ))
+  } else {
+    # Original return if no predictions requested
+    return(results_list)
+  }
 }

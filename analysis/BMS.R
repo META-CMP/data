@@ -210,15 +210,15 @@ index<-which(periods%in% desired_period.month)
 index
 
 #Plot posterior and prior model size distribution and posterios model probabilities
-plot(bms_full_list[[element]])
+plot(bms_full_list[[index]])
 
 #plot posterios model probabilities
-plotConv(bms_full_list[[element]])
+plotConv(bms_full_list[[index]])
 
 # Plot typical BMS image 
-image(bms_full_list[[element]], cex.axis=.5, order.by.pip = T, yprop2pip=F)#,col=c("orange","lightgrey"), main=paste0("BMA image ",outcome," ",x," months")
+image(bms_full_list[[index]], cex.axis=.5, order.by.pip = T, yprop2pip=F)#,col=c("orange","lightgrey"), main=paste0("BMA image ",outcome," ",x," months")
 
 # Plot marginal density for a specifi moderator. In this case the dsge model 
-density(bms_full_list[[element]], reg="dsge")
+density(bms_full_list[[index]], reg="dsge")
 
 

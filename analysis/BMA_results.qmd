@@ -1,0 +1,2043 @@
+---
+title: "BMA results"
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-depth: 5
+---
+
+## Preparation 
+
+::: {.callout-important}
+### TO DO: Integrate this results report into the main document 
+
+For now, I save the BMA results here to increase computational speed. When we have final results, we move them to the main reporting document (`all results.qmd`). 
+
+The preparation in the next code block is the same as in the main document.
+:::
+
+```{r prep}
+#| code-fold: true
+
+# Load libraries
+library(here)
+library(tidyverse) # for data manipulation
+library(dplyr) # for data manipulation
+library(modelsummary) # to nicely print results
+library(plotly)
+library(JWileymisc)
+library(viridis) # Color palette used in funnel
+library(fastDummies) # Automatic dummy creation
+library(BMS) # Bayesian model averaging
+
+# Load our functions
+source(here("analysis/R/plot_mean_effect.R"))
+source(here("analysis/R/apply_winsorization.R"))
+source(here("analysis/R/plot_average_irfs.R"))
+source(here("analysis/R/funnel_plot.R"))
+source(here("analysis/R/display_equation.R"))
+source(here("analysis/R/meta_analysis.R"))
+# Function to extract intercept estimates (corrected IRF) # TO DO: Define this externally
+extract_intercepts <- function(model, method) {
+  if (method == "AK") {
+    estimate <- model$tidy[1, 2]
+    se <- model$tidy[1, 3]
+    ci_lower <- estimate - se * qnorm(1 - (1 - conflevel) / 2)
+    ci_upper <- estimate + se * qnorm(1 - (1 - conflevel) / 2)
+  } else {
+    ci <- confint(model, level = conflevel)
+    estimate <- unname(coef(model)[1])
+    ci_lower <- unname(ci[1, 1])
+    ci_upper <- unname(ci[1, 2])
+  }
+  return(c(estimate = estimate, lower = ci_lower, upper = ci_upper))
+}
+# Load AK functions
+source(here("analysis/R/kasy_MetaStudiesFunctions.R"))
+source(here("analysis/R/kasy_RobustVariance.R"))
+source(here("analysis/R/kasy_MetaStudiesPlots.R"))
+
+# Load data
+data_path <- here("data/preliminary_data_test.RData") # works
+load(data_path)
+
+# Filter out models with quality concerns
+data_with_quality_concern <- data # First, store data with quality concerns for access
+data <- data %>% filter(quality_concern!=1)
+
+# Specify periods to estimate for
+chosen_periods <- c(seq(3, 60, by = 3))
+
+# Define global winsorization parameter
+wins_para <- 0.02
+
+# Set a global confidence interval level for regression tables
+conflevel <- 0.89
+
+```
+
+## Developing the BMA function
+
+::: {.callout-important}
+### TO DO:
+
+- [ ] Define the function in external file and load in preparation.
+- [ ] increase the brun and iter parameters for final results.
+- [ ] ...
+
+:::
+
+```{r bma_loop}
+#| code-fold: true
+
+# BMA LOOP FUNCTION DEV
+bma_loop <- function (data,
+                      periods = seq(3, 60, by = 3),
+                      g_ = "UIP",
+                      mprior_ = "uniform",
+                      user.int_ = FALSE,
+                      nmodel_ = 5000,
+                      burn_ = 1e2,
+                      iter_ = 2e2,
+                      mcmc_ = "bd",
+                      yprop2pip_ = TRUE,
+                      cex.axis_ = 0.5) {
+  
+  # Initialize a list to store error messages
+  error_log <- list()
+  
+  # Placeholder to store results
+  results_list <- list()
+  
+  # Initialize a list to store successful outputs
+  bma_outputs <- list()
+  
+  # Store all variable names
+  all_vars <- c()
+  
+  # Run BMA for each period
+  for (i in periods) {
+    tryCatch({
+      # Filter data for out_var and the current period i
+      data_bma <- data %>%
+        filter(period.month == i) %>%
+        select(-period.month) # Drop period.month, as it should not be used as a
+      # regressor in the BMA
+      
+      # Check if there are any character or factor columns and create dummies
+      char_factor_cols <- sapply(data_bma, function(x) is.character(x) || is.factor(x))
+      if (any(char_factor_cols)) {
+        # Automatically create dummies for factor and character variables.
+        # This sets as reference group the most frequent level of each factor variable
+        # and removes the original factor variable to only use the newly created dummies. 
+        data_bma <- fastDummies::dummy_cols(data_bma,
+                                            remove_most_frequent_dummy = TRUE,
+                                            remove_selected_columns = TRUE)
+      }
+      
+      # Test if any NA values in data_bma and remove these
+      if (anyNA(data_bma)) {
+        warning("Some of the selected variables contain NA values.
+                Bayesian model averaging will ignore these observations.")
+        data_bma <- data_bma[complete.cases(data_bma), ]
+      }
+      
+      # BMS package requires a dataframe
+      data_bma <- as.data.frame(data_bma)
+      
+      # Estimation
+      bma_broad_output <- BMS::bms(data_bma,
+                                   g = g_,
+                                   mprior = mprior_,
+                                   user.int = user.int_,
+                                   nmodel = nmodel_,
+                                   burn = burn_,
+                                   iter = iter_ ,
+                                   mcmc = mcmc_)
+      
+      # Store the successful output
+      bma_outputs[[as.character(i)]] <- bma_broad_output
+      
+      # Get results with variable names
+      results <- coef(bma_broad_output)
+      results_list[[as.character(i)]] <- results
+      
+      # Update all_vars with new variable names
+      all_vars <- union(all_vars, rownames(results))
+      
+      # Model summary
+      print(paste("Period", i, "summary:"))
+      print(summary(bma_broad_output))
+      
+      # Plot
+      image(bma_broad_output,
+            yprop2pip = yprop2pip_,
+            cex.axis = cex.axis_
+      )
+      
+    }, error = function(e) {
+      # Store the error message along with the iteration info
+      error_log[[length(error_log) + 1]] <- conditionMessage(e)
+    })
+  }
+  
+  # Check which periods were successfully processed
+  successful_periods <- names(bma_outputs)
+  print(paste("Successfully processed periods:", paste(successful_periods, collapse = ", ")))
+  
+  # Create data frames for each statistic
+  stats <- c("PIP", "Post Mean", "Post SD", "Cond.Pos.Sign")
+  result_dfs <- lapply(stats, function(stat) {
+    df <- matrix(NA, nrow = length(all_vars), ncol = length(results_list), 
+                 dimnames = list(all_vars, names(results_list)))
+    for (period in names(results_list)) {
+      period_results <- results_list[[period]]
+      df[rownames(period_results), period] <- period_results[, stat]
+    }
+    as.data.frame(df)
+  })
+  names(result_dfs) <- stats
+  
+  # Create a list to store the long format dataframes
+  df_long_list <- list()
+  
+  # Reshape and plot for each statistic
+  plots <- lapply(c("PIP", "Post Mean", "Cond.Pos.Sign"), function(stat) {
+    df <- result_dfs[[stat]]
+    df$Variable <- rownames(df)
+    
+    df_long <- reshape2::melt(df, id.vars = "Variable", 
+                              variable.name = "Period", value.name = stat)
+    df_long$Period <- as.numeric(as.character(df_long$Period))
+    
+    # Store the long format dataframe
+    df_long_list[[stat]] <<- df_long
+
+    if (stat == "Post Mean") {
+      # Add upper and lower bounds for Post Mean
+      df_sd <- result_dfs[["Post SD"]]
+      df_sd$Variable <- rownames(df_sd)
+      df_sd_long <- reshape2::melt(df_sd, id.vars = "Variable", 
+                                   variable.name = "Period", value.name = "Post SD")
+      df_sd_long$Period <- as.numeric(as.character(df_sd_long$Period))
+      
+      df_long <- merge(df_long, df_sd_long, by = c("Variable", "Period"))
+      df_long$Upper <- df_long$`Post Mean` + 2 * df_long$`Post SD`
+      df_long$Lower <- df_long$`Post Mean` - 2 * df_long$`Post SD`
+      
+      # Update the stored long format dataframe for Post Mean
+      df_long_list[[stat]] <<- df_long
+
+      p <- plotly::plot_ly(df_long, x = ~Period, color = ~Variable) %>%
+        add_ribbons(ymin = ~Lower, ymax = ~Upper, line = list(color = "transparent"), 
+                    showlegend = FALSE, hoverinfo = "none") %>%
+        add_lines(y = ~`Post Mean`, hoverinfo = "text",
+                  text = ~paste("Variable:", Variable, 
+                                "<br>Period:", Period, 
+                                "<br>Post Mean:", round(`Post Mean`, 4),
+                                "<br>Post SD:", round(`Post SD`, 4)))
+    } else {
+      p <- plotly::plot_ly(df_long, 
+                           x = ~Period, 
+                           y = as.formula(paste0("~`", stat, "`")),
+                           color = ~Variable, 
+                           type = 'scatter', 
+                           mode = 'lines+markers',
+                           hoverinfo = "text",
+                           text = ~paste("Variable:", Variable, 
+                                         "<br>Period:", Period, 
+                                         "<br>", stat, ":", round(get(stat), 4)))
+    }
+    
+    p %>% layout(
+      title = paste("Change in BMA", stat, "across Periods"),
+      xaxis = list(title = "Month"),
+      yaxis = list(title = stat)
+    )
+  })
+  names(plots) <- c("PIP", "Post Mean", "Cond.Pos.Sign")
+  
+  # Finish sound
+  beepr::beep()
+  
+  # Return both the plots and the dataframes
+  return(list(plots = plots, dataframes = df_long_list))
+}
+
+```
+
+```{r bma_plotting_functions}
+#| code-fold: true
+
+#' Create a PIP (Posterior Inclusion Probability) plot
+#'
+#' This function creates a line plot of PIP values across periods for selected variables
+#' from Bayesian Model Averaging (BMA) results.
+#'
+#' @param results A list containing BMA results, specifically including a dataframe
+#'   named 'PIP' within a 'dataframes' list.
+#' @param variables A character vector of variable names to be plotted.
+#'
+#' @return A plotly object representing the PIP plot.
+#'
+#' @examples
+#' variables_of_interest <- c("SE2", "group_est_broad_lp_ardl")
+#' pip_plot(results_output_bma_1, variables_of_interest)
+pip_plot <- function(results, variables) {
+  # Extract the PIP dataframe
+  pip_df <- results$dataframes$PIP
+  
+  # Filter the dataframe for the target variables
+  filtered_df <- pip_df %>%
+    filter(Variable %in% variables)
+  
+  # Create and return the plot
+  plot_ly(filtered_df, x = ~Period, color = ~Variable) %>%
+    add_lines(y = ~PIP, hoverinfo = "text",
+              text = ~paste("Variable:", Variable, 
+                            "<br>Period:", Period, 
+                            "<br>PIP:", round(PIP, 4))) %>%
+    layout(title = "PIP across IRF periods for selected variables",
+           xaxis = list(title = "Period"),
+           yaxis = list(title = "PIP"))
+}
+
+#' Create a Post Mean plot
+#'
+#' This function creates a line plot of Post Mean values across periods for selected
+#' variables from Bayesian Model Averaging (BMA) results, including confidence intervals.
+#'
+#' @param results A list containing BMA results, specifically including a dataframe
+#'   named 'Post Mean' within a 'dataframes' list.
+#' @param variables A character vector of variable names to be plotted.
+#'
+#' @return A plotly object representing the Post Mean plot.
+#'
+#' @examples
+#' variables_of_interest <- c("SE2", "group_est_broad_lp_ardl")
+#' post_mean_plot(results_output_bma_1, variables_of_interest)
+post_mean_plot <- function(results, variables) {
+  # Extract the Post Mean dataframe
+  post_mean_df <- results$dataframes$`Post Mean`
+  
+  # Filter the dataframe for the target variables
+  filtered_df <- post_mean_df %>%
+    filter(Variable %in% variables)
+  
+  # Create and return the plot
+  plot_ly(filtered_df, x = ~Period, color = ~Variable) %>%
+    add_ribbons(ymin = ~Lower, ymax = ~Upper, line = list(color = "transparent"), 
+                showlegend = FALSE, hoverinfo = "none") %>%
+    add_lines(y = ~`Post Mean`, hoverinfo = "text",
+              text = ~paste("Variable:", Variable, 
+                            "<br>Period:", Period, 
+                            "<br>Post Mean:", round(`Post Mean`, 4),
+                            "<br>Post SD:", round(`Post SD`, 4))) %>%
+    layout(title = "Post Mean across IRF periods for selected variables",
+           xaxis = list(title = "Period"),
+           yaxis = list(title = "Post Mean"))
+}
+
+#' Create a Conditional Positive Sign plot
+#'
+#' This function creates a line plot of Conditional Positive Sign values across periods
+#' for selected variables from Bayesian Model Averaging (BMA) results.
+#'
+#' @param results A list containing BMA results, specifically including a dataframe
+#'   named 'Cond.Pos.Sign' within a 'dataframes' list.
+#' @param variables A character vector of variable names to be plotted.
+#'
+#' @return A plotly object representing the Conditional Positive Sign plot.
+#'
+#' @examples
+#' variables_of_interest <- c("SE2", "group_est_broad_lp_ardl")
+#' cond_pos_sign_plot(results_output_bma_1, variables_of_interest)
+cond_pos_sign_plot <- function(results, variables) {
+  # Extract the Cond.Pos.Sign dataframe
+  cps_df <- results$dataframes$`Cond.Pos.Sign`
+  
+  # Filter the dataframe for the target variables
+  filtered_df <- cps_df %>%
+    filter(Variable %in% variables)
+  
+  # Create and return the plot
+  plot_ly(filtered_df, x = ~Period, color = ~Variable) %>%
+    add_lines(y = ~`Cond.Pos.Sign`, hoverinfo = "text",
+              text = ~paste("Variable:", Variable, 
+                            "<br>Period:", Period, 
+                            "<br>Cond.Pos.Sign:", round(`Cond.Pos.Sign`, 4))) %>%
+    layout(title = "Conditional positive sign across IRF periods for selected variables",
+           xaxis = list(title = "Period"),
+           yaxis = list(title = "Cond.Pos.Sign"))
+}
+
+
+```
+
+
+::: {.callout-important}
+### Some general notes: 
+
+- `scr` and `dcr` are generally `0` for all models. See `unique(data$scr)`, `unique(data$dcr)`. We can completely exclude it.
+- `cbind` is generally `0` for all models. See `unique(data$cbind)`. We can completely exclude it.
+- `real_output` might not be consistent in coding (gdp vs rgdp), we should probably not use it. 
+- `fexch` is only true for very few observations, especially for outcome %in% c("rate", "unemp", "emp"): `sum(data$fexch == 1 & data$outcome %in% c("rate", "unemp", "emp"))`. Here it leads to failures of the BMA for many periods. We should exclude it, at least for these outcomes. 
+- We maybe should not jointly include `top_5_or_tier`, `journal_impact`, `num_cit`, they might measure similar things. Below I tried the inclusion of the log of `num_cit`, however, for each outcome variable, it leads to failure of the BMA.
+
+:::
+
+## BMA for output
+
+::: {.callout-important}
+### TO DO:
+
+- check VIF 
+- identify variables that are likley to be strongly explained by other variables
+- more robustness checks?
+- Prior sensitivity
+
+:::
+
+```{r}
+out_var <- "output"
+```
+
+::: {.callout-important}
+### Variables that are likley to be strongly explained by other variables
+
+::: {.callout-important}
+
+`varother` varother is likely one variable in "Estimation method" that is strongly explained by the others (i.e. when the other methods except "bayes" are all 0 (false), varother should be 1 (true). Here is some simple inspection:
+
+```{r}
+subset_data <- data[data$varother == 1 & data$outcome == out_var, ]
+summary(subset_data[, c("var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge")])
+colMeans(subset_data[, c("var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge")]) * 100 # Percentages of all varother == 1 combinations with other methods for all data points for out_var
+
+
+```
+::: 
+
+
+::: {.callout-important}
+
+`dsge` and `idother` could be related strongly. Here is some simple inspection:
+
+```{r}
+subset_data <- data[data$idother == 1 & data$outcome == out_var, ]
+summary(subset_data[, c("iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "dsge")])
+colMeans(subset_data[, c("iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "dsge")]) * 100 # Percentages of all idother == 1 combinations with other identification methods + dsge for all data points for out_var
+
+```
+
+::: 
+
+:::
+
+### FLAGSHIP PAPER - Identification and estimation approaches
+
+::: {.callout-note}
+
+In this BMA specification, we focus on the relevance of different identification and estimation approaches. In particular, we consolidate our models into more parsimonious identification and estimation categories based on our raw coding to enlarge the sample size for each identification or estimation category.
+
+The categories for identification (`group_ident_broad`) in the case of `output` are: 
+
+```{r}
+unique(data %>% filter(outcome == out_var) %>% select(group_ident_broad))
+```
+
+The categories for estimation `group_est_broad` in the case of `output` are:
+
+::: {.callout-important}
+#### TO DO:
+
+The creation of `group_est_broad` should be done in the `data_prep.R` file analogous to the identification categories.
+
+```{r}
+#| code-fold: true
+
+# Consolidate estimation methods
+data <- data %>%
+  mutate(group_est_broad = case_when(
+    # Group 1: var, standard VAR
+    (var == 1 & lp == 0 & vecm == 0 & dyn_ols == 0 & fvar == 0 & tvar == 0 & gvar == 0 & dsge == 0 & varother == 0) ~ "standard_var",
+    
+    # Group 2: lp_ardl
+    ((lp == 1 | dyn_ols == 1) & fvar == 0) ~ "lp_ardl",
+    
+    # Group 3: favar
+    (fvar == 1) ~ "favar",
+    
+    # Group 4: other_var
+    ((varother == 1 | tvar == 1 | gvar == 1 | vecm == 1) & lp == 0 & dyn_ols == 0 & fvar == 0 & dsge == 0) ~ "other_var",
+    
+    # Group 5: dsge
+    (dsge == 1) ~ "dsge",
+    
+    # Default case
+    TRUE ~ "Other"
+
+))
+```
+::: 
+
+
+```{r}
+unique(data %>% filter(outcome == out_var) %>% select(group_est_broad))
+```
+- `standard_var`: purely standard VAR
+- `other_var`: `varother` or `tvar` or `gvar` or `vecm`
+- `dsge`: `dsge`
+- `lp_ardl`: `lp` or `dyn_ols` (both single equation)
+- `favar`: `fvar`
+
+Furthermore, we also control for selected other influences, especially publication characteristics like `top_5_or_tier` and `cbanker` and the specific variable used to measure the outcome variable (`outcome_measure`) and also for Bayesian and frequentist estimation (`bayes`). 
+
+The data used excludes studies with `quality_concern`s and is winsorized at the 2 % level. We also use a PEESE specification by including the squared standard error data in the BMA.
+
+:::
+
+
+```{r bma_output_ident_est_consolidated}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
+    SE2 = (JWileymisc::winsorizor(SE.avg, wins_para, na.rm = TRUE))^2
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work
+    mean.effect,
+    ### P-bias test ###
+    SE2, # PEESE
+    ### Moderators ###
+    # Identification approach
+    group_ident_broad,
+    # Estimation method
+    group_est_broad,
+    bayes,
+    # Model specification 
+    outcome_measure,
+    # Publication characteristics
+    cbanker,
+    top_5_or_tier
+  )
+
+# Run
+results_output_bma_1 <- bma_loop(data = bma_data,
+         burn_ = 1e4,
+         iter_ = 2e4)
+
+
+# Access the plots
+results_output_bma_1$plots$PIP
+results_output_bma_1$plots$`Post Mean`
+results_output_bma_1$plots$Cond.Pos.Sign
+
+# PIP Plot for specific variables
+vars_of_interest <- c("SE2",
+          "group_est_broad_lp_ardl", 
+          "group_ident_broad_hf", 
+          "group_ident_broad_signr", 
+          "top_5_or_tier", 
+          "outcome_measure_gap",
+          NULL
+          )
+pip_plot(results_output_bma_1, vars_of_interest)
+
+# Post Mean Plot for specific variables
+post_mean_plot(results_output_bma_1, vars_of_interest)
+
+# Conditional Positive Sign plot for specific variables
+cond_pos_sign_plot(results_output_bma_1, vars_of_interest)
+```
+
+
+#### Robustness
+
+::: {.callout-note}
+##### Adding other moderators and external variables
+
+Here we do a robustness check for the focus on consolidated identification and estimation methods. Here we add a broad set of other moderator and external variables.
+
+:::
+
+```{r bma_output_ident_est_consolidated_robustness}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
+    SE2 = (JWileymisc::winsorizor(SE.avg, wins_para, na.rm = TRUE))^2,
+    
+    # Robustness additions
+    abs_shock_size = abs(shock_size),
+    log_obs = log(observations),
+    log_infl = log(infl),
+    log_gdppc = log(gdppc),
+    log_num_cit = log(num_cit + 1) # We add 1 to avoid the creation of -Inf values
+
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work
+    mean.effect,
+    ### P-bias test ###
+    SE2, # PEESE
+    ### Moderators ###
+    # Identification approach
+    group_ident_broad,
+    # Estimation method
+    group_est_broad,
+    bayes,
+    # Model specification
+    outcome_measure,
+    # Publication characteristics
+    cbanker,
+    top_5_or_tier,
+    
+    ### Robustness additions ###
+    
+    # Regime
+    lor,
+    upr,
+    # scr,                        # this is 0 for all models
+    # dcr,                        # this is 0 for all models
+    hike,
+    cut,
+    # Frequency
+    # annual,                      # This needs to be deactivated for non-year months
+    # quarter,                     # Needs to be deactivated for 6 months
+    month,
+    # Controls
+    comprice,
+    outpgap,
+    find,
+    eglob,
+    # cbind,                           # this is 0 for all models
+    fexch,
+    inflexp,
+    foreignir,
+    fx,
+    lrir,
+    # Other data / model / study characteristics
+    cum,
+    prefer,
+    abs_shock_size,
+    panel,
+    log_obs,
+    pure_rate_shock,
+    convent,
+    decomposition,
+    pub_year,
+    transformation,
+    periodicity,
+    # real_output,                   # Real output might not be consistent in coding (gdp vs rgdp)
+    # transformed,                   # Try as alternatively to transformation - this is a dummy
+    main_research_q,
+    regime,
+    # rate_pers, # Try this one with complete.cases (it should work, but seems to interfere with some other variable, try different versions)
+    interest_rate_short,
+    mean_year,
+    
+    # External data
+    country_dev,
+    log_infl,
+    log_gdppc,
+    tradegl,
+    fingl,
+    findev,
+    cbi,
+    exrate,
+    n_of_countries,
+    log_num_cit                   
+  )
+
+# Run
+results_output_bma_2 <- bma_loop(data = bma_data,
+         burn_ = 1e4,
+         iter_ = 2e4)
+
+
+# Access the plots
+results_output_bma_2$plots$PIP
+results_output_bma_2$plots$`Post Mean`
+results_output_bma_2$plots$Cond.Pos.Sign
+
+# PIP Plot for specific variables
+vars_of_interest <- c("SE2",
+          "group_est_broad_lp_ardl", 
+          "group_ident_broad_hf", 
+          "group_ident_broad_signr", 
+          "top_5_or_tier", 
+          "outcome_measure_gap",
+          NULL
+          )
+pip_plot(results_output_bma_2, vars_of_interest)
+
+# Post Mean Plot for specific variables
+post_mean_plot(results_output_bma_2, vars_of_interest)
+
+# Conditional Positive Sign plot for specific variables
+cond_pos_sign_plot(results_output_bma_2, vars_of_interest)
+```
+
+Comparing BMA identification & estimation baseline with robustness specification:
+
+```{r}
+#| code-fold: true
+
+subplot(results_output_bma_1$plots$PIP, results_output_bma_2$plots$PIP, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+```{r}
+#| code-fold: true
+
+subplot(pip_plot(results_output_bma_1, vars_of_interest), pip_plot(results_output_bma_2, vars_of_interest)
+, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+```{r}
+#| code-fold: true
+
+subplot(post_mean_plot(results_output_bma_1, vars_of_interest), post_mean_plot(results_output_bma_2, vars_of_interest)
+, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+::: {.callout-note}
+##### Consolidated BMA
+
+Now we create a joint BMA of our initial specificiation with identification and estimation approaches and those additional moderators that are consistently relevant in the extended BMA (according to their PIP).
+
+In particular, we include: 
+
+
+
+:::
+
+### Other Robustness 
+
+#### Initial heteregoneity check on all extracted data and "raw" coding
+
+::: {.callout-note}
+
+Here we do an initial BMA on all effect size data including models with `quality_concern`, without winsorization and without testing for publication bias (no standard error variable in the BMA). We also do not add external data and make use of the raw coding data as much as possible.
+
+This helps us to understand how the patterns of BMA results are changing when we exclude models with `quality_concern`, add winsorization, test for publication bias by adding the SE (FAT-PAT) or SE^2 (PEESE) to the BMA or when we add study-external data to the BMA.
+
+Details for this specification:
+
+- all data with quality_concern
+- 0 % (no) winsorization
+- no FAT-PET / PEESE term (no SE)
+- mostly raw coding data (no grouping together of identification or estimation methods etc.)
+- no external data
+
+:::
+
+```{r bma_initial_raw_data}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data_with_quality_concern %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    abs_shock_size = abs(shock_size),
+    log_obs = log(observations)
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work, but dropped in function
+    mean.effect,
+    # Identification
+    iv,
+    forecast_based,
+    nr,
+    event,
+    chol,
+    svar,
+    signr,
+    hf,
+    heteroskedas,
+    longrun,
+    idother,                     # might be strongly related to dsge
+    # Estimation method
+    var,
+    lp,
+    vecm,
+    dyn_ols,
+    fvar,
+    tvar,
+    gvar,
+    bayes,
+    dsge,
+    # varother,                    # varother is likely one variable in "Estimation method" that is strongly explained by the others (i.e. when the other methods except "bayes" are all 0 (false), varother should be 1 (true). Therefore, we should leave it out here to make it the "default case".
+    # Regime
+    lor,
+    upr,
+    # scr,                        # this is 0 for all models
+    # dcr,                        # this is 0 for all models
+    hike,
+    cut,
+    # Frequency
+    # annual,                      # This needs to be deactivated for non-year months
+    # quarter,                     # Needs to be deactivated for 6 months 
+    month,             
+    # Controls
+    comprice,
+    outpgap,
+    find,
+    eglob,
+    # cbind,                           # this is 0 for all models
+    fexch,
+    inflexp,
+    foreignir,
+    fx,
+    lrir,
+    # Other data / model / study characteristics
+    cum,
+    prefer,
+    abs_shock_size,
+    panel,
+    log_obs,     
+    pure_rate_shock,
+    convent,
+    decomposition,
+    cbanker,
+    pub_year,
+    transformation,
+    periodicity,
+    # real_output,                   # Real output might not be consistent in coding (gdp vs rgdp)
+    outcome_measure,
+    # transformed,                   # Try as alternatively to transformation - this is a dummy
+    main_research_q,
+    quality_concern,
+    regime,
+    # rate_pers, # Try this one with complete.cases (it should work, but seems to interfere with some other variable, try different versions)
+    country_dev,         # Factor version of the dummies for advanced, upper_middle, mixed
+    interest_rate_short,
+    mean_year
+  )
+
+# Run
+results_output_bma_3 <- bma_loop(data = bma_data,
+         burn_ = 1e2,
+         iter_ = 2e2)
+
+# Access the plots
+results_output_bma_3$plots$PIP
+results_output_bma_3$plots$`Post Mean`
+results_output_bma_3$plots$Cond.Pos.Sign
+
+# Access the dataframes
+head(results_output_bma_3$dataframes$PIP)
+head(results_output_bma_3$dataframes$`Post Mean`)
+head(results_output_bma_3$dataframes$Cond.Pos.Sign)
+
+# Replot with filtering 
+
+# Step 1: Extract the PIP dataframe
+pip_df <- results_output_bma_3$dataframes$PIP
+
+# Step 2: Filter for variables with PIP > 0.5 in at least 6 periods
+high_pip_vars <- pip_df %>%
+  group_by(Variable) %>%
+  summarise(high_pip_count = sum(PIP > 0.9, na.rm = TRUE)) %>%
+  filter(high_pip_count >= 5) %>%
+  pull(Variable)
+
+# Step 3: Filter the original dataframe to keep only these variables
+filtered_pip_df <- pip_df %>%
+  filter(Variable %in% high_pip_vars)
+
+# Step 4: Create a new plot with the filtered data
+filtered_pip_plot <- plot_ly(filtered_pip_df, 
+                             x = ~Period, 
+                             y = ~PIP,
+                             color = ~Variable, 
+                             type = 'scatter', 
+                             mode = 'lines+markers',
+                             hoverinfo = "text",
+                             text = ~paste("Variable:", Variable, 
+                                           "<br>Period:", Period, 
+                                           "<br>PIP:", round(PIP, 4))) %>%
+  layout(title = "Change in BMA PIP across Periods (Filtered for High PIP)",
+         xaxis = list(title = "Month"),
+         yaxis = list(title = "PIP"))
+
+# Display the plot
+filtered_pip_plot
+
+
+```
+
+
+## BMA for price level
+
+
+::: {.callout-important}
+### TO DO:
+
+- [ ] ...
+- [ ] 
+
+- check VIF 
+
+:::
+
+```{r}
+out_var <- "inflation"
+```
+
+### FLAGSHIP PAPER - Identification and estimation approaches
+
+::: {.callout-note}
+
+In this BMA specification, we are focussing on the relevance of different identification and estimation approaches. In particular, we consolidate our models into more parsimonious identification and estimation categories based on our raw coding to enlarge the sample size for each identification or estimation category.
+
+The categories for identification (`group_ident_broad`) in the case of `inflation` (i.e. price level) are: 
+
+```{r}
+unique(data %>% filter(outcome == out_var) %>% select(group_ident_broad))
+```
+
+The categories for estimation `group_est_broad` in the case of `inflation` are:
+
+```{r}
+unique(data %>% filter(outcome == out_var) %>% select(group_est_broad))
+```
+- `standard_var`: purely standard `var`
+- `other_var`: `varother` or `tvar` or `gvar` or `vecm`
+- `dsge`: `dsge`
+- `lp_ardl`: `lp` or `dyn_ols` (both single equation)
+- `favar`: `fvar`
+
+Furthermore, we also control for selected other influences, especially publication characteristics like `top_5_or_tier` and `cbanker` and the specific variable used to measure the outcome variable (`outcome_measure`) and also for Bayesian and frequentist estimation (`bayes`). 
+
+The data used excludes studies with `quality_concern`s and is winsorized at the 2 % level. We also use a PEESE specification by including the squared standard error data in the BMA.
+
+:::
+
+
+```{r bma_price_level_ident_est_consolidated}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
+    SE2 = (JWileymisc::winsorizor(SE.avg, wins_para, na.rm = TRUE))^2
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work
+    mean.effect,
+    ### P-bias test ###
+    SE2, # PEESE
+    ### Moderators ###
+    # Identification approach
+    group_ident_broad,
+    # Estimation method
+    group_est_broad,
+    bayes,
+    # Model specification 
+    outcome_measure,
+    # Publication characteristics
+    cbanker,
+    top_5_or_tier
+  )
+
+# Run
+results_price_level_bma_1 <- bma_loop(data = bma_data,
+         burn_ = 1e4,
+         iter_ = 2e4)
+
+
+# Access the plots
+results_price_level_bma_1$plots$PIP
+results_price_level_bma_1$plots$`Post Mean`
+results_price_level_bma_1$plots$Cond.Pos.Sign
+
+# PIP Plot for specific variables
+vars_of_interest <- c("SE2",
+                      # "group_est_broad_lp_ardl",
+                      "group_ident_broad_hf",
+                      # "group_ident_broad_idother",
+                      "group_ident_broad_signr",
+                      "top_5_or_tier",
+                      NULL)
+pip_plot(results_price_level_bma_1, vars_of_interest)
+
+# Post Mean Plot for specific variables
+post_mean_plot(results_price_level_bma_1, vars_of_interest)
+
+# Conditional Positive Sign plot for specific variables
+cond_pos_sign_plot(results_price_level_bma_1, vars_of_interest)
+```
+
+
+
+#### Robustness
+
+::: {.callout-note}
+##### Adding other moderators and external variables
+
+Here we do a robustness check for the focus on consolidated identification and estimation methods. Here we add a broad set of other moderator and external variables.
+
+:::
+
+```{r bma_price_level_ident_est_consolidated_robustness}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
+    SE2 = (JWileymisc::winsorizor(SE.avg, wins_para, na.rm = TRUE))^2,
+    
+    # Robustness additions
+    abs_shock_size = abs(shock_size),
+    log_obs = log(observations),
+    log_infl = log(infl),
+    log_gdppc = log(gdppc),
+    log_num_cit = log(num_cit + 1) # We add 1 to avoid the creation of -Inf values
+
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work
+    mean.effect,
+    ### P-bias test ###
+    SE2, # PEESE
+    ### Moderators ###
+    # Identification approach
+    group_ident_broad,
+    # Estimation method
+    group_est_broad,
+    bayes,
+    # Model specification
+    outcome_measure,
+    # Publication characteristics
+    cbanker,
+    top_5_or_tier,
+    
+    # Robustness additions
+    
+    # Regime
+    lor,
+    upr,
+    # scr,                        # this is 0 for all models
+    # dcr,                        # this is 0 for all models
+    hike,
+    cut,
+    # Frequency
+    # annual,                      # This needs to be deactivated for non-year months
+    # quarter,                     # Needs to be deactivated for 6 months
+    month,
+    # Controls
+    comprice,
+    outpgap,
+    find,
+    eglob,
+    # cbind,                           # this is 0 for all models
+    fexch,
+    inflexp,
+    foreignir,
+    fx,
+    lrir,
+    # Other data / model / study characteristics
+    cum,
+    prefer,
+    abs_shock_size,
+    panel,
+    log_obs,
+    pure_rate_shock,
+    convent,
+    decomposition,
+    pub_year,
+    transformation,
+    periodicity,
+    # real_output,                   # Real output might not be consistent in coding (gdp vs rgdp)
+    # transformed,                   # Try as alternatively to transformation - this is a dummy
+    main_research_q,
+    regime,
+    # rate_pers, # Try this one with complete.cases (it should work, but seems to interfere with some other variable, try different versions)
+    interest_rate_short,
+    mean_year,
+    
+    # External data
+    country_dev,       
+    log_infl,
+    log_gdppc,
+    tradegl,
+    fingl,
+    findev,
+    cbi,
+    exrate,
+    n_of_countries,
+    log_num_cit                               
+
+  )
+
+# Run
+results_price_level_bma_2 <- bma_loop(data = bma_data,
+         burn_ = 1e4,
+         iter_ = 2e4)
+
+
+# Access the plots
+results_price_level_bma_2$plots$PIP
+results_price_level_bma_2$plots$`Post Mean`
+results_price_level_bma_2$plots$Cond.Pos.Sign
+
+# PIP Plot for specific variables
+vars_of_interest <- c("SE2",
+                      # "group_est_broad_lp_ardl",
+                      "group_ident_broad_hf",
+                      # "group_ident_broad_idother",
+                      "group_ident_broad_signr",
+                      "top_5_or_tier",
+                      NULL)
+pip_plot(results_price_level_bma_2, vars_of_interest)
+
+# Post Mean Plot for specific variables
+post_mean_plot(results_price_level_bma_2, vars_of_interest)
+
+# Conditional Positive Sign plot for specific variables
+cond_pos_sign_plot(results_price_level_bma_2, vars_of_interest)
+```
+
+Comparing BMA identification & estimation baseline with robustness specification:
+
+```{r}
+#| code-fold: true
+
+subplot(results_price_level_bma_1$plots$PIP, results_price_level_bma_2$plots$PIP, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+```{r}
+#| code-fold: true
+
+subplot(pip_plot(results_price_level_bma_1, vars_of_interest), pip_plot(results_price_level_bma_2, vars_of_interest)
+, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+```{r}
+#| code-fold: true
+
+subplot(post_mean_plot(results_price_level_bma_1, vars_of_interest), post_mean_plot(results_price_level_bma_2, vars_of_interest)
+, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+## BMA for Unemployment rate
+
+::: {.callout-important}
+### TO DO:
+
+- [ ] ...
+- check VIF 
+- more robustness checks?
+
+:::
+
+```{r}
+out_var <- "unemp"
+```
+
+
+### FLAGSHIP PAPER - Identification and estimation approaches
+
+::: {.callout-note}
+
+In this BMA specification, we focus on the relevance of different identification and estimation approaches. In particular, we consolidate our models into more parsimonious identification and estimation categories based on our raw coding to enlarge the sample size for each identification or estimation category.
+
+The categories for identification (`group_ident_broad`) in the case of `unemp` are: 
+
+```{r}
+unique(data %>% filter(outcome == out_var) %>% select(group_ident_broad))
+```
+
+The categories for estimation `group_est_broad` in the case of `unemp` are:
+
+```{r}
+unique(data %>% filter(outcome == out_var) %>% select(group_est_broad))
+```
+- `standard_var`: purely standard VAR
+- `other_var`: `varother` or `tvar` or `gvar` or `vecm`
+- `lp_ardl`: `lp` or `dyn_ols` (both single equation)
+- `favar`: `fvar`
+
+Note that there are no `dsge` models for `unemp`.
+
+Furthermore, we also control for selected other influences, especially publication characteristics like `top_5_or_tier` and `cbanker`. Since for `unemp` the variable used to measure the outcome variable (`outcome_measure`) is always `une_rate`, we do not include it. We also control for Bayesian and frequentist estimation (`bayes`). 
+
+The data used excludes studies with `quality_concern`s and is winsorized at the 2 % level. We also use a PEESE specification by including the squared standard error data in the BMA.
+
+:::
+
+
+```{r bma_unemp_ident_est_consolidated}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
+    SE2 = (JWileymisc::winsorizor(SE.avg, wins_para, na.rm = TRUE))^2
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work
+    mean.effect,
+    ### P-bias test ###
+    SE2, # PEESE
+    ### Moderators ###
+    # Identification approach
+    group_ident_broad,
+    # Estimation method
+    group_est_broad,
+    bayes,
+    # Publication characteristics
+    cbanker,
+    top_5_or_tier
+  )
+
+# Run
+results_unemp_bma_1 <- bma_loop(data = bma_data,
+         burn_ = 1e4,
+         iter_ = 2e4)
+
+
+# Access the plots
+results_unemp_bma_1$plots$PIP
+results_unemp_bma_1$plots$`Post Mean`
+results_unemp_bma_1$plots$Cond.Pos.Sign
+
+# PIP Plot for specific variables
+vars_of_interest <- c("SE2",
+          "bayes", 
+          "group_ident_broad_signr", 
+          NULL
+          )
+pip_plot(results_unemp_bma_1, vars_of_interest)
+
+# Post Mean Plot for specific variables
+post_mean_plot(results_unemp_bma_1, vars_of_interest)
+
+# Conditional Positive Sign plot for specific variables
+cond_pos_sign_plot(results_unemp_bma_1, vars_of_interest)
+```
+
+
+#### Robustness
+
+::: {.callout-note}
+##### Adding other moderators and external variables
+
+Here we do a robustness check for the focus on consolidated identification and estimation methods. Here we add a broad set of other moderator and external variables.
+
+:::
+
+```{r bma_unemp_ident_est_consolidated_robustness}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
+    SE2 = (JWileymisc::winsorizor(SE.avg, wins_para, na.rm = TRUE))^2,
+    
+    # Robustness additions
+    abs_shock_size = abs(shock_size),
+    log_obs = log(observations),
+    log_infl = log(infl),
+    log_gdppc = log(gdppc),
+    log_num_cit = log(num_cit + 1) # We add 1 to avoid the creation of -Inf values
+    
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work
+    mean.effect,
+    ### P-bias test ###
+    SE2, # PEESE
+    ### Moderators ###
+    # Identification approach
+    group_ident_broad,
+    # Estimation method
+    group_est_broad,
+    bayes,
+    # Publication characteristics
+    cbanker,
+    top_5_or_tier,
+    
+    # Robustness additions
+    
+    # # Regime
+    lor,
+    upr,
+    # scr,                        # this is 0 for all models
+    # dcr,                        # this is 0 for all models
+    hike,
+    cut,
+    # Frequency
+    # annual,                      # This needs to be deactivated for non-year months
+    # quarter,                     # Needs to be deactivated for 6 months
+    month,
+    # # Controls
+    comprice,
+    outpgap,
+    find,
+    eglob,
+    # cbind,                           # this is 0 for all models
+    # fexch,                          # This is only 0 for unemp: unique(data[data$outcome == "unemp","fexch"])
+    inflexp,
+    foreignir,
+    fx,
+    lrir,
+    # Other data / model / study characteristics
+    # cum,                           # This is only 0 for unemp: unique(data[data$outcome == "unemp","cum"])
+    prefer,
+    abs_shock_size,
+    # panel,                         # Inclusion leads to failures of BMA for many periods for unemp
+    log_obs,
+    pure_rate_shock,
+    # convent,                       # Inclusion leads to failures of BMA for many periods for unemp
+    decomposition,
+    pub_year,
+    # transformation,                # This is only "lev" for unemp: unique(data[data$outcome == "unemp","transformation"])
+    # periodicity,                     # Inclusion leads to failures of BMA for many periods for unemp
+    # real_output,                   # Real output might not be consistent in coding (gdp vs rgdp)
+    # transformed,                   # This is only 0 for unemp: unique(data[data$outcome == "unemp","transformed"])
+    main_research_q,
+    regime,
+    # rate_pers, # Try this one with complete.cases (it should work, but seems to interfere with some other variable, try different versions)
+    # country_dev,                   # Inclusion leads to failures of BMA for many periods for unemp
+    interest_rate_short,
+    mean_year,
+    
+    # External data
+    # country_dev,                    # Inclusion leads to failures of BMA for period 51, 54, 57
+    log_infl,
+    log_gdppc,
+    tradegl,
+    fingl,
+    findev,
+    cbi,
+    exrate,
+    # n_of_countries,                  # Inclusion leads to failures of BMA for period 51, 54, 57
+    log_num_cit                      
+    
+  )
+
+# Run
+results_unemp_bma_2 <- bma_loop(data = bma_data,
+         burn_ = 1e4,
+         iter_ = 2e4)
+
+
+# Access the plots
+results_unemp_bma_2$plots$PIP
+results_unemp_bma_2$plots$`Post Mean`
+results_unemp_bma_2$plots$Cond.Pos.Sign
+
+# PIP Plot for specific variables
+vars_of_interest <- c("SE2",
+          "bayes", 
+          "group_ident_broad_signr", 
+          NULL
+          )
+pip_plot(results_unemp_bma_2, vars_of_interest)
+
+# Post Mean Plot for specific variables
+post_mean_plot(results_unemp_bma_2, vars_of_interest)
+
+# Conditional Positive Sign plot for specific variables
+cond_pos_sign_plot(results_unemp_bma_2, vars_of_interest)
+```
+
+Comparing BMA identification & estimation baseline with robustness specification:
+
+```{r}
+#| code-fold: true
+
+subplot(results_unemp_bma_1$plots$PIP, results_unemp_bma_2$plots$PIP, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+```{r}
+#| code-fold: true
+
+subplot(pip_plot(results_unemp_bma_1, vars_of_interest), pip_plot(results_unemp_bma_2, vars_of_interest)
+, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+```{r}
+#| code-fold: true
+
+subplot(post_mean_plot(results_unemp_bma_1, vars_of_interest), post_mean_plot(results_unemp_bma_2, vars_of_interest)
+, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+## BMA for Employment
+
+::: {.callout-important}
+### TO DO:
+
+- [ ] ...
+- check VIF 
+- more robustness checks?
+
+:::
+
+```{r}
+out_var <- "emp"
+```
+
+
+### FLAGSHIP PAPER - Identification and estimation approaches
+
+::: {.callout-note}
+
+In this BMA specification, we focus on the relevance of different identification and estimation approaches. In particular, we consolidate our models into more parsimonious identification and estimation categories based on our raw coding to enlarge the sample size for each identification or estimation category.
+
+The categories for identification (`group_ident_broad`) in the case of `emp` are: 
+
+```{r}
+unique(data %>% filter(outcome == out_var) %>% select(group_ident_broad))
+```
+
+The categories for estimation `group_est_broad` in the case of `emp` are:
+
+```{r}
+unique(data %>% filter(outcome == out_var) %>% select(group_est_broad))
+```
+- `standard_var`: purely standard VAR
+- `dsge`: `dsge`
+- `lp_ardl`: `lp` or `dyn_ols` (both single equation)
+- `favar`: `fvar`
+
+Note that there are no `other_var` models for `emp`.
+
+Furthermore, we also control for selected other influences, especially publication characteristics like `top_5_or_tier` and `cbanker` and the specific variable used to measure the outcome variable (`outcome_measure`). We also control for Bayesian and frequentist estimation (`bayes`).
+
+The data used excludes studies with `quality_concern`s and is winsorized at the 2 % level. We also use a PEESE specification by including the squared standard error data in the BMA.
+
+:::
+
+
+```{r bma_emp_ident_est_consolidated}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
+    SE2 = (JWileymisc::winsorizor(SE.avg, wins_para, na.rm = TRUE))^2
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work
+    mean.effect,
+    ### P-bias test ###
+    SE2, # PEESE
+    ### Moderators ###
+    # Identification approach
+    group_ident_broad,
+    # Estimation method
+    group_est_broad,
+    bayes,
+    # Model specification 
+    outcome_measure,
+    # Publication characteristics
+    cbanker,
+    top_5_or_tier
+  )
+
+# Run
+results_emp_bma_1 <- bma_loop(data = bma_data,
+         burn_ = 1e4,
+         iter_ = 2e4)
+
+
+# Access the plots
+results_emp_bma_1$plots$PIP
+results_emp_bma_1$plots$`Post Mean`
+results_emp_bma_1$plots$Cond.Pos.Sign
+
+# PIP Plot for specific variables
+vars_of_interest <- c("SE2",
+          "outcome_measure_emp_rate", 
+          "top_5_or_tier", 
+          NULL
+          )
+pip_plot(results_emp_bma_1, vars_of_interest)
+
+# Post Mean Plot for specific variables
+post_mean_plot(results_emp_bma_1, vars_of_interest)
+
+# Conditional Positive Sign plot for specific variables
+cond_pos_sign_plot(results_emp_bma_1, vars_of_interest)
+```
+
+
+#### Robustness
+
+::: {.callout-note}
+##### Adding other moderators and external variables
+
+Here we do a robustness check for the focus on consolidated identification and estimation methods. Here we add a broad set of other moderator and external variables.
+
+:::
+
+```{r bma_emp_ident_est_consolidated_robustness}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
+    SE2 = (JWileymisc::winsorizor(SE.avg, wins_para, na.rm = TRUE))^2,
+    
+    # Robustness additions
+    abs_shock_size = abs(shock_size),
+    log_obs = log(observations),
+    log_infl = log(infl),
+    log_gdppc = log(gdppc),
+    log_num_cit = log(num_cit + 1) # We add 1 to avoid the creation of -Inf values
+    
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work
+    mean.effect,
+    ### P-bias test ###
+    SE2, # PEESE
+    ### Moderators ###
+    # Identification approach
+    group_ident_broad,
+    # Estimation method
+    group_est_broad,
+    bayes,
+    # Model specification 
+    outcome_measure,
+    # Publication characteristics
+    cbanker,
+    top_5_or_tier,
+    
+    # Robustness additions
+    
+    # # Regime
+    # lor,                        # This is only 0 for emp: unique(data[data$outcome == "emp","lor"])  
+    # upr,                        # This is only 0 for emp: unique(data[data$outcome == "emp","lor"])  
+    # scr,                        # this is 0 for all models
+    # dcr,                        # this is 0 for all models
+    hike,
+    cut,
+    # Frequency
+    # annual,                      # This needs to be deactivated for non-year months
+    # quarter,                     # Needs to be deactivated for 6 months
+    month,
+    # Controls
+    comprice,
+    outpgap,
+    find,
+    eglob,
+    # cbind,                           # this is 0 for all models
+    # fexch,                           # Inclusion leads to failures of BMA for many periods.
+    inflexp,
+    foreignir,
+    fx,
+    lrir,
+    # Other data / model / study characteristics
+    cum,
+    prefer,
+    abs_shock_size,
+    panel,
+    log_obs,
+    pure_rate_shock,
+    convent,
+    # decomposition,                  # This is only 0 for emp: unique(data[data$outcome == "emp","decomposition"])
+    pub_year,
+    # transformation,                 # Inclusion leads to complete failure of BMA due to relation to outcome_measure
+    periodicity,
+    # # real_output,                   # Real output might not be consistent in coding (gdp vs rgdp)
+    # # transformed,                   # Maybe use as alternative to transformation
+    main_research_q,
+    # regime,                         # This is only 0 for emp: unique(data[data$outcome == "emp","regime"])  
+    # # rate_pers, # Try this one with complete.cases (it should work, but seems to interfere with some other variable, try different versions)
+    interest_rate_short,
+    mean_year,
+    
+    # External data
+    country_dev,
+    log_infl,
+    log_gdppc,
+    tradegl,
+    fingl,
+    findev,
+    cbi,
+    exrate,
+    n_of_countries,
+    # log_num_cit                       # Inclusion leads to failure of BMA for emp
+  )
+
+# Run
+results_emp_bma_2 <- bma_loop(data = bma_data,
+         burn_ = 1e4,
+         iter_ = 2e4)
+
+
+# Access the plots
+results_emp_bma_2$plots$PIP
+results_emp_bma_2$plots$`Post Mean`
+results_emp_bma_2$plots$Cond.Pos.Sign
+
+# PIP Plot for specific variables
+vars_of_interest <- c("SE2",
+          "outcome_measure_emp_rate", 
+          "top_5_or_tier", 
+          NULL
+          )
+pip_plot(results_emp_bma_2, vars_of_interest)
+
+# Post Mean Plot for specific variables
+post_mean_plot(results_emp_bma_2, vars_of_interest)
+
+# Conditional Positive Sign plot for specific variables
+cond_pos_sign_plot(results_emp_bma_2, vars_of_interest)
+```
+
+Comparing BMA identification & estimation baseline with robustness specification:
+
+```{r}
+#| code-fold: true
+
+subplot(results_emp_bma_1$plots$PIP, results_emp_bma_2$plots$PIP, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+```{r}
+#| code-fold: true
+
+subplot(pip_plot(results_emp_bma_1, vars_of_interest), pip_plot(results_emp_bma_2, vars_of_interest)
+, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+```{r}
+#| code-fold: true
+
+subplot(post_mean_plot(results_emp_bma_1, vars_of_interest), post_mean_plot(results_emp_bma_2, vars_of_interest)
+, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+## BMA for interest rate
+
+::: {.callout-important}
+### TO DO:
+
+- [ ] ...
+- [ ] 
+
+- [ ] check VIF 
+
+:::
+
+```{r}
+out_var <- "rate"
+```
+
+### FLAGSHIP PAPER - Identification and estimation approaches
+
+::: {.callout-note}
+
+In this BMA specification, we are focussing on the relevance of different identification and estimation approaches. In particular, we consolidate our models into more parsimonious identification and estimation categories based on our raw coding to enlarge the sample size for each identification or estimation category.
+
+The categories for identification (`group_ident_broad`) in the case of `rate` are:
+
+```{r}
+unique(data %>% filter(outcome == out_var) %>% select(group_ident_broad))
+```
+
+The categories for estimation `group_est_broad` in the case of `rate` are:
+
+```{r}
+unique(data %>% filter(outcome == out_var) %>% select(group_est_broad))
+```
+- `standard_var`: purely standard VAR
+- `other_var`: `varother` or `tvar` or `gvar` or `vecm`
+- `dsge`: `dsge`
+- `lp_ardl`: `lp` or `dyn_ols` (both single equation)
+- `favar`: `fvar`
+
+Furthermore, we also control for selected other influences, especially publication characteristics like `top_5_or_tier` and `cbanker`. Different from our BMA for `output` and `inflation`, we do not include `outcome_measure` because it is always `rate` and also for Bayesian and frequentist estimation (`bayes`). 
+
+The data used excludes studies with `quality_concern`s and is winsorized at the 2 % level. We also use a PEESE specification by including the squared standard error data in the BMA.
+
+:::
+
+
+```{r bma_interest_rate_ident_est_consolidated}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
+    SE2 = (JWileymisc::winsorizor(SE.avg, wins_para, na.rm = TRUE))^2
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work
+    mean.effect,
+    ### P-bias test ###
+    SE2, # PEESE
+    ### Moderators ###
+    # Identification approach
+    group_ident_broad,
+    # Estimation method
+    group_est_broad,
+    bayes,
+    # Publication characteristics
+    cbanker,
+    top_5_or_tier
+  )
+
+# Run
+results_interest_rate_bma_1 <- bma_loop(data = bma_data,
+         burn_ = 1e4,
+         iter_ = 2e4)
+
+
+# Access the plots
+results_interest_rate_bma_1$plots$PIP
+results_interest_rate_bma_1$plots$`Post Mean`
+results_interest_rate_bma_1$plots$Cond.Pos.Sign
+
+# PIP Plot for specific variables
+vars_of_interest <- c("SE2",
+                         "group_est_broad_favar",
+                         "group_est_broad_lp_ardl",
+                         "group_est_broad_other_var",
+                         NULL)
+pip_plot(results_interest_rate_bma_1, vars_of_interest)
+
+# Post Mean Plot for specific variables
+post_mean_plot(results_interest_rate_bma_1, vars_of_interest)
+
+# Conditional Positive Sign plot for specific variables
+cond_pos_sign_plot(results_interest_rate_bma_1, vars_of_interest)
+```
+
+
+
+#### Robustness
+
+::: {.callout-note}
+##### Adding other moderators and external variables
+
+Here we do a robustness check for the focus on consolidated identification and estimation methods. Here we add a broad set of other moderator and external variables.
+
+:::
+
+```{r bma_interest_rate_ident_est_consolidated_robustness}
+#| code-fold: true
+
+# Filter the data for the outcome variable and the variables for which BMA 
+# should be done
+bma_data <- data %>% 
+  filter(outcome == out_var) %>%
+  mutate(         
+    mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
+    SE2 = (JWileymisc::winsorizor(SE.avg, wins_para, na.rm = TRUE))^2,
+    
+    # Robustness additions
+    abs_shock_size = abs(shock_size),
+    log_obs = log(observations),
+    log_infl = log(infl),
+    log_gdppc = log(gdppc),
+    log_num_cit = log(num_cit + 1) # We add 1 to avoid the creation of -Inf values
+    
+  ) %>% 
+  select(
+    period.month, # Necessary for the BMA loop to work
+    mean.effect,
+    ### P-bias test ###
+    SE2, # PEESE
+    ### Moderators ###
+    # Identification approach
+    group_ident_broad,
+    # Estimation method
+    group_est_broad,
+    bayes,
+    # Publication characteristics
+    cbanker,
+    top_5_or_tier,
+    
+    # Robustness additions
+
+    # Regime
+    lor,
+    upr,
+    # scr,                        # this is 0 for all models
+    # dcr,                        # this is 0 for all models
+    hike,
+    cut,
+    # Frequency
+    # annual,                      # This needs to be deactivated for non-year months
+    # quarter,                     # Needs to be deactivated for 6 months
+    month,
+    # Controls
+    comprice,
+    outpgap,
+    find,
+    eglob,
+    # cbind,                           # this is 0 for all models
+    # fexch,                           # This is only true for very few observations for outcome == "rate": sum(data$fexch == 1 & data$outcome == "rate").
+    inflexp,
+    foreignir,
+    fx,
+    lrir,
+    # Other data / model / study characteristics
+    # cum,                           # This is 0 for all models for data$outcome == "rate"
+    prefer,
+    abs_shock_size,
+    panel,
+    log_obs,
+    pure_rate_shock,
+    convent,
+    decomposition,
+    pub_year,
+    # transformation,                # This is always "rate" for data$outcome == "rate"
+    # periodicity,                     # This is always "NA" for data$outcome == "rate"
+    # real_output,                   # Real output might not be consistent in coding (gdp vs rgdp)
+    # transformed,                   # Try as alternatively to transformation - this is a dummy
+    # main_research_q,               # This is 0 for all models for data$outcome == "rate"
+    regime,
+    # rate_pers, # Try this one with complete.cases (it should work, but seems to interfere with some other variable, try different versions)
+    interest_rate_short,
+    mean_year,
+    
+    # External data
+    country_dev,
+    log_infl,
+    log_gdppc,
+    tradegl,
+    fingl,
+    findev,
+    cbi,
+    exrate,
+    n_of_countries,
+    log_num_cit                   
+    
+  )
+
+# Run
+results_interest_rate_bma_2 <- bma_loop(data = bma_data,
+         burn_ = 1e4,
+         iter_ = 2e4)
+
+
+# Access the plots
+results_interest_rate_bma_2$plots$PIP
+results_interest_rate_bma_2$plots$`Post Mean`
+results_interest_rate_bma_2$plots$Cond.Pos.Sign
+
+# PIP Plot for specific variables
+vars_of_interest <- c("SE2",
+                         "group_est_broad_favar",
+                         "group_est_broad_lp_ardl",
+                         "group_est_broad_other_var",
+                         NULL)
+pip_plot(results_interest_rate_bma_2, vars_of_interest)
+
+# Post Mean Plot for specific variables
+post_mean_plot(results_interest_rate_bma_2, vars_of_interest)
+
+# Conditional Positive Sign plot for specific variables
+cond_pos_sign_plot(results_interest_rate_bma_2, vars_of_interest)
+```
+
+Comparing BMA identification & estimation baseline with robustness specification:
+
+```{r}
+#| code-fold: true
+
+subplot(results_interest_rate_bma_1$plots$PIP, results_interest_rate_bma_2$plots$PIP, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+```{r}
+#| code-fold: true
+
+subplot(pip_plot(results_interest_rate_bma_1, vars_of_interest), pip_plot(results_interest_rate_bma_2, vars_of_interest)
+, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```
+
+```{r}
+#| code-fold: true
+
+subplot(post_mean_plot(results_interest_rate_bma_1, vars_of_interest), post_mean_plot(results_interest_rate_bma_2, vars_of_interest)
+, nrows = 1, margin = 0.1) %>% layout(
+  showlegend=TRUE,
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.2, y = 1, text = "Identification & estimation BMA", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.8, y = 1, text = "Robustness Check", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60))
+```

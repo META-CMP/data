@@ -213,7 +213,16 @@ se_rescale <- function(se){
   return(Y)
 }
 
-stem_funnel <- function(beta_input, se_input, stem_estimates){
+stem_funnel <- function(beta_input, se_input, stem_estimates,
+                        # Values for figures
+                        t_stat = 1.96,
+                        lineswidth = 2.5,
+                        filled_diamond = 18,
+                        points_size = 2,
+                        se_axis_min = 0,
+                        beta_axis_min = -4,
+                        beta_axis_max = 2,
+                        labNames = c('Coefficient ','Precision ')){
   #take stem estimates
   b_stem <- stem_estimates[1]
   SE_b_stem <- stem_estimates[2]
@@ -226,16 +235,6 @@ stem_funnel <- function(beta_input, se_input, stem_estimates){
   beta_sorted <- data_sorted[,1]
   se_sorted <- data_sorted[,2]
   cumulative_estimates = weighted_mean(beta_sorted, se_sorted, sigma0)
-  
-  #set values for figures
-  t_stat <- 1.96
-  lineswidth<-2.5
-  filled_diamond <- 18
-  points_size <-2
-  se_axis_min <- 0
-  beta_axis_min <- -4
-  beta_axis_max <- 2
-  labNames <- c('Coefficient ','Precision ')
   
   # rescale SE for ease of visual interpretation
   se_axis <- se_rescale(se_sorted)

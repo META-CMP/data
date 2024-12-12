@@ -32,10 +32,11 @@
 filtered_data_summary <- function(data) {
   unique_studies <- length(unique(data$key))
   unique_models <- length(unique(paste(data$key, data$model_id)))
+  unique_irfs <- length(unique(paste(data$key, data$model_id, data$outcome)))
   total_datapoints <- nrow(data)
   
   data.frame(
-    Metric = c("Studies", "Models", "Total datapoints"),
-    Count = c(unique_studies, unique_models, total_datapoints)
+    Metric = c("Studies", "Models", "IRFs", "Total datapoints"),
+    Count = c(unique_studies, unique_models, unique_irfs, total_datapoints)
   )
 }

@@ -127,7 +127,7 @@ data$main_research_q<-ifelse(data$main_research_q==1,"Main research q","other")
 data$chol_ident<-ifelse(data$group_ident_broad=="chol","chol","other")
 data$cbanker<-ifelse(data$cbanker==1,"cbanker","other")
 
-p<-ggplot(data, aes(x = z_stat)) +
+p2<-ggplot(data, aes(x = z_stat_winsor)) +
   geom_density(fill = "blue", alpha = 0.2, adjust = 0.7) +
   geom_histogram(aes(y = ..density..), binwidth = 0.1, alpha = 0.3) + 
   facet_wrap(~ period.month, scales = "free") +

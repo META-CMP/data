@@ -53,12 +53,14 @@ We would somewhere need to justify why we only look at studies without quality_c
 ```{r prep}
 # Load libraries
 library(here)
-library(tidyverse)# for data manipulation
-library(dplyr)# for data manipulation
-library(modelsummary)# to nicely print results
+library(tidyverse) # for data manipulation
+library(dplyr) # for data manipulation
+library(modelsummary) # to nicely print results
 library(plotly)
 library(JWileymisc)
 library(viridis) # Color palette used in funnel
+library(fastDummies) # Automatic dummy creation
+library(BMS) # Bayesian model averaging
 
 # Load our functions
 source(here("analysis/R/plot_mean_effect.R"))
@@ -92,6 +94,7 @@ data_path <- here("data/preliminary_data_test.RData") # works
 load(data_path)
 
 # Filter out models with quality concerns
+data_with_quality_concern <- data # First, store data with quality concerns for access
 data <- data %>% filter(quality_concern!=1)
 
 # Specify periods to estimate for
@@ -155,6 +158,8 @@ plot_mean_effect(data %>% filter(outcome == out_var),
 out_var <- "rate"
 plot_mean_effect(data %>% filter(outcome == out_var), 
                  filter_outcome = out_var, x_axis = "period_month")
+
+# Add mean line 
 ```
 
 ## Average IRFs
@@ -185,16 +190,30 @@ Plot median line in these plots.
 
 out_var <- "output"
 
+# Without median 
 avg_irf_output <- plot_average_irfs(
   data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE
+  show_legend = TRUE,
+  show_median = FALSE
 )
 
-avg_irf_output
+# With median 
+avg_irf_output_median <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE,
+  show_median = TRUE
+)
+
+avg_irf_output_median 
+
 ```
 
 ### Price level 
@@ -208,10 +227,21 @@ avg_irf_pricelevel <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE
+  show_legend = TRUE,
+  show_median = FALSE
 )
 
-avg_irf_pricelevel
+avg_irf_pricelevel_median <- plot_average_irfs(
+  data %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE,
+  show_median = TRUE
+)
+
+avg_irf_pricelevel_median
 ```
 
 ### (Un)employment
@@ -226,7 +256,8 @@ avg_irf_unemp <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE
+  show_legend = TRUE,
+  show_median = TRUE
 )
 
 avg_irf_unemp
@@ -243,7 +274,8 @@ avg_irf_emp <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE
+  show_legend = TRUE,
+  show_median = TRUE
 )
 
 avg_irf_emp
@@ -260,7 +292,8 @@ avg_irf_rate <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE
+  show_legend = TRUE,
+  show_median = TRUE
 )
 
 avg_irf_rate
@@ -343,14 +376,13 @@ margin = list(t = 80))
 
 ## Funnel plots
 
-
 ::: {.callout-important}
 ### TO DO: What are the findings with respect to H2?
 :::
 
 ```{r funnel_periods}
 periods <- c(1,6,12,18,24,30,36)
-opacity <- 0.1
+opacity <- 0.08
 ```
 
 ### Standard
@@ -368,14 +400,15 @@ Externally define plotting function for multiple period funnels.
 out_var <- "output"
 
 # For single period plot
-# create_funnel_plot(data %>% filter(outcome == out_var),
-#                        outvar = out_var,
-#                        prd = 3,
-#                        se_option = "avg",
-#                        wins = wins_para,
-#                        opac = 0.1,
-#                        ap = FALSE,
-#                        type = "standard")
+create_funnel_plot(data %>% filter(outcome == out_var),
+                       outvar = out_var,
+                       prd = 3,
+                       color_by_outcome_var = T,
+                       se_option = "avg",
+                       wins = wins_para,
+                       opac = 0.1,
+                       ap = FALSE,
+                       type = "standard")
 
 
 # Create a list of plots
@@ -383,6 +416,8 @@ plot_list <- lapply(periods, function(prd) {
   p <- create_funnel_plot(data %>% filter(outcome == out_var),
                      outvar = out_var,
                      prd = prd,
+                     color_by_outcome_var = T,
+                     legend = FALSE,
                      se_option = "avg",
                      wins = wins_para,
                      opac = 0.05,
@@ -636,6 +671,1308 @@ Maybe add AK style funnel plots.
 
 ### Brodeur density plots
 
+::: {.callout-important}
+#### TO DO 
+
+Discuss: We need to be aware of the potential impact of measurement or approximation errors, as small errors can easily decide between stat. significant and stat. non-significant results (e.g. extracted effect size 1, SE 1.01, but with error 0.01). Keeping in mind that especially our approximation of the CI bounds is very rough.
+
+Discuss: Using SE.upper instead of SE.avg could be quite important!
+
+- Define functions outside of script
+- The option for `counterfact_by_period = TRUE` in the plot function (`create_z_stat_plot()`) doesnt work correctly at the moment. It assigns the wrong df and ncp values to the facet. We use average values instead. This would be nice to have fixed.
+
+:::
+
+
+```{r brodeur_functions}
+# Define the functions for Brodeur 2020 plot 
+
+# Create likelihood for non central t distribution
+log_likelihood_nct <- function(df, ncp, observed_tvalues) {
+  -sum(dt(observed_tvalues, df = df, ncp = ncp, log = TRUE))
+}
+
+# Create function to optimize parameters
+optimize_parameters <- function(observed_tvalues, initial_df = 2, initial_ncp = 1.65) {
+  # Define the log-likelihood function for optimization
+  log_likelihood <- function(df, ncp) {
+    log_likelihood_nct(df, ncp, observed_tvalues)
+  }
+  
+  # Use optimization to estimate the parameters
+  fit <- mle(log_likelihood, start = list(df = initial_df, ncp = initial_ncp))
+  
+  # Extract the estimated parameters
+  df_est <- coef(fit)["df"]
+  ncp_est <- coef(fit)["ncp"]
+  
+  return(list(df = df_est, ncp = ncp_est))
+}
+
+# Estimate parameters of counterfactual non-central t-distribution using all estimates with a z-Value larger than 5 (as in Brodeur 2020).
+fit_all_periods <- function(data, threshold = 5) {
+  results <- data %>%
+    filter(z_stat > threshold) %>%
+    group_by(period.month) %>%
+    summarise(
+      params = list(optimize_parameters(z_stat - threshold)),
+      .groups = 'drop'
+    ) %>%
+    mutate(
+      df = map_dbl(params, "df"),
+      ncp = map_dbl(params, "ncp")
+    )
+  results$df_fit <- data.frame(
+  period.month = sort(unique(data$period.month)),
+  df = results$df
+  )
+  results$ncp_fit <- data.frame(
+  period.month = sort(unique(data$period.month)),
+  ncp = results$ncp
+  )
+  
+  return(results)
+}
+
+# Create Brodeur data preparation function
+brodeur_data_prep <- function (
+    data = data,
+    outvar = out_var,
+    periods = 1:60,
+    se_option = "avg",
+    wins = wins_para,
+    only_negative = TRUE,
+    only_positive = FALSE
+    ) {
+  # Prepare data
+  d_brodeur <- data %>% 
+  filter(outcome == outvar, 
+         period.month %in% periods) %>% 
+  mutate(
+    # Winsorization and SE option
+    mean.effect = JWileymisc::winsorizor(mean.effect, percentile = wins),
+    SE = case_when(
+      se_option == "avg" ~ JWileymisc::winsorizor(SE.avg, percentile = wins),
+      se_option == "upper" ~ JWileymisc::winsorizor(SE.upper, percentile = wins),
+      se_option == "lower" ~ JWileymisc::winsorizor(SE.lower, percentile = wins)
+    ),
+    # Calculate z_stat
+    z_stat = abs(mean.effect / SE)
+    )
+  
+  # Extract only negative effects
+  if (only_negative == TRUE & only_positive == FALSE) {
+    d_brodeur <- d_brodeur %>% 
+    filter(
+      mean.effect <= 0
+    )
+  }
+  # Extract only positive effects
+  if (only_positive == TRUE & only_negative == FALSE) {
+    d_brodeur <- d_brodeur %>% 
+    filter(
+      mean.effect >= 0
+    )
+  }
+  return(d_brodeur)
+}
+
+# Define the plotting function
+create_z_stat_plot <- function(data,
+                               brodeur_results = results,
+                               title = "Density of z-statistic",
+                               counterfact_by_period = TRUE, 
+                               facet_var = NULL,
+                               yupper = 0.6,
+                               nrow = NULL, 
+                               ncol = NULL) {
+  
+  # Define significance levels and their z-values
+  sig_levels <- c(1, 1.645, 1.960, 2.575)  # z-values for different significance levels
+  
+  p <- ggplot(data, aes(x = z_stat)) +
+    geom_density(fill = "blue", alpha = 0.1, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..), 
+                   breaks = c(seq(0,0.99,length.out = 10),
+                              seq(0.99, 1.635, length.out = 6)[-1],
+                              seq(1.635, 1.95, length.out = 3)[-1], 
+                              seq(1.95, 2.565, length.out = 3)[-1],
+                              seq(2.565, 15, 0.1)[-1]), 
+                   alpha = 0.35) +
+    geom_vline(xintercept = sig_levels, linetype = "dotted") +
+    annotate("text", x = sig_levels[1] + (sig_levels[2] - sig_levels[1]) / 2, y = yupper - 0.01, 
+             label = "*", size = 2.5) +
+    annotate("text", x = sig_levels[2] + (sig_levels[3] - sig_levels[2]) / 2, y = yupper - 0.01, 
+             label = "**", size = 2.5) +
+    annotate("text", x = sig_levels[3] + (sig_levels[4] - sig_levels[3]) / 2, y = yupper - 0.01, 
+             label = "***", size = 2.5) +
+    annotate("text", x = sig_levels[4] + 0.5, y = yupper - 0.01, 
+             label = "****", size = 2.5) +
+    labs(title = title, x = "z-statistic (for negative effect sizes)", y = "") +
+    xlim(-0.1, 10) +
+    ylim(0, yupper) +
+    theme_classic()
+  
+  if (counterfact_by_period == TRUE) {
+    # Add t-distribution curves with df & ncp for each period
+    for (period in sort(unique(data$period.month))) {
+      curr_df <- brodeur_results$df_fit$df[brodeur_results$df_fit$period.month == period]
+      curr_ncp <- brodeur_results$ncp_fit$ncp[brodeur_results$ncp_fit$period.month == period]
+
+      p <- p + stat_function(
+        fun = function(x) dt(x, df = curr_df, ncp = curr_ncp),
+        data = data[data$period.month == period, ],
+        color = "red", linetype = "solid", size = 0.5
+      )
+    }
+  } else {
+    # Add counterfactual with mean df & ncp
+    p <- p + stat_function(
+        fun = function(x) dt(x, df = mean(brodeur_results$df_fit$df), ncp = mean(brodeur_results$ncp_fit$ncp)),
+        color = "red", linetype = "solid", size = 0.5
+    )
+  }
+  
+  # Add additional faceting if specified
+  if (!is.null(facet_var)) {
+    p <- p + facet_wrap(as.formula(paste("~", facet_var)), scales = "free", nrow = nrow, ncol = ncol)
+  } else {
+    p <- p + facet_wrap(~ period.month, scales = "free")
+  }
+  
+  return(p)
+}
+
+```
+
+#### Output 
+
+::: {.callout-important collapse="true"}
+##### Output with SE.avg
+
+```{r brodeur_density_plot_output_SEavg}
+library(fitdistrplus)
+library(stats4) 
+
+out_var <- "output"
+
+chosen_periods_brodeur <- c(0:60)
+
+# Data prep
+d_brodeur_neg <- brodeur_data_prep(data,
+                                   outvar = out_var,
+                                   se_option = "avg",
+                                   periods = chosen_periods_brodeur,
+                                   wins = wins_para,
+                                   only_negative = TRUE,
+                                   only_positive = FALSE)
+
+# Fit distribution parameters and extract df & ncp
+results <- fit_all_periods(d_brodeur_neg)
+
+# Define stylized horizons 
+vsr <- 6
+smr <- 18
+mlr <- 36
+horizons <- c(
+  paste0("impact to short run (0m - ", vsr - 1, "m)"),
+  paste0("short run to medium run (", vsr, "m - ", smr, "m)"),
+  paste0("medium run to long run (", smr + 1, "m - ", mlr, "m)"),
+  paste0("long run (", mlr + 1, "m - ", chosen_periods_brodeur[length(chosen_periods_brodeur)], "m)")
+)
+d_brodeur_neg <- d_brodeur_neg %>% 
+  mutate(horizon = case_when(
+    period.month < vsr ~ horizons[1],
+    (period.month >= vsr & period.month <= smr) ~ horizons[2],
+    (period.month > smr & period.month <= mlr) ~ horizons[3],
+    period.month > mlr ~ horizons[4]
+    ),
+    horizon = factor(horizon, levels = horizons)
+  )
+
+# Create density plots
+# At period 3, 12, 24, 26
+(brodeur_dens_3_12_24_36_output_avg <- create_z_stat_plot(d_brodeur_neg %>% filter(period.month %in% c(3, 12, 24, 36)),
+                   brodeur_results = results,
+                   counterfact_by_period = TRUE, 
+                   yupper = 0.8, 
+                   facet_var = "period.month",
+                   title = NULL))
+# At all periods
+(brodeur_dens_all_periods_output_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 0.8, 
+                   facet_var = "period.month",
+                   title = NULL))
+# At horizons
+(brodeur_dens_horizons_output_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 0.8, 
+                   facet_var = "horizon", ncol = 2,
+                   title = NULL))
+# For top tier journals
+d_brodeur_neg$top_5_or_tier <- factor(d_brodeur_neg$top_5_or_tier, levels = c(0, 1), labels = c("other publication", "top journal"))
+d_brodeur_neg %>% # For proportions by period
+  count(period.month, top_5_or_tier) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n))
+top_tier_journal_share_plot <- d_brodeur_neg %>% # Visualization with ggplot2
+  ggplot(aes(x = period.month, fill = top_5_or_tier)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Publication Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_tier_output_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 0.8, 
+                   facet_var = "horizon + top_5_or_tier", ncol = 2,
+                   title = NULL))
+d_brodeur_neg$is_top_5 <- factor(d_brodeur_neg$is_top_5, levels = c(0, 1), labels = c("other journals", "top 5"))
+# For proportions by period
+d_brodeur_neg %>%
+  count(period.month, is_top_5) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n))
+# Visualization with ggplot2
+d_brodeur_neg %>%
+  ggplot(aes(x = period.month, fill = is_top_5)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Journal Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_5_output_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 2.5, 
+                   facet_var = "horizon + is_top_5", ncol = 2,
+                   title = NULL))
+
+```
+
+:::
+
+```{r brodeur_density_plot_output}
+library(fitdistrplus)
+library(stats4) 
+
+out_var <- "output"
+
+chosen_periods_brodeur <- c(0:60)
+
+# Data prep
+d_brodeur_neg <- brodeur_data_prep(data,
+                                   outvar = out_var,
+                                   se_option = "upper",
+                                   periods = chosen_periods_brodeur,
+                                   wins = wins_para,
+                                   only_negative = TRUE,
+                                   only_positive = FALSE)
+
+# Fit distribution parameters and extract df & ncp
+results <- fit_all_periods(d_brodeur_neg)
+
+# Define stylized horizons 
+vsr <- 6
+smr <- 18
+mlr <- 36
+horizons <- c(
+  paste0("impact to short run (0m - ", vsr - 1, "m)"),
+  paste0("short run to medium run (", vsr, "m - ", smr, "m)"),
+  paste0("medium run to long run (", smr + 1, "m - ", mlr, "m)"),
+  paste0("long run (", mlr + 1, "m - ", chosen_periods_brodeur[length(chosen_periods_brodeur)], "m)")
+)
+d_brodeur_neg <- d_brodeur_neg %>% 
+  mutate(horizon = case_when(
+    period.month < vsr ~ horizons[1],
+    (period.month >= vsr & period.month <= smr) ~ horizons[2],
+    (period.month > smr & period.month <= mlr) ~ horizons[3],
+    period.month > mlr ~ horizons[4]
+    ),
+    horizon = factor(horizon, levels = horizons)
+  )
+
+# Create density plots
+# At period 3, 12, 24, 36
+(brodeur_dens_3_12_24_36_output <- create_z_stat_plot(d_brodeur_neg %>% filter(period.month %in% c(3, 12, 24, 36)),
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 0.8, 
+                   facet_var = "period.month",
+                   title = NULL))
+# At all periods
+(brodeur_dens_all_periods_output <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 0.8, 
+                   facet_var = "period.month",
+                   title = NULL))
+# At horizons 
+(brodeur_dens_horizons_output <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 0.8, 
+                   facet_var = "horizon", ncol = 2,
+                   title = NULL))
+# For top tier journals
+d_brodeur_neg$top_5_or_tier <- factor(d_brodeur_neg$top_5_or_tier, levels = c(0, 1), labels = c("other publication", "top journal"))
+d_brodeur_neg %>% # Proportions by period
+  count(period.month, top_5_or_tier) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n))
+top_tier_journal_share_plot <- d_brodeur_neg %>% # Visualization with ggplot2
+  ggplot(aes(x = period.month, fill = top_5_or_tier)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Publication Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_tier_output <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 0.8, 
+                   facet_var = "horizon + top_5_or_tier", ncol = 2,
+                   title = NULL))
+d_brodeur_neg$is_top_5 <- factor(d_brodeur_neg$is_top_5, levels = c(0, 1), labels = c("other journals", "top 5"))
+d_brodeur_neg %>%# For proportions by period
+  count(period.month, is_top_5) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n)) # Visualization with ggplot2
+d_brodeur_neg %>%
+  ggplot(aes(x = period.month, fill = is_top_5)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Journal Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_5_output <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 2.5, 
+                   facet_var = "horizon + is_top_5", ncol = 2,
+                   title = NULL))
+
+
+# Other facets
+# CB
+d_brodeur_neg$cbanker <- factor(d_brodeur_neg$cbanker, levels = c(0, 1), labels = c("non-CB", "CB"))
+(brodeur_dens_cbanker_output <- create_z_stat_plot(d_brodeur_neg,
+                                               brodeur_results = results,
+                                               counterfact_by_period = F, 
+                                               yupper = 0.75,
+                                               ncol = 2,
+                                               facet_var = "horizon + cbanker",
+                                               title = NULL))
+
+# By identification method
+(brodeur_dens_ident_output <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75, 
+                                                       facet_var = "horizon + group_ident_broad",
+                                                       title = NULL))
+# By estimation method
+(brodeur_dens_est_output <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75, 
+                                                       facet_var = "horizon + group_est_broad",
+                                                       title = NULL))
+# Frequentist vs Bayesian
+d_brodeur_neg$bayes <- factor(d_brodeur_neg$bayes, levels = c(0, 1), labels = c("Frequentist", "Bayesian"))
+(brodeur_dens_bayes_output <- create_z_stat_plot(d_brodeur_neg,
+                                                        brodeur_results = results,
+                                                        counterfact_by_period = F, 
+                                                        yupper = 0.75,
+                                                        ncol = 2,
+                                                        facet_var = "horizon + bayes",
+                                                        title = NULL))
+
+# Main research question
+d_brodeur_neg$main_research_q <- factor(d_brodeur_neg$main_research_q, levels = c(0, 1), labels = c("Side result", "Main result"))
+(brodeur_dens_main_research_q_output <- create_z_stat_plot(d_brodeur_neg,
+                                                        brodeur_results = results,
+                                                        counterfact_by_period = F, 
+                                                        yupper = 0.75,
+                                                        ncol = 2,
+                                                        facet_var = "horizon + main_research_q",
+                                                        title = NULL))
+# By publication type 
+(brodeur_dens_type_output <- create_z_stat_plot(d_brodeur_neg,
+                                                   brodeur_results = results,
+                                                   counterfact_by_period = F, 
+                                                   yupper = 0.75,
+                                                   ncol = 8,
+                                                   facet_var = "horizon + type",
+                                                   title = NULL))
+
+# Panel vs non-panel
+d_brodeur_neg$panel <- factor(d_brodeur_neg$panel, levels = c(0, 1), labels = c("non-panel", "panel"))
+(brodeur_dens_panel_output <- create_z_stat_plot(d_brodeur_neg,
+                                                brodeur_results = results,
+                                                counterfact_by_period = F, 
+                                                yupper = 0.75,
+                                                ncol = 2,
+                                                facet_var = "horizon + panel",
+                                                title = NULL))
+
+# By country dev
+(brodeur_dens_country_dev_output <- create_z_stat_plot(d_brodeur_neg,
+                                                brodeur_results = results,
+                                                counterfact_by_period = F, 
+                                                yupper = 0.75,
+                                                ncol = 3,
+                                                facet_var = "horizon + country_dev",
+                                                title = NULL))
+
+# By publication year
+(brodeur_dens_pub_year_output <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75,
+                                                       facet_var = "horizon + pub_year",
+                                                       title = NULL))
+
+# By frequency
+d_brodeur_neg <- d_brodeur_neg %>%
+  mutate(freq = case_when(
+    month == 1 ~ "monthly",
+    quarter == 1 ~ "quarterly",
+    annual == 1 ~ "annual"
+  )) 
+(brodeur_dens_freq_output <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75,
+                                                       ncol = 3,
+                                                       facet_var = "horizon + freq",
+                                                       title = NULL))
+# Which is hacked: effect or SE? 
+# Define the plotting function
+# density_plot_effect <- function(data,
+#                                title = "Density of effect or SE",
+#                                facet_var = NULL,
+#                                yupper = 1,
+#                                nrow = NULL, 
+#                                ncol = NULL) {
+  
+  p <- ggplot(d_brodeur_neg, aes(x = mean.effect)) + # ggplot(data, aes(x = mean.effect)) +
+    geom_density(fill = "blue", alpha = 0.1, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..),
+                   binwidth = 0.1, 
+                   alpha = 0.35) +
+    labs(title = title, x = "Density of negative effect sizes", y = "") +
+    xlim(-2,0) +
+    ylim(0, yupper) +
+    theme_classic()
+  
+  # Add additional faceting if specified
+  if (!is.null(facet_var)) {
+    p <- p + facet_wrap(as.formula(paste("~", facet_var)), scales = "free", nrow = nrow, ncol = ncol)
+  } else {
+    p <- p + facet_wrap(~ period.month, scales = "free")
+  }
+  
+  # return(p)
+# }
+
+p
+# Define the plotting function
+# density_plot_se <- function(data,
+#                                title = "Density of effect or SE",
+#                                facet_var = NULL,
+#                                yupper = 2.5,
+#                                nrow = NULL, 
+#                                ncol = NULL) {
+  
+  p <- ggplot(d_brodeur_neg, aes(x = SE)) + #ggplot(data, aes(x = SE)) +
+    geom_density(fill = "blue", alpha = 0.1, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..),
+                   binwidth = 0.1, 
+                   alpha = 0.35) +
+    labs(title = title, x = "Density of negative effect sizes", y = "") +
+    ylim(0, yupper) +
+    theme_classic()
+  
+  # Add additional faceting if specified
+  if (!is.null(facet_var)) {
+    p <- p + facet_wrap(as.formula(paste("~", facet_var)), scales = "free", nrow = nrow, ncol = ncol)
+  } else {
+    p <- p + facet_wrap(~ period.month, scales = "free")
+  }
+  
+  # return(p)
+# }
+
+p
+```
+
+#### Price level 
+
+
+::: {.callout-important collapse="true"}
+##### Price level with SE.avg
+
+```{r brodeur_density_plot_pricelevel_avg}
+library(fitdistrplus)
+library(stats4) 
+
+out_var <- "inflation"
+
+chosen_periods_brodeur <- c(0:60)
+
+# Data prep
+d_brodeur_neg <- brodeur_data_prep(data,
+                                   outvar = out_var,
+                                   se_option = "avg",
+                                   periods = chosen_periods_brodeur,
+                                   wins = wins_para,
+                                   only_negative = TRUE,
+                                   only_positive = FALSE)
+
+# Fit distribution parameters and extract df & ncp
+results <- fit_all_periods(d_brodeur_neg)
+
+# Define stylized horizons 
+vsr <- 6
+smr <- 18
+mlr <- 36
+horizons <- c(
+  paste0("impact to short run (0m - ", vsr - 1, "m)"),
+  paste0("short run to medium run (", vsr, "m - ", smr, "m)"),
+  paste0("medium run to long run (", smr + 1, "m - ", mlr, "m)"),
+  paste0("long run (", mlr + 1, "m - ", chosen_periods_brodeur[length(chosen_periods_brodeur)], "m)")
+)
+d_brodeur_neg <- d_brodeur_neg %>% 
+  mutate(horizon = case_when(
+    period.month < vsr ~ horizons[1],
+    (period.month >= vsr & period.month <= smr) ~ horizons[2],
+    (period.month > smr & period.month <= mlr) ~ horizons[3],
+    period.month > mlr ~ horizons[4]
+    ),
+    horizon = factor(horizon, levels = horizons)
+  )
+
+# Create density plots
+# At period 3, 12, 24, 26
+(brodeur_dens_3_12_24_36_pricelevel_avg <- create_z_stat_plot(d_brodeur_neg %>% filter(period.month %in% c(3, 12, 24, 36)),
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 0.7, 
+                   facet_var = "period.month",
+                   title = NULL))
+# At all periods
+(brodeur_dens_all_periods_pricelevel_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 1, 
+                   facet_var = "period.month",
+                   title = NULL))
+# At horizons
+(brodeur_dens_horizons_pricelevel_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 0.7, 
+                   facet_var = "horizon", ncol = 2,
+                   title = NULL))
+# For top tier journals
+d_brodeur_neg$top_5_or_tier <- factor(d_brodeur_neg$top_5_or_tier, levels = c(0, 1), labels = c("other journals", "top journals"))
+d_brodeur_neg %>% # For proportions by period
+  count(period.month, top_5_or_tier) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n)) # Visualization with ggplot2
+d_brodeur_neg %>%
+  ggplot(aes(x = period.month, fill = top_5_or_tier)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Journal Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_tier_pricelevel_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 0.7, 
+                   facet_var = "horizon + top_5_or_tier", ncol = 2,
+                   title = NULL))
+d_brodeur_neg$is_top_5 <- factor(d_brodeur_neg$is_top_5, levels = c(0, 1), labels = c("other journals", "top 5"))
+d_brodeur_neg %>% # For proportions by period
+  count(period.month, is_top_5) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n)) # Visualization with ggplot2
+d_brodeur_neg %>%
+  ggplot(aes(x = period.month, fill = is_top_5)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Journal Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_5_pricelevel_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 2.5, 
+                   facet_var = "horizon + is_top_5", ncol = 2,
+                   title = NULL))
+```
+
+:::
+
+```{r brodeur_density_plot_pricelevel}
+library(fitdistrplus)
+library(stats4) 
+
+out_var <- "inflation"
+
+chosen_periods_brodeur <- c(0:60)
+
+# Data prep
+d_brodeur_neg <- brodeur_data_prep(data,
+                                   outvar = out_var,
+                                   se_option = "upper",
+                                   periods = chosen_periods_brodeur,
+                                   wins = wins_para,
+                                   only_negative = TRUE,
+                                   only_positive = FALSE)
+
+# Fit distribution parameters and extract df & ncp
+results <- fit_all_periods(d_brodeur_neg)
+
+# Define stylized horizons 
+vsr <- 6
+smr <- 18
+mlr <- 36
+horizons <- c(
+  paste0("impact to short run (0m - ", vsr - 1, "m)"),
+  paste0("short run to medium run (", vsr, "m - ", smr, "m)"),
+  paste0("medium run to long run (", smr + 1, "m - ", mlr, "m)"),
+  paste0("long run (", mlr + 1, "m - ", chosen_periods_brodeur[length(chosen_periods_brodeur)], "m)")
+)
+d_brodeur_neg <- d_brodeur_neg %>% 
+  mutate(horizon = case_when(
+    period.month < vsr ~ horizons[1],
+    (period.month >= vsr & period.month <= smr) ~ horizons[2],
+    (period.month > smr & period.month <= mlr) ~ horizons[3],
+    period.month > mlr ~ horizons[4]
+    ),
+    horizon = factor(horizon, levels = horizons)
+  )
+
+# Create density plots
+# At period 3, 12, 24, 26
+(brodeur_dens_3_12_24_36_pricelevel <- create_z_stat_plot(d_brodeur_neg %>% filter(period.month %in% c(3, 12, 24, 36)),
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 0.7, 
+                   facet_var = "period.month",
+                   title = NULL))
+# At all periods
+(brodeur_dens_all_periods_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 1, 
+                   facet_var = "period.month",
+                   title = NULL))
+# At horizons
+(brodeur_dens_horizons_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 0.7, 
+                   facet_var = "horizon", ncol = 2,
+                   title = NULL))
+# For top tier journals
+d_brodeur_neg$top_5_or_tier <- factor(d_brodeur_neg$top_5_or_tier, levels = c(0, 1), labels = c("other journals", "top journals"))
+d_brodeur_neg %>% # For proportions by period
+  count(period.month, top_5_or_tier) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n)) # Visualization with ggplot2
+d_brodeur_neg %>%
+  ggplot(aes(x = period.month, fill = top_5_or_tier)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Journal Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_tier_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 0.7, 
+                   facet_var = "horizon + top_5_or_tier", ncol = 2,
+                   title = NULL))
+d_brodeur_neg$is_top_5 <- factor(d_brodeur_neg$is_top_5, levels = c(0, 1), labels = c("other journals", "top 5"))
+d_brodeur_neg %>% # For proportions by period
+  count(period.month, is_top_5) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n)) # Visualization with ggplot2
+d_brodeur_neg %>%
+  ggplot(aes(x = period.month, fill = is_top_5)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Journal Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_5_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 2.5, 
+                   facet_var = "horizon + is_top_5", ncol = 2,
+                   title = NULL))
+
+# Other facets
+d_brodeur_neg$cbanker <- factor(d_brodeur_neg$cbanker, levels = c(0, 1), labels = c("non-CB", "CB"))
+(brodeur_dens_cbanker_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                                               brodeur_results = results,
+                                               counterfact_by_period = F, 
+                                               yupper = 0.75,
+                                               ncol = 2,
+                                               facet_var = "horizon + cbanker",
+                                               title = NULL))
+
+# By identification method
+(brodeur_dens_ident_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75, 
+                                                       facet_var = "horizon + group_ident_broad",
+                                                       title = NULL))
+# By estimation method
+(brodeur_dens_est_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75, 
+                                                       facet_var = "horizon + group_est_broad",
+                                                       title = NULL))
+# Frequentist vs Bayesian
+d_brodeur_neg$bayes <- factor(d_brodeur_neg$bayes, levels = c(0, 1), labels = c("Frequentist", "Bayesian"))
+(brodeur_dens_bayes_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                                                        brodeur_results = results,
+                                                        counterfact_by_period = F, 
+                                                        yupper = 0.75,
+                                                        ncol = 2,
+                                                        facet_var = "horizon + bayes",
+                                                        title = NULL))
+
+# Main research question
+d_brodeur_neg$main_research_q <- factor(d_brodeur_neg$main_research_q, levels = c(0, 1), labels = c("Side result", "Main result"))
+(brodeur_dens_main_research_q_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                                                        brodeur_results = results,
+                                                        counterfact_by_period = F, 
+                                                        yupper = 0.75,
+                                                        ncol = 2,
+                                                        facet_var = "horizon + main_research_q",
+                                                        title = NULL))
+# By publication type 
+(brodeur_dens_type_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                                                   brodeur_results = results,
+                                                   counterfact_by_period = F, 
+                                                   yupper = 0.75,
+                                                   ncol = 8,
+                                                   facet_var = "horizon + type",
+                                                   title = NULL))
+
+# Panel vs non-panel
+d_brodeur_neg$panel <- factor(d_brodeur_neg$panel, levels = c(0, 1), labels = c("non-panel", "panel"))
+(brodeur_dens_panel_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                                                brodeur_results = results,
+                                                counterfact_by_period = F, 
+                                                yupper = 0.75,
+                                                ncol = 2,
+                                                facet_var = "horizon + panel",
+                                                title = NULL))
+
+# By country dev
+(brodeur_dens_country_dev_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                                                brodeur_results = results,
+                                                counterfact_by_period = F, 
+                                                yupper = 0.75,
+                                                ncol = 3,
+                                                facet_var = "horizon + country_dev",
+                                                title = NULL))
+
+# By publication year
+(brodeur_dens_pub_year_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75,
+                                                       facet_var = "horizon + pub_year",
+                                                       title = NULL))
+
+# By frequency
+d_brodeur_neg <- d_brodeur_neg %>%
+  mutate(freq = case_when(
+    month == 1 ~ "monthly",
+    quarter == 1 ~ "quarterly",
+    annual == 1 ~ "annual"
+  )) 
+(brodeur_dens_freq_pricelevel <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75,
+                                                       ncol = 3,
+                                                       facet_var = "horizon + freq",
+                                                       title = NULL))
+# Which is hacked: effect or SE? 
+# Define the plotting function
+# density_plot_effect <- function(data,
+#                                title = "Density of effect or SE",
+#                                facet_var = NULL,
+#                                yupper = 1,
+#                                nrow = NULL, 
+#                                ncol = NULL) {
+  
+  p <- ggplot(d_brodeur_neg, aes(x = mean.effect)) + # ggplot(data, aes(x = mean.effect)) +
+    geom_density(fill = "blue", alpha = 0.1, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..),
+                   binwidth = 0.1, 
+                   alpha = 0.35) +
+    labs(title = title, x = "Density of negative effect sizes", y = "") +
+    ylim(0, yupper) +
+    theme_classic()
+  
+  # Add additional faceting if specified
+  if (!is.null(facet_var)) {
+    p <- p + facet_wrap(as.formula(paste("~", facet_var)), scales = "free", nrow = nrow, ncol = ncol)
+  } else {
+    p <- p + facet_wrap(~ period.month, scales = "free")
+  }
+  
+  # return(p)
+# }
+
+p
+# Define the plotting function
+# density_plot_se <- function(data,
+#                                title = "Density of effect or SE",
+#                                facet_var = NULL,
+#                                yupper = 2.5,
+#                                nrow = NULL, 
+#                                ncol = NULL) {
+  
+  p <- ggplot(d_brodeur_neg, aes(x = SE)) + # ggplot(data, aes(x = SE)) +
+    geom_density(fill = "blue", alpha = 0.1, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..),
+                   binwidth = 0.1, 
+                   alpha = 0.35) +
+    labs(title = title, x = "Density of negative effect sizes", y = "") +
+    ylim(0, yupper) +
+    theme_classic()
+  
+  # Add additional faceting if specified
+  if (!is.null(facet_var)) {
+    p <- p + facet_wrap(as.formula(paste("~", facet_var)), scales = "free", nrow = nrow, ncol = ncol)
+  } else {
+    p <- p + facet_wrap(~ period.month, scales = "free")
+  }
+  
+  # return(p)
+# }
+
+p
+
+```
+
+
+#### Interest rate
+
+::: {.callout-warning}
+##### TO DO:
+
+- `chosen_periods_brodeur <- c(0:48)` # > 48 fails for some periods. Unclear why.
+
+:::
+
+::: {.callout-important collapse="true"}
+##### Interest rate with SE.avg
+
+```{r brodeur_density_plot_rate}
+library(fitdistrplus)
+library(stats4) 
+
+out_var <- "rate"
+
+chosen_periods_brodeur <- c(0:48) # > 48 fails for some periods. Unclear why.
+
+# Data prep
+d_brodeur_neg <- brodeur_data_prep(data,
+                                   outvar = out_var,
+                                   se_option = "avg",
+                                   periods = chosen_periods_brodeur,
+                                   wins = wins_para,
+                                   only_negative = FALSE,
+                                   only_positive = FALSE)
+
+# Fit distribution parameters and extract df & ncp
+results <- fit_all_periods(d_brodeur_neg)
+
+# Define stylized horizons 
+vsr <- 6
+smr <- 18
+mlr <- 36
+horizons <- c(
+  paste0("impact to short run (0m - ", vsr - 1, "m)"),
+  paste0("short run to medium run (", vsr, "m - ", smr, "m)"),
+  paste0("medium run to long run (", smr + 1, "m - ", mlr, "m)"),
+  paste0("long run (", mlr + 1, "m - ", chosen_periods_brodeur[length(chosen_periods_brodeur)], "m)")
+)
+d_brodeur_neg <- d_brodeur_neg %>% 
+  mutate(horizon = case_when(
+    period.month < vsr ~ horizons[1],
+    (period.month >= vsr & period.month <= smr) ~ horizons[2],
+    (period.month > smr & period.month <= mlr) ~ horizons[3],
+    period.month > mlr ~ horizons[4]
+    ),
+    horizon = factor(horizon, levels = horizons)
+  )
+
+# Create density plots
+# At period 3, 12, 24, 26
+(brodeur_dens_3_12_24_36_rate_avg <- create_z_stat_plot(d_brodeur_neg %>% filter(period.month %in% c(3, 12, 24, 36)),
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 1.5, 
+                   facet_var = "period.month",
+                   title = NULL)) + 
+  labs(x = "z-statistic")
+# At all periods
+(brodeur_dens_all_periods_rate_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 1.5, 
+                   facet_var = "period.month",
+                   title = NULL)) + 
+  labs(x = "z-statistic")
+# At horizons
+(brodeur_dens_horizons_rate_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 1.5, 
+                   facet_var = "horizon", ncol = 2,
+                   title = NULL)) + 
+  labs(x = "z-statistic")
+# For top tier journals
+d_brodeur_neg$top_5_or_tier <- factor(d_brodeur_neg$top_5_or_tier, levels = c(0, 1), labels = c("other journals", "top journals"))
+# For proportions by period
+d_brodeur_neg %>%
+  count(period.month, top_5_or_tier) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n))
+# Visualization with ggplot2
+d_brodeur_neg %>%
+  ggplot(aes(x = period.month, fill = top_5_or_tier)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Journal Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_tier_rate_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 1.5, 
+                   facet_var = "horizon + top_5_or_tier", ncol = 2,
+                   title = NULL)) + 
+  labs(x = "z-statistic")
+d_brodeur_neg$is_top_5 <- factor(d_brodeur_neg$is_top_5, levels = c(0, 1), labels = c("other journals", "top 5"))
+# For proportions by period
+d_brodeur_neg %>%
+  count(period.month, is_top_5) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n))
+# Visualization with ggplot2
+d_brodeur_neg %>%
+  ggplot(aes(x = period.month, fill = is_top_5)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Journal Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_5_rate_avg <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 2.5, 
+                   facet_var = "horizon + is_top_5", ncol = 2,
+                   title = NULL)) + 
+  labs(x = "z-statistic")
+```
+
+:::
+
+```{r brodeur_density_plot_rate}
+library(fitdistrplus)
+library(stats4) 
+
+out_var <- "rate"
+
+chosen_periods_brodeur <- c(0:48) # > 48 fails, unclear why
+
+# Data prep
+d_brodeur_neg <- brodeur_data_prep(data,
+                                   outvar = out_var,
+                                   se_option = "lower",
+                                   periods = chosen_periods_brodeur,
+                                   wins = wins_para,
+                                   only_negative = FALSE,
+                                   only_positive = FALSE)
+
+# Fit distribution parameters and extract df & ncp
+results <- fit_all_periods(d_brodeur_neg)
+
+# Define stylized horizons 
+vsr <- 6
+smr <- 18
+mlr <- 36
+horizons <- c(
+  paste0("impact to short run (0m - ", vsr - 1, "m)"),
+  paste0("short run to medium run (", vsr, "m - ", smr, "m)"),
+  paste0("medium run to long run (", smr + 1, "m - ", mlr, "m)"),
+  paste0("long run (", mlr + 1, "m - ", chosen_periods_brodeur[length(chosen_periods_brodeur)], "m)")
+)
+d_brodeur_neg <- d_brodeur_neg %>% 
+  mutate(horizon = case_when(
+    period.month < vsr ~ horizons[1],
+    (period.month >= vsr & period.month <= smr) ~ horizons[2],
+    (period.month > smr & period.month <= mlr) ~ horizons[3],
+    period.month > mlr ~ horizons[4]
+    ),
+    horizon = factor(horizon, levels = horizons)
+  )
+
+# Create density plots
+# At period 3, 12, 24, 26
+(brodeur_dens_3_12_24_36_rate <- create_z_stat_plot(d_brodeur_neg %>% filter(period.month %in% c(3, 12, 24, 36)),
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 1.5, 
+                   facet_var = "period.month",
+                   title = NULL)) + 
+  labs(x = "z-statistic")
+# At all periods
+(brodeur_dens_all_periods_rate <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 1.5, 
+                   facet_var = "period.month",
+                   title = NULL)) + 
+  labs(x = "z-statistic")
+# At horizons
+(brodeur_dens_horizons_rate <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results,
+                   counterfact_by_period = F, 
+                   yupper = 1.5, 
+                   facet_var = "horizon", ncol = 2,
+                   title = NULL)) + 
+  labs(x = "z-statistic")
+# For top tier journals
+d_brodeur_neg$top_5_or_tier <- factor(d_brodeur_neg$top_5_or_tier, levels = c(0, 1), labels = c("other journals", "top journals"))
+# For proportions by period
+d_brodeur_neg %>%
+  count(period.month, top_5_or_tier) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n))
+# Visualization with ggplot2
+d_brodeur_neg %>%
+  ggplot(aes(x = period.month, fill = top_5_or_tier)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Journal Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_tier_rate <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 1.5, 
+                   facet_var = "horizon + top_5_or_tier", ncol = 2,
+                   title = NULL)) + 
+  labs(x = "z-statistic")
+d_brodeur_neg$is_top_5 <- factor(d_brodeur_neg$is_top_5, levels = c(0, 1), labels = c("other journals", "top 5"))
+# For proportions by period
+d_brodeur_neg %>%
+  count(period.month, is_top_5) %>%
+  group_by(period.month) %>%
+  mutate(proportion = n / sum(n))
+# Visualization with ggplot2
+d_brodeur_neg %>%
+  ggplot(aes(x = period.month, fill = is_top_5)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Distribution of Journals by Period",
+       x = "Period",
+       y = "Count",
+       fill = "Journal Type") +
+  theme_minimal()
+(brodeur_dens_horizons_top_5_rate <- create_z_stat_plot(d_brodeur_neg,
+                   brodeur_results = results, 
+                   counterfact_by_period = F, 
+                   yupper = 2.5, 
+                   facet_var = "horizon + is_top_5", ncol = 2,
+                   title = NULL)) + 
+  labs(x = "z-statistic")
+
+
+# Other facets
+d_brodeur_neg$cbanker <- factor(d_brodeur_neg$cbanker, levels = c(0, 1), labels = c("non-CB", "CB"))
+(brodeur_dens_cbanker_rate <- create_z_stat_plot(d_brodeur_neg,
+                                               brodeur_results = results,
+                                               counterfact_by_period = F, 
+                                               yupper = 0.75,
+                                               ncol = 2,
+                                               facet_var = "horizon + cbanker",
+                                               title = NULL))
+
+# By identification method
+(brodeur_dens_ident_rate <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75, 
+                                                       facet_var = "horizon + group_ident_broad",
+                                                       title = NULL))
+# By estimation method
+(brodeur_dens_est_rate <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75, 
+                                                       facet_var = "horizon + group_est_broad",
+                                                       title = NULL))
+# Frequentist vs Bayesian
+d_brodeur_neg$bayes <- factor(d_brodeur_neg$bayes, levels = c(0, 1), labels = c("Frequentist", "Bayesian"))
+(brodeur_dens_bayes_rate <- create_z_stat_plot(d_brodeur_neg,
+                                                        brodeur_results = results,
+                                                        counterfact_by_period = F, 
+                                                        yupper = 0.75,
+                                                        ncol = 2,
+                                                        facet_var = "horizon + bayes",
+                                                        title = NULL))
+
+# Main research question
+d_brodeur_neg$main_research_q <- factor(d_brodeur_neg$main_research_q, levels = c(0, 1), labels = c("Side result", "Main result"))
+(brodeur_dens_main_research_q_rate <- create_z_stat_plot(d_brodeur_neg,
+                                                        brodeur_results = results,
+                                                        counterfact_by_period = F, 
+                                                        yupper = 0.75,
+                                                        ncol = 2,
+                                                        facet_var = "horizon + main_research_q",
+                                                        title = NULL))
+# By publication type 
+(brodeur_dens_type_rate <- create_z_stat_plot(d_brodeur_neg,
+                                                   brodeur_results = results,
+                                                   counterfact_by_period = F, 
+                                                   yupper = 0.75,
+                                                   ncol = 8,
+                                                   facet_var = "horizon + type",
+                                                   title = NULL))
+
+# Panel vs non-panel
+d_brodeur_neg$panel <- factor(d_brodeur_neg$panel, levels = c(0, 1), labels = c("non-panel", "panel"))
+(brodeur_dens_panel_rate <- create_z_stat_plot(d_brodeur_neg,
+                                                brodeur_results = results,
+                                                counterfact_by_period = F, 
+                                                yupper = 0.75,
+                                                ncol = 2,
+                                                facet_var = "horizon + panel",
+                                                title = NULL))
+
+# By country dev
+(brodeur_dens_country_dev_rate <- create_z_stat_plot(d_brodeur_neg,
+                                                brodeur_results = results,
+                                                counterfact_by_period = F, 
+                                                yupper = 0.75,
+                                                ncol = 3,
+                                                facet_var = "horizon + country_dev",
+                                                title = NULL))
+
+# By publication year
+(brodeur_dens_pub_year_rate <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75,
+                                                       facet_var = "horizon + pub_year",
+                                                       title = NULL))
+
+# By frequency
+d_brodeur_neg <- d_brodeur_neg %>%
+  mutate(freq = case_when(
+    month == 1 ~ "monthly",
+    quarter == 1 ~ "quarterly",
+    annual == 1 ~ "annual"
+  )) 
+(brodeur_dens_freq_rate <- create_z_stat_plot(d_brodeur_neg,
+                                                       brodeur_results = results,
+                                                       counterfact_by_period = F, 
+                                                       yupper = 0.75,
+                                                       ncol = 3,
+                                                       facet_var = "horizon + freq",
+                                                       title = NULL))
+# Which is hacked: effect or SE? 
+# Define the plotting function
+# density_plot_effect <- function(data,
+#                                title = "Density of effect or SE",
+#                                facet_var = NULL,
+#                                yupper = 1,
+#                                nrow = NULL, 
+#                                ncol = NULL) {
+  
+  p <- ggplot(d_brodeur_neg, aes(x = mean.effect)) + # ggplot(data, aes(x = mean.effect)) +
+    geom_density(fill = "blue", alpha = 0.1, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..),
+                   binwidth = 0.1, 
+                   alpha = 0.35) +
+    labs(title = title, x = "Density of negative effect sizes", y = "") +
+    ylim(0, yupper) +
+    theme_classic()
+  
+  # Add additional faceting if specified
+  if (!is.null(facet_var)) {
+    p <- p + facet_wrap(as.formula(paste("~", facet_var)), scales = "free", nrow = nrow, ncol = ncol)
+  } else {
+    p <- p + facet_wrap(~ period.month, scales = "free")
+  }
+  
+  # return(p)
+# }
+
+p
+# Define the plotting function
+# density_plot_se <- function(data,
+#                                title = "Density of effect or SE",
+#                                facet_var = NULL,
+#                                yupper = 2.5,
+#                                nrow = NULL, 
+#                                ncol = NULL) {
+  
+  p <- ggplot(d_brodeur_neg, aes(x = SE)) + # ggplot(data, aes(x = SE)) +
+    geom_density(fill = "blue", alpha = 0.1, adjust = 0.7) +
+    geom_histogram(aes(y = ..density..),
+                   binwidth = 0.1, 
+                   alpha = 0.35) +
+    labs(title = title, x = "Density of negative effect sizes", y = "") +
+    ylim(0, yupper) +
+    theme_classic()
+  
+  # Add additional faceting if specified
+  if (!is.null(facet_var)) {
+    p <- p + facet_wrap(as.formula(paste("~", facet_var)), scales = "free", nrow = nrow, ncol = ncol)
+  } else {
+    p <- p + facet_wrap(~ period.month, scales = "free")
+  }
+  
+  # return(p)
+# }
+
+p
+```
+
+
 ### AK density plots
 
 ## Simple p-bias estimations & IRF corrections
@@ -800,7 +2137,8 @@ output_ak <- meta_analysis(data,
                           cutoff_val=1, # 68 % level as cutoff
                           AK_modelmu = "t",
                           AK_symmetric = FALSE,
-                          AK_conf_level = conflevel
+                          AK_conf_level = conflevel,
+                          ak_plot = "pub_prob_only"
                           )
 
 # Create html table
@@ -829,6 +2167,7 @@ modelsummary::modelplot(output_ak,
               background = b)
 
 ```
+
 
 #### IRF correction
 
@@ -1043,7 +2382,8 @@ pricelevel_ak <- meta_analysis(data,
                           cutoff_val = 1, # 68 % level as cutoff
                           AK_modelmu = "t",
                           AK_symmetric = FALSE,
-                          AK_conf_level = conflevel
+                          AK_conf_level = conflevel,
+                          ak_plot = "pub_prob_only"
                           )
 
 # Create html table
@@ -1454,8 +2794,409 @@ margin = list(t = 80))
 
 :::
 
+## FLAGSHIP PAPER - Identification and estimation approaches
 
-## Baseline PEESE regression with moderators for `group_ident_broad`, `top_5_or_tier` and `cbanker`
+::: {.callout-note}
+
+This specification is motivated by our hypotheses about identification and estimation procedures (H7/H8) and certain publication characteristics, like journal impact factors (H2) and central bank affiliation (H9).
+
+We focus on the relevance of different identification and estimation approaches. In particular, we consolidate our models into more parsimonious identification and estimation categories based on our raw coding to enlarge the sample size for each identification or estimation category.
+
+Furthermore, we also control for selected other influences, especially publication characteristics like `top_5_or_tier` and `cbanker` and the specific variable used to measure the outcome variable (`outcome_measure`) and also for Bayesian and frequentist estimation (`bayes`). 
+
+The data used excludes studies with `quality_concern`s and is winsorized at the `{r} wins_para * 100` % level. We use a PEESE specification.
+
+:::
+
+::: {.callout-important}
+#### TO DO: Creation of `group_est_broad` in `data_prep.R`
+
+The creation of `group_est_broad` should be done in the `data_prep.R` file analogous to the identification categories.
+```{r}
+#| code-fold: true
+
+# Consolidate estimation methods
+data <- data %>%
+  mutate(group_est_broad = case_when(
+    # Group 1: var, standard VAR
+    (var == 1 & lp == 0 & vecm == 0 & dyn_ols == 0 & fvar == 0 & tvar == 0 & gvar == 0 & dsge == 0 & varother == 0) ~ "standard_var",
+    
+    # Group 2: lp_ardl
+    ((lp == 1 | dyn_ols == 1) & fvar == 0) ~ "lp_ardl",
+    
+    # Group 3: favar
+    (fvar == 1) ~ "favar",
+    
+    # Group 4: other_var
+    ((varother == 1 | tvar == 1 | gvar == 1 | vecm == 1) & lp == 0 & dyn_ols == 0 & fvar == 0 & dsge == 0) ~ "other_var",
+    
+    # Group 5: dsge
+    (dsge == 1) ~ "dsge",
+    
+    # Default case
+    TRUE ~ "Other"
+
+))
+
+# Transform into factor and make "standard_var" the reference 
+data$group_est_broad <- factor(data$group_est_broad, 
+                               levels = c("standard_var", 
+                                          "lp_ardl", 
+                                          "favar", 
+                                          "other_var", 
+                                          "dsge"))
+levels(data$group_est_broad)
+
+```
+::: 
+
+### Output
+
+::: {.callout-note}
+##### WP 1 Baseline: identification methods + top journals + CB related
+
+```{r peese_output_ident_consolidated}
+
+out_var <- "output"
+
+# Periods for FMM conference
+chosen_periods_fmm <- c(3, 
+                        6, 
+                        9,
+                        12, 
+                        15,
+                        18, 
+                        21,
+                        24, 
+                        30,
+                        36, 
+                        48,
+                        60)
+
+output_wp1_baseline <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          # periods = chosen_periods,
+                          periods = chosen_periods_fmm,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = "PEESE", 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "top_5_or_tier",
+                                   "cbanker"))
+
+coef_names_baseline <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'group_ident_broadhf' = 'High frequency', 
+  'group_ident_broadnr' = 'Narrative',
+  'group_ident_broadsignr' = 'Sign restrictions',
+  'group_ident_broadidother' = 'Other identificiation ',
+  'top_5_or_tier' = 'Top tier publication',
+  'cbanker' = 'Central bank related')
+
+# Create html output
+modelsummary::modelsummary(output_wp1_baseline, 
+                           output = "gt", stars = TRUE, conf_level = conflevel, title = paste0("PEESE ",out_var), gof_map = NULL, coef_map = coef_names_baseline)
+
+# For FMM presentation
+modelsummary::modelsummary(output_wp1_baseline, 
+                           output = "outputs_for_working_papers/wp1/discuss/baseline_meta_reg_output.png",
+                           stars = TRUE, 
+                           fmt = 2,
+                           statistic = NULL,
+                           conf_level = conflevel, 
+                           gof_map = "nobs", 
+                           coef_map = coef_names_baseline)
+
+```
+:::
+
+
+::: {.callout-note}
+##### WP 1 Robustness: + estimation methods & outcome_measure
+
+```{r peese_output_ident_est_consolidated}
+
+# Create consolidated `outcome_measure_output_cons` for output, transform into factor and make "gdp" (now including "gnp") the reference (only a very small number of observations uses "gnp")
+data <- data %>%
+  mutate(outcome_measure_output_cons = case_when(
+    outcome == "output" & outcome_measure == "gnp" ~ "gdp",
+    outcome == "output" ~ outcome_measure,
+    TRUE ~ NA_character_  # For non-output rows
+  )) %>%
+  mutate(outcome_measure_output_cons = factor(outcome_measure_output_cons, 
+                                       levels = c("gdp", "ip", "gap")))
+
+output_wp1_baseline_robustness <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          # periods = chosen_periods,
+                          periods = chosen_periods_fmm,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = "PEESE", 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "group_est_broad",
+                                   "outcome_measure_output_cons",
+                                   "top_5_or_tier",
+                                   "cbanker"))
+
+coef_names_baseline <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'group_ident_broadhf' = 'High frequency', 
+  'group_ident_broadnr' = 'Narrative',
+  'group_ident_broadsignr' = 'Sign restrictions',
+  'group_ident_broadidother' = 'Other identificiation ',
+  'top_5_or_tier' = 'Top tier publication',
+  'cbanker' = 'Central bank related',
+  'group_est_broadlp_ardl' = 'LP and ARDL',
+  'group_est_broadfavar' = 'FAVAR', 
+  'group_est_broadother_var' = 'Other VAR',
+  'group_est_broaddsge' = 'DSGE',
+  'outcome_measure_output_consgap' = 'Output gap',
+  'outcome_measure_output_consip' = 'IP')
+
+# Create html output
+modelsummary::modelsummary(output_wp1_baseline_robustness, 
+                           output = "gt", stars = TRUE, conf_level = conflevel, title = paste0("PEESE ",out_var), gof_map = NULL, coef_map = coef_names_baseline)
+
+# For FMM presentation
+modelsummary::modelsummary(output_wp1_baseline_robustness, 
+                           output = "outputs_for_working_papers/wp1/discuss/robustness_meta_reg_output.png",
+                           stars = TRUE, 
+                           fmt = 2,
+                           statistic = NULL,
+                           conf_level = conflevel, 
+                           gof_map = "nobs", 
+                           coef_map = coef_names_baseline)
+
+```
+:::
+
+### Price level
+
+::: {.callout-note}
+##### WP 1 Baseline: identification methods + top journals + CB related
+
+```{r peese_pricelevel_ident_consolidated}
+
+out_var <- "inflation"
+
+# Periods for FMM conference
+chosen_periods_fmm <- c(3, 
+                        6, 
+                        12, 
+                        18, 
+                        24, 
+                        30,
+                        36,
+                        42,
+                        48,
+                        54,
+                        60)
+
+pricelevel_wp1_baseline <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          # periods = chosen_periods,
+                          periods = chosen_periods_fmm,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = "PEESE", 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "top_5_or_tier",
+                                   "cbanker"))
+
+coef_names_baseline <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'group_ident_broadhf' = 'High frequency', 
+  'group_ident_broadnr' = 'Narrative',
+  'group_ident_broadsignr' = 'Sign restrictions',
+  'group_ident_broadidother' = 'Other identificiation ',
+  'top_5_or_tier' = 'Top tier publication',
+  'cbanker' = 'Central bank related')
+
+# Create html output
+modelsummary::modelsummary(pricelevel_wp1_baseline, 
+                           output = "gt", stars = TRUE, conf_level = conflevel, title = paste0("PEESE ",out_var), gof_map = NULL, coef_map = coef_names_baseline)
+
+# For FMM presentation
+modelsummary::modelsummary(pricelevel_wp1_baseline, 
+                           output = "outputs_for_working_papers/wp1/discuss/baseline_meta_reg_pricelevel.png",
+                           stars = TRUE, 
+                           fmt = 2,
+                           statistic = NULL,
+                           conf_level = conflevel, 
+                           gof_map = "nobs", 
+                           coef_map = coef_names_baseline)
+
+```
+
+::: 
+
+::: {.callout-note}
+##### WP 1 Robustness: + estimation methods & outcome_measure
+
+##### TO DO: 
+
+```{r peese_pricelevel_ident_est_consolidated}
+# Transform `outcome_measure_pricelevel` into factor and make "cpi" the reference
+data <- data %>%
+  mutate(outcome_measure_pricelevel = case_when(
+    outcome == "inflation" ~ outcome_measure,
+    TRUE ~ NA_character_  # For non-pricelevel rows
+  )) %>% 
+  mutate(outcome_measure_pricelevel = factor(outcome_measure_pricelevel, 
+                                       levels = c("cpi", "deflator", "wpi", "core")))
+             
+pricelevel_wp1_baseline_robustness <- meta_analysis(data, 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          # periods = chosen_periods,
+                          periods = chosen_periods_fmm,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = "PEESE", 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "group_est_broad",
+                                   "bayes",
+                                   "outcome_measure_pricelevel",
+                                   "top_5_or_tier",
+                                   "cbanker"))
+
+coef_names_baseline <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'group_ident_broadhf' = 'High frequency', 
+  'group_ident_broadnr' = 'Narrative',
+  'group_ident_broadsignr' = 'Sign restrictions',
+  'group_ident_broadidother' = 'Other identificiation ',
+  'top_5_or_tier' = 'Top tier publication',
+  'cbanker' = 'Central bank related',
+  'group_est_broadlp_ardl' = 'LP and ARDL',
+  'group_est_broadfavar' = 'FAVAR', 
+  'group_est_broadother_var' = 'Other VAR',
+  'group_est_broaddsge' = 'DSGE',
+  'bayes' = 'Bayesian',
+  'outcome_measure_pricelevelcore' = 'Core',
+  'outcome_measure_priceleveldeflator' = 'Deflator',
+  'outcome_measure_pricelevelwpi' = 'WPI')
+
+# Create html output
+modelsummary::modelsummary(pricelevel_wp1_baseline_robustness, 
+                           output = "gt", stars = TRUE, conf_level = conflevel, title = paste0("PEESE ",out_var), gof_map = NULL, coef_map = coef_names_baseline)
+
+# For FMM presentation
+modelsummary::modelsummary(pricelevel_wp1_baseline_robustness, 
+                           output = "outputs_for_working_papers/wp1/discuss/robustness_meta_reg_pricelevel.tex",
+                           stars = TRUE, 
+                           fmt = 2,
+                           statistic = NULL,
+                           conf_level = conflevel, 
+                           gof_map = "nobs", 
+                           coef_map = coef_names_baseline)
+```
+:::
+
+
+### Unemployment
+
+```{r peese_unemp_ident_est_consolidated}
+
+out_var <- "unemp"
+
+unemp_baseline <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = "PEESE", 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "group_est_broad",
+                                   "bayes",
+                                   # "outcome_measure", # Always une_rate
+                                   "top_5_or_tier",
+                                   "cbanker"))
+
+coef_names_baseline <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'group_ident_broadhf' = 'High frequency', 
+  'group_ident_broadnr' = 'Narrative',
+  'group_ident_broadsignr' = 'Sign restrictions',
+  'group_ident_broadidother' = 'Other identificiation ',
+  'group_est_broadlp_ardl' = 'LP and ARDL',
+  'group_est_broadfavar' = 'FAVAR', 
+  'group_est_broadother_var' = 'Other VAR',
+  'group_est_broaddsge' = 'DSGE',
+  'bayes' = 'Bayesian',
+  'top_5_or_tier' = 'Top tier publication',
+  'cbanker' = 'Central bank related')
+
+# Create html output
+modelsummary::modelsummary(unemp_baseline, 
+                           output = "gt", stars = TRUE, conf_level = conflevel, title = paste0("PEESE ",out_var), gof_map = NULL, coef_map = coef_names_baseline)
+
+```
+
+
+### Employment
+
+```{r peese_emp_ident_est_consolidated}
+
+out_var <- "emp"
+
+emp_baseline <- meta_analysis(data , 
+                          outvar = out_var, 
+                          se_option = "avg", 
+                          periods = chosen_periods,
+                          wins = wins_para, 
+                          prec_weighted = TRUE, 
+                          estimation = "PEESE", 
+                          cluster_se = TRUE, 
+                          mods = c("group_ident_broad",
+                                   "group_est_broad",
+                                   "bayes",
+                                   "outcome_measure",
+                                   "top_5_or_tier",
+                                   "cbanker"))
+
+coef_names_baseline <- c(
+  "(Intercept)"="Intercept",
+  "variance_winsor"= "Variance",
+  'group_ident_broadhf' = 'High frequency', 
+  'group_ident_broadnr' = 'Narrative',
+  'group_ident_broadsignr' = 'Sign restrictions',
+  'group_ident_broadidother' = 'Other identificiation ',
+  'group_est_broadlp_ardl' = 'LP and ARDL',
+  'group_est_broadfavar' = 'FAVAR', 
+  'group_est_broadother_var' = 'Other VAR',
+  'group_est_broaddsge' = 'DSGE',
+  'bayes' = 'Bayesian',
+  'outcome_measureemp_rate' = 'Emp. rate',
+  'top_5_or_tier' = 'Top tier publication',
+  'cbanker' = 'Central bank related')
+
+# Create html output
+modelsummary::modelsummary(emp_baseline, 
+                           output = "gt", stars = TRUE, conf_level = conflevel, title = paste0("PEESE ",out_var), gof_map = NULL, coef_map = coef_names_baseline)
+
+```
+
+
+::: {.callout-warning}
+### Old version without `group_est_broad`, `outcome_measure` and `bayes` 
+
+Baseline PEESE regression with moderators for `group_ident_broad`, `top_5_or_tier` and `cbanker`
 
 ::: {.callout-note}
 
@@ -1464,7 +3205,7 @@ This specification is motivated by our hypotheses about identification procedure
 :::
 
 ::: {.callout-important}
-### TO DO: Robustness
+##### TO DO: Robustness
 
 Add different specifications for these hypotheses.
 
@@ -1475,9 +3216,9 @@ Justifications for the baseline specification:
 
 :::
 
-### Output
+##### Output
 
-```{r baseline_output}
+```{r baseline_output_old}
 
 out_var <- "output"
 
@@ -1491,7 +3232,7 @@ output_baseline <- meta_analysis(data ,
                           cluster_se = TRUE, 
                           mods = c("group_ident_broad",
                                    "top_5_or_tier",
-                                   "cbanker"))#,"rate_pers"
+                                   "cbanker"))
 
 
 coef_names_baseline <- c(
@@ -1511,7 +3252,7 @@ modelsummary::modelsummary(output_baseline,
 ```
 
 
-### Price level
+##### Price level
 
 ```{r baseline_pricelevel}
 
@@ -1534,7 +3275,7 @@ modelsummary::modelsummary(pricelevel_baseline, output = "gt", stars = TRUE, con
 
 ```
 
-### Unemployment
+##### Unemployment
 
 ```{r baseline_unemployment}
 
@@ -1557,7 +3298,7 @@ modelsummary::modelsummary(unemp_baseline, output = "gt", stars = TRUE, conf_lev
 
 ```
 
-### Employment
+##### Employment
 
 ```{r baseline_employment}
 
@@ -1580,6 +3321,7 @@ modelsummary::modelsummary(emp_baseline, output = "gt", stars = TRUE, conf_level
 
 ```
 
+::: 
 
 
 ## Robustness check for horizon 12 (PEESE)
@@ -1843,6 +3585,330 @@ modelsummary::modelsummary(
 
 ## Bayesian model averaging 
 
+
+::: {.callout-tip}
+
+TO DO: are these comments still valid?
+
+- In this section, results are need to be updated manually due to intensity of calculation.
+- For the large plots, try right click in browser to open pictures in a new tab for more details.
+
+:::
+
+### Output 
+
+#### All data, no winsorization, __in__cluding `quality_concern` 
+
+::: {.callout-note}
+As a first exploration of heterogeneity and its associated covariates in our coding, we estimate a broad range of models on our full sample. This also reveals the inflating influence of studies with `quality_concern`s on the `mean.effect`.
+:::
+
+::: {.callout-important}
+TO DO: define function for bma with data as input
+:::
+
+- no se 
+- no external data
+- mostly raw coding data
+
+```{r bma_broad_output}
+#| eval: false
+out_var <- "output"
+
+# Define periods for which BMA should be done
+bma_periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
+
+for (x in bma_periods) {
+  
+  # Filter data for out_var and the current period x
+  data_bma <- data_with_quality_concern %>% 
+    filter(outcome == out_var, period.month == x) %>% 
+    mutate(         
+      abs_shock_size = abs(shock_size) # This should enter with absolute value, since mean.effect is standardized. We could also do this in data_prep.
+      ) %>% 
+    select(
+        mean.effect,
+        cum,
+        prefer,
+        abs_shock_size,
+        # Identification
+        iv,
+        forecast_based,
+        nr,
+        event,
+        chol,
+        svar,
+        signr,
+        hf,
+        heteroskedas,
+        longrun,
+        idother,
+        # Estimation method
+        var,
+        lp,
+        vecm,
+        dyn_ols,
+        fvar,
+        tvar,
+        gvar,
+        bayes,
+        dsge,
+        varother,
+        ## Regime
+        # lor,
+        # upr,
+        # scr,                        # this is 0 for all models
+        # dcr,                        # this is 0 for all models
+        # hike,
+        # cut,
+        # Frequency
+        # annual,                      # This needs to be deactivated for non-year months
+        # quarter,                     # Needs to be deactivated for 6 months
+        # month,
+        ## Other data characteristics
+        # panel,
+        # observations,                  # Maybe rather take the log here already
+        ## Controls
+        # comprice,
+        # outpgap,
+        # find,
+        # eglob,
+        # cbind#,                           # this is zero for all studies
+        # fexch,
+        # inflexp,
+        # foreignir,
+        # fx,
+        # lrir,
+        ## Other
+        # pure_rate_shock,
+        # convent,
+        # decomposition,
+        # cbanker,
+        # pub_year,                     
+        # transformation,
+        # periodicity,
+        # real_output,                   # Real output might not be consistent in coding (gdp vs rgdp)
+        # outcome_measure,
+        # transformed,                   # Try alternatively with transformation
+        # main_research_q,
+        # quality_concern,
+        # regime,
+        # rate_pers, # Try this one with complete.cases below (it should work, but seems to interfere with some other variable, try different versions)
+        # country_dev,         # Try as alternative to advanced, upper_middle, mixed
+        # advanced,
+        # upper_middle,
+        # mixed_unclass,
+        # interest_rate_short,
+        # start_year,                     # Maybe use as alternative to mean_year
+        # end_year,                       # Maybe use as alternative to mean_year
+        # mean_year
+    )
+  
+  # Automatically create dummies for factor and character variables.
+  # This sets as reference group the most frequent level of each factor variable
+  # and removes the original factor variable to only use the newly created dummies. 
+  # data_bma <- fastDummies::dummy_cols(data_bma,
+  #                                     remove_most_frequent_dummy = TRUE,
+  #                                     remove_selected_columns = TRUE)
+  
+  # Test if any NA values in data_bma and remove these
+  if (anyNA(data_bma)) {
+    warning("Some of the selected variables contain NA values. Bayesian model averaging will ignore these observations.")
+    data_bma <- data_bma[complete.cases(data_bma), ]
+  }
+  
+  # BMS package requires a dataframe
+  data_bma <- as.data.frame(data_bma)
+  
+  # Estimation
+  bma_broad_output <- BMS::bms(data_bma, 
+             g = "UIP", 
+             mprior = "uniform", 
+             user.int = FALSE,
+             nmodel = 5000,
+             burn = 1e5, # 1e6, # burn ins and iterations should be increased for final estimation
+             iter= 2e5,  # 2e6, # burn ins and iterations should be increased for final estimation
+             mcmc="bd")
+  
+  # Model summary
+  summary(bma_broad_output)
+  
+  # 
+  subtitle <- paste("Period ", x)
+  image(bma_broad_output, 
+        yprop2pip = FALSE, 
+        cex.axis=.4, 
+        sub = subtitle
+  )
+
+  
+}
+```
+
+```{r}
+
+out_var <- "output"
+
+# Define periods for which BMA should be done
+bma_periods <- c(3, 6, 12, 18, 24, 30, 36, 48)
+
+
+# Initialize a list to store error messages
+error_log <- list()
+
+# Initialize a list to store successful outputs
+bma_outputs <- list()
+
+for (x in bma_periods) {
+  tryCatch({
+    # Filter data for out_var and the current period x
+    data_bma <- data_with_quality_concern %>% 
+      filter(outcome == out_var, period.month == x) %>% 
+      mutate(         
+        abs_shock_size = abs(shock_size)
+      ) %>% 
+      select(
+        mean.effect,
+        cum,
+        prefer,
+        abs_shock_size,
+        # Identification
+        iv,
+        forecast_based,
+        nr,
+        event,
+        chol,
+        svar,
+        signr,
+        hf,
+        heteroskedas,
+        longrun,
+        idother,
+        # Estimation method
+        var,
+        lp,
+        vecm,
+        dyn_ols,
+        fvar,
+        tvar,
+        gvar,
+        bayes,
+        dsge,
+        varother,
+        # Regime
+        lor,
+        upr,
+        # scr,                        # this is 0 for all models
+        # dcr,                        # this is 0 for all models
+        hike,
+        cut,
+        # Frequency
+        # annual,                      # This needs to be deactivated for non-year months
+        # quarter,                     # Needs to be deactivated for 6 months
+        month,
+        # Other data characteristics
+        panel,
+        observations,                  # Maybe rather take the log here already
+        # Controls
+        comprice,
+        outpgap,
+        find,
+        eglob,
+        # cbind#,                           # this is zero for all studies
+        fexch,
+        inflexp,
+        foreignir,
+        fx,
+        lrir,
+        # Other
+        pure_rate_shock,
+        convent,
+        decomposition,
+        cbanker,
+        pub_year,
+        transformation,
+        periodicity,
+        # real_output,                   # Real output might not be consistent in coding (gdp vs rgdp)
+        outcome_measure,
+        # transformed,                   # Try alternatively with transformation
+        main_research_q,
+        quality_concern,
+        regime,
+        # rate_pers, # Try this one with complete.cases below (it should work, but seems to interfere with some other variable, try different versions)
+        # country_dev,         # Try as alternative to advanced, upper_middle, mixed
+        advanced,
+        upper_middle,
+        mixed_unclass,
+        interest_rate_short,
+        start_year,                     # Maybe use as alternative to mean_year
+        end_year,                       # Maybe use as alternative to mean_year
+        mean_year
+    )
+    
+    # Automatically create dummies for factor and character variables.
+    # This sets as reference group the most frequent level of each factor variable
+    # and removes the original factor variable to only use the newly created dummies. 
+    data_bma <- fastDummies::dummy_cols(data_bma,
+                                        remove_most_frequent_dummy = TRUE,
+                                        remove_selected_columns = TRUE)
+    
+    # Test if any NA values in data_bma and remove these
+    if (anyNA(data_bma)) {
+      warning("Some of the selected variables contain NA values. Bayesian model averaging will ignore these observations.")
+      data_bma <- data_bma[complete.cases(data_bma), ]
+    }
+    
+    # BMS package requires a dataframe
+    data_bma <- as.data.frame(data_bma)
+    
+    # Estimation
+    bma_broad_output <- BMS::bms(data_bma, 
+               g = "UIP", 
+               mprior = "uniform", 
+               user.int = FALSE,
+               nmodel = 5000,
+               burn = 1e4,
+               iter = 2e4,
+               mcmc = "bd")
+    
+    # Store the successful output
+    bma_outputs[[as.character(x)]] <- bma_broad_output
+    
+    # Model summary
+    summary(bma_broad_output)
+    
+    # Plot
+    subtitle <- paste("Period ", x)
+    image(bma_broad_output, 
+          yprop2pip = FALSE, 
+          cex.axis = .2, 
+          sub = subtitle
+    )
+    
+  }, error = function(e) {
+    # Store the error message along with the iteration info
+    error_log[[length(error_log) + 1]] <- conditionMessage(e)
+    
+  })
+}
+
+# You can also check which periods were successfully processed
+successful_periods <- names(bma_outputs)
+print(paste("Successfully processed periods:", paste(successful_periods, collapse = ", ")))
+```
+
+
+#### All data, 2 % winsorization, __ex__cluding `quality_concern` 
+
+- no se 
+- no external data
+- as raw coding data as possible
+
+```{r}
+# data_bms <- 
+  
+```
+
 # Best practices and high quality estimation
 
 ## High quality estimation
@@ -1862,7 +3928,7 @@ modelsummary::modelsummary(
 
 ::: {.callout-warning}
 
-Note: DSGE models in our data never have effect sizes in period 0 or 1. Can this be true? We need to check this.
+Note: DSGE models in our data never have effect sizes in period 0 or 1. Can this be true? We should check this.
 
 ```{r}
 
@@ -3327,7 +5393,8 @@ perform_meta_analysis <- function(data, wins) {
       cutoff_val=1,
       AK_modelmu = "t",
       AK_symmetric = FALSE,
-      AK_conf_level = 0.68
+      AK_conf_level = 0.68,
+      ak_plot = "both"
   )
   )
 }
@@ -3527,13 +5594,6 @@ irf_range_correction %>%
     y = ~V1,
     name = "Broad high quality (only with no_hf_no_nr)",
     line = list(color = 'rgba(600,100,700,1)')
-  ) %>%
-  add_lines(
-    data = df_results,
-    x = ~period,
-    y = ~V1,
-    name = "Best practice 2",
-    line = list(color = 'rgba(100,100,100,1)')
   )
 
 ```
@@ -4674,5 +6734,398 @@ subplot(avg_irf_rate_us, avg_irf_rate_ea12, avg_irf_rate_upper_middle, avg_irf_r
 margin = list(t = 80))
 
 ```
+
+# Outputs for Working Papers
+
+::: {.callout-note}
+## Discuss
+
+### Brodeur plots 
+
+```{r}
+# Output
+
+################## compare SE.avg vs SE.upper ##################
+brodeur_dens_3_12_24_36_output_avg
+brodeur_dens_3_12_24_36_output
+brodeur_dens_all_periods_output_avg
+brodeur_dens_all_periods_output
+brodeur_dens_horizons_output_avg
+brodeur_dens_horizons_output
+brodeur_dens_horizons_top_tier_output_avg
+brodeur_dens_horizons_top_tier_output
+
+################## With SE.upper ##################
+# Full sample 
+brodeur_dens_3_12_24_36_output
+brodeur_dens_all_periods_output
+brodeur_dens_horizons_output
+
+# Top tier journals
+top_tier_journal_share_plot
+brodeur_dens_horizons_top_tier_output
+
+################## Other facets ##################
+
+
+```
+
+```{r}
+
+# Price level
+
+################## compare SE.avg vs SE.upper ##################
+brodeur_dens_3_12_24_36_pricelevel_avg
+brodeur_dens_3_12_24_36_pricelevel
+brodeur_dens_all_periods_pricelevel_avg
+brodeur_dens_all_periods_pricelevel
+brodeur_dens_horizons_pricelevel_avg
+brodeur_dens_horizons_pricelevel
+brodeur_dens_horizons_top_tier_pricelevel_avg
+brodeur_dens_horizons_top_tier_pricelevel
+
+################## With SE.upper ##################
+brodeur_dens_3_12_24_36_pricelevel
+brodeur_dens_all_periods_pricelevel
+brodeur_dens_horizons_pricelevel
+
+# Top tier journals
+top_tier_journal_share_plot
+brodeur_dens_horizons_top_tier_pricelevel
+
+################## Other facets ##################
+
+
+```
+
+```{r}
+
+# Interest rate
+
+################## compare SE.avg vs SE.lower ##################
+brodeur_dens_3_12_24_36_rate_avg
+brodeur_dens_3_12_24_36_rate
+brodeur_dens_all_periods_rate_avg
+brodeur_dens_all_periods_rate
+brodeur_dens_horizons_rate_avg
+brodeur_dens_horizons_rate
+brodeur_dens_horizons_top_tier_rate_avg
+brodeur_dens_horizons_top_tier_rate
+
+################## With SE.lower ##################
+brodeur_dens_3_12_24_36_rate
+brodeur_dens_all_periods_rate
+brodeur_dens_horizons_rate
+
+# Top tier journals
+top_tier_journal_share_plot
+brodeur_dens_horizons_top_tier_rate
+
+################## Other facets ##################
+
+
+```
+
+:::
+
+## Working Paper 1 - "The overstated effects of conventional monetary policy on output and prices"
+
+### Publication Bias
+
+#### Average output and price level response (uncorrected)
+
+```{r WP1_average_irfs_output_pricelevel}
+
+# Create plot 
+WP1_average_irfs_output_pricelevel <- subplot(avg_irf_output, avg_irf_pricelevel, nrows = 1, margin = 0.03) %>% layout(
+  showlegend=FALSE,
+  title = 'Effects of conventional monetary policy shocks',
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.25, y = 1, text = "Output", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.75, y = 1, text = "Price level", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+),
+margin = list(t = 60)) %>%
+    layout(
+      xaxis = list(title = "Months"),
+      xaxis2 = list(title = "Months"),
+      yaxis = list(title = "Effect (%)",
+                   range = list(-2.8,0.8)
+                   ),
+      yaxis2 = list(range = list(-2.8,0.8)
+                   ),
+      hovermode = "compare"
+    )
+
+# Display plot
+WP1_average_irfs_output_pricelevel
+
+# Save pdf
+orca(WP1_average_irfs_output_pricelevel,
+      file = "outputs_for_working_papers/wp1/include/uncorrected_average_irfs_output_pricelevel.pdf",
+      scale = NULL,
+      width = 1500,
+      height = NULL
+    )
+
+```
+
+#### Brodeur, p-hacking: density plots, distribution of z-statistics: 3 months, 12 months, 24 months, 36 months after the monetary policy shock (ein Plot, 4 sub-figures) - including counterfactual distribution of z-statistics
+
+```{r}
+
+# Output
+
+ggsave("outputs_for_working_papers/wp1/discuss/brodeur_dens_3_12_24_36_output.pdf", brodeur_dens_3_12_24_36_output, width = 6, height = 5)
+
+ggsave("outputs_for_working_papers/wp1/discuss/brodeur_dens_horizons_output.pdf", brodeur_dens_horizons_output, width = 6, height = 5)
+
+ggsave("outputs_for_working_papers/wp1/discuss/brodeur_dens_horizons_top_tier_output.pdf", brodeur_dens_horizons_top_tier_output, width = 6, height = 5)
+
+ggsave("outputs_for_working_papers/wp1/discuss/brodeur_dens_all_periods_output.pdf", brodeur_dens_all_periods_output, width = 20, height = 12)
+```
+
+```{r}
+
+# Price level
+
+ggsave("outputs_for_working_papers/wp1/discuss/brodeur_dens_3_12_24_36_pricelevel.pdf", brodeur_dens_3_12_24_36_pricelevel, width = 6, height = 5)
+
+ggsave("outputs_for_working_papers/wp1/discuss/brodeur_dens_horizons_pricelevel.pdf", brodeur_dens_horizons_pricelevel, width = 6, height = 5)
+
+ggsave("outputs_for_working_papers/wp1/discuss/brodeur_dens_horizons_top_tier_pricelevel.pdf", brodeur_dens_horizons_top_tier_pricelevel, width = 6, height = 5)
+
+ggsave("outputs_for_working_papers/wp1/discuss/brodeur_dens_all_periods_pricelevel.pdf", brodeur_dens_all_periods_pricelevel, width = 20, height = 12)
+```
+
+
+#### Randomisation tests (Brodeur et al. 2020; siehe Anhang) to econometrically confirm bunching of estimates at critical thresholds of significance - eventually als Table, aber das können wir wohl auch in den Appendix integrieren.
+
+#### Andrews-Kasy: conditional publication probabilities, 3 months, 12 months, 24 months, 36 months after the monetary policy shock (one plot, sub-figures) - wichtig wäre hier, dass die y-Achse über die sub-figures normalisiert ist, um es einfach ersichtlich zu machen, dass die steps bei späteren Horizonten größer sind.
+
+```{r}
+library(patchwork)
+
+# Output 
+months <- seq(3, 60, by = 3)
+plots <- list()
+for (month in months) {
+  plot_name <- paste0("p", month)
+  plots[[plot_name]] <- output_ak[[as.character(month)]]$plot + 
+    theme_minimal() + 
+    labs(subtitle = paste("Month", month)) + 
+    labs(y = "Pub.Pr.")
+}
+# All quarters
+combined_plot_all <- plots$p3 + plots$p6  + plots$p9 + plots$p12 + plots$p15  + plots$p18 + plots$p21 + plots$p24 + plots$p27 + plots$p30 + plots$p33 + plots$p36 + plots$p39 + plots$p42 + plots$p45 + plots$p48 + plots$p51  + plots$p54  + plots$p57 +plots$p60 + 
+  # plot_layout(ncol = 4, byrow = TRUE) # Alternative layout
+  plot_layout(nrow = 1, byrow = TRUE) # As one row
+combined_plot_all
+# Every two quarters up to 4 years
+combined_plot_two_quarters <- plots$p6 + plots$p12+ plots$p18+ plots$p24+ plots$p30+ plots$p36 + plots$p42 + plots$p48 +
+  plot_layout(ncol = 4, byrow = TRUE) # Alternative layout
+  # plot_layout(nrow = 1, byrow = TRUE) # As one row
+combined_plot_two_quarters
+# Very few periods
+combined_plot_years <- plots$p3 + plots$p12 + plots$p24 + plots$p36 + plots$p48 + #plots$p60 +
+  # plot_layout(nrow = 4, byrow = TRUE) # Alternative layout
+  plot_layout(nrow = 1, byrow = TRUE) # As one row
+combined_plot_years
+
+ggsave("outputs_for_working_papers/wp1/discuss/publication_prob_years_output.pdf", combined_plot_years, width = 12, height = 4)
+
+
+# Price level 
+months <- seq(3, 60, by = 3)
+plots <- list()
+for (month in months) {
+  plot_name <- paste0("p", month)
+  plots[[plot_name]] <- pricelevel_ak[[as.character(month)]]$plot + 
+    theme_minimal() + 
+    labs(subtitle = paste("Month", month)) + 
+    labs(y = "Pub.Pr.")
+}
+# All quarters
+combined_plot_all <- plots$p3 + plots$p6  + plots$p9 + plots$p12 + plots$p15  + plots$p18 + plots$p21 + plots$p24 + plots$p27 + plots$p30 + plots$p33 + plots$p36 + plots$p39 + plots$p42 + plots$p45 + plots$p48 + plots$p51  + plots$p54  + plots$p57 +plots$p60 + 
+  # plot_layout(ncol = 4, byrow = TRUE) # Alternative layout
+  plot_layout(nrow = 1, byrow = TRUE) # As one row
+combined_plot_all
+# Every two quarters up to 4 years
+combined_plot_two_quarters <- plots$p6 + plots$p12+ plots$p18+ plots$p24+ plots$p30+ plots$p36 + plots$p42 + plots$p48 +
+  plot_layout(ncol = 4, byrow = TRUE) # Alternative layout
+  # plot_layout(nrow = 1, byrow = TRUE) # As one row
+combined_plot_two_quarters
+# Very few periods
+combined_plot_years <- plots$p3 + plots$p12 + plots$p24 + plots$p36 + plots$p48 + #plots$p60 +
+  # plot_layout(nrow = 4, byrow = TRUE) # Alternative layout
+  plot_layout(nrow = 1, byrow = TRUE) # As one row
+combined_plot_years
+
+ggsave("outputs_for_working_papers/wp1/discuss/publication_prob_years_pricelevel.pdf", combined_plot_years, width = 12, height = 4)
+
+
+
+```
+
+
+
+#### Funnel plots: 3 months, 12 months, 24 months, 36 months after the monetary policy shock
+
+##### Output 
+```{r WP1_funnel_output}
+
+out_var <- "output"
+periods <- c(3, 12, 24, 36)
+
+# Create a list of plots
+plot_list <- lapply(periods, function(prd) {
+  p <- create_funnel_plot(data %>% filter(outcome == out_var),
+                     outvar = out_var,
+                     prd = prd,
+                     se_option = "avg",
+                     legend = FALSE,
+                     wins = wins_para,
+                     opac = 0.04,
+                     ap = FALSE,
+                     type = "standard")
+  # Add annotation for period
+  p <- p %>% add_annotations(
+    text = paste("Period", prd),
+    x = 0.5,
+    y = 1,
+    xref = "paper",
+    yref = "paper",
+    xanchor = "center",
+    yanchor = "bottom",
+    showarrow = FALSE,
+    font = list(size = 14)
+  )
+  
+  return(p)
+})
+
+
+# Combine plots into a subplot
+WP1_funnel_output <- subplot(plot_list, nrows = 4, shareX = TRUE, shareY = TRUE) %>%
+  layout(title = "")
+
+# Display the subplot
+WP1_funnel_output
+
+# Save pdf
+orca(WP1_funnel_output,
+      file = "outputs_for_working_papers/wp1/include/funnel_plots/funnel_output.pdf",
+      scale = NULL,
+      width = 800,
+      height = 1000
+    )
+
+```
+
+##### Price level 
+
+```{r WP1_funnel_pricelevel}
+
+out_var <- "inflation"
+
+# Create a list of plots
+plot_list <- lapply(periods, function(prd) {
+  p <- create_funnel_plot(data %>% filter(outcome == out_var),
+                     outvar = out_var,
+                     prd = prd,
+                     se_option = "avg",
+                     legend = FALSE,
+                     wins = wins_para,
+                     opac = 0.04,
+                     ap = FALSE,
+                     type = "standard")
+  # Add annotation for period
+  p <- p %>% add_annotations(
+    text = paste("Period", prd),
+    x = 0.5,
+    y = 1,
+    xref = "paper",
+    yref = "paper",
+    xanchor = "center",
+    yanchor = "bottom",
+    showarrow = FALSE,
+    font = list(size = 14)
+  )
+  
+  return(p)
+})
+
+
+# Combine plots into a subplot
+WP1_funnel_pricelevel <- subplot(plot_list, nrows = 4, shareX = TRUE, shareY = TRUE) %>%
+  layout(title = "")
+
+# Display the subplot
+WP1_funnel_pricelevel
+
+# Save pdf
+orca(WP1_funnel_pricelevel,
+      file = "outputs_for_working_papers/wp1/include/funnel_plots/funnel_pricelevel.pdf",
+      scale = NULL,
+      width = 800,
+      height = 1000
+    )
+
+```
+##### Interest rate
+```{r WP1_funnel_rate}
+
+out_var <- "rate"
+
+# Create a list of plots
+plot_list <- lapply(periods, function(prd) {
+  p <- create_funnel_plot(data %>% filter(outcome == out_var),
+                     outvar = out_var,
+                     prd = prd,
+                     se_option = "avg",
+                     legend = FALSE,
+                     wins = wins_para,
+                     opac = 0.04,
+                     ap = FALSE,
+                     type = "standard")
+  # Add annotation for period
+  p <- p %>% add_annotations(
+    text = paste("Period", prd),
+    x = 0.5,
+    y = 1,
+    xref = "paper",
+    yref = "paper",
+    xanchor = "center",
+    yanchor = "bottom",
+    showarrow = FALSE,
+    font = list(size = 14)
+  )
+  
+  return(p)
+})
+
+
+# Combine plots into a subplot
+WP1_funnel_rate <- subplot(plot_list, nrows = 4, shareX = TRUE, shareY = TRUE) %>%
+  layout(title = "")
+
+# Display the subplot
+WP1_funnel_rate
+
+# Save pdf
+orca(WP1_funnel_rate,
+      file = "outputs_for_working_papers/wp1/include/funnel_plots/funnel_rate.pdf",
+      scale = NULL,
+      width = 800,
+      height = 1000
+    )
+
+```
+
+#### IRFs with range of publication bias corrected estimates - drei sub-figures zu output, price level und interest rate response in einem Plot
+
 
 

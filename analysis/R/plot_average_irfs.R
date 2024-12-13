@@ -1,35 +1,74 @@
-#' Plot average impulse response function (IRFs)
+#' Plot average impulse response functions (IRFs) with confidence bounds
 #'
-#' This function creates a plot of an average IRF with confidence intervals.
+#' Creates a plot of average impulse response functions (IRFs) from a meta-analysis with confidence bounds.
+#' Supports two methods for uncertainty visualization: approximated confidence intervals
+#' or standard error bounds. Can display both mean and median responses with their
+#' respective uncertainty bounds.
 #'
-#' @param data A data frame containing the necessary columns for plotting.
-#' @param period_limit An integer specifying the maximum number of periods to include in the plot.
+#' @param data A data frame containing the following required columns:
+#'   \itemize{
+#'     \item period.month: Time periods for the IRF
+#'     \item mean.effect: Point estimates
+#'     \item approx.CI.lower_68, approx.CI.upper_68: approximated 68% confidence interval bounds
+#'     \item approx.CI.lower_95, approx.CI.upper_95: approximated 95% confidence interval bounds
+#'     \item SE.upper, SE.lower: Upper and lower standard errors
+#'   }
+#' @param period_limit Integer. Maximum number of periods to include in the plot. 
+#'   Default is NULL (all periods).
+#' @param winsor Logical. Whether to apply winsorization to the data. Default is FALSE.
+#' @param wins_par Numeric. Percentile for winsorization when winsor = TRUE. Default is 0.
+#' @param corrected_irf Optional data frame containing meta-analysis corrections with columns:
+#'   period, estimate, lower, upper.
+#' @param show_legend Logical. Whether to display the plot legend. Default is TRUE.
+#' @param show_median Logical. Whether to display median IRF and its bounds. Default is FALSE.
+#' @param return_data Logical. Whether to return the processed data along with the plot. 
+#'   Default is FALSE.
+#' @param ci_method Character. Method for computing confidence bounds. Must be either 
+#'   "approx.CIs" (approximated CIs) or "avg.se" (average standard error bounds). Default is "approx.CIs".
+#' @param se_multiplier Numeric. Multiplier for standard errors when ci_method = "avg.se". 
+#'   Default is 1.
 #'
-#' @return A plotly plot of average IRFs.
-#'
-#' @import plotly
-#' @import dplyr
+#' @return If return_data = FALSE (default), returns a plotly object.
+#'   If return_data = TRUE, returns a list containing:
+#'   \itemize{
+#'     \item plot: The plotly visualization
+#'     \item data: The processed data frame used for plotting
+#'   }
 #'
 #' @examples
-#' library(dplyr)
-#' library(plotly)
-#' # Load the data
-#' data_path <- "data/preliminary_data.RData"
-#' load(data_path)
+#' \dontrun{
+#' # Basic usage with approximated CIs
+#' plot1 <- plot_average_irfs(data)
 #'
-#' # Test with default period_limit
-#' plot_all_outcomes <- plot_average_irfs(data)
-#' print(plot_all_outcomes)
+#' # Using SE bounds with 2 standard errors
+#' plot2 <- plot_average_irfs(data, 
+#'                           ci_method = "avg.se", 
+#'                           se_multiplier = 2)
 #'
-#' # Test with custom period_limit
-#' period_limit <- 20
-#' plot_period_limit <- plot_average_irfs(data, period_limit)
-#' print(plot_period_limit)
+#' # Show both mean and median with period limit
+#' plot3 <- plot_average_irfs(data,
+#'                           period_limit = 24,
+#'                           show_median = TRUE)
+#'
+#' # Apply winsorization and return processed data
+#' result <- plot_average_irfs(data,
+#'                            winsor = TRUE,
+#'                            wins_par = 0.01,
+#'                            return_data = TRUE)
+#' }
+#'
+#' @import dplyr
+#' @import plotly
 #'
 #' @export
-plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf, show_legend = TRUE, show_median = FALSE, return_data = FALSE) {
+plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf, show_legend = TRUE, show_median = FALSE, return_data = FALSE, ci_method = "approx.CIs", se_multiplier = 1) {
   
-  # Apply winsorization (if selected) to the CIs and mean effect
+  # Validate ci_method parameter
+  if (!ci_method %in% c("approx.CIs", "avg.se")) {
+    stop("ci_method must be either 'approx.CIs' or 'avg.se'")
+  }
+  
+  # Apply winsorization (if selected) to the CIs, mean effect, and SEs
   if (winsor == TRUE) {
     data$approx.CI.lower_68 <- winsorizor(data$approx.CI.lower_68, percentile = wins_par)
     data$approx.CI.upper_68 <- winsorizor(data$approx.CI.upper_68, percentile = wins_par)
@@ -38,11 +77,14 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
     data$approx.CI.lower_95 <- winsorizor(data$approx.CI.lower_95, percentile = wins_par)
     data$approx.CI.upper_95 <- winsorizor(data$approx.CI.upper_95, percentile = wins_par)
     data$mean.effect <- winsorizor(data$mean.effect, percentile = wins_par)
+    data$SE.upper <- winsorizor(data$SE.upper, percentile = wins_par)
+    data$SE.lower <- winsorizor(data$SE.lower, percentile = wins_par)
   }
   
   average_irf <- data %>%
     group_by(period.month) %>%
     summarise(
+      # Mean calculations
       avg_mean.effect = mean(mean.effect, na.rm = TRUE),
       avg_CI.lower_68 = mean(approx.CI.lower_68, na.rm = TRUE),
       avg_CI.upper_68 = mean(approx.CI.upper_68, na.rm = TRUE),
@@ -50,85 +92,151 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
       avg_CI.upper_90 = mean(approx.CI.upper_90, na.rm = TRUE),
       avg_CI.lower_95 = mean(approx.CI.lower_95, na.rm = TRUE),
       avg_CI.upper_95 = mean(approx.CI.upper_95, na.rm = TRUE),
+      avg_SE.upper = mean(SE.upper, na.rm = TRUE),
+      avg_SE.lower = mean(SE.lower, na.rm = TRUE),
+      # Median calculations
       median_mean.effect = median(mean.effect, na.rm = TRUE),
       median_CI.lower_68 = median(approx.CI.lower_68, na.rm = TRUE),
       median_CI.upper_68 = median(approx.CI.upper_68, na.rm = TRUE),
       median_CI.lower_90 = median(approx.CI.lower_90, na.rm = TRUE),
       median_CI.upper_90 = median(approx.CI.upper_90, na.rm = TRUE),
       median_CI.lower_95 = median(approx.CI.lower_95, na.rm = TRUE),
-      median_CI.upper_95 = median(approx.CI.upper_95, na.rm = TRUE)
+      median_CI.upper_95 = median(approx.CI.upper_95, na.rm = TRUE),
+      median_SE.upper = median(SE.upper, na.rm = TRUE),
+      median_SE.lower = median(SE.lower, na.rm = TRUE)
     )
   
-  
+  # Calculate avg_SE-based bounds
+  if (ci_method == "avg.se") {
+    average_irf <- average_irf %>%
+      mutate(
+        avg_bound_upper_se = avg_mean.effect + avg_SE.upper,
+        avg_bound_lower_se = avg_mean.effect - avg_SE.lower,
+        median_bound_upper_se = median_mean.effect + median_SE.upper,
+        median_bound_lower_se = median_mean.effect - median_SE.lower
+      )
+    if (se_multiplier != 1) {
+      average_irf <- average_irf %>%
+        mutate(
+          avg_bound_upper_se_multiplier = avg_mean.effect + (se_multiplier * avg_SE.upper),
+          avg_bound_lower_se_multiplier = avg_mean.effect - (se_multiplier * avg_SE.lower),
+          median_bound_upper_se_multiplier = median_mean.effect + (se_multiplier * median_SE.upper),
+          median_bound_lower_se_multiplier = median_mean.effect - (se_multiplier * median_SE.lower)
+        )
+    }
+  }
 
+  # Apply period limit if specified
   if (!is.null(period_limit)) {
     average_irf <- average_irf %>% filter(period.month <= period_limit)
   }
   
+  # Create base plot
   plot <- average_irf %>%
     plot_ly(showlegend = show_legend) %>%
-    add_ribbons(
-      x = ~period.month,
-      ymin = ~avg_CI.lower_68,
-      ymax = ~avg_CI.upper_68,
-      name = "68% CI",
-      line = list(color = 'rgba(0,0,0,0)'),
-      fillcolor = 'rgba(135,206,250,0.2)'
-    ) %>%
-    # add_ribbons(
-    #   x = ~period.month,
-    #   ymin = ~avg_CI.lower_90,
-    #   ymax = ~avg_CI.upper_90,
-    #   name = "90% CI",
-    #   line = list(color = 'rgba(0,0,0,0)'),
-    #   fillcolor = 'rgba(135,206,250,0.2)'
-    # ) %>%
-    add_ribbons(
-      x = ~period.month,
-      ymin = ~avg_CI.lower_95,
-      ymax = ~avg_CI.upper_95,
-      name = "95% CI",
-      line = list(color = 'rgba(0,0,0,0)'),
-      fillcolor = 'rgba(135,206,250,0.2)'
-    ) %>%
     add_lines(
       x = ~period.month,
       y = ~avg_mean.effect,
-      name = "Average effect",
-      line = list(color = 'rgba(0,76,153,0.5)', width = 2)
-    ) %>%
-    layout(
-      title = "Average IRF",
-      xaxis = list(title = "Period (Months)"),
-      yaxis = list(title = "Effect"),
-      hovermode = "compare"
+      name = "Avg. effect",
+      line = list(color = 'rgba(0,76,153,1)', width = 3)
     )
   
-  # Add median, if requested in function call
+  # Add confidence bounds based on selected method
+  if (ci_method == "approx.CIs") {
+    plot <- plot %>%
+      add_ribbons(
+        x = ~period.month,
+        ymin = ~avg_CI.lower_68,
+        ymax = ~avg_CI.upper_68,
+        name = "Avg. 68% CI",
+        line = list(color = 'rgba(0,0,0,0)'),
+        fillcolor = 'rgba(135,206,250,0.5)'
+      ) %>%
+      add_ribbons(
+        x = ~period.month,
+        ymin = ~avg_CI.lower_95,
+        ymax = ~avg_CI.upper_95,
+        name = "Avg. 95% CI",
+        line = list(color = 'rgba(0,0,0,0)'),
+        fillcolor = 'rgba(135,206,250,0.1)'
+      )
+  } else {  # ci_method == "avg.se"
+    plot <- plot %>%
+      add_ribbons(
+        x = ~period.month,
+        ymin = ~avg_bound_lower_se,
+        ymax = ~avg_bound_upper_se,
+        name = "1 avg. SE bound",
+        line = list(color = 'rgba(0,0,0,0)'),
+        fillcolor = 'rgba(135,206,250,0.5)'
+      )
+    
+    if (se_multiplier != 1) {
+      plot <- plot %>%
+        add_ribbons(
+          x = ~period.month,
+          ymin = ~avg_bound_lower_se_multiplier,
+          ymax = ~avg_bound_upper_se_multiplier,
+          name = paste(se_multiplier, "avg. SE bounds"),
+          line = list(color = 'rgba(0,0,0,0)'),
+          fillcolor = 'rgba(135,206,250,0.1)'
+        )
+    }
+    
+  }
+  
+  # Add median if requested
   if (show_median == TRUE) {
+    # Add median line
     plot <- plot %>%
       add_lines(
         x = ~period.month,
         y = ~median_mean.effect,
         name = "Median",
-        line = list(color = 'rgba(255,0,0,0.5)', width = 2)
-      ) %>%
-      add_ribbons(
-        x = ~period.month,
-        ymin = ~median_CI.lower_95,
-        ymax = ~median_CI.upper_95,
-        name = "Median 95% CI",
-        line = list(color = 'rgba(0,0,0,0)'),
-        fillcolor = 'rgba(255,0,0,0.1)'
-      ) %>%
-      add_ribbons(
-        x = ~period.month,
-        ymin = ~median_CI.lower_68,
-        ymax = ~median_CI.upper_68,
-        name = "Median 68% CI",
-        line = list(color = 'rgba(0,0,0,0)'),
-        fillcolor = 'rgba(255,0,0,0.1)'
+        line = list(color = 'rgba(255,0,0,0.8)', width = 2)
       )
+    # Add median bounds based on selected method
+    if (ci_method == "approx.CIs") {
+      plot <- plot %>%
+        add_ribbons(
+          x = ~period.month,
+          ymin = ~median_CI.lower_95,
+          ymax = ~median_CI.upper_95,
+          name = "Median 95% CI",
+          line = list(color = 'rgba(0,0,0,0)'),
+          fillcolor = 'rgba(255,0,0,0.07)'
+        ) %>%
+        add_ribbons(
+          x = ~period.month,
+          ymin = ~median_CI.lower_68,
+          ymax = ~median_CI.upper_68,
+          name = "Median 68% CI",
+          line = list(color = 'rgba(0,0,0,0)'),
+          fillcolor = 'rgba(255,0,0,0.2)'
+        )
+    } else { # ci_method == "avg.se"
+      plot <- plot %>%
+        add_ribbons(
+          x = ~period.month,
+          ymin = ~median_bound_lower_se,
+          ymax = ~median_bound_upper_se,
+          name = "1 median SE bound",
+          line = list(color = 'rgba(0,0,0,0)'),
+          fillcolor = 'rgba(255,0,0,0.2)'
+        )
+      
+      if (se_multiplier != 1) {
+        plot <- plot %>%
+          add_ribbons(
+            x = ~period.month,
+            ymin = ~median_bound_lower_se_multiplier,
+            ymax = ~median_bound_upper_se_multiplier,
+            name = paste(se_multiplier, "median SE bounds"),
+            line = list(color = 'rgba(0,0,0,0)'),
+            fillcolor = 'rgba(255,0,0,0.07)'
+          )
+      }
+    }
   }
   
   # Add corrected IRF with confidence bounds if provided
@@ -154,6 +262,15 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
       )
     
   }
+  
+  # Add layout
+  plot <- plot %>%
+    layout(
+      title = "Average IRF",
+      xaxis = list(title = "Period (Months)"),
+      yaxis = list(title = "Effect"),
+      hovermode = "compare"
+    )
   
   # Optionally return the data alongside the plot
   if (return_data) {

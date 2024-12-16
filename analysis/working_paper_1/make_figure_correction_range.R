@@ -169,45 +169,63 @@ mean_median_per_period <- all_results_df %>%
     median = median(estimate)
   ) %>% ungroup()
 
-# Generate the average IRF plot with publication bias correction range
+# Generate the average IRF data and plot
 figure_irf_range_correction_output <- plot_average_irfs(
   filtered_data,
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = T
-) %>%
+  show_legend = T,
+  return_data = TRUE
+)
+
+# Join average IRF data with correction data
+min_max_per_period_95 <- min_max_per_period_95 %>%
+  rename(period.month = period, correction.min_estimate_95 = min_estimate, correction.max_estimate_95 = max_estimate)
+min_max_per_period_68 <- min_max_per_period_68 %>%
+  rename(period.month = period, correction.min_estimate_68 = min_estimate, correction.max_estimate_68 = max_estimate)
+mean_median_per_period <- mean_median_per_period %>%
+  rename(period.month = period, correction.mean = mean, correction.median = median)
+figure_irf_range_correction_output$data <- figure_irf_range_correction_output$data %>%
+  left_join(min_max_per_period_95, by = "period.month") %>%
+  left_join(min_max_per_period_68, by = "period.month") %>%
+  left_join(mean_median_per_period, by = "period.month")
+# Save figure data as csv
+write_csv(figure_irf_range_correction_output$data, here::here("analysis/working_paper_1/figures/irf_range_correction/figure_irf_range_correction_output.csv"))
+
+# Add publication bias correction range to plot
+figure_irf_range_correction_output <- figure_irf_range_correction_output$plot %>%
   add_ribbons(
     data = min_max_per_period_95,
-    x = ~period,
-    ymin = ~min_estimate,
-    ymax = ~max_estimate,
+    x = ~period.month,
+    ymin = ~correction.min_estimate_95,
+    ymax = ~correction.max_estimate_95,
     name = "P-bias corrections 95% range",
     line = list(color = 'rgba(0,0,0,0)'),
     fillcolor = 'rgba(244,2,3,0.2)'
   ) %>%
   add_ribbons(
     data = min_max_per_period_68,
-    x = ~period,
-    ymin = ~min_estimate,
-    ymax = ~max_estimate,
+    x = ~period.month,
+    ymin = ~correction.min_estimate_68,
+    ymax = ~correction.max_estimate_68,
     name = "P-bias corrections 68% range",
     line = list(color = 'rgba(0,0,0,0)'),
     fillcolor = 'rgba(244, 2, 3, 0.3)'
   ) %>% 
   add_lines(
     data = mean_median_per_period,
-    x = ~period,
-    y = ~mean,
+    x = ~period.month,
+    y = ~correction.mean,
     name = "Correction mean",
     line = list(color = 'darkred',
                 dash = 'dash')
   ) %>%
   # add_lines(
   #   data = mean_median_per_period,
-  #   x = ~period,
-  #   y = ~median,
+  #   x = ~period.month,
+  #   y = ~correction.median,
   #   name = "Correction median",
   #   line = list(color = 'darkred',
   #               dash = 'dot')
@@ -218,10 +236,9 @@ figure_irf_range_correction_output <- plot_average_irfs(
     yaxis = list(title = "Effect in %"),
     hovermode = "compare"
   )
-# Display the figure
 figure_irf_range_correction_output
 
-# Save as pdf
+# Save figure as pdf
 orca(figure_irf_range_correction_output,
      file = "analysis/working_paper_1/figures/irf_range_correction/figure_irf_range_correction_output.pdf",
      scale = NULL,
@@ -231,6 +248,7 @@ orca(figure_irf_range_correction_output,
 
 # For price level ----
 out_var <- "inflation"
+
 ## With sampling - this version has unstable results due to drawing samples but much faster estimation. ----
 filtered_data <- d_no_qc %>%
   filter(period.month %in% c(0, chosen_periods), outcome == out_var)
@@ -240,6 +258,7 @@ all_results <- list()
 
 # Compute results using the functions from above
 results <- lapply(1:10, analyze_subsample)
+beepr::beep()
 
 # Combine results for all subsamples
 all_results_df <- do.call(rbind, results)
@@ -275,59 +294,76 @@ mean_median_per_period <- all_results_df %>%
     median = median(estimate)
   ) %>% ungroup()
 
-# Generate the average IRF plot with publication bias correction range
+# Generate the average IRF data and plot
 figure_irf_range_correction_pricelevel <- plot_average_irfs(
   filtered_data,
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = T
-) %>%
+  show_legend = T,
+  return_data = TRUE
+)
+
+# Join average IRF data with correction data
+min_max_per_period_95 <- min_max_per_period_95 %>%
+  rename(period.month = period, correction.min_estimate_95 = min_estimate, correction.max_estimate_95 = max_estimate)
+min_max_per_period_68 <- min_max_per_period_68 %>%
+  rename(period.month = period, correction.min_estimate_68 = min_estimate, correction.max_estimate_68 = max_estimate)
+mean_median_per_period <- mean_median_per_period %>%
+  rename(period.month = period, correction.mean = mean, correction.median = median)
+figure_irf_range_correction_pricelevel$data <- figure_irf_range_correction_pricelevel$data %>%
+  left_join(min_max_per_period_95, by = "period.month") %>%
+  left_join(min_max_per_period_68, by = "period.month") %>%
+  left_join(mean_median_per_period, by = "period.month")
+# Save figure data as csv
+write_csv(figure_irf_range_correction_pricelevel$data, here::here("analysis/working_paper_1/figures/irf_range_correction/figure_irf_range_correction_pricelevel.csv"))
+
+# Add publication bias correction range to plot
+figure_irf_range_correction_pricelevel <- figure_irf_range_correction_pricelevel$plot %>%
   add_ribbons(
     data = min_max_per_period_95,
-    x = ~period,
-    ymin = ~min_estimate,
-    ymax = ~max_estimate,
+    x = ~period.month,
+    ymin = ~correction.min_estimate_95,
+    ymax = ~correction.max_estimate_95,
     name = "P-bias corrections 95% range",
     line = list(color = 'rgba(0,0,0,0)'),
     fillcolor = 'rgba(244,2,3,0.2)'
   ) %>%
   add_ribbons(
     data = min_max_per_period_68,
-    x = ~period,
-    ymin = ~min_estimate,
-    ymax = ~max_estimate,
+    x = ~period.month,
+    ymin = ~correction.min_estimate_68,
+    ymax = ~correction.max_estimate_68,
     name = "P-bias corrections 68% range",
     line = list(color = 'rgba(0,0,0,0)'),
     fillcolor = 'rgba(244, 2, 3, 0.3)'
   ) %>% 
   add_lines(
     data = mean_median_per_period,
-    x = ~period,
-    y = ~mean,
+    x = ~period.month,
+    y = ~correction.mean,
     name = "Correction mean",
     line = list(color = 'darkred',
                 dash = 'dash')
   ) %>%
   # add_lines(
   #   data = mean_median_per_period,
-  #   x = ~period,
-  #   y = ~median,
+  #   x = ~period.month,
+  #   y = ~correction.median,
   #   name = "Correction median",
   #   line = list(color = 'darkred',
   #               dash = 'dot')
   # ) %>%
   layout(
-    title = "Output response to 100 bp rate shock, average and p-bias corrected range",
+    title = "Price level response to 100 bp rate shock, average and p-bias corrected range",
     xaxis = list(title = "Month"),
     yaxis = list(title = "Effect in %"),
     hovermode = "compare"
   )
-# Display the figure
 figure_irf_range_correction_pricelevel
 
-# Save as pdf
+# Save figure as pdf
 orca(figure_irf_range_correction_pricelevel,
      file = "analysis/working_paper_1/figures/irf_range_correction/figure_irf_range_correction_pricelevel.pdf",
      scale = NULL,
@@ -335,8 +371,12 @@ orca(figure_irf_range_correction_pricelevel,
      height = 1100 * 0.6
 )
 
+
 # For interest rate ----
 out_var <- "rate"
+# Set new winsorization levels for estimation of rate (>0.02 fails due to singular matrix)
+wins_para_levels <- c(0, 0.01, 0.02)#, 0.03, 0.04)
+
 ## With sampling - this version has unstable results due to drawing samples but much faster estimation. ----
 filtered_data <- d_no_qc %>%
   filter(period.month %in% c(0, chosen_periods), outcome == out_var)
@@ -346,6 +386,7 @@ all_results <- list()
 
 # Compute results using the functions from above
 results <- lapply(1:10, analyze_subsample)
+beepr::beep()
 
 # Combine results for all subsamples
 all_results_df <- do.call(rbind, results)
@@ -357,7 +398,7 @@ all_results_df %>%
     n()
   )
 
-# Use 95% region of estimate per period.
+# Use 95% region of estimate per period. 
 min_max_per_period_95 <- all_results_df %>%
   group_by(period) %>%
   summarise(
@@ -365,7 +406,7 @@ min_max_per_period_95 <- all_results_df %>%
     max_estimate = quantile(estimate,0.975, na.rm = TRUE)
   ) %>% ungroup()
 
-# Use 68% region of estimate per period.
+# Use 68% region of estimate per period. 
 min_max_per_period_68 <- all_results_df %>%
   group_by(period) %>%
   summarise(
@@ -373,7 +414,7 @@ min_max_per_period_68 <- all_results_df %>%
     max_estimate = quantile(estimate,0.84, na.rm = TRUE)
   ) %>% ungroup()
 
-# Mean estimate per period.
+# Mean estimate per period. 
 mean_median_per_period <- all_results_df %>%
   group_by(period) %>%
   summarise(
@@ -381,57 +422,79 @@ mean_median_per_period <- all_results_df %>%
     median = median(estimate)
   ) %>% ungroup()
 
-# Generate the average IRF plot with publication bias correction range
-
+# Generate the average IRF data and plot
 figure_irf_range_correction_rate <- plot_average_irfs(
   filtered_data,
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = T
-) %>%
+  show_legend = T,
+  return_data = TRUE
+)
+
+# Join average IRF data with correction data
+min_max_per_period_95 <- min_max_per_period_95 %>%
+  rename(period.month = period, correction.min_estimate_95 = min_estimate, correction.max_estimate_95 = max_estimate)
+min_max_per_period_68 <- min_max_per_period_68 %>%
+  rename(period.month = period, correction.min_estimate_68 = min_estimate, correction.max_estimate_68 = max_estimate)
+mean_median_per_period <- mean_median_per_period %>%
+  rename(period.month = period, correction.mean = mean, correction.median = median)
+figure_irf_range_correction_rate$data <- figure_irf_range_correction_rate$data %>%
+  left_join(min_max_per_period_95, by = "period.month") %>%
+  left_join(min_max_per_period_68, by = "period.month") %>%
+  left_join(mean_median_per_period, by = "period.month")
+# Save figure data as csv
+write_csv(figure_irf_range_correction_rate$data, here::here("analysis/working_paper_1/figures/irf_range_correction/figure_irf_range_correction_rate.csv"))
+
+# Add publication bias correction range to plot
+figure_irf_range_correction_rate <- figure_irf_range_correction_rate$plot %>%
   add_ribbons(
     data = min_max_per_period_95,
-    x = ~period,
-    ymin = ~min_estimate,
-    ymax = ~max_estimate,
+    x = ~period.month,
+    ymin = ~correction.min_estimate_95,
+    ymax = ~correction.max_estimate_95,
     name = "P-bias corrections 95% range",
     line = list(color = 'rgba(0,0,0,0)'),
     fillcolor = 'rgba(244,2,3,0.2)'
   ) %>%
   add_ribbons(
     data = min_max_per_period_68,
-    x = ~period,
-    ymin = ~min_estimate,
-    ymax = ~max_estimate,
+    x = ~period.month,
+    ymin = ~correction.min_estimate_68,
+    ymax = ~correction.max_estimate_68,
     name = "P-bias corrections 68% range",
     line = list(color = 'rgba(0,0,0,0)'),
     fillcolor = 'rgba(244, 2, 3, 0.3)'
   ) %>% 
   add_lines(
     data = mean_median_per_period,
-    x = ~period,
-    y = ~mean,
+    x = ~period.month,
+    y = ~correction.mean,
     name = "Correction mean",
     line = list(color = 'darkred',
                 dash = 'dash')
   ) %>%
   # add_lines(
   #   data = mean_median_per_period,
-  #   x = ~period,
-  #   y = ~median,
+  #   x = ~period.month,
+  #   y = ~correction.median,
   #   name = "Correction median",
   #   line = list(color = 'darkred',
   #               dash = 'dot')
   # ) %>%
   layout(
-    title = "Output response to 100 bp rate shock, average and p-bias corrected range",
+    title = "Interest rate response to 100 bp interest rate shock, average and p-bias corrected range",
     xaxis = list(title = "Month"),
     yaxis = list(title = "Effect in %"),
     hovermode = "compare"
   )
-# Display the figure
 figure_irf_range_correction_rate
 
-
+# Save figure as pdf
+orca(figure_irf_range_correction_rate,
+     file = "analysis/working_paper_1/figures/irf_range_correction/figure_irf_range_correction_rate.pdf",
+     scale = NULL,
+     width = 1500 * 0.6,
+     height = 1100 * 0.6
+)

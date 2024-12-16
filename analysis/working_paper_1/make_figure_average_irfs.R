@@ -33,7 +33,7 @@ avg_irf_output <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output.csv"))
+write_csv(avg_irf_output$data, here::here(save_path, "avg_irf_output.csv"))
 # Change plot title
 avg_irf_output <- avg_irf_output$plot %>% plotly::layout(
   title = "Average IRF for Output"
@@ -51,7 +51,7 @@ avg_irf_output_median <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_median$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_median.csv"))
+write_csv(avg_irf_output_median$data, here::here(save_path, "avg_irf_output_median.csv"))
 # Change plot title
 avg_irf_output_median <- avg_irf_output_median$plot %>% plotly::layout(
   title = "Average and median IRF for Output"
@@ -72,7 +72,7 @@ avg_irf_pricelevel <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel.csv"))
+write_csv(avg_irf_pricelevel$data, here::here(save_path, "avg_irf_pricelevel.csv"))
 # Change plot title
 avg_irf_pricelevel <- avg_irf_pricelevel$plot %>% plotly::layout(
   title = "Average IRF for Inflation"
@@ -90,7 +90,7 @@ avg_irf_pricelevel_median <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_median$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_median.csv"))
+write_csv(avg_irf_pricelevel_median$data, here::here(save_path, "avg_irf_pricelevel_median.csv"))
 # Change plot title
 avg_irf_pricelevel_median <- avg_irf_pricelevel_median$plot %>% plotly::layout(
   title = "Average and median IRF for Inflation"
@@ -111,7 +111,7 @@ avg_irf_rate <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate.csv"))
+write_csv(avg_irf_rate$data, here::here(save_path, "avg_irf_rate.csv"))
 # Change plot title
 avg_irf_rate <- avg_irf_rate$plot %>% plotly::layout(
   title = "Average IRF for Interest Rate"
@@ -129,7 +129,7 @@ avg_irf_rate_median <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_median$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_median.csv"))
+write_csv(avg_irf_rate_median$data, here::here(save_path, "avg_irf_rate_median.csv"))
 # Change plot title
 avg_irf_rate_median <- avg_irf_rate_median$plot %>% plotly::layout(
   title = "Average and median IRF for Interest Rate"
@@ -231,7 +231,7 @@ avg_irf_output_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_top_journals.csv"))
+write_csv(avg_irf_output_top_journals$data, here::here(save_path, "avg_irf_output_top_journals.csv"))
 # Change plot title
 avg_irf_output_top_journals <- avg_irf_output_top_journals$plot %>% plotly::layout(
   title = "Average and median IRF for output in top journals"
@@ -249,7 +249,7 @@ avg_irf_output_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_other_publications.csv"))
+write_csv(avg_irf_output_other_publications$data, here::here(save_path, "avg_irf_output_other_publications.csv"))
 # Change plot title
 avg_irf_output_other_publications <- avg_irf_output_other_publications$plot %>% plotly::layout(
   title = "Average and median IRF for output in other publications"
@@ -319,7 +319,7 @@ avg_irf_output_cbanker <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_cbanker$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_cbanker.csv"))
+write_csv(avg_irf_output_cbanker$data, here::here(save_path, "avg_irf_output_cbanker.csv"))
 # Change plot title
 avg_irf_output_cbanker <- avg_irf_output_cbanker$plot %>% plotly::layout(
   title = "Average and median IRF for output in central bank affiliated publications"
@@ -336,7 +336,7 @@ avg_irf_output_non_cbanker <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_non_cbanker$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_non_cbanker.csv"))
+write_csv(avg_irf_output_non_cbanker$data, here::here(save_path, "avg_irf_output_non_cbanker.csv"))
 # Change plot title
 avg_irf_output_non_cbanker <- avg_irf_output_non_cbanker$plot %>% plotly::layout(
   title = "Average and median IRF for output in non-central bank affiliated publications"
@@ -405,7 +405,7 @@ avg_irf_output_chol <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_chol$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_chol.csv"))
+write_csv(avg_irf_output_chol$data, here::here(save_path, "avg_irf_output_chol.csv"))
 # Change plot title
 avg_irf_output_chol <- avg_irf_output_chol$plot %>% plotly::layout(
   title = "Cholesky"
@@ -423,7 +423,7 @@ avg_irf_output_signr <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_signr$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_signr.csv"))
+write_csv(avg_irf_output_signr$data, here::here(save_path, "avg_irf_output_signr.csv"))
 # Change plot title
 avg_irf_output_signr <- avg_irf_output_signr$plot %>% plotly::layout(
   title = "Sign restrictions"
@@ -441,7 +441,7 @@ avg_irf_output_hf <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_hf$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_hf.csv"))
+write_csv(avg_irf_output_hf$data, here::here(save_path, "avg_irf_output_hf.csv"))
 # Change plot title
 avg_irf_output_hf <- avg_irf_output_hf$plot %>% plotly::layout(
   title = "High frequency"
@@ -459,7 +459,7 @@ avg_irf_output_idother <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_idother$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_idother.csv"))
+write_csv(avg_irf_output_idother$data, here::here(save_path, "avg_irf_output_idother.csv"))
 # Change plot title
 avg_irf_output_idother <- avg_irf_output_idother$plot %>% plotly::layout(
   title = "Other identification methods"
@@ -477,7 +477,7 @@ avg_irf_output_nr <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_nr$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_nr.csv"))
+write_csv(avg_irf_output_nr$data, here::here(save_path, "avg_irf_output_nr.csv"))
 # Change plot title
 avg_irf_output_nr <- avg_irf_output_nr$plot %>% plotly::layout(
   title = "Narrative"
@@ -566,7 +566,7 @@ avg_irf_output_chol_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_chol_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_chol_top_journals.csv"))
+write_csv(avg_irf_output_chol_top_journals$data, here::here(save_path, "avg_irf_output_chol_top_journals.csv"))
 # Change plot title
 avg_irf_output_chol_top_journals <- avg_irf_output_chol_top_journals$plot %>% plotly::layout(
   title = "Cholesky"
@@ -584,7 +584,7 @@ avg_irf_output_signr_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_signr_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_signr_top_journals.csv"))
+write_csv(avg_irf_output_signr_top_journals$data, here::here(save_path, "avg_irf_output_signr_top_journals.csv"))
 # Change plot title
 avg_irf_output_signr_top_journals <- avg_irf_output_signr_top_journals$plot %>% plotly::layout(
   title = "Sign restrictions"
@@ -602,7 +602,7 @@ avg_irf_output_hf_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_hf_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_hf_top_journals.csv"))
+write_csv(avg_irf_output_hf_top_journals$data, here::here(save_path, "avg_irf_output_hf_top_journals.csv"))
 # Change plot title
 avg_irf_output_hf_top_journals <- avg_irf_output_hf_top_journals$plot %>% plotly::layout(
   title = "High frequency"
@@ -620,7 +620,7 @@ avg_irf_output_idother_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_idother_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_idother_top_journals.csv"))
+write_csv(avg_irf_output_idother_top_journals$data, here::here(save_path, "avg_irf_output_idother_top_journals.csv"))
 # Change plot title
 avg_irf_output_idother_top_journals <- avg_irf_output_idother_top_journals$plot %>% plotly::layout(
   title = "Other identification methods"
@@ -638,7 +638,7 @@ avg_irf_output_nr_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_nr_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_nr_top_journals.csv"))
+write_csv(avg_irf_output_nr_top_journals$data, here::here(save_path, "avg_irf_output_nr_top_journals.csv"))
 # Change plot title
 avg_irf_output_nr_top_journals <- avg_irf_output_nr_top_journals$plot %>% plotly::layout(
   title = "Narrative"
@@ -709,7 +709,7 @@ avg_irf_output_chol_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_chol_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_chol_other_publications.csv"))
+write_csv(avg_irf_output_chol_other_publications$data, here::here(save_path, "avg_irf_output_chol_other_publications.csv"))
 # Change plot title
 avg_irf_output_chol_other_publications <- avg_irf_output_chol_other_publications$plot %>% plotly::layout(
   title = "Cholesky"
@@ -727,7 +727,7 @@ avg_irf_output_signr_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_signr_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_signr_other_publications.csv"))
+write_csv(avg_irf_output_signr_other_publications$data, here::here(save_path, "avg_irf_output_signr_other_publications.csv"))
 # Change plot title
 avg_irf_output_signr_other_publications <- avg_irf_output_signr_other_publications$plot %>% plotly::layout(
   title = "Sign restrictions"
@@ -745,7 +745,7 @@ avg_irf_output_hf_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_hf_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_hf_other_publications.csv"))
+write_csv(avg_irf_output_hf_other_publications$data, here::here(save_path, "avg_irf_output_hf_other_publications.csv"))
 # Change plot title
 avg_irf_output_hf_other_publications <- avg_irf_output_hf_other_publications$plot %>% plotly::layout(
   title = "High frequency"
@@ -763,7 +763,7 @@ avg_irf_output_idother_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_idother_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_idother_other_publications.csv"))
+write_csv(avg_irf_output_idother_other_publications$data, here::here(save_path, "avg_irf_output_idother_other_publications.csv"))
 # Change plot title
 avg_irf_output_idother_other_publications <- avg_irf_output_idother_other_publications$plot %>% plotly::layout(
   title = "Other identification methods"
@@ -781,7 +781,7 @@ avg_irf_output_nr_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_nr_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_nr_other_publications.csv"))
+write_csv(avg_irf_output_nr_other_publications$data, here::here(save_path, "avg_irf_output_nr_other_publications.csv"))
 # Change plot title
 avg_irf_output_nr_other_publications <- avg_irf_output_nr_other_publications$plot %>% plotly::layout(
   title = "Narrative"
@@ -888,7 +888,7 @@ avg_irf_output_us <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_us$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_us.csv"))
+write_csv(avg_irf_output_us$data, here::here(save_path, "avg_irf_output_us.csv"))
 # Change plot title
 avg_irf_output_us <- avg_irf_output_us$plot %>% plotly::layout(
   title = "US"
@@ -906,7 +906,7 @@ avg_irf_output_ea12 <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_ea12$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_ea12.csv"))
+write_csv(avg_irf_output_ea12$data, here::here(save_path, "avg_irf_output_ea12.csv"))
 # Change plot title
 avg_irf_output_ea12 <- avg_irf_output_ea12$plot %>% plotly::layout(
   title = "EA12"
@@ -924,7 +924,7 @@ avg_irf_output_upper_middle <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_upper_middle$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_upper_middle.csv"))
+write_csv(avg_irf_output_upper_middle$data, here::here(save_path, "avg_irf_output_upper_middle.csv"))
 # Change plot title
 avg_irf_output_upper_middle <- avg_irf_output_upper_middle$plot %>% plotly::layout(
   title = "Emerging Economies"
@@ -942,7 +942,7 @@ avg_irf_output_other_advanced <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_other_advanced$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_output_other_advanced.csv"))
+write_csv(avg_irf_output_other_advanced$data, here::here(save_path, "avg_irf_output_other_advanced.csv"))
 # Change plot title
 avg_irf_output_other_advanced <- avg_irf_output_other_advanced$plot %>% plotly::layout(
   title = "Other advanced"
@@ -1051,7 +1051,7 @@ avg_irf_pricelevel_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_top_journals.csv"))
+write_csv(avg_irf_pricelevel_top_journals$data, here::here(save_path, "avg_irf_pricelevel_top_journals.csv"))
 # Change plot title
 avg_irf_pricelevel_top_journals <- avg_irf_pricelevel_top_journals$plot %>% plotly::layout(
   title = "Top journals"
@@ -1069,7 +1069,7 @@ avg_irf_pricelevel_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_other_publications.csv"))
+write_csv(avg_irf_pricelevel_other_publications$data, here::here(save_path, "avg_irf_pricelevel_other_publications.csv"))
 # Change plot title
 avg_irf_pricelevel_other_publications <- avg_irf_pricelevel_other_publications$plot %>% plotly::layout(
   title = "Other publications"
@@ -1140,7 +1140,7 @@ avg_irf_pricelevel_cbanker <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_cbanker$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_cbanker.csv"))
+write_csv(avg_irf_pricelevel_cbanker$data, here::here(save_path, "avg_irf_pricelevel_cbanker.csv"))
 # Change plot title
 avg_irf_pricelevel_cbanker <- avg_irf_pricelevel_cbanker$plot %>% plotly::layout(
   title = "Central bank affiliated"
@@ -1157,7 +1157,7 @@ avg_irf_pricelevel_non_cbanker <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_non_cbanker$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_non_cbanker.csv"))
+write_csv(avg_irf_pricelevel_non_cbanker$data, here::here(save_path, "avg_irf_pricelevel_non_cbanker.csv"))
 # Change plot title
 avg_irf_pricelevel_non_cbanker <- avg_irf_pricelevel_non_cbanker$plot %>% plotly::layout(
   title = "Non-central bank affiliated"
@@ -1215,7 +1215,7 @@ avg_irf_pricelevel_chol <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_chol$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_chol.csv"))
+write_csv(avg_irf_pricelevel_chol$data, here::here(save_path, "avg_irf_pricelevel_chol.csv"))
 # Change plot title
 avg_irf_pricelevel_chol <- avg_irf_pricelevel_chol$plot %>% plotly::layout(
   title = "Cholesky"
@@ -1233,7 +1233,7 @@ avg_irf_pricelevel_signr <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_signr$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_signr.csv"))
+write_csv(avg_irf_pricelevel_signr$data, here::here(save_path, "avg_irf_pricelevel_signr.csv"))
 # Change plot title
 avg_irf_pricelevel_signr <- avg_irf_pricelevel_signr$plot %>% plotly::layout(
   title = "Sign restrictions"
@@ -1251,7 +1251,7 @@ avg_irf_pricelevel_hf <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_hf$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_hf.csv"))
+write_csv(avg_irf_pricelevel_hf$data, here::here(save_path, "avg_irf_pricelevel_hf.csv"))
 # Change plot title
 avg_irf_pricelevel_hf <- avg_irf_pricelevel_hf$plot %>% plotly::layout(
   title = "High frequency"
@@ -1269,7 +1269,7 @@ avg_irf_pricelevel_idother <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_idother$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_idother.csv"))
+write_csv(avg_irf_pricelevel_idother$data, here::here(save_path, "avg_irf_pricelevel_idother.csv"))
 # Change plot title
 avg_irf_pricelevel_idother <- avg_irf_pricelevel_idother$plot %>% plotly::layout(
   title = "Other identification methods"
@@ -1287,7 +1287,7 @@ avg_irf_pricelevel_nr <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_nr$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_nr.csv"))
+write_csv(avg_irf_pricelevel_nr$data, here::here(save_path, "avg_irf_pricelevel_nr.csv"))
 # Change plot title
 avg_irf_pricelevel_nr <- avg_irf_pricelevel_nr$plot %>% plotly::layout(
   title = "Narrative"
@@ -1365,7 +1365,7 @@ avg_irf_pricelevel_chol_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_chol_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_chol_top_journals.csv"))
+write_csv(avg_irf_pricelevel_chol_top_journals$data, here::here(save_path, "avg_irf_pricelevel_chol_top_journals.csv"))
 # Change plot title
 avg_irf_pricelevel_chol_top_journals <- avg_irf_pricelevel_chol_top_journals$plot %>% plotly::layout(
   title = "Cholesky"
@@ -1383,7 +1383,7 @@ avg_irf_pricelevel_signr_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_signr_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_signr_top_journals.csv"))
+write_csv(avg_irf_pricelevel_signr_top_journals$data, here::here(save_path, "avg_irf_pricelevel_signr_top_journals.csv"))
 # Change plot title
 avg_irf_pricelevel_signr_top_journals <- avg_irf_pricelevel_signr_top_journals$plot %>% plotly::layout(
   title = "Sign restrictions"
@@ -1401,7 +1401,7 @@ avg_irf_pricelevel_hf_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_hf_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_hf_top_journals.csv"))
+write_csv(avg_irf_pricelevel_hf_top_journals$data, here::here(save_path, "avg_irf_pricelevel_hf_top_journals.csv"))
 # Change plot title
 avg_irf_pricelevel_hf_top_journals <- avg_irf_pricelevel_hf_top_journals$plot %>% plotly::layout(
   title = "High frequency"
@@ -1419,7 +1419,7 @@ avg_irf_pricelevel_idother_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_idother_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_idother_top_journals.csv"))
+write_csv(avg_irf_pricelevel_idother_top_journals$data, here::here(save_path, "avg_irf_pricelevel_idother_top_journals.csv"))
 # Change plot title
 avg_irf_pricelevel_idother_top_journals <- avg_irf_pricelevel_idother_top_journals$plot %>% plotly::layout(
   title = "Other identification methods"
@@ -1437,7 +1437,7 @@ avg_irf_pricelevel_nr_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_nr_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_nr_top_journals.csv"))
+write_csv(avg_irf_pricelevel_nr_top_journals$data, here::here(save_path, "avg_irf_pricelevel_nr_top_journals.csv"))
 # Change plot title
 avg_irf_pricelevel_nr_top_journals <- avg_irf_pricelevel_nr_top_journals$plot %>% plotly::layout(
   title = "Narrative"
@@ -1514,7 +1514,7 @@ avg_irf_pricelevel_chol_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_chol_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_chol_other_publications.csv"))
+write_csv(avg_irf_pricelevel_chol_other_publications$data, here::here(save_path, "avg_irf_pricelevel_chol_other_publications.csv"))
 # Change plot title
 avg_irf_pricelevel_chol_other_publications <- avg_irf_pricelevel_chol_other_publications$plot %>% plotly::layout(
   title = "Cholesky"
@@ -1532,7 +1532,7 @@ avg_irf_pricelevel_signr_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_signr_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_signr_other_publications.csv"))
+write_csv(avg_irf_pricelevel_signr_other_publications$data, here::here(save_path, "avg_irf_pricelevel_signr_other_publications.csv"))
 # Change plot title
 avg_irf_pricelevel_signr_other_publications <- avg_irf_pricelevel_signr_other_publications$plot %>% plotly::layout(
   title = "Sign restrictions"
@@ -1550,7 +1550,7 @@ avg_irf_pricelevel_hf_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_hf_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_hf_other_publications.csv"))
+write_csv(avg_irf_pricelevel_hf_other_publications$data, here::here(save_path, "avg_irf_pricelevel_hf_other_publications.csv"))
 # Change plot title
 avg_irf_pricelevel_hf_other_publications <- avg_irf_pricelevel_hf_other_publications$plot %>% plotly::layout(
   title = "High frequency"
@@ -1568,7 +1568,7 @@ avg_irf_pricelevel_idother_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_idother_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_idother_other_publications.csv"))
+write_csv(avg_irf_pricelevel_idother_other_publications$data, here::here(save_path, "avg_irf_pricelevel_idother_other_publications.csv"))
 # Change plot title
 avg_irf_pricelevel_idother_other_publications <- avg_irf_pricelevel_idother_other_publications$plot %>% plotly::layout(
   title = "Other identification methods"
@@ -1586,7 +1586,7 @@ avg_irf_pricelevel_nr_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_nr_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_nr_other_publications.csv"))
+write_csv(avg_irf_pricelevel_nr_other_publications$data, here::here(save_path, "avg_irf_pricelevel_nr_other_publications.csv"))
 # Change plot title
 avg_irf_pricelevel_nr_other_publications <- avg_irf_pricelevel_nr_other_publications$plot %>% plotly::layout(
   title = "Narrative"
@@ -1699,7 +1699,7 @@ avg_irf_pricelevel_us <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_us$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_us.csv"))
+write_csv(avg_irf_pricelevel_us$data, here::here(save_path, "avg_irf_pricelevel_us.csv"))
 # Change plot title
 avg_irf_pricelevel_us <- avg_irf_pricelevel_us$plot %>% plotly::layout(
   title = "US"
@@ -1717,7 +1717,7 @@ avg_irf_pricelevel_ea12 <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_ea12$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_ea12.csv"))
+write_csv(avg_irf_pricelevel_ea12$data, here::here(save_path, "avg_irf_pricelevel_ea12.csv"))
 # Change plot title
 avg_irf_pricelevel_ea12 <- avg_irf_pricelevel_ea12$plot %>% plotly::layout(
   title = "EA12"
@@ -1735,7 +1735,7 @@ avg_irf_pricelevel_upper_middle <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_upper_middle$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_upper_middle.csv"))
+write_csv(avg_irf_pricelevel_upper_middle$data, here::here(save_path, "avg_irf_pricelevel_upper_middle.csv"))
 # Change plot title
 avg_irf_pricelevel_upper_middle <- avg_irf_pricelevel_upper_middle$plot %>% plotly::layout(
   title = "Upper middle income countries"
@@ -1753,7 +1753,7 @@ avg_irf_pricelevel_other_advanced <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_other_advanced$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_pricelevel_other_advanced.csv"))
+write_csv(avg_irf_pricelevel_other_advanced$data, here::here(save_path, "avg_irf_pricelevel_other_advanced.csv"))
 # Change plot title
 avg_irf_pricelevel_other_advanced <- avg_irf_pricelevel_other_advanced$plot %>% plotly::layout(
   title = "Other advanced economies"
@@ -1865,7 +1865,7 @@ avg_irf_rate_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_top_journals.csv"))
+write_csv(avg_irf_rate_top_journals$data, here::here(save_path, "avg_irf_rate_top_journals.csv"))
 # Change plot title
 avg_irf_rate_top_journals <- avg_irf_rate_top_journals$plot %>% plotly::layout(
   title = "Top journals"
@@ -1883,7 +1883,7 @@ avg_irf_rate_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_other_publications.csv"))
+write_csv(avg_irf_rate_other_publications$data, here::here(save_path, "avg_irf_rate_other_publications.csv"))
 # Change plot title
 avg_irf_rate_other_publications <- avg_irf_rate_other_publications$plot %>% plotly::layout(
   title = "Other publications"
@@ -1938,7 +1938,7 @@ avg_irf_rate_cbanker <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_cbanker$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_cbanker.csv"))
+write_csv(avg_irf_rate_cbanker$data, here::here(save_path, "avg_irf_rate_cbanker.csv"))
 # Change plot title
 avg_irf_rate_cbanker <- avg_irf_rate_cbanker$plot %>% plotly::layout(
   title = "Central bank affiliated"
@@ -1955,7 +1955,7 @@ avg_irf_rate_non_cbanker <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_non_cbanker$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_non_cbanker.csv"))
+write_csv(avg_irf_rate_non_cbanker$data, here::here(save_path, "avg_irf_rate_non_cbanker.csv"))
 # Change plot title
 avg_irf_rate_non_cbanker <- avg_irf_rate_non_cbanker$plot %>% plotly::layout(
   title = "Non-central bank affiliated"
@@ -2013,7 +2013,7 @@ avg_irf_rate_chol <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_chol$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_chol.csv"))
+write_csv(avg_irf_rate_chol$data, here::here(save_path, "avg_irf_rate_chol.csv"))
 
 #### For Sign restrictions
 avg_irf_rate_signr <- plot_average_irfs(
@@ -2027,7 +2027,7 @@ avg_irf_rate_signr <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_signr$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_signr.csv"))
+write_csv(avg_irf_rate_signr$data, here::here(save_path, "avg_irf_rate_signr.csv"))
 
 #### For High frequency
 avg_irf_rate_hf <- plot_average_irfs(
@@ -2041,7 +2041,7 @@ avg_irf_rate_hf <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_hf$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_hf.csv"))
+write_csv(avg_irf_rate_hf$data, here::here(save_path, "avg_irf_rate_hf.csv"))
 
 #### For Other identification methods
 avg_irf_rate_idother <- plot_average_irfs(
@@ -2055,7 +2055,7 @@ avg_irf_rate_idother <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_idother$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_idother.csv"))
+write_csv(avg_irf_rate_idother$data, here::here(save_path, "avg_irf_rate_idother.csv"))
 
 #### For narrative
 avg_irf_rate_nr <- plot_average_irfs(
@@ -2069,7 +2069,7 @@ avg_irf_rate_nr <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_nr$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_nr.csv"))
+write_csv(avg_irf_rate_nr$data, here::here(save_path, "avg_irf_rate_nr.csv"))
 
 # Joint figure, one row
 y_lims <- c(-1.5, 2.2)
@@ -2143,7 +2143,7 @@ avg_irf_rate_chol_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_chol_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_chol_top_journals.csv"))
+write_csv(avg_irf_rate_chol_top_journals$data, here::here(save_path, "avg_irf_rate_chol_top_journals.csv"))
 
 #### For Sign restrictions
 avg_irf_rate_signr_top_journals <- plot_average_irfs(
@@ -2157,7 +2157,7 @@ avg_irf_rate_signr_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_signr_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_signr_top_journals.csv"))
+write_csv(avg_irf_rate_signr_top_journals$data, here::here(save_path, "avg_irf_rate_signr_top_journals.csv"))
 
 #### For High frequency
 avg_irf_rate_hf_top_journals <- plot_average_irfs(
@@ -2171,7 +2171,7 @@ avg_irf_rate_hf_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_hf_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_hf_top_journals.csv"))
+write_csv(avg_irf_rate_hf_top_journals$data, here::here(save_path, "avg_irf_rate_hf_top_journals.csv"))
 
 #### For Other identification methods
 avg_irf_rate_idother_top_journals <- plot_average_irfs(
@@ -2185,7 +2185,7 @@ avg_irf_rate_idother_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_idother_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_idother_top_journals.csv"))
+write_csv(avg_irf_rate_idother_top_journals$data, here::here(save_path, "avg_irf_rate_idother_top_journals.csv"))
 
 #### For narrative
 avg_irf_rate_nr_top_journals <- plot_average_irfs(
@@ -2199,7 +2199,7 @@ avg_irf_rate_nr_top_journals <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_nr_top_journals$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_nr_top_journals.csv"))
+write_csv(avg_irf_rate_nr_top_journals$data, here::here(save_path, "avg_irf_rate_nr_top_journals.csv"))
 
 # Joint figure, one row
 y_lims <- c(-1.6, 2.2)
@@ -2273,7 +2273,7 @@ avg_irf_rate_chol_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_chol_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_chol_other_publications.csv"))
+write_csv(avg_irf_rate_chol_other_publications$data, here::here(save_path, "avg_irf_rate_chol_other_publications.csv"))
 
 #### For Sign restrictions
 avg_irf_rate_signr_other_publications <- plot_average_irfs(
@@ -2287,7 +2287,7 @@ avg_irf_rate_signr_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_signr_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_signr_other_publications.csv"))
+write_csv(avg_irf_rate_signr_other_publications$data, here::here(save_path, "avg_irf_rate_signr_other_publications.csv"))
 
 #### For High frequency
 avg_irf_rate_hf_other_publications <- plot_average_irfs(
@@ -2301,7 +2301,7 @@ avg_irf_rate_hf_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_hf_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_hf_other_publications.csv"))
+write_csv(avg_irf_rate_hf_other_publications$data, here::here(save_path, "avg_irf_rate_hf_other_publications.csv"))
 
 #### For Other identification methods
 avg_irf_rate_idother_other_publications <- plot_average_irfs(
@@ -2315,7 +2315,7 @@ avg_irf_rate_idother_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_idother_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_idother_other_publications.csv"))
+write_csv(avg_irf_rate_idother_other_publications$data, here::here(save_path, "avg_irf_rate_idother_other_publications.csv"))
 
 #### For narrative
 avg_irf_rate_nr_other_publications <- plot_average_irfs(
@@ -2329,7 +2329,7 @@ avg_irf_rate_nr_other_publications <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_rate_nr_other_publications$data %>% dplyr::rename(avg.effect = avg_mean.effect, median.effect = median_mean.effect), here::here(save_path, "avg_irf_rate_nr_other_publications.csv"))
+write_csv(avg_irf_rate_nr_other_publications$data, here::here(save_path, "avg_irf_rate_nr_other_publications.csv"))
 
 # Joint figure, one row
 y_lims <- c(-1.5, 2.2)

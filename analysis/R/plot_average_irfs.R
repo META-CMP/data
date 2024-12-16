@@ -43,14 +43,14 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
   average_irf <- data %>%
     group_by(period.month) %>%
     summarise(
-      avg_mean.effect = mean(mean.effect, na.rm = TRUE),
+      avg.effect = mean(mean.effect, na.rm = TRUE),
       avg_CI.lower_68 = mean(approx.CI.lower_68, na.rm = TRUE),
       avg_CI.upper_68 = mean(approx.CI.upper_68, na.rm = TRUE),
       avg_CI.lower_90 = mean(approx.CI.lower_90, na.rm = TRUE),
       avg_CI.upper_90 = mean(approx.CI.upper_90, na.rm = TRUE),
       avg_CI.lower_95 = mean(approx.CI.lower_95, na.rm = TRUE),
       avg_CI.upper_95 = mean(approx.CI.upper_95, na.rm = TRUE),
-      median_mean.effect = median(mean.effect, na.rm = TRUE),
+      median.effect = median(mean.effect, na.rm = TRUE),
       median_CI.lower_68 = median(approx.CI.lower_68, na.rm = TRUE),
       median_CI.upper_68 = median(approx.CI.upper_68, na.rm = TRUE),
       median_CI.lower_90 = median(approx.CI.lower_90, na.rm = TRUE),
@@ -93,7 +93,7 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
     ) %>%
     add_lines(
       x = ~period.month,
-      y = ~avg_mean.effect,
+      y = ~avg.effect,
       name = "Average effect",
       line = list(color = 'rgba(0,76,153,0.5)', width = 2)
     ) %>%
@@ -109,7 +109,7 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
     plot <- plot %>%
       add_lines(
         x = ~period.month,
-        y = ~median_mean.effect,
+        y = ~median.effect,
         name = "Median",
         line = list(color = 'rgba(255,0,0,0.5)', width = 2)
       ) %>%
@@ -155,8 +155,23 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
     
   }
   
-  # Optionally return the data alongside the plot
+  # Return data and/or plot based on return_data parameter
   if (return_data) {
+    if (!is.null(corrected_irf)) {
+      # Rename corrected_irf columns to avoid conflicts
+      corrected_data <- corrected_irf %>%
+        rename(
+          corrected_estimate = estimate,
+          corrected_lower = lower,
+          corrected_upper = upper
+        ) %>%
+        rename(period.month = period)  # Align with average_irf column name
+      
+      # Join with average_irf
+      combined_data <- left_join(average_irf, corrected_data, by = "period.month")
+      return(list(plot = plot, data = combined_data))
+    }
+    
     return(list(plot = plot, data = average_irf))
   }
   

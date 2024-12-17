@@ -11,7 +11,7 @@
         "cum": false
     }, 
     "impulse_and_response_variables": { 
-        "inttype": "lev_a_3_month_rate", 
+        "inttype": "lev_a_3_month_nibor", 
         "size": "100bp", 
         "axis_trans": false, 
         "dep": "logdiff_a_cpi log_q_rgdp", 

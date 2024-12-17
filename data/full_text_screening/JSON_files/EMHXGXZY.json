@@ -44,7 +44,7 @@
         "cum": false
     },
     "impulse_and_response_variables": {
-        "inttype": "lev_a_short_rate",
+        "inttype": "lev_a_policy_rate",
         "size": {
           "model_1": "9bp",
           "model_2": "9bp",

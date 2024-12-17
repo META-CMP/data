@@ -57,6 +57,58 @@ avg_irf_output_median <- avg_irf_output_median$plot %>% plotly::layout(
   title = "Average and median IRF for Output"
 )
 
+## With median, with SE bounds ----
+avg_irf_output_median_se_bounds <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE,
+  show_median = TRUE,
+  ci_method = "avg.se",
+  se_multiplier = 2,
+  return_data = TRUE
+)
+# Save data as csv
+write_csv(avg_irf_output_median_se_bounds$data, here::here(save_path, "avg_irf_output_median_se_bounds.csv"))
+# Change plot title
+avg_irf_output_median_se_bounds <- avg_irf_output_median_se_bounds$plot %>% plotly::layout(
+  title = "Average and median IRF for Output"
+)
+# Comparison plot avg_irf_output_median and avg_irf_output_median_se_bounds with same ylim and next to each other
+figure_avg_irf_output_median_se_bounds <- subplot(avg_irf_output_median, 
+                                                  avg_irf_output_median_se_bounds, 
+                                                  nrows = 1, 
+                                                  margin = 0.03) %>% layout(
+  showlegend=FALSE,
+  title = 'Average effects of conventional monetary policy shocks on output',
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.25, y = 1, text = "With approx. CI bounds", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.75, y = 1, text = "With SE bounds", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+), margin = list(t = 60)) %>%
+  layout(
+    xaxis = list(title = "Months"),
+    xaxis2 = list(title = "Months"),
+    yaxis = list(title = "Effect (%)",
+                 range = list(-2.8,0.8)
+    ),
+    yaxis2 = list(range = list(-2.8,0.8)
+    ),
+    hovermode = "compare"
+  )
+# Save as pdf
+orca(figure_avg_irf_output_median_se_bounds,
+     file = "analysis/working_paper_1/figures/average_irfs/figure_avg_irf_output_median_se_bounds.pdf",
+     scale = NULL,
+     width = 1500,
+     height = NULL
+)
+
 # For price level ----
 out_var <- "inflation"
 
@@ -96,6 +148,58 @@ avg_irf_pricelevel_median <- avg_irf_pricelevel_median$plot %>% plotly::layout(
   title = "Average and median IRF for Inflation"
 )
 
+## With median, with SE bounds ----
+avg_irf_pricelevel_median_se_bounds <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE,
+  show_median = TRUE,
+  ci_method = "avg.se",
+  se_multiplier = 2,
+  return_data = TRUE
+)
+# Save data as csv
+write_csv(avg_irf_pricelevel_median_se_bounds$data, here::here(save_path, "avg_irf_pricelevel_median_se_bounds.csv"))
+# Change plot title
+avg_irf_pricelevel_median_se_bounds <- avg_irf_pricelevel_median_se_bounds$plot %>% plotly::layout(
+  title = "Average and median IRF for Inflation"
+)
+# Comparison plot avg_irf_pricelevel_median and avg_irf_pricelevel_median_se_bounds with same ylim and next to each other
+figure_avg_irf_pricelevel_median_se_bounds <- subplot(avg_irf_pricelevel_median, 
+                                                      avg_irf_pricelevel_median_se_bounds, 
+                                                      nrows = 1, 
+                                                      margin = 0.03) %>% layout(
+  showlegend=FALSE,
+  title = 'Average effects of conventional monetary policy shocks on inflation',
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.25, y = 1, text = "With approx. CI bounds", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.75, y = 1, text = "With SE bounds", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+), margin = list(t = 60)) %>%
+  layout(
+    xaxis = list(title = "Months"),
+    xaxis2 = list(title = "Months"),
+    yaxis = list(title = "Effect (%)",
+                 range = list(-2.8,0.8)
+    ),
+    yaxis2 = list(range = list(-2.8,0.8)
+    ),
+    hovermode = "compare"
+  )
+# Save as pdf
+orca(figure_avg_irf_pricelevel_median_se_bounds,
+     file = "analysis/working_paper_1/figures/average_irfs/figure_avg_irf_pricelevel_median_se_bounds.pdf",
+     scale = NULL,
+     width = 1500,
+     height = NULL
+)
+
 # For the interest rate ----
 out_var <- "rate"
 
@@ -133,6 +237,58 @@ write_csv(avg_irf_rate_median$data, here::here(save_path, "avg_irf_rate_median.c
 # Change plot title
 avg_irf_rate_median <- avg_irf_rate_median$plot %>% plotly::layout(
   title = "Average and median IRF for Interest Rate"
+)
+
+## With median, with SE bounds ----
+avg_irf_rate_median_se_bounds <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE,
+  show_median = TRUE,
+  ci_method = "avg.se",
+  se_multiplier = 2,
+  return_data = TRUE
+)
+# Save data as csv
+write_csv(avg_irf_rate_median_se_bounds$data, here::here(save_path, "avg_irf_rate_median_se_bounds.csv"))
+# Change plot title
+avg_irf_rate_median_se_bounds <- avg_irf_rate_median_se_bounds$plot %>% plotly::layout(
+  title = "Average and median IRF for Interest Rate"
+)
+# Comparison plot avg_irf_rate_median and avg_irf_rate_median_se_bounds with same ylim and next to each other
+figure_avg_irf_rate_median_se_bounds <- subplot(avg_irf_rate_median, 
+                                                avg_irf_rate_median_se_bounds, 
+                                                nrows = 1, 
+                                                margin = 0.03) %>% layout(
+  showlegend=FALSE,
+  title = 'Average effects of conventional monetary policy shocks on the interest rate',
+  xaxis3 = list(title = "Month"), # x-axis for plot 3
+  xaxis4 = list(title = "Month")  # x-axis for plot 4
+) %>% layout(annotations = list(
+  list(x = 0.25, y = 1, text = "With approx. CI bounds", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom"),
+  list(x = 0.75, y = 1, text = "With SE bounds", showarrow = FALSE, xref = "paper", yref = "paper",
+       xanchor = "center", yanchor = "bottom")
+), margin = list(t = 60)) %>%
+  layout(
+    xaxis = list(title = "Months"),
+    xaxis2 = list(title = "Months"),
+    yaxis = list(title = "Effect (%)",
+                 range = list(-1,1.5)
+    ),
+    yaxis2 = list(range = list(-1,1.5)
+    ),
+    hovermode = "compare"
+  )
+# Save as pdf
+orca(figure_avg_irf_rate_median_se_bounds,
+     file = "analysis/working_paper_1/figures/average_irfs/figure_avg_irf_rate_median_se_bounds.pdf",
+     scale = NULL,
+     width = 1500,
+     height = NULL
 )
 
 # Joint figure of average IRFs for output and price level ----

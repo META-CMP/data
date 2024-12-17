@@ -110,18 +110,18 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
   if (ci_method == "avg.se") {
     average_irf <- average_irf %>%
       mutate(
-        avg_bound_upper_se = avg_mean.effect + avg_SE.upper,
-        avg_bound_lower_se = avg_mean.effect - avg_SE.lower,
-        median_bound_upper_se = median_mean.effect + median_SE.upper,
-        median_bound_lower_se = median_mean.effect - median_SE.lower
+        avg_bound_upper_se = avg.effect + avg_SE.upper,
+        avg_bound_lower_se = avg.effect - avg_SE.lower,
+        median_bound_upper_se = median.effect + median_SE.upper,
+        median_bound_lower_se = median.effect - median_SE.lower
       )
     if (se_multiplier != 1) {
       average_irf <- average_irf %>%
         mutate(
-          avg_bound_upper_se_multiplier = avg_mean.effect + (se_multiplier * avg_SE.upper),
-          avg_bound_lower_se_multiplier = avg_mean.effect - (se_multiplier * avg_SE.lower),
-          median_bound_upper_se_multiplier = median_mean.effect + (se_multiplier * median_SE.upper),
-          median_bound_lower_se_multiplier = median_mean.effect - (se_multiplier * median_SE.lower)
+          avg_bound_upper_se_multiplier = avg.effect + (se_multiplier * avg_SE.upper),
+          avg_bound_lower_se_multiplier = avg.effect - (se_multiplier * avg_SE.lower),
+          median_bound_upper_se_multiplier = median.effect + (se_multiplier * median_SE.upper),
+          median_bound_lower_se_multiplier = median.effect - (se_multiplier * median_SE.lower)
         )
     }
   }

@@ -1070,7 +1070,7 @@ avg_irf_output_ea12 <- avg_irf_output_ea12$plot %>% plotly::layout(
 
 #### Upper middle ----
 avg_irf_output_upper_middle <- plot_average_irfs(
-  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, upper_middle == 1),
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, upper_middle_income == 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
@@ -1086,9 +1086,9 @@ avg_irf_output_upper_middle <- avg_irf_output_upper_middle$plot %>% plotly::layo
   title = "Emerging Economies"
 )
 
-#### Other advanced  ----
-avg_irf_output_other_advanced <- plot_average_irfs(
-  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, advanced == 1, ea12 != 1, us != 1),
+#### Other high_income  ----
+avg_irf_output_other_high_income <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, high_income == 1, ea12 != 1, us != 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
@@ -1098,10 +1098,10 @@ avg_irf_output_other_advanced <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_output_other_advanced$data, here::here(save_path, "avg_irf_output_other_advanced.csv"))
+write_csv(avg_irf_output_other_high_income$data, here::here(save_path, "avg_irf_output_other_high_income.csv"))
 # Change plot title
-avg_irf_output_other_advanced <- avg_irf_output_other_advanced$plot %>% plotly::layout(
-  title = "Other advanced"
+avg_irf_output_other_high_income <- avg_irf_output_other_high_income$plot %>% plotly::layout(
+  title = "Other high_income"
 )
 
 #### Joint plot 
@@ -1109,7 +1109,7 @@ y_lims <- c(-3.3, 1.6)
 figure_average_irfs_output_country_region <- subplot(avg_irf_output_us, 
                                                      avg_irf_output_ea12, 
                                                      avg_irf_output_upper_middle, 
-                                                     avg_irf_output_other_advanced, 
+                                                     avg_irf_output_other_high_income, 
                                                      nrows = 1, 
                                                      margin = 0.03) %>% layout(
   showlegend=FALSE,
@@ -1125,7 +1125,7 @@ figure_average_irfs_output_country_region <- subplot(avg_irf_output_us,
        xanchor = "center", yanchor = "bottom"),
   list(x = 0.65, y = 1, text = "Emerging Economies", showarrow = FALSE, xref = "paper", yref = "paper",
        xanchor = "center", yanchor = "bottom"),
-  list(x = 0.9, y = 1, text = "Other advanced", showarrow = FALSE, xref = "paper", yref = "paper",
+  list(x = 0.9, y = 1, text = "Other Advanced", showarrow = FALSE, xref = "paper", yref = "paper",
        xanchor = "center", yanchor = "bottom")
 ), margin = list(t = 60)) %>%
   layout(
@@ -1158,16 +1158,16 @@ orca(figure_average_irfs_output_country_region,
 #### Sample size plot for country/region
 print(d_no_qc %>% # Proportions by period
         filter(period.month %in% seq(0,60,by=3), outcome == out_var) %>%
-        count(period.month, us, ea12, upper_middle, advanced) %>%
+        count(period.month, us, ea12, upper_middle_income, high_income) %>%
         group_by(period.month) %>%
         mutate(proportion = n / sum(n)), n = 105)
 
 ggplot(d_no_qc %>% 
          filter(period.month %in% seq(0,60,by=3), outcome == out_var) %>% 
-         count(period.month, us, ea12, upper_middle, advanced) %>%
+         count(period.month, us, ea12, upper_middle_income, high_income) %>%
          group_by(period.month) %>%
          mutate(proportion = n / sum(n)), 
-       aes(x = period.month, y = proportion, fill = interaction(us, ea12, upper_middle, advanced))) +
+       aes(x = period.month, y = proportion, fill = interaction(us, ea12, upper_middle_income, high_income))) +
   geom_bar(stat = "identity") +
   scale_fill_brewer(palette = "Set2",
                     labels = c("Other", "Advanced", "Upper Middle", "EA12", "US"),
@@ -1180,10 +1180,10 @@ ggplot(d_no_qc %>%
 
 d_plot <- d_no_qc %>% 
   filter(period.month %in% seq(0,60,by=3), outcome == out_var) %>%
-  count(period.month, us, ea12, upper_middle, advanced)
+  count(period.month, us, ea12, upper_middle_income, high_income)
 
 ggplot(d_plot, aes(x = period.month, y = n, 
-                   fill = interaction(us, ea12, upper_middle, advanced))) +
+                   fill = interaction(us, ea12, upper_middle_income, high_income))) +
   geom_bar(stat = "identity") +
   scale_fill_brewer(palette = "Set2",
                     labels = c("Other", "Advanced", "Upper Middle", "EA12", "US"),
@@ -1881,7 +1881,7 @@ avg_irf_pricelevel_ea12 <- avg_irf_pricelevel_ea12$plot %>% plotly::layout(
 
 #### Upper middle ----
 avg_irf_pricelevel_upper_middle <- plot_average_irfs(
-  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, upper_middle == 1),
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, upper_middle_income == 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
@@ -1897,9 +1897,9 @@ avg_irf_pricelevel_upper_middle <- avg_irf_pricelevel_upper_middle$plot %>% plot
   title = "Upper middle income countries"
 )
 
-#### Other advanced ----
-avg_irf_pricelevel_other_advanced <- plot_average_irfs(
-  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, advanced == 1, ea12 != 1, us != 1),
+#### Other high_income ----
+avg_irf_pricelevel_other_high_income <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, high_income == 1, ea12 != 1, us != 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
@@ -1909,10 +1909,10 @@ avg_irf_pricelevel_other_advanced <- plot_average_irfs(
   return_data = TRUE
 )
 # Save data as csv
-write_csv(avg_irf_pricelevel_other_advanced$data, here::here(save_path, "avg_irf_pricelevel_other_advanced.csv"))
+write_csv(avg_irf_pricelevel_other_high_income$data, here::here(save_path, "avg_irf_pricelevel_other_high_income.csv"))
 # Change plot title
-avg_irf_pricelevel_other_advanced <- avg_irf_pricelevel_other_advanced$plot %>% plotly::layout(
-  title = "Other advanced economies"
+avg_irf_pricelevel_other_high_income <- avg_irf_pricelevel_other_high_income$plot %>% plotly::layout(
+  title = "Other high income economies"
 )
 
 #### Joint plot 
@@ -1920,7 +1920,7 @@ y_lims <- c(-2.5, 1)
 figure_average_irfs_pricelevel_country_region <- subplot(avg_irf_pricelevel_us, 
                                                      avg_irf_pricelevel_ea12, 
                                                      avg_irf_pricelevel_upper_middle, 
-                                                     avg_irf_pricelevel_other_advanced, 
+                                                     avg_irf_pricelevel_other_high_income, 
                                                      nrows = 1, 
                                                      margin = 0.03) %>% layout(
                                                        showlegend=FALSE,
@@ -1934,7 +1934,7 @@ figure_average_irfs_pricelevel_country_region <- subplot(avg_irf_pricelevel_us,
                                                             xanchor = "center", yanchor = "bottom"),
                                                        list(x = 0.4, y = 1, text = "Euro area", showarrow = FALSE, xref = "paper", yref = "paper",
                                                             xanchor = "center", yanchor = "bottom"),
-                                                       list(x = 0.65, y = 1, text = "Emerging Economies", showarrow = FALSE, xref = "paper", yref = "paper",
+                                                       list(x = 0.65, y = 1, text = "Emerging economies", showarrow = FALSE, xref = "paper", yref = "paper",
                                                             xanchor = "center", yanchor = "bottom"),
                                                        list(x = 0.9, y = 1, text = "Other advanced", showarrow = FALSE, xref = "paper", yref = "paper",
                                                             xanchor = "center", yanchor = "bottom")
@@ -1970,16 +1970,16 @@ orca(figure_average_irfs_pricelevel_country_region,
 #### Sample size plot for country/region
 print(d_no_qc %>% # Proportions by period
         filter(period.month %in% seq(0,60,by=3), outcome == out_var) %>%
-        count(period.month, us, ea12, upper_middle, advanced) %>%
+        count(period.month, us, ea12, upper_middle_income, high_income) %>%
         group_by(period.month) %>%
         mutate(proportion = n / sum(n)), n = 105)
 
 ggplot(d_no_qc %>% 
          filter(period.month %in% seq(0,60,by=3), outcome == out_var) %>% 
-         count(period.month, us, ea12, upper_middle, advanced) %>%
+         count(period.month, us, ea12, upper_middle_income, high_income) %>%
          group_by(period.month) %>%
          mutate(proportion = n / sum(n)), 
-       aes(x = period.month, y = proportion, fill = interaction(us, ea12, upper_middle, advanced))) +
+       aes(x = period.month, y = proportion, fill = interaction(us, ea12, upper_middle_income, high_income))) +
   geom_bar(stat = "identity") +
   scale_fill_brewer(palette = "Set2",
                     labels = c("Other", "Advanced", "Upper Middle", "EA12", "US"),
@@ -1992,10 +1992,10 @@ ggplot(d_no_qc %>%
 
 d_plot <- d_no_qc %>% 
   filter(period.month %in% seq(0,60,by=3), outcome == out_var) %>%
-  count(period.month, us, ea12, upper_middle, advanced)
+  count(period.month, us, ea12, upper_middle_income, high_income)
 
 ggplot(d_plot, aes(x = period.month, y = n, 
-                   fill = interaction(us, ea12, upper_middle, advanced))) +
+                   fill = interaction(us, ea12, upper_middle_income, high_income))) +
   geom_bar(stat = "identity") +
   scale_fill_brewer(palette = "Set2",
                     labels = c("Other", "Advanced", "Upper Middle", "EA12", "US"),

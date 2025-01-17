@@ -3,11 +3,11 @@ library(here) # For file paths
 library(tidyverse) # For data manipulation
 
 # Load data ----
-data_path <- here("data/preliminary_data_test.RData")
+data_path <- here("data/final_data_working_paper_1.RData")
 load(data_path)
 
 # Store data with quality concerns for robustness checks ----
-d_qc <- data 
+d_qc <- data
 
 # Filter out models with quality concerns ----
 d_no_qc <- data %>% filter(quality_concern != 1)

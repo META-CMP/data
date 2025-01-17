@@ -377,8 +377,8 @@ orca(figure_irf_range_correction_pricelevel,
 
 # For interest rate ----
 out_var <- "rate"
-# Set new winsorization levels for estimation of rate (>0.02 fails due to singular matrix)
-wins_para_levels <- c(0, 0.01, 0.02)#, 0.03, 0.04)
+# Set new winsorization levels for estimation of rate (>0.01 fails due to singular matrix)
+wins_para_levels <- c(0, 0.01)#, 0.02, 0.03, 0.04)
 
 ## With sampling - this version has unstable results due to drawing samples but much faster estimation. ----
 filtered_data <- d_no_qc %>%
@@ -501,3 +501,4 @@ orca(figure_irf_range_correction_rate,
      width = 1500 * 0.6,
      height = 1100 * 0.6
 )
+

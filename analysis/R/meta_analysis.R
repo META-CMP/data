@@ -91,7 +91,7 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
                           AK_modelmu = "normal", AK_conf_level = 0.95, 
                           ak_plot = NULL, AK_plot_prob_y_range = c(0, 40), 
                           ak_prob_plot_log_scale = FALSE, return_lm = FALSE, 
-                          pred_data = NULL, pred_conf_level = 0.89) {
+                          pred_data = NULL, pred_conf_level = 0.68) {
   
   # Check pred_data for compatibility with estimation method
   if (!is.null(pred_data)) {

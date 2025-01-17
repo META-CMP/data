@@ -37,7 +37,7 @@ create_mmr_coefficient_plot <- function(
   ggplot(plot_data, aes(x = model)) +
     # Add confidence intervals
     geom_ribbon(aes(ymin = conf.low, ymax = conf.high, 
-                    fill = factor(conf_level)), alpha = 0.2) +
+                    fill = factor(conf_level)), alpha = 0.1) +
     # Add the point estimates
     geom_line(aes(y = estimate), color = "black", linewidth = 0.5) +
     geom_point(aes(y = estimate), color = "black", size = 1) +

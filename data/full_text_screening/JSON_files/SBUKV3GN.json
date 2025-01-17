@@ -27,13 +27,13 @@
     }, 
     "identification_strategy": { 
         "iv": false, 
-        "forecast_based": true, 
+        "forecast_based": false, 
         "nr": false, 
         "event": false, 
         "chol": true, 
         "svar": false, 
         "signr": false, 
-        "hf": true, 
+        "hf": false, 
         "heteroskedas": false, 
         "longrun": false, 
         "idother": false 

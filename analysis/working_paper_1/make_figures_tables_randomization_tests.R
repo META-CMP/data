@@ -11,7 +11,7 @@ source(here::here("analysis/R/format_randomization_table.R"))
 source(here::here("analysis/R/plot_randomization_tests.R"))
 
 # Define windows ----
-deltas <- seq(0.5, 0.005, by = -0.005)
+deltas <- seq(0.5, 0.05, by = -0.005)
 
 # Define ylims ----
 ylims <- c(0, 1)

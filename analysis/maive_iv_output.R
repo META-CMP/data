@@ -104,6 +104,13 @@ for (x in periods) {
 }
 
 view(maive_df_first_output)
-view(maive_df_second_output)
+
+library(xtable)
+# Convert data frame to LaTeX table
+latex_table_first <- xtable(maive_df_first_output)
+
+
+# Export to .tex file
+print(latex_table_first, file = "~/GitHub/data/analysis/working_paper_1/tables/maive/maive_first_output.tex", include.rownames = TRUE)
 
 

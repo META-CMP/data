@@ -104,6 +104,12 @@ for (x in periods) {
 }
 
 view(maive_df_first_inflation)
-view(maive_df_second_inflation)
 
+library(xtable)
+# Convert data frame to LaTeX table
+latex_table_first <- xtable(maive_df_first_inflation)
+
+
+# Export to .tex file
+print(latex_table_first, file = "~/GitHub/data/analysis/working_paper_1/tables/maive/maive_first_inflation.tex", include.rownames = TRUE)
 

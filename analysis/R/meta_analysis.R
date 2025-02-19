@@ -33,7 +33,20 @@ create_equation <- function(base_formula, mods) {
 #' @param se_option A string specifying the standard error option to use. Can be "avg", "lower", or "upper".
 #' @param periods A numeric vector specifying the periods (in months) for which to perform the analysis.
 #' @param wins A numeric value specifying the winsorization parameter.
+#' @param first_period_wins_prec A numeric value specifying the winsorization  
+#'   for StandardError and precision in the first period (period.month == 0). Default is NULL, in which case 
+#'   the regular wins parameter is used.
+#' @param first_period_wins_mean A numeric value specifying the winsorization  
+#'   for mean.effect in the first period (period.month == 0). Default is NULL, in which case the regular 
+#'   wins parameter is used.
 #' @param prec_weighted A logical value indicating whether to use precision weighting.
+#' @param ap A logical value indicating whether to filter for adequately powered studies. Default is FALSE.
+#' @param ap_horizon A numeric value specifying the horizon (period.month) at which to evaluate adequate power.
+#'   If NULL (default), power is evaluated separately for each period. If specified, power is evaluated
+#'   at this horizon and entire IRFs (all periods for a model) are kept or dropped based on this evaluation.
+#' @param ap_prec_weighted A logical value indicating whether to use precision weighting when calculating
+#'   the true effect for adequate power evaluation. Default is TRUE.
+#' @param ap_parameter Numeric value used in the threshold calculation for adequate power filtering. Default is 2.8.
 #' @param estimation String specifying the meta analysis model, one of "Mean", "UWLS", "FAT-PAT", "PEESE", "EK", or "AK".
 #' @param mods A character vector of moderator variable names to include in the multiple meta-regression. If NULL, no moderators are included.
 #' @param hc_type A string specifying the type of Heteroskedasticity-Consistent (HC) Covariance Matrix Estimator to use. 
@@ -84,8 +97,10 @@ create_equation <- function(base_formula, mods) {
 #' modelsummary::modelsummary(AK_results, output = "gt", statistic = c("se = {std.error}", "conf.int"))
 #' 
 #' @export
-meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
-                          estimation = "Mean", ap = FALSE, cluster_se = FALSE, 
+meta_analysis <- function(data, outvar, se_option, periods, wins, first_period_wins_prec = NULL,
+                          first_period_wins_mean = NULL, prec_weighted,
+                          estimation = "Mean", ap = FALSE, ap_horizon = NULL, ap_prec_weighted = TRUE, 
+                          ap_parameter = 2.8, cluster_se = FALSE, 
                           hc_type = NULL, EK_sig_threshold = 1.96, mods = NULL, 
                           cutoff_val = c(1.960), AK_symmetric = FALSE, 
                           AK_modelmu = "normal", AK_conf_level = 0.95, 
@@ -103,6 +118,57 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
   
   # Subset data for the specified outcome variable
   data <- subset(data, outcome %in% outvar)
+  
+  # If ap is TRUE and ap_horizon is specified, do the AP filtering before the period loop
+  if (ap && !is.null(ap_horizon)) {
+    # First get the data for the specified horizon and apply winsorization
+    horizon_data <- subset(data, period.month == ap_horizon)
+    
+    if (nrow(horizon_data) == 0) {
+      stop(paste("No data available for specified ap_horizon:", ap_horizon))
+    }
+    
+    # Apply standard error selection
+    if (se_option == "avg") {
+      horizon_data$StandardError <- horizon_data$SE.avg
+      horizon_data$precision <- horizon_data$precision.avg
+    } else if (se_option == "lower") {
+      horizon_data$StandardError <- horizon_data$SE.lower
+      horizon_data$precision <- horizon_data$precision.lower
+    } else if (se_option == "upper") {
+      horizon_data$StandardError <- horizon_data$SE.upper
+      horizon_data$precision <- horizon_data$precision.upper
+    }
+    
+    # Apply winsorization to horizon data
+    current_wins_prec <- if (ap_horizon == 0) first_period_wins_prec else wins
+    current_wins_mean <- if (ap_horizon == 0) first_period_wins_mean else wins
+    horizon_data <- apply_winsorization(horizon_data, wins = wins,
+                                        wins_prec = current_wins_prec,
+                                        wins_mean = current_wins_mean)
+    
+    # Calculate estimate of "true" effect for the horizon
+    est_true_effect <- if(ap_prec_weighted) {
+      weighted.mean(horizon_data$mean.effect_winsor,
+                    w = 1/(horizon_data$standarderror_winsor^2))
+    } else {
+      mean(horizon_data$mean.effect_winsor)
+    }
+    
+    # Calculate threshold using the weighted mean
+    waap_threshold <- abs(est_true_effect)/ap_parameter
+    
+    # Get the model IDs that pass the threshold
+    selected_models <- horizon_data[horizon_data$standarderror_winsor <= waap_threshold,
+                                    c("key", "model_id")]
+    
+    # Filter the original data to keep only the selected models
+    data <- merge(data, selected_models, by = c("key", "model_id"))
+    
+    if (nrow(data) == 0) {
+      stop("No adequately powered studies found based on the specified horizon")
+    }
+  }
 
   # Check which periods have data
   available_periods <- unique(data$period.month)
@@ -153,14 +219,40 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
       data_period$precision <- data_period$precision.upper
     }
     
-    # Apply winsorization to the standard error, mean effect, and precision
-    data_period <- apply_winsorization(data_period, wins)
+    # Select appropriate winsorization levels
+    if (x == 0) {
+      current_wins_prec <- if (!is.null(first_period_wins_prec)) first_period_wins_prec else wins
+      current_wins_mean <- if (!is.null(first_period_wins_mean)) first_period_wins_mean else wins
+    } else {
+      current_wins_prec <- NULL
+      current_wins_mean <- NULL
+    }
+    data_period <- apply_winsorization(data_period, wins = wins, 
+                                       wins_prec = current_wins_prec, 
+                                       wins_mean = current_wins_mean)
 
-    # Filter adequately powered if ap == TRUE
-    if (ap == TRUE) {
-      data_period$ap <- ifelse(data_period$standarderror_winsor <= abs(data_period$mean.effect_winsor)/2.8, 1, 0)
+    # Apply WAAP if ap == TRUE and ap_horizon is NULL
+    if (ap == TRUE && is.null(ap_horizon)) {
+
+      # Calculate estimate of "true" effect for this period
+      est_true_effect <- if(ap_prec_weighted) {
+        weighted.mean(data_period$mean.effect_winsor,
+                      w = 1/(data_period$standarderror_winsor^2))
+      } else if (ap_prec_weighted == FALSE) {
+        mean(data_period$mean.effect_winsor)
+      }
+      # Calculate threshold using the weighted mean for this period
+      waap_threshold <- abs(est_true_effect)/ap_parameter
+      
+      # Filter data for this period
       data_period <- data_period %>%
-        filter(ap == 1)
+        filter(standarderror_winsor <= waap_threshold)
+      
+      # Check if we still have data after filtering
+      if (nrow(data_period) == 0) {
+        warning(paste("No adequately powered studies found for period", x))
+        next  # Skip to next period
+      }
     }
 
     # Calculate t.stat_winsor for UWLS
@@ -296,7 +388,16 @@ meta_analysis <- function(data, outvar, se_option, periods, wins, prec_weighted,
       }
       
       # Apply winsorization
-      data_period <- apply_winsorization(data_period, wins)
+      if (x == 0) {
+        current_wins_prec <- if (!is.null(first_period_wins_prec)) first_period_wins_prec else wins
+        current_wins_mean <- if (!is.null(first_period_wins_mean)) first_period_wins_mean else wins
+      } else {
+        current_wins_prec <- NULL
+        current_wins_mean <- NULL
+      }
+      data_period <- apply_winsorization(data_period, wins = wins,
+                                         wins_prec = current_wins_prec,
+                                         wins_mean = current_wins_mean)
       data_period$variance_winsor <- data_period$standarderror_winsor^2
       data_period$precvariance_winsor <- 1 / data_period$variance_winsor
       

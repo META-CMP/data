@@ -61,7 +61,7 @@
 #' @import plotly
 #'
 #' @export
-plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf, show_legend = TRUE, show_median = FALSE, return_data = FALSE, ci_method = "approx.CIs", se_multiplier = 1) {
+plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_par = 0, corrected_irf, corrected_irf_color = 'red', corrected_irf_name = "Meta analysis CI", corrected_irf_show_CIs = TRUE, show_legend = TRUE, show_median = FALSE, return_data = FALSE, ci_method = "approx.CIs", se_multiplier = 1) {
   
   # Validate ci_method parameter
   if (!ci_method %in% c("approx.CIs", "avg.se")) {
@@ -241,24 +241,26 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
   
   # Add corrected IRF with confidence bounds if provided
   if (!is.null(corrected_irf)) {
-    plot <- plot %>%
-      add_ribbons(
-        data = corrected_irf,
-        x = ~period,
-        ymin = ~lower,
-        ymax = ~upper,
-        name = "Meta analysis CI",
-        line = list(color = 'rgba(0,0,0,0)'),
-        fillcolor = 'rgba(255,0,0,0.2)'
-      )
+    if (corrected_irf_show_CIs == TRUE) {
+      plot <- plot %>%
+        add_ribbons(
+          data = corrected_irf,
+          x = ~period,
+          ymin = ~lower,
+          ymax = ~upper,
+          name = corrected_irf_name,
+          line = list(color = corrected_irf_color, width = 3, dash = 'dot'),
+          fillcolor = paste0('rgba(', paste(col2rgb(corrected_irf_color), collapse=','), ',0.5)')
+        )
+    }
     
     plot <- plot %>% 
       add_lines(
         data = corrected_irf,
         x = ~period,
         y = ~estimate,
-        name = "Meta analysis",
-        line = list(color = 'red', width = 3, dash = 'dash')
+        name = corrected_irf_name,
+        line = list(color = corrected_irf_color, width = 3, dash = 'dot')
       )
     
   }

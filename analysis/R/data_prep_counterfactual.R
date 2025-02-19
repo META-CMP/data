@@ -74,8 +74,9 @@ data_prep_counterfactual <- function (
         se_option == "upper" ~ JWileymisc::winsorizor(SE.upper, percentile = wins),
         se_option == "lower" ~ JWileymisc::winsorizor(SE.lower, percentile = wins)
       ),
-      # Calculate z_stat
-      z_stat = abs(mean.effect / SE)
+      # Calculate z_stat (also absolute values)
+      z_stat = mean.effect / SE,
+      abs_z_stat = abs(mean.effect / SE)
     )
   
   # Extract only negative effects

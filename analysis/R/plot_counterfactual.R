@@ -56,7 +56,12 @@ plot_counterfactual <- function(data,
                                 omit_cf = FALSE,
                                 kernel_adjust = 0.5,
                                 kernel_bw = 0.2,
-                                kernel_type = "epanechnikov"
+                                kernel_type = "epanechnikov",
+                                add_legend = TRUE,
+                                add_significance_stars = TRUE,
+                                star_spacing = 0.02,
+                                star_buffer = -0.02,
+                                star_cex = 1
 ) {
   # Get relevant data
   if(is.null(group)) {
@@ -99,17 +104,34 @@ plot_counterfactual <- function(data,
                 adjust = kernel_adjust, 
                 bw = kernel_bw, 
                 kernel = kernel_type,
-                from = 0, 
-                to = 10), 
+                from = xlims[1], 
+                to = xlims[2]), 
         lwd = 2)
   
   # Add vertical lines at significance levels
   if(!is.null(significance)) {
     abline(v = significance, lty = "dotted")
+    # Add significance stars if requested
+    if(!is.null(significance) && add_significance_stars) {
+      # Calculate starting y position based on ylim
+      star_start <- ylim[2] - star_buffer
+      y_positions <- seq(star_start, 
+                         star_start - (star_spacing * (length(significance) - 1)), 
+                         -star_spacing)
+      
+      # Add stars in descending order
+      for(i in 1:length(y_positions)) {
+        text(significance[i:length(significance)], 
+             y_positions[i], 
+             "*", 
+             cex = star_cex, 
+             col = "black")
+      }
+    }
   }
   
   # Add theoretical density
-  z_seq <- seq(0, 10, 0.01)
+  z_seq <- seq(xlims[1], xlims[2], 0.01)
   theoretical_dens <- dt(z_seq, 
                          df = calibration$df, 
                          ncp = calibration$ncp)
@@ -147,14 +169,16 @@ plot_counterfactual <- function(data,
   }
   
   # Add legend
-  legend("topright", 
-         legend = legend_items,
-         col = legend_colors,
-         lty = legend_lines,
-         pch = legend_pch,
-         pt.bg = legend_pt_bg,
-         bty = "n",
-         pt.cex = 1.2)
+  if (add_legend == TRUE) {
+    legend("topright", 
+           legend = legend_items,
+           col = legend_colors,
+           lty = legend_lines,
+           pch = legend_pch,
+           pt.bg = legend_pt_bg,
+           bty = "n",
+           pt.cex = 1.2)
+  }
   
   # Return plot data invisibly
   invisible(list(

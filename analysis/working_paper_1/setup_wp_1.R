@@ -19,13 +19,14 @@ wins_para <- 0.02
 conflevel <- 0.89
 
 # Define stylized time horizons ----
-vsr <- 6
-smr <- 18
+vsr <- 1
+smr <- 12
 mlr <- 36
 horizons <- c(
-  paste0("impact to short run (0m - ", vsr - 1, "m)"),
-  paste0("short run to medium run (", vsr, "m - ", smr, "m)"),
-  paste0("medium run to long run (", smr + 1, "m - ", mlr, "m)"),
+  paste0("impact (0m)"),
+  paste0("short run (", vsr, "m - ", smr, "m)"),
+  paste0("medium run (", smr + 1, "m - ", mlr, "m)"),
   paste0("long run (> ", mlr, "m)")
 )
+
 

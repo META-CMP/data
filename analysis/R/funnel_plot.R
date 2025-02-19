@@ -8,6 +8,12 @@
 #' @param prd A numeric value specifying the period (in months) to filter the data.
 #' @param se_option A string specifying the standard error option to use. Can be "avg", "lower", or "upper".
 #' @param wins A numeric value specifying the Winsorization parameter.
+#' @param first_period_wins_prec A numeric value specifying the winsorization percentile 
+#'   for StandardError and precision in the first period (period.month == 0). Default is NULL, in which case 
+#'   the regular wins parameter is used.
+#' @param first_period_wins_mean A numeric value specifying the winsorization percentile 
+#'   for mean.effect in the first period (period.month == 0). Default is NULL, in which case the regular 
+#'   wins parameter is used.
 #' @param legend If TRUE (default), the legend will be shown in the standard plot.
 #' @param opac A numeric value specifying the opacity parameter for the plot.
 #' @param ap If TRUE, only adequately powered studies are included.
@@ -52,7 +58,8 @@
 #' print(ak_plot_excluded)
 #'
 #' @export
-create_funnel_plot <- function(data, outvar, prd, color_by_outcome_var = TRUE, se_option = "avg", wins = 0.02, legend = TRUE, opac = 0.15, ap = FALSE, type = "standard", AK_critvals = c(1, 1.96, 2.58), AK_exclude_outliers = FALSE) {
+create_funnel_plot <- function(data, outvar, prd, color_by_outcome_var = TRUE, se_option = "avg", wins = 0.02, first_period_wins_prec = NULL,
+                               first_period_wins_mean = NULL, legend = TRUE, opac = 0.15, ap = FALSE, type = "standard", AK_critvals = c(1, 1.96, 2.58), AK_exclude_outliers = FALSE) {
   # Filter the data for the specific period and outcome variable
   data_filtered <- data %>%
     filter(period.month == prd, outcome == outvar)
@@ -69,8 +76,18 @@ create_funnel_plot <- function(data, outvar, prd, color_by_outcome_var = TRUE, s
     data_filtered$precision <- data_filtered$precision.upper
   }
   
-  # Apply Winsorization to the standard error, mean effect, and precision
-  data_filtered <- apply_winsorization(data_filtered, wins)
+  # Select appropriate winsorization level and type
+  if (prd == 0) {
+    current_wins_prec <- if (!is.null(first_period_wins_prec)) first_period_wins_prec else wins
+    current_wins_mean <- if (!is.null(first_period_wins_mean)) first_period_wins_mean else wins
+  } else {
+    current_wins_prec <- NULL
+    current_wins_mean <- NULL
+  }
+  data_filtered <- apply_winsorization(data_filtered, wins = wins, 
+                                       wins_prec = current_wins_prec, 
+                                       wins_mean = current_wins_mean)
+  # Select appropriate winsorization levels
   
   # Filter adequately powered if ap == TRUE
   if (ap == TRUE) {

@@ -55,6 +55,10 @@ calibrate_counterfactual <- function(data,
     stop("group must be a column in data")
   }
   
+  # Store sign of threshold for later use
+  threshold_sign <- sign(threshold)
+  abs_threshold <- abs(threshold)
+  
   # Get relevant data
   if(is.null(group)) {
     method_data <- data[[statistic]]
@@ -69,8 +73,13 @@ calibrate_counterfactual <- function(data,
   
   # Calculate empirical mass above threshold
   n_total <- length(method_data)
-  n_above <- sum(method_data > threshold)
-  empirical_mass <- n_above / n_total
+  if(threshold_sign >= 0) {
+    n_above <- sum(method_data > threshold)
+    empirical_mass <- n_above / n_total
+  } else {
+    n_above <- sum(method_data < threshold)
+    empirical_mass <- n_above / n_total
+  }
   
   # Initialize storage
   best_fit <- list(
@@ -92,8 +101,8 @@ calibrate_counterfactual <- function(data,
     # Calculate fit for each np
     for(i in seq_along(np_fits$np)) {
       ncp <- np_fits$np[i]
-      # Calculate survival function at threshold
-      sdf_t <- 1 - (pt(threshold, df = df, ncp = ncp) - pt(0, df = df, ncp = ncp)) / 
+      # Calculate survival function at threshold using absolute values
+      sdf_t <- 1 - (pt(abs_threshold, df = df, ncp = ncp) - pt(0, df = df, ncp = ncp)) / 
         (1 - pt(0, df = df, ncp = ncp))
       np_fits$fit_diff[i] <- empirical_mass - sdf_t
     }
@@ -104,16 +113,17 @@ calibrate_counterfactual <- function(data,
       best_np <- np_fits$np[cross_idx[1]]
       
       # Evaluate full fit with these parameters
-      t_seq <- sort(method_data)
+      # Use absolute values for fitting
+      t_seq <- sort(abs(method_data))
       theoretical_cdf <- (pt(t_seq, df = df, ncp = best_np) - pt(0, df = df, ncp = best_np)) / 
         (1 - pt(0, df = df, ncp = best_np))
-      empirical_cdf <- ecdf(method_data)(t_seq)
+      empirical_cdf <- ecdf(abs(method_data))(t_seq)
       
       total_fit_error <- mean(abs(theoretical_cdf - empirical_cdf))
-      
+
       if(total_fit_error < best_fit$fit_error) {
         best_fit$df <- df
-        best_fit$ncp <- best_np
+        best_fit$ncp <- best_np * threshold_sign  # Apply sign based on original threshold
         best_fit$fit_error <- total_fit_error
       }
     }

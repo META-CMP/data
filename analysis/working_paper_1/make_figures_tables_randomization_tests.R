@@ -44,7 +44,7 @@ d_z_stat_neg_output <- d_z_stat_neg_output %>%
 ### Test at 68 % level ----
 random_test_output_68 <- randomization_test_battery(
   data = d_z_stat_neg_output,
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level 
   group = "horizon",
   deltas = deltas
@@ -68,7 +68,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ### Test at 90 % level ----
 random_test_output_90 <- randomization_test_battery(
   data = d_z_stat_neg_output,
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.645), # 90 % level
   group = "horizon",
   deltas = deltas
@@ -92,7 +92,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ### Test at 95 % level ----
 random_test_output_95 <- randomization_test_battery(
   data = d_z_stat_neg_output,
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.96), # 95 % level
   group = "horizon",
   deltas = deltas
@@ -116,7 +116,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ### Test at 99 % level ----
 random_test_output_99 <- randomization_test_battery(
   data = d_z_stat_neg_output,
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(2.576), # 99 % level
   group = "horizon",
   deltas = deltas
@@ -144,7 +144,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 68 % level ----
 random_test_output_68_top_journals <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(top_5_or_tier == 1),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -167,7 +167,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 95 % level ----
 random_test_output_95_top_journals <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(top_5_or_tier == 1),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.96), # 95 % level
   group = "horizon",
   deltas = deltas
@@ -192,7 +192,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 68 % level ----
 random_test_output_68_other_publications <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(top_5_or_tier == 0),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -220,7 +220,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 95 % level ----
 random_test_output_95_other_publications <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(top_5_or_tier == 0),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.96), # 95 % level
   group = "horizon",
   deltas = deltas
@@ -267,7 +267,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 68 % level ----
 random_test_output_68_cbanker <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(cbanker == 1),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -290,7 +290,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 95 % level ----
 random_test_output_95_cbanker <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(cbanker == 1),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.96), # 95 % level
   group = "horizon",
   deltas = deltas
@@ -315,7 +315,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 68 % level ----
 random_test_output_68_non_cbanker <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(cbanker == 0),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -338,7 +338,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 95 % level ----
 random_test_output_95_non_cbanker <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(cbanker == 0),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.96), # 95 % level
   group = "horizon",
   deltas = deltas
@@ -385,7 +385,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ##### Test at 68 % level ----
 random_test_output_68_hf <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(group_ident_broad == "hf"),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -410,7 +410,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ##### Test at 68 % level ----
 random_test_output_68_nr <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(group_ident_broad == "nr"),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -433,7 +433,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ##### Test at 90 % level ----
 random_test_output_90_nr <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(group_ident_broad == "nr"),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.645), # 90 % level
   group = "horizon",
   deltas = deltas
@@ -458,7 +458,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ##### Test at 68 % level ----
 random_test_output_68_chol <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(group_ident_broad == "chol"),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -483,7 +483,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ##### Test at 68 % level ----
 random_test_output_68_signr <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(group_ident_broad == "signr"),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -508,7 +508,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ##### Test at 68 % level ----
 random_test_output_68_idother <- randomization_test_battery(
   data = d_z_stat_neg_output %>% filter(group_ident_broad == "idother"),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -556,7 +556,7 @@ d_z_stat_neg_pricelevel <- d_z_stat_neg_pricelevel %>%
 ### Test at 68 % level ----
 random_test_pricelevel_68 <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel,
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -579,7 +579,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ### Test at 90 % level ----
 random_test_pricelevel_90 <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel,
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.645), # 90 % level
   group = "horizon",
   deltas = deltas
@@ -602,7 +602,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ### Test at 95 % level ----
 random_test_pricelevel_95 <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel,
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.96), # 95 % level
   group = "horizon",
   deltas = deltas
@@ -625,7 +625,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ### Test at 99 % level ----
 random_test_pricelevel_99 <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel,
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(2.576), # 99 % level
   group = "horizon",
   deltas = deltas
@@ -652,7 +652,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 68 % level ----
 random_test_pricelevel_68_top_journals <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel %>% filter(top_5_or_tier == 1),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -675,7 +675,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 95 % level ----
 random_test_pricelevel_95_top_journals <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel %>% filter(top_5_or_tier == 1),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.96), # 95 % level
   group = "horizon",
   deltas = deltas
@@ -700,7 +700,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 68 % level ----
 random_test_pricelevel_68_other_publications <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel %>% filter(top_5_or_tier == 0),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -723,7 +723,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 95 % level ----
 random_test_pricelevel_95_other_publications <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel %>% filter(top_5_or_tier == 0),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.96), # 95 % level
   group = "horizon",
   deltas = deltas
@@ -770,7 +770,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 68 % level ----
 random_test_pricelevel_68_cbanker <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel %>% filter(cbanker == 1),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -793,7 +793,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 95 % level ----
 random_test_pricelevel_95_cbanker <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel %>% filter(cbanker == 1),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.96), # 95 % level
   group = "horizon",
   deltas = deltas
@@ -818,7 +818,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 68 % level ----
 random_test_pricelevel_68_non_cbanker <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel %>% filter(cbanker == 0),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level
   group = "horizon",
   deltas = deltas
@@ -841,7 +841,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 #### Test at 95 % level ----
 random_test_pricelevel_95_non_cbanker <- randomization_test_battery(
   data = d_z_stat_neg_pricelevel %>% filter(cbanker == 0),
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.96), # 95 % level
   group = "horizon",
   deltas = deltas
@@ -909,7 +909,7 @@ d_z_stat_neg_rate <- d_z_stat_neg_rate %>%
 ### Test at 68 % level ----
 random_test_68_rate <- randomization_test_battery(
   data = d_z_stat_neg_rate,
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1), # 68 % level 
   group = "horizon",
   deltas = deltas
@@ -932,7 +932,7 @@ ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_
 ### Test at 90 % level ----
 random_test_90_rate <- randomization_test_battery(
   data = d_z_stat_neg_rate,
-  statistic = "z_stat",
+  statistic = "abs_z_stat",
   thresholds = c(1.645), # 90 % level
   group = "horizon",
   deltas = deltas

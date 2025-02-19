@@ -253,7 +253,7 @@ figure_irf_range_correction_output <- plot_average_irfs(
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  show_median = TRUE,
+  show_median = FALSE,
   corrected_irf = NULL,
   show_legend = T,
   return_data = TRUE
@@ -473,7 +473,7 @@ figure_irf_range_correction_pricelevel <- plot_average_irfs(
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  show_median = TRUE,
+  show_median = FALSE,
   corrected_irf = NULL,
   show_legend = T,
   return_data = TRUE
@@ -695,7 +695,7 @@ figure_irf_range_correction_rate <- plot_average_irfs(
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  show_median = TRUE,
+  show_median = FALSE,
   corrected_irf = NULL,
   show_legend = T,
   return_data = TRUE

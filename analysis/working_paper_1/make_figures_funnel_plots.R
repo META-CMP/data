@@ -17,6 +17,8 @@ out_var <- "output"
 
 # Selected periods
 periods <- c(3, 12, 24, 36)
+# periods <- c(0, 1, 12, 36) # As for horizons
+# periods <- c(0, 1, 18, 36) # As for horizons
 
 # Create a list of plots
 plot_list <- lapply(periods, function(prd) {
@@ -26,7 +28,7 @@ plot_list <- lapply(periods, function(prd) {
                           se_option = "upper",
                           legend = FALSE,
                           wins = wins_para,
-                          opac = 0.04,
+                          opac = 0.1,
                           ap = FALSE,
                           type = "standard")
   # Add annotation for period
@@ -72,7 +74,7 @@ plot_list <- lapply(periods, function(prd) {
                           se_option = "upper",
                           legend = FALSE,
                           wins = wins_para,
-                          opac = 0.04,
+                          opac = 0.1,
                           ap = FALSE,
                           type = "standard")
   # Add annotation for period
@@ -117,7 +119,7 @@ plot_list <- lapply(periods, function(prd) {
                           se_option = "avg",
                           legend = FALSE,
                           wins = wins_para,
-                          opac = 0.04,
+                          opac = 0.1,
                           ap = FALSE,
                           type = "standard")
   # Add annotation for period

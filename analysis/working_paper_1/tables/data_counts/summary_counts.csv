@@ -1,0 +1,13 @@
+"Dataset","Outcome","Studies","Models","IRFs","Points"
+"Full dataset","Overall",437,2136,5531,169737
+"Full dataset","output",399,1857,1857,56175
+"Full dataset","inflation",414,1760,1760,53781
+"Full dataset","emp",43,105,105,3475
+"Full dataset","unemp",64,251,251,8440
+"Full dataset","rate",374,1558,1558,47866
+"No quality concerns","Overall",415,2009,5169,155676
+"No quality concerns","output",377,1735,1735,51405
+"No quality concerns","inflation",392,1670,1670,50519
+"No quality concerns","emp",39,99,99,3288
+"No quality concerns","unemp",62,199,199,5925
+"No quality concerns","rate",354,1466,1466,44539

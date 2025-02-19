@@ -28,10 +28,6 @@ data$top_5_or_tier <- ifelse(is.na(data$top_5_or_tier), FALSE, data$top_5_or_tie
 data$is_top_5 <- ifelse(is.na(data$is_top_5), 0, data$is_top_5)
 data$is_top_tier <- ifelse(is.na(data$is_top_tier), 0, data$is_top_tier)
 
-# De-mean publication year data ----
-data <- data %>% 
-  mutate(pub_year = pub_year - mean(pub_year))
-
 # Calculate average standard error and precision options ----
 data$SE.avg <- (data$SE.upper + data$SE.lower) / 2
 data$precision.avg <- 1 / data$SE.avg
@@ -295,6 +291,33 @@ data <- data %>%
   mutate(outcome_measure_pricelevel_cons = factor(outcome_measure_pricelevel_cons, 
                                              levels = c("cpi", "deflator", "wpi", "core")))
 levels(data$outcome_measure_pricelevel_cons)
+
+# Consolidate data frequency ----
+data$freq <- case_when(
+  data$month == 1 ~ "month",
+  data$quarter == 1 ~ "quarter",
+  data$annual == 1 ~ "annual"
+)
+# Convert to factor
+data$freq <- factor(data$freq, 
+                              levels = c("quarter", "month", "annual"))
+
+# Generate byproduct dummy ----
+data$byproduct <- mapply(function(main, outcome) {
+  # Split main into components
+  main_components <- unlist(strsplit(main, "\\s+"))
+  
+  # Check if it's a byproduct based on the rules
+  is_byproduct <- switch(outcome,
+                         "inflation" = !("inflation" %in% main_components),
+                         "output" = !("gdp" %in% main_components),
+                         "unemp" = !("emp" %in% main_components),
+                         "emp" = !("emp" %in% main_components),
+                         "rate" = TRUE  # rate is always a byproduct as it has no direct main category
+  )
+  
+  return(as.numeric(is_byproduct))
+}, data$main, data$outcome)
 
 # Generate number of observations used for a specific model ----
 

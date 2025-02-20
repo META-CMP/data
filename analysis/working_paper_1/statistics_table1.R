@@ -33,7 +33,7 @@ df %>%
 
 library(readxl)
 
-df1 <- read_excel("C:/Users/Usuario/Documents/GitHub/data/data/study_characteristics/citations_for_included_studies.xlsx",
+df1 <- read_excel(here("data/study_characteristics/citations_for_included_studies.xlsx"),
                   sheet = "Sheet 1")
 
 merged_df <- inner_join(df1, df, by = "key")

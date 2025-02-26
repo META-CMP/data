@@ -1,4 +1,4 @@
-# Descriptive statistis for table1
+# Descriptive statistics for table1
 
 # Source the setup file ---- 
 source(here::here("analysis/working_paper_1/setup_wp_1.R"))
@@ -58,24 +58,12 @@ custom_summary(merged_df$num_cit.y)
 # back to the previous data set
 
 df %>%
-  count(main) %>%
-  mutate(percent = n / sum(n) * 100) %>%
-  print(n = Inf)  # print all rows
+  count(byproduct) %>%
+  mutate(percent = n / sum(n) * 100)
 
-main_gdp <- ((576 + 8888 + 1649 + 1602 + 10571 + 1014 +2996 + 416 + 
-              431 + 7412 + 1289 + 1323 + 38997+ 9994 + 778 + 720 +309 + 
-                240)/ 146463) * 100
-print(main_gdp)
-
-main_inflation <- ((36 + 736 + 576 + 1649 + 1602 + 10571 + 1014 + 2996 +
-                      7412 + 1289 + 38997 + 9994 + 7439 + 848 + 445 + 720 +
-                      400 + 240 + 142)/ 146463) * 100
-print(main_inflation)
-
-main_other <- ((278 + 36 + 63 + 736 + 576 + 1602 + 2996 + 416 + 431 +
-                  7412 + 1289  + 1323 + 9994 + 778 + 848 + 445 + 720 +
-                  400 + 46871 + 309 + 240 + 142)/ 146463) * 100
-print(main_other)
+df %>%
+  count(prefer) %>%
+  mutate(percent = n / sum(n) * 100)
 
 
 df %>%
@@ -102,6 +90,18 @@ print(outcome_otherprice)
 
 df %>%
   count(group_inttype) %>%
+  mutate(percent = n / sum(n) * 100)
+
+df %>%
+  count(annual) %>%
+  mutate(percent = n / sum(n) * 100)
+
+df %>%
+  count(quarter) %>%
+  mutate(percent = n / sum(n) * 100)
+
+df %>%
+  count(month) %>%
   mutate(percent = n / sum(n) * 100)
 
 
@@ -134,9 +134,4 @@ df %>%
   count(transformation) %>%
   mutate(percent = n / sum(n) * 100)
 
-transformation_yes <- ((10214 + 15733) / 146463) * 100
-print(transformation_yes)
-
-transformation_no <- ((715 + 75262 + 44539) / 146463) * 100
-print(transformation_no)
 

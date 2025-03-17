@@ -26,7 +26,7 @@ plot_counterfactual(d_z_stat_output %>% filter(horizon == "impact (0m)"),
                     breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                     significance = sig_thresholds,
                     add_legend = FALSE,
-                    xlims = c(-10, 10),
+                    xlims = c(-6, 6),
                     ylim = c(0, 0.9))
 abline(v = 0, col = "black", lty = 2)
 mtext("With sign restrictions", side = 3, line = 3)
@@ -46,7 +46,7 @@ plot_counterfactual(d_z_stat_output %>% filter(!(group_ident_broad %in% c("signr
                     breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                     significance = sig_thresholds,
                     add_legend = FALSE,
-                    xlims = c(-10, 10),
+                    xlims = c(-6, 6),
                     ylim = c(0, 0.9))
 abline(v = 0, col = "black", lty = 2)
 mtext("Without sign restrictions", side = 3, line = 3)
@@ -80,7 +80,7 @@ for(m in horizons) {
                       breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.9))
   if (m == horizons[1]) {
     mtext("Other publications", side = 3, line = 3)
@@ -103,7 +103,7 @@ for(m in horizons) {
                       breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.9))
   if (m == horizons[1]) {
     mtext("Top journals", side = 3, line = 3)
@@ -142,7 +142,7 @@ for(m in horizons) {
                       breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.7))
   if (m == horizons[1]) {
     mtext("non-CB", side = 3, line = 3)
@@ -165,7 +165,7 @@ for(m in horizons) {
                       breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.7))
   if (m == horizons[1]) {
     mtext("CB", side = 3, line = 3)
@@ -199,7 +199,7 @@ plot_counterfactual(d_z_stat_neg_pricelevel %>% filter(horizon == "impact (0m)")
                     breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                     significance = sig_thresholds,
                     add_legend = FALSE,
-                    xlims = c(-10, 10),
+                    xlims = c(-6, 6),
                     ylim = c(0, 0.9))
 abline(v = 0, col = "black", lty = 2)
 mtext("With sign restrictions", side = 3, line = 3)
@@ -219,7 +219,7 @@ plot_counterfactual(d_z_stat_neg_pricelevel %>% filter(!(group_ident_broad %in% 
                     breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                     significance = sig_thresholds,
                     add_legend = FALSE,
-                    xlims = c(-10, 10),
+                    xlims = c(-6, 6),
                     ylim = c(0, 1))
 abline(v = 0, col = "black", lty = 2)
 mtext("Without sign restrictions", side = 3, line = 3)
@@ -253,7 +253,7 @@ for(m in horizons) {
                       breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.7))
   if (m == horizons[1]) {
     mtext("Other publications", side = 3, line = 3)
@@ -276,7 +276,7 @@ for(m in horizons) {
                       breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.7))
   if (m == horizons[1]) {
     mtext("Top journals", side = 3, line = 3)
@@ -315,7 +315,7 @@ for(m in horizons) {
                       breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.7))
   if (m == horizons[1]) {
     mtext("non-CB", side = 3, line = 3)
@@ -338,7 +338,7 @@ for(m in horizons) {
                       breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.7))
   if (m == horizons[1]) {
     mtext("CB", side = 3, line = 3)
@@ -380,7 +380,7 @@ for(m in horizons) {
                       breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.7))
   if (m == horizons[1]) {
     mtext("Other publications", side = 3, line = 3)
@@ -403,7 +403,7 @@ for(m in horizons) {
                       breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.7))
   if (m == horizons[1]) {
     mtext("Top journals", side = 3, line = 3)

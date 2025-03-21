@@ -29,4 +29,7 @@ horizons <- c(
   paste0("long run (> ", mlr, "m)")
 )
 
+# Set global parameters for plots ----
+y_lims <- c(-2.7, 0.7)
+titles_size <- 16
 

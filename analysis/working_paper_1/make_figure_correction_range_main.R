@@ -767,8 +767,6 @@ orca(figure_irf_range_correction_rate,
 )
 
 # Joint figure ---- 
-y_lims <- c(-2.7, 0.7)
-titles_size <- 16
 figure_irf_range_correction_all <- subplot(subplot(figure_irf_range_correction_output,
                                                    figure_irf_range_correction_pricelevel,
                                                    shareY = TRUE),

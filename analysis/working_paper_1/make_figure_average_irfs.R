@@ -69,7 +69,7 @@ avg_irf_output <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE,
+  show_legend = FALSE,
   show_median = FALSE,
   return_data = TRUE
 )
@@ -87,7 +87,7 @@ avg_irf_output_median <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -202,88 +202,8 @@ peese_uw_output <- meta_analysis(d_no_qc,
                                cluster_se = TRUE)
 peese_uw_output_pbias <- extract_pbias(peese_uw_output)
 peese_uw_output <- extract_intercepts(peese_uw_output)
-### Estimate WAAP ----
-# waap_output <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "upper", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_prec_weighted = TRUE,
-#                              ap_parameter = 2.8,
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# waap_output <- extract_intercepts(waap_output)
-### Estimate AAP (WAAP without weights) ----
-# waap_uw_output <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "upper", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_prec_weighted = FALSE,
-#                              ap_parameter = 2.8,
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# waap_uw_output <- extract_intercepts(waap_uw_output)
-### Estimate WAAP for 68 % level ----
-# waap_output_68 <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "upper", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_prec_weighted = TRUE,
-#                              ap_parameter = 1.84, # 68% level
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# waap_output_68 <- extract_intercepts(waap_output_68)
-### Estimate AAP (WAAP without weights) for 68 level ----
-# waap_uw_output_68 <- meta_analysis(d_no_qc,
-#                                 outvar = out_var,
-#                                 se_option = "upper", 
-#                                 periods = seq(0, 60, by = 3),
-#                                 wins = wins_para,
-#                                 prec_weighted = FALSE,
-#                                 ap = TRUE,
-#                                 ap_prec_weighted = FALSE,
-#                                 ap_parameter = 1.84, # 68% level
-#                                 estimation = "UWLS", 
-#                                 cluster_se = TRUE)
-# waap_uw_output_68 <- extract_intercepts(waap_uw_output_68)
 ### Estimate WAAP with model selection based on horizon ----
-# model_waap_output <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "upper", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_horizon = 12,
-#                              ap_prec_weighted = TRUE,
-#                              ap_parameter = 2.8,
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# model_waap_output <- extract_intercepts(model_waap_output)
-### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
-# model_waap_uw_output <- meta_analysis(d_no_qc,
-#                                    outvar = out_var,
-#                                    se_option = "upper", 
-#                                    periods = seq(0, 60, by = 3),
-#                                    wins = wins_para,
-#                                    prec_weighted = FALSE,
-#                                    ap = TRUE,
-#                                    ap_horizon = 12,
-#                                    ap_prec_weighted = FALSE,
-#                                    ap_parameter = 2.8,
-#                                    estimation = "UWLS", 
-#                                    cluster_se = TRUE)
-# model_waap_uw_output <- extract_intercepts(model_waap_uw_output)
-### Estimate WAAP for 68 % level with model selection based on horizon ----
-model_waap_output_68 <- meta_analysis(d_no_qc,
+model_waap_output <- meta_analysis(d_no_qc,
                                    outvar = out_var,
                                    se_option = "upper", 
                                    periods = seq(0, 60, by = 3),
@@ -292,12 +212,12 @@ model_waap_output_68 <- meta_analysis(d_no_qc,
                                    ap = TRUE,
                                    ap_horizon = 12,
                                    ap_prec_weighted = TRUE,
-                                   ap_parameter = 1.84, # 68% level
+                                   ap_parameter = 2.8,
                                    estimation = "UWLS", 
                                    cluster_se = TRUE)
-model_waap_output_68 <- extract_intercepts(model_waap_output_68)
-### Estimate AAP (unweigthed WAAP) for 68 % level with model selection based on horizon ----
-model_waap_uw_output_68 <- meta_analysis(d_no_qc,
+model_waap_output <- extract_intercepts(model_waap_output)
+### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
+model_waap_uw_output <- meta_analysis(d_no_qc,
                                       outvar = out_var,
                                       se_option = "upper", 
                                       periods = seq(0, 60, by = 3),
@@ -306,10 +226,10 @@ model_waap_uw_output_68 <- meta_analysis(d_no_qc,
                                       ap = TRUE,
                                       ap_horizon = 12,
                                       ap_prec_weighted = FALSE,
-                                      ap_parameter = 1.84, # 68% level
+                                      ap_parameter = 2.8,
                                       estimation = "UWLS", 
                                       cluster_se = TRUE)
-model_waap_uw_output_68 <- extract_intercepts(model_waap_uw_output_68)
+model_waap_uw_output <- extract_intercepts(model_waap_uw_output)
 ### Estimate AK ----
 ak_output <- meta_analysis(d_no_qc,
                            outvar = out_var,
@@ -326,92 +246,56 @@ ak_output <- meta_analysis(d_no_qc,
                            ak_plot = "both")
 ak_output <- extract_intercepts_AK(ak_output)
 ### Plot corrected effects ----
-avg_irf_output_median_corrections <- avg_irf_output_median %>% 
-  # add_lines(
-  #   data = waap_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
+avg_irf_output_corrections <- avg_irf_output %>% 
   add_lines(
     data = peese_output,
     x = ~period,
     y = ~estimate,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
   add_lines(
     data = fatpet_output,
     x = ~period,
     y = ~estimate,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>% 
   add_lines(
     data = fatpet_uw_output,
     x = ~period,
     y = ~estimate,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>%
   add_lines(
     data = peese_uw_output,
     x = ~period,
     y = ~estimate,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
-  ) %>%
-  # add_lines(
-  #   data = waap_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  add_trace(
-    data = model_waap_output_68,
-    x = ~period,
-    y = ~estimate,
-    name = "WAAP (model selection, 68%)",
-    marker = list(color = "darkblue", size = 5)
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
   add_trace(
-    data = model_waap_uw_output_68,
+    data = model_waap_output,
     x = ~period,
     y = ~estimate,
-    name = "unweighted WAAP (model selection, 68%)",
+    name = "WAAP",
+    showlegend = FALSE,
+    marker = list(color = "darkgreen", size = 5)
+  ) %>%
+  add_trace(
+    data = model_waap_uw_output,
+    x = ~period,
+    y = ~estimate,
+    name = "UAAP",
+    showlegend = FALSE,
     marker = list(color = "white", size = 5,
                   line = list(
-                    color = 'darkblue',
+                    color = 'darkgreen',
                     width = 1
                   ))
   ) %>% 
@@ -420,168 +304,81 @@ avg_irf_output_median_corrections <- avg_irf_output_median %>%
     x = ~period,
     y = ~estimate,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   )
-avg_irf_output_median_corrections
+avg_irf_output_corrections
 ### Save as PDF
-orca(avg_irf_output_median_corrections,
-     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_output_median_corrections.pdf",
+orca(avg_irf_output_corrections,
+     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_output_corrections.pdf",
      scale = NULL,
      width = 1500 * 0.6,
      height = 1100 * 0.6
 )
 ### Plot corrected effects with bounds ----
 avg_irf_output_corrections_with_bounds <- avg_irf_output %>% 
-  # add_lines(
-  #   data = waap_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
-  # add_lines(
-  #   data = peese_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "PEESE",
-  #   line = list(color = "darkblue", width = 1, dash = 'solid')
-  # ) %>%
   add_ribbons(
     data = peese_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
-  # add_lines(
-  #   data = fatpet_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "FAT-PET",
-  #   line = list(color = "darkblue", width = 2, dash = "dot")
-  # ) %>%
   add_ribbons(
     data = fatpet_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>%
-  # add_lines(
-  #   data = fatpet_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted FAT-PET",
-  #   line = list(color = "darkblue", width = 4, dash = "dot")
-  # ) %>%
   add_ribbons(
     data = fatpet_uw_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>% 
-  # add_lines(
-  #   data = peese_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted PEESE",
-  #   line = list(color = "darkblue", width = 4, dash = "solid")
-  # ) %>% 
   add_ribbons(
     data = peese_uw_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
-  # add_lines(
-  #   data = waap_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection, 68%)",
-  #   marker = list(color = "darkblue", size = 5)
-  # ) %>% 
   add_ribbons(
-    data = model_waap_output_68,
+    data = model_waap_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "WAAP",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1)
   ) %>%
-  # add_trace(
-  #   data = model_waap_uw_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection, 68%)",
-  #   marker = list(color = "white", size = 5,
-  #                 line = list(
-  #                   color = 'darkblue',
-  #                   width = 1
-  #                 ))
-  # ) %>% 
   add_ribbons(
-    data = model_waap_uw_output_68,
+    data = model_waap_uw_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "UAAP",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1)
   ) %>% 
-  # add_lines(
-  #   data = ak_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "AK",
-  #   line = list(color = "darkblue", width = 1, dash = 'longdashdot')
-  # ) %>% 
   add_ribbons(
     data = ak_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   ) %>% 
   layout(
     yaxis = list(
@@ -604,15 +401,17 @@ output_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = 'darkblue', width = 3)
+    showlegend = FALSE,
+    line = list(color = 'darkgreen', width = 3)
   ) %>% 
   add_ribbons(
     data = fatpet_uw_output_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = 'darkblue', width = 3, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = 'darkgreen', width = 3, dash = "dot")
   ) %>%
   add_ribbons(
     data = peese_output_pbias,
@@ -620,15 +419,17 @@ output_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "solid")
+    showlegend = FALSE,
+    line = list(color = 'darkgreen', width = 3, dash = "solid")
   ) %>%
   add_ribbons(
     data = peese_uw_output_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "dash")
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = 'darkgreen', width = 3, dash = "dash")
   )
 output_pbias_plot
 ### Save as PDF
@@ -700,7 +501,7 @@ avg_irf_pricelevel <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE,
+  show_legend = FALSE,
   show_median = FALSE,
   return_data = TRUE
 )
@@ -718,7 +519,7 @@ avg_irf_pricelevel_median <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -774,88 +575,8 @@ peese_uw_pricelevel <- meta_analysis(d_no_qc,
                                  cluster_se = TRUE)
 peese_uw_pricelevel_pbias <- extract_pbias(peese_uw_pricelevel)
 peese_uw_pricelevel <- extract_intercepts(peese_uw_pricelevel)
-### Estimate WAAP ----
-# waap_pricelevel <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "upper", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_prec_weighted = TRUE,
-#                              ap_parameter = 2.8,
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# waap_pricelevel <- extract_intercepts(waap_pricelevel)
-### Estimate AAP (WAAP without weights) ----
-# waap_uw_pricelevel <- meta_analysis(d_no_qc,
-#                                 outvar = out_var,
-#                                 se_option = "upper", 
-#                                 periods = seq(0, 60, by = 3),
-#                                 wins = wins_para,
-#                                 prec_weighted = FALSE,
-#                                 ap = TRUE,
-#                                 ap_prec_weighted = FALSE,
-#                                 ap_parameter = 2.8,
-#                                 estimation = "UWLS", 
-#                                 cluster_se = TRUE)
-# waap_uw_pricelevel <- extract_intercepts(waap_uw_pricelevel)
-### Estimate WAAP for 68 % level ----
-# waap_pricelevel_68 <- meta_analysis(d_no_qc,
-#                                 outvar = out_var,
-#                                 se_option = "upper", 
-#                                 periods = seq(0, 60, by = 3),
-#                                 wins = wins_para,
-#                                 prec_weighted = FALSE,
-#                                 ap = TRUE,
-#                                 ap_prec_weighted = TRUE,
-#                                 ap_parameter = 1.84, # 68% level
-#                                 estimation = "UWLS", 
-#                                 cluster_se = TRUE)
-# waap_pricelevel_68 <- extract_intercepts(waap_pricelevel_68)
-### Estimate AAP (WAAP without weights) for 68 level ----
-# waap_uw_pricelevel_68 <- meta_analysis(d_no_qc,
-#                                    outvar = out_var,
-#                                    se_option = "upper", 
-#                                    periods = seq(0, 60, by = 3),
-#                                    wins = wins_para,
-#                                    prec_weighted = FALSE,
-#                                    ap = TRUE,
-#                                    ap_prec_weighted = FALSE,
-#                                    ap_parameter = 1.84, # 68% level
-#                                    estimation = "UWLS", 
-#                                    cluster_se = TRUE)
-# waap_uw_pricelevel_68 <- extract_intercepts(waap_uw_pricelevel_68)
 ### Estimate WAAP with model selection based on horizon ----
-# model_waap_pricelevel <- meta_analysis(d_no_qc,
-#                                    outvar = out_var,
-#                                    se_option = "upper", 
-#                                    periods = seq(0, 60, by = 3),
-#                                    wins = wins_para,
-#                                    prec_weighted = FALSE,
-#                                    ap = TRUE,
-#                                    ap_horizon = 36,
-#                                    ap_prec_weighted = TRUE,
-#                                    ap_parameter = 2.8,
-#                                    estimation = "UWLS", 
-#                                    cluster_se = TRUE)
-# model_waap_pricelevel <- extract_intercepts(model_waap_pricelevel)
-### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
-# model_waap_uw_pricelevel <- meta_analysis(d_no_qc,
-#                                       outvar = out_var,
-#                                       se_option = "upper", 
-#                                       periods = seq(0, 60, by = 3),
-#                                       wins = wins_para,
-#                                       prec_weighted = FALSE,
-#                                       ap = TRUE,
-#                                       ap_horizon = 36,
-#                                       ap_prec_weighted = FALSE,
-#                                       ap_parameter = 2.8,
-#                                       estimation = "UWLS", 
-#                                       cluster_se = TRUE)
-# model_waap_uw_pricelevel <- extract_intercepts(model_waap_uw_pricelevel)
-### Estimate WAAP with model selection based on horizon ----
-model_waap_pricelevel_68 <- meta_analysis(d_no_qc,
+model_waap_pricelevel <- meta_analysis(d_no_qc,
                                       outvar = out_var,
                                       se_option = "upper", 
                                       periods = seq(0, 60, by = 3),
@@ -864,12 +585,12 @@ model_waap_pricelevel_68 <- meta_analysis(d_no_qc,
                                       ap = TRUE,
                                       ap_horizon = 36,
                                       ap_prec_weighted = TRUE,
-                                      ap_parameter = 1.84,
+                                      ap_parameter = 2.8,
                                       estimation = "UWLS", 
                                       cluster_se = TRUE)
-model_waap_pricelevel_68 <- extract_intercepts(model_waap_pricelevel_68)
+model_waap_pricelevel <- extract_intercepts(model_waap_pricelevel)
 ### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
-model_waap_uw_pricelevel_68 <- meta_analysis(d_no_qc,
+model_waap_uw_pricelevel <- meta_analysis(d_no_qc,
                                          outvar = out_var,
                                          se_option = "upper", 
                                          periods = seq(0, 60, by = 3),
@@ -878,10 +599,10 @@ model_waap_uw_pricelevel_68 <- meta_analysis(d_no_qc,
                                          ap = TRUE,
                                          ap_horizon = 36,
                                          ap_prec_weighted = FALSE,
-                                         ap_parameter = 1.84,
+                                         ap_parameter = 2.8,
                                          estimation = "UWLS", 
                                          cluster_se = TRUE)
-model_waap_uw_pricelevel_68 <- extract_intercepts(model_waap_uw_pricelevel_68)
+model_waap_uw_pricelevel <- extract_intercepts(model_waap_uw_pricelevel)
 ### Estimate AK ----
 ak_pricelevel <- meta_analysis(d_no_qc,
                            outvar = out_var,
@@ -898,92 +619,56 @@ ak_pricelevel <- meta_analysis(d_no_qc,
                            ak_plot = "both")
 ak_pricelevel <- extract_intercepts_AK(ak_pricelevel)
 ### Plot corrected effects ----
-avg_irf_pricelevel_median_corrections <- avg_irf_pricelevel_median %>% 
-  # add_lines(
-  #   data = waap_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
+avg_irf_pricelevel_corrections <- avg_irf_pricelevel %>% 
   add_lines(
     data = peese_pricelevel,
     x = ~period,
     y = ~estimate,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
   add_lines(
     data = fatpet_pricelevel,
     x = ~period,
     y = ~estimate,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>% 
   add_lines(
     data = fatpet_uw_pricelevel,
     x = ~period,
     y = ~estimate,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>%
   add_lines(
     data = peese_uw_pricelevel,
     x = ~period,
     y = ~estimate,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
-  ) %>%
-  # add_lines(
-  #   data = waap_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  add_trace(
-    data = model_waap_pricelevel_68,
-    x = ~period,
-    y = ~estimate,
-    name = "WAAP (model selection, 68%)",
-    marker = list(color = "darkblue", size = 5)
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
   add_trace(
-    data = model_waap_uw_pricelevel_68,
+    data = model_waap_pricelevel,
     x = ~period,
     y = ~estimate,
-    name = "unweighted WAAP (model selection, 68%)",
+    name = "WAAP",
+    showlegend = FALSE,
+    marker = list(color = "darkgreen", size = 5)
+  ) %>%
+  add_trace(
+    data = model_waap_uw_pricelevel,
+    x = ~period,
+    y = ~estimate,
+    name = "UAAP",
+    showlegend = FALSE,
     marker = list(color = "white", size = 5,
                   line = list(
-                    color = 'darkblue',
+                    color = 'darkgreen',
                     width = 1
                   ))
   ) %>% 
@@ -992,168 +677,81 @@ avg_irf_pricelevel_median_corrections <- avg_irf_pricelevel_median %>%
     x = ~period,
     y = ~estimate,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   )
-avg_irf_pricelevel_median_corrections
+avg_irf_pricelevel_corrections
 ### Save as PDF
-orca(avg_irf_pricelevel_median_corrections,
-     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_pricelevel_median_corrections.pdf",
+orca(avg_irf_pricelevel_corrections,
+     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_pricelevel_corrections.pdf",
      scale = NULL,
      width = 1500 * 0.6,
      height = 1100 * 0.6
 )
 ### Plot corrected effects with bounds ----
 avg_irf_pricelevel_corrections_with_bounds <- avg_irf_pricelevel %>% 
-  # add_lines(
-  #   data = waap_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
-  # add_lines(
-  #   data = peese_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "PEESE",
-  #   line = list(color = "darkblue", width = 1, dash = 'solid')
-  # ) %>%
   add_ribbons(
     data = peese_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
-  ) %>% 
-  # add_lines(
-  #   data = fatpet_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "FAT-PET",
-  #   line = list(color = "darkblue", width = 2, dash = "dot")
-  # ) %>%
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
+  ) %>%
   add_ribbons(
     data = fatpet_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>%
-  # add_lines(
-  #   data = fatpet_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted FAT-PET",
-  #   line = list(color = "darkblue", width = 4, dash = "dot")
-  # ) %>%
   add_ribbons(
     data = fatpet_uw_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>% 
-  # add_lines(
-  #   data = peese_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted PEESE",
-  #   line = list(color = "darkblue", width = 4, dash = "solid")
-  # ) %>% 
   add_ribbons(
     data = peese_uw_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
-  # add_lines(
-  #   data = waap_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection, 68%)",
-  #   marker = list(color = "darkblue", size = 5)
-  # ) %>% 
   add_ribbons(
-    data = model_waap_pricelevel_68,
+    data = model_waap_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "WAAP",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1)
   ) %>%
-  # add_trace(
-  #   data = model_waap_uw_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection, 68%)",
-  #   marker = list(color = "white", size = 5,
-  #                 line = list(
-  #                   color = 'darkblue',
-  #                   width = 1
-  #                 ))
-  # ) %>% 
   add_ribbons(
-    data = model_waap_uw_pricelevel_68,
+    data = model_waap_uw_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "UAAP",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1)
   ) %>% 
-  # add_lines(
-  #   data = ak_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "AK",
-  #   line = list(color = "darkblue", width = 1, dash = 'longdashdot')
-  # ) %>% 
   add_ribbons(
     data = ak_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   ) %>% 
   layout(
     yaxis = list(
@@ -1176,15 +774,17 @@ pricelevel_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = 'darkblue', width = 3)
+    showlegend = FALSE,
+    line = list(color = 'darkgreen', width = 3)
   ) %>% 
   add_ribbons(
     data = fatpet_uw_pricelevel_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = 'darkblue', width = 3, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = 'darkgreen', width = 3, dash = "dot")
   ) %>%
   add_ribbons(
     data = peese_pricelevel_pbias,
@@ -1192,15 +792,17 @@ pricelevel_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "solid")
+    showlegend = FALSE,
+    line = list(color = 'darkgreen', width = 3, dash = "solid")
   ) %>%
   add_ribbons(
     data = peese_uw_pricelevel_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "dash")
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = 'darkgreen', width = 3, dash = "dash")
   )
 pricelevel_pbias_plot
 ### Save as PDF
@@ -1228,7 +830,7 @@ avg_irf_pricelevel_median_se_bounds <- plot_average_irfs(
 write_csv(avg_irf_pricelevel_median_se_bounds$data, here::here(save_path, "avg_irf_pricelevel_median_se_bounds.csv"))
 # Change plot title
 avg_irf_pricelevel_median_se_bounds <- avg_irf_pricelevel_median_se_bounds$plot %>% plotly::layout(
-  title = "Average and median IRF for Inflation"
+  title = "Mean and median IRF for Inflation"
 )
 # Comparison plot avg_irf_pricelevel_median and avg_irf_pricelevel_median_se_bounds with same ylim and next to each other
 figure_avg_irf_pricelevel_median_se_bounds <- subplot(avg_irf_pricelevel_median, 
@@ -1347,88 +949,8 @@ peese_uw_rate <- meta_analysis(d_no_qc,
                                  cluster_se = TRUE)
 peese_uw_rate_pbias <- extract_pbias(peese_uw_rate)
 peese_uw_rate <- extract_intercepts(peese_uw_rate)
-### Estimate WAAP ----
-# waap_rate <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "avg", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_prec_weighted = TRUE,
-#                              ap_parameter = 2.8,
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# waap_rate <- extract_intercepts(waap_rate)
-### Estimate AAP (WAAP without weights) ----
-# waap_uw_rate <- meta_analysis(d_no_qc,
-#                                 outvar = out_var,
-#                                 se_option = "avg", 
-#                                 periods = seq(0, 60, by = 3),
-#                                 wins = wins_para,
-#                                 prec_weighted = FALSE,
-#                                 ap = TRUE,
-#                                 ap_prec_weighted = FALSE,
-#                                 ap_parameter = 2.8,
-#                                 estimation = "UWLS", 
-#                                 cluster_se = TRUE)
-# waap_uw_rate <- extract_intercepts(waap_uw_rate)
-### Estimate WAAP for 68 % level ----
-# waap_rate_68 <- meta_analysis(d_no_qc,
-#                                 outvar = out_var,
-#                                 se_option = "avg", 
-#                                 periods = seq(0, 60, by = 3),
-#                                 wins = wins_para,
-#                                 prec_weighted = FALSE,
-#                                 ap = TRUE,
-#                                 ap_prec_weighted = TRUE,
-#                                 ap_parameter = 1.84, # 68% level
-#                                 estimation = "UWLS", 
-#                                 cluster_se = TRUE)
-# waap_rate_68 <- extract_intercepts(waap_rate_68)
-### Estimate AAP (WAAP without weights) for 68 level ----
-# waap_uw_rate_68 <- meta_analysis(d_no_qc,
-#                                    outvar = out_var,
-#                                    se_option = "avg", 
-#                                    periods = seq(0, 60, by = 3),
-#                                    wins = wins_para,
-#                                    prec_weighted = FALSE,
-#                                    ap = TRUE,
-#                                    ap_prec_weighted = FALSE,
-#                                    ap_parameter = 1.84, # 68% level
-#                                    estimation = "UWLS", 
-#                                    cluster_se = TRUE)
-# waap_uw_rate_68 <- extract_intercepts(waap_uw_rate_68)
 ### Estimate WAAP with model selection based on horizon ----
-# model_waap_rate <- meta_analysis(d_no_qc,
-#                                    outvar = out_var,
-#                                    se_option = "avg", 
-#                                    periods = seq(0, 60, by = 3),
-#                                    wins = wins_para,
-#                                    prec_weighted = FALSE,
-#                                    ap = TRUE,
-#                                    ap_horizon = 12,
-#                                    ap_prec_weighted = TRUE,
-#                                    ap_parameter = 2.8,
-#                                    estimation = "UWLS", 
-#                                    cluster_se = TRUE)
-# model_waap_rate <- extract_intercepts(model_waap_rate)
-### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
-# model_waap_uw_rate <- meta_analysis(d_no_qc,
-#                                       outvar = out_var,
-#                                       se_option = "avg", 
-#                                       periods = seq(0, 60, by = 3),
-#                                       wins = wins_para,
-#                                       prec_weighted = FALSE,
-#                                       ap = TRUE,
-#                                       ap_horizon = 12,
-#                                       ap_prec_weighted = FALSE,
-#                                       ap_parameter = 2.8,
-#                                       estimation = "UWLS", 
-#                                       cluster_se = TRUE)
-# model_waap_uw_rate <- extract_intercepts(model_waap_uw_rate)
-### Estimate WAAP with model selection based on horizon ----
-model_waap_rate_68 <- meta_analysis(d_no_qc,
+model_waap_rate <- meta_analysis(d_no_qc,
                                       outvar = out_var,
                                       se_option = "avg", 
                                       periods = seq(0, 60, by = 3),
@@ -1437,12 +959,12 @@ model_waap_rate_68 <- meta_analysis(d_no_qc,
                                       ap = TRUE,
                                       ap_horizon = 12,
                                       ap_prec_weighted = TRUE,
-                                      ap_parameter = 1.84,
+                                      ap_parameter = 2.8,
                                       estimation = "UWLS", 
                                       cluster_se = TRUE)
-model_waap_rate_68 <- extract_intercepts(model_waap_rate_68)
+model_waap_rate <- extract_intercepts(model_waap_rate)
 ### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
-model_waap_uw_rate_68 <- meta_analysis(d_no_qc,
+model_waap_uw_rate <- meta_analysis(d_no_qc,
                                          outvar = out_var,
                                          se_option = "avg", 
                                          periods = seq(0, 60, by = 3),
@@ -1451,10 +973,10 @@ model_waap_uw_rate_68 <- meta_analysis(d_no_qc,
                                          ap = TRUE,
                                          ap_horizon = 12,
                                          ap_prec_weighted = FALSE,
-                                         ap_parameter = 1.84,
+                                         ap_parameter = 2.8,
                                          estimation = "UWLS", 
                                          cluster_se = TRUE)
-model_waap_uw_rate_68 <- extract_intercepts(model_waap_uw_rate_68)
+model_waap_uw_rate <- extract_intercepts(model_waap_uw_rate)
 ### Estimate AK ----
 ak_rate <- meta_analysis(d_no_qc,
                            outvar = out_var,
@@ -1471,92 +993,50 @@ ak_rate <- meta_analysis(d_no_qc,
                            ak_plot = "both")
 ak_rate <- extract_intercepts_AK(ak_rate)
 ### Plot corrected effects ----
-avg_irf_rate_median_corrections <- avg_irf_rate_median %>% 
-  # add_lines(
-  #   data = waap_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
+avg_irf_rate_corrections <- avg_irf_rate %>% 
   add_lines(
     data = peese_rate,
     x = ~period,
     y = ~estimate,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
   add_lines(
     data = fatpet_rate,
     x = ~period,
     y = ~estimate,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>% 
   add_lines(
     data = fatpet_uw_rate,
     x = ~period,
     y = ~estimate,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>%
   add_lines(
     data = peese_uw_rate,
     x = ~period,
     y = ~estimate,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
-  ) %>%
-  # add_lines(
-  #   data = waap_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  add_trace(
-    data = model_waap_rate_68,
-    x = ~period,
-    y = ~estimate,
-    name = "WAAP (model selection, 68%)",
-    marker = list(color = "darkblue", size = 5)
+    name = "OLS with SE<sup>2</sup>",
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
   add_trace(
-    data = model_waap_uw_rate_68,
+    data = model_waap_rate,
     x = ~period,
     y = ~estimate,
-    name = "unweighted WAAP (model selection, 68%)",
+    name = "WAAP",
+    marker = list(color = "darkgreen", size = 5)
+  ) %>%
+  add_trace(
+    data = model_waap_uw_rate,
+    x = ~period,
+    y = ~estimate,
+    name = "UAAP",
     marker = list(color = "white", size = 5,
                   line = list(
-                    color = 'darkblue',
+                    color = 'darkgreen',
                     width = 1
                   ))
   ) %>% 
@@ -1565,168 +1045,73 @@ avg_irf_rate_median_corrections <- avg_irf_rate_median %>%
     x = ~period,
     y = ~estimate,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   )
-avg_irf_rate_median_corrections
+avg_irf_rate_corrections
 ### Save as PDF
-orca(avg_irf_rate_median_corrections,
-     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_rate_median_corrections.pdf",
+orca(avg_irf_rate_corrections,
+     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_rate_corrections.pdf",
      scale = NULL,
      width = 1500 * 0.6,
      height = 1100 * 0.6
 )
 ### Plot corrected effects with bounds ----
 avg_irf_rate_corrections_with_bounds <- avg_irf_rate %>% 
-  # add_lines(
-  #   data = waap_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
-  # add_lines(
-  #   data = peese_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "PEESE",
-  #   line = list(color = "darkblue", width = 1, dash = 'solid')
-  # ) %>%
   add_ribbons(
     data = peese_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
-  # add_lines(
-  #   data = fatpet_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "FAT-PET",
-  #   line = list(color = "darkblue", width = 2, dash = "dot")
-  # ) %>%
   add_ribbons(
     data = fatpet_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>%
-  # add_lines(
-  #   data = fatpet_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted FAT-PET",
-  #   line = list(color = "darkblue", width = 4, dash = "dot")
-  # ) %>%
   add_ribbons(
     data = fatpet_uw_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>% 
-  # add_lines(
-  #   data = peese_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted PEESE",
-  #   line = list(color = "darkblue", width = 4, dash = "solid")
-  # ) %>% 
   add_ribbons(
     data = peese_uw_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
+    name = "OLS with SE<sup>2</sup>",
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
-  # add_lines(
-  #   data = waap_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection, 68%)",
-  #   marker = list(color = "darkblue", size = 5)
-  # ) %>% 
   add_ribbons(
-    data = model_waap_rate_68,
+    data = model_waap_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "WAAP",
+    line = list(color = "darkgreen", width = 1)
   ) %>%
-  # add_trace(
-  #   data = model_waap_uw_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection, 68%)",
-  #   marker = list(color = "white", size = 5,
-  #                 line = list(
-  #                   color = 'darkblue',
-  #                   width = 1
-  #                 ))
-  # ) %>% 
   add_ribbons(
-    data = model_waap_uw_rate_68,
+    data = model_waap_uw_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "UAAP",
+    line = list(color = "darkgreen", width = 1)
   ) %>% 
-  # add_lines(
-  #   data = ak_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "AK",
-  #   line = list(color = "darkblue", width = 1, dash = 'longdashdot')
-  # ) %>% 
   add_ribbons(
     data = ak_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   ) %>% 
   layout(
     yaxis = list(
@@ -1749,15 +1134,15 @@ rate_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = 'darkblue', width = 3)
+    line = list(color = 'darkgreen', width = 3)
   ) %>% 
   add_ribbons(
     data = fatpet_uw_rate_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = 'darkblue', width = 3, dash = "dot")
+    name = "OLS",
+    line = list(color = 'darkgreen', width = 3, dash = "dot")
   ) %>%
   add_ribbons(
     data = peese_rate_pbias,
@@ -1765,15 +1150,15 @@ rate_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "solid")
+    line = list(color = 'darkgreen', width = 3, dash = "solid")
   ) %>%
   add_ribbons(
     data = peese_uw_rate_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "dash")
+    name = "OLS with SE<sup>2</sup>",
+    line = list(color = 'darkgreen', width = 3, dash = "dash")
   )
 rate_pbias_plot
 ### Save as PDF
@@ -1876,35 +1261,33 @@ orca(figure_average_irfs_output_pricelevel,
 )
 
 # Joint figure of average IRFs for output, price level and interest rate with median ----
-figure_average_irfs_output_pricelevel_rate_with_median <- subplot(avg_irf_output_median, 
-                                                                  avg_irf_pricelevel_median, 
-                                                                  avg_irf_rate_median, 
-                                                                  nrows = 2, 
-                                                                  margin = 0.05) %>% layout(
-  showlegend = FALSE,
-  title = 'Average and median IRFs') %>% layout(annotations = list(
-  list(x = 0.25, y = 1, text = "Output", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.75, y = 1, text = "Price level", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.25, y = 0.45, text = "Interest rate", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
-), margin = list(t = 60)) %>%
+figure_average_irfs_output_pricelevel_rate_with_median <- subplot(subplot(avg_irf_output_median,
+                                                                          avg_irf_pricelevel_median,
+                                                                          shareY = TRUE),
+                                                                  avg_irf_rate_median, widths = c(.66, .33)
+) %>%
+  layout(legend = list(orientation = "h",   # show entries horizontally
+                       xanchor = "center",  # use center of legend as anchor
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size))) %>%        # put legend in center of x-axis
+  layout(title = "",
+         xaxis2 = list(title = "Months")
+  ) %>%
   layout(
-    xaxis = list(title = "Months"),
-    xaxis2 = list(title = "Months"),
-    xaxis3 = list(title = "Months"),
-    yaxis = list(title = "Effect (%)",
-                 range = list(-2.8,0.8)
-    ),
-    yaxis2 = list(range = list(-2.8,0.8)
-    ),
-    yaxis3 = list(title = "Effect (%-points)", 
-                  range = list(-1,1.5)
-    ),
-    hovermode = "compare"
-  ) 
-
+    yaxis = list(#title = "Effect (%)",
+      range = list(y_lims[1], y_lims[2])),
+    yaxis2 = list(#title = "Effect (%-points)",
+      range = list(-1, 1.5))
+  ) %>%
+  layout(annotations = list(
+    list(x = 30, y = y_lims[2], text = "Output response (%)", showarrow = FALSE, xref = "x", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = y_lims[2], text = "Price level response (%)", showarrow = FALSE, xref = "x2", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y2",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+  ), margin = list(t = 60)
+  )
 # Display figure
 figure_average_irfs_output_pricelevel_rate_with_median
 
@@ -1912,38 +1295,37 @@ figure_average_irfs_output_pricelevel_rate_with_median
 orca(figure_average_irfs_output_pricelevel_rate_with_median,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_output_pricelevel_rate_with_median.pdf",
      scale = NULL,
-     width = 1500,
-     height = 1000
+     width = 1034,
+     height = 486 * 0.8
 )
 
 # Joint figure of average IRFs for output, price level and interest rate with different publication bias corrections ----
-figure_average_irfs_output_pricelevel_rate_corrections <- subplot(avg_irf_output_median_corrections, 
-                                                                  avg_irf_pricelevel_median_corrections, 
-                                                                  avg_irf_rate_median_corrections, 
-                                                                  nrows = 2, 
-                                                                  margin = 0.05) %>% layout(
-  showlegend = FALSE,
-  title = 'Average and median IRFs') %>% layout(annotations = list(
-  list(x = 0.25, y = 1, text = "Output", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.75, y = 1, text = "Price level", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.25, y = 0.45, text = "Interest rate", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
-), margin = list(t = 60)) %>%
+figure_average_irfs_output_pricelevel_rate_corrections <- subplot(subplot(avg_irf_output_corrections,
+                                                                  avg_irf_pricelevel_corrections,
+                                                                  shareY = TRUE),
+                                                          avg_irf_rate_corrections, widths = c(.66, .33)
+) %>%
+  layout(legend = list(orientation = "h",   # show entries horizontally
+                       xanchor = "center",  # use center of legend as anchor
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size))) %>%        # put legend in center of x-axis
+  layout(title = "",
+         xaxis2 = list(title = "Months")
+  ) %>%
   layout(
-    xaxis = list(title = "Months"),
-    xaxis2 = list(title = "Months"),
-    xaxis3 = list(title = "Months"),
-    yaxis = list(title = "Effect (%)",
-                 range = list(-2.8,0.8)
-    ),
-    yaxis2 = list(range = list(-2.8,0.8)
-    ),
-    yaxis3 = list(title = "Effect (%-points)", 
-                  range = list(-1,1.5)
-    ),
-    hovermode = "compare"
+    yaxis = list(#title = "Effect (%)",
+      range = list(y_lims[1], y_lims[2])),
+    yaxis2 = list(#title = "Effect (%-points)",
+      range = list(-1, 1.5))
+  ) %>%
+  layout(annotations = list(
+    list(x = 30, y = y_lims[2], text = "Output response (%)", showarrow = FALSE, xref = "x", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = y_lims[2], text = "Price level response (%)", showarrow = FALSE, xref = "x2", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y2",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+  ), margin = list(t = 60)
   )
 # Display figure
 figure_average_irfs_output_pricelevel_rate_corrections
@@ -1951,13 +1333,13 @@ figure_average_irfs_output_pricelevel_rate_corrections
 orca(figure_average_irfs_output_pricelevel_rate_corrections,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_output_pricelevel_rate_corrections.pdf",
      scale = NULL,
-     width = 1500,
-     height = 1000
+     width = 1034,
+     height = 486 * 0.8
 )
 
 # For sub-samples ----
 ## Set PEESE color and legend ----
-peese_color <- "darkblue"
+peese_color <- "darkgreen"
 peese_legend <- paste0("PEESE ", 100*conflevel, "% CI")
 ## For output ----
 out_var <- "output"

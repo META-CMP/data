@@ -140,13 +140,7 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
   
   # Create base plot
   plot <- average_irf %>%
-    plot_ly(showlegend = show_legend) %>%
-    add_lines(
-      x = ~period.month,
-      y = ~avg.effect,
-      name = "Average effect from literature",
-      line = list(color = 'rgba(0,76,153,1)', width = 3)
-    )
+    plot_ly(showlegend = show_legend)
   
   # Add confidence bounds based on selected method
   if (show_CIs == TRUE) {
@@ -198,14 +192,6 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
   
   # Add median if requested
   if (show_median == TRUE) {
-    # Add median line
-    plot <- plot %>%
-      add_lines(
-        x = ~period.month,
-        y = ~median.effect,
-        name = "Median",
-        line = list(color = 'rgba(255,0,0,0.8)', width = 2)
-      )
     if (show_CIs == TRUE) {
       # Add median bounds based on selected method
       if (ci_method == "approx.CIs") {
@@ -254,6 +240,14 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
         }
       }
     }
+    # Add median line
+    plot <- plot %>%
+      add_lines(
+        x = ~period.month,
+        y = ~median.effect,
+        name = "Median effect from literature",
+        line = list(color = 'rgba(255,0,0,0.8)', width = 2)
+      )
   }
   
   # Add percentiles if requested
@@ -278,6 +272,15 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
         fillcolor = 'rgba(147, 112, 219, 0.3)'
       )
   }
+  
+  # Add average line
+  plot <- plot %>%
+    add_lines(
+      x = ~period.month,
+      y = ~avg.effect,
+      name = "Mean effect from literature",
+      line = list(color = 'rgba(0,76,153,1)', width = 3)
+    )
   
   # Add corrected IRF with confidence bounds if provided
   if (!is.null(corrected_irf)) {

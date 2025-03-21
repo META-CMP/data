@@ -451,18 +451,18 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
       title = "P-bias corrected effects, 14 % top journal, 55 % CB affiliation",
@@ -483,11 +483,11 @@ prediction <- rbind(prediction, uncorrected_irf)
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2)
 )
 # Save as pdf
@@ -577,18 +577,18 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
       title = "P-bias corrected effects, 0 % top journal, 55 % CB affiliation",
@@ -609,11 +609,11 @@ prediction <- rbind(prediction, uncorrected_irf)
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2)
 )
 # Save as pdf
@@ -703,18 +703,18 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
       title = "P-bias corrected effects, 100 % top journal, 55 % CB affiliation",
@@ -735,11 +735,11 @@ prediction <- rbind(prediction, uncorrected_irf)
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2)
 )
 # Save as pdf
@@ -1293,16 +1293,18 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
       title = "P-bias corrected effects, 14 % top journals, 55 % CB affiliation",
@@ -1323,11 +1325,11 @@ prediction <- rbind(prediction, uncorrected_irf)
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2))
 # Save as pdf
 ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_corrected_effects_ident.pdf"),
@@ -1417,16 +1419,18 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
       title = "P-bias corrected effects, 0 % top journals, 55 % CB affiliation",
@@ -1447,11 +1451,11 @@ prediction <- rbind(prediction, uncorrected_irf)
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2))
 # Save as pdf
 ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_corrected_effects_ident_other_pub.pdf"),
@@ -1540,16 +1544,18 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
       title = "P-bias corrected effects, 100 % top journals, 55 % CB affiliation",
@@ -1570,11 +1576,11 @@ prediction <- rbind(prediction, uncorrected_irf)
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2))
 # Save as pdf
 ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_corrected_effects_ident_top_journals.pdf"),

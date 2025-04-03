@@ -72,15 +72,20 @@ plot_average_irfs <- function(data, period_limit = NULL, winsor = FALSE, wins_pa
   
   # Apply winsorization (if selected) to the CIs, mean effect, and SEs
   if (winsor == TRUE) {
-    data$approx.CI.lower_68 <- winsorizor(data$approx.CI.lower_68, percentile = wins_par)
-    data$approx.CI.upper_68 <- winsorizor(data$approx.CI.upper_68, percentile = wins_par)
-    data$approx.CI.lower_90 <- winsorizor(data$approx.CI.lower_90, percentile = wins_par)
-    data$approx.CI.upper_90 <- winsorizor(data$approx.CI.upper_90, percentile = wins_par)
-    data$approx.CI.lower_95 <- winsorizor(data$approx.CI.lower_95, percentile = wins_par)
-    data$approx.CI.upper_95 <- winsorizor(data$approx.CI.upper_95, percentile = wins_par)
-    data$mean.effect <- winsorizor(data$mean.effect, percentile = wins_par)
-    data$SE.upper <- winsorizor(data$SE.upper, percentile = wins_par)
-    data$SE.lower <- winsorizor(data$SE.lower, percentile = wins_par)
+    data <- data %>%
+      group_by(period.month) %>%
+      mutate(
+        approx.CI.lower_68 = winsorizor(approx.CI.lower_68, percentile = wins_par),
+        approx.CI.upper_68 = winsorizor(approx.CI.upper_68, percentile = wins_par),
+        approx.CI.lower_90 = winsorizor(approx.CI.lower_90, percentile = wins_par),
+        approx.CI.upper_90 = winsorizor(approx.CI.upper_90, percentile = wins_par),
+        approx.CI.lower_95 = winsorizor(approx.CI.lower_95, percentile = wins_par),
+        approx.CI.upper_95 = winsorizor(approx.CI.upper_95, percentile = wins_par),
+        mean.effect = winsorizor(mean.effect, percentile = wins_par),
+        SE.upper = winsorizor(SE.upper, percentile = wins_par),
+        SE.lower = winsorizor(SE.lower, percentile = wins_par)
+      ) %>%
+      ungroup()
   }
   
   average_irf <- data %>%

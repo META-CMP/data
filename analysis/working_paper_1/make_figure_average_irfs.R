@@ -1412,18 +1412,19 @@ orca(figure_average_irfs_output_top_journals_other_publications,
      width = 1034 * 2/3,
      height = 486 * 0.8
 )
-#### Sample size plot of top journals vs other
-top_other_prop <- d_no_qc %>% # Proportions by period
-  filter(period.month %in% seq(0,60,by=3)) %>%
+#### Sample shares of top journals vs other
+# Get proportions by period
+top_other_prop <- d_no_qc %>%
+  filter(period.month %in% seq(0, 60, by=3)) %>%
   count(period.month, top_5_or_tier) %>%
   group_by(period.month) %>%
   mutate(proportion = n / sum(n))
 print(top_other_prop, n = 42)
 # Get average proportion for top journals across periods
 top_prop <- top_other_prop %>%
-  filter(top_5_or_tier == "top journal") %>%
+  filter(top_5_or_tier == 1) %>%
   select(period.month, top_5_or_tier, proportion)
-print(top_prop, n = 42)
+print(top_prop, n = 21)
 mean(top_prop$proportion)  
 
 d_no_qc %>%
@@ -1528,7 +1529,7 @@ cbanker_prop <- d_no_qc %>% # Proportions by period
   mutate(proportion = n / sum(n))
 print(cbanker_prop, n = 42)
 cbanker_prop <- cbanker_prop %>% 
-       filter(cbanker == "central bank affiliated") %>%
+       filter(cbanker == 1) %>%
        select(period.month, proportion)
 print(cbanker_prop, n = 42)
 mean(cbanker_prop$proportion)

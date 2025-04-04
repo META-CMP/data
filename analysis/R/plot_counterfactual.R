@@ -143,7 +143,7 @@ plot_counterfactual <- function(data,
   }
   
   # Create legend components
-  legend_items <- c("Histogram", "Empirical Density")
+  legend_items <- c("Histogram", "Emp. density")
   legend_colors <- c("grey", "black")
   legend_lines <- c(NA, 1)
   legend_pch <- c(22, NA)

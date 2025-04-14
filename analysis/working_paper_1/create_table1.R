@@ -44,6 +44,10 @@ options(digits = 10)
 # ------------------------------------------------------------------------------
 # 1. Compute Shares for Categorical Moderators ----
 # ------------------------------------------------------------------------------
+period_month <- df %>%
+  count(period.month) %>%
+  mutate(share = n / sum(n) * 100)
+
 # For Estimation method values (from df$group_est_broad):
 estimation_shares <- df %>%
   count(group_est_broad) %>%
@@ -312,6 +316,10 @@ table_data1 %>%
   pack_rows("Publication characteristics", 11, 16, bold = TRUE, hline_after = TRUE) %>%
   add_header_above(c(" " = 2, "Summary Statistics" = 1))
 
+# ------------------------------------------------------------------------------
+# 3. Create table 2
+# ------------------------------------------------------------------------------
+
 # Create the data frame with Variable and Value
 table_data2 <- data.frame(
   Variable = c(
@@ -372,7 +380,7 @@ table_data2 %>%
   add_header_above(c(" " = 2, "Summary Statistics" = 1))
 
 # ------------------------------------------------------------------------------
-# 3. Save to file (optional)
+# 4. Save to file (optional)
 # ------------------------------------------------------------------------------
 
 write.csv(table_data1, file = here::here("analysis/working_paper_1/tables/summary_statistics/table1.csv"), 

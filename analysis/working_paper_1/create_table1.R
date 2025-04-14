@@ -64,6 +64,7 @@ vecm <- df %>%
 
 # Create VECM value
 vecm <- vecm[["share"]][[2]]
+vecm
 
 # For Identification method values (from df$group_ident_broad):
 identifcation_shares <- df %>%

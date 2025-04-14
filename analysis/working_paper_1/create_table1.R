@@ -225,8 +225,17 @@ time_series <- type_data[["share"]][[1]]
 #For transformed IRF if needed
 
 trans_irf <- df %>%
+  filter(!(outcome_measure %in% c("emp", "emp_rate", "une_rate", "rate"))) %>%
   count(transformation) %>%
   mutate(share = n / sum(n) * 100)
+
+growth <- trans_irf[["share"]][[1]]
+levels <- trans_irf[["share"]][[2]]
+log_level <- trans_irf[["share"]][[3]]
+log_diff <- trans_irf[["share"]][[4]]
+
+transformed <- trans_irf[["share"]][[1]] + trans_irf[["share"]][[4]]
+no_transformed <- trans_irf[["share"]][[2]] + trans_irf[["share"]][[3]]
 
 
 # ------------------------------------------------------------------------------

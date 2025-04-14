@@ -125,12 +125,16 @@ cbanker <- cbanker[["share"]][[2]]
 stats_pubyear <- custom_summary(df$publication_year)
 
 mean_pubyear <- stats_pubyear[["Mean"]]
+sd_pubyear <- stats_pubyear[["SD"]]
+sd_pubyear
 
 #Create number of citations mean value 
 
 stats_numcit <- custom_summary(df$num_cit.x)
 
 mean_numcit <- stats_numcit[["Mean"]]
+sd_numcit <- stats_numcit[["SD"]]
+sd_numcit
 
 #Create byproduct value 
 

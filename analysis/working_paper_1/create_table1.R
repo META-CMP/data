@@ -19,14 +19,14 @@ df1 <- read_excel(here("data/study_characteristics/citations_for_included_studie
                   sheet = "Sheet 1")
 merged_df <- inner_join(df1, df, by = "key")
 
-# For demonstration, we set df equal to merged_df
+# We set df equal to merged_df
 merged_df <- merged_df %>% filter(period.month %in% seq(0, 60, by = 3))
 merged_df <- merged_df %>%
   filter(!(outcome_measure %in% c("emp", "emp_rate", "une_rate")))
 
 df <- merged_df
 
-# (Optional) Example summaries for continuous publication variables:
+# Summaries for continuous publication variables:
 custom_summary <- function(x) {
   c(
     Min = min(x, na.rm = TRUE),
@@ -49,22 +49,28 @@ estimation_shares <- df %>%
   count(group_est_broad) %>%
   mutate(share = n / sum(n) * 100)
 
+#Create estimation values to paste in the table
+
 var <- estimation_shares[["share"]][[1]]
 lp_ardl <- estimation_shares[["share"]][[2]]
 favar <- estimation_shares[["share"]][[3]]
 other_var <- estimation_shares[["share"]][[4]]
 dsge <- estimation_shares[["share"]][[5]]
 
+# Count how much VECM are in the data
 vecm <- df %>%
   count(vecm) %>%
   mutate(share = n / sum(n) * 100)
 
+# Create VECM value
 vecm <- vecm[["share"]][[2]]
 
 # For Identification method values (from df$group_ident_broad):
 identifcation_shares <- df %>%
   count(group_ident_broad) %>%
   mutate(share = n / sum(n) * 100)
+
+#Create identification values to be paste in the table
 
 chol <- identifcation_shares[["share"]][[1]]
 hf <- identifcation_shares[["share"]][[2]]
@@ -73,17 +79,23 @@ signr <- identifcation_shares[["share"]][[4]]
 idother <- identifcation_shares[["share"]][[5]]
 
 # For Variable frequency:
+# Annual frequency
 annual <- df %>%
   count(annual) %>%
   mutate(share = n / sum(n) * 100)
 
+#Create annual frequency value 
 annual <- annual[["share"]][[2]]
 
+#Create quarterly frequency value 
 quarter <- df %>%
   count(quarter) %>%
   mutate(share = n / sum(n) * 100)
 
 quarter <- quarter[["share"]][[2]]
+
+
+#Create monthly frequency value 
 
 monthly <- df %>%
   count(month) %>%
@@ -91,11 +103,16 @@ monthly <- df %>%
 
 monthly <- monthly[["share"]][[2]]
 
+
+#Create top tier value 
+
 top_5_or_tier <- df %>%
   count(top_5_or_tier) %>%
   mutate(share = n / sum(n) * 100)
 
 top_5_or_tier <- top_5_or_tier[["share"]][[2]]
+
+#Create central bank value 
 
 cbanker<- df %>%
   count(cbanker) %>%
@@ -103,15 +120,19 @@ cbanker<- df %>%
 
 cbanker <- cbanker[["share"]][[2]]
 
+#Create publication year mean value 
+
 stats_pubyear <- custom_summary(df$publication_year)
 
 mean_pubyear <- stats_pubyear[["Mean"]]
+
+#Create number of citations mean value 
 
 stats_numcit <- custom_summary(df$num_cit.x)
 
 mean_numcit <- stats_numcit[["Mean"]]
 
-
+#Create byproduct value 
 
 byproduct <- df %>%
   count(byproduct) %>%
@@ -123,11 +144,15 @@ prefer <- df %>%
   count(prefer) %>%
   mutate(share = n / sum(n) * 100)
 
+#Create preferred estimate value 
+
 prefer <- prefer[["share"]][[2]]
 
 country_us <- df %>%
   count(us) %>%
   mutate(share = n / sum(n) * 100)
+
+#Create US country share value 
 
 us <- country_us[["share"]][[2]]
 
@@ -135,8 +160,11 @@ country_ea12 <- df %>%
   count(ea12) %>%
   mutate(share = n / sum(n) * 100)
 
+#Create EA-12 share value 
+
 ea12 <- country_ea12[["share"]][[2]]
 
+#Create other advanced countries share value 
 
 other_advanced <- df %>%
   count(country_dev) %>%
@@ -146,9 +174,13 @@ advanced <-
   other_advanced[["share"]][[1]] - 
   country_us[["share"]][[2]] - country_ea12[["share"]][[2]]
 
+#Create emerging countries share value 
+
 emerging <- 
   other_advanced[["share"]][[2]] + other_advanced[["share"]][[3]] +
   other_advanced[["share"]][[4]] + other_advanced[["share"]][[5]]
+
+#For outcome measures
 
 outcome <- df %>%
   filter(!(outcome_measure %in% c("emp", "emp_rate", "une_rate", "rate")))
@@ -156,6 +188,8 @@ outcome <- df %>%
 outcome_measure <- outcome %>%
   count(outcome_measure) %>%
   mutate(share = n / sum(n) * 100)
+
+#Create outcome measures share values
 
 outcome_gdp <- outcome_measure[["share"]][[5]] + outcome_measure[["share"]][[6]]
 outcome_ip <- outcome_measure[["share"]][[7]]
@@ -169,16 +203,26 @@ interest_type <- df %>%
   count(group_inttype) %>%
   mutate(share = n / sum(n) * 100)
 
+#Create interest rates share values 
+
 overnight <- interest_type[["share"]][[1]]
 lending <- interest_type[["share"]][[2]]
 year_rate <- interest_type[["share"]][[3]]
+
+#For the type of the data
 
 type_data <- df %>%
   count(panel) %>%
   mutate(share = n / sum(n) * 100)
 
+#Create panel data share value 
+
 panel <- type_data[["share"]][[2]]
+
+#Create time series share value 
 time_series <- type_data[["share"]][[1]]
+
+#For transformed IRF if needed
 
 trans_irf <- df %>%
   count(transformation) %>%

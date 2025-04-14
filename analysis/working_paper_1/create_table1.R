@@ -125,12 +125,16 @@ cbanker <- cbanker[["share"]][[2]]
 stats_pubyear <- custom_summary(df$publication_year)
 
 mean_pubyear <- stats_pubyear[["Mean"]]
+sd_pubyear <- stats_pubyear[["SD"]]
+sd_pubyear
 
 #Create number of citations mean value 
 
 stats_numcit <- custom_summary(df$num_cit.x)
 
 mean_numcit <- stats_numcit[["Mean"]]
+sd_numcit <- stats_numcit[["SD"]]
+sd_numcit
 
 #Create byproduct value 
 
@@ -242,9 +246,8 @@ no_transformed <- trans_irf[["share"]][[2]] + trans_irf[["share"]][[3]]
 # 2. Create table 1
 # ------------------------------------------------------------------------------
 
-
 # Create the data frame with Variable and Value
-table_data <- data.frame(
+table_data1 <- data.frame(
   Variable = c(
     # Estimation method
     "VAR", "LP-ARDL", "FAVAR", "Other VAR", "DSGE",
@@ -256,13 +259,7 @@ table_data <- data.frame(
     "Publication year",
     "Citations",
     "By-product",
-    "Preferred estimate",
-    # Measurement and sample characteristics
-    "US", "Euro Area", "Other advanced", "Emerging",
-    "GDP", "IP", "Output gap", "CPI", "GDP deflator", "Other price",
-    "Overnight rate", "Lending rate", "Year rate", 
-    "Annual frequency", "Quarterly frequency", "Monthly frequency", 
-    "Panel data", "Time series"
+    "Preferred estimate"
   ),
   Explanation = c(
     # Estimation Methods
@@ -283,7 +280,48 @@ table_data <- data.frame(
     "Publication year of the study",
     "Number of citations in Google Scholar",
     "Indicator whether the estimate was not the main research question",
-    "The authors signal an estimate to be their preferred one",
+    "The authors signal an estimate to be their preferred one"
+  ),
+  Share = c(
+    # Estimation method
+    var, lp_ardl, favar, other_var, dsge,
+    # Identification approach
+    chol, signr, hf, nr, idother,
+    # Publication characteristics
+    top_5_or_tier, cbanker, mean_pubyear, mean_numcit, byproduct, prefer
+  )
+)
+
+# Format the table
+table_data1 %>%
+  kable(
+    format = "html",
+    digits = 2,
+    align = c("l", "l", "r"),
+    col.names = c("Variable", "Explanation", "Share in % / Mean"),
+    caption = "Table 1: Description and summary statistics for moderator variables"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    position = "left"
+  ) %>%
+  pack_rows("Estimation method", 1, 5, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Identification method", 6, 10, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Publication characteristics", 11, 16, bold = TRUE, hline_after = TRUE) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 1))
+
+# Create the data frame with Variable and Value
+table_data2 <- data.frame(
+  Variable = c(
+    # Measurement and sample characteristics
+    "US", "Euro Area", "Other advanced", "Emerging",
+    "GDP", "IP", "Output gap", "CPI", "GDP deflator", "Other price",
+    "Overnight rate", "Lending rate", "Year rate", 
+    "Annual frequency", "Quarterly frequency", "Monthly frequency", 
+    "Panel data", "Time series"
+  ),
+  Explanation = c(
     # Measurement and sample characteristics
     "Estimates based on US data", 
     "Estimates based on Euro Area country data", 
@@ -305,12 +343,6 @@ table_data <- data.frame(
     "Time series data used"
   ),
   Share = c(
-    # Estimation method
-    var, lp_ardl, favar, other_var, dsge,
-    # Identification approach
-    chol, signr, hf, nr, idother,
-    # Publication characteristics
-    top_5_or_tier, cbanker, mean_pubyear, mean_numcit, byproduct, prefer,
     # Measurement and sample characteristics
     us, ea12, advanced, emerging,
     outcome_gdp, outcome_ip, outcome_gap,
@@ -322,29 +354,29 @@ table_data <- data.frame(
 )
 
 # Format the table
-table_data %>%
+table_data2 %>%
   kable(
     format = "html",
     digits = 2,
     align = c("l", "l", "r"),
     col.names = c("Variable", "Explanation", "Share in % / Mean"),
-    caption = "Table 1: Description and summary statistics for moderator variables"
+    caption = "Table 2: Description and summary statistics for other control variables"
   ) %>%
   kable_styling(
     bootstrap_options = c("striped", "hover"),
     full_width = FALSE,
     position = "left"
   ) %>%
-  pack_rows("Estimation method", 1, 5, bold = TRUE, hline_after = TRUE) %>%
-  pack_rows("Identification method", 6, 10, bold = TRUE, hline_after = TRUE) %>%
-  pack_rows("Publication characteristics", 11, 16, bold = TRUE, hline_after = TRUE) %>%
-  pack_rows("Measurement and sample characteristics", 17, 34, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Measurement and sample characteristics", 1, 18, bold = TRUE, hline_after = TRUE) %>%
   add_header_above(c(" " = 2, "Summary Statistics" = 1))
 
 # ------------------------------------------------------------------------------
 # 3. Save to file (optional)
 # ------------------------------------------------------------------------------
 
-write.csv(table_data, file = here::here("analysis/working_paper_1/tables/summary_statistics/summary_statistics.csv"), 
+write.csv(table_data1, file = here::here("analysis/working_paper_1/tables/summary_statistics/table1.csv"), 
+          row.names = FALSE)
+
+write.csv(table_data2, file = here::here("analysis/working_paper_1/tables/summary_statistics/table2.csv"), 
           row.names = FALSE)
 

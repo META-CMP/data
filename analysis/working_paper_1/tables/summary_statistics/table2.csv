@@ -1,8 +1,4 @@
 "Variable","Explanation","Share"
-"US","Estimates based on US data",47.510924513752
-"Euro Area","Estimates based on Euro Area country data",16.198881231869
-"Other advanced","Other advanced countries (e.g. UK, Japan, Canada, Australia)",25.4378985764471
-"Emerging","Emerging market countries",10.8522956779319
 "GDP","GDP is the output variable",34.2241364093693
 "IP","Industrial production is the output variable",13.0937461387746
 "Output gap","Output gap is the output variable",3.18959278414206
@@ -17,3 +13,5 @@
 "Monthly frequency","Estimates based on monthly frequency data",35.2938296387872
 "Panel data","Panel data used",11.6344541415229
 "Time series","Time series data used",88.3655458584771
+"Transformed IRF - No","Indicator whether we transformed the IRF estimates - No",73.1488182444001
+"Transformed IRF - Yes","Indicator whether we transformed the IRF estimates - Yes",26.8511817555999

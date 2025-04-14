@@ -389,7 +389,7 @@ table_data2 %>%
   add_header_above(c(" " = 2, "Summary Statistics" = 1))
 
 # ------------------------------------------------------------------------------
-# 4. Save to file (optional)
+# 4. Save to file
 # ------------------------------------------------------------------------------
 
 write.csv(table_data1, file = here::here("analysis/working_paper_1/tables/summary_statistics/table1.csv"), 

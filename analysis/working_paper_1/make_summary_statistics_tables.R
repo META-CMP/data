@@ -264,7 +264,8 @@ table_data1 <- data.frame(
     "Publication year",
     "Citations",
     "By-product",
-    "Preferred estimate"
+    "Preferred estimate",
+    "US", "Euro Area", "Other advanced", "Emerging"
   ),
   Explanation = c(
     # Estimation Methods
@@ -285,7 +286,12 @@ table_data1 <- data.frame(
     "Publication year of the study",
     "Number of citations in Google Scholar",
     "Indicator whether the estimate was not the main research question",
-    "The authors signal an estimate to be their preferred one"
+    "The authors signal an estimate to be their preferred one",
+    # Country groups
+    "Estimates based on US data", 
+    "Estimates based on Euro Area country data", 
+    "Other advanced countries (e.g. UK, Japan, Canada, Australia)", 
+    "Emerging market countries"
   ),
   Share = c(
     # Estimation method
@@ -293,7 +299,9 @@ table_data1 <- data.frame(
     # Identification approach
     chol, signr, hf, nr, idother,
     # Publication characteristics
-    top_5_or_tier, cbanker, mean_pubyear, mean_numcit, byproduct, prefer
+    top_5_or_tier, cbanker, mean_pubyear, mean_numcit, byproduct, prefer,
+    #Country groups
+    us, ea12, advanced, emerging
   )
 )
 
@@ -314,6 +322,7 @@ table_data1 %>%
   pack_rows("Estimation method", 1, 5, bold = TRUE, hline_after = TRUE) %>%
   pack_rows("Identification method", 6, 10, bold = TRUE, hline_after = TRUE) %>%
   pack_rows("Publication characteristics", 11, 16, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Country groups", 17, 20, bold = TRUE, hline_after = TRUE) %>%
   add_header_above(c(" " = 2, "Summary Statistics" = 1))
 
 # ------------------------------------------------------------------------------
@@ -324,18 +333,13 @@ table_data1 %>%
 table_data2 <- data.frame(
   Variable = c(
     # Measurement and sample characteristics
-    "US", "Euro Area", "Other advanced", "Emerging",
     "GDP", "IP", "Output gap", "CPI", "GDP deflator", "Other price",
     "Overnight rate", "Lending rate", "Year rate", 
     "Annual frequency", "Quarterly frequency", "Monthly frequency", 
-    "Panel data", "Time series"
+    "Panel data", "Time series", "Transformed IRF - No", "Transformed IRF - Yes"
   ),
   Explanation = c(
     # Measurement and sample characteristics
-    "Estimates based on US data", 
-    "Estimates based on Euro Area country data", 
-    "Other advanced countries (e.g. UK, Japan, Canada, Australia)", 
-    "Emerging market countries",
     "GDP is the output variable", 
     "Industrial production is the output variable",
     "Output gap is the output variable",
@@ -349,16 +353,20 @@ table_data2 <- data.frame(
     "Estimates based on quarterly frequency data",
     "Estimates based on monthly frequency data",
     "Panel data used",
-    "Time series data used"
+    "Time series data used",
+    # Transformation
+    "Indicator whether we transformed the IRF estimates - No",
+    "Indicator whether we transformed the IRF estimates - Yes"
   ),
   Share = c(
     # Measurement and sample characteristics
-    us, ea12, advanced, emerging,
     outcome_gdp, outcome_ip, outcome_gap,
     outcome_cpi, outcome_deflator, outcome_other,
     overnight, lending, year_rate,
     annual, quarter, monthly,
-    panel, time_series
+    panel, time_series,
+    # Transformation
+    no_transformed, transformed
   )
 )
 
@@ -376,7 +384,8 @@ table_data2 %>%
     full_width = FALSE,
     position = "left"
   ) %>%
-  pack_rows("Measurement and sample characteristics", 1, 18, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Measurement and sample characteristics", 1, 14, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Transformation", 15, 16, bold = TRUE, hline_after = TRUE) %>%
   add_header_above(c(" " = 2, "Summary Statistics" = 1))
 
 # ------------------------------------------------------------------------------

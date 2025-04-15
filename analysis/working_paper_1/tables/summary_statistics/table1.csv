@@ -1,0 +1,21 @@
+"Variable","Explanation","Share"
+"VAR","Vector autoregression (VAR) + vector error correction models (VECM)",70.0894769697786
+"LP-ARDL","Local projection (LP) and autoregressive distributed lag (ARDL) models",12.8083038544867
+"FAVAR","Factor Augmented VAR (FAVAR) estimation",4.75415253926093
+"Other VAR","Other VAR estimation method (e.g. TVP-VAR, GVAR)",9.59398753932213
+"DSGE","Estimated DSGE model",2.75407909715167
+"Cholesky","Cholesky decomposition or SVAR restrictions",48.2869628015717
+"Sign restrictions","Sign restrictions of responses",18.5098596031678
+"High-Frequency","High frequency information",12.7887192920181
+"Narrative","Narrative approach",12.3101215466908
+"Other identification","Other strategy (e.g. long-run restrictions, heteroskedasticity, DSGE)",8.10433675655165
+"Top publication","Paper published in top-50 economics journal",13.6259593375522
+"Central bank","Central bank outlet or authors affiliated with central bank",54.3545050613854
+"Publication year","Publication year of the study",2015.27679106944
+"Citations","Number of citations in Google Scholar",155.949273568794
+"By-product","Indicator whether the estimate was not the main research question",58.3546519456039
+"Preferred estimate","The authors signal an estimate to be their preferred one",38.521610340649
+"US","Estimates based on US data",47.510924513752
+"Euro Area","Estimates based on Euro Area country data",16.198881231869
+"Other advanced","Other advanced countries (e.g. UK, Japan, Canada, Australia)",25.4378985764471
+"Emerging","Emerging market countries",10.8522956779319

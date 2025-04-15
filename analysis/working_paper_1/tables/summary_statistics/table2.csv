@@ -1,0 +1,17 @@
+"Variable","Explanation","Share"
+"GDP","GDP is the output variable",34.2241364093693
+"IP","Industrial production is the output variable",13.0937461387746
+"Output gap","Output gap is the output variable",3.18959278414206
+"CPI","Consumer Price Index is the price level variable",29.7848304591107
+"GDP deflator","GDP deflator is the price level variable",16.5498737930913
+"Other price","Other price measure (e.g. Core or Wholesale Price Index)",3.15782041551198
+"Overnight rate","Short-term rates (including money market and policy rates)",47.2587732719684
+"Lending rate","Weekly to monthly lending and bond rates",34.0085927267831
+"Year rate","Yearly to longer-term rates",18.7326340012485
+"Annual frequency","Estimates based on annual frequency data",0.809087236985446
+"Quarterly frequency","Estimates based on quarterly frequency data",63.8970831242273
+"Monthly frequency","Estimates based on monthly frequency data",35.2938296387872
+"Panel data","Panel data used",11.6344541415229
+"Time series","Time series data used",88.3655458584771
+"Transformed IRF - No","Indicator whether we transformed the IRF estimates - No",73.1488182444001
+"Transformed IRF - Yes","Indicator whether we transformed the IRF estimates - Yes",26.8511817555999

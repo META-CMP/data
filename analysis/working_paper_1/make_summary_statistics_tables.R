@@ -10,21 +10,11 @@ library(readxl)
 source(here::here("analysis/working_paper_1/setup_wp_1.R"))
 
 # Use d_no_qc as df and filter out unwanted outcome measures
+# Filtered from the period months we use
+
 df <- d_no_qc %>%
   filter(!(outcome_measure %in% c("emp", "emp_rate", "une_rate")))
 df <- df %>% filter(period.month %in% seq(0, 60, by = 3))
-
-# Read in citation data and merge with df based on "key"
-df1 <- read_excel(here("data/study_characteristics/citations_for_included_studies.xlsx"),
-                  sheet = "Sheet 1")
-merged_df <- inner_join(df1, df, by = "key")
-
-# We set df equal to merged_df
-merged_df <- merged_df %>% filter(period.month %in% seq(0, 60, by = 3))
-merged_df <- merged_df %>%
-  filter(!(outcome_measure %in% c("emp", "emp_rate", "une_rate")))
-
-df <- merged_df
 
 # Summaries for continuous publication variables:
 custom_summary <- function(x) {
@@ -127,7 +117,7 @@ cbanker <- cbanker[["share"]][[2]]
 
 #Create publication year mean value 
 
-stats_pubyear <- custom_summary(df$publication_year)
+stats_pubyear <- custom_summary(df$pub_year)
 
 mean_pubyear <- stats_pubyear[["Mean"]]
 sd_pubyear <- stats_pubyear[["SD"]]
@@ -135,7 +125,7 @@ sd_pubyear
 
 #Create number of citations mean value 
 
-stats_numcit <- custom_summary(df$num_cit.x)
+stats_numcit <- custom_summary(df$num_cit)
 
 mean_numcit <- stats_numcit[["Mean"]]
 sd_numcit <- stats_numcit[["SD"]]

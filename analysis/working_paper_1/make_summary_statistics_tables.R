@@ -38,28 +38,6 @@ period_month <- df %>%
   count(period.month) %>%
   mutate(share = n / sum(n) * 100)
 
-# For Estimation method values (from df$group_est_broad):
-estimation_shares <- df %>%
-  count(group_est_broad) %>%
-  mutate(share = n / sum(n) * 100)
-
-#Create estimation values to paste in the table
-
-var <- estimation_shares[["share"]][[1]]
-lp_ardl <- estimation_shares[["share"]][[2]]
-favar <- estimation_shares[["share"]][[3]]
-other_var <- estimation_shares[["share"]][[4]]
-dsge <- estimation_shares[["share"]][[5]]
-
-# Count how much VECM are in the data
-vecm <- df %>%
-  count(vecm) %>%
-  mutate(share = n / sum(n) * 100)
-
-# Create VECM value
-vecm <- vecm[["share"]][[2]]
-vecm
-
 # For Identification method values (from df$group_ident_broad):
 identifcation_shares <- df %>%
   count(group_ident_broad) %>%
@@ -115,37 +93,7 @@ cbanker<- df %>%
 
 cbanker <- cbanker[["share"]][[2]]
 
-#Create publication year mean value 
 
-stats_pubyear <- custom_summary(df$pub_year)
-
-mean_pubyear <- stats_pubyear[["Mean"]]
-sd_pubyear <- stats_pubyear[["SD"]]
-sd_pubyear
-
-#Create number of citations mean value 
-
-stats_numcit <- custom_summary(df$num_cit)
-
-mean_numcit <- stats_numcit[["Mean"]]
-sd_numcit <- stats_numcit[["SD"]]
-sd_numcit
-
-#Create byproduct value 
-
-byproduct <- df %>%
-  count(byproduct) %>%
-  mutate(share = n / sum(n) * 100)
-
-byproduct <- byproduct[["share"]][[2]]
-
-prefer <- df %>%
-  count(prefer) %>%
-  mutate(share = n / sum(n) * 100)
-
-#Create preferred estimate value 
-
-prefer <- prefer[["share"]][[2]]
 
 country_us <- df %>%
   count(us) %>%
@@ -178,6 +126,60 @@ advanced <-
 emerging <- 
   other_advanced[["share"]][[2]] + other_advanced[["share"]][[3]] +
   other_advanced[["share"]][[4]] + other_advanced[["share"]][[5]]
+
+# For Estimation method values (from df$group_est_broad):
+estimation_shares <- df %>%
+  count(group_est_broad) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create estimation values to paste in the table
+
+var <- estimation_shares[["share"]][[1]]
+lp_ardl <- estimation_shares[["share"]][[2]]
+favar <- estimation_shares[["share"]][[3]]
+other_var <- estimation_shares[["share"]][[4]]
+dsge <- estimation_shares[["share"]][[5]]
+
+# Count how much VECM are in the data
+vecm <- df %>%
+  count(vecm) %>%
+  mutate(share = n / sum(n) * 100)
+
+# Create VECM value
+vecm <- vecm[["share"]][[2]]
+vecm
+
+#Create publication year mean value 
+
+stats_pubyear <- custom_summary(df$pub_year)
+
+mean_pubyear <- stats_pubyear[["Mean"]]
+sd_pubyear <- stats_pubyear[["SD"]]
+sd_pubyear
+
+#Create number of citations mean value 
+
+stats_numcit <- custom_summary(df$num_cit)
+
+mean_numcit <- stats_numcit[["Mean"]]
+sd_numcit <- stats_numcit[["SD"]]
+sd_numcit
+
+#Create byproduct value 
+
+byproduct <- df %>%
+  count(byproduct) %>%
+  mutate(share = n / sum(n) * 100)
+
+byproduct <- byproduct[["share"]][[2]]
+
+prefer <- df %>%
+  count(prefer) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create preferred estimate value 
+
+prefer <- prefer[["share"]][[2]]
 
 #For outcome measures
 
@@ -244,26 +246,14 @@ no_transformed <- trans_irf[["share"]][[2]] + trans_irf[["share"]][[3]]
 # Create the data frame with Variable and Value
 table_data1 <- data.frame(
   Variable = c(
-    # Estimation method
-    "VAR", "LP-ARDL", "FAVAR", "Other VAR", "DSGE",
     # Identification approach
     "Cholesky", "Sign restrictions", "High-Frequency", "Narrative", "Other identification",
     # Publication characteristics
     "Top publication", 
     "Central bank",
-    "Publication year",
-    "Citations",
-    "By-product",
-    "Preferred estimate",
     "US", "Euro Area", "Other advanced", "Emerging"
   ),
   Explanation = c(
-    # Estimation Methods
-    "Vector autoregression (VAR) + vector error correction models (VECM)",
-    "Local projection (LP) and autoregressive distributed lag (ARDL) models",
-    "Factor Augmented VAR (FAVAR) estimation", 
-    "Other VAR estimation method (e.g. TVP-VAR, GVAR)", 
-    "Estimated DSGE model",
     # Identification Methods
     "Cholesky decomposition or SVAR restrictions",
     "Sign restrictions of responses", 
@@ -273,10 +263,6 @@ table_data1 <- data.frame(
     # Publication characteristics
     "Paper published in top-50 economics journal", 
     "Central bank outlet or authors affiliated with central bank",
-    "Publication year of the study",
-    "Number of citations in Google Scholar",
-    "Indicator whether the estimate was not the main research question",
-    "The authors signal an estimate to be their preferred one",
     # Country groups
     "Estimates based on US data", 
     "Estimates based on Euro Area country data", 
@@ -284,12 +270,10 @@ table_data1 <- data.frame(
     "Emerging market countries"
   ),
   Share = c(
-    # Estimation method
-    var, lp_ardl, favar, other_var, dsge,
     # Identification approach
     chol, signr, hf, nr, idother,
     # Publication characteristics
-    top_5_or_tier, cbanker, mean_pubyear, mean_numcit, byproduct, prefer,
+    top_5_or_tier, cbanker,
     #Country groups
     us, ea12, advanced, emerging
   )
@@ -309,10 +293,9 @@ table_data1 %>%
     full_width = FALSE,
     position = "left"
   ) %>%
-  pack_rows("Estimation method", 1, 5, bold = TRUE, hline_after = TRUE) %>%
-  pack_rows("Identification method", 6, 10, bold = TRUE, hline_after = TRUE) %>%
-  pack_rows("Publication characteristics", 11, 16, bold = TRUE, hline_after = TRUE) %>%
-  pack_rows("Country groups", 17, 20, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Identification method", 1, 5, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Publication characteristics", 6, 7, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Country groups", 8, 11, bold = TRUE, hline_after = TRUE) %>%
   add_header_above(c(" " = 2, "Summary Statistics" = 1))
 
 # ------------------------------------------------------------------------------
@@ -322,13 +305,28 @@ table_data1 %>%
 # Create the data frame with Variable and Value
 table_data2 <- data.frame(
   Variable = c(
+    # Estimation method
+    "VAR", "LP/ARDL", "FAVAR", "Other VAR", "DSGE",
+    # Other publication characteristics
+    "Publication year", "Citations", "By-product", "Preferred estimate",
     # Measurement and sample characteristics
     "GDP", "IP", "Output gap", "CPI", "GDP deflator", "Other price",
     "Overnight rate", "Lending rate", "Year rate", 
     "Annual frequency", "Quarterly frequency", "Monthly frequency", 
-    "Panel data", "Time series", "Transformed IRF - No", "Transformed IRF - Yes"
+    "Panel data", "Time series"
   ),
   Explanation = c(
+    # Estimation Method
+    "Vector autoregression (VAR) + vector error correction models (VECM)",
+    "Local projection (LP) and autoregressive distributed lag (ARDL) models",
+    "Factor Augmented VAR (FAVAR) estimation", 
+    "Other VAR estimation method (e.g. TVP-VAR, GVAR)", 
+    "Estimated DSGE model",
+    # Other publication characteristics
+    "Publication year of the study",
+    "Number of citations in Google Scholar",
+    "Indicator whether the estimate was not the main research question",
+    "The authors signal an estimate to be their preferred one",
     # Measurement and sample characteristics
     "GDP is the output variable", 
     "Industrial production is the output variable",
@@ -342,21 +340,20 @@ table_data2 <- data.frame(
     "Estimates based on annual frequency data",
     "Estimates based on quarterly frequency data",
     "Estimates based on monthly frequency data",
-    "Panel data used",
-    "Time series data used",
-    # Transformation
-    "Indicator whether we transformed the IRF estimates - No",
-    "Indicator whether we transformed the IRF estimates - Yes"
+    "Panel data used", 
+    "Time series data used "
   ),
   Share = c(
+    # Estimation method
+    var, lp_ardl, favar, other_var, dsge,
+    # Other publication characteristics
+    mean_pubyear, mean_numcit, byproduct, prefer,
     # Measurement and sample characteristics
     outcome_gdp, outcome_ip, outcome_gap,
     outcome_cpi, outcome_deflator, outcome_other,
     overnight, lending, year_rate,
     annual, quarter, monthly,
-    panel, time_series,
-    # Transformation
-    no_transformed, transformed
+    panel, time_series
   )
 )
 
@@ -374,8 +371,9 @@ table_data2 %>%
     full_width = FALSE,
     position = "left"
   ) %>%
-  pack_rows("Measurement and sample characteristics", 1, 14, bold = TRUE, hline_after = TRUE) %>%
-  pack_rows("Transformation", 15, 16, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Estimation Method", 1, 5, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Other publication characteristics", 6, 9, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows("Measurement and sample characteristics", 10, 23, bold = TRUE, hline_after = TRUE) %>%
   add_header_above(c(" " = 2, "Summary Statistics" = 1))
 
 # ------------------------------------------------------------------------------

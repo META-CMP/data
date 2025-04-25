@@ -100,12 +100,13 @@ plot_counterfactual <- function(data,
        ylab = "Density")
   
   # Add kernel density of observed data
-  lines(density(plot_data, 
-                adjust = kernel_adjust, 
-                bw = kernel_bw, 
+  lines(density(plot_data,
+                adjust = kernel_adjust,
+                bw = kernel_bw,
                 kernel = kernel_type,
-                from = xlims[1], 
-                to = xlims[2]), 
+                from = xlims[1],
+                to = xlims[2],
+                na.rm = TRUE),
         lwd = 2)
   
   # Add vertical lines at significance levels
@@ -132,13 +133,13 @@ plot_counterfactual <- function(data,
   
   # Add theoretical density
   z_seq <- seq(xlims[1], xlims[2], 0.01)
-  theoretical_dens <- dt(z_seq, 
-                         df = calibration$df, 
+  theoretical_dens <- dt(z_seq,
+                         df = calibration$df,
                          ncp = calibration$ncp)
   if (omit_cf == FALSE) {
-    lines(z_seq, theoretical_dens, 
-          col = "red", 
-          lty = 2, 
+    lines(z_seq, theoretical_dens,
+          col = "red",
+          lty = 2,
           lwd = 2)
   }
   
@@ -184,12 +185,13 @@ plot_counterfactual <- function(data,
   invisible(list(
     data = plot_data,
     breaks = breaks,
-    density = density(plot_data, 
-                      adjust = 0.9, 
-                      bw = 0.2, 
+    density = density(plot_data,
+                      adjust = 0.9,
+                      bw = 0.2,
                       kernel = "epanechnikov",
-                      from = 0, 
-                      to = 10),
+                      from = 0,
+                      to = 10,
+                      na.rm = TRUE),
     theoretical = data.frame(
       x = z_seq,
       y = theoretical_dens

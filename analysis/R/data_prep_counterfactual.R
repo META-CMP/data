@@ -56,7 +56,7 @@
 data_prep_counterfactual <- function (
     data = data,
     outvar = out_var,
-    periods = 1:60,
+    periods = 0:60,
     se_option = "avg",
     wins = wins_para,
     only_negative = TRUE,
@@ -66,6 +66,7 @@ data_prep_counterfactual <- function (
   d_brodeur <- data %>% 
     filter(outcome == outvar, 
            period.month %in% periods) %>% 
+    group_by(period.month) %>%
     mutate(
       # Winsorization and SE option
       mean.effect = JWileymisc::winsorizor(mean.effect, percentile = wins),
@@ -77,7 +78,8 @@ data_prep_counterfactual <- function (
       # Calculate z_stat (also absolute values)
       z_stat = mean.effect / SE,
       abs_z_stat = abs(mean.effect / SE)
-    )
+    ) %>%
+    ungroup()
   
   # Extract only negative effects
   if (only_negative == TRUE & only_positive == FALSE) {

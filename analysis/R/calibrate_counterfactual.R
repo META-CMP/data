@@ -77,7 +77,7 @@ calibrate_counterfactual <- function(data,
     n_above <- sum(method_data > threshold)
     empirical_mass <- n_above / n_total
   } else {
-    n_above <- sum(method_data < threshold)
+    n_above <- sum(method_data < threshold, na.rm = TRUE)
     empirical_mass <- n_above / n_total
   }
   

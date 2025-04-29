@@ -544,7 +544,7 @@ orca(figure_irf_range_correction_pricelevel,
 out_var <- "rate"
 
 # Set range of winsorization levels for estimations (higher values fail due to singularity issues)
-wins_para_levels <- c(0, 0.01, 0.02, 0.03)
+wins_para_levels <- c(0, 0.01, 0.02, 0.03, 0.04)
 
 # Function to perform multiple meta-analyses for a given wins level for interest rate
 perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12) {

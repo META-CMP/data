@@ -402,7 +402,7 @@ output_pbias_plot <- plot_ly() %>%
     ymax = ~upper,
     name = "FAT-PET",
     showlegend = FALSE,
-    line = list(color = 'darkgreen', width = 3)
+    line = list(width = 3)
   ) %>% 
   add_ribbons(
     data = fatpet_uw_output_pbias,
@@ -411,7 +411,7 @@ output_pbias_plot <- plot_ly() %>%
     ymax = ~upper,
     name = "OLS",
     showlegend = FALSE,
-    line = list(color = 'darkgreen', width = 3, dash = "dot")
+    line = list(width = 3, dash = "dot")
   ) %>%
   add_ribbons(
     data = peese_output_pbias,
@@ -420,7 +420,7 @@ output_pbias_plot <- plot_ly() %>%
     ymax = ~upper,
     name = "PEESE",
     showlegend = FALSE,
-    line = list(color = 'darkgreen', width = 3, dash = "solid")
+    line = list(width = 3, dash = "solid")
   ) %>%
   add_ribbons(
     data = peese_uw_output_pbias,
@@ -429,7 +429,7 @@ output_pbias_plot <- plot_ly() %>%
     ymax = ~upper,
     name = "OLS with SE<sup>2</sup>",
     showlegend = FALSE,
-    line = list(color = 'darkgreen', width = 3, dash = "dash")
+    line = list(width = 3, dash = "dash")
   )
 output_pbias_plot
 ### Save as PDF
@@ -775,7 +775,7 @@ pricelevel_pbias_plot <- plot_ly() %>%
     ymax = ~upper,
     name = "FAT-PET",
     showlegend = FALSE,
-    line = list(color = 'darkgreen', width = 3)
+    line = list(width = 3)
   ) %>% 
   add_ribbons(
     data = fatpet_uw_pricelevel_pbias,
@@ -784,7 +784,7 @@ pricelevel_pbias_plot <- plot_ly() %>%
     ymax = ~upper,
     name = "OLS",
     showlegend = FALSE,
-    line = list(color = 'darkgreen', width = 3, dash = "dot")
+    line = list(width = 3, dash = "dot")
   ) %>%
   add_ribbons(
     data = peese_pricelevel_pbias,
@@ -793,7 +793,7 @@ pricelevel_pbias_plot <- plot_ly() %>%
     ymax = ~upper,
     name = "PEESE",
     showlegend = FALSE,
-    line = list(color = 'darkgreen', width = 3, dash = "solid")
+    line = list(width = 3, dash = "solid")
   ) %>%
   add_ribbons(
     data = peese_uw_pricelevel_pbias,
@@ -802,7 +802,7 @@ pricelevel_pbias_plot <- plot_ly() %>%
     ymax = ~upper,
     name = "OLS with SE<sup>2</sup>",
     showlegend = FALSE,
-    line = list(color = 'darkgreen', width = 3, dash = "dash")
+    line = list(width = 3, dash = "dash")
   )
 pricelevel_pbias_plot
 ### Save as PDF
@@ -875,7 +875,7 @@ avg_irf_rate <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = FALSE,
+  show_legend = TRUE,
   show_median = FALSE,
   return_data = TRUE
 )
@@ -1134,7 +1134,7 @@ rate_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = 'darkgreen', width = 3)
+    line = list(width = 3)
   ) %>% 
   add_ribbons(
     data = fatpet_uw_rate_pbias,
@@ -1142,7 +1142,7 @@ rate_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "OLS",
-    line = list(color = 'darkgreen', width = 3, dash = "dot")
+    line = list(width = 3, dash = "dot")
   ) %>%
   add_ribbons(
     data = peese_rate_pbias,
@@ -1150,7 +1150,7 @@ rate_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = 'darkgreen', width = 3, dash = "solid")
+    line = list(width = 3, dash = "solid")
   ) %>%
   add_ribbons(
     data = peese_uw_rate_pbias,
@@ -1158,7 +1158,7 @@ rate_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "OLS with SE<sup>2</sup>",
-    line = list(color = 'darkgreen', width = 3, dash = "dash")
+    line = list(width = 3, dash = "dash")
   )
 rate_pbias_plot
 ### Save as PDF
@@ -1633,6 +1633,7 @@ avg_irf_output_nr <- avg_irf_output_nr$plot %>% plotly::layout(
 
 # Joint figure, one row
 y_lims <- c(-5, 2)
+titles_size_ident <- 20
 figure_average_irfs_output_identification_methods <- subplot(avg_irf_output_chol, 
                                                              avg_irf_output_signr, 
                                                              avg_irf_output_hf, 
@@ -1644,18 +1645,18 @@ figure_average_irfs_output_identification_methods <- subplot(avg_irf_output_chol
 ) %>% layout(legend = list(orientation = "h",
                        xanchor = "center",
                        x = 0.5, y = -0.3, 
-                       font = list(size = titles_size))) %>% 
+                       font = list(size = titles_size_ident))) %>% 
   layout(annotations = list(
     list(x = 0.1, y = 1, text = "Cholesky & SVAR", showarrow = FALSE, xref = "paper", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 0.3, y = 1, text = "Sign restrictions", showarrow = FALSE, xref = "paper", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 0.5, y = 1, text = "High frequency", showarrow = FALSE, xref = "paper", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 0.7, y = 1, text = "Narrative", showarrow = FALSE, xref = "paper", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 0.9, y = 1, text = "Other", showarrow = FALSE, xref = "paper", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident))
 ), margin = list(t = 60)) %>%
   layout(
     xaxis3 = list(title = "Month")
@@ -2101,16 +2102,16 @@ figure_average_irfs_output_country_region <- subplot(avg_irf_output_us,
   layout(legend = list(orientation = "h",
                        xanchor = "center",
                        x = 0.5, y = -0.3, 
-                       font = list(size = titles_size))) %>% 
+                       font = list(size = titles_size_ident))) %>% 
   layout(annotations = list(
           list(x = 30, y = 1, text = "US", showarrow = FALSE, xref = "x", yref = "paper",
-               xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+               xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
           list(x = 30, y = 1, text = "Euro area", showarrow = FALSE, xref = "x2", yref = "paper",
-               xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+               xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
           list(x = 30, y = 1, text = "Emerging economies", showarrow = FALSE, xref = "x3", yref = "paper",
-               xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+               xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
           list(x = 30, y = 1, text = "Other advanced", showarrow = FALSE, xref = "x4", yref = "paper",
-               xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+               xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident))
 ), margin = list(t = 60)) %>%
   layout(
     xaxis = list(title = "Months"),
@@ -2449,18 +2450,18 @@ figure_average_irfs_pricelevel_identification_methods <- subplot(avg_irf_pricele
   layout(legend = list(orientation = "h",   
                        xanchor = "center",  
                        x = 0.5, y = -0.3, 
-                       font = list(size = titles_size))) %>%
+                       font = list(size = titles_size_ident))) %>%
   layout(annotations = list(
     list(x = 0.1, y = 1, text = "Cholesky & SVAR", showarrow = FALSE, xref = "paper", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 0.3, y = 1, text = "Sign restrictions", showarrow = FALSE, xref = "paper", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 0.5, y = 1, text = "High frequency", showarrow = FALSE, xref = "paper", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 0.7, y = 1, text = "Narrative", showarrow = FALSE, xref = "paper", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 0.9, y = 1, text = "Other", showarrow = FALSE, xref = "paper", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident))
   ), margin = list(t = 60)) %>%
   layout(
     xaxis3 = list(title = "Months"),
@@ -2914,16 +2915,16 @@ figure_average_irfs_pricelevel_country_region <- subplot(avg_irf_pricelevel_us,
   layout(legend = list(orientation = "h",   
                        xanchor = "center",  
                        x = 0.5, y = -0.3, 
-                       font = list(size = titles_size))) %>%
+                       font = list(size = titles_size_ident))) %>%
   layout(annotations = list(
     list(x = 30, y = 1, text = "US", showarrow = FALSE, xref = "x", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 30, y = 1, text = "Euro area", showarrow = FALSE, xref = "x2", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 30, y = 1, text = "Emerging economies", showarrow = FALSE, xref = "x3", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
     list(x = 30, y = 1, text = "Other advanced", showarrow = FALSE, xref = "x4", yref = "paper",
-         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident))
   ), margin = list(t = 60)) %>%
   layout(
     xaxis = list(title = "Months"),
@@ -2942,8 +2943,8 @@ figure_average_irfs_pricelevel_country_region
 orca(figure_average_irfs_pricelevel_country_region,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_pricelevel_country_region.pdf",
      scale = NULL,
-     width = 1034 * 5/3,
-     height = 486 * 1.1
+     width = 1034 * 4/3,
+     height = 486 * 0.8
 )
 
 #### Sample size plot for country/region

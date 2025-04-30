@@ -56,7 +56,7 @@ table_random_test_output_68 <- format_randomization_table(random_test_output_68,
 (figure_random_test_output_68 <- plot_randomization_tests(
   table_random_test_output_68,
   group_order = horizons,
-  threshold = "1 (68 % level) - Output",
+  threshold = "-1 (68 % level) - Output",
   y_limits = ylims
 ))
 #### Save figure as pdf 
@@ -80,7 +80,7 @@ table_random_test_output_90 <- format_randomization_table(random_test_output_90,
 (figure_random_test_output_90 <- plot_randomization_tests(
   table_random_test_output_90,
   group_order = horizons,
-  threshold = "1.645 (90 % level) - Output",
+  threshold = "-1.645 (90 % level) - Output",
   y_limits = ylims
 ))
 #### Save figure as pdf
@@ -104,7 +104,7 @@ table_random_test_output_95 <- format_randomization_table(random_test_output_95,
 (figure_random_test_output_95 <- plot_randomization_tests(
   table_random_test_output_95,
   group_order = horizons,
-  threshold = "1.96 (95 % level) - Output",
+  threshold = "-1.96 (95 % level) - Output",
   y_limits = ylims
 ))
 #### Save figure as pdf
@@ -156,7 +156,7 @@ table_random_test_output_68_top_journals <- format_randomization_table(random_te
 (figure_random_test_output_68_top_journals <- plot_randomization_tests(
   table_random_test_output_68_top_journals,
   group_order = horizons,
-  threshold = "1 (68 % level) - Output - Top journals",
+  threshold = "-1 (68 % level) - Output - Top journals",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_68_top_journals.pdf",
@@ -179,7 +179,7 @@ table_random_test_output_95_top_journals <- format_randomization_table(random_te
 (figure_random_test_output_95_top_journals <- plot_randomization_tests(
   table_random_test_output_95_top_journals,
   group_order = horizons,
-  threshold = "1.96 (95 % level) - Output - Top journals",
+  threshold = "-1.96 (95 % level) - Output - Top journals",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_95_top_journals.pdf",
@@ -204,7 +204,7 @@ table_random_test_output_68_other_publications <- format_randomization_table(ran
 (figure_random_test_output_68_other_publications <- plot_randomization_tests(
   table_random_test_output_68_other_publications,
   group_order = horizons,
-  threshold = "1 (68 % level) - Output - Other publications",
+  threshold = "-1 (68 % level) - Output - Other publications",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_68_other_publications.pdf",
@@ -232,7 +232,7 @@ table_random_test_output_95_other_publications <- format_randomization_table(ran
 (figure_random_test_output_95_other_publications <- plot_randomization_tests(
   table_random_test_output_95_other_publications,
   group_order = horizons,
-  threshold = "1.96 (95 % level) - Output - Other publications",
+  threshold = "-1.96 (95 % level) - Output - Other publications",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_95_other_publications.pdf",
@@ -279,7 +279,7 @@ table_random_test_output_68_cbanker <- format_randomization_table(random_test_ou
 (figure_random_test_output_68_cbanker <- plot_randomization_tests(
   table_random_test_output_68_cbanker,
   group_order = horizons,
-  threshold = "1 (68 % level) - Output - Central bank related",
+  threshold = "-1 (68 % level) - Output - Central bank related",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_68_cbanker.pdf",
@@ -302,7 +302,7 @@ table_random_test_output_95_cbanker <- format_randomization_table(random_test_ou
 (figure_random_test_output_95_cbanker <- plot_randomization_tests(
   table_random_test_output_95_cbanker,
   group_order = horizons,
-  threshold = "1.96 (95 % level) - Output - Central bank related",
+  threshold = "-1.96 (95 % level) - Output - Central bank related",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_95_cbanker.pdf",
@@ -327,7 +327,7 @@ table_random_test_output_68_non_cbanker <- format_randomization_table(random_tes
 (figure_random_test_output_68_non_cbanker <- plot_randomization_tests(
   table_random_test_output_68_non_cbanker,
   group_order = horizons,
-  threshold = "1 (68 % level) - Output - Non-central bank related",
+  threshold = "-1 (68 % level) - Output - Non-central bank related",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_68_non_cbanker.pdf",
@@ -350,7 +350,7 @@ table_random_test_output_95_non_cbanker <- format_randomization_table(random_tes
 (figure_random_test_output_95_non_cbanker <- plot_randomization_tests(
   table_random_test_output_95_non_cbanker,
   group_order = horizons,
-  threshold = "1.96 (95 % level) - Output - Non-central bank related",
+  threshold = "-1.96 (95 % level) - Output - Non-central bank related",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_95_non_cbanker.pdf",
@@ -397,7 +397,7 @@ table_random_test_output_68_hf <- format_randomization_table(random_test_output_
 (figure_random_test_output_68_hf <- plot_randomization_tests(
   table_random_test_output_68_hf,
   group_order = horizons,
-  threshold = "1 (68 % level) - Output - HF",
+  threshold = "-1 (68 % level) - Output - HF",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_68_hf.pdf",
@@ -422,7 +422,7 @@ table_random_test_output_68_nr <- format_randomization_table(random_test_output_
 (figure_random_test_output_68_nr <- plot_randomization_tests(
   table_random_test_output_68_nr,
   group_order = horizons,
-  threshold = "1 (68 % level) - Output - NR",
+  threshold = "-1 (68 % level) - Output - NR",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_68_nr.pdf",
@@ -445,7 +445,7 @@ table_random_test_output_90_nr <- format_randomization_table(random_test_output_
 (figure_random_test_output_90_nr <- plot_randomization_tests(
   table_random_test_output_90_nr,
   group_order = horizons,
-  threshold = "1.645 (90 % level) - Output - NR",
+  threshold = "-1.645 (90 % level) - Output - NR",
   y_limits = ylims))
 ##### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_90_nr.pdf",
@@ -470,7 +470,7 @@ table_random_test_output_68_chol <- format_randomization_table(random_test_outpu
 (figure_random_test_output_68_chol <- plot_randomization_tests(
   table_random_test_output_68_chol,
   group_order = horizons,
-  threshold = "1 (68 % level) - Output - chol",
+  threshold = "-1 (68 % level) - Output - chol",
   y_limits = ylims))
 ##### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_68_chol.pdf",
@@ -495,7 +495,7 @@ table_random_test_output_68_signr <- format_randomization_table(random_test_outp
 (figure_random_test_output_68_signr <- plot_randomization_tests(
   table_random_test_output_68_signr,
   group_order = horizons,
-  threshold = "1 (68 % level) - Output - signr",
+  threshold = "-1 (68 % level) - Output - signr",
   y_limits = ylims))
 ##### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_68_signr.pdf",
@@ -520,7 +520,7 @@ table_random_test_output_68_idother <- format_randomization_table(random_test_ou
 (figure_random_test_output_68_idother <- plot_randomization_tests(
   table_random_test_output_68_idother,
   group_order = horizons,
-  threshold = "1 (68 % level) - Output - idother",
+  threshold = "-1 (68 % level) - Output - idother",
   y_limits = ylims))
 ##### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_output_68_idother.pdf",
@@ -568,7 +568,7 @@ table_random_test_pricelevel_68 <- format_randomization_table(random_test_pricel
 (figure_random_test_pricelevel_68 <- plot_randomization_tests(
   table_random_test_pricelevel_68,
   group_order = horizons,
-  threshold = "1 (68 % level) - Price level",
+  threshold = "-1 (68 % level) - Price level",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_68.pdf", 
@@ -591,7 +591,7 @@ table_random_test_pricelevel_90 <- format_randomization_table(random_test_pricel
 (figure_random_test_pricelevel_90 <- plot_randomization_tests(
   table_random_test_pricelevel_90,
   group_order = horizons,
-  threshold = "1.645 (90 % level) - Price level",
+  threshold = "-1.645 (90 % level) - Price level",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_90.pdf", 
@@ -614,7 +614,7 @@ table_random_test_pricelevel_95 <- format_randomization_table(random_test_pricel
 (figure_random_test_pricelevel_95 <- plot_randomization_tests(
   table_random_test_pricelevel_95,
   group_order = horizons,
-  threshold = "1.96 (95 % level) - Price level",
+  threshold = "-1.96 (95 % level) - Price level",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_95.pdf", 
@@ -664,7 +664,7 @@ table_random_test_pricelevel_68_top_journals <- format_randomization_table(rando
 (figure_random_test_pricelevel_68_top_journals <- plot_randomization_tests(
   table_random_test_pricelevel_68_top_journals,
   group_order = horizons,
-  threshold = "1 (68 % level) - Price level - Top journals",
+  threshold = "-1 (68 % level) - Price level - Top journals",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_68_top_journals.pdf",
@@ -687,7 +687,7 @@ table_random_test_pricelevel_95_top_journals <- format_randomization_table(rando
 (figure_random_test_pricelevel_95_top_journals <- plot_randomization_tests(
   table_random_test_pricelevel_95_top_journals,
   group_order = horizons,
-  threshold = "1.96 (95 % level) - Price level - Top journals",
+  threshold = "-1.96 (95 % level) - Price level - Top journals",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_95_top_journals.pdf",
@@ -712,7 +712,7 @@ table_random_test_pricelevel_68_other_publications <- format_randomization_table
 (figure_random_test_pricelevel_68_other_publications <- plot_randomization_tests(
   table_random_test_pricelevel_68_other_publications,
   group_order = horizons,
-  threshold = "1 (68 % level) - Price level - Other publications",
+  threshold = "-1 (68 % level) - Price level - Other publications",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_68_other_publications.pdf",
@@ -735,7 +735,7 @@ table_random_test_pricelevel_95_other_publications <- format_randomization_table
 (figure_random_test_pricelevel_95_other_publications <- plot_randomization_tests(
   table_random_test_pricelevel_95_other_publications,
   group_order = horizons,
-  threshold = "1.96 (95 % level) - Price level - Other publications",
+  threshold = "-1.96 (95 % level) - Price level - Other publications",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_95_other_publications.pdf",
@@ -782,7 +782,7 @@ table_random_test_pricelevel_68_cbanker <- format_randomization_table(random_tes
 (figure_random_test_pricelevel_68_cbanker <- plot_randomization_tests(
   table_random_test_pricelevel_68_cbanker,
   group_order = horizons,
-  threshold = "1 (68 % level) - Price level - Central bank related",
+  threshold = "-1 (68 % level) - Price level - Central bank related",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_68_cbanker.pdf",
@@ -805,7 +805,7 @@ table_random_test_pricelevel_95_cbanker <- format_randomization_table(random_tes
 (figure_random_test_pricelevel_95_cbanker <- plot_randomization_tests(
   table_random_test_pricelevel_95_cbanker,
   group_order = horizons,
-  threshold = "1.96 (95 % level) - Price level - Central bank related",
+  threshold = "-1.96 (95 % level) - Price level - Central bank related",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_95_cbanker.pdf",
@@ -830,7 +830,7 @@ table_random_test_pricelevel_68_non_cbanker <- format_randomization_table(random
 (figure_random_test_pricelevel_68_non_cbanker <- plot_randomization_tests(
   table_random_test_pricelevel_68_non_cbanker,
   group_order = horizons,
-  threshold = "1 (68 % level) - Price level - Non-central bank related",
+  threshold = "-1 (68 % level) - Price level - Non-central bank related",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_68_non_cbanker.pdf",
@@ -853,7 +853,7 @@ table_random_test_pricelevel_95_non_cbanker <- format_randomization_table(random
 (figure_random_test_pricelevel_95_non_cbanker <- plot_randomization_tests(
   table_random_test_pricelevel_95_non_cbanker,
   group_order = horizons,
-  threshold = "1.96 (95 % level) - Price level - Non-central bank related",
+  threshold = "-1.96 (95 % level) - Price level - Non-central bank related",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_pricelevel_95_non_cbanker.pdf",
@@ -921,7 +921,7 @@ table_random_test_68_rate <- format_randomization_table(random_test_68_rate,
 (figure_random_test_68_rate <- plot_randomization_tests(
   table_random_test_68_rate,
   group_order = horizons,
-  threshold = "1 (68 % level) - Interest rate",
+  threshold = "-1 (68 % level) - Interest rate",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_68_rate.pdf", 
@@ -944,7 +944,7 @@ table_random_test_90_rate <- format_randomization_table(random_test_90_rate,
 (figure_random_test_90_rate <- plot_randomization_tests(
   table_random_test_90_rate,
   group_order = horizons,
-  threshold = "1.645 (90 % level) - Interest rate",
+  threshold = "-1.645 (90 % level) - Interest rate",
   y_limits = ylims))
 #### Save figure as pdf
 ggsave("analysis/working_paper_1/figures/randomization_tests/figure_random_test_90_rate.pdf", 

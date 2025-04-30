@@ -374,8 +374,8 @@ prediction_conf_level = 0.67
 get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
-    top_5_or_tier = 0.14,
-    cbanker = 0.55,
+    top_5_or_tier = 0.14, # See table 1 in working paper
+    cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
   
@@ -451,21 +451,21 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
-      title = "P-bias corrected effects, 14 % top journal, 55 % CB affiliation",
+      title = "P-bias corrected effects, 14 % top journal, 54 % CB affiliation",
       x = "Month",
       y = "Effect",
       color = "Identification",
@@ -483,11 +483,11 @@ prediction <- rbind(prediction, uncorrected_irf)
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2)
 )
 # Save as pdf
@@ -496,12 +496,135 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_baseli
        device = "pdf",
        width = 7,
        height = 5)
+
+####### Compare corrected with sub-sample averages ----
+# Delete uncorrected average
+prediction <- prediction %>% filter(source != "Uncorrected")
+mmr_output_baseline_subsample_averages_vs_corrected_effects_ident <- ggplot(prediction, 
+                                                       aes(x = period, 
+                                                           color = source, 
+                                                           fill = source)) +
+    # # Add confidence intervals without outer lines
+    # geom_ribbon(aes(ymin = ci_lower, ymax = ci_upper), 
+    #             alpha = 0.1,
+    #             color = NA) +
+    geom_line(aes(y = predicted_value), 
+              linewidth = 1) +
+    geom_point(aes(y = predicted_value), 
+               size = 2) +
+    scale_color_manual(values = c(
+      "Chol/SVAR" = "#112EB8",
+      "High Frequency" = "#E41A1C",
+      "Narrative" = "orange",
+      "SignR" = "#4DAF4A",
+      "Other" = "#984EA3"#,
+      # "Uncorrected" = "#1f77b4"
+    )) +
+    # scale_fill_manual(values = c(
+    #   "Chol/SVAR" = "#112EB8",
+    #   "High Frequency" = "#E41A1C",
+    #   "Narrative" = "orange",
+    #   "SignR" = "#4DAF4A",
+    #   "Other" = "#984EA3",
+    #   "Uncorrected" = "#1f77b4"
+    # )) +
+    labs(
+      title = "P-bias corrected effects assuming 14 % top journal, 54 % CB affiliation",
+      x = "Month",
+      y = "Effect",
+      color = "Identification",
+      fill = "Identification"
+    ) +
+    theme_minimal() +
+    coord_cartesian(ylim = c(-3, 0.25)) +
+    theme(
+      legend.position = "bottom",
+      panel.grid.minor = element_blank(),
+      plot.title = element_text(hjust = 0.5),
+      plot.subtitle = element_text(hjust = 0.5)
+    ) +
+    geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.5)
+# Get data for uncorrected Chol/SVAR
+avg_irf_output_chol <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol"),
+  winsor = TRUE,
+  wins_par = wins_para,
+  return_data = TRUE,
+  corrected_irf = NULL
+)
+chol <- data.frame(
+  period = avg_irf_output_chol$data$period.month,
+  average = avg_irf_output_chol$data$avg.effect
+)
+# Get data for uncorrected High Frequency
+avg_irf_output_hf <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf"),
+  winsor = TRUE,
+  wins_par = wins_para,
+  return_data = TRUE,
+  corrected_irf = NULL
+)
+hf <- data.frame(
+  period = avg_irf_output_hf$data$period.month,
+  average = avg_irf_output_hf$data$avg.effect
+)
+# Get data for uncorrected Narrative
+avg_irf_output_nr <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr"),
+  winsor = TRUE,
+  wins_par = wins_para,
+  return_data = TRUE,
+  corrected_irf = NULL
+)
+nr <- data.frame(
+  period = avg_irf_output_nr$data$period.month,
+  average = avg_irf_output_nr$data$avg.effect
+)
+# Get data for uncorrected SignR
+avg_irf_output_signr <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr"),
+  winsor = TRUE,
+  wins_par = wins_para,
+  return_data = TRUE,
+  corrected_irf = NULL
+)
+SignR <- data.frame(
+  period = avg_irf_output_signr$data$period.month,
+  average = avg_irf_output_signr$data$avg.effect
+)
+# Get data for uncorrected Other
+avg_irf_output_idother <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother"),
+  winsor = TRUE,
+  wins_par = wins_para,
+  return_data = TRUE,
+  corrected_irf = NULL
+)
+other <- data.frame(
+  period = avg_irf_output_idother$data$period.month,
+  average = avg_irf_output_idother$data$avg.effect
+)
+# Add uncorrected sub-sample lines to plot
+(mmr_output_baseline_subsample_averages_vs_corrected_effects_ident <- mmr_output_baseline_subsample_averages_vs_corrected_effects_ident +
+  geom_line(data = chol, aes(x = period, y = average), color = "#112EB8", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) +
+  geom_line(data = hf, aes(x = period, y = average), color = "#E41A1C", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) +
+  geom_line(data = nr, aes(x = period, y = average), color = "orange", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) + 
+  geom_line(data = SignR, aes(x = period, y = average), color = "#4DAF4A", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) +
+  geom_line(data = other, aes(x = period, y = average), color = "#984EA3", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75))
+
+# Save as pdf
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_baseline_subsample_averages_vs_corrected_effects_ident.pdf"),
+       plot = mmr_output_baseline_subsample_averages_vs_corrected_effects_ident,
+       device = "pdf",
+       width = 7,
+       height = 5)
+
 ###### For other publications for different identification methods (cbanker roughly at sample average) ----
 get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
     top_5_or_tier = 0,
-    cbanker = 0.55,
+    cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
   
@@ -577,21 +700,21 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
-      title = "P-bias corrected effects, 0 % top journal, 55 % CB affiliation",
+      title = "P-bias corrected effects, 0 % top journal, 54 % CB affiliation",
       x = "Month",
       y = "Effect",
       color = "Identification",
@@ -602,18 +725,22 @@ prediction <- rbind(prediction, uncorrected_irf)
     theme(
       legend.position = "bottom",
       panel.grid.minor = element_blank(),
-      plot.title = element_text(hjust = 0.5),
-      plot.subtitle = element_text(hjust = 0.5)
+      plot.title = element_text(hjust = 0.5, size = 16),
+      plot.subtitle = element_text(hjust = 0.5, size = 14),
+      axis.title = element_text(size = 14),
+      axis.text = element_text(size = 12),
+      legend.title = element_text(size = 14),
+      legend.text = element_text(size = 12)
     ) +
     geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.5) +
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2)
 )
 # Save as pdf
@@ -627,7 +754,7 @@ get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "ido
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
     top_5_or_tier = 1,
-    cbanker = 0.55,
+    cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
   
@@ -703,21 +830,21 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
       "Other" = "#984EA3",
-      "Uncorrected" = "black"
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
-      title = "P-bias corrected effects, 100 % top journal, 55 % CB affiliation",
+      title = "P-bias corrected effects, 100 % top journal, 54 % CB affiliation",
       x = "Month",
       y = "Effect",
       color = "Identification",
@@ -735,11 +862,11 @@ prediction <- rbind(prediction, uncorrected_irf)
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2)
 )
 # Save as pdf
@@ -1216,8 +1343,8 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_ba
 get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
-    top_5_or_tier = 0.14,
-    cbanker = 0.55,
+    top_5_or_tier = 0.14, # See table 1 in working paper
+    cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
   
@@ -1293,19 +1420,21 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
-      title = "P-bias corrected effects, 14 % top journals, 55 % CB affiliation",
+      title = "P-bias corrected effects, 14 % top journals, 54 % CB affiliation",
       x = "Month",
       y = "Effect",
       color = "Identification",
@@ -1316,18 +1445,22 @@ prediction <- rbind(prediction, uncorrected_irf)
     theme(
       legend.position = "bottom",
       panel.grid.minor = element_blank(),
-      plot.title = element_text(hjust = 0.5),
-      plot.subtitle = element_text(hjust = 0.5)
+      plot.title = element_text(hjust = 0.5, size = 16),
+      plot.subtitle = element_text(hjust = 0.5, size = 14),
+      axis.title = element_text(size = 14),
+      axis.text = element_text(size = 12),
+      legend.title = element_text(size = 14),
+      legend.text = element_text(size = 12)
     ) +
     geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.5) +
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2))
 # Save as pdf
 ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_corrected_effects_ident.pdf"),
@@ -1336,12 +1469,136 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_ba
        width = 7,
        height = 5)
 
+####### Compare corrected with sub-sample averages ----
+# Delete uncorrected average
+prediction <- prediction %>% filter(source != "Uncorrected")
+(mmr_pricelevel_baseline_subsample_averages_vs_corrected_effects_ident <-  ggplot(prediction, 
+                                                                                    aes(x = period, 
+                                                                                    color = source, 
+                                                                                    fill = source)) +
+  # # Add confidence intervals without outer lines
+  # geom_ribbon(aes(ymin = ci_lower, ymax = ci_upper), 
+  #             alpha = 0.1,
+  #             color = NA) +
+  geom_line(aes(y = predicted_value), 
+            linewidth = 1) +
+  geom_point(aes(y = predicted_value), 
+             size = 2) +
+  scale_color_manual(values = c(
+    "Chol/SVAR" = "#112EB8",
+    "High Frequency" = "#E41A1C",
+    "Narrative" = "orange",
+    "SignR" = "#4DAF4A",
+    "Other" = "#984EA3"#,
+    # "Uncorrected" = "#1f77b4"
+  )) +
+  # scale_fill_manual(values = c(
+  #   "Chol/SVAR" = "#112EB8",
+  #   "High Frequency" = "#E41A1C",
+  #   "Narrative" = "orange",
+  #   "SignR" = "#4DAF4A",
+  #   "Other" = "#984EA3",
+  #   "Uncorrected" = "#1f77b4"
+  # )) +
+  labs(
+    title = "P-bias corrected effects assuming 14 % top journal, 54 % CB affiliation",
+    x = "Month",
+    y = "Effect",
+    color = "Identification",
+    fill = "Identification"
+  ) +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-2, 0.25)) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5)
+  ) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.5)
+)
+# Get data for uncorrected Chol/SVAR
+avg_irf_pricelevel_chol <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol"),
+  winsor = TRUE,
+  wins_par = wins_para,
+  return_data = TRUE,
+  corrected_irf = NULL
+)
+chol <- data.frame(
+  period = avg_irf_pricelevel_chol$data$period.month,
+  average = avg_irf_pricelevel_chol$data$avg.effect
+)
+# Get data for uncorrected High Frequency
+avg_irf_pricelevel_hf <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf"),
+  winsor = TRUE,
+  wins_par = wins_para,
+  return_data = TRUE,
+  corrected_irf = NULL
+)
+hf <- data.frame(
+  period = avg_irf_pricelevel_hf$data$period.month,
+  average = avg_irf_pricelevel_hf$data$avg.effect
+)
+# Get data for uncorrected Narrative
+avg_irf_pricelevel_nr <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr"),
+  winsor = TRUE,
+  wins_par = wins_para,
+  return_data = TRUE,
+  corrected_irf = NULL
+)
+nr <- data.frame(
+  period = avg_irf_pricelevel_nr$data$period.month,
+  average = avg_irf_pricelevel_nr$data$avg.effect
+)
+# Get data for uncorrected SignR
+avg_irf_pricelevel_signr <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr"),
+  winsor = TRUE,
+  wins_par = wins_para,
+  return_data = TRUE,
+  corrected_irf = NULL
+)
+SignR <- data.frame(
+  period = avg_irf_pricelevel_signr$data$period.month,
+  average = avg_irf_pricelevel_signr$data$avg.effect
+)
+# Get data for uncorrected Other
+avg_irf_pricelevel_idother <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother"),
+  winsor = TRUE,
+  wins_par = wins_para,
+  return_data = TRUE,
+  corrected_irf = NULL
+)
+other <- data.frame(
+  period = avg_irf_pricelevel_idother$data$period.month,
+  average = avg_irf_pricelevel_idother$data$avg.effect
+)
+# Add uncorrected sub-sample lines to plot
+(mmr_pricelevel_baseline_subsample_averages_vs_corrected_effects_ident <- mmr_pricelevel_baseline_subsample_averages_vs_corrected_effects_ident +
+    geom_line(data = chol, aes(x = period, y = average), color = "#112EB8", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) +
+    geom_line(data = hf, aes(x = period, y = average), color = "#E41A1C", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) +
+    geom_line(data = nr, aes(x = period, y = average), color = "orange", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) + 
+    geom_line(data = SignR, aes(x = period, y = average), color = "#4DAF4A", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) +
+    geom_line(data = other, aes(x = period, y = average), color = "#984EA3", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75))
+
+# Save as pdf
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_subsample_averages_vs_corrected_effects_ident.pdf"),
+       plot = mmr_pricelevel_baseline_subsample_averages_vs_corrected_effects_ident,
+       device = "pdf",
+       width = 7,
+       height = 5)
+
+
 ###### For other publications for different identification methods (cbanker roughly at sample average) ----
 get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
     top_5_or_tier = 0,
-    cbanker = 0.55,
+    cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
   
@@ -1417,19 +1674,21 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
-      title = "P-bias corrected effects, 0 % top journals, 55 % CB affiliation",
+      title = "P-bias corrected effects, 0 % top journals, 54 % CB affiliation",
       x = "Month",
       y = "Effect",
       color = "Identification",
@@ -1447,11 +1706,11 @@ prediction <- rbind(prediction, uncorrected_irf)
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2))
 # Save as pdf
 ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_corrected_effects_ident_other_pub.pdf"),
@@ -1464,7 +1723,7 @@ get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "ido
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
     top_5_or_tier = 1,
-    cbanker = 0.55,
+    cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
   
@@ -1540,19 +1799,21 @@ prediction <- rbind(prediction, uncorrected_irf)
     scale_color_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
-      "Narrative" = "#377EB8",
+      "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3"
+      "Other" = "#984EA3",
+      "Uncorrected" = "#1f77b4"
     )) +
     labs(
-      title = "P-bias corrected effects, 100 % top journals, 55 % CB affiliation",
+      title = "P-bias corrected effects, 100 % top journals, 54 % CB affiliation",
       x = "Month",
       y = "Effect",
       color = "Identification",
@@ -1570,11 +1831,11 @@ prediction <- rbind(prediction, uncorrected_irf)
     # Add uncorrected
     geom_line(data = prediction %>% filter(source == "Uncorrected"), 
               aes(y = predicted_value), 
-              color = "black", 
+              color = "#1f77b4", 
               linetype = "dashed") +
     geom_point(data = prediction %>% filter(source == "Uncorrected"), 
                aes(y = predicted_value), 
-               color = "black", 
+               color = "#1f77b4", 
                size = 2))
 # Save as pdf
 ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_corrected_effects_ident_top_journals.pdf"),

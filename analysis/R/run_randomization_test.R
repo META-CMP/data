@@ -77,7 +77,7 @@ run_randomization_test <- function(data,
   }
   
   # Count successes (above threshold)
-  n_success <- sum(window_data >= threshold)
+  n_success <- sum(window_data >= threshold, na.rm = TRUE)
   
   # Run binomial test
   test_result <- binom.test(n_success, n_obs, p = 0.5, 

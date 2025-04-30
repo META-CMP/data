@@ -40,6 +40,15 @@ d_z_stat_output <- d_z_stat_output %>%
 ## Create 2x2 plot for all horizons ----
 par(mfrow = c(2, 2))
 
+# Define horizon specific ylim to be used in loop
+ylim_horizons <- list(
+  "impact (0m)" = c(0, 0.8),
+  "short run (1m - 12m)" = c(0, 0.4),
+  "medium run (13m - 36m)" = c(0, 0.4),
+  "long run (> 36m)" = c(0, 0.4)
+)
+  
+
 for(m in horizons) {
   # Calibrate
   cf <- calibrate_counterfactual(d_z_stat_output,
@@ -54,17 +63,17 @@ for(m in horizons) {
                       group = "horizon",
                       group_value = m,
                       calibration = cf,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                       significance = sig_thresholds,
-                      ylim = c(0, 0.7),
+                      ylim = ylim_horizons[[m]],
                       show_params = FALSE,
                       omit_cf = FALSE,
                       add_legend = ifelse(m == horizons[1], TRUE, FALSE),
                       add_significance_stars = TRUE,
-                      star_spacing = 0.02,
-                      star_buffer = -0.02,
+                      star_spacing = ifelse(m == horizons[1], 0.02, 0.01),
+                      star_buffer = ifelse(m == horizons[1], -0.02, -0.01),
                       star_cex = 1
                       )
   
@@ -108,6 +117,14 @@ d_z_stat_neg_pricelevel <- d_z_stat_neg_pricelevel %>%
 ## Create 2x2 plot for all horizons ----
 par(mfrow = c(2, 2))
 
+# Define horizon specific ylim to be used in loop
+ylim_horizons <- list(
+  "impact (0m)" = c(0, 0.8),
+  "short run (1m - 12m)" = c(0, 0.45),
+  "medium run (13m - 36m)" = c(0, 0.45),
+  "long run (> 36m)" = c(0, 0.45)
+)
+
 for(m in horizons) {
   # Calibrate
   cf <- calibrate_counterfactual(d_z_stat_neg_pricelevel,
@@ -122,17 +139,17 @@ for(m in horizons) {
                       group = "horizon",
                       group_value = m,
                       calibration = cf,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                       significance = sig_thresholds,
-                      ylim = c(0, 1),
+                      ylim = ylim_horizons[[m]],
                       show_params = FALSE,
                       omit_cf = FALSE,
                       add_legend = ifelse(m == horizons[1], TRUE, FALSE),
                       add_significance_stars = TRUE,
-                      star_spacing = 0.02,
-                      star_buffer = -0.02,
+                      star_spacing = ifelse(m == horizons[1], 0.02, 0.01),
+                      star_buffer = ifelse(m == horizons[1], -0.02, -0.01),
                       star_cex = 1
                       )
   
@@ -188,9 +205,9 @@ for(m in horizons) {
                       group = "horizon",
                       group_value = m,
                       calibration = cf,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e20, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e20),
                       significance = c(1, 1.645, 1.96, 2.576),
                       ylim = c(0, 0.6),
                       show_params = FALSE,
@@ -213,3 +230,4 @@ dev.copy(pdf, "analysis/working_paper_1/figures/z_stat_densities/figure_z_densit
 dev.off()
 
 par(mfrow = c(1, 1))
+

@@ -23,10 +23,10 @@ plot_counterfactual(d_z_stat_output %>% filter(horizon == "impact (0m)"),
                     show_params = FALSE,
                     omit_cf = TRUE,
                     # breaks = c(seq(0, 10, 0.05), 1000),
-                    breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                    breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                     significance = sig_thresholds,
                     add_legend = FALSE,
-                    xlims = c(-10, 10),
+                    xlims = c(-6, 6),
                     ylim = c(0, 0.9))
 abline(v = 0, col = "black", lty = 2)
 mtext("With sign restrictions", side = 3, line = 3)
@@ -43,10 +43,10 @@ plot_counterfactual(d_z_stat_output %>% filter(!(group_ident_broad %in% c("signr
                     show_params = FALSE,
                     omit_cf = TRUE,
                     # breaks = c(seq(0, 10, 0.05), 1000),
-                    breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                    breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                     significance = sig_thresholds,
                     add_legend = FALSE,
-                    xlims = c(-10, 10),
+                    xlims = c(-6, 6),
                     ylim = c(0, 0.9))
 abline(v = 0, col = "black", lty = 2)
 mtext("Without sign restrictions", side = 3, line = 3)
@@ -60,6 +60,14 @@ dev.off()
 
 ### Create 4x2 plot for all horizons ----
 par(mfrow = c(4, 2))
+
+# Define horizon specific ylim to be used in loop
+ylim_horizons <- list(
+  "impact (0m)" = c(0, 0.8),
+  "short run (1m - 12m)" = c(0, 0.5),
+  "medium run (13m - 36m)" = c(0, 0.8),
+  "long run (> 36m)" = c(0, 0.8)
+)
 
 for(m in horizons) {
   
@@ -77,11 +85,12 @@ for(m in horizons) {
                       group_value = m,
                       calibration = cf_other,
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
-                      ylim = c(0, 0.9))
+                      xlims = c(-6, 6),
+                      ylim = ylim_horizons[[m]]
+                      )
   if (m == horizons[1]) {
     mtext("Other publications", side = 3, line = 3)
   }
@@ -100,11 +109,12 @@ for(m in horizons) {
                       group_value = m,
                       calibration = cf_top,
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
-                      ylim = c(0, 0.9))
+                      xlims = c(-6, 6),
+                      ylim = ylim_horizons[[m]]
+                      )
   if (m == horizons[1]) {
     mtext("Top journals", side = 3, line = 3)
   }  
@@ -123,6 +133,14 @@ par(mfrow = c(1, 1))
 ### Create 4x2 plot for all horizons ----
 par(mfrow = c(4, 2))
 
+# Define horizon specific ylim to be used in loop
+ylim_horizons <- list(
+  "impact (0m)" = c(0, 0.8),
+  "short run (1m - 12m)" = c(0, 0.4),
+  "medium run (13m - 36m)" = c(0, 0.4),
+  "long run (> 36m)" = c(0, 0.4)
+)
+
 for(m in horizons) {
   
   # Calibrate for no central bank affiliation
@@ -139,11 +157,12 @@ for(m in horizons) {
                       group_value = m,
                       calibration = cf_other,
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
-                      ylim = c(0, 0.7))
+                      xlims = c(-6, 6),
+                      ylim = ylim_horizons[[m]]
+                      )
   if (m == horizons[1]) {
     mtext("non-CB", side = 3, line = 3)
   }
@@ -162,11 +181,12 @@ for(m in horizons) {
                       group_value = m,
                       calibration = cf_cb,
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
-                      ylim = c(0, 0.7))
+                      xlims = c(-6, 6),
+                      ylim = ylim_horizons[[m]]
+                      )
   if (m == horizons[1]) {
     mtext("CB", side = 3, line = 3)
   }  
@@ -196,10 +216,10 @@ plot_counterfactual(d_z_stat_neg_pricelevel %>% filter(horizon == "impact (0m)")
                     show_params = FALSE,
                     omit_cf = TRUE,
                     # breaks = c(seq(0, 10, 0.05), 1000),
-                    breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                    breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                     significance = sig_thresholds,
                     add_legend = FALSE,
-                    xlims = c(-10, 10),
+                    xlims = c(-6, 6),
                     ylim = c(0, 0.9))
 abline(v = 0, col = "black", lty = 2)
 mtext("With sign restrictions", side = 3, line = 3)
@@ -216,10 +236,10 @@ plot_counterfactual(d_z_stat_neg_pricelevel %>% filter(!(group_ident_broad %in% 
                     show_params = FALSE,
                     omit_cf = TRUE,
                     # breaks = c(seq(0, 10, 0.05), 1000),
-                    breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                    breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                     significance = sig_thresholds,
                     add_legend = FALSE,
-                    xlims = c(-10, 10),
+                    xlims = c(-6, 6),
                     ylim = c(0, 1))
 abline(v = 0, col = "black", lty = 2)
 mtext("Without sign restrictions", side = 3, line = 3)
@@ -233,6 +253,14 @@ dev.off()
 
 ### Create 4x2 plot for all horizons ----
 par(mfrow = c(4, 2))
+
+# Define horizon specific ylim to be used in loop
+ylim_horizons <- list(
+  "impact (0m)" = c(0, 1),
+  "short run (1m - 12m)" = c(0, 0.5),
+  "medium run (13m - 36m)" = c(0, 0.5),
+  "long run (> 36m)" = c(0, 0.5)
+)
 
 for(m in horizons) {
   
@@ -250,11 +278,12 @@ for(m in horizons) {
                       group_value = m,
                       calibration = cf_other,
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
-                      ylim = c(0, 0.7))
+                      xlims = c(-6, 6),
+                      ylim = ylim_horizons[[m]]
+                      )
   if (m == horizons[1]) {
     mtext("Other publications", side = 3, line = 3)
   }
@@ -273,11 +302,12 @@ for(m in horizons) {
                       group_value = m,
                       calibration = cf_top,
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
-                      ylim = c(0, 0.7))
+                      xlims = c(-6, 6),
+                      ylim = ylim_horizons[[m]]
+                      )
   if (m == horizons[1]) {
     mtext("Top journals", side = 3, line = 3)
   }  
@@ -296,6 +326,14 @@ par(mfrow = c(1, 1))
 ### Create 4x2 plot for all horizons ----
 par(mfrow = c(4, 2))
 
+# Define horizon specific ylim to be used in loop
+ylim_horizons <- list(
+  "impact (0m)" = c(0, 1),
+  "short run (1m - 12m)" = c(0, 0.4),
+  "medium run (13m - 36m)" = c(0, 0.5),
+  "long run (> 36m)" = c(0, 0.5)
+)
+
 for(m in horizons) {
   
   # Calibrate for no central bank affiliation
@@ -312,11 +350,12 @@ for(m in horizons) {
                       group_value = m,
                       calibration = cf_other,
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
-                      ylim = c(0, 0.7))
+                      xlims = c(-6, 6),
+                      ylim = ylim_horizons[[m]]
+                      )
   if (m == horizons[1]) {
     mtext("non-CB", side = 3, line = 3)
   }
@@ -335,11 +374,12 @@ for(m in horizons) {
                       group_value = m,
                       calibration = cf_cb,
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e15, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e15),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
-                      ylim = c(0, 0.7))
+                      xlims = c(-6, 6),
+                      ylim = ylim_horizons[[m]]
+                      )
   if (m == horizons[1]) {
     mtext("CB", side = 3, line = 3)
   }  
@@ -377,10 +417,10 @@ for(m in horizons) {
                       group_value = m,
                       calibration = cf_other,
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e20, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e20),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.7))
   if (m == horizons[1]) {
     mtext("Other publications", side = 3, line = 3)
@@ -400,10 +440,10 @@ for(m in horizons) {
                       group_value = m,
                       calibration = cf_top,
                       # breaks = c(seq(0, 10, 0.05), 1000),
-                      breaks = c(-1000, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1000),
+                      breaks = c(-1e20, seq(-10, 0.05, 0.05), seq(0, 10, 0.05), 1e20),
                       significance = sig_thresholds,
                       add_legend = FALSE,
-                      xlims = c(-10, 10),
+                      xlims = c(-6, 6),
                       ylim = c(0, 0.7))
   if (m == horizons[1]) {
     mtext("Top journals", side = 3, line = 3)

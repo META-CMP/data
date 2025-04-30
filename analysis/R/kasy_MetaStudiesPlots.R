@@ -132,7 +132,7 @@ estimates_plot_prob <- function(cutoffs, symmetric, estimates, model="normal", y
   names(dens)[names(dens) == 'p'] <- 'publication probability'
   
   p <- ggplot(dens, aes(x = z, y = `publication probability`)) +
-    xlab(latex2exp::TeX("Z")) +
+    xlab(latex2exp::TeX("$z$")) +
     geom_line(size = 2, color = "blue") +
     # expand_limits(y = 0) +
     scale_x_continuous(breaks = -3:3) +

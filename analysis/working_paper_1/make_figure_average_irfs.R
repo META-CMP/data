@@ -69,7 +69,7 @@ avg_irf_output <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE,
+  show_legend = FALSE,
   show_median = FALSE,
   return_data = TRUE
 )
@@ -87,7 +87,7 @@ avg_irf_output_median <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -202,88 +202,8 @@ peese_uw_output <- meta_analysis(d_no_qc,
                                cluster_se = TRUE)
 peese_uw_output_pbias <- extract_pbias(peese_uw_output)
 peese_uw_output <- extract_intercepts(peese_uw_output)
-### Estimate WAAP ----
-# waap_output <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "upper", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_prec_weighted = TRUE,
-#                              ap_parameter = 2.8,
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# waap_output <- extract_intercepts(waap_output)
-### Estimate AAP (WAAP without weights) ----
-# waap_uw_output <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "upper", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_prec_weighted = FALSE,
-#                              ap_parameter = 2.8,
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# waap_uw_output <- extract_intercepts(waap_uw_output)
-### Estimate WAAP for 68 % level ----
-# waap_output_68 <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "upper", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_prec_weighted = TRUE,
-#                              ap_parameter = 1.84, # 68% level
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# waap_output_68 <- extract_intercepts(waap_output_68)
-### Estimate AAP (WAAP without weights) for 68 level ----
-# waap_uw_output_68 <- meta_analysis(d_no_qc,
-#                                 outvar = out_var,
-#                                 se_option = "upper", 
-#                                 periods = seq(0, 60, by = 3),
-#                                 wins = wins_para,
-#                                 prec_weighted = FALSE,
-#                                 ap = TRUE,
-#                                 ap_prec_weighted = FALSE,
-#                                 ap_parameter = 1.84, # 68% level
-#                                 estimation = "UWLS", 
-#                                 cluster_se = TRUE)
-# waap_uw_output_68 <- extract_intercepts(waap_uw_output_68)
 ### Estimate WAAP with model selection based on horizon ----
-# model_waap_output <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "upper", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_horizon = 12,
-#                              ap_prec_weighted = TRUE,
-#                              ap_parameter = 2.8,
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# model_waap_output <- extract_intercepts(model_waap_output)
-### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
-# model_waap_uw_output <- meta_analysis(d_no_qc,
-#                                    outvar = out_var,
-#                                    se_option = "upper", 
-#                                    periods = seq(0, 60, by = 3),
-#                                    wins = wins_para,
-#                                    prec_weighted = FALSE,
-#                                    ap = TRUE,
-#                                    ap_horizon = 12,
-#                                    ap_prec_weighted = FALSE,
-#                                    ap_parameter = 2.8,
-#                                    estimation = "UWLS", 
-#                                    cluster_se = TRUE)
-# model_waap_uw_output <- extract_intercepts(model_waap_uw_output)
-### Estimate WAAP for 68 % level with model selection based on horizon ----
-model_waap_output_68 <- meta_analysis(d_no_qc,
+model_waap_output <- meta_analysis(d_no_qc,
                                    outvar = out_var,
                                    se_option = "upper", 
                                    periods = seq(0, 60, by = 3),
@@ -292,12 +212,12 @@ model_waap_output_68 <- meta_analysis(d_no_qc,
                                    ap = TRUE,
                                    ap_horizon = 12,
                                    ap_prec_weighted = TRUE,
-                                   ap_parameter = 1.84, # 68% level
+                                   ap_parameter = 2.8,
                                    estimation = "UWLS", 
                                    cluster_se = TRUE)
-model_waap_output_68 <- extract_intercepts(model_waap_output_68)
-### Estimate AAP (unweigthed WAAP) for 68 % level with model selection based on horizon ----
-model_waap_uw_output_68 <- meta_analysis(d_no_qc,
+model_waap_output <- extract_intercepts(model_waap_output)
+### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
+model_waap_uw_output <- meta_analysis(d_no_qc,
                                       outvar = out_var,
                                       se_option = "upper", 
                                       periods = seq(0, 60, by = 3),
@@ -306,10 +226,10 @@ model_waap_uw_output_68 <- meta_analysis(d_no_qc,
                                       ap = TRUE,
                                       ap_horizon = 12,
                                       ap_prec_weighted = FALSE,
-                                      ap_parameter = 1.84, # 68% level
+                                      ap_parameter = 2.8,
                                       estimation = "UWLS", 
                                       cluster_se = TRUE)
-model_waap_uw_output_68 <- extract_intercepts(model_waap_uw_output_68)
+model_waap_uw_output <- extract_intercepts(model_waap_uw_output)
 ### Estimate AK ----
 ak_output <- meta_analysis(d_no_qc,
                            outvar = out_var,
@@ -326,92 +246,56 @@ ak_output <- meta_analysis(d_no_qc,
                            ak_plot = "both")
 ak_output <- extract_intercepts_AK(ak_output)
 ### Plot corrected effects ----
-avg_irf_output_median_corrections <- avg_irf_output_median %>% 
-  # add_lines(
-  #   data = waap_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
+avg_irf_output_corrections <- avg_irf_output %>% 
   add_lines(
     data = peese_output,
     x = ~period,
     y = ~estimate,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
   add_lines(
     data = fatpet_output,
     x = ~period,
     y = ~estimate,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>% 
   add_lines(
     data = fatpet_uw_output,
     x = ~period,
     y = ~estimate,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>%
   add_lines(
     data = peese_uw_output,
     x = ~period,
     y = ~estimate,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
-  ) %>%
-  # add_lines(
-  #   data = waap_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  add_trace(
-    data = model_waap_output_68,
-    x = ~period,
-    y = ~estimate,
-    name = "WAAP (model selection, 68%)",
-    marker = list(color = "darkblue", size = 5)
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
   add_trace(
-    data = model_waap_uw_output_68,
+    data = model_waap_output,
     x = ~period,
     y = ~estimate,
-    name = "unweighted WAAP (model selection, 68%)",
+    name = "WAAP",
+    showlegend = FALSE,
+    marker = list(color = "darkgreen", size = 5)
+  ) %>%
+  add_trace(
+    data = model_waap_uw_output,
+    x = ~period,
+    y = ~estimate,
+    name = "UAAP",
+    showlegend = FALSE,
     marker = list(color = "white", size = 5,
                   line = list(
-                    color = 'darkblue',
+                    color = 'darkgreen',
                     width = 1
                   ))
   ) %>% 
@@ -420,168 +304,81 @@ avg_irf_output_median_corrections <- avg_irf_output_median %>%
     x = ~period,
     y = ~estimate,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   )
-avg_irf_output_median_corrections
+avg_irf_output_corrections
 ### Save as PDF
-orca(avg_irf_output_median_corrections,
-     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_output_median_corrections.pdf",
+orca(avg_irf_output_corrections,
+     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_output_corrections.pdf",
      scale = NULL,
      width = 1500 * 0.6,
      height = 1100 * 0.6
 )
 ### Plot corrected effects with bounds ----
 avg_irf_output_corrections_with_bounds <- avg_irf_output %>% 
-  # add_lines(
-  #   data = waap_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
-  # add_lines(
-  #   data = peese_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "PEESE",
-  #   line = list(color = "darkblue", width = 1, dash = 'solid')
-  # ) %>%
   add_ribbons(
     data = peese_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
-  # add_lines(
-  #   data = fatpet_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "FAT-PET",
-  #   line = list(color = "darkblue", width = 2, dash = "dot")
-  # ) %>%
   add_ribbons(
     data = fatpet_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>%
-  # add_lines(
-  #   data = fatpet_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted FAT-PET",
-  #   line = list(color = "darkblue", width = 4, dash = "dot")
-  # ) %>%
   add_ribbons(
     data = fatpet_uw_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>% 
-  # add_lines(
-  #   data = peese_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted PEESE",
-  #   line = list(color = "darkblue", width = 4, dash = "solid")
-  # ) %>% 
   add_ribbons(
     data = peese_uw_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
-  # add_lines(
-  #   data = waap_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection, 68%)",
-  #   marker = list(color = "darkblue", size = 5)
-  # ) %>% 
   add_ribbons(
-    data = model_waap_output_68,
+    data = model_waap_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "WAAP",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1)
   ) %>%
-  # add_trace(
-  #   data = model_waap_uw_output_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection, 68%)",
-  #   marker = list(color = "white", size = 5,
-  #                 line = list(
-  #                   color = 'darkblue',
-  #                   width = 1
-  #                 ))
-  # ) %>% 
   add_ribbons(
-    data = model_waap_uw_output_68,
+    data = model_waap_uw_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "UAAP",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1)
   ) %>% 
-  # add_lines(
-  #   data = ak_output,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "AK",
-  #   line = list(color = "darkblue", width = 1, dash = 'longdashdot')
-  # ) %>% 
   add_ribbons(
     data = ak_output,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   ) %>% 
   layout(
     yaxis = list(
@@ -604,15 +401,17 @@ output_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = 'darkblue', width = 3)
+    showlegend = FALSE,
+    line = list(width = 3)
   ) %>% 
   add_ribbons(
     data = fatpet_uw_output_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = 'darkblue', width = 3, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(width = 3, dash = "dot")
   ) %>%
   add_ribbons(
     data = peese_output_pbias,
@@ -620,15 +419,17 @@ output_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "solid")
+    showlegend = FALSE,
+    line = list(width = 3, dash = "solid")
   ) %>%
   add_ribbons(
     data = peese_uw_output_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "dash")
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(width = 3, dash = "dash")
   )
 output_pbias_plot
 ### Save as PDF
@@ -645,7 +446,7 @@ avg_irf_output_median_se_bounds <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE,
+  show_legend = FALSE,
   show_median = TRUE,
   ci_method = "avg.se",
   se_multiplier = 2,
@@ -700,7 +501,7 @@ avg_irf_pricelevel <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE,
+  show_legend = FALSE,
   show_median = FALSE,
   return_data = TRUE
 )
@@ -718,7 +519,7 @@ avg_irf_pricelevel_median <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -774,88 +575,8 @@ peese_uw_pricelevel <- meta_analysis(d_no_qc,
                                  cluster_se = TRUE)
 peese_uw_pricelevel_pbias <- extract_pbias(peese_uw_pricelevel)
 peese_uw_pricelevel <- extract_intercepts(peese_uw_pricelevel)
-### Estimate WAAP ----
-# waap_pricelevel <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "upper", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_prec_weighted = TRUE,
-#                              ap_parameter = 2.8,
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# waap_pricelevel <- extract_intercepts(waap_pricelevel)
-### Estimate AAP (WAAP without weights) ----
-# waap_uw_pricelevel <- meta_analysis(d_no_qc,
-#                                 outvar = out_var,
-#                                 se_option = "upper", 
-#                                 periods = seq(0, 60, by = 3),
-#                                 wins = wins_para,
-#                                 prec_weighted = FALSE,
-#                                 ap = TRUE,
-#                                 ap_prec_weighted = FALSE,
-#                                 ap_parameter = 2.8,
-#                                 estimation = "UWLS", 
-#                                 cluster_se = TRUE)
-# waap_uw_pricelevel <- extract_intercepts(waap_uw_pricelevel)
-### Estimate WAAP for 68 % level ----
-# waap_pricelevel_68 <- meta_analysis(d_no_qc,
-#                                 outvar = out_var,
-#                                 se_option = "upper", 
-#                                 periods = seq(0, 60, by = 3),
-#                                 wins = wins_para,
-#                                 prec_weighted = FALSE,
-#                                 ap = TRUE,
-#                                 ap_prec_weighted = TRUE,
-#                                 ap_parameter = 1.84, # 68% level
-#                                 estimation = "UWLS", 
-#                                 cluster_se = TRUE)
-# waap_pricelevel_68 <- extract_intercepts(waap_pricelevel_68)
-### Estimate AAP (WAAP without weights) for 68 level ----
-# waap_uw_pricelevel_68 <- meta_analysis(d_no_qc,
-#                                    outvar = out_var,
-#                                    se_option = "upper", 
-#                                    periods = seq(0, 60, by = 3),
-#                                    wins = wins_para,
-#                                    prec_weighted = FALSE,
-#                                    ap = TRUE,
-#                                    ap_prec_weighted = FALSE,
-#                                    ap_parameter = 1.84, # 68% level
-#                                    estimation = "UWLS", 
-#                                    cluster_se = TRUE)
-# waap_uw_pricelevel_68 <- extract_intercepts(waap_uw_pricelevel_68)
 ### Estimate WAAP with model selection based on horizon ----
-# model_waap_pricelevel <- meta_analysis(d_no_qc,
-#                                    outvar = out_var,
-#                                    se_option = "upper", 
-#                                    periods = seq(0, 60, by = 3),
-#                                    wins = wins_para,
-#                                    prec_weighted = FALSE,
-#                                    ap = TRUE,
-#                                    ap_horizon = 36,
-#                                    ap_prec_weighted = TRUE,
-#                                    ap_parameter = 2.8,
-#                                    estimation = "UWLS", 
-#                                    cluster_se = TRUE)
-# model_waap_pricelevel <- extract_intercepts(model_waap_pricelevel)
-### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
-# model_waap_uw_pricelevel <- meta_analysis(d_no_qc,
-#                                       outvar = out_var,
-#                                       se_option = "upper", 
-#                                       periods = seq(0, 60, by = 3),
-#                                       wins = wins_para,
-#                                       prec_weighted = FALSE,
-#                                       ap = TRUE,
-#                                       ap_horizon = 36,
-#                                       ap_prec_weighted = FALSE,
-#                                       ap_parameter = 2.8,
-#                                       estimation = "UWLS", 
-#                                       cluster_se = TRUE)
-# model_waap_uw_pricelevel <- extract_intercepts(model_waap_uw_pricelevel)
-### Estimate WAAP with model selection based on horizon ----
-model_waap_pricelevel_68 <- meta_analysis(d_no_qc,
+model_waap_pricelevel <- meta_analysis(d_no_qc,
                                       outvar = out_var,
                                       se_option = "upper", 
                                       periods = seq(0, 60, by = 3),
@@ -864,12 +585,12 @@ model_waap_pricelevel_68 <- meta_analysis(d_no_qc,
                                       ap = TRUE,
                                       ap_horizon = 36,
                                       ap_prec_weighted = TRUE,
-                                      ap_parameter = 1.84,
+                                      ap_parameter = 2.8,
                                       estimation = "UWLS", 
                                       cluster_se = TRUE)
-model_waap_pricelevel_68 <- extract_intercepts(model_waap_pricelevel_68)
+model_waap_pricelevel <- extract_intercepts(model_waap_pricelevel)
 ### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
-model_waap_uw_pricelevel_68 <- meta_analysis(d_no_qc,
+model_waap_uw_pricelevel <- meta_analysis(d_no_qc,
                                          outvar = out_var,
                                          se_option = "upper", 
                                          periods = seq(0, 60, by = 3),
@@ -878,10 +599,10 @@ model_waap_uw_pricelevel_68 <- meta_analysis(d_no_qc,
                                          ap = TRUE,
                                          ap_horizon = 36,
                                          ap_prec_weighted = FALSE,
-                                         ap_parameter = 1.84,
+                                         ap_parameter = 2.8,
                                          estimation = "UWLS", 
                                          cluster_se = TRUE)
-model_waap_uw_pricelevel_68 <- extract_intercepts(model_waap_uw_pricelevel_68)
+model_waap_uw_pricelevel <- extract_intercepts(model_waap_uw_pricelevel)
 ### Estimate AK ----
 ak_pricelevel <- meta_analysis(d_no_qc,
                            outvar = out_var,
@@ -898,92 +619,56 @@ ak_pricelevel <- meta_analysis(d_no_qc,
                            ak_plot = "both")
 ak_pricelevel <- extract_intercepts_AK(ak_pricelevel)
 ### Plot corrected effects ----
-avg_irf_pricelevel_median_corrections <- avg_irf_pricelevel_median %>% 
-  # add_lines(
-  #   data = waap_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
+avg_irf_pricelevel_corrections <- avg_irf_pricelevel %>% 
   add_lines(
     data = peese_pricelevel,
     x = ~period,
     y = ~estimate,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
   add_lines(
     data = fatpet_pricelevel,
     x = ~period,
     y = ~estimate,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>% 
   add_lines(
     data = fatpet_uw_pricelevel,
     x = ~period,
     y = ~estimate,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>%
   add_lines(
     data = peese_uw_pricelevel,
     x = ~period,
     y = ~estimate,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
-  ) %>%
-  # add_lines(
-  #   data = waap_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  add_trace(
-    data = model_waap_pricelevel_68,
-    x = ~period,
-    y = ~estimate,
-    name = "WAAP (model selection, 68%)",
-    marker = list(color = "darkblue", size = 5)
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
   add_trace(
-    data = model_waap_uw_pricelevel_68,
+    data = model_waap_pricelevel,
     x = ~period,
     y = ~estimate,
-    name = "unweighted WAAP (model selection, 68%)",
+    name = "WAAP",
+    showlegend = FALSE,
+    marker = list(color = "darkgreen", size = 5)
+  ) %>%
+  add_trace(
+    data = model_waap_uw_pricelevel,
+    x = ~period,
+    y = ~estimate,
+    name = "UAAP",
+    showlegend = FALSE,
     marker = list(color = "white", size = 5,
                   line = list(
-                    color = 'darkblue',
+                    color = 'darkgreen',
                     width = 1
                   ))
   ) %>% 
@@ -992,168 +677,81 @@ avg_irf_pricelevel_median_corrections <- avg_irf_pricelevel_median %>%
     x = ~period,
     y = ~estimate,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   )
-avg_irf_pricelevel_median_corrections
+avg_irf_pricelevel_corrections
 ### Save as PDF
-orca(avg_irf_pricelevel_median_corrections,
-     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_pricelevel_median_corrections.pdf",
+orca(avg_irf_pricelevel_corrections,
+     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_pricelevel_corrections.pdf",
      scale = NULL,
      width = 1500 * 0.6,
      height = 1100 * 0.6
 )
 ### Plot corrected effects with bounds ----
 avg_irf_pricelevel_corrections_with_bounds <- avg_irf_pricelevel %>% 
-  # add_lines(
-  #   data = waap_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
-  # add_lines(
-  #   data = peese_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "PEESE",
-  #   line = list(color = "darkblue", width = 1, dash = 'solid')
-  # ) %>%
   add_ribbons(
     data = peese_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
-  ) %>% 
-  # add_lines(
-  #   data = fatpet_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "FAT-PET",
-  #   line = list(color = "darkblue", width = 2, dash = "dot")
-  # ) %>%
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
+  ) %>%
   add_ribbons(
     data = fatpet_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>%
-  # add_lines(
-  #   data = fatpet_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted FAT-PET",
-  #   line = list(color = "darkblue", width = 4, dash = "dot")
-  # ) %>%
   add_ribbons(
     data = fatpet_uw_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>% 
-  # add_lines(
-  #   data = peese_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted PEESE",
-  #   line = list(color = "darkblue", width = 4, dash = "solid")
-  # ) %>% 
   add_ribbons(
     data = peese_uw_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
-  # add_lines(
-  #   data = waap_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection, 68%)",
-  #   marker = list(color = "darkblue", size = 5)
-  # ) %>% 
   add_ribbons(
-    data = model_waap_pricelevel_68,
+    data = model_waap_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "WAAP",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1)
   ) %>%
-  # add_trace(
-  #   data = model_waap_uw_pricelevel_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection, 68%)",
-  #   marker = list(color = "white", size = 5,
-  #                 line = list(
-  #                   color = 'darkblue',
-  #                   width = 1
-  #                 ))
-  # ) %>% 
   add_ribbons(
-    data = model_waap_uw_pricelevel_68,
+    data = model_waap_uw_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "UAAP",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1)
   ) %>% 
-  # add_lines(
-  #   data = ak_pricelevel,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "AK",
-  #   line = list(color = "darkblue", width = 1, dash = 'longdashdot')
-  # ) %>% 
   add_ribbons(
     data = ak_pricelevel,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   ) %>% 
   layout(
     yaxis = list(
@@ -1176,15 +774,17 @@ pricelevel_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = 'darkblue', width = 3)
+    showlegend = FALSE,
+    line = list(width = 3)
   ) %>% 
   add_ribbons(
     data = fatpet_uw_pricelevel_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = 'darkblue', width = 3, dash = "dot")
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(width = 3, dash = "dot")
   ) %>%
   add_ribbons(
     data = peese_pricelevel_pbias,
@@ -1192,15 +792,17 @@ pricelevel_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "solid")
+    showlegend = FALSE,
+    line = list(width = 3, dash = "solid")
   ) %>%
   add_ribbons(
     data = peese_uw_pricelevel_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "dash")
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(width = 3, dash = "dash")
   )
 pricelevel_pbias_plot
 ### Save as PDF
@@ -1218,7 +820,7 @@ avg_irf_pricelevel_median_se_bounds <- plot_average_irfs(
   winsor = TRUE,
   wins_par = wins_para,
   corrected_irf = NULL,
-  show_legend = TRUE,
+  show_legend = FALSE,
   show_median = TRUE,
   ci_method = "avg.se",
   se_multiplier = 2,
@@ -1228,7 +830,7 @@ avg_irf_pricelevel_median_se_bounds <- plot_average_irfs(
 write_csv(avg_irf_pricelevel_median_se_bounds$data, here::here(save_path, "avg_irf_pricelevel_median_se_bounds.csv"))
 # Change plot title
 avg_irf_pricelevel_median_se_bounds <- avg_irf_pricelevel_median_se_bounds$plot %>% plotly::layout(
-  title = "Average and median IRF for Inflation"
+  title = "Mean and median IRF for Inflation"
 )
 # Comparison plot avg_irf_pricelevel_median and avg_irf_pricelevel_median_se_bounds with same ylim and next to each other
 figure_avg_irf_pricelevel_median_se_bounds <- subplot(avg_irf_pricelevel_median, 
@@ -1347,88 +949,8 @@ peese_uw_rate <- meta_analysis(d_no_qc,
                                  cluster_se = TRUE)
 peese_uw_rate_pbias <- extract_pbias(peese_uw_rate)
 peese_uw_rate <- extract_intercepts(peese_uw_rate)
-### Estimate WAAP ----
-# waap_rate <- meta_analysis(d_no_qc,
-#                              outvar = out_var,
-#                              se_option = "avg", 
-#                              periods = seq(0, 60, by = 3),
-#                              wins = wins_para,
-#                              prec_weighted = FALSE,
-#                              ap = TRUE,
-#                              ap_prec_weighted = TRUE,
-#                              ap_parameter = 2.8,
-#                              estimation = "UWLS", 
-#                              cluster_se = TRUE)
-# waap_rate <- extract_intercepts(waap_rate)
-### Estimate AAP (WAAP without weights) ----
-# waap_uw_rate <- meta_analysis(d_no_qc,
-#                                 outvar = out_var,
-#                                 se_option = "avg", 
-#                                 periods = seq(0, 60, by = 3),
-#                                 wins = wins_para,
-#                                 prec_weighted = FALSE,
-#                                 ap = TRUE,
-#                                 ap_prec_weighted = FALSE,
-#                                 ap_parameter = 2.8,
-#                                 estimation = "UWLS", 
-#                                 cluster_se = TRUE)
-# waap_uw_rate <- extract_intercepts(waap_uw_rate)
-### Estimate WAAP for 68 % level ----
-# waap_rate_68 <- meta_analysis(d_no_qc,
-#                                 outvar = out_var,
-#                                 se_option = "avg", 
-#                                 periods = seq(0, 60, by = 3),
-#                                 wins = wins_para,
-#                                 prec_weighted = FALSE,
-#                                 ap = TRUE,
-#                                 ap_prec_weighted = TRUE,
-#                                 ap_parameter = 1.84, # 68% level
-#                                 estimation = "UWLS", 
-#                                 cluster_se = TRUE)
-# waap_rate_68 <- extract_intercepts(waap_rate_68)
-### Estimate AAP (WAAP without weights) for 68 level ----
-# waap_uw_rate_68 <- meta_analysis(d_no_qc,
-#                                    outvar = out_var,
-#                                    se_option = "avg", 
-#                                    periods = seq(0, 60, by = 3),
-#                                    wins = wins_para,
-#                                    prec_weighted = FALSE,
-#                                    ap = TRUE,
-#                                    ap_prec_weighted = FALSE,
-#                                    ap_parameter = 1.84, # 68% level
-#                                    estimation = "UWLS", 
-#                                    cluster_se = TRUE)
-# waap_uw_rate_68 <- extract_intercepts(waap_uw_rate_68)
 ### Estimate WAAP with model selection based on horizon ----
-# model_waap_rate <- meta_analysis(d_no_qc,
-#                                    outvar = out_var,
-#                                    se_option = "avg", 
-#                                    periods = seq(0, 60, by = 3),
-#                                    wins = wins_para,
-#                                    prec_weighted = FALSE,
-#                                    ap = TRUE,
-#                                    ap_horizon = 12,
-#                                    ap_prec_weighted = TRUE,
-#                                    ap_parameter = 2.8,
-#                                    estimation = "UWLS", 
-#                                    cluster_se = TRUE)
-# model_waap_rate <- extract_intercepts(model_waap_rate)
-### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
-# model_waap_uw_rate <- meta_analysis(d_no_qc,
-#                                       outvar = out_var,
-#                                       se_option = "avg", 
-#                                       periods = seq(0, 60, by = 3),
-#                                       wins = wins_para,
-#                                       prec_weighted = FALSE,
-#                                       ap = TRUE,
-#                                       ap_horizon = 12,
-#                                       ap_prec_weighted = FALSE,
-#                                       ap_parameter = 2.8,
-#                                       estimation = "UWLS", 
-#                                       cluster_se = TRUE)
-# model_waap_uw_rate <- extract_intercepts(model_waap_uw_rate)
-### Estimate WAAP with model selection based on horizon ----
-model_waap_rate_68 <- meta_analysis(d_no_qc,
+model_waap_rate <- meta_analysis(d_no_qc,
                                       outvar = out_var,
                                       se_option = "avg", 
                                       periods = seq(0, 60, by = 3),
@@ -1437,12 +959,12 @@ model_waap_rate_68 <- meta_analysis(d_no_qc,
                                       ap = TRUE,
                                       ap_horizon = 12,
                                       ap_prec_weighted = TRUE,
-                                      ap_parameter = 1.84,
+                                      ap_parameter = 2.8,
                                       estimation = "UWLS", 
                                       cluster_se = TRUE)
-model_waap_rate_68 <- extract_intercepts(model_waap_rate_68)
+model_waap_rate <- extract_intercepts(model_waap_rate)
 ### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
-model_waap_uw_rate_68 <- meta_analysis(d_no_qc,
+model_waap_uw_rate <- meta_analysis(d_no_qc,
                                          outvar = out_var,
                                          se_option = "avg", 
                                          periods = seq(0, 60, by = 3),
@@ -1451,10 +973,10 @@ model_waap_uw_rate_68 <- meta_analysis(d_no_qc,
                                          ap = TRUE,
                                          ap_horizon = 12,
                                          ap_prec_weighted = FALSE,
-                                         ap_parameter = 1.84,
+                                         ap_parameter = 2.8,
                                          estimation = "UWLS", 
                                          cluster_se = TRUE)
-model_waap_uw_rate_68 <- extract_intercepts(model_waap_uw_rate_68)
+model_waap_uw_rate <- extract_intercepts(model_waap_uw_rate)
 ### Estimate AK ----
 ak_rate <- meta_analysis(d_no_qc,
                            outvar = out_var,
@@ -1471,92 +993,50 @@ ak_rate <- meta_analysis(d_no_qc,
                            ak_plot = "both")
 ak_rate <- extract_intercepts_AK(ak_rate)
 ### Plot corrected effects ----
-avg_irf_rate_median_corrections <- avg_irf_rate_median %>% 
-  # add_lines(
-  #   data = waap_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
+avg_irf_rate_corrections <- avg_irf_rate %>% 
   add_lines(
     data = peese_rate,
     x = ~period,
     y = ~estimate,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
   add_lines(
     data = fatpet_rate,
     x = ~period,
     y = ~estimate,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>% 
   add_lines(
     data = fatpet_uw_rate,
     x = ~period,
     y = ~estimate,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>%
   add_lines(
     data = peese_uw_rate,
     x = ~period,
     y = ~estimate,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
-  ) %>%
-  # add_lines(
-  #   data = waap_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  add_trace(
-    data = model_waap_rate_68,
-    x = ~period,
-    y = ~estimate,
-    name = "WAAP (model selection, 68%)",
-    marker = list(color = "darkblue", size = 5)
+    name = "OLS with SE<sup>2</sup>",
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
   add_trace(
-    data = model_waap_uw_rate_68,
+    data = model_waap_rate,
     x = ~period,
     y = ~estimate,
-    name = "unweighted WAAP (model selection, 68%)",
+    name = "WAAP",
+    marker = list(color = "darkgreen", size = 5)
+  ) %>%
+  add_trace(
+    data = model_waap_uw_rate,
+    x = ~period,
+    y = ~estimate,
+    name = "UAAP",
     marker = list(color = "white", size = 5,
                   line = list(
-                    color = 'darkblue',
+                    color = 'darkgreen',
                     width = 1
                   ))
   ) %>% 
@@ -1565,168 +1045,73 @@ avg_irf_rate_median_corrections <- avg_irf_rate_median %>%
     x = ~period,
     y = ~estimate,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   )
-avg_irf_rate_median_corrections
+avg_irf_rate_corrections
 ### Save as PDF
-orca(avg_irf_rate_median_corrections,
-     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_rate_median_corrections.pdf",
+orca(avg_irf_rate_corrections,
+     file = "analysis/working_paper_1/figures/average_irfs/avg_irf_rate_corrections.pdf",
      scale = NULL,
      width = 1500 * 0.6,
      height = 1100 * 0.6
 )
 ### Plot corrected effects with bounds ----
 avg_irf_rate_corrections_with_bounds <- avg_irf_rate %>% 
-  # add_lines(
-  #   data = waap_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP",
-  #   line = list(color = "lightblue", width = 4, dash = 'dash')
-  # ) %>%
-  # add_lines(
-  #   data = peese_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "PEESE",
-  #   line = list(color = "darkblue", width = 1, dash = 'solid')
-  # ) %>%
   add_ribbons(
     data = peese_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = "darkblue", width = 1, dash = 'solid')
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
-  # add_lines(
-  #   data = fatpet_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "FAT-PET",
-  #   line = list(color = "darkblue", width = 2, dash = "dot")
-  # ) %>%
   add_ribbons(
     data = fatpet_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = "darkblue", width = 2, dash = "dot")
+    line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>%
-  # add_lines(
-  #   data = fatpet_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted FAT-PET",
-  #   line = list(color = "darkblue", width = 4, dash = "dot")
-  # ) %>%
   add_ribbons(
     data = fatpet_uw_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = "darkblue", width = 4, dash = "dot")
+    name = "OLS",
+    line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>% 
-  # add_lines(
-  #   data = peese_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted PEESE",
-  #   line = list(color = "darkblue", width = 4, dash = "solid")
-  # ) %>% 
   add_ribbons(
     data = peese_uw_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = "darkblue", width = 4, dash = "solid")
+    name = "OLS with SE<sup>2</sup>",
+    line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
-  # add_lines(
-  #   data = waap_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP",
-  #   line = list(color = "blue", width = 2, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (68%)",
-  #   line = list(color = "lightblue", width = 1, dash = "dash")
-  # ) %>%
-  # add_lines(
-  #   data = waap_uw_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (68%)",
-  #   line = list(color = "blue", width = 5, dash = "dash")
-  # ) %>% 
-  # add_trace(
-  #   data = model_waap_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection)",
-  #   marker = list(color = "lightblue", width = 2)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_uw_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection)",
-  #   marker = list(color = "blue", width = 0.5)
-  # ) %>%
-  # add_trace(
-  #   data = model_waap_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "WAAP (model selection, 68%)",
-  #   marker = list(color = "darkblue", size = 5)
-  # ) %>% 
   add_ribbons(
-    data = model_waap_rate_68,
+    data = model_waap_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "WAAP",
+    line = list(color = "darkgreen", width = 1)
   ) %>%
-  # add_trace(
-  #   data = model_waap_uw_rate_68,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "unweighted WAAP (model selection, 68%)",
-  #   marker = list(color = "white", size = 5,
-  #                 line = list(
-  #                   color = 'darkblue',
-  #                   width = 1
-  #                 ))
-  # ) %>% 
   add_ribbons(
-    data = model_waap_uw_rate_68,
+    data = model_waap_uw_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted WAAP (model selection, 68%)",
-    line = list(color = "darkblue", width = 1)
+    name = "UAAP",
+    line = list(color = "darkgreen", width = 1)
   ) %>% 
-  # add_lines(
-  #   data = ak_rate,
-  #   x = ~period,
-  #   y = ~estimate,
-  #   name = "AK",
-  #   line = list(color = "darkblue", width = 1, dash = 'longdashdot')
-  # ) %>% 
   add_ribbons(
     data = ak_rate,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
     name = "AK",
-    line = list(color = "darkblue", width = 1, dash = 'longdashdot')
+    line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   ) %>% 
   layout(
     yaxis = list(
@@ -1749,15 +1134,15 @@ rate_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "FAT-PET",
-    line = list(color = 'darkblue', width = 3)
+    line = list(width = 3)
   ) %>% 
   add_ribbons(
     data = fatpet_uw_rate_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted FAT-PET",
-    line = list(color = 'darkblue', width = 3, dash = "dot")
+    name = "OLS",
+    line = list(width = 3, dash = "dot")
   ) %>%
   add_ribbons(
     data = peese_rate_pbias,
@@ -1765,15 +1150,15 @@ rate_pbias_plot <- plot_ly() %>%
     ymin = ~lower,
     ymax = ~upper,
     name = "PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "solid")
+    line = list(width = 3, dash = "solid")
   ) %>%
   add_ribbons(
     data = peese_uw_rate_pbias,
     x = ~period,
     ymin = ~lower,
     ymax = ~upper,
-    name = "unweighted PEESE",
-    line = list(color = 'darkblue', width = 3, dash = "dash")
+    name = "OLS with SE<sup>2</sup>",
+    line = list(width = 3, dash = "dash")
   )
 rate_pbias_plot
 ### Save as PDF
@@ -1876,35 +1261,33 @@ orca(figure_average_irfs_output_pricelevel,
 )
 
 # Joint figure of average IRFs for output, price level and interest rate with median ----
-figure_average_irfs_output_pricelevel_rate_with_median <- subplot(avg_irf_output_median, 
-                                                                  avg_irf_pricelevel_median, 
-                                                                  avg_irf_rate_median, 
-                                                                  nrows = 2, 
-                                                                  margin = 0.05) %>% layout(
-  showlegend = FALSE,
-  title = 'Average and median IRFs') %>% layout(annotations = list(
-  list(x = 0.25, y = 1, text = "Output", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.75, y = 1, text = "Price level", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.25, y = 0.45, text = "Interest rate", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
-), margin = list(t = 60)) %>%
+figure_average_irfs_output_pricelevel_rate_with_median <- subplot(subplot(avg_irf_output_median,
+                                                                          avg_irf_pricelevel_median,
+                                                                          shareY = TRUE),
+                                                                  avg_irf_rate_median, widths = c(.66, .33)
+) %>%
+  layout(legend = list(orientation = "h",   # show entries horizontally
+                       xanchor = "center",  # use center of legend as anchor
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size))) %>%        # put legend in center of x-axis
+  layout(title = "",
+         xaxis2 = list(title = "Months")
+  ) %>%
   layout(
-    xaxis = list(title = "Months"),
-    xaxis2 = list(title = "Months"),
-    xaxis3 = list(title = "Months"),
-    yaxis = list(title = "Effect (%)",
-                 range = list(-2.8,0.8)
-    ),
-    yaxis2 = list(range = list(-2.8,0.8)
-    ),
-    yaxis3 = list(title = "Effect (%-points)", 
-                  range = list(-1,1.5)
-    ),
-    hovermode = "compare"
-  ) 
-
+    yaxis = list(#title = "Effect (%)",
+      range = list(y_lims[1], y_lims[2])),
+    yaxis2 = list(#title = "Effect (%-points)",
+      range = list(-1, 1.5))
+  ) %>%
+  layout(annotations = list(
+    list(x = 30, y = y_lims[2], text = "Output response (%)", showarrow = FALSE, xref = "x", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = y_lims[2], text = "Price level response (%)", showarrow = FALSE, xref = "x2", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y2",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+  ), margin = list(t = 60)
+  )
 # Display figure
 figure_average_irfs_output_pricelevel_rate_with_median
 
@@ -1912,38 +1295,37 @@ figure_average_irfs_output_pricelevel_rate_with_median
 orca(figure_average_irfs_output_pricelevel_rate_with_median,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_output_pricelevel_rate_with_median.pdf",
      scale = NULL,
-     width = 1500,
-     height = 1000
+     width = 1034,
+     height = 486 * 0.8
 )
 
 # Joint figure of average IRFs for output, price level and interest rate with different publication bias corrections ----
-figure_average_irfs_output_pricelevel_rate_corrections <- subplot(avg_irf_output_median_corrections, 
-                                                                  avg_irf_pricelevel_median_corrections, 
-                                                                  avg_irf_rate_median_corrections, 
-                                                                  nrows = 2, 
-                                                                  margin = 0.05) %>% layout(
-  showlegend = FALSE,
-  title = 'Average and median IRFs') %>% layout(annotations = list(
-  list(x = 0.25, y = 1, text = "Output", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.75, y = 1, text = "Price level", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.25, y = 0.45, text = "Interest rate", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
-), margin = list(t = 60)) %>%
+figure_average_irfs_output_pricelevel_rate_corrections <- subplot(subplot(avg_irf_output_corrections,
+                                                                  avg_irf_pricelevel_corrections,
+                                                                  shareY = TRUE),
+                                                          avg_irf_rate_corrections, widths = c(.66, .33)
+) %>%
+  layout(legend = list(orientation = "h",   # show entries horizontally
+                       xanchor = "center",  # use center of legend as anchor
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size))) %>%        # put legend in center of x-axis
+  layout(title = "",
+         xaxis2 = list(title = "Months")
+  ) %>%
   layout(
-    xaxis = list(title = "Months"),
-    xaxis2 = list(title = "Months"),
-    xaxis3 = list(title = "Months"),
-    yaxis = list(title = "Effect (%)",
-                 range = list(-2.8,0.8)
-    ),
-    yaxis2 = list(range = list(-2.8,0.8)
-    ),
-    yaxis3 = list(title = "Effect (%-points)", 
-                  range = list(-1,1.5)
-    ),
-    hovermode = "compare"
+    yaxis = list(#title = "Effect (%)",
+      range = list(y_lims[1], y_lims[2])),
+    yaxis2 = list(#title = "Effect (%-points)",
+      range = list(-1, 1.5))
+  ) %>%
+  layout(annotations = list(
+    list(x = 30, y = y_lims[2], text = "Output response (%)", showarrow = FALSE, xref = "x", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = y_lims[2], text = "Price level response (%)", showarrow = FALSE, xref = "x2", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y2",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+  ), margin = list(t = 60)
   )
 # Display figure
 figure_average_irfs_output_pricelevel_rate_corrections
@@ -1951,39 +1333,23 @@ figure_average_irfs_output_pricelevel_rate_corrections
 orca(figure_average_irfs_output_pricelevel_rate_corrections,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_output_pricelevel_rate_corrections.pdf",
      scale = NULL,
-     width = 1500,
-     height = 1000
+     width = 1034,
+     height = 486 * 0.8
 )
 
 # For sub-samples ----
-## Set PEESE color and legend ----
-peese_color <- "darkblue"
-peese_legend <- paste0("PEESE ", 100*conflevel, "% CI")
 ## For output ----
 out_var <- "output"
 ### For top journals vs other publications ----
-y_lims <- c(-4.7, 1.1)
+y_lims <- c(-3.5, 1.1)
 #### Top journals
-##### Corrected IRF PEESE
-peese_top_journals <- meta_analysis(d_no_qc %>% filter(top_5_or_tier == "top journal"),
-                                     outvar = out_var, 
-                                     se_option = "upper", 
-                                     periods = seq(0, 60, by = 3),
-                                     wins = wins_para,
-                                     prec_weighted = TRUE,
-                                     estimation = "PEESE", 
-                                     cluster_se = TRUE)
-peese_top_journals <- extract_intercepts(peese_top_journals)
 ##### Plot
 avg_irf_output_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -1992,31 +1358,18 @@ avg_irf_output_top_journals <- plot_average_irfs(
 write_csv(avg_irf_output_top_journals$data, here::here(save_path, "avg_irf_output_top_journals.csv"))
 # Change plot title
 avg_irf_output_top_journals <- avg_irf_output_top_journals$plot %>% plotly::layout(
-  title = "Average and median IRF for output in top journals"
+  title = ""
 )
 
 #### Other publications
-##### Corrected IRF PEESE
-peese_other_publications <- meta_analysis(d_no_qc %>% filter(top_5_or_tier == "other publication"),
-                                         outvar = out_var, 
-                                         se_option = "upper", 
-                                         periods = seq(0, 60, by = 3),
-                                         wins = wins_para,
-                                         prec_weighted = TRUE,
-                                         estimation = "PEESE", 
-                                         cluster_se = TRUE)
-peese_other_publications <- extract_intercepts(peese_other_publications)
 ##### Plot
 avg_irf_output_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2024,35 +1377,31 @@ avg_irf_output_other_publications <- plot_average_irfs(
 write_csv(avg_irf_output_other_publications$data, here::here(save_path, "avg_irf_output_other_publications.csv"))
 # Change plot title
 avg_irf_output_other_publications <- avg_irf_output_other_publications$plot %>% plotly::layout(
-  title = "Average and median IRF for output in other publications"
+  title = ""
 )
 
 #### Joint figure, top journals right plot, other left
 figure_average_irfs_output_top_journals_other_publications <- subplot(avg_irf_output_other_publications, 
                                                                       avg_irf_output_top_journals, 
-                                                                      nrows = 1, 
-                                                                      margin = 0.03) %>% layout(
-  showlegend=FALSE,
-  title = 'Average effects of conventional monetary policy shocks on output',
-  xaxis3 = list(title = "Month"), # x-axis for plot 3
-  xaxis4 = list(title = "Month")  # x-axis for plot 4
-) %>% layout(annotations = list(
-  list(x = 0.25, y = 1, text = "Other publications", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.75, y = 1, text = "Top journals", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
-), margin = list(t = 60)) %>%
+                                                                      nrows = 1,
+                                                                      shareY = TRUE) %>%
+  layout(legend = list(orientation = "h",   
+                       xanchor = "center",  
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size))) %>% 
+  layout(annotations = list(
+    list(x = 0.25, y = 1, text = "Other publications", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 0.75, y = 1, text = "Top journals", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+  ), margin = list(t = 60)) %>%
   layout(
     xaxis = list(title = "Months"),
     xaxis2 = list(title = "Months"),
     yaxis = list(title = "Effect (%)",
                  range = list(y_lims[1], y_lims[2])
     ),
-    yaxis2 = list(range = list(y_lims[1], y_lims[2])
-    ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Output - Top journals vs other publications"
   )
 # Display figure
 figure_average_irfs_output_top_journals_other_publications
@@ -2060,12 +1409,13 @@ figure_average_irfs_output_top_journals_other_publications
 orca(figure_average_irfs_output_top_journals_other_publications,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_output_top_journals_other_publications.pdf",
      scale = NULL,
-     width = 1500,
-     height = NULL
+     width = 1034 * 2/3,
+     height = 486 * 0.8
 )
-#### Sample size plot of top journals vs other
-top_other_prop <- d_no_qc %>% # Proportions by period
-  filter(period.month %in% seq(0,60,by=3), outcome == out_var) %>%
+#### Sample shares of top journals vs other
+# Get proportions by period
+top_other_prop <- d_no_qc %>%
+  filter(period.month %in% seq(0, 60, by=3)) %>%
   count(period.month, top_5_or_tier) %>%
   group_by(period.month) %>%
   mutate(proportion = n / sum(n))
@@ -2074,6 +1424,7 @@ print(top_other_prop, n = 42)
 top_prop <- top_other_prop %>%
   filter(top_5_or_tier == 1) %>%
   select(period.month, top_5_or_tier, proportion)
+print(top_prop, n = 21)
 mean(top_prop$proportion)  
 
 d_no_qc %>%
@@ -2088,26 +1439,13 @@ d_no_qc %>%
 
 ### For cbanker vs non-cbanker ----
 #### For central bank affiliated
-##### Corrected IRF PEESE
-peese_cbanker <- meta_analysis(d_no_qc %>% filter(cbanker == "central bank affiliated"),
-                               outvar = out_var,
-                               se_option = "upper", 
-                               periods = seq(0, 60, by = 3),
-                               wins = wins_para,
-                               prec_weighted = TRUE,
-                               estimation = "PEESE", 
-                               cluster_se = TRUE)
-peese_cbanker <- extract_intercepts(peese_cbanker)
 ##### Plot
 avg_irf_output_cbanker <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, cbanker == "central bank affiliated"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_cbanker,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -2116,31 +1454,19 @@ avg_irf_output_cbanker <- plot_average_irfs(
 write_csv(avg_irf_output_cbanker$data, here::here(save_path, "avg_irf_output_cbanker.csv"))
 # Change plot title
 avg_irf_output_cbanker <- avg_irf_output_cbanker$plot %>% plotly::layout(
-  title = "Average and median IRF for output in central bank affiliated publications"
+  title = ""
 )
 
 #### For non-central bank affiliated
 ##### Corrected IRF PEESE
-peese_non_cbanker <- meta_analysis(d_no_qc %>% filter(cbanker == "non-central bank affiliated"),
-                                   outvar = out_var,
-                                   se_option = "upper", 
-                                   periods = seq(0, 60, by = 3),
-                                   wins = wins_para,
-                                   prec_weighted = TRUE,
-                                   estimation = "PEESE", 
-                                   cluster_se = TRUE)
-peese_non_cbanker <- extract_intercepts(peese_non_cbanker)
 ##### Plot
 avg_irf_output_non_cbanker <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, cbanker == "non-central bank affiliated"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_non_cbanker,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2148,45 +1474,41 @@ avg_irf_output_non_cbanker <- plot_average_irfs(
 write_csv(avg_irf_output_non_cbanker$data, here::here(save_path, "avg_irf_output_non_cbanker.csv"))
 # Change plot title
 avg_irf_output_non_cbanker <- avg_irf_output_non_cbanker$plot %>% plotly::layout(
-  title = "Average and median IRF for output in non-central bank affiliated publications"
+  title = ""
 )
 
 # Joint figure, cbanker right plot, non-cbanker left
 y_lims <- c(-2.5, 1)
 figure_average_irfs_output_cbanker_non_cbanker <- subplot(avg_irf_output_non_cbanker, 
                                                            avg_irf_output_cbanker, 
-                                                           nrows = 1, 
-                                                           margin = 0.03) %>% layout(
-  showlegend=FALSE,
-  title = 'Average effects of conventional monetary policy shocks on output',
-  xaxis3 = list(title = "Month"), # x-axis for plot 3
-  xaxis4 = list(title = "Month")  # x-axis for plot 4
-) %>% layout(annotations = list(
-  list(x = 0.25, y = 1, text = "Non-central bank affiliated", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.75, y = 1, text = "Central bank affiliated", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
-), margin = list(t = 60)) %>%
+                                                           nrows = 1,
+                                                           shareY = TRUE) %>%
+  layout(legend = list(orientation = "h",
+                       xanchor = "center",
+                       x = 0.5, y = -0.3,
+                       font = list(size = titles_size))) %>%
+  layout(annotations = list(
+    list(x = 0.25, y = 1, text = "Non-central bank affiliated", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 0.75, y = 1, text = "Central bank affiliated", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+  ), margin = list(t = 60)) %>%
   layout(
     xaxis = list(title = "Months"),
     xaxis2 = list(title = "Months"),
     yaxis = list(title = "Effect (%)",
                  range = list(y_lims[1], y_lims[2])
     ),
-    yaxis2 = list(range = list(y_lims[1], y_lims[2])
-    ),
     hovermode = "compare"
-) %>% layout(
-  title = "Average and median IRFs - Output - CB vs no CB"
-)
+  )
 # Display figure
 figure_average_irfs_output_cbanker_non_cbanker
 # Save as pdf
 orca(figure_average_irfs_output_cbanker_non_cbanker,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_output_cbanker_non_cbanker.pdf",
      scale = NULL,
-     width = 1500,
-     height = NULL
+     width = 1034 * 2/3,
+     height = 486 * 0.8
 )
 
 # Sample size plot for cbanker vs non-cbanker
@@ -2201,7 +1523,7 @@ d_no_qc %>%
   theme_minimal()
 # Get average proportion for central bank affiliated across periods
 cbanker_prop <- d_no_qc %>% # Proportions by period
-  filter(period.month %in% seq(0,60,by=3), outcome == out_var) %>%
+  filter(period.month %in% seq(0,60,by=3)) %>%
   count(period.month, cbanker) %>%
   group_by(period.month) %>%
   mutate(proportion = n / sum(n))
@@ -2209,32 +1531,20 @@ print(cbanker_prop, n = 42)
 cbanker_prop <- cbanker_prop %>% 
        filter(cbanker == 1) %>%
        select(period.month, proportion)
+print(cbanker_prop, n = 42)
 mean(cbanker_prop$proportion)
 
 ### For identifaction methods ("chol", "signr", "hf", "idother", "nr") ----
 ### For all publications
 #### For Cholesky
-##### Corrected IRF PEESE
-peese_chol <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "chol"),
-                            outvar = out_var,
-                            se_option = "upper", 
-                            periods = seq(0, 60, by = 3),
-                            wins = wins_para,
-                            prec_weighted = TRUE,
-                            estimation = "PEESE", 
-                            cluster_se = TRUE)
-peese_chol <- extract_intercepts(peese_chol)
 ##### Plot
 avg_irf_output_chol <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_chol,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2246,27 +1556,14 @@ avg_irf_output_chol <- avg_irf_output_chol$plot %>% plotly::layout(
 )
 
 #### For Sign restrictions
-##### Corrected IRF PEESE
-peese_signr <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "signr"),
-                             outvar = out_var,
-                             se_option = "upper", 
-                             periods = seq(0, 60, by = 3),
-                             wins = wins_para,
-                             prec_weighted = TRUE,
-                             estimation = "PEESE", 
-                             cluster_se = TRUE)
-peese_signr <- extract_intercepts(peese_signr)
 ##### Plot
 avg_irf_output_signr <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_signr,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2278,27 +1575,14 @@ avg_irf_output_signr <- avg_irf_output_signr$plot %>% plotly::layout(
 )
 
 #### For High frequency
-##### Corrected IRF PEESE
-peese_hf <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "hf"),
-                          outvar = out_var,
-                          se_option = "upper", 
-                          periods = seq(0, 60, by = 3),
-                          wins = wins_para,
-                          prec_weighted = TRUE,
-                          estimation = "PEESE", 
-                          cluster_se = TRUE)
-peese_hf <- extract_intercepts(peese_hf)
 ##### Plot
 avg_irf_output_hf <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_hf,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2310,26 +1594,13 @@ avg_irf_output_hf <- avg_irf_output_hf$plot %>% plotly::layout(
 )
 
 #### For Other identification methods
-##### Corrected IRF PEESE
-peese_idother <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "idother"),
-                               outvar = out_var,
-                               se_option = "upper", 
-                               periods = seq(0, 60, by = 3),
-                               wins = wins_para,
-                               prec_weighted = TRUE,
-                               estimation = "PEESE", 
-                               cluster_se = TRUE)
-peese_idother <- extract_intercepts(peese_idother)
 ##### Plot
 avg_irf_output_idother <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_idother,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -2342,27 +1613,14 @@ avg_irf_output_idother <- avg_irf_output_idother$plot %>% plotly::layout(
 )
 
 #### For narrative
-##### Corrected IRF PEESE
-peese_nr <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "nr"),
-                          outvar = out_var,
-                          se_option = "upper", 
-                          periods = seq(0, 60, by = 3),
-                          wins = wins_para,
-                          prec_weighted = TRUE,
-                          estimation = "PEESE", 
-                          cluster_se = TRUE)
-peese_nr <- extract_intercepts(peese_nr)
 ##### Plot
 avg_irf_output_nr <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_nr,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2375,52 +1633,38 @@ avg_irf_output_nr <- avg_irf_output_nr$plot %>% plotly::layout(
 
 # Joint figure, one row
 y_lims <- c(-5, 2)
+titles_size_ident <- 20
 figure_average_irfs_output_identification_methods <- subplot(avg_irf_output_chol, 
                                                              avg_irf_output_signr, 
                                                              avg_irf_output_hf, 
-                                                             avg_irf_output_idother, 
                                                              avg_irf_output_nr, 
-                                                             nrows = 1, 
-                                                             margin = 0.03) %>% layout(
-  showlegend=FALSE,
-  title = 'Average effects of conventional monetary policy shocks on output',
-  xaxis3 = list(title = "Month"), # x-axis for plot 3
-  xaxis4 = list(title = "Month"), # x-axis for plot 4
-  xaxis5 = list(title = "Month"), # x-axis for plot 5
-  xaxis6 = list(title = "Month")  # x-axis for plot 6
-) %>% layout(annotations = list(
-  list(x = 0.1, y = 1, text = "Cholesky", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.3, y = 1, text = "Sign restrictions", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.5, y = 1, text = "High frequency", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.7, y = 1, text = "Other", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.9, y = 1, text = "Narrative", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
+                                                             avg_irf_output_idother, 
+                                                             nrows = 1,
+                                                             shareY = TRUE) %>% layout(
+  title = ''
+) %>% layout(legend = list(orientation = "h",
+                       xanchor = "center",
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size_ident))) %>% 
+  layout(annotations = list(
+    list(x = 0.1, y = 1, text = "Cholesky & SVAR", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 0.3, y = 1, text = "Sign restrictions", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 0.5, y = 1, text = "High frequency", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 0.7, y = 1, text = "Narrative", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 0.9, y = 1, text = "Other", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident))
 ), margin = list(t = 60)) %>%
   layout(
-    xaxis = list(title = "Months"),
-    xaxis2 = list(title = "Months"),
-    xaxis3 = list(title = "Months"),
-    xaxis4 = list(title = "Months"),
-    xaxis5 = list(title = "Months")
+    xaxis3 = list(title = "Month")
   ) %>% layout(
     yaxis = list(title = "Effect (%)",
                  range = list(y_lims[1], y_lims[2])
     ),
-    yaxis2 = list(range = list(y_lims[1], y_lims[2])
-    ),
-    yaxis3 = list(range = list(y_lims[1], y_lims[2])
-    ),
-    yaxis4 = list(range = list(y_lims[1], y_lims[2])
-    ),
-    yaxis5 = list(range = list(y_lims[1], y_lims[2])
-    ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Output - By identification method"
   )
 # Display figure
 figure_average_irfs_output_identification_methods
@@ -2428,8 +1672,8 @@ figure_average_irfs_output_identification_methods
 orca(figure_average_irfs_output_identification_methods,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_output_identification_methods.pdf",
      scale = NULL,
-     width = 1500,
-     height = NULL
+     width = 1034 * 5/3,
+     height = 486 * 1.1
 )
 
 # Sample size plot for identification methods
@@ -2445,27 +1689,14 @@ d_no_qc %>%
 
 ### By identifcation method for top journals ----
 #### For Cholesky
-##### Corrected IRF PEESE
-peese_chol_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "chol", top_5_or_tier == "top journal"),
-                                        outvar = out_var,
-                                        se_option = "upper", 
-                                        periods = seq(0, 60, by = 3),
-                                        wins = wins_para,
-                                        prec_weighted = TRUE,
-                                        estimation = "PEESE", 
-                                        cluster_se = TRUE)
-peese_chol_top_journals <- extract_intercepts(peese_chol_top_journals)
 ##### Plot
 avg_irf_output_chol_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_chol_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2477,27 +1708,14 @@ avg_irf_output_chol_top_journals <- avg_irf_output_chol_top_journals$plot %>% pl
 )
 
 #### For Sign restrictions
-##### Corrected IRF PEESE
-peese_signr_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "signr", top_5_or_tier == "top journal"),
-                                         outvar = out_var,
-                                         se_option = "upper", 
-                                         periods = seq(0, 60, by = 3),
-                                         wins = wins_para,
-                                         prec_weighted = TRUE,
-                                         estimation = "PEESE", 
-                                         cluster_se = TRUE)
-peese_signr_top_journals <- extract_intercepts(peese_signr_top_journals)
 ##### Plot
 avg_irf_output_signr_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_signr_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2509,27 +1727,14 @@ avg_irf_output_signr_top_journals <- avg_irf_output_signr_top_journals$plot %>% 
 )
 
 #### For High frequency
-##### Corrected IRF PEESE
-peese_hf_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "hf", top_5_or_tier == "top journal"),
-                                      outvar = out_var,
-                                      se_option = "upper", 
-                                      periods = seq(0, 57, by = 3), # Estimation fails for period 60, probably due to small sample issues
-                                      wins = wins_para,
-                                      prec_weighted = TRUE,
-                                      estimation = "PEESE", 
-                                      cluster_se = TRUE)
-peese_hf_top_journals <- extract_intercepts(peese_hf_top_journals)
 ##### Plot
 avg_irf_output_hf_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_hf_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2541,26 +1746,13 @@ avg_irf_output_hf_top_journals <- avg_irf_output_hf_top_journals$plot %>% plotly
 )
 
 #### For Other identification methods
-##### Corrected IRF PEESE
-peese_idother_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "idother", top_5_or_tier == "top journal"),
-                                           outvar = out_var,
-                                           se_option = "upper", 
-                                           periods = seq(0, 60, by = 3),
-                                           wins = wins_para,
-                                           prec_weighted = TRUE,
-                                           estimation = "PEESE", 
-                                           cluster_se = TRUE)
-peese_idother_top_journals <- extract_intercepts(peese_idother_top_journals)
 ##### Plot
 avg_irf_output_idother_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_idother_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -2573,27 +1765,14 @@ avg_irf_output_idother_top_journals <- avg_irf_output_idother_top_journals$plot 
 )
 
 #### For narrative
-##### Corrected IRF PEESE
-peese_nr_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "nr", top_5_or_tier == "top journal"),
-                                      outvar = out_var,
-                                      se_option = "upper", 
-                                      periods = seq(0, 60, by = 3),
-                                      wins = wins_para,
-                                      prec_weighted = TRUE,
-                                      estimation = "PEESE", 
-                                      cluster_se = TRUE)
-peese_nr_top_journals <- extract_intercepts(peese_nr_top_journals)
 ##### Plot
 avg_irf_output_nr_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_nr_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2644,8 +1823,6 @@ figure_average_irfs_output_identification_methods_top_journals <- subplot(avg_ir
     yaxis5 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Output - By identification method - Top journals"
   )
 # Display figure
 figure_average_irfs_output_identification_methods_top_journals
@@ -2658,26 +1835,13 @@ orca(figure_average_irfs_output_identification_methods_top_journals,
 )
 ### By identifcation method for other publications ----
 #### For Cholesky
-##### Corrected IRF PEESE
-peese_chol_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "chol", top_5_or_tier == "other publication"),
-                                             outvar = out_var,
-                                             se_option = "upper", 
-                                             periods = seq(0, 60, by = 3),
-                                             wins = wins_para,
-                                             prec_weighted = TRUE,
-                                             estimation = "PEESE", 
-                                             cluster_se = TRUE)
-peese_chol_other_publications <- extract_intercepts(peese_chol_other_publications)
 avg_irf_output_chol_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_chol_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2689,26 +1853,13 @@ avg_irf_output_chol_other_publications <- avg_irf_output_chol_other_publications
 )
 
 #### For Sign restrictions
-##### Corrected IRF PEESE
-peese_signr_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "signr", top_5_or_tier == "other publication"),
-                                              outvar = out_var,
-                                              se_option = "upper", 
-                                              periods = seq(0, 60, by = 3),
-                                              wins = wins_para,
-                                              prec_weighted = TRUE,
-                                              estimation = "PEESE", 
-                                              cluster_se = TRUE)
-peese_signr_other_publications <- extract_intercepts(peese_signr_other_publications)
 avg_irf_output_signr_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_signr_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2720,27 +1871,14 @@ avg_irf_output_signr_other_publications <- avg_irf_output_signr_other_publicatio
 )
 
 #### For High frequency
-##### Corrected IRF PEESE
-peese_hf_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "hf", top_5_or_tier == "other publication"),
-                                           outvar = out_var,
-                                           se_option = "upper", 
-                                           periods = seq(0, 60, by = 3),
-                                           wins = wins_para,
-                                           prec_weighted = TRUE,
-                                           estimation = "PEESE", 
-                                           cluster_se = TRUE)
-peese_hf_other_publications <- extract_intercepts(peese_hf_other_publications)
 ##### Plot
 avg_irf_output_hf_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_hf_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2752,26 +1890,13 @@ avg_irf_output_hf_other_publications <- avg_irf_output_hf_other_publications$plo
 )
 
 #### For Other identification methods
-##### Corrected IRF PEESE
-peese_idother_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "idother", top_5_or_tier == "other publication"),
-                                                outvar = out_var,
-                                                se_option = "upper", 
-                                                periods = seq(0, 60, by = 3),
-                                                wins = wins_para,
-                                                prec_weighted = TRUE,
-                                                estimation = "PEESE", 
-                                                cluster_se = TRUE)
-peese_idother_other_publications <- extract_intercepts(peese_idother_other_publications)
 ##### Plot
 avg_irf_output_idother_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_idother_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -2784,27 +1909,14 @@ avg_irf_output_idother_other_publications <- avg_irf_output_idother_other_public
 )
 
 #### For narrative
-##### Corrected IRF PEESE
-peese_nr_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "nr", top_5_or_tier == "other publication"),
-                                           outvar = out_var,
-                                           se_option = "upper", 
-                                           periods = seq(0, 60, by = 3),
-                                           wins = wins_para,
-                                           prec_weighted = TRUE,
-                                           estimation = "PEESE", 
-                                           cluster_se = TRUE)
-peese_nr_other_publications <- extract_intercepts(peese_nr_other_publications)
 ##### Plot
 avg_irf_output_nr_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_nr_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2855,8 +1967,6 @@ figure_average_irfs_output_identification_methods_other_publications <- subplot(
     yaxis5 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Output - By identification method - Other publications"
   )
 # Display figure
 figure_average_irfs_output_identification_methods_other_publications
@@ -2890,8 +2000,6 @@ figure_average_irfs_output_identification_methods_top_journals_other_publication
     yaxis6 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Output - By identification method - Other publications (top row) vs top journals (bottom row)"
   )
 # Display figure
 figure_average_irfs_output_identification_methods_top_journals_other_publications
@@ -2905,27 +2013,14 @@ orca(figure_average_irfs_output_identification_methods_top_journals_other_public
 
 ### By country/region ----
 #### US ----
-##### Corrected IRF PEESE
-peese_us <- meta_analysis(d_no_qc %>% filter(us == 1),
-                          outvar = out_var,
-                          se_option = "upper", 
-                          periods = seq(0, 60, by = 3),
-                          wins = wins_para,
-                          prec_weighted = TRUE,
-                          estimation = "PEESE", 
-                          cluster_se = TRUE)
-peese_us <- extract_intercepts(peese_us)
 ##### Plot
 avg_irf_output_us <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, us == 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_us,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2938,26 +2033,14 @@ avg_irf_output_us <- avg_irf_output_us$plot %>% plotly::layout(
 
 #### EA12 ----
 ##### Corrected IRF PEESE
-peese_ea12 <- meta_analysis(d_no_qc %>% filter(ea12 == 1),
-                            outvar = out_var,
-                            se_option = "upper", 
-                            periods = seq(0, 60, by = 3),
-                            wins = wins_para,
-                            prec_weighted = TRUE,
-                            estimation = "PEESE", 
-                            cluster_se = TRUE)
-peese_ea12 <- extract_intercepts(peese_ea12)
 ##### Plot
 avg_irf_output_ea12 <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, ea12 == 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_ea12,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -2969,27 +2052,14 @@ avg_irf_output_ea12 <- avg_irf_output_ea12$plot %>% plotly::layout(
 )
 
 #### Upper middle ----
-##### Corrected IRF PEESE
-peese_upper_middle <- meta_analysis(d_no_qc %>% filter(upper_middle_income == 1),
-                                   outvar = out_var,
-                                   se_option = "upper", 
-                                   periods = seq(0, 60, by = 3),
-                                   wins = wins_para,
-                                   prec_weighted = TRUE,
-                                   estimation = "PEESE", 
-                                   cluster_se = TRUE)
-peese_upper_middle <- extract_intercepts(peese_upper_middle)
 ##### Plot
 avg_irf_output_upper_middle <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, upper_middle_income == 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_upper_middle,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3001,26 +2071,13 @@ avg_irf_output_upper_middle <- avg_irf_output_upper_middle$plot %>% plotly::layo
 )
 
 #### Other high_income  ----
-##### Corrected IRF PEESE
-peese_other_high_income <- meta_analysis(d_no_qc %>% filter(high_income == 1, ea12 != 1, us != 1),
-                                      outvar = out_var,
-                                      se_option = "upper", 
-                                      periods = seq(0, 60, by = 3),
-                                      wins = wins_para,
-                                      prec_weighted = TRUE,
-                                      estimation = "PEESE", 
-                                      cluster_se = TRUE)
-peese_other_high_income <- extract_intercepts(peese_other_high_income)
 ##### Plot
 avg_irf_output_other_high_income <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, high_income == 1, ea12 != 1, us != 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_other_high_income,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -3038,23 +2095,23 @@ figure_average_irfs_output_country_region <- subplot(avg_irf_output_us,
                                                      avg_irf_output_ea12, 
                                                      avg_irf_output_upper_middle, 
                                                      avg_irf_output_other_high_income, 
-                                                     nrows = 1, 
-                                                     margin = 0.03) %>% layout(
-  showlegend=FALSE,
-  title = 'Average effects of conventional monetary policy shocks on output',
-  xaxis3 = list(title = "Month"), # x-axis for plot 3
-  xaxis4 = list(title = "Month"), # x-axis for plot 4
-  xaxis5 = list(title = "Month"), # x-axis for plot 5
-  xaxis6 = list(title = "Month")  # x-axis for plot 6
-) %>% layout(annotations = list(
-  list(x = 0.1, y = 1, text = "US", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.4, y = 1, text = "Euro area", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.65, y = 1, text = "Emerging Economies", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.9, y = 1, text = "Other Advanced", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
+                                                     nrows = 1,
+                                                     shareY = TRUE) %>% layout(
+  title = ''
+) %>% 
+  layout(legend = list(orientation = "h",
+                       xanchor = "center",
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size_ident))) %>% 
+  layout(annotations = list(
+          list(x = 30, y = 1, text = "US", showarrow = FALSE, xref = "x", yref = "paper",
+               xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+          list(x = 30, y = 1, text = "Euro area", showarrow = FALSE, xref = "x2", yref = "paper",
+               xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+          list(x = 30, y = 1, text = "Emerging economies", showarrow = FALSE, xref = "x3", yref = "paper",
+               xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+          list(x = 30, y = 1, text = "Other advanced", showarrow = FALSE, xref = "x4", yref = "paper",
+               xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident))
 ), margin = list(t = 60)) %>%
   layout(
     xaxis = list(title = "Months"),
@@ -3071,8 +2128,6 @@ figure_average_irfs_output_country_region <- subplot(avg_irf_output_us,
     yaxis4 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare" 
-) %>% layout(
-  title = "Average and median IRFs - Output - By country/group"
 )
 # Display figure
 figure_average_irfs_output_country_region
@@ -3080,8 +2135,8 @@ figure_average_irfs_output_country_region
 orca(figure_average_irfs_output_country_region,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_output_country_region.pdf",
      scale = NULL,
-     width = 1500,
-     height = NULL
+     width = 1034 * 4/3,
+     height = 486 * 0.8
 )
 #### Sample size plot for country/region
 print(d_no_qc %>% # Proportions by period
@@ -3124,26 +2179,13 @@ ggplot(d_plot, aes(x = period.month, y = n,
 out_var <- "inflation"
 ### For top journals vs other publications ----
 #### Top journals
-##### Corrected IRF PEESE
-peese_top_journals <- meta_analysis(d_no_qc %>% filter(top_5_or_tier == "top journal"),
-                                   outvar = out_var,
-                                   se_option = "upper", 
-                                   periods = seq(0, 60, by = 3),
-                                   wins = wins_para,
-                                   prec_weighted = TRUE,
-                                   estimation = "PEESE", 
-                                   cluster_se = TRUE)
-peese_top_journals <- extract_intercepts(peese_top_journals)
 ##### Plot
 avg_irf_pricelevel_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -3156,27 +2198,14 @@ avg_irf_pricelevel_top_journals <- avg_irf_pricelevel_top_journals$plot %>% plot
 )
 
 #### Other publications
-##### Corrected IRF PEESE
-peese_other_publications <- meta_analysis(d_no_qc %>% filter(top_5_or_tier == "other publication"),
-                                        outvar = out_var,
-                                        se_option = "upper", 
-                                        periods = seq(0, 60, by = 3),
-                                        wins = wins_para,
-                                        prec_weighted = TRUE,
-                                        estimation = "PEESE", 
-                                        cluster_se = TRUE)
-peese_other_publications <- extract_intercepts(peese_other_publications)
 ##### Plot
 avg_irf_pricelevel_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3188,41 +2217,38 @@ avg_irf_pricelevel_other_publications <- avg_irf_pricelevel_other_publications$p
 )
 
 #### Joint figure, top journals right plot, other left
-y_lims <- c(-4.2, 0.9)
+y_lims <- c(-3, 0.9)
 figure_average_irfs_pricelevel_top_journals_other_publications <- subplot(avg_irf_pricelevel_other_publications, 
                                                                          avg_irf_pricelevel_top_journals, 
-                                                                         nrows = 1, 
-                                                                         margin = 0.03) %>% layout(
-  showlegend=FALSE,
-  title = 'Average effects of conventional monetary policy shocks on inflation',
-  xaxis3 = list(title = "Month"), # x-axis for plot 3
-  xaxis4 = list(title = "Month")  # x-axis for plot 4
-) %>% layout(annotations = list(
-  list(x = 0.25, y = 1, text = "Other publications", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.75, y = 1, text = "Top journals", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
-), margin = list(t = 60)) %>%
+                                                                         nrows = 1,
+                                                                         shareY = TRUE) %>% 
+  layout(title = "") %>%
+  layout(legend = list(orientation = "h",   
+                       xanchor = "center",  
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size))) %>% 
+  layout(annotations = list(
+    list(x = 0.25, y = 1, text = "Other publications", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 0.75, y = 1, text = "Top journals", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+  ), margin = list(t = 60)) %>%
   layout(
     xaxis = list(title = "Months"),
     xaxis2 = list(title = "Months"),
     yaxis = list(title = "Effect (%)",
                  range = list(y_lims[1], y_lims[2])
     ),
-    yaxis2 = list(range = list(y_lims[1], y_lims[2])
-    ),
     hovermode = "compare"
-) %>% layout(
-  title = "Average and median IRFs - Price level - Top journals vs other publications"
-)
+  )
 # Display figure
 figure_average_irfs_pricelevel_top_journals_other_publications
 # Save as pdf
 orca(figure_average_irfs_pricelevel_top_journals_other_publications,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_pricelevel_top_journals_other_publications.pdf",
      scale = NULL,
-     width = 1500,
-     height = NULL
+     width = 1034 * 2/3,
+     height = 486 * 0.8
 )
 #### Sample size plot of top journals vs other
 print(d_no_qc %>% # Proportions by period
@@ -3242,26 +2268,13 @@ d_no_qc %>%
 
 ### For cbanker vs non-cbanker ----
 #### Central bank affiliated
-##### Corrected IRF PEESE
-peese_cbanker <- meta_analysis(d_no_qc %>% filter(cbanker == "central bank affiliated"),
-                             outvar = out_var,
-                             se_option = "upper", 
-                             periods = seq(0, 60, by = 3),
-                             wins = wins_para,
-                             prec_weighted = TRUE,
-                             estimation = "PEESE", 
-                             cluster_se = TRUE)
-peese_cbanker <- extract_intercepts(peese_cbanker)
 ##### Plot
 avg_irf_pricelevel_cbanker <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, cbanker == "central bank affiliated"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_cbanker,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -3274,27 +2287,14 @@ avg_irf_pricelevel_cbanker <- avg_irf_pricelevel_cbanker$plot %>% plotly::layout
 )
 
 ### For non-cbanker
-##### Corrected IRF PEESE
-peese_non_cbanker <- meta_analysis(d_no_qc %>% filter(cbanker == "non-central bank affiliated"),
-                                outvar = out_var,
-                                se_option = "upper", 
-                                periods = seq(0, 60, by = 3),
-                                wins = wins_para,
-                                prec_weighted = TRUE,
-                                estimation = "PEESE", 
-                                cluster_se = TRUE)
-peese_non_cbanker <- extract_intercepts(peese_non_cbanker)
 ##### Plot
 avg_irf_pricelevel_non_cbanker <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, cbanker == "non-central bank affiliated"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_non_cbanker,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3309,64 +2309,48 @@ avg_irf_pricelevel_non_cbanker <- avg_irf_pricelevel_non_cbanker$plot %>% plotly
 y_lims <- c(-2, 0.5)
 figure_average_irfs_pricelevel_cbanker_non_cbanker <- subplot(avg_irf_pricelevel_non_cbanker, 
                                                               avg_irf_pricelevel_cbanker, 
-                                                              nrows = 1, 
-                                                              margin = 0.03) %>% layout(
-  showlegend=FALSE,
-  title = 'Average effects of conventional monetary policy shocks on inflation',
-  xaxis3 = list(title = "Month"), # x-axis for plot 3
-  xaxis4 = list(title = "Month")  # x-axis for plot 4
-) %>% layout(annotations = list(
-  list(x = 0.25, y = 1, text = "Non-central bank affiliated", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.75, y = 1, text = "Central bank affiliated", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
-), margin = list(t = 60)) %>%
+                                                              nrows = 1,
+                                                              shareY = TRUE) %>%
+  layout(title = "") %>%
+  layout(legend = list(orientation = "h",   
+                       xanchor = "center",  
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size))) %>%
+  layout(annotations = list(
+    list(x = 0.25, y = 1, text = "Non-central bank affiliated", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 0.75, y = 1, text = "Central bank affiliated", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+  ), margin = list(t = 60)) %>%
   layout(
     xaxis = list(title = "Months"),
     xaxis2 = list(title = "Months"),
     yaxis = list(title = "Effect (%)",
                  range = list(y_lims[1], y_lims[2])
     ),
-    yaxis2 = list(range = list(y_lims[1], y_lims[2])
-    ),
     hovermode = "compare"
-) %>% layout(
-  title = "Average and median IRFs - Price level - CB vs no CB"
-)
+  )
 # Display figure
 figure_average_irfs_pricelevel_cbanker_non_cbanker
 # Save as pdf
 orca(figure_average_irfs_pricelevel_cbanker_non_cbanker,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_pricelevel_cbanker_non_cbanker.pdf",
      scale = NULL,
-     width = 1500,
-     height = NULL
+     width = 1034 * 2/3,
+     height = 486 * 0.8
 )
 
 ### By identifcation method ("chol", "signr", "hf", "idother", "nr") ----
 ### For all publications
 #### For Cholesky
-##### Corrected IRF PEESE
-peese_chol <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "chol"),
-                          outvar = out_var,
-                          se_option = "upper", 
-                          periods = seq(0, 60, by = 3),
-                          wins = wins_para,
-                          prec_weighted = TRUE,
-                          estimation = "PEESE", 
-                          cluster_se = TRUE)
-peese_chol <- extract_intercepts(peese_chol)
 ##### Plot
 avg_irf_pricelevel_chol <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_chol,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3374,31 +2358,18 @@ avg_irf_pricelevel_chol <- plot_average_irfs(
 write_csv(avg_irf_pricelevel_chol$data, here::here(save_path, "avg_irf_pricelevel_chol.csv"))
 # Change plot title
 avg_irf_pricelevel_chol <- avg_irf_pricelevel_chol$plot %>% plotly::layout(
-  title = "Cholesky"
+  title = "Cholesky & SVAR"
 )
 
 #### For Sign restrictions
-##### Corrected IRF PEESE
-peese_signr <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "signr"),
-                           outvar = out_var,
-                           se_option = "upper", 
-                           periods = seq(0, 60, by = 3),
-                           wins = wins_para,
-                           prec_weighted = TRUE,
-                           estimation = "PEESE", 
-                           cluster_se = TRUE)
-peese_signr <- extract_intercepts(peese_signr)
 ##### Plot
 avg_irf_pricelevel_signr <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_signr,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3410,27 +2381,14 @@ avg_irf_pricelevel_signr <- avg_irf_pricelevel_signr$plot %>% plotly::layout(
 )
 
 #### For High frequency
-##### Corrected IRF PEESE
-peese_hf <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "hf"),
-                        outvar = out_var,
-                        se_option = "upper", 
-                        periods = seq(0, 60, by = 3),
-                        wins = wins_para,
-                        prec_weighted = TRUE,
-                        estimation = "PEESE", 
-                        cluster_se = TRUE)
-peese_hf <- extract_intercepts(peese_hf)
 ##### Plot
 avg_irf_pricelevel_hf <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_hf,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3442,26 +2400,13 @@ avg_irf_pricelevel_hf <- avg_irf_pricelevel_hf$plot %>% plotly::layout(
 )
 
 #### For Other identification methods
-##### Corrected IRF PEESE
-peese_idother <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "idother"),
-                             outvar = out_var,
-                             se_option = "upper", 
-                             periods = seq(0, 60, by = 3),
-                             wins = wins_para,
-                             prec_weighted = TRUE,
-                             estimation = "PEESE", 
-                             cluster_se = TRUE)
-peese_idother <- extract_intercepts(peese_idother)
 ##### Plot
 avg_irf_pricelevel_idother <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_idother,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -3474,27 +2419,14 @@ avg_irf_pricelevel_idother <- avg_irf_pricelevel_idother$plot %>% plotly::layout
 )
 
 #### For narrative
-##### Corrected IRF PEESE
-peese_nr <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "nr"),
-                      outvar = out_var,
-                      se_option = "upper", 
-                      periods = seq(0, 60, by = 3),
-                      wins = wins_para,
-                      prec_weighted = TRUE,
-                      estimation = "PEESE", 
-                      cluster_se = TRUE)
-peese_nr <- extract_intercepts(peese_nr)
 ##### Plot
 avg_irf_pricelevel_nr <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_nr,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3510,49 +2442,41 @@ y_lims <- c(-2.5, 1)
 figure_average_irfs_pricelevel_identification_methods <- subplot(avg_irf_pricelevel_chol, 
                                                                  avg_irf_pricelevel_signr, 
                                                                  avg_irf_pricelevel_hf, 
-                                                                 avg_irf_pricelevel_idother, 
                                                                  avg_irf_pricelevel_nr, 
+                                                                 avg_irf_pricelevel_idother, 
                                                                  nrows = 1, 
-                                                                 margin = 0.03) %>% layout(
-  showlegend=FALSE,
-  title = 'Average effects of conventional monetary policy shocks on inflation',
-  xaxis3 = list(title = "Month"), # x-axis for plot 3
-  xaxis4 = list(title = "Month"), # x-axis for plot 4
-  xaxis5 = list(title = "Month"), # x-axis for plot 5
-  xaxis6 = list(title = "Month")  # x-axis for plot 6
-) %>% layout(annotations = list(
-  list(x = 0.1, y = 1, text = "Cholesky", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.3, y = 1, text = "Sign restrictions", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.5, y = 1, text = "High frequency", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.7, y = 1, text = "Other", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom"),
-  list(x = 0.9, y = 1, text = "Narrative", showarrow = FALSE, xref = "paper", yref = "paper",
-       xanchor = "center", yanchor = "bottom")
-), margin = list(t = 60)) %>%
+                                                                 shareY = TRUE) %>%
+  layout(title = "") %>%
+  layout(legend = list(orientation = "h",   
+                       xanchor = "center",  
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size_ident))) %>%
+  layout(annotations = list(
+    list(x = 0.1, y = 1, text = "Cholesky & SVAR", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 0.3, y = 1, text = "Sign restrictions", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 0.5, y = 1, text = "High frequency", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 0.7, y = 1, text = "Narrative", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 0.9, y = 1, text = "Other", showarrow = FALSE, xref = "paper", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident))
+  ), margin = list(t = 60)) %>%
   layout(
-    xaxis = list(title = "Months"),
-    xaxis2 = list(title = "Months"),
     xaxis3 = list(title = "Months"),
-    xaxis4 = list(title = "Months"),
-    xaxis5 = list(title = "Months")
-  ) %>% layout(
     yaxis = list(title = "Effect (%)",
                  range = list(y_lims[1], y_lims[2])
     ),
     yaxis2 = list(range = list(y_lims[1], y_lims[2])
     ),
-    yaxis3 = list(range = list(y_lims[1], y_lims[2])
-    ),
+    yaxis3 = list(range = list(y_lims[1], y_lims[2]) 
+    ), 
     yaxis4 = list(range = list(y_lims[1], y_lims[2])
     ),
     yaxis5 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Price level - By identification method"
   )
 # Display figure
 figure_average_irfs_pricelevel_identification_methods
@@ -3560,33 +2484,20 @@ figure_average_irfs_pricelevel_identification_methods
 orca(figure_average_irfs_pricelevel_identification_methods,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_pricelevel_identification_methods.pdf",
      scale = NULL,
-     width = 1500,
-     height = NULL
+     width = 1034 * 5/3,
+     height = 486 * 1.1
 )
 
 ### By identifcation method for top journals ----
 #### For Cholesky
-##### Corrected IRF PEESE
-peese_chol_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "chol", top_5_or_tier == "top journal"),
-                                      outvar = out_var,
-                                      se_option = "upper", 
-                                      periods = seq(0, 60, by = 3),
-                                      wins = wins_para,
-                                      prec_weighted = TRUE,
-                                      estimation = "PEESE", 
-                                      cluster_se = TRUE)
-peese_chol_top_journals <- extract_intercepts(peese_chol_top_journals)
 ##### Plot
 avg_irf_pricelevel_chol_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_chol_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3598,27 +2509,14 @@ avg_irf_pricelevel_chol_top_journals <- avg_irf_pricelevel_chol_top_journals$plo
 )
   
 #### For Sign restrictions
-##### Corrected IRF PEESE
-peese_signr_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "signr", top_5_or_tier == "top journal"),
-                                       outvar = out_var,
-                                       se_option = "upper", 
-                                       periods = seq(0, 60, by = 3),
-                                       wins = wins_para,
-                                       prec_weighted = TRUE,
-                                       estimation = "PEESE", 
-                                       cluster_se = TRUE)
-peese_signr_top_journals <- extract_intercepts(peese_signr_top_journals)
 ##### Plot
 avg_irf_pricelevel_signr_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_signr_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3630,27 +2528,14 @@ avg_irf_pricelevel_signr_top_journals <- avg_irf_pricelevel_signr_top_journals$p
 )
 
 #### For High frequency
-##### Corrected IRF PEESE
-peese_hf_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "hf", top_5_or_tier == "top journal"),
-                                    outvar = out_var,
-                                    se_option = "upper", 
-                                    periods = seq(0, 60, by = 3),
-                                    wins = wins_para,
-                                    prec_weighted = TRUE,
-                                    estimation = "PEESE", 
-                                    cluster_se = TRUE)
-peese_hf_top_journals <- extract_intercepts(peese_hf_top_journals)
 ##### Plot
 avg_irf_pricelevel_hf_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_hf_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3662,26 +2547,13 @@ avg_irf_pricelevel_hf_top_journals <- avg_irf_pricelevel_hf_top_journals$plot %>
 )
 
 #### For Other identification methods
-##### Corrected IRF PEESE
-peese_idother_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "idother", top_5_or_tier == "top journal"),
-                                         outvar = out_var,
-                                         se_option = "upper", 
-                                         periods = seq(0, 60, by = 3),
-                                         wins = wins_para,
-                                         prec_weighted = TRUE,
-                                         estimation = "PEESE", 
-                                         cluster_se = TRUE)
-peese_idother_top_journals <- extract_intercepts(peese_idother_top_journals)
 ##### Plot
 avg_irf_pricelevel_idother_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_idother_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -3694,27 +2566,14 @@ avg_irf_pricelevel_idother_top_journals <- avg_irf_pricelevel_idother_top_journa
 )
 
 #### For narrative
-##### Corrected IRF PEESE
-peese_nr_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "nr", top_5_or_tier == "top journal"),
-                                   outvar = out_var,
-                                   se_option = "upper", 
-                                   periods = seq(0, 60, by = 3),
-                                   wins = wins_para,
-                                   prec_weighted = TRUE,
-                                   estimation = "PEESE", 
-                                   cluster_se = TRUE)
-peese_nr_top_journals <- extract_intercepts(peese_nr_top_journals)
 ##### Plot
 avg_irf_pricelevel_nr_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_nr_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3771,8 +2630,6 @@ figure_average_irfs_pricelevel_identification_methods_top_journals <- subplot(av
     yaxis5 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Price level - By identification method - Top journals"
   )
 # Display figure
 figure_average_irfs_pricelevel_identification_methods_top_journals
@@ -3785,27 +2642,14 @@ orca(figure_average_irfs_pricelevel_identification_methods_top_journals,
 )
 ### By identifcation method for other publications ----
 #### For Cholesky
-##### Corrected IRF PEESE
-peese_chol_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "chol", top_5_or_tier == "other publication"),
-                                           outvar = out_var,
-                                           se_option = "upper", 
-                                           periods = seq(0, 60, by = 3),
-                                           wins = wins_para,
-                                           prec_weighted = TRUE,
-                                           estimation = "PEESE", 
-                                           cluster_se = TRUE)
-peese_chol_other_publications <- extract_intercepts(peese_chol_other_publications)
 ##### Plot
 avg_irf_pricelevel_chol_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_chol_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3817,27 +2661,14 @@ avg_irf_pricelevel_chol_other_publications <- avg_irf_pricelevel_chol_other_publ
 )
 
 #### For Sign restrictions
-##### Corrected IRF PEESE
-peese_signr_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "signr", top_5_or_tier == "other publication"),
-                                            outvar = out_var,
-                                            se_option = "upper", 
-                                            periods = seq(0, 60, by = 3),
-                                            wins = wins_para,
-                                            prec_weighted = TRUE,
-                                            estimation = "PEESE", 
-                                            cluster_se = TRUE)
-peese_signr_other_publications <- extract_intercepts(peese_signr_other_publications)
 ##### Plot
 avg_irf_pricelevel_signr_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_signr_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3849,27 +2680,14 @@ avg_irf_pricelevel_signr_other_publications <- avg_irf_pricelevel_signr_other_pu
 )
 
 #### For High frequency
-##### Corrected IRF PEESE
-peese_hf_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "hf", top_5_or_tier == "other publication"),
-                                          outvar = out_var,
-                                          se_option = "upper", 
-                                          periods = seq(0, 60, by = 3),
-                                          wins = wins_para,
-                                          prec_weighted = TRUE,
-                                          estimation = "PEESE", 
-                                          cluster_se = TRUE)
-peese_hf_other_publications <- extract_intercepts(peese_hf_other_publications)
 ##### Plot
 avg_irf_pricelevel_hf_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_hf_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3881,26 +2699,13 @@ avg_irf_pricelevel_hf_other_publications <- avg_irf_pricelevel_hf_other_publicat
 )
 
 #### For Other identification methods
-##### Corrected IRF PEESE
-peese_idother_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "idother", top_5_or_tier == "other publication"),
-                                             outvar = out_var,
-                                             se_option = "upper", 
-                                             periods = seq(0, 60, by = 3),
-                                             wins = wins_para,
-                                             prec_weighted = TRUE,
-                                             estimation = "PEESE", 
-                                             cluster_se = TRUE)
-peese_idother_other_publications <- extract_intercepts(peese_idother_other_publications)
 ##### Plot
 avg_irf_pricelevel_idother_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_idother_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -3913,27 +2718,14 @@ avg_irf_pricelevel_idother_other_publications <- avg_irf_pricelevel_idother_othe
 )
 
 #### For narrative
-##### Corrected IRF PEESE
-peese_nr_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "nr", top_5_or_tier == "other publication"),
-                                         outvar = out_var,
-                                         se_option = "upper", 
-                                         periods = seq(0, 60, by = 3),
-                                         wins = wins_para,
-                                         prec_weighted = TRUE,
-                                         estimation = "PEESE", 
-                                         cluster_se = TRUE)
-peese_nr_other_publications <- extract_intercepts(peese_nr_other_publications)
 ##### Plot
 avg_irf_pricelevel_nr_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_nr_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -3990,8 +2782,6 @@ figure_average_irfs_pricelevel_identification_methods_other_publications <- subp
     yaxis5 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Price level - By identification method - Other publications"
   )
 # Display figure
 figure_average_irfs_pricelevel_identification_methods_other_publications
@@ -4025,8 +2815,6 @@ figure_average_irfs_pricelevel_identification_methods_top_journals_other_publica
     yaxis6 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Price level - By identification method - Other publications (top row) vs top journals (bottom row)"
   )
 # Display figure
 figure_average_irfs_pricelevel_identification_methods_top_journals_other_publications
@@ -4040,27 +2828,14 @@ orca(figure_average_irfs_pricelevel_identification_methods_top_journals_other_pu
 
 ### By country/region ----
 #### US ----
-##### Corrected IRF PEESE
-peese_us <- meta_analysis(d_no_qc %>% filter(us == 1),
-                      outvar = out_var,
-                      se_option = "upper", 
-                      periods = seq(0, 60, by = 3),
-                      wins = wins_para,
-                      prec_weighted = TRUE,
-                      estimation = "PEESE", 
-                      cluster_se = TRUE)
-peese_us <- extract_intercepts(peese_us)
 ##### Plot
 avg_irf_pricelevel_us <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, us == 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_us,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4072,27 +2847,14 @@ avg_irf_pricelevel_us <- avg_irf_pricelevel_us$plot %>% plotly::layout(
 )
 
 #### EA12 ----
-##### Corrected IRF PEESE
-peese_ea12 <- meta_analysis(d_no_qc %>% filter(ea12 == 1),
-                        outvar = out_var,
-                        se_option = "upper", 
-                        periods = seq(0, 60, by = 3),
-                        wins = wins_para,
-                        prec_weighted = TRUE,
-                        estimation = "PEESE", 
-                        cluster_se = TRUE)
-peese_ea12 <- extract_intercepts(peese_ea12)
 ##### Plot
 avg_irf_pricelevel_ea12 <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, ea12 == 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_ea12,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4104,27 +2866,14 @@ avg_irf_pricelevel_ea12 <- avg_irf_pricelevel_ea12$plot %>% plotly::layout(
 )
 
 #### Upper middle ----
-##### Corrected IRF PEESE
-peese_upper_middle <- meta_analysis(d_no_qc %>% filter(upper_middle_income == 1),
-                                outvar = out_var,
-                                se_option = "upper", 
-                                periods = seq(0, 60, by = 3),
-                                wins = wins_para,
-                                prec_weighted = TRUE,
-                                estimation = "PEESE", 
-                                cluster_se = TRUE)
-peese_upper_middle <- extract_intercepts(peese_upper_middle)
 ##### Plot
 avg_irf_pricelevel_upper_middle <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, upper_middle_income == 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_upper_middle,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4136,26 +2885,13 @@ avg_irf_pricelevel_upper_middle <- avg_irf_pricelevel_upper_middle$plot %>% plot
 )
 
 #### Other high_income ----
-##### Corrected IRF PEESE
-peese_other_high_income <- meta_analysis(d_no_qc %>% filter(high_income == 1, ea12 != 1, us != 1),
-                                    outvar = out_var,
-                                    se_option = "upper", 
-                                    periods = seq(0, 60, by = 3),
-                                    wins = wins_para,
-                                    prec_weighted = TRUE,
-                                    estimation = "PEESE", 
-                                    cluster_se = TRUE)
-peese_other_high_income <- extract_intercepts(peese_other_high_income)
 ##### Plot
 avg_irf_pricelevel_other_high_income <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, high_income == 1, ea12 != 1, us != 1),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_other_high_income,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -4173,41 +2909,33 @@ figure_average_irfs_pricelevel_country_region <- subplot(avg_irf_pricelevel_us,
                                                      avg_irf_pricelevel_ea12, 
                                                      avg_irf_pricelevel_upper_middle, 
                                                      avg_irf_pricelevel_other_high_income, 
-                                                     nrows = 1, 
-                                                     margin = 0.03) %>% layout(
-                                                       showlegend=FALSE,
-                                                       title = 'Average effects of conventional monetary policy shocks on output',
-                                                       xaxis3 = list(title = "Month"), # x-axis for plot 3
-                                                       xaxis4 = list(title = "Month"), # x-axis for plot 4
-                                                       xaxis5 = list(title = "Month"), # x-axis for plot 5
-                                                       xaxis6 = list(title = "Month")  # x-axis for plot 6
-                                                     ) %>% layout(annotations = list(
-                                                       list(x = 0.1, y = 1, text = "US", showarrow = FALSE, xref = "paper", yref = "paper",
-                                                            xanchor = "center", yanchor = "bottom"),
-                                                       list(x = 0.4, y = 1, text = "Euro area", showarrow = FALSE, xref = "paper", yref = "paper",
-                                                            xanchor = "center", yanchor = "bottom"),
-                                                       list(x = 0.65, y = 1, text = "Emerging economies", showarrow = FALSE, xref = "paper", yref = "paper",
-                                                            xanchor = "center", yanchor = "bottom"),
-                                                       list(x = 0.9, y = 1, text = "Other advanced", showarrow = FALSE, xref = "paper", yref = "paper",
-                                                            xanchor = "center", yanchor = "bottom")
-                                                     ), margin = list(t = 60)) %>%
+                                                     nrows = 1,
+                                                     shareY = TRUE) %>%
+  layout(title = "") %>%
+  layout(legend = list(orientation = "h",   
+                       xanchor = "center",  
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size_ident))) %>%
+  layout(annotations = list(
+    list(x = 30, y = 1, text = "US", showarrow = FALSE, xref = "x", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 30, y = 1, text = "Euro area", showarrow = FALSE, xref = "x2", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 30, y = 1, text = "Emerging economies", showarrow = FALSE, xref = "x3", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident)),
+    list(x = 30, y = 1, text = "Other advanced", showarrow = FALSE, xref = "x4", yref = "paper",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size_ident))
+  ), margin = list(t = 60)) %>%
   layout(
     xaxis = list(title = "Months"),
     xaxis2 = list(title = "Months"),
     xaxis3 = list(title = "Months"),
-    xaxis4 = list(title = "Months"),
+    xaxis4 = list(title = "Months")
+  ) %>% layout(
     yaxis = list(title = "Effect (%)",
                  range = list(y_lims[1], y_lims[2])
     ),
-    yaxis2 = list(range = list(y_lims[1], y_lims[2])
-    ),
-    yaxis3 = list(range = list(y_lims[1], y_lims[2]) 
-    ), 
-    yaxis4 = list(range = list(y_lims[1], y_lims[2])
-    ),
-    hovermode = "compare" 
-  ) %>% layout(
-    title = "Average and median IRFs - Price level - By country/group"
+    hovermode = "compare"
   )
 # Display figure
 figure_average_irfs_pricelevel_country_region
@@ -4215,8 +2943,8 @@ figure_average_irfs_pricelevel_country_region
 orca(figure_average_irfs_pricelevel_country_region,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_pricelevel_country_region.pdf",
      scale = NULL,
-     width = 1500,
-     height = NULL
+     width = 1034 * 4/3,
+     height = 486 * 0.8
 )
 
 #### Sample size plot for country/region
@@ -4262,26 +2990,13 @@ out_var <- "rate"
 
 ### For top journals vs other publications ----
 #### Top journals
-##### Corrected IRF PEESE
-peese_top_journals <- meta_analysis(d_no_qc %>% filter(top_5_or_tier == "top journal"),
-                               outvar = out_var,
-                               se_option = "avg", 
-                               periods = seq(0, 60, by = 3),
-                               wins = wins_para,
-                               prec_weighted = TRUE,
-                               estimation = "PEESE", 
-                               cluster_se = TRUE)
-peese_top_journals <- extract_intercepts(peese_top_journals)
 ##### Plot
 avg_irf_rate_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -4294,27 +3009,14 @@ avg_irf_rate_top_journals <- avg_irf_rate_top_journals$plot %>% plotly::layout(
 )
 
 #### Other publications
-##### Corrected IRF PEESE
-peese_other_publications <- meta_analysis(d_no_qc %>% filter(top_5_or_tier == "other publication"),
-                                     outvar = out_var,
-                                     se_option = "avg", 
-                                     periods = seq(0, 60, by = 3),
-                                     wins = wins_para,
-                                     prec_weighted = TRUE,
-                                     estimation = "PEESE", 
-                                     cluster_se = TRUE)
-peese_other_publications <- extract_intercepts(peese_other_publications)
 ##### Plot
 avg_irf_rate_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4349,8 +3051,6 @@ figure_average_irfs_rate_top_journals_other_publications <- subplot(avg_irf_rate
     yaxis2 = list(range = list(-1,1.6)
     ),
     hovermode = "compare"
-) %>% layout(
-  title = "Average and median IRFs - Interest rate - Top journals vs other publications"
 )
 # Display figure
 figure_average_irfs_rate_top_journals_other_publications
@@ -4364,26 +3064,13 @@ orca(figure_average_irfs_rate_top_journals_other_publications,
 
 ### For cbanker vs non-cbanker ----
 #### Central bank affiliated
-##### Corrected IRF PEESE
-peese_cbanker <- meta_analysis(d_no_qc %>% filter(cbanker == "central bank affiliated"),
-                           outvar = out_var,
-                           se_option = "avg", 
-                           periods = seq(0, 60, by = 3),
-                           wins = wins_para,
-                           prec_weighted = TRUE,
-                           estimation = "PEESE", 
-                           cluster_se = TRUE)
-peese_cbanker <- extract_intercepts(peese_cbanker)
 ##### Plot
 avg_irf_rate_cbanker <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, cbanker == "central bank affiliated"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_cbanker,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -4396,27 +3083,14 @@ avg_irf_rate_cbanker <- avg_irf_rate_cbanker$plot %>% plotly::layout(
 )
 
 ### Non-central bank affiliated
-##### Corrected IRF PEESE
-peese_non_cbanker <- meta_analysis(d_no_qc %>% filter(cbanker == "non-central bank affiliated"),
-                               outvar = out_var,
-                               se_option = "avg", 
-                               periods = seq(0, 60, by = 3),
-                               wins = wins_para,
-                               prec_weighted = TRUE,
-                               estimation = "PEESE", 
-                               cluster_se = TRUE)
-peese_non_cbanker <- extract_intercepts(peese_non_cbanker)
 ##### Plot
 avg_irf_rate_non_cbanker <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, cbanker == "non-central bank affiliated"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_non_cbanker,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4452,8 +3126,6 @@ figure_average_irfs_rate_cbanker_non_cbanker <- subplot(avg_irf_rate_non_cbanker
     yaxis2 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-) %>% layout(
-  title = "Average and median IRFs - Interest rate - CB vs no CB"
 )
 # Display figure
 figure_average_irfs_rate_cbanker_non_cbanker
@@ -4468,27 +3140,14 @@ orca(figure_average_irfs_rate_cbanker_non_cbanker,
 ### By identifcation method ("chol", "signr", "hf", "idother", "nr") ----
 ### For all publications
 #### For Cholesky
-##### Corrected IRF PEESE
-peese_chol <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "chol"),
-                        outvar = out_var,
-                        se_option = "avg", 
-                        periods = seq(0, 60, by = 3),
-                        wins = wins_para,
-                        prec_weighted = TRUE,
-                        estimation = "PEESE", 
-                        cluster_se = TRUE)
-peese_chol <- extract_intercepts(peese_chol)
 ##### Plot
 avg_irf_rate_chol <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_chol,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4496,27 +3155,14 @@ avg_irf_rate_chol <- plot_average_irfs(
 write_csv(avg_irf_rate_chol$data, here::here(save_path, "avg_irf_rate_chol.csv"))
 
 #### For Sign restrictions
-##### Corrected IRF PEESE
-peese_signr <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "signr"),
-                         outvar = out_var,
-                         se_option = "avg", 
-                         periods = seq(0, 60, by = 3),
-                         wins = wins_para,
-                         prec_weighted = TRUE,
-                         estimation = "PEESE", 
-                         cluster_se = TRUE)
-peese_signr <- extract_intercepts(peese_signr)
 ##### Plot
 avg_irf_rate_signr <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_signr,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4524,27 +3170,14 @@ avg_irf_rate_signr <- plot_average_irfs(
 write_csv(avg_irf_rate_signr$data, here::here(save_path, "avg_irf_rate_signr.csv"))
 
 #### For High frequency
-##### Corrected IRF PEESE
-peese_hf <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "hf"),
-                      outvar = out_var,
-                      se_option = "avg", 
-                      periods = seq(0, 60, by = 3),
-                      wins = wins_para,
-                      prec_weighted = TRUE,
-                      estimation = "PEESE", 
-                      cluster_se = TRUE)
-peese_hf <- extract_intercepts(peese_hf)
 ##### Plot
 avg_irf_rate_hf <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_hf,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4552,26 +3185,13 @@ avg_irf_rate_hf <- plot_average_irfs(
 write_csv(avg_irf_rate_hf$data, here::here(save_path, "avg_irf_rate_hf.csv"))
 
 #### For Other identification methods
-##### Corrected IRF PEESE
-peese_idother <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "idother"),
-                           outvar = out_var,
-                           se_option = "avg", 
-                           periods = seq(0, 60, by = 3),
-                           wins = wins_para,
-                           prec_weighted = TRUE,
-                           estimation = "PEESE", 
-                           cluster_se = TRUE)
-peese_idother <- extract_intercepts(peese_idother)
 ##### Plot
 avg_irf_rate_idother <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_idother,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -4580,27 +3200,14 @@ avg_irf_rate_idother <- plot_average_irfs(
 write_csv(avg_irf_rate_idother$data, here::here(save_path, "avg_irf_rate_idother.csv"))
 
 #### For narrative
-##### Corrected IRF PEESE
-peese_nr <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "nr"),
-                      outvar = out_var,
-                      se_option = "avg", 
-                      periods = seq(0, 60, by = 3),
-                      wins = wins_para,
-                      prec_weighted = TRUE,
-                      estimation = "PEESE", 
-                      cluster_se = TRUE)
-peese_nr <- extract_intercepts(peese_nr)
 ##### Plot
 avg_irf_rate_nr <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_nr,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4653,8 +3260,6 @@ figure_average_irfs_rate_identification_methods <- subplot(avg_irf_rate_chol$plo
     yaxis5 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Interest rate - By identification method"
   )
 # Display figure
 figure_average_irfs_rate_identification_methods
@@ -4668,27 +3273,14 @@ orca(figure_average_irfs_rate_identification_methods,
 
 ### By identifcation method for top journals ----
 #### For Cholesky
-##### Corrected IRF PEESE
-peese_chol_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "chol", top_5_or_tier == "top journal"),
-                                    outvar = out_var,
-                                    se_option = "avg", 
-                                    periods = seq(0, 60, by = 3),
-                                    wins = wins_para,
-                                    prec_weighted = TRUE,
-                                    estimation = "PEESE", 
-                                    cluster_se = TRUE)
-peese_chol_top_journals <- extract_intercepts(peese_chol_top_journals)
 ##### Plot
 avg_irf_rate_chol_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_chol_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4696,27 +3288,14 @@ avg_irf_rate_chol_top_journals <- plot_average_irfs(
 write_csv(avg_irf_rate_chol_top_journals$data, here::here(save_path, "avg_irf_rate_chol_top_journals.csv"))
 
 #### For Sign restrictions
-##### Corrected IRF PEESE
-peese_signr_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "signr", top_5_or_tier == "top journal"),
-                                     outvar = out_var,
-                                     se_option = "avg", 
-                                     periods = seq(0, 60, by = 3),
-                                     wins = wins_para,
-                                     prec_weighted = TRUE,
-                                     estimation = "PEESE", 
-                                     cluster_se = TRUE)
-peese_signr_top_journals <- extract_intercepts(peese_signr_top_journals)
 ##### Plot
 avg_irf_rate_signr_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_signr_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4724,27 +3303,14 @@ avg_irf_rate_signr_top_journals <- plot_average_irfs(
 write_csv(avg_irf_rate_signr_top_journals$data, here::here(save_path, "avg_irf_rate_signr_top_journals.csv"))
 
 #### For High frequency
-##### Corrected IRF PEESE
-peese_hf_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "hf", top_5_or_tier == "top journal"),
-                                  outvar = out_var,
-                                  se_option = "avg", 
-                                  periods = seq(0, 60, by = 3),
-                                  wins = wins_para,
-                                  prec_weighted = TRUE,
-                                  estimation = "PEESE", 
-                                  cluster_se = TRUE)
-peese_hf_top_journals <- extract_intercepts(peese_hf_top_journals)
 ##### Plot
 avg_irf_rate_hf_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_hf_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4752,26 +3318,13 @@ avg_irf_rate_hf_top_journals <- plot_average_irfs(
 write_csv(avg_irf_rate_hf_top_journals$data, here::here(save_path, "avg_irf_rate_hf_top_journals.csv"))
 
 #### For Other identification methods
-##### Corrected IRF PEESE
-peese_idother_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "idother", top_5_or_tier == "top journal"),
-                                      outvar = out_var,
-                                      se_option = "avg", 
-                                      periods = seq(0, 60, by = 3),
-                                      wins = wins_para,
-                                      prec_weighted = TRUE,
-                                      estimation = "PEESE", 
-                                      cluster_se = TRUE)
-peese_idother_top_journals <- extract_intercepts(peese_idother_top_journals)
 ##### Plot
 avg_irf_rate_idother_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_idother_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -4780,27 +3333,14 @@ avg_irf_rate_idother_top_journals <- plot_average_irfs(
 write_csv(avg_irf_rate_idother_top_journals$data, here::here(save_path, "avg_irf_rate_idother_top_journals.csv"))
 
 #### For narrative
-##### Corrected IRF PEESE
-peese_nr_top_journals <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "nr", top_5_or_tier == "top journal"),
-                                outvar = out_var,
-                                se_option = "avg", 
-                                periods = seq(0, 60, by = 3),
-                                wins = wins_para,
-                                prec_weighted = TRUE,
-                                estimation = "PEESE", 
-                                cluster_se = TRUE)
-peese_nr_top_journals <- extract_intercepts(peese_nr_top_journals)
 ##### Plot
 avg_irf_rate_nr_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr", top_5_or_tier == "top journal"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_nr_top_journals,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4853,8 +3393,6 @@ figure_average_irfs_rate_identification_methods_top_journals <- subplot(avg_irf_
     yaxis5 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Interest rate - By identification method - Top journals"
   )
 # Display figure
 figure_average_irfs_rate_identification_methods_top_journals
@@ -4868,27 +3406,14 @@ orca(figure_average_irfs_rate_identification_methods_top_journals,
 
 ### By identifcation method for other publications ----
 #### For Cholesky
-##### Corrected IRF PEESE
-peese_chol_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "chol", top_5_or_tier == "other publication"),
-                                          outvar = out_var,
-                                          se_option = "avg", 
-                                          periods = seq(0, 60, by = 3),
-                                          wins = wins_para,
-                                          prec_weighted = TRUE,
-                                          estimation = "PEESE", 
-                                          cluster_se = TRUE)
-peese_chol_other_publications <- extract_intercepts(peese_chol_other_publications)
 ##### Plot
 avg_irf_rate_chol_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_chol_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4896,27 +3421,14 @@ avg_irf_rate_chol_other_publications <- plot_average_irfs(
 write_csv(avg_irf_rate_chol_other_publications$data, here::here(save_path, "avg_irf_rate_chol_other_publications.csv"))
 
 #### For Sign restrictions
-##### Corrected IRF PEESE
-peese_signr_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "signr", top_5_or_tier == "other publication"),
-                                           outvar = out_var,
-                                           se_option = "avg", 
-                                           periods = seq(0, 60, by = 3),
-                                           wins = wins_para,
-                                           prec_weighted = TRUE,
-                                           estimation = "PEESE", 
-                                           cluster_se = TRUE)
-peese_signr_other_publications <- extract_intercepts(peese_signr_other_publications)
 ##### Plot
 avg_irf_rate_signr_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_signr_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4924,27 +3436,14 @@ avg_irf_rate_signr_other_publications <- plot_average_irfs(
 write_csv(avg_irf_rate_signr_other_publications$data, here::here(save_path, "avg_irf_rate_signr_other_publications.csv"))
 
 #### For High frequency
-##### Corrected IRF PEESE
-peese_hf_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "hf", top_5_or_tier == "other publication"),
-                                        outvar = out_var,
-                                        se_option = "avg", 
-                                        periods = seq(0, 60, by = 3),
-                                        wins = wins_para,
-                                        prec_weighted = TRUE,
-                                        estimation = "PEESE", 
-                                        cluster_se = TRUE)
-peese_hf_other_publications <- extract_intercepts(peese_hf_other_publications)
 ##### Plot
 avg_irf_rate_hf_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_hf_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -4952,26 +3451,13 @@ avg_irf_rate_hf_other_publications <- plot_average_irfs(
 write_csv(avg_irf_rate_hf_other_publications$data, here::here(save_path, "avg_irf_rate_hf_other_publications.csv"))
 
 #### For Other identification methods
-##### Corrected IRF PEESE
-peese_idother_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "idother", top_5_or_tier == "other publication"),
-                                            outvar = out_var,
-                                            se_option = "avg", 
-                                            periods = seq(0, 60, by = 3),
-                                            wins = wins_para,
-                                            prec_weighted = TRUE,
-                                            estimation = "PEESE", 
-                                            cluster_se = TRUE)
-peese_idother_other_publications <- extract_intercepts(peese_idother_other_publications)
 ##### Plot
 avg_irf_rate_idother_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_idother_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
+  corrected_irf = NULL,
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
@@ -4980,27 +3466,14 @@ avg_irf_rate_idother_other_publications <- plot_average_irfs(
 write_csv(avg_irf_rate_idother_other_publications$data, here::here(save_path, "avg_irf_rate_idother_other_publications.csv"))
 
 #### For narrative
-##### Corrected IRF PEESE
-peese_nr_other_publications <- meta_analysis(d_no_qc %>% filter(group_ident_broad == "nr", top_5_or_tier == "other publication"),
-                                        outvar = out_var,
-                                        se_option = "avg", 
-                                        periods = seq(0, 60, by = 3),
-                                        wins = wins_para,
-                                        prec_weighted = TRUE,
-                                        estimation = "PEESE", 
-                                        cluster_se = TRUE)
-peese_nr_other_publications <- extract_intercepts(peese_nr_other_publications)
 ##### Plot
 avg_irf_rate_nr_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr", top_5_or_tier == "other publication"),
   period_limit = 60,
   winsor = TRUE,
   wins_par = wins_para,
-  corrected_irf = peese_nr_other_publications,
-  corrected_irf_color = peese_color,
-  corrected_irf_name = peese_legend,
-  corrected_irf_show_CIs = FALSE,
-  show_legend = TRUE,
+  corrected_irf = NULL,
+  show_legend = FALSE,
   show_median = TRUE,
   return_data = TRUE
 )
@@ -5053,8 +3526,6 @@ figure_average_irfs_rate_identification_methods_other_publications <- subplot(av
     yaxis5 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Interest rate - By identification method - Other publications"
   )
 # Display figure
 figure_average_irfs_rate_identification_methods_other_publications
@@ -5088,8 +3559,6 @@ figure_average_irfs_rate_identification_methods_top_journals_other_publications 
     yaxis6 = list(range = list(y_lims[1], y_lims[2])
     ),
     hovermode = "compare"
-  ) %>% layout(
-    title = "Average and median IRFs - Interest rate - By identification method - Other publications (top row) vs top journals (bottom row)"
   )
 # Display figure
 figure_average_irfs_rate_identification_methods_top_journals_other_publications

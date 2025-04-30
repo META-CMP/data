@@ -197,7 +197,8 @@ outcome_ip <- outcome_measure[["share"]][[7]]
 outcome_gap <- outcome_measure[["share"]][[4]]
 outcome_cpi <- outcome_measure[["share"]][[2]]
 outcome_deflator <- outcome_measure[["share"]][[3]]
-outcome_other <- outcome_measure[["share"]][[1]] + outcome_measure[["share"]][[8]]
+outcome_core <- outcome_measure[["share"]][[1]] 
+outcome_wpi <- outcome_measure[["share"]][[8]]
 
 # For interest rate type:
 interest_type <- df %>%
@@ -310,7 +311,7 @@ table_data2 <- data.frame(
     # Other publication characteristics
     "Publication year", "Citations", "By-product", "Preferred estimate",
     # Measurement and sample characteristics
-    "GDP", "IP", "Output gap", "CPI", "GDP deflator", "Other price",
+    "GDP", "IP", "Output gap", "CPI", "GDP deflator", "Core", "WPI",
     "Overnight rate", "Lending rate", "Year rate", 
     "Annual frequency", "Quarterly frequency", "Monthly frequency", 
     "Panel data", "Time series"
@@ -333,7 +334,8 @@ table_data2 <- data.frame(
     "Output gap is the output variable",
     "Consumer Price Index is the price level variable",
     "GDP deflator is the price level variable",
-    "Other price measure (e.g. Core or Wholesale Price Index)",
+    "Core price index is the price level variable",
+    "Wholesale Price Index is the price level variable",
     "Short-term rates (including money market and policy rates)",
     "Weekly to monthly lending and bond rates",
     "Yearly to longer-term rates",
@@ -350,7 +352,7 @@ table_data2 <- data.frame(
     mean_pubyear, mean_numcit, byproduct, prefer,
     # Measurement and sample characteristics
     outcome_gdp, outcome_ip, outcome_gap,
-    outcome_cpi, outcome_deflator, outcome_other,
+    outcome_cpi, outcome_deflator, outcome_core, outcome_wpi,
     overnight, lending, year_rate,
     annual, quarter, monthly,
     panel, time_series

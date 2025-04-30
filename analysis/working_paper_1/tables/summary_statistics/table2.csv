@@ -5,7 +5,7 @@
 "Other VAR","Other VAR estimation method (e.g. TVP-VAR, GVAR)",9.59398753932213
 "DSGE","Estimated DSGE model",2.75407909715167
 "Publication year","Publication year of the study",2015.27679106944
-"Citations","Number of citations in Google Scholar",155.949273568794
+"Citations","Number of citations in Google Scholar",155.949273568821
 "By-product","Indicator whether the estimate was not the main research question",58.3546519456039
 "Preferred estimate","The authors signal an estimate to be their preferred one",38.521610340649
 "GDP","GDP is the output variable",34.2241364093693
@@ -13,7 +13,8 @@
 "Output gap","Output gap is the output variable",3.18959278414206
 "CPI","Consumer Price Index is the price level variable",29.7848304591107
 "GDP deflator","GDP deflator is the price level variable",16.5498737930913
-"Other price","Other price measure (e.g. Core or Wholesale Price Index)",3.15782041551198
+"Core","Core price index is the price level variable",2.29820133090922
+"WPI","Wholesale Price Index is the price level variable",0.859619084602757
 "Overnight rate","Short-term rates (including money market and policy rates)",47.2587732719684
 "Lending rate","Weekly to monthly lending and bond rates",34.0085927267831
 "Year rate","Yearly to longer-term rates",18.7326340012485

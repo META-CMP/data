@@ -1,7 +1,7 @@
-# MMR robustness: Bayesian Model Averaging (BMA) and unweighted MMR comparison
+# MMR robustness: Bayesian Model Averaging (BMA) and OLS-FAT-PAT MMR comparison
 
-# Robustness check MMR OLS version with SE2 without inverse-variance weights ----
-source(here::here("analysis/working_paper_1/mmr_ols_unweighted_robust.R")) 
+# MMR OLS with SE (FAT-PET without inverse-variance weights) ----
+source(here::here("analysis/working_paper_1/mmr_ols_fatpat_robust.R")) 
 
 # Source the setup file ---- 
 source(here::here("analysis/working_paper_1/setup_wp_1.R"))
@@ -43,14 +43,14 @@ bma_data <- d_no_qc %>%
   filter(outcome == out_var) %>%
   mutate(         
     mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
-    SE2 = (JWileymisc::winsorizor(SE.upper, wins_para, na.rm = TRUE))^2
+    SE = (JWileymisc::winsorizor(SE.upper, wins_para, na.rm = TRUE))
   ) %>% 
   select(
     period.month, # Necessary for the BMA loop to work
     mean.effect, # (Intercept)
     
     ### P-bias test ###
-    SE2, # PEESE
+    SE,
     
     ### Baseline specification ###
     # Consolidated identification approach
@@ -101,7 +101,7 @@ results_bma_output <- bma_loop(data = bma_data,
 # Save results 
 saveRDS(results_bma_output, here::here("analysis/working_paper_1/figures/mmr/bma_output_with_fixed.rds"))
 # Load results
-# results_bma_output <- readRDS(here::here("analysis/working_paper_1/mmr/bma_output_with_fixed.rds"))
+# results_bma_output <- readRDS(here::here("analysis/working_paper_1/figures/mmr/bma_output_with_fixed.rds"))
 
 ## BMA analysis with no fixed regressors ----
 
@@ -115,14 +115,14 @@ results_bma_output_no_fixed <- bma_loop(data = bma_data,
 # Save results
 saveRDS(results_bma_output_no_fixed, here::here("analysis/working_paper_1/figures/mmr/bma_output_no_fixed.rds"))
 # Load results
-# results_bma_output_no_fixed <- readRDS(here::here("analysis/working_paper_1/mmr/bma_output_no_fixed.rds"))
+# results_bma_output_no_fixed <- readRDS(here::here("analysis/working_paper_1/figures/mmr/bma_output_no_fixed.rds"))
 
 ## Comparison between BMA and MMR results ----
 #### Plots ----
 ##### Coefficient plots ----
-p1 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "(Intercept)", conf_levels = c(0.67, 0.89, 0.97),
+p1 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "(Intercept)", conf_levels = c(0.67, 0.89, 0.97),
                                   custom_title = "Corrected reference response") +
-  coord_cartesian(ylim = c(-1, 0.1)) +
+  coord_cartesian(ylim = c(-0.75, 0.25)) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
   # No axis labels
@@ -138,9 +138,9 @@ p1 <- p1 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "(Intercept)"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p2 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "variance_winsor", conf_levels = c(0.67, 0.89, 0.97),
-                                  custom_title = "P-bias coefficient (variance)") +
-  coord_cartesian(ylim = c(-0.4, 0)) +
+p2 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "standarderror_winsor", conf_levels = c(0.67, 0.89, 0.97),
+                                  custom_title = "P-bias coefficient (SE)") +
+  coord_cartesian(ylim = c(-1.25, 0)) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
   # No axis labels
@@ -148,15 +148,15 @@ p2 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "variance_winsor", conf
         axis.title.y = element_blank())
 # Add BMA lines:
 p2 <- p2 +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output, "SE2"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_output, "SE2"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output, "SE"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_output, "SE"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "red", linetype = "dotdash", size = 1.5) +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output_no_fixed, "SE2"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "SE2"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output_no_fixed, "SE"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "SE"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 y_lims <- c(-1.5, 0.75)
-p3 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "group_ident_broadhf", conf_levels = c(0.67, 0.89, 0.97), 
+p3 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_ident_broadhf", conf_levels = c(0.67, 0.89, 0.97), 
                                   custom_title = "HF") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -173,7 +173,7 @@ p3 <- p3 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_ident_broad_hf"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p4 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "group_ident_broadnr", conf_levels = c(0.67, 0.89, 0.97), 
+p4 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_ident_broadnr", conf_levels = c(0.67, 0.89, 0.97), 
                                   custom_title = "NR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -190,7 +190,7 @@ p4 <- p4 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_ident_broad_nr"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p5 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "group_ident_broadsignr", conf_levels = c(0.67, 0.89, 0.97), 
+p5 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_ident_broadsignr", conf_levels = c(0.67, 0.89, 0.97), 
                                   custom_title = "SignR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -207,7 +207,7 @@ p5 <- p5 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_ident_broad_signr"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p6 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "group_ident_broadidother", conf_levels = c(0.67, 0.89, 0.97), 
+p6 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_ident_broadidother", conf_levels = c(0.67, 0.89, 0.97), 
                                   custom_title = "Other") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -224,7 +224,7 @@ p6 <- p6 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_ident_broad_idother"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p7 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "top_5_or_tier", conf_levels = c(0.67, 0.89, 0.97), 
+p7 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "top_5_or_tier", conf_levels = c(0.67, 0.89, 0.97), 
                                   custom_title = "Top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -241,7 +241,7 @@ p7 <- p7 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "top_5_or_tier"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p8 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "cbanker", conf_levels = c(0.67, 0.89, 0.97), 
+p8 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "cbanker", conf_levels = c(0.67, 0.89, 0.97), 
                                   custom_title = "CB affiliated") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -258,7 +258,7 @@ p8 <- p8 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "cbanker"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p9 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "group_est_broadlp_ardl", conf_levels = c(0.67, 0.89, 0.97), 
+p9 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_est_broadlp_ardl", conf_levels = c(0.67, 0.89, 0.97), 
                                   custom_title = "LP and ARDL") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -275,7 +275,7 @@ p9 <- p9 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_est_broad_lp_ardl"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p10 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "group_est_broadfavar", conf_levels = c(0.67, 0.89, 0.97), 
+p10 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_est_broadfavar", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "FAVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -292,7 +292,7 @@ p10 <- p10 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_est_broad_favar"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p11 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "group_est_broadother_var", conf_levels = c(0.67, 0.89, 0.97), 
+p11 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_est_broadother_var", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "Other VAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -309,7 +309,7 @@ p11 <- p11 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_est_broad_other_var"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p12 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "group_est_broaddsge", conf_levels = c(0.67, 0.89, 0.97), 
+p12 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_est_broaddsge", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "DSGE") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -326,7 +326,7 @@ p12 <- p12 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_est_broad_dsge"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p13 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "outcome_measure_output_consgap", conf_levels = c(0.67, 0.89, 0.97), 
+p13 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "outcome_measure_output_consgap", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "Output gap") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -343,7 +343,7 @@ p13 <- p13 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "outcome_measure_output_cons_gap"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p14 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "outcome_measure_output_consip", conf_levels = c(0.67, 0.89, 0.97), 
+p14 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "outcome_measure_output_consip", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "IP") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -360,7 +360,7 @@ p14 <- p14 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "outcome_measure_output_cons_ip"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p15 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "group_inttypeweek_month", conf_levels = c(0.67, 0.89, 0.97), 
+p15 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_inttypeweek_month", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "weekly/monthly rate") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -377,7 +377,7 @@ p15 <- p15 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_inttype_week_month"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p16 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "group_inttypeyear", conf_levels = c(0.67, 0.89, 0.97), 
+p16 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_inttypeyear", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "yearly rate") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -394,7 +394,7 @@ p16 <- p16 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_inttype_year"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p17 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "pub_year_dm", conf_levels = c(0.67, 0.89, 0.97), 
+p17 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "pub_year_dm", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "Publication year") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -411,7 +411,7 @@ p17 <- p17 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "pub_year_dm"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p18 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "num_cit_dm", conf_levels = c(0.67, 0.89, 0.97), 
+p18 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "num_cit_dm", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "Number of citations") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -428,7 +428,7 @@ p18 <- p18 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "num_cit_dm"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p19 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "prefer", conf_levels = c(0.67, 0.89, 0.97), 
+p19 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "prefer", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "Preferred") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -445,7 +445,7 @@ p19 <- p19 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "prefer"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p20 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "byproduct", conf_levels = c(0.67, 0.89, 0.97), 
+p20 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "byproduct", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "By-product") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -462,7 +462,7 @@ p20 <- p20 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "byproduct"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p21 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "freqmonth", conf_levels = c(0.67, 0.89, 0.97), 
+p21 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "freqmonth", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "Monthly") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -479,7 +479,7 @@ p21 <- p21 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "freq_month"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p22 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "freqannual", conf_levels = c(0.67, 0.89, 0.97), 
+p22 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "freqannual", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "Annual") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -496,7 +496,7 @@ p22 <- p22 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "freq_annual"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p23 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "panel", conf_levels = c(0.67, 0.89, 0.97), 
+p23 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "panel", conf_levels = c(0.67, 0.89, 0.97), 
                                    custom_title = "Panel") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -661,20 +661,20 @@ pip_1 <- create_simple_plot(
                               post_mean = plotly_data(pip_plot(results_bma_output_no_fixed, "(Intercept)"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-###### SE2
+###### SE
 pip_2 <- create_simple_plot(
-  data = plotly_data(pip_plot(results_bma_output, c("SE2"))),
+  data = plotly_data(pip_plot(results_bma_output, c("SE"))),
   x_name = "Period",
   y_name = "PIP",
-  custom_title = "Variance",
+  custom_title = "SE",
   # custom_subtitle = "Sample Data",
   line_color = "red",        
   point_color = "red",       
   x_lab = "Month",
   y_lab = "PIP"
 ) + 
-  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_output_no_fixed, "SE2"))$Period, 
-                              post_mean = plotly_data(pip_plot(results_bma_output_no_fixed, "SE2"))$PIP),
+  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_output_no_fixed, "SE"))$Period, 
+                              post_mean = plotly_data(pip_plot(results_bma_output_no_fixed, "SE"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 ###### HF
@@ -1061,14 +1061,14 @@ bma_data <- d_no_qc %>%
   filter(outcome == out_var) %>%
   mutate(         
     mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
-    SE2 = (JWileymisc::winsorizor(SE.upper, wins_para, na.rm = TRUE))^2
+    SE = (JWileymisc::winsorizor(SE.upper, wins_para, na.rm = TRUE))
   ) %>% 
   select(
     period.month, # Necessary for the BMA loop to work
     mean.effect, # (Intercept)
     
     ### P-bias test ###
-    SE2, # PEESE
+    SE,
     
     ### Baseline specification ###
     # Consolidated identification approach
@@ -1134,9 +1134,9 @@ saveRDS(results_bma_pricelevel_no_fixed, here::here("analysis/working_paper_1/fi
 
 #### Plots ----
 ##### Coefficient plots ----
-p1 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "(Intercept)",
+p1 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "(Intercept)",
                                   custom_title = "Corrected reference response") +
-  coord_cartesian(ylim = c(-0.5, 0.2)) +
+  coord_cartesian(ylim = c(-0.25, 0.4)) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
   # No axis labels
@@ -1151,9 +1151,9 @@ p1 <- p1 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "(Intercept)"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p2 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "variance_winsor", 
-                                  custom_title = "P-bias coefficient (variance)") +
-  coord_cartesian(ylim = c(-1, 0)) +
+p2 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "standarderror_winsor", 
+                                  custom_title = "P-bias coefficient (SE)") +
+  coord_cartesian(ylim = c(-1.25, 0)) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
   # No axis labels
@@ -1161,15 +1161,15 @@ p2 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "variance_winsor",
         axis.title.y = element_blank())
 # Add BMA lines:
 p2 <- p2 +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel, "SE2"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel, "SE2"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel, "SE"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel, "SE"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "red", linetype = "dotdash", size = 1.5) +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "SE2"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "SE2"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "SE"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "SE"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-y_lims <- c(-1, 0.3)
-p3 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "group_ident_broadhf", 
+y_lims <- c(-1, 0.5)
+p3 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_ident_broadhf", 
                                   custom_title = "HF") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1186,7 +1186,7 @@ p3 <- p3 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_hf"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p4 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "group_ident_broadnr", 
+p4 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_ident_broadnr", 
                                   custom_title = "NR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1203,7 +1203,7 @@ p4 <- p4 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_nr"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p5 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "group_ident_broadsignr", 
+p5 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_ident_broadsignr", 
                                   custom_title = "SignR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1220,7 +1220,7 @@ p5 <- p5 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_signr"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p6 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "group_ident_broadidother", 
+p6 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_ident_broadidother", 
                                   custom_title = "Other") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1237,7 +1237,7 @@ p6 <- p6 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_idother"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p7 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "top_5_or_tier", 
+p7 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "top_5_or_tier", 
                                   custom_title = "Top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1254,7 +1254,7 @@ p7 <- p7 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "top_5_or_tier"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p8 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "cbanker", 
+p8 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "cbanker", 
                                   custom_title = "CB affiliated") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1271,7 +1271,7 @@ p8 <- p8 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "cbanker"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p9 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "group_est_broadlp_ardl", 
+p9 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_est_broadlp_ardl", 
                                   custom_title = "LP and ARDL") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1288,7 +1288,7 @@ p9 <- p9 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_est_broad_lp_ardl"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p10 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "group_est_broadfavar", 
+p10 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_est_broadfavar", 
                                    custom_title = "FAVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1305,7 +1305,7 @@ p10 <- p10 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_est_broad_favar"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p11 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "group_est_broadother_var", 
+p11 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_est_broadother_var", 
                                    custom_title = "Other VAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1322,7 +1322,7 @@ p11 <- p11 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_est_broad_other_var"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p12 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "group_est_broaddsge", 
+p12 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_est_broaddsge", 
                                    custom_title = "DSGE") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1339,7 +1339,7 @@ p12 <- p12 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_est_broad_dsge"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p13 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "outcome_measure_pricelevel_conscore", 
+p13 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "outcome_measure_pricelevel_conscore", 
                                    custom_title = "Core") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1356,7 +1356,7 @@ p13 <- p13 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "outcome_measure_pricelevel_cons_core"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p14 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "outcome_measure_pricelevel_consdeflator", 
+p14 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "outcome_measure_pricelevel_consdeflator", 
                                    custom_title = "Deflator") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1373,7 +1373,7 @@ p14 <- p14 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "outcome_measure_pricelevel_cons_deflator"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p15 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "outcome_measure_pricelevel_conswpi", 
+p15 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "outcome_measure_pricelevel_conswpi", 
                                    custom_title = "WPI") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1390,7 +1390,7 @@ p15 <- p15 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "outcome_measure_pricelevel_cons_wpi"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p16 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "group_inttypeweek_month", 
+p16 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_inttypeweek_month", 
                                    custom_title = "weekly/monthly rate") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1407,7 +1407,7 @@ p16 <- p16 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_inttype_week_month"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p17 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_OLS, "group_inttypeyear", 
+p17 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_inttypeyear", 
                                    custom_title = "yearly rate") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1424,7 +1424,7 @@ p17 <- p17 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_inttype_year"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p18 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "pub_year_dm", 
+p18 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "pub_year_dm", 
                                    custom_title = "Publication year") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1441,7 +1441,7 @@ p18 <- p18 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "pub_year_dm"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p19 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "num_cit_dm", 
+p19 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "num_cit_dm", 
                                    custom_title = "Number of citations") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1458,7 +1458,7 @@ p19 <- p19 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "num_cit_dm"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p20 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "prefer", 
+p20 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "prefer", 
                                    custom_title = "Preferred") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1475,7 +1475,7 @@ p20 <- p20 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "prefer"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p21 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "byproduct", 
+p21 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "byproduct", 
                                    custom_title = "By-product") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1492,7 +1492,7 @@ p21 <- p21 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "byproduct"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p22 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "freqmonth", 
+p22 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "freqmonth", 
                                    custom_title = "Monthly") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1509,7 +1509,7 @@ p22 <- p22 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "freq_month"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p23 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "freqannual", 
+p23 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "freqannual", 
                                    custom_title = "Annual") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1526,7 +1526,7 @@ p23 <- p23 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "freq_annual"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p24 <- create_mmr_coefficient_plot(mmr_output_robust_OLS, "panel", 
+p24 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "panel", 
                                    custom_title = "Panel") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1611,20 +1611,20 @@ pip_1 <- create_simple_plot(
                               post_mean = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "(Intercept)"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-###### SE2
+###### SE
 pip_2 <- create_simple_plot(
-  data = plotly_data(pip_plot(results_bma_pricelevel, c("SE2"))),
+  data = plotly_data(pip_plot(results_bma_pricelevel, c("SE"))),
   x_name = "Period",
   y_name = "PIP",
-  custom_title = "Variance",
+  custom_title = "SE",
   # custom_subtitle = "Sample Data",
   line_color = "red",        
   point_color = "red",       
   x_lab = "Month",
   y_lab = "PIP"
 ) + 
-  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "SE2"))$Period, 
-                              post_mean = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "SE2"))$PIP),
+  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "SE"))$Period, 
+                              post_mean = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "SE"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 ###### HF

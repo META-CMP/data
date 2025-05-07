@@ -1302,12 +1302,12 @@ orca(figure_average_irfs_output_pricelevel_rate_with_median,
 # Joint figure of average IRFs for output, price level and interest rate with different publication bias corrections ----
 figure_average_irfs_output_pricelevel_rate_corrections <- subplot(subplot(avg_irf_output_corrections,
                                                                   avg_irf_pricelevel_corrections,
-                                                                  shareY = TRUE),
+                                                                  shareY = FALSE),
                                                           avg_irf_rate_corrections, widths = c(.66, .33)
 ) %>%
   layout(legend = list(orientation = "h",   # show entries horizontally
                        xanchor = "center",  # use center of legend as anchor
-                       x = 0.5, y = -0.3, 
+                       x = 0.5, y = -0.15, 
                        font = list(size = titles_size))) %>%        # put legend in center of x-axis
   layout(title = "",
          xaxis2 = list(title = "Months")
@@ -1315,7 +1315,9 @@ figure_average_irfs_output_pricelevel_rate_corrections <- subplot(subplot(avg_ir
   layout(
     yaxis = list(#title = "Effect (%)",
       range = list(y_lims[1], y_lims[2])),
-    yaxis2 = list(#title = "Effect (%-points)",
+    yaxis2 = list(#title = "Effect (%)",
+      range = list(y_lims[1], y_lims[2])),
+    yaxis3 = list(#title = "Effect (%-points)",
       range = list(-1, 1.5))
   ) %>%
   layout(annotations = list(
@@ -1323,7 +1325,7 @@ figure_average_irfs_output_pricelevel_rate_corrections <- subplot(subplot(avg_ir
          xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
     list(x = 30, y = y_lims[2], text = "Price level response (%)", showarrow = FALSE, xref = "x2", yref = "y",
          xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
-    list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y2",
+    list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y3",
          xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
   ), margin = list(t = 60)
   )
@@ -1334,9 +1336,15 @@ orca(figure_average_irfs_output_pricelevel_rate_corrections,
      file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_output_pricelevel_rate_corrections.pdf",
      scale = NULL,
      width = 1034,
-     height = 486 * 0.8
+     height = 486 * 1.2
 )
-
+# HIGHER VERSION
+orca(figure_average_irfs_output_pricelevel_rate_corrections,
+     file = "analysis/working_paper_1/figures/average_irfs/figure_average_irfs_output_pricelevel_rate_corrections_higher.pdf",
+     scale = NULL,
+     width = 1034,
+     height = 486 * 1.5
+)
 # For sub-samples ----
 ## For output ----
 out_var <- "output"

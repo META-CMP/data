@@ -388,3 +388,150 @@ write.csv(table_data1, file = here::here("analysis/working_paper_1/tables/summar
 write.csv(table_data2, file = here::here("analysis/working_paper_1/tables/summary_statistics/table2.csv"), 
           row.names = FALSE)
 
+# ------------------------------------------------------------------------------
+# 5. ECB questions
+# ------------------------------------------------------------------------------
+
+# Create a data frame specifically for identification methods
+ident_table <- data.frame(
+  Method = c(
+    "Cholesky", 
+    "Sign restrictions", 
+    "High-Frequency", 
+    "Narrative", 
+    "Other identification",
+    "Total"
+  ),
+  Count = c(
+    # Extract the counts from the identifcation_shares data frame
+    identifcation_shares$n[1],
+    identifcation_shares$n[4], # Sign restrictions
+    identifcation_shares$n[2], # High-Frequency
+    identifcation_shares$n[3], # Narrative
+    identifcation_shares$n[5], # Other
+    sum(identifcation_shares$n) # Total
+  ),
+  Share = c(
+    # Extract the shares from the identifcation_shares data frame
+    chol,
+    signr,
+    hf,
+    nr,
+    idother,
+    100.00 # Total should be 100%
+  )
+)
+
+# Format the table
+ident_table %>%
+  kable(
+    format = "html",
+    digits = 2,
+    align = c("l", "r", "r"),
+    col.names = c("Identification Method", "Count", "Share (%)"),
+    caption = "Identification Methods: Counts and Shares"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    position = "left"
+  )
+
+
+# Table with number of studies using each identifiaction method ----
+d <- d_no_qc %>% 
+  filter(outcome %in% c("output", "inflation", "rate"), period.month %in% seq(0, 60, by = 3))
+length(unique(d$key))
+
+n_studies_chol <- nrow(unique(d %>% 
+                                filter(group_ident_broad == "chol") %>% 
+                                select(key)))
+n_studies_signr <- nrow(unique(d %>% 
+                                 filter(group_ident_broad == "signr") %>% 
+                                 select(key)))
+n_studies_hf <- nrow(unique(d %>% 
+                              filter(group_ident_broad == "hf") %>% 
+                              select(key)))
+n_studies_nr <- nrow(unique(d %>% 
+                              filter(group_ident_broad == "nr") %>% 
+                              select(key)))
+n_studies_other <- nrow(unique(d %>% 
+                                 filter(group_ident_broad == "idother") %>% 
+                                 select(key)))
+n_studies_total <- sum(
+  n_studies_chol,
+  n_studies_signr,
+  n_studies_hf,
+  n_studies_nr,
+  n_studies_other
+)
+n_studies_total # Can be more than 409 because one study may have several models with different identifaction methods 
+
+nrow(unique(d_no_qc %>% 
+              filter(outcome %in% c("output", "inflation", "rate"), period.month %in% seq(0, 60, by = 3)) %>% 
+              select(key)))
+# Create a data frame for the number of studies using each identification method
+ident_studies_table <- data.frame(
+  Method = c(
+    "Cholesky/SVAR", 
+    "Sign restrictions", 
+    "High-Frequency", 
+    "Narrative", 
+    "Other identification",
+    "Total"
+  ),
+  Count = c(
+    n_studies_chol,
+    n_studies_signr,
+    n_studies_hf,
+    n_studies_nr,
+    n_studies_other,
+    n_studies_total
+  )
+)
+# Format the table
+ident_studies_table %>%
+  kable(
+    format = "html",
+    digits = 2,
+    align = c("l", "r"),
+    col.names = c("Identification Method", "Count"),
+    caption = "Number of Studies Using Each Identification Method"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    position = "left"
+  )
+
+# Publication types ----
+# For each unique d$key in d, give me the d$type
+d_study_types <- d %>% 
+  group_by(key) %>%
+  select(key, type) %>% 
+  unique()
+nrow(d_study_types)
+
+# Count the number of studies for each type
+study_types_count <- d_study_types %>% 
+  group_by(type) %>% 
+  summarise(n = n()) %>% 
+  mutate(share = n / sum(n) * 100)
+# Format the table
+study_types_count %>%
+  kable(
+    format = "html",
+    digits = 2,
+    align = c("l", "r", "r"),
+    col.names = c("Publication Type", "Count", "Share (%)"),
+    caption = "Publication Types: Counts and Shares"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    position = "left"
+  )
+
+
+
+

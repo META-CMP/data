@@ -1,249 +1,20 @@
-# Creates figures and tables from multivariate meta-regression estimations for PEESE
+# Creates figures and tables from MMR estimations for WLS-PEESE
 
-# Source the setup file ---- 
-source(here::here("analysis/working_paper_1/setup_wp_1.R"))
+# Source the MMR preparation file ----
+source(here::here("analysis/working_paper_1/mmr_preparation.R"))
 
 # Potential outlier ---- 
 # One study has strong effects on top journal coefficients and other identification, but there is no obvious reason for excluding the study. 
 # For comparison, activate the line below to remove study with key KB9TBSNM from d_no_qc
 # d_no_qc <- d_no_qc %>% filter(key != "KB9TBSNM")
 
-# Load required libraries ----
-library(plotly) # For interactive plots
-library(JWileymisc) # For winsorizing
-library(patchwork) # For combining plots
-library(viridis) # For color palette in funnel plots
-
-# Source required functions ----
-source(here::here("analysis/R/meta_analysis.R"))
-source(here::here("analysis/R/apply_winsorization.R"))
-source(here::here("analysis/R/create_mmr_coefficient_plot.R"))
-source((here::here("analysis/R/funnel_plot.R")))
-source(here::here("analysis/R/plot_average_irfs.R"))
-
-# Define periods for estimation ----
-chosen_periods <- seq(0, 60, by = 3)
-chosen_periods_tables <- c(
-  3,
-  6,
-  12,
-  18,
-  24,
-  30,
-  36,
-  42,
-  48,
-  54,
-  60
-)
-
-# Define coefficient names and moderator variables ----
-## Baseline model ----
-### PEESE coefficient names 
-peese_coef_name <- c(
-  "(Intercept)" = "Intercept",
-  "variance_winsor"= "Variance"
-)
-### Consolidated identification methods
-ident_mod <- "group_ident_broad"
-ident_coef_name <- c(
-  'group_ident_broadhf' = 'High frequency', 
-  'group_ident_broadnr' = 'Narrative',
-  'group_ident_broadsignr' = 'Sign restrictions',
-  'group_ident_broadidother' = 'Other identificiation '
-)
-### Top journal dummy 
-top_journal_mod <- c("top_5_or_tier") 
-top_journal_coef_name <- c('top_5_or_tier' = 'Top tier publication')
-### CB affiliation dummy
-cb_mod <- c("cbanker")
-cb_coef_name <- c('cbanker' = 'Central bank related')
-### Baseline model combination 
-baseline_mods <- c(ident_mod, top_journal_mod, cb_mod)
-baseline_coef_names <- c(peese_coef_name, ident_coef_name, top_journal_coef_name, cb_coef_name)
-## Robustness models ----
-### Consolidated estimation methods
-est_mod <- "group_est_broad"
-est_coef_name <- c(
-  'group_est_broadlp_ardl' = 'LP and ARDL',
-  'group_est_broadfavar' = 'FAVAR', 
-  'group_est_broadother_var' = 'Other VAR',
-  'group_est_broaddsge' = 'DSGE'
-)
-### Consolidated outcome measures
-output_measure <- "outcome_measure_output_cons"
-output_measure_coef_name <- c(
-  'outcome_measure_output_consip' = 'Ind. prod.',
-  'outcome_measure_output_consgap' = 'Output gap')
-pricelevel_measure <- "outcome_measure_pricelevel_cons"
-pricelevel_measure_coef_name <- c(
-  'outcome_measure_pricelevel_consdeflator' = 'Deflator',
-  'outcome_measure_pricelevel_conswpi' = 'WPI',
-  'outcome_measure_pricelevel_conscore' = 'Core')
-### Consolidated interest rate types
-int_rate_mod <- "group_inttype"
-int_rate_coef_name <- c(
-  'group_inttypeweek_month' = 'weekly/monthly rate',
-  'group_inttypeyear' = 'yearly rate'
-)
-### Publication year and number of citations
-#### Outcome- and horizon-specific de-meaning of pub_year and num_cit 
-d_no_qc <- d_no_qc %>%
-  group_by(outcome, period.month) %>%
-  mutate(
-    pub_year_dm =  pub_year - mean(pub_year, na.rm = TRUE),
-    num_cit_dm = num_cit - mean(num_cit, na.rm = TRUE)
-  ) %>%
-  ungroup()
-pub_year_mod <- "pub_year_dm"
-pub_year_coef_name <- c("pub_year_dm" = "Publication year")
-num_cit_mod <- "num_cit_dm"
-num_cit_coef_name <- c("num_cit_dm" = "# citations")
-### Preferred estimate
-prefer_mod <- "prefer"
-prefer_coef_name <- c("prefer" = "Preferred estimate")
-### Byproduct 
-byproduct_mod <- "byproduct"
-byproduct_coef_name <- c("byproduct" = "By-product")
-### Data frequency 
-freq_mod <- "freq"
-freq_coef_name <- c("freqmonth" = "Monthly data",
-                    "freqannual" = "Yearly data")
-### Panel (vs time series)
-panel_mod <- "panel"
-panel_coef_name <- c("panel" = "Panel")
-
-### Robustness model combinations
-robustness_mods_output <- c(est_mod, 
-                            output_measure, 
-                            int_rate_mod, 
-                            pub_year_mod,
-                            num_cit_mod,
-                            prefer_mod,
-                            byproduct_mod,
-                            freq_mod,
-                            panel_mod)
-robusntess_coef_names_output <- c(est_coef_name, 
-                                  output_measure_coef_name, 
-                                  int_rate_coef_name, 
-                                  pub_year_coef_name,
-                                  num_cit_coef_name,
-                                  prefer_coef_name,
-                                  byproduct_coef_name,
-                                  freq_coef_name,
-                                  panel_coef_name)
-robustness_mods_pricelevel <- c(est_mod, 
-                                pricelevel_measure, 
-                                int_rate_mod,
-                                pub_year_mod,
-                                num_cit_mod,
-                                prefer_mod,
-                                byproduct_mod,
-                                freq_mod,
-                                panel_mod)
-robusntess_coef_names_pricelevel <- c(est_coef_name, 
-                                      int_rate_coef_name, 
-                                      pricelevel_measure_coef_name,
-                                      pub_year_coef_name,
-                                      num_cit_coef_name,
-                                      prefer_coef_name,
-                                      byproduct_coef_name,
-                                      freq_coef_name,
-                                      panel_coef_name)
-
-# Hardcode the maximum of period 0 precision to allow estimation ---- 
-## Create vectors of the columns we want to process ----
-
-se_cols <- c("SE.avg", "SE.upper", "SE.lower")
-precision_cols <- c("precision.avg", "precision.upper", "precision.lower")
-
-for (outcome in unique(d_no_qc$outcome)) {
-  # Subset data for this outcome where period.month == 1
-  subset_data <- d_no_qc[d_no_qc$period.month == 1 & d_no_qc$outcome == outcome, ]
-  
-  # Process SE columns (check against minimums)
-  for (col in se_cols) {
-    winsorized_values <- winsorizor(subset_data[[col]], percentile = wins_para)
-    min_value <- min(winsorized_values)
-    
-    # Only overwrite values that are below the minimum
-    mask <- d_no_qc$period.month == 0 &
-      d_no_qc$outcome == outcome &
-      d_no_qc[[col]] < 2*min_value
-    
-    d_no_qc[mask, col] <- 2*min_value
-  }
-  
-  # Process precision columns (check against maximums)
-  for (col in precision_cols) {
-    winsorized_values <- winsorizor(subset_data[[col]], percentile = wins_para)
-    max_value <- max(winsorized_values)
-    
-    # Only overwrite values that are above the maximum
-    mask <- d_no_qc$period.month == 0 &
-      d_no_qc$outcome == outcome &
-      d_no_qc[[col]] > 2*max_value
-    
-    d_no_qc[mask, col] <- 2*max_value
-  }
-}
-## Compare period 0 (no winsorized) and 1 (winsorized) funnels ----
-### For "output"
-create_funnel_plot(d_no_qc,
-                   outvar = "output",
-                   prd = 1,
-                   se_option = "upper",
-                   legend = FALSE,
-                   wins = wins_para,
-                   opac = 0.1,
-                   ap = FALSE,
-                   type = "standard")
-create_funnel_plot(d_no_qc,
-                   outvar = "output",
-                   prd = 0,
-                   se_option = "upper",
-                   legend = FALSE,
-                   wins = 0,
-                   opac = 0.1,
-                   ap = FALSE,
-                   type = "standard")
-### For "pricelevel"
-create_funnel_plot(d_no_qc,
-                   outvar = "inflation",
-                   prd = 1,
-                   se_option = "upper",
-                   legend = FALSE,
-                   wins = wins_para,
-                   opac = 0.1,
-                   ap = FALSE,
-                   type = "standard")
-### For "rate"
-create_funnel_plot(d_no_qc,
-                   outvar = "rate",
-                   prd = 1,
-                   se_option = "upper",
-                   legend = FALSE,
-                   wins = wins_para,
-                   opac = 0.1,
-                   ap = FALSE,
-                   type = "standard")
-create_funnel_plot(d_no_qc,
-                   outvar = "rate",
-                   prd = 0,
-                   se_option = "upper",
-                   legend = FALSE,
-                   wins = 0,
-                   opac = 0.1,
-                   ap = FALSE,
-                   type = "standard")
-
 # Estimation ----
 
 ## For output ----
 out_var <- "output"
 
-### Baseline model estimation ----
-mmr_output_baseline <- meta_analysis(d_no_qc, 
+### WLS-PEESE model estimation ----
+mmr_output_wls_peese <- meta_analysis(d_no_qc, 
                                      outvar = out_var, 
                                      se_option = "upper", 
                                      periods = chosen_periods,
@@ -254,39 +25,39 @@ mmr_output_baseline <- meta_analysis(d_no_qc,
                                      mods = baseline_mods)
 #### Table ----
 ##### Create html output
-modelsummary::modelsummary(mmr_output_baseline[as.character(chosen_periods_tables)], 
+modelsummary::modelsummary(mmr_output_wls_peese[as.character(chosen_periods_tables)], 
                            output = "gt", 
                            stars = TRUE, 
                            conf_level = conflevel, 
-                           title = paste("Baseline", "PEESE", out_var),
+                           title = paste("WLS-PEESE", out_var),
                            gof_map = "nobs",
-                           coef_map = baseline_coef_names)
+                           coef_map = peese_coef_names)
 ##### Save table as png
-modelsummary::modelsummary(mmr_output_baseline[as.character(chosen_periods_tables)],
-                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_output_baseline", ".png"),
+modelsummary::modelsummary(mmr_output_wls_peese[as.character(chosen_periods_tables)],
+                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_output_wls_peese", ".png"),
                            stars = FALSE,
                            fmt = 3,
                            conf_level = conflevel,
                            gof_map = "nobs",
-                           coef_map = baseline_coef_names)
+                           coef_map = peese_coef_names)
 ##### Save table as tex
-modelsummary::modelsummary(mmr_output_baseline[as.character(chosen_periods_tables)],
-                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_output_baseline", ".tex"),
+modelsummary::modelsummary(mmr_output_wls_peese[as.character(chosen_periods_tables)],
+                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_output_wls_peese", ".tex"),
                            stars = FALSE,
                            fmt = 3,
                            conf_level = conflevel,
                            gof_map = "nobs",
-                           coef_map = baseline_coef_names)
+                           coef_map = peese_coef_names)
 #### Plots ----
 ##### Coefficient plots ----
-(p1 <- create_mmr_coefficient_plot(mmr_output_baseline, "(Intercept)",
+(p1 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "(Intercept)",
                                    custom_title = "Corrected reference response") +
    coord_cartesian(ylim = c(-0.4, 0)) +
    labs(subtitle = "Cholesky/SVAR, no top journal, no CB affiliation") +
    # No axis labels
    theme(axis.title.x = element_blank(),
          axis.title.y = element_blank()))
-(p2 <- create_mmr_coefficient_plot(mmr_output_baseline, "variance_winsor", 
+(p2 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "variance_winsor", 
                                    custom_title = "P-bias coefficient (variance)") +
     coord_cartesian(ylim = c(-1.3, 0)) +
     # No subtitle
@@ -295,18 +66,18 @@ modelsummary::modelsummary(mmr_output_baseline[as.character(chosen_periods_table
     theme(axis.title.x = element_blank(),
           axis.title.y = element_blank()))
 # Combined plot p1, p2:
-(figure_mmr_output_baseline_intercept_p_bias <- (p1 + p2) +
+(figure_mmr_output_wls_peese_intercept_p_bias <- (p1 + p2) +
     plot_annotation(
       caption = "Shaded areas show 67%, 89% and 97% confidence intervals"
     ))
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_baseline_intercept_p_bias.pdf"),
-       plot = figure_mmr_output_baseline_intercept_p_bias,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_peese_intercept_p_bias.pdf"),
+       plot = figure_mmr_output_wls_peese_intercept_p_bias,
        device = "pdf",
        width = 7,
        height = 3)
 y_lims <- c(-0.75, 0.5)
-p3 <- create_mmr_coefficient_plot(mmr_output_baseline, "group_ident_broadhf", 
+p3 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "group_ident_broadhf", 
                                   custom_title = "HF") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -314,7 +85,7 @@ p3 <- create_mmr_coefficient_plot(mmr_output_baseline, "group_ident_broadhf",
   # No axis labels
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
-p4 <- create_mmr_coefficient_plot(mmr_output_baseline, "group_ident_broadnr", 
+p4 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "group_ident_broadnr", 
                                   custom_title = "NR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -322,7 +93,7 @@ p4 <- create_mmr_coefficient_plot(mmr_output_baseline, "group_ident_broadnr",
   # No axis labels
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
-p5 <- create_mmr_coefficient_plot(mmr_output_baseline, "group_ident_broadsignr", 
+p5 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "group_ident_broadsignr", 
                                   custom_title = "SignR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -330,7 +101,7 @@ p5 <- create_mmr_coefficient_plot(mmr_output_baseline, "group_ident_broadsignr",
   # No axis labels
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
-p6 <- create_mmr_coefficient_plot(mmr_output_baseline, "group_ident_broadidother", 
+p6 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "group_ident_broadidother", 
                                   custom_title = "Other") +
   coord_cartesian(ylim = y_lims) + 
   # No subtitle
@@ -339,7 +110,7 @@ p6 <- create_mmr_coefficient_plot(mmr_output_baseline, "group_ident_broadidother
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 # Plot on top journal 
-p7 <- create_mmr_coefficient_plot(mmr_output_baseline, "top_5_or_tier", 
+p7 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "top_5_or_tier", 
                                   custom_title = "Top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -348,7 +119,7 @@ p7 <- create_mmr_coefficient_plot(mmr_output_baseline, "top_5_or_tier",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 # Plot on CB affiliation
-p8 <- create_mmr_coefficient_plot(mmr_output_baseline, "cbanker", 
+p8 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "cbanker", 
                                   custom_title = "CB affiliated") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -363,7 +134,7 @@ p8 <- create_mmr_coefficient_plot(mmr_output_baseline, "cbanker",
       caption = "Shaded areas show 67%, 89% and 97% confidence intervals"
     ))
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_baseline_moderators.pdf"),
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_peese_moderators.pdf"),
        plot = combined_plot,
        device = "pdf",
        width = 7,
@@ -436,7 +207,7 @@ uncorrected_irf <- data.frame(
 prediction <- rbind(prediction, uncorrected_irf)
 
 # Plot corrected effects
-(mmr_output_baseline_corrected_effects_ident <- ggplot(prediction, 
+(mmr_output_wls_peese_corrected_effects_ident <- ggplot(prediction, 
                                                        aes(x = period, 
                                                            color = source, 
                                                            fill = source)) +
@@ -491,8 +262,8 @@ prediction <- rbind(prediction, uncorrected_irf)
                size = 2)
 )
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_baseline_corrected_effects_ident.pdf"),
-       plot = mmr_output_baseline_corrected_effects_ident,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_peese_corrected_effects_ident.pdf"),
+       plot = mmr_output_wls_peese_corrected_effects_ident,
        device = "pdf",
        width = 7,
        height = 5)
@@ -500,7 +271,7 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_baseli
 ####### Compare corrected with sub-sample averages ----
 # Delete uncorrected average
 prediction <- prediction %>% filter(source != "Uncorrected")
-mmr_output_baseline_subsample_averages_vs_corrected_effects_ident <- ggplot(prediction, 
+mmr_output_wls_peese_subsample_averages_vs_corrected_effects_ident <- ggplot(prediction, 
                                                        aes(x = period, 
                                                            color = source, 
                                                            fill = source)) +
@@ -605,7 +376,7 @@ other <- data.frame(
   average = avg_irf_output_idother$data$avg.effect
 )
 # Add uncorrected sub-sample lines to plot
-(mmr_output_baseline_subsample_averages_vs_corrected_effects_ident <- mmr_output_baseline_subsample_averages_vs_corrected_effects_ident +
+(mmr_output_wls_peese_subsample_averages_vs_corrected_effects_ident <- mmr_output_wls_peese_subsample_averages_vs_corrected_effects_ident +
   geom_line(data = chol, aes(x = period, y = average), color = "#112EB8", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) +
   geom_line(data = hf, aes(x = period, y = average), color = "#E41A1C", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) +
   geom_line(data = nr, aes(x = period, y = average), color = "orange", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) + 
@@ -613,8 +384,8 @@ other <- data.frame(
   geom_line(data = other, aes(x = period, y = average), color = "#984EA3", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75))
 
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_baseline_subsample_averages_vs_corrected_effects_ident.pdf"),
-       plot = mmr_output_baseline_subsample_averages_vs_corrected_effects_ident,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_peese_subsample_averages_vs_corrected_effects_ident.pdf"),
+       plot = mmr_output_wls_peese_subsample_averages_vs_corrected_effects_ident,
        device = "pdf",
        width = 7,
        height = 5)
@@ -685,7 +456,7 @@ uncorrected_irf <- data.frame(
 prediction <- rbind(prediction, uncorrected_irf)
 
 # Plot corrected effects
-(mmr_output_baseline_corrected_effects_ident_other_pub <- ggplot(prediction, 
+(mmr_output_wls_peese_corrected_effects_ident_other_pub <- ggplot(prediction, 
                                                        aes(x = period, 
                                                            color = source, 
                                                            fill = source)) +
@@ -744,8 +515,8 @@ prediction <- rbind(prediction, uncorrected_irf)
                size = 2)
 )
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_baseline_corrected_effects_ident_other_pub.pdf"),
-       plot = mmr_output_baseline_corrected_effects_ident_other_pub,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_peese_corrected_effects_ident_other_pub.pdf"),
+       plot = mmr_output_wls_peese_corrected_effects_ident_other_pub,
        device = "pdf",
        width = 7,
        height = 5)
@@ -815,7 +586,7 @@ uncorrected_irf <- data.frame(
 prediction <- rbind(prediction, uncorrected_irf)
 
 # Plot corrected effects
-(mmr_output_baseline_corrected_effects_ident_other_pub <- ggplot(prediction, 
+(mmr_output_wls_peese_corrected_effects_ident_other_pub <- ggplot(prediction, 
                                                                  aes(x = period, 
                                                                      color = source, 
                                                                      fill = source)) +
@@ -870,8 +641,8 @@ prediction <- rbind(prediction, uncorrected_irf)
                size = 2)
 )
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_baseline_corrected_effects_ident_top_journals.pdf"),
-       plot = mmr_output_baseline_corrected_effects_ident_other_pub,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_peese_corrected_effects_ident_top_journals.pdf"),
+       plot = mmr_output_wls_peese_corrected_effects_ident_other_pub,
        device = "pdf",
        width = 7,
        height = 5)
@@ -879,7 +650,7 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_baseli
 
 ### Robustness model estimation ----
 #### Table ----
-mmr_output_robust <- meta_analysis(d_no_qc,
+mmr_output_wls_peese_robust <- meta_analysis(d_no_qc,
                                    outvar = out_var, 
                                    se_option = "upper", 
                                    periods = chosen_periods,
@@ -892,51 +663,51 @@ mmr_output_robust <- meta_analysis(d_no_qc,
                                      robustness_mods_output)
                                    )
 ##### Create html output
-modelsummary::modelsummary(mmr_output_robust[as.character(chosen_periods_tables)],
+modelsummary::modelsummary(mmr_output_wls_peese_robust[as.character(chosen_periods_tables)],
                            output = "gt", 
                            stars = TRUE, 
                            conf_level = conflevel, 
                            title = paste("Robustness", "PEESE", out_var), 
                            gof_map = NULL, 
                            coef_map = c(
-                             baseline_coef_names, 
+                             peese_coef_names, 
                              robusntess_coef_names_output)
                            )
 ##### Save table as png - all controls
-modelsummary::modelsummary(mmr_output_robust[as.character(chosen_periods_tables)],
-                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_output_robust", ".png"),
+modelsummary::modelsummary(mmr_output_wls_peese_robust[as.character(chosen_periods_tables)],
+                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_output_wls_peese_robust", ".png"),
                            stars = FALSE,
                            fmt = 3,
                            conf_level = conflevel,
                            gof_map = "nobs",
                            coef_map = c(
-                             baseline_coef_names,
+                             peese_coef_names,
                              robusntess_coef_names_output)
                            )
 ##### Save table as png - only baseline coefficients 
-modelsummary::modelsummary(mmr_output_robust[as.character(chosen_periods_tables)],
-                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_output_robust_baseline_coef", ".png"),
+modelsummary::modelsummary(mmr_output_wls_peese_robust[as.character(chosen_periods_tables)],
+                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_output_wls_peese_robust_baseline_coef", ".png"),
                            stars = FALSE,
                            fmt = 3,
                            conf_level = conflevel,
                            gof_map = "nobs",
                            coef_map = c(
-                             baseline_coef_names)
+                             peese_coef_names)
                            )
 ##### Save table as tex - only baseline coefficients 
-modelsummary::modelsummary(mmr_output_robust[as.character(chosen_periods_tables)],
-                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_output_robust_baseline_coef", ".tex"),
+modelsummary::modelsummary(mmr_output_wls_peese_robust[as.character(chosen_periods_tables)],
+                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_output_wls_peese_robust_baseline_coef", ".tex"),
                            stars = FALSE,
                            fmt = 3,
                            conf_level = conflevel,
                            gof_map = "nobs",
                            coef_map = c(
-                             baseline_coef_names)
+                             peese_coef_names)
                            )
 
 #### Plots ----
 ##### Coefficient plots ----
-(p1 <- create_mmr_coefficient_plot(mmr_output_robust, "(Intercept)",
+(p1 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "(Intercept)",
                                    custom_title = "Corrected reference response") +
     coord_cartesian(ylim = c(-0.4, 0)) +
     # No subtitle
@@ -947,7 +718,7 @@ modelsummary::modelsummary(mmr_output_robust[as.character(chosen_periods_tables)
     theme(axis.title.x = element_blank(),
           axis.title.y = element_blank()))
 
-(p2 <- create_mmr_coefficient_plot(mmr_output_robust, "variance_winsor", 
+(p2 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "variance_winsor", 
                                    custom_title = "P-bias coefficient (variance)") +
     coord_cartesian(ylim = c(-1.3, 0)) +
     # No subtitle
@@ -957,20 +728,20 @@ modelsummary::modelsummary(mmr_output_robust[as.character(chosen_periods_tables)
           axis.title.y = element_blank()))
 
 # Combined plot p1, p2:
-(figure_mmr_output_robust_intercept_p_bias <- (p1 + p2) +
+(figure_mmr_output_wls_peese_robust_intercept_p_bias <- (p1 + p2) +
     plot_annotation(
       caption = "Shaded areas show 67%, 89% and 97% confidence intervals"
     ))
 
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_robust_intercept_p_bias.pdf"),
-       plot = figure_mmr_output_robust_intercept_p_bias,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_peese_robust_intercept_p_bias.pdf"),
+       plot = figure_mmr_output_wls_peese_robust_intercept_p_bias,
        device = "pdf",
        width = 7,
        height = 3)
 
 y_lims <- c(-0.75, 0.5)
-p3 <- create_mmr_coefficient_plot(mmr_output_robust, "group_ident_broadhf", 
+p3 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_ident_broadhf", 
                                   custom_title = "HF") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -979,7 +750,7 @@ p3 <- create_mmr_coefficient_plot(mmr_output_robust, "group_ident_broadhf",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p4 <- create_mmr_coefficient_plot(mmr_output_robust, "group_ident_broadnr", 
+p4 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_ident_broadnr", 
                                   custom_title = "NR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -988,7 +759,7 @@ p4 <- create_mmr_coefficient_plot(mmr_output_robust, "group_ident_broadnr",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p5 <- create_mmr_coefficient_plot(mmr_output_robust, "group_ident_broadsignr", 
+p5 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_ident_broadsignr", 
                                   custom_title = "SignR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -997,7 +768,7 @@ p5 <- create_mmr_coefficient_plot(mmr_output_robust, "group_ident_broadsignr",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p6 <- create_mmr_coefficient_plot(mmr_output_robust, "group_ident_broadidother", 
+p6 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_ident_broadidother", 
                                   custom_title = "Other") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1006,7 +777,7 @@ p6 <- create_mmr_coefficient_plot(mmr_output_robust, "group_ident_broadidother",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p7 <- create_mmr_coefficient_plot(mmr_output_robust, "top_5_or_tier", 
+p7 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "top_5_or_tier", 
                                   custom_title = "Top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1015,7 +786,7 @@ p7 <- create_mmr_coefficient_plot(mmr_output_robust, "top_5_or_tier",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p8 <- create_mmr_coefficient_plot(mmr_output_robust, "cbanker", 
+p8 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "cbanker", 
                                   custom_title = "CB affiliated") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1024,7 +795,7 @@ p8 <- create_mmr_coefficient_plot(mmr_output_robust, "cbanker",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p9 <- create_mmr_coefficient_plot(mmr_output_robust, "group_est_broadlp_ardl", 
+p9 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_est_broadlp_ardl", 
                                   custom_title = "LP and ARDL") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1033,7 +804,7 @@ p9 <- create_mmr_coefficient_plot(mmr_output_robust, "group_est_broadlp_ardl",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p10 <- create_mmr_coefficient_plot(mmr_output_robust, "group_est_broadfavar", 
+p10 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_est_broadfavar", 
                                    custom_title = "FAVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1042,7 +813,7 @@ p10 <- create_mmr_coefficient_plot(mmr_output_robust, "group_est_broadfavar",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p11 <- create_mmr_coefficient_plot(mmr_output_robust, "group_est_broadother_var", 
+p11 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_est_broadother_var", 
                                    custom_title = "Other VAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1051,7 +822,7 @@ p11 <- create_mmr_coefficient_plot(mmr_output_robust, "group_est_broadother_var"
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p12 <- create_mmr_coefficient_plot(mmr_output_robust, "group_est_broaddsge", 
+p12 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_est_broaddsge", 
                                    custom_title = "DSGE") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1060,7 +831,7 @@ p12 <- create_mmr_coefficient_plot(mmr_output_robust, "group_est_broaddsge",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p13 <- create_mmr_coefficient_plot(mmr_output_robust, "outcome_measure_output_consgap", 
+p13 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "outcome_measure_output_consgap", 
                                    custom_title = "Output gap") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1069,7 +840,7 @@ p13 <- create_mmr_coefficient_plot(mmr_output_robust, "outcome_measure_output_co
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p14 <- create_mmr_coefficient_plot(mmr_output_robust, "outcome_measure_output_consip", 
+p14 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "outcome_measure_output_consip", 
                                    custom_title = "IP") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1078,7 +849,7 @@ p14 <- create_mmr_coefficient_plot(mmr_output_robust, "outcome_measure_output_co
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p15 <- create_mmr_coefficient_plot(mmr_output_robust, "group_inttypeweek_month", 
+p15 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_inttypeweek_month", 
                                    custom_title = "weekly/monthly rate") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1087,7 +858,7 @@ p15 <- create_mmr_coefficient_plot(mmr_output_robust, "group_inttypeweek_month",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p16 <- create_mmr_coefficient_plot(mmr_output_robust, "group_inttypeyear", 
+p16 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_inttypeyear", 
                                    custom_title = "yearly rate") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1096,7 +867,7 @@ p16 <- create_mmr_coefficient_plot(mmr_output_robust, "group_inttypeyear",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p17 <- create_mmr_coefficient_plot(mmr_output_robust, "pub_year_dm", 
+p17 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "pub_year_dm", 
                                    custom_title = "Publication year") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1105,7 +876,7 @@ p17 <- create_mmr_coefficient_plot(mmr_output_robust, "pub_year_dm",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p18 <- create_mmr_coefficient_plot(mmr_output_robust, "num_cit_dm", 
+p18 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "num_cit_dm", 
                                    custom_title = "Number of citations") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1114,7 +885,7 @@ p18 <- create_mmr_coefficient_plot(mmr_output_robust, "num_cit_dm",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p19 <- create_mmr_coefficient_plot(mmr_output_robust, "prefer", 
+p19 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "prefer", 
                                    custom_title = "Preferred") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1123,7 +894,7 @@ p19 <- create_mmr_coefficient_plot(mmr_output_robust, "prefer",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p20 <- create_mmr_coefficient_plot(mmr_output_robust, "byproduct", 
+p20 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "byproduct", 
                                    custom_title = "By-product") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1132,7 +903,7 @@ p20 <- create_mmr_coefficient_plot(mmr_output_robust, "byproduct",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p21 <- create_mmr_coefficient_plot(mmr_output_robust, "freqmonth", 
+p21 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "freqmonth", 
                                    custom_title = "Monthly") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1141,7 +912,7 @@ p21 <- create_mmr_coefficient_plot(mmr_output_robust, "freqmonth",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p22 <- create_mmr_coefficient_plot(mmr_output_robust, "freqannual", 
+p22 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "freqannual", 
                                    custom_title = "Annual") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1150,7 +921,7 @@ p22 <- create_mmr_coefficient_plot(mmr_output_robust, "freqannual",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p23 <- create_mmr_coefficient_plot(mmr_output_robust, "panel", 
+p23 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "panel", 
                                    custom_title = "Panel") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1167,7 +938,7 @@ combined_plot <- (p3 + p4) / (p5 + p6) / (p7 + p8)
       caption = "Shaded areas show 67%, 89% and 97% confidence intervals"
     ))
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_robust_moderators.pdf"),
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_peese_robust_moderators.pdf"),
        plot = combined_plot,
        device = "pdf",
        width = 7,
@@ -1181,7 +952,7 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_robust
     ))
 
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_robust_moderators_est.pdf"),
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_peese_robust_moderators_est.pdf"),
        plot = combined_plot_est,
        device = "pdf",
        width = 7,
@@ -1201,8 +972,8 @@ empty_plot <- ggplot() +
 ## For price level ----
 out_var <- "inflation"
 
-### Baseline model estimation ----
-mmr_pricelevel_baseline <- meta_analysis(d_no_qc, 
+### WLS-PEESE model estimation ----
+mmr_pricelevel_wls_peese <- meta_analysis(d_no_qc, 
                                          outvar = out_var, 
                                          se_option = "upper", 
                                          periods = chosen_periods,
@@ -1213,32 +984,32 @@ mmr_pricelevel_baseline <- meta_analysis(d_no_qc,
                                          mods = baseline_mods)
 #### Table ----
 ##### Create html output
-modelsummary::modelsummary(mmr_pricelevel_baseline[as.character(chosen_periods_tables)], 
+modelsummary::modelsummary(mmr_pricelevel_wls_peese[as.character(chosen_periods_tables)], 
                            output = "gt", 
                            stars = TRUE, 
                            conf_level = conflevel, 
-                           title = paste("Baseline", "PEESE", out_var), 
+                           title = paste("WLS-PEESE", out_var), 
                            gof_map = NULL, 
-                           coef_map = baseline_coef_names)
+                           coef_map = peese_coef_names)
 ##### Save table as png
-modelsummary::modelsummary(mmr_pricelevel_baseline[as.character(chosen_periods_tables)],
-                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_pricelevel_baseline", ".png"),
+modelsummary::modelsummary(mmr_pricelevel_wls_peese[as.character(chosen_periods_tables)],
+                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_pricelevel_wls_peese", ".png"),
                            stars = FALSE,
                            fmt = 3,
                            conf_level = conflevel,
                            gof_map = "nobs",
-                           coef_map = baseline_coef_names)
+                           coef_map = peese_coef_names)
 ##### Save table as tex
-modelsummary::modelsummary(mmr_pricelevel_baseline[as.character(chosen_periods_tables)],
-                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_pricelevel_baseline", ".tex"),
+modelsummary::modelsummary(mmr_pricelevel_wls_peese[as.character(chosen_periods_tables)],
+                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_pricelevel_wls_peese", ".tex"),
                            stars = FALSE,
                            fmt = 3,
                            conf_level = conflevel,
                            gof_map = "nobs",
-                           coef_map = baseline_coef_names)
+                           coef_map = peese_coef_names)
 #### Plots ----
 ##### Coefficient plots ----
-(p1 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "(Intercept)", 
+(p1 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "(Intercept)", 
                                    custom_title = "Corrected reference response") +
    coord_cartesian(ylim = c(-0.2, 0.1)) +
    # No subtitle
@@ -1249,7 +1020,7 @@ modelsummary::modelsummary(mmr_pricelevel_baseline[as.character(chosen_periods_t
    theme(axis.title.x = element_blank(),
          axis.title.y = element_blank()))
 
-(p2 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "variance_winsor", 
+(p2 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "variance_winsor", 
                                    custom_title = "P-bias coefficient (variance)") +
     coord_cartesian(ylim = c(-2.5, 0)) +
     # No subtitle
@@ -1259,18 +1030,18 @@ modelsummary::modelsummary(mmr_pricelevel_baseline[as.character(chosen_periods_t
           axis.title.y = element_blank()))
 
 # Combined plot p1, p2:
-(figure_mmr_pricelevel_baseline_intercept_p_bias <- (p1 + p2) +
+(figure_mmr_pricelevel_wls_peese_intercept_p_bias <- (p1 + p2) +
     plot_annotation(
       caption = "Shaded areas show 67%, 89% and 97% confidence intervals"
     ))
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_intercept_p_bias.pdf"),
-       plot = figure_mmr_pricelevel_baseline_intercept_p_bias,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wls_peese_intercept_p_bias.pdf"),
+       plot = figure_mmr_pricelevel_wls_peese_intercept_p_bias,
        device = "pdf",
        width = 7,
        height = 3)
 y_lims <- c(-0.75, 0.5)
-p3 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "group_ident_broadhf", 
+p3 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "group_ident_broadhf", 
                                   custom_title = "HF") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1279,7 +1050,7 @@ p3 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "group_ident_broadhf"
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p4 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "group_ident_broadnr", 
+p4 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "group_ident_broadnr", 
                                   custom_title = "NR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1288,7 +1059,7 @@ p4 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "group_ident_broadnr"
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p5 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "group_ident_broadsignr", 
+p5 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "group_ident_broadsignr", 
                                   custom_title = "SignR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1297,7 +1068,7 @@ p5 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "group_ident_broadsig
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p6 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "group_ident_broadidother", 
+p6 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "group_ident_broadidother", 
                                   custom_title = "Other") +
   coord_cartesian(ylim = y_lims) + 
   # No subtitle
@@ -1307,7 +1078,7 @@ p6 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "group_ident_broadido
         axis.title.y = element_blank())
 
 # Plot on top journal 
-p7 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "top_5_or_tier", 
+p7 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "top_5_or_tier", 
                                   custom_title = "Top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1317,7 +1088,7 @@ p7 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "top_5_or_tier",
         axis.title.y = element_blank())
 
 # Plot on CB affiliation
-p8 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "cbanker", 
+p8 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "cbanker", 
                                   custom_title = "CB affiliated") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1333,7 +1104,7 @@ p8 <- create_mmr_coefficient_plot(mmr_pricelevel_baseline, "cbanker",
       caption = "Shaded areas show 67%, 89% and 97% confidence intervals"
     ))
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_moderators.pdf"),
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wls_peese_moderators.pdf"),
        plot = combined_plot,
        device = "pdf",
        width = 7,
@@ -1405,7 +1176,7 @@ uncorrected_irf <- data.frame(
 prediction <- rbind(prediction, uncorrected_irf)
 
 # Plot corrected effects
-(mmr_pricelevel_baseline_corrected_effects_ident <- ggplot(prediction, 
+(mmr_pricelevel_wls_peese_corrected_effects_ident <- ggplot(prediction, 
                                                            aes(x = period, 
                                                                color = source, 
                                                                fill = source)) +
@@ -1463,8 +1234,8 @@ prediction <- rbind(prediction, uncorrected_irf)
                color = "#1f77b4", 
                size = 2))
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_corrected_effects_ident.pdf"),
-       plot = mmr_pricelevel_baseline_corrected_effects_ident,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wls_peese_corrected_effects_ident.pdf"),
+       plot = mmr_pricelevel_wls_peese_corrected_effects_ident,
        device = "pdf",
        width = 7,
        height = 5)
@@ -1472,7 +1243,7 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_ba
 ####### Compare corrected with sub-sample averages ----
 # Delete uncorrected average
 prediction <- prediction %>% filter(source != "Uncorrected")
-(mmr_pricelevel_baseline_subsample_averages_vs_corrected_effects_ident <-  ggplot(prediction, 
+(mmr_pricelevel_wls_peese_subsample_averages_vs_corrected_effects_ident <-  ggplot(prediction, 
                                                                                     aes(x = period, 
                                                                                     color = source, 
                                                                                     fill = source)) +
@@ -1578,7 +1349,7 @@ other <- data.frame(
   average = avg_irf_pricelevel_idother$data$avg.effect
 )
 # Add uncorrected sub-sample lines to plot
-(mmr_pricelevel_baseline_subsample_averages_vs_corrected_effects_ident <- mmr_pricelevel_baseline_subsample_averages_vs_corrected_effects_ident +
+(mmr_pricelevel_wls_peese_subsample_averages_vs_corrected_effects_ident <- mmr_pricelevel_wls_peese_subsample_averages_vs_corrected_effects_ident +
     geom_line(data = chol, aes(x = period, y = average), color = "#112EB8", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) +
     geom_line(data = hf, aes(x = period, y = average), color = "#E41A1C", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) +
     geom_line(data = nr, aes(x = period, y = average), color = "orange", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75) + 
@@ -1586,8 +1357,8 @@ other <- data.frame(
     geom_line(data = other, aes(x = period, y = average), color = "#984EA3", linetype = "dashed", inherit.aes = FALSE, linewidth = 0.75))
 
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_subsample_averages_vs_corrected_effects_ident.pdf"),
-       plot = mmr_pricelevel_baseline_subsample_averages_vs_corrected_effects_ident,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wls_peese_subsample_averages_vs_corrected_effects_ident.pdf"),
+       plot = mmr_pricelevel_wls_peese_subsample_averages_vs_corrected_effects_ident,
        device = "pdf",
        width = 7,
        height = 5)
@@ -1659,7 +1430,7 @@ uncorrected_irf <- data.frame(
 prediction <- rbind(prediction, uncorrected_irf)
 
 # Plot corrected effects
-(mmr_pricelevel_baseline_corrected_effects_ident_other_pub <- ggplot(prediction, 
+(mmr_pricelevel_wls_peese_corrected_effects_ident_other_pub <- ggplot(prediction, 
                                                            aes(x = period, 
                                                                color = source, 
                                                                fill = source)) +
@@ -1713,8 +1484,8 @@ prediction <- rbind(prediction, uncorrected_irf)
                color = "#1f77b4", 
                size = 2))
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_corrected_effects_ident_other_pub.pdf"),
-       plot = mmr_pricelevel_baseline_corrected_effects_ident_other_pub,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wls_peese_corrected_effects_ident_other_pub.pdf"),
+       plot = mmr_pricelevel_wls_peese_corrected_effects_ident_other_pub,
        device = "pdf",
        width = 7,
        height = 5)
@@ -1784,7 +1555,7 @@ uncorrected_irf <- data.frame(
 prediction <- rbind(prediction, uncorrected_irf)
 
 # Plot corrected effects
-(mmr_pricelevel_baseline_corrected_effects_ident_other_pub <- ggplot(prediction, 
+(mmr_pricelevel_wls_peese_corrected_effects_ident_other_pub <- ggplot(prediction, 
                                                                      aes(x = period, 
                                                                          color = source, 
                                                                          fill = source)) +
@@ -1838,15 +1609,15 @@ prediction <- rbind(prediction, uncorrected_irf)
                color = "#1f77b4", 
                size = 2))
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_baseline_corrected_effects_ident_top_journals.pdf"),
-       plot = mmr_pricelevel_baseline_corrected_effects_ident_other_pub,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wls_peese_corrected_effects_ident_top_journals.pdf"),
+       plot = mmr_pricelevel_wls_peese_corrected_effects_ident_other_pub,
        device = "pdf",
        width = 7,
        height = 5)
 
 ### Robustness model estimation ----
 #### Table ----
-mmr_pricelevel_robust <- meta_analysis(d_no_qc,
+mmr_pricelevel_wls_peese_robust <- meta_analysis(d_no_qc,
                                        outvar = out_var, 
                                        se_option = "upper", 
                                        periods = chosen_periods,
@@ -1859,49 +1630,49 @@ mmr_pricelevel_robust <- meta_analysis(d_no_qc,
                                          robustness_mods_pricelevel)
                                        )
 ##### Create html output
-modelsummary::modelsummary(mmr_pricelevel_robust[as.character(chosen_periods_tables)],
+modelsummary::modelsummary(mmr_pricelevel_wls_peese_robust[as.character(chosen_periods_tables)],
                            output = "gt", 
                            stars = TRUE, 
                            conf_level = conflevel, 
                            title = paste("Robustness", "PEESE", out_var), 
                            gof_map = NULL, 
                            coef_map = c(
-                             baseline_coef_names, 
+                             peese_coef_names, 
                              robusntess_coef_names_pricelevel)
                            )
 ##### Save table as png
-modelsummary::modelsummary(mmr_pricelevel_robust[as.character(chosen_periods_tables)],
-                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_pricelevel_robust", ".png"),
+modelsummary::modelsummary(mmr_pricelevel_wls_peese_robust[as.character(chosen_periods_tables)],
+                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_pricelevel_wls_peese_robust", ".png"),
                            stars = FALSE,
                            fmt = 3,
                            # statistic = NULL,
                            conf_level = conflevel,
                            gof_map = "nobs",
                            coef_map = c(
-                             baseline_coef_names,
+                             peese_coef_names,
                              robusntess_coef_names_pricelevel)
                            )
 ##### Save table as png - only baseline coefficients 
-modelsummary::modelsummary(mmr_pricelevel_robust[as.character(chosen_periods_tables)],
-                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_pricelevel_robust_baseline_coef", ".png"),
+modelsummary::modelsummary(mmr_pricelevel_wls_peese_robust[as.character(chosen_periods_tables)],
+                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_pricelevel_wls_peese_robust_baseline_coef", ".png"),
                            stars = FALSE,
                            fmt = 3,
                            # statistic = NULL,
                            conf_level = conflevel,
                            gof_map = "nobs",
-                           coef_map = baseline_coef_names)
+                           coef_map = peese_coef_names)
 ##### Save table as tex - only baseline coefficients 
-modelsummary::modelsummary(mmr_pricelevel_robust[as.character(chosen_periods_tables)],
-                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_pricelevel_robust_baseline_coef", ".tex"),
+modelsummary::modelsummary(mmr_pricelevel_wls_peese_robust[as.character(chosen_periods_tables)],
+                           output = paste0("analysis/working_paper_1/tables/mmr_peese/", "mmr_pricelevel_wls_peese_robust_baseline_coef", ".tex"),
                            stars = FALSE,
                            fmt = 3,
                            # statistic = NULL,
                            conf_level = conflevel,
                            gof_map = "nobs",
-                           coef_map = baseline_coef_names)
+                           coef_map = peese_coef_names)
 #### Plots ----
 ##### Coefficient plots ----
-(p1 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "(Intercept)",
+(p1 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "(Intercept)",
                                    custom_title = "Corrected reference response") +
    coord_cartesian(ylim = c(-0.2, 0.1)) +
    # No subtitle
@@ -1912,7 +1683,7 @@ modelsummary::modelsummary(mmr_pricelevel_robust[as.character(chosen_periods_tab
    theme(axis.title.x = element_blank(),
          axis.title.y = element_blank()))
 
-(p2 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "variance_winsor", 
+(p2 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "variance_winsor", 
                                    custom_title = "P-bias coefficient (variance)") +
     coord_cartesian(ylim = c(-2.5, 0)) +
     # No subtitle
@@ -1922,19 +1693,19 @@ modelsummary::modelsummary(mmr_pricelevel_robust[as.character(chosen_periods_tab
           axis.title.y = element_blank()))
 
 # Combined plot p1, p2:
-(figure_mmr_pricelevel_robust_intercept_p_bias <- (p1 + p2) +
+(figure_mmr_pricelevel_wls_peese_robust_intercept_p_bias <- (p1 + p2) +
     plot_annotation(
       caption = "Shaded areas show 67%, 89% and 97% confidence intervals"
     ))
 
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_robust_intercept_p_bias.pdf"),
-       plot = figure_mmr_pricelevel_robust_intercept_p_bias,
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wls_peese_robust_intercept_p_bias.pdf"),
+       plot = figure_mmr_pricelevel_wls_peese_robust_intercept_p_bias,
        device = "pdf",
        width = 7,
        height = 3)
 y_lims <- c(-0.75, 0.5)
-p3 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_ident_broadhf", 
+p3 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_ident_broadhf", 
                                   custom_title = "HF") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1943,7 +1714,7 @@ p3 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_ident_broadhf",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p4 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_ident_broadnr", 
+p4 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_ident_broadnr", 
                                   custom_title = "NR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1952,7 +1723,7 @@ p4 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_ident_broadnr",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p5 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_ident_broadsignr", 
+p5 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_ident_broadsignr", 
                                   custom_title = "SignR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1961,7 +1732,7 @@ p5 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_ident_broadsignr
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p6 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_ident_broadidother", 
+p6 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_ident_broadidother", 
                                   custom_title = "Other") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1970,7 +1741,7 @@ p6 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_ident_broadidoth
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p7 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "top_5_or_tier", 
+p7 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "top_5_or_tier", 
                                   custom_title = "Top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1979,7 +1750,7 @@ p7 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "top_5_or_tier",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p8 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "cbanker", 
+p8 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "cbanker", 
                                   custom_title = "CB affiliated") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1988,7 +1759,7 @@ p8 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "cbanker",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p9 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_est_broadlp_ardl", 
+p9 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_est_broadlp_ardl", 
                                   custom_title = "LP and ARDL") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -1997,7 +1768,7 @@ p9 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_est_broadlp_ardl
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p10 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_est_broadfavar", 
+p10 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_est_broadfavar", 
                                    custom_title = "FAVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2006,7 +1777,7 @@ p10 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_est_broadfavar"
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p11 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_est_broadother_var", 
+p11 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_est_broadother_var", 
                                    custom_title = "Other VAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2015,7 +1786,7 @@ p11 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_est_broadother_
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p12 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_est_broaddsge", 
+p12 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_est_broaddsge", 
                                    custom_title = "DSGE") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2024,7 +1795,7 @@ p12 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_est_broaddsge",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p13 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "outcome_measure_pricelevel_conscore", 
+p13 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "outcome_measure_pricelevel_conscore", 
                                    custom_title = "Core") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2033,7 +1804,7 @@ p13 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "outcome_measure_price
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p14 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "outcome_measure_pricelevel_consdeflator", 
+p14 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "outcome_measure_pricelevel_consdeflator", 
                                    custom_title = "Deflator") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2042,7 +1813,7 @@ p14 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "outcome_measure_price
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p15 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "outcome_measure_pricelevel_conswpi", 
+p15 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "outcome_measure_pricelevel_conswpi", 
                                    custom_title = "WPI") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2051,7 +1822,7 @@ p15 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "outcome_measure_price
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p16 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_inttypeweek_month", 
+p16 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_inttypeweek_month", 
                                    custom_title = "weekly/monthly rate") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2060,7 +1831,7 @@ p16 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_inttypeweek_mon
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p17 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_inttypeyear", 
+p17 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_inttypeyear", 
                                    custom_title = "yearly rate") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2069,7 +1840,7 @@ p17 <- create_mmr_coefficient_plot(mmr_pricelevel_robust, "group_inttypeyear",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p18 <- create_mmr_coefficient_plot(mmr_output_robust, "pub_year_dm", 
+p18 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "pub_year_dm", 
                                    custom_title = "Publication year") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2078,7 +1849,7 @@ p18 <- create_mmr_coefficient_plot(mmr_output_robust, "pub_year_dm",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p19 <- create_mmr_coefficient_plot(mmr_output_robust, "num_cit_dm", 
+p19 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "num_cit_dm", 
                                    custom_title = "Number of citations") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2087,7 +1858,7 @@ p19 <- create_mmr_coefficient_plot(mmr_output_robust, "num_cit_dm",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p20 <- create_mmr_coefficient_plot(mmr_output_robust, "prefer", 
+p20 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "prefer", 
                                    custom_title = "Preferred") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2096,7 +1867,7 @@ p20 <- create_mmr_coefficient_plot(mmr_output_robust, "prefer",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p21 <- create_mmr_coefficient_plot(mmr_output_robust, "byproduct", 
+p21 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "byproduct", 
                                    custom_title = "By-product") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2105,7 +1876,7 @@ p21 <- create_mmr_coefficient_plot(mmr_output_robust, "byproduct",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p22 <- create_mmr_coefficient_plot(mmr_output_robust, "freqmonth", 
+p22 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "freqmonth", 
                                    custom_title = "Monthly") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2114,7 +1885,7 @@ p22 <- create_mmr_coefficient_plot(mmr_output_robust, "freqmonth",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p23 <- create_mmr_coefficient_plot(mmr_output_robust, "freqannual", 
+p23 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "freqannual", 
                                    custom_title = "Annual") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2123,7 +1894,7 @@ p23 <- create_mmr_coefficient_plot(mmr_output_robust, "freqannual",
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p24 <- create_mmr_coefficient_plot(mmr_output_robust, "panel", 
+p24 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "panel", 
                                    custom_title = "Panel") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
@@ -2139,7 +1910,7 @@ p24 <- create_mmr_coefficient_plot(mmr_output_robust, "panel",
       caption = "Shaded areas show 67%, 89% and 97% confidence intervals"
     ))
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_robust_moderators.pdf"),
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wls_peese_robust_moderators.pdf"),
        plot = combined_plot,
        device = "pdf",
        width = 7,
@@ -2156,7 +1927,7 @@ empty_plot <- ggplot() +
       caption = "Shaded areas show 67%, 89% and 97% confidence intervals"
     ))
 # Save as pdf
-ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_robust_moderators_est.pdf"),
+ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wls_peese_robust_moderators_est.pdf"),
        plot = combined_plot_est,
        device = "pdf",
        width = 7,

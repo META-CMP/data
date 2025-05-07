@@ -769,12 +769,12 @@ orca(figure_irf_range_correction_rate,
 # Joint figure ---- 
 figure_irf_range_correction_all <- subplot(subplot(figure_irf_range_correction_output,
                                                    figure_irf_range_correction_pricelevel,
-                                                   shareY = TRUE),
+                                                   shareY = FALSE),
                                            figure_irf_range_correction_rate, widths = c(.66, .33)
                                            ) %>%
   layout(legend = list(orientation = "h",   # show entries horizontally
                        xanchor = "center",  # use center of legend as anchor
-                       x = 0.5, y = -0.3, 
+                       x = 0.5, y = -0.15, 
                        font = list(size = titles_size))) %>%        # put legend in center of x-axis
   layout(title = "",
          xaxis2 = list(title = "Months")
@@ -783,14 +783,16 @@ figure_irf_range_correction_all <- subplot(subplot(figure_irf_range_correction_o
   yaxis = list(#title = "Effect (%)",
   range = list(y_lims[1], y_lims[2])),
   yaxis2 = list(#title = "Effect (%-points)",
-  range = list(-1, 1.5))
+  range = list(y_lims[1], y_lims[2])),
+  yaxis3 = list(#title = "Effect (%-points)",
+    range = list(-1, 1.5))
   ) %>%
   layout(annotations = list(
     list(x = 30, y = y_lims[2], text = "Output response (%)", showarrow = FALSE, xref = "x", yref = "y",
          xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
     list(x = 30, y = y_lims[2], text = "Price level response (%)", showarrow = FALSE, xref = "x2", yref = "y",
          xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
-    list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y2",
+    list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y3",
          xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
   ), margin = list(t = 60)
   )
@@ -801,7 +803,14 @@ orca(figure_irf_range_correction_all,
      file = paste0("analysis/working_paper_1/figures/irf_range_correction/", subfolder, "/figure_irf_range_correction_all.pdf"),
      scale = NULL,
      width = 1034,
-     height = 486 * 0.8
+     height = 486 * 1.2
+)
+# HIGHER VERSION
+orca(figure_irf_range_correction_all,
+     file = paste0("analysis/working_paper_1/figures/irf_range_correction/", subfolder, "/figure_irf_range_correction_all_higher.pdf"),
+     scale = NULL,
+     width = 1034,
+     height = 486 * 1.5
 )
 
 beepr::beep()

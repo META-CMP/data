@@ -55,7 +55,7 @@ for (outcome in unique(d_no_qc$outcome)) {
   }
 }
 
-# Redefining top_5_or_tier and cbanker as factors
+# Redefining top_5_or_tier and cbanker as factors ----
 d_no_qc$top_5_or_tier <- factor(d_no_qc$top_5_or_tier, levels = c(0, 1), labels = c("other publication", "top journal"))
 d_no_qc$cbanker <- factor(d_no_qc$cbanker, levels = c(0, 1), labels = c("non-central bank affiliated", "central bank affiliated"))
 

@@ -12,6 +12,8 @@ source(here::here("analysis/R/plot_counterfactual.R"))
 sig_thresholds <- c(-1, -1.645, -1.96, -2.576)
 calibration_threshold <- -5
 
+# wins_para <- 0 # To check for influence of winsorization
+
 # For employment ----
 out_var <- "emp"
 

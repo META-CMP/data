@@ -93,7 +93,7 @@ results_bma_output <- bma_loop(data = bma_data,
                                    "cbanker"
                                  ),
                                  burn_ = 1e6,
-                                 iter_ = 3e6,
+                                 iter_ = 2e6,
                                  nmodel = 5000,
                                  mprior = "dilut",
                                  g = "UIP"
@@ -107,7 +107,7 @@ saveRDS(results_bma_output, here::here("analysis/working_paper_1/figures/mmr/bma
 
 results_bma_output_no_fixed <- bma_loop(data = bma_data,
                                burn_ = 1e6,
-                               iter_ = 3e6,
+                               iter_ = 2e6,
                                nmodel = 5000,
                                mprior = "dilut",
                                g = "UIP"
@@ -1109,7 +1109,7 @@ results_bma_pricelevel <- bma_loop(data = bma_data,
                                    "cbanker"
                                  ),
                                  burn_ = 1e6,
-                                 iter_ = 3e6,
+                                 iter_ = 2e6,
                                  nmodel = 5000,
                                  mprior = "dilut",
                                  g = "UIP")
@@ -1121,7 +1121,7 @@ saveRDS(results_bma_pricelevel, here::here("analysis/working_paper_1/figures/mmr
 ## BMA analysis without fixed baseline regressors ----
 results_bma_pricelevel_no_fixed <- bma_loop(data = bma_data,
                                             burn_ = 1e6,
-                                            iter_ = 3e6,
+                                            iter_ = 2e6,
                                             nmodel = 5000,
                                             mprior = "dilut",
                                             g = "UIP")
@@ -2018,3 +2018,4 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_pricelevel_robust
       theme = theme(plot.title = element_text(hjust = 0.5))
     ))
 
+beepr::beep()

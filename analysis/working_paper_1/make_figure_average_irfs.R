@@ -18,42 +18,8 @@ source(here::here("analysis/R/kasy_MetaStudiesPlots.R"))
 # Define general folder path to save figures and their data
 save_path <- "analysis/working_paper_1/figures/average_irfs/"
 
-# Hardcode the maximum of period 0 precision to allow estimation in period 0 ---- 
-## Create vectors of the columns we want to process ----
-
-se_cols <- c("SE.avg", "SE.upper", "SE.lower")
-precision_cols <- c("precision.avg", "precision.upper", "precision.lower")
-
-for (outcome in unique(d_no_qc$outcome)) {
-  # Subset data for this outcome where period.month == 1
-  subset_data <- d_no_qc[d_no_qc$period.month == 1 & d_no_qc$outcome == outcome, ]
-  
-  # Process SE columns (check against minimums)
-  for (col in se_cols) {
-    winsorized_values <- winsorizor(subset_data[[col]], percentile = wins_para)
-    min_value <- min(winsorized_values)
-    
-    # Only overwrite values that are below the minimum
-    mask <- d_no_qc$period.month == 0 &
-      d_no_qc$outcome == outcome &
-      d_no_qc[[col]] < 2*min_value
-    
-    d_no_qc[mask, col] <- 2*min_value
-  }
-  
-  # Process precision columns (check against maximums)
-  for (col in precision_cols) {
-    winsorized_values <- winsorizor(subset_data[[col]], percentile = wins_para)
-    max_value <- max(winsorized_values)
-    
-    # Only overwrite values that are above the maximum
-    mask <- d_no_qc$period.month == 0 &
-      d_no_qc$outcome == outcome &
-      d_no_qc[[col]] > 2*max_value
-    
-    d_no_qc[mask, col] <- 2*max_value
-  }
-}
+# Capping procedure for period 0 precision and se ----
+source(here::here("analysis/working_paper_1/period_0_capping_se_prec.R"))
 
 # Redefining top_5_or_tier and cbanker as factors
 d_no_qc$top_5_or_tier <- factor(d_no_qc$top_5_or_tier, levels = c(0, 1), labels = c("other publication", "top journal"))

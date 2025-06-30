@@ -4,39 +4,29 @@
 ]                     %% tabularray outer close
 {                     %% tabularray inner open
 colspec={Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]},
-column{1}={halign=l,},
-column{2}={halign=c,},
-column{3}={halign=c,},
-column{4}={halign=c,},
-column{5}={halign=c,},
-column{6}={halign=c,},
-column{7}={halign=c,},
-column{8}={halign=c,},
-column{9}={halign=c,},
-column{10}={halign=c,},
-column{11}={halign=c,},
-column{12}={halign=c,},
-hline{18}={1,2,3,4,5,6,7,8,9,10,11,12}{solid, 0.05em, black},
+column{2,3,4,5,6,7,8,9,10,11,12}={}{halign=c,},
+column{1}={}{halign=l,},
+hline{18}={1,2,3,4,5,6,7,8,9,10,11,12}{solid, black, 0.05em},
 }                     %% tabularray inner close
 \toprule
 & 3 & 6 & 12 & 18 & 24 & 30 & 36 & 42 & 48 & 54 & 60 \\ \midrule %% TinyTableHeader
-Intercept              & \num{0.039}   & \num{0.072}   & \num{0.082}   & \num{0.055}   & \num{0.016}   & \num{-0.008}  & \num{-0.114}  & \num{-0.078}  & \num{-0.026}  & \num{-0.008}  & \num{-0.114}  \\
+Intercept & \num{0.039} & \num{0.072} & \num{0.082} & \num{0.055} & \num{0.016} & \num{-0.008} & \num{-0.114} & \num{-0.078} & \num{-0.026} & \num{-0.008} & \num{-0.114} \\
 & (\num{0.011}) & (\num{0.019}) & (\num{0.033}) & (\num{0.044}) & (\num{0.054}) & (\num{0.061}) & (\num{0.097}) & (\num{0.068}) & (\num{0.062}) & (\num{0.067}) & (\num{0.053}) \\
-Variance               & \num{-1.421}  & \num{-0.982}  & \num{-0.868}  & \num{-0.670}  & \num{-0.605}  & \num{-0.609}  & \num{-0.558}  & \num{-0.519}  & \num{-0.534}  & \num{-0.474}  & \num{-0.346}  \\
+Variance & \num{-1.421} & \num{-0.982} & \num{-0.868} & \num{-0.670} & \num{-0.605} & \num{-0.609} & \num{-0.558} & \num{-0.519} & \num{-0.534} & \num{-0.474} & \num{-0.346} \\
 & (\num{0.192}) & (\num{0.129}) & (\num{0.106}) & (\num{0.086}) & (\num{0.076}) & (\num{0.072}) & (\num{0.070}) & (\num{0.073}) & (\num{0.077}) & (\num{0.074}) & (\num{0.091}) \\
-High frequency         & \num{-0.087}  & \num{-0.172}  & \num{-0.170}  & \num{-0.148}  & \num{-0.099}  & \num{-0.033}  & \num{-0.085}  & \num{-0.053}  & \num{0.113}   & \num{0.202}   & \num{0.361}   \\
+High frequency & \num{-0.087} & \num{-0.172} & \num{-0.170} & \num{-0.148} & \num{-0.099} & \num{-0.033} & \num{-0.085} & \num{-0.053} & \num{0.113} & \num{0.202} & \num{0.361} \\
 & (\num{0.077}) & (\num{0.053}) & (\num{0.059}) & (\num{0.061}) & (\num{0.071}) & (\num{0.064}) & (\num{0.107}) & (\num{0.117}) & (\num{0.107}) & (\num{0.110}) & (\num{0.176}) \\
-Narrative              & \num{-0.030}  & \num{-0.044}  & \num{-0.071}  & \num{-0.090}  & \num{-0.101}  & \num{-0.071}  & \num{-0.095}  & \num{-0.037}  & \num{-0.069}  & \num{-0.216}  & \num{-0.329}  \\
+Narrative & \num{-0.030} & \num{-0.044} & \num{-0.071} & \num{-0.090} & \num{-0.101} & \num{-0.071} & \num{-0.095} & \num{-0.037} & \num{-0.069} & \num{-0.216} & \num{-0.329} \\
 & (\num{0.010}) & (\num{0.013}) & (\num{0.024}) & (\num{0.033}) & (\num{0.039}) & (\num{0.036}) & (\num{0.068}) & (\num{0.055}) & (\num{0.068}) & (\num{0.110}) & (\num{0.096}) \\
-Sign restrictions      & \num{-0.046}  & \num{-0.084}  & \num{-0.142}  & \num{-0.159}  & \num{-0.160}  & \num{-0.136}  & \num{-0.226}  & \num{-0.188}  & \num{-0.170}  & \num{-0.141}  & \num{-0.151}  \\
+Sign restrictions & \num{-0.046} & \num{-0.084} & \num{-0.142} & \num{-0.159} & \num{-0.160} & \num{-0.136} & \num{-0.226} & \num{-0.188} & \num{-0.170} & \num{-0.141} & \num{-0.151} \\
 & (\num{0.013}) & (\num{0.023}) & (\num{0.030}) & (\num{0.038}) & (\num{0.046}) & (\num{0.055}) & (\num{0.056}) & (\num{0.055}) & (\num{0.050}) & (\num{0.056}) & (\num{0.078}) \\
-Other identificiation  & \num{-0.023}  & \num{-0.014}  & \num{-0.017}  & \num{-0.001}  & \num{-0.007}  & \num{-0.043}  & \num{-0.051}  & \num{-0.085}  & \num{-0.205}  & \num{-0.215}  & \num{-0.172}  \\
+Other identificiation & \num{-0.023} & \num{-0.014} & \num{-0.017} & \num{-0.001} & \num{-0.007} & \num{-0.043} & \num{-0.051} & \num{-0.085} & \num{-0.205} & \num{-0.215} & \num{-0.172} \\
 & (\num{0.021}) & (\num{0.040}) & (\num{0.058}) & (\num{0.069}) & (\num{0.072}) & (\num{0.083}) & (\num{0.078}) & (\num{0.078}) & (\num{0.120}) & (\num{0.120}) & (\num{0.133}) \\
-Top tier publication   & \num{0.030}   & \num{0.055}   & \num{0.066}   & \num{0.092}   & \num{0.081}   & \num{-0.014}  & \num{0.025}   & \num{-0.036}  & \num{-0.014}  & \num{0.059}   & \num{0.059}   \\
+Top tier publication & \num{0.030} & \num{0.055} & \num{0.066} & \num{0.092} & \num{0.081} & \num{-0.014} & \num{0.025} & \num{-0.036} & \num{-0.014} & \num{0.059} & \num{0.059} \\
 & (\num{0.018}) & (\num{0.021}) & (\num{0.028}) & (\num{0.033}) & (\num{0.039}) & (\num{0.044}) & (\num{0.062}) & (\num{0.059}) & (\num{0.059}) & (\num{0.070}) & (\num{0.088}) \\
-Central bank related   & \num{-0.002}  & \num{-0.018}  & \num{-0.020}  & \num{-0.013}  & \num{-0.006}  & \num{-0.009}  & \num{0.039}   & \num{-0.021}  & \num{-0.009}  & \num{-0.034}  & \num{0.002}   \\
+Central bank related & \num{-0.002} & \num{-0.018} & \num{-0.020} & \num{-0.013} & \num{-0.006} & \num{-0.009} & \num{0.039} & \num{-0.021} & \num{-0.009} & \num{-0.034} & \num{0.002} \\
 & (\num{0.009}) & (\num{0.012}) & (\num{0.019}) & (\num{0.023}) & (\num{0.027}) & (\num{0.030}) & (\num{0.056}) & (\num{0.039}) & (\num{0.033}) & (\num{0.041}) & (\num{0.040}) \\
-Num.Obs.               & \num{1623}    & \num{1622}    & \num{1645}    & \num{1584}    & \num{1569}    & \num{1437}    & \num{1338}    & \num{1219}    & \num{998}     & \num{795}     & \num{496}     \\
+Num.Obs. & \num{1623} & \num{1622} & \num{1645} & \num{1584} & \num{1569} & \num{1437} & \num{1338} & \num{1219} & \num{998} & \num{795} & \num{496} \\
 \bottomrule
 \end{tblr}
 \end{table}

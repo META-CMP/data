@@ -15,6 +15,9 @@ source(here::here("analysis/R/kasy_MetaStudiesFunctions.R"))
 source(here::here("analysis/R/kasy_RobustVariance.R"))
 source(here::here("analysis/R/kasy_MetaStudiesPlots.R"))
 
+# Capping procedure for period 0 precision and se ----
+source(here::here("analysis/working_paper_1/period_0_capping_se_prec.R"))
+
 # Sub-folder for figures ----
 subfolder <- "alt_unweighted_only"
 # This version:
@@ -23,7 +26,7 @@ subfolder <- "alt_unweighted_only"
 ## PEESE unweighted
 ## WAAP (2.8, horizon-based model selection) unweighted
 # Sampling: no, full sample
-# Winsorization: 0, 0.01, 0.02, 0.03, 0.04, 0.05 (only up to 0.03 for interest rate)
+# Winsorization: 0, 0.01, 0.02, 0.03, 0.04, 0.05
 
 # Define additional functions ----
 
@@ -98,8 +101,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "FAT-PET", 
       cluster_se = TRUE),
@@ -109,8 +110,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "PEESE", 
       cluster_se = TRUE),
@@ -120,8 +119,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = FALSE,
@@ -261,8 +258,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "FAT-PET", 
       cluster_se = TRUE),
@@ -272,8 +267,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "PEESE", 
       cluster_se = TRUE),
@@ -283,8 +276,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = FALSE,
@@ -427,8 +418,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "FAT-PET", 
       cluster_se = TRUE),
@@ -438,8 +427,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "PEESE", 
       cluster_se = TRUE),
@@ -449,8 +436,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = FALSE,

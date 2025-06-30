@@ -39,16 +39,21 @@ output_ak <- meta_analysis(d_no_qc,
 )
 
 ## Create combined plots ----
+# Version without confidence bands:
 plots <- list()
-# # Version without confidence bands:
-# for (month in months) {
-#   plot_name <- paste0("p", month)
-#   plots[[plot_name]] <- output_ak[[as.character(month)]]$plot + 
-#     theme_minimal() + 
-#     labs(subtitle = paste("Month", month)) + 
-#     labs(y = "Publication probability")
-# }
+for (month in months) {
+  plot_name <- paste0("p", month)
+  plots[[plot_name]] <- output_ak[[as.character(month)]]$plot +
+    theme_minimal() +
+    labs(subtitle = paste("Month", month)) +
+    labs(y = "Publication probability")
+}
+# All quarters
+combined_plot_all <- plots$p3 + plots$p6  + plots$p9 + plots$p12 + plots$p15  + plots$p18 + plots$p21 + plots$p24 + plots$p27 + plots$p30 + plots$p33 + plots$p36 + plots$p39 + plots$p42 + plots$p45 + plots$p48 + plots$p51  + plots$p54  + plots$p57 +plots$p60 + 
+  plot_layout(nrow = 1, byrow = TRUE) # As one row
+combined_plot_all
 # With confidence bands
+plots <- list()
 for (month in months) {
   plot_name <- paste0("p", month)
   
@@ -87,10 +92,6 @@ for (month in months) {
     labs(subtitle = paste("Month", month)) + 
     labs(y = "Publication probability")
 }
-# All quarters
-combined_plot_all <- plots$p3 + plots$p6  + plots$p9 + plots$p12 + plots$p15  + plots$p18 + plots$p21 + plots$p24 + plots$p27 + plots$p30 + plots$p33 + plots$p36 + plots$p39 + plots$p42 + plots$p45 + plots$p48 + plots$p51  + plots$p54  + plots$p57 +plots$p60 + 
-  plot_layout(nrow = 1, byrow = TRUE) # As one row
-combined_plot_all
 # Every two quarters up to 4 years
 combined_plot_two_quarters <- plots$p6 + plots$p12+ plots$p18+ plots$p24+ plots$p30+ plots$p36 + plots$p42 + plots$p48 +
   plot_layout(nrow = 1, byrow = TRUE) # As one row
@@ -112,7 +113,7 @@ ggsave("analysis/working_paper_1/figures/publication_probability/figure_publicat
        height = 6)
 
 # All periods (appendix)
-ggsave("analysis/working_paper_1/figures/publication_probability/figure_publication_probabiltiy_output_all_periods.pdf", 
+ggsave("analysis/working_paper_1/figures/publication_probability/figure_publication_probabiltiy_output_all_periods_no_bounds.pdf", 
        combined_plot_all, 
        width = 36, 
        height = 16)
@@ -138,15 +139,20 @@ pricelevel_ak <- meta_analysis(d_no_qc,
 )
 ## Create combined plots ----
 plots <- list()
-# # Version without confidence bands:
-# for (month in months) {
-#   plot_name <- paste0("p", month)
-#   plots[[plot_name]] <- pricelevel_ak[[as.character(month)]]$plot + 
-#     theme_minimal() + 
-#     labs(subtitle = paste("Month", month)) + 
-#     labs(y = "Publication probability")
-# }
+# Version without confidence bands:
+for (month in months) {
+  plot_name <- paste0("p", month)
+  plots[[plot_name]] <- pricelevel_ak[[as.character(month)]]$plot +
+    theme_minimal() +
+    labs(subtitle = paste("Month", month)) +
+    labs(y = "Publication probability")
+}
+# All quarters
+combined_plot_all <- plots$p3 + plots$p6  + plots$p9 + plots$p12 + plots$p15  + plots$p18 + plots$p21 + plots$p24 + plots$p27 + plots$p30 + plots$p33 + plots$p36 + plots$p39 + plots$p42 + plots$p45 + plots$p48 + plots$p51  + plots$p54  + plots$p57 +plots$p60 + 
+  plot_layout(nrow = 1, byrow = TRUE) # As one row
+combined_plot_all
 # With confidence bands
+plots <- list()
 for (month in months) {
   plot_name <- paste0("p", month)
   
@@ -185,10 +191,6 @@ for (month in months) {
     labs(subtitle = paste("Month", month)) + 
     labs(y = "Publication probability")
 }
-# All quarters
-combined_plot_all <- plots$p3 + plots$p6  + plots$p9 + plots$p12 + plots$p15  + plots$p18 + plots$p21 + plots$p24 + plots$p27 + plots$p30 + plots$p33 + plots$p36 + plots$p39 + plots$p42 + plots$p45 + plots$p48 + plots$p51  + plots$p54  + plots$p57 +plots$p60 + 
-  plot_layout(nrow = 1, byrow = TRUE) # As one row
-combined_plot_all
 # Every two quarters up to 4 years
 combined_plot_two_quarters <- plots$p6 + plots$p12+ plots$p18+ plots$p24+ plots$p30+ plots$p36 + plots$p42 + plots$p48 +
   plot_layout(nrow = 1, byrow = TRUE) # As one row
@@ -210,7 +212,7 @@ ggsave("analysis/working_paper_1/figures/publication_probability/figure_publicat
        width = 16, 
        height = 6)
 # All periods (appendix)
-ggsave("analysis/working_paper_1/figures/publication_probability/figure_publication_probability_pricelevel_all_periods.pdf",
+ggsave("analysis/working_paper_1/figures/publication_probability/figure_publication_probability_pricelevel_all_periods_no_bounds.pdf",
        combined_plot_all, 
        width = 36, 
        height = 16) 
@@ -277,15 +279,20 @@ rate_ak <- meta_analysis(d_no_qc,
 )
 ## Create combined plots ----
 plots <- list()
-# # Version without confidence bands:
-# for (month in months) {
-#   plot_name <- paste0("p", month)
-#   plots[[plot_name]] <- rate_ak[[as.character(month)]]$plot + 
-#     theme_minimal() + 
-#     labs(subtitle = paste("Month", month)) + 
-#     labs(y = "Publication probability")
-# }
+# Version without confidence bands:
+for (month in months) {
+  plot_name <- paste0("p", month)
+  plots[[plot_name]] <- rate_ak[[as.character(month)]]$plot +
+    theme_minimal() +
+    labs(subtitle = paste("Month", month)) +
+    labs(y = "Publication probability")
+}
+# All quarters
+combined_plot_all <- plots$p3 + plots$p6  + plots$p9 + plots$p12 + plots$p15  + plots$p18 + plots$p21 + plots$p24 + plots$p27 + plots$p30 + plots$p33 + plots$p36 + plots$p39 + plots$p42 + plots$p45 + plots$p48 + plots$p51  + plots$p54  + plots$p57 +plots$p60 + 
+  plot_layout(nrow = 1, byrow = TRUE) # As one row
+combined_plot_all
 # With confidence bands
+plots <- list()
 month <- c(3, 12, 24, 36, 48) # Months to plot
 for (month in months) {
   plot_name <- paste0("p", month)
@@ -325,10 +332,6 @@ for (month in months) {
     labs(subtitle = paste("Month", month)) + 
     labs(y = "Publication probability")
 }
-# All quarters
-combined_plot_all <- plots$p3 + plots$p6  + plots$p9 + plots$p12 + plots$p15  + plots$p18 + plots$p21 + plots$p24 + plots$p27 + plots$p30 + plots$p33 + plots$p36 + plots$p39 + plots$p42 + plots$p45 + plots$p48 + plots$p51  + plots$p54  + plots$p57 +plots$p60 + 
-  plot_layout(nrow = 1, byrow = TRUE) # As one row
-combined_plot_all
 # Every two quarters up to 4 years
 combined_plot_two_quarters <- plots$p6 + plots$p12+ plots$p18+ plots$p24+ plots$p30+ plots$p36 + plots$p42 + plots$p48 +
   plot_layout(nrow = 1, byrow = TRUE) # As one row
@@ -350,11 +353,8 @@ ggsave("analysis/working_paper_1/figures/publication_probability/figure_publicat
        width = 16, 
        height = 6)
 # All periods (appendix)
-ggsave("analysis/working_paper_1/figures/publication_probability/figure_publication_probability_rate_all_periods.pdf",
+ggsave("analysis/working_paper_1/figures/publication_probability/figure_publication_probability_rate_all_periods_no_bounds.pdf",
        combined_plot_all, 
        width = 36, 
        height = 16) 
-
-
-
 

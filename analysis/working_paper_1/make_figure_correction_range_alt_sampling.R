@@ -15,6 +15,9 @@ source(here::here("analysis/R/kasy_MetaStudiesFunctions.R"))
 source(here::here("analysis/R/kasy_RobustVariance.R"))
 source(here::here("analysis/R/kasy_MetaStudiesPlots.R"))
 
+# Capping procedure for period 0 precision and se ----
+source(here::here("analysis/working_paper_1/period_0_capping_se_prec.R"))
+
 # Sub-folder for figures ----
 subfolder <- "alt_sampling"
 # This version:
@@ -27,7 +30,7 @@ subfolder <- "alt_sampling"
 ## WAAP (2.8, horizon-based model selection) unweighted
 ## AK
 # Sampling: 1 model per study, repeated 10 times
-# Winsorization: 0, 0.01, 0.02, 0.03, 0.04, 0.05 (only up to 0.02 for rate)
+# Winsorization: 0, 0.01, 0.02, 0.03, 0.04, 0.05
 
 # Define additional functions ----
 
@@ -114,8 +117,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "FAT-PET", 
       cluster_se = TRUE),
@@ -125,8 +126,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = FALSE,
       prec_weighted = TRUE,
       estimation = "FAT-PET",
@@ -138,8 +137,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "PEESE", 
       cluster_se = TRUE),
@@ -149,8 +146,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = FALSE,
       prec_weighted = TRUE,
       estimation = "PEESE",
@@ -162,8 +157,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = TRUE,
@@ -178,8 +171,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = FALSE,
@@ -194,8 +185,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "AK",
       cluster_se = TRUE,
@@ -336,8 +325,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "FAT-PET", 
       cluster_se = TRUE),
@@ -347,8 +334,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = FALSE,
       prec_weighted = TRUE,
       estimation = "FAT-PET",
@@ -360,8 +345,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "PEESE", 
       cluster_se = TRUE),
@@ -371,8 +354,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = FALSE,
       prec_weighted = TRUE,
       estimation = "PEESE",
@@ -384,8 +365,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = TRUE,
@@ -400,8 +379,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = FALSE,
@@ -416,8 +393,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "AK",
       cluster_se = TRUE,
@@ -550,20 +525,21 @@ orca(figure_irf_range_correction_pricelevel,
 # For interest rate ----
 out_var <- "rate"
 
-# Set range of winsorization levels for estimations (higher levels fails due to singularity issues)
-wins_para_levels <- c(0, 0.01, 0.02)
+# Restrict range of winsorization levels for AK estimation (higher values fail due to singularity issues)
+wins_para_levels_ak <- c(0, 0.01, 0.02)  # Restricted range for AK method
 
-# Function to perform multiple meta-analyses for a given wins level for interest rate
+# Modified perform_meta_analysis function for interest rate to allow for restriction of wins levels for AK
 perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12) {
-  list(
+  # Check if this wins level is available for AK
+  wins_ak <- ifelse(wins %in% wins_para_levels_ak, wins, NA)
+  
+  results <- list(
     fatpet_uw = meta_analysis(
       data = data,
       outvar = out_var,
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "FAT-PET", 
       cluster_se = TRUE),
@@ -573,8 +549,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = FALSE,
       prec_weighted = TRUE,
       estimation = "FAT-PET",
@@ -586,8 +560,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "PEESE", 
       cluster_se = TRUE),
@@ -597,8 +569,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = FALSE,
       prec_weighted = TRUE,
       estimation = "PEESE",
@@ -610,8 +580,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = TRUE,
@@ -626,8 +594,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = FALSE,
@@ -635,15 +601,19 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       prec_weighted = FALSE,
       estimation = "UWLS",
       cluster_se = TRUE
-    ),
-    AK = meta_analysis(
+    )
+  )
+  
+  # Only add AK if wins level is available for AK
+  if (!is.na(wins_ak)) {
+    results$AK = meta_analysis(
       data = data,
       outvar = out_var,
       se_option = se_opt,
       periods = chosen_periods,
-      wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
+      wins = wins_ak,
+      
+      first_period_wins_mean = wins_ak,
       prec_weighted = FALSE,
       estimation = "AK",
       cluster_se = TRUE,
@@ -653,7 +623,73 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       AK_conf_level = conflevel,
       ak_plot = "both"
     )
+  }
+  
+  return(results)
+}
+
+# Modified analyze_subsample_model function for interest rate
+analyze_subsample_model <- function(subsample_id) {
+  
+  # First sample one model per study
+  subsample <- filtered_data %>%
+    distinct(key, model_id) %>%
+    group_by(key) %>%
+    slice_sample(n = 1) %>%
+    left_join(filtered_data, by = c("key", "model_id"))
+  
+  # Run all methods with their respective winsorization levels
+  results_list <- lapply(wins_para_levels, function(wins) perform_meta_analysis(subsample, wins))
+  names(results_list) <- paste0("wins_", wins_para_levels)
+  
+  # For interest rate, handle missing AK results
+  if (out_var == "rate") {
+    # Get AK results from max available winsorization level
+    ak_results_max <- results_list[["wins_0.02"]][["AK"]]
+    
+    for (wins in wins_para_levels[wins_para_levels > 0.02]) {
+      wins_name <- paste0("wins_", wins)
+      if (is.null(results_list[[wins_name]][["AK"]])) {
+        # Don't copy - just leave it NULL
+        # The combine_results function will skip NULL entries
+      }
+    }
+  }
+  
+  # Combine results for all methods (handle FAT-PET methods too)
+  final_fatpet_uw <- do.call(rbind, combine_results(results_list, "fatpet_uw"))
+  final_fatpet <- do.call(rbind, combine_results(results_list, "fatpet"))
+  final_peese_uw <- do.call(rbind, combine_results(results_list, "peese_uw"))
+  final_peese <- do.call(rbind, combine_results(results_list, "peese"))
+  final_waap_uw <- do.call(rbind, combine_results(results_list, "waap_uw"))
+  final_waap <- do.call(rbind, combine_results(results_list, "waap"))
+  
+  # For AK, only include results where it was actually computed
+  if (out_var == "rate") {
+    ak_results_to_combine <- list()
+    for (wins in wins_para_levels_ak) {
+      wins_name <- paste0("wins_", wins)
+      if (!is.null(results_list[[wins_name]][["AK"]])) {
+        ak_results_to_combine[[wins_name]] <- results_list[[wins_name]]
+      }
+    }
+    final_ak <- do.call(rbind, combine_results(ak_results_to_combine, "AK"))
+  } else {
+    final_ak <- do.call(rbind, combine_results(results_list, "AK"))
+  }
+  
+  # Combine all method results into a single final data frame
+  final_df <- rbind(final_fatpet_uw,
+                    final_fatpet,
+                    final_peese_uw,
+                    final_peese,
+                    final_waap_uw,
+                    final_waap,
+                    final_ak
   )
+  final_df$subsample <- subsample_id
+  
+  return(final_df)
 }
 
 filtered_data <- d_no_qc %>%

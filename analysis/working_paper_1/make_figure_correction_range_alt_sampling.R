@@ -102,9 +102,6 @@ wins_para_levels <- c(0, 0.01, 0.02, 0.03, 0.04, 0.05)
 # Define periods for estimation
 chosen_periods <- seq(0, 60, by = 3)
 
-# Set seed for reproducibility (due to sampling below) ----
-set.seed(42)
-
 # For output ----
 out_var <- "output"
 

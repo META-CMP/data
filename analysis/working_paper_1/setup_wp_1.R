@@ -33,3 +33,5 @@ horizons <- c(
 y_lims <- c(-2.7, 0.7)
 titles_size <- 16
 
+# Set seed for reproducibility ----
+set.seed(42)

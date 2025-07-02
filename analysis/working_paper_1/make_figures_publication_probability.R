@@ -135,7 +135,7 @@ pricelevel_ak <- meta_analysis(d_no_qc,
                                AK_symmetric = FALSE,
                                AK_conf_level = conflevel,
                                ak_plot = "pub_prob_only",
-                               AK_plot_prob_y_range = c(0, 20) # Use c(0, 12.5) for narrower plots without confidence bands 
+                               AK_plot_prob_y_range = c(0, 15) # Use c(0, 12.5) for narrower plots without confidence bands 
 )
 ## Create combined plots ----
 plots <- list()

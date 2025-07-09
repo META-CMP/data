@@ -1,19 +1,3 @@
-
-__TO DOs:__
-
-- [ ] Renaming of paths with spaces " "
-- [ ] Rework of folder structure? Does it all make sense?
-- [ ] All links working correctly? (after final update of folder names)
-- [ ] Make consistent throughout repo: 10714 vs 10,714
-- [ ] Delete outdated or irrelevant files
-- [ ] All sub-README.md's mentioned in main README.md?
-- [ ] Die `packages_for_full_text_download` aus der Nextcloud in den post-AS Ordner überschreiben?
-- [x] rankings und citations data aus nextcloud hier her
-- [ ] Codebook aktualisieren - [dieses R-File](https://github.com/META-CMP/data/blob/documentation_fts/edit_codebook.R) dazu benutzen, damit Änderungen leicht einsehbar bleiben 
-- [ ] How to Issues aktualisieren
-- [ ] Alle variablen (auch die aus xlsx files etc.) definiert (idealerweise im codebook)?
-- [ ] all R code should be properly documented
-
 # Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy
 
 This repository contains all raw and transformed data for our [pre-registered meta-study on the macroeconomic effects of conventional monetary policy](https://osf.io/cduq4). Below, we refer to the documentation of our data collection, management and transformation, as well as scripts for our data analyses.

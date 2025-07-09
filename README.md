@@ -1,9 +1,17 @@
 # Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy
 
-This repository contains all raw and transformed data for our [pre-registered meta-study on the macroeconomic effects of conventional monetary policy](https://osf.io/cduq4). Below, we refer to the documentation of our data collection, management and transformation, as well as scripts for our data analyses.
-
 > [!IMPORTANT]
+>
+> **Pre-registration:**
+>
 > The pre-registration and the pre-analysis plan for our meta-study can be found at [https://osf.io/cduq4](https://osf.io/cduq4).
+>
+> **Research papers:**
+> 
+> Enzinger, M., Gechert, S., Heimberger, P., Prante, F., & Romero, D. F. (n.d.). **The overstated effects of conventional monetary policy on output and prices**. **[OSF Preprint]** [**[Replication files]**](https://github.com/META-CMP/data/tree/main/analysis/working_paper_1) 
+> 
+
+This repository contains all raw and transformed data for our pre-registered **meta-study on the macroeconomic effects of conventional monetary policy**. Below, we provide guidance on the documentation of our data collection, data processing and transformation, and the scripts for the data analyses.
 
 ---
 
@@ -11,8 +19,8 @@ This repository contains all raw and transformed data for our [pre-registered me
 
 ### Literature data base search
 
-As a first step, we conducted a comprehensive search for literature that estimates effects of monetary policy shocks on output, (un)employment or the price level.
-We detailed our search strategy for potentially relevant literature in [Sec. 3.3 and 3.4 of our pre-registration](https://osf.io/4jxk3). We used the [EconLit](https://www.aeaweb.org/econlit/) and the [Google Scholar](https://scholar.google.com/) databases for our search of primary studies. Due to differences in their search behaviour[^1], we decided to use one comprehensive query for EconLit and multiple simpler search queries for Google Scholar.
+We conducted a comprehensive search for literature that estimates effects of monetary policy shocks on output, (un)employment or the price level.
+We detailed our search strategy for relevant literature in [Sec. 3.3 and 3.4 of our pre-registration](https://osf.io/4jxk3). We used the [EconLit](https://www.aeaweb.org/econlit/) and the [Google Scholar](https://scholar.google.com/) databases for our search of primary studies. Due to differences in their search behaviour[^1], we decided to use one comprehensive query for EconLit and multiple simpler search queries for Google Scholar.
 
 [^1]: Check [Sec. 3.3 of the pre-registration](https://osf.io/4jxk3) for details.
 

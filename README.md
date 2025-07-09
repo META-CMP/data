@@ -19,7 +19,7 @@ This repository contains all raw and transformed data for our pre-registered **m
 
 ### Literature data base search
 
-We conducted a comprehensive search for literature that estimates effects of monetary policy shocks on output, (un)employment or the price level.
+We conducted a comprehensive search for literature that econometrically estimates effects of monetary policy shocks on output, (un)employment or the price level.
 We detailed our search strategy for relevant literature in [Sec. 3.3 and 3.4 of our pre-registration](https://osf.io/4jxk3). We used the [EconLit](https://www.aeaweb.org/econlit/) and the [Google Scholar](https://scholar.google.com/) databases for our search of primary studies. Due to differences in their search behaviour[^1], we decided to use one comprehensive query for EconLit and multiple simpler search queries for Google Scholar.
 
 [^1]: Check [Sec. 3.3 of the pre-registration](https://osf.io/4jxk3) for details.

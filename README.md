@@ -30,12 +30,6 @@ We detailed our search strategy for relevant literature in [Sec. 3.3 and 3.4 of 
 This yielded 7455 bibliographic entries from our EconLit search and 10810 bibliographic entries from our Google scholar search. After de-duplication, checks for the availability of abstracts and the inclusion of additional studies from related existing meta-studies (see [here](data/study_search/database_search/processed
 /preparation_for_abstract_screening) for detailed documentation of these steps and related files), our consolidated dataset of primary studies with available abstracts totaled at 10714 entries.
 
-- [x] outline steps to get to our dataset
-- [x] refer to folder and files
-- [x] refer to more detailed documentation therin
-- [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
-- [ ] check if something important in quarto docs
-
 ### Abstract screening
 
 Our dataset of 10714 studies then entered into the artificial intelligence-supported abstract screening to exclude clearly ineligible studies according to our eligibility criteria as defined in [Sec. 3.5 of our pre-registration](https://osf.io/4jxk3). The title and abstract screening was conducted independently by two researchers using [ASReview](https://asreview.nl/). [Sec. 3.6.1 of our pre-registration](https://osf.io/4jxk3) presents the details of the abstract screening process. [Sec. 3.7.1 of our pre-registration](https://osf.io/4jxk3) defines the stopping rules for the abstract screening phase. See [here](data/study_search/database_search/processed/abstract_screening) for further documentation and related files of the abstract screening.

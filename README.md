@@ -1,17 +1,23 @@
-# Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy
-
-> [!IMPORTANT]
+> [!NOTE]
 >
-> **Pre-registration:**
+> # Do monetary policy shocks affect output, employment, and prices? Meta-analyses on the effects of conventional monetary policy
 >
-> The pre-registration and the pre-analysis plan for our meta-study can be found at [https://osf.io/cduq4](https://osf.io/cduq4).
+> ## About:
+>  
+> This repository contains replication files and documentation for our **meta-study on the macroeconomic effects of conventional monetary policy**. Below, we provide guidance on our research process and the documentation of our data collection, data processing and transformation, and the scripts for the data analyses.
+> 
+> ## Project:
+> 
+> This repository is part of the research project [Monetary Policy and Energy Prices](https://www.tu-chemnitz.de/wirtschaft/vwl4/Makrooekonomie/MORPEP.php.en) funded by the [European Macro Policy Network (EMPN)](https://empn.eu/).
+> 
+> ## Pre-registration:
 >
-> **Research papers:**
+> The pre-registration and pre-analysis plan for our meta-study can be found at [https://osf.io/cduq4](https://osf.io/cduq4).
+>
+> ## Research papers:
 > 
 > Enzinger, M., Gechert, S., Heimberger, P., Prante, F., & Romero, D. F. (n.d.). **The overstated effects of conventional monetary policy on output and prices**. **[OSF Preprint]** [**[Replication files]**](https://github.com/META-CMP/data/tree/main/analysis/working_paper_1) 
-> 
-
-This repository contains all raw and transformed data for our pre-registered **meta-study on the macroeconomic effects of conventional monetary policy**. Below, we provide guidance on the documentation of our data collection, data processing and transformation, and the scripts for the data analyses.
+>
 
 ---
 

@@ -1,4 +1,4 @@
-setwd("~/data/data/study search/database search/processed/post_AS/packages_for_full_text_download")
+setwd("~/data/data/study_search/database_search/processed/post_AS/packages_for_full_text_download")
 getwd()
 library(readxl)
 file.list <- 1:26

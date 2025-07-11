@@ -14,6 +14,12 @@ Total results from our EconLit search: 7455 bibliographic entries.
 
 Date of search: 9 February 2023
 
+## Files: 
+
+- The `.zip` [file](https://github.com/META-CMP/data/blob/main/data/study%20search/database%20search/raw/EconLit%20search/38ecfbf0-25c0-4cfb-bd0e-5fc4bbe0c62e.zip) is the original file as retrieved from EconLit.
+- The `.ris` [file](https://github.com/META-CMP/data/blob/main/data/study%20search/database%20search/raw/EconLit%20search/EL%20-%20Query%20-%20monetary%20policy%20shocks%20AND%20(%E2%80%9Cindustrial%20production%E2%80%9D%20OR%20output%20OR%20GDP%20OR%20%E2%80%9Ceconomic%20growth%E2%80%9D%20OR%20%E2%80%9Ceconomic%20activity%E2%80%9D%20OR%20employment%20OR%20unemployment%20OR%20inflation%20OR%20%E2%80%9Cprice%20level%E2%80%9D%20OR%20%E2%80%9CGDP%20deflator%E2%80%9D%20OR%20CPI).ris) is the unzipped version of the original file and can be opened with bibliographic software.
+- We also provide the converted `.csv` [version](https://github.com/META-CMP/data/blob/main/data/study%20search/database%20search/raw/EconLit%20search/EL%20-%20Query%20-%20monetary%20policy%20shocks%20AND%20(%E2%80%9Cindustrial%20production%E2%80%9D%20OR%20output%20OR%20GDP%20OR%20%E2%80%9Ceconomic%20growth%E2%80%9D%20OR%20%E2%80%9Ceconomic%20activity%E2%80%9D%20OR%20employment%20OR%20unemployment%20OR%20inflation%20OR%20%E2%80%9Cprice%20level%E2%80%9D%20OR%20%E2%80%9CGDP%20deflator%E2%80%9D%20OR%20CPI).csv) of the original file for ease of access.
+
 ## Persistent link to our EconLit search: 
 
 [https://search.ebscohost.com/login.aspx?direct=true&db=eoh&bquery=monetary+policy+shocks+AND+(+(%e2%80%9cindustrial+production%e2%80%9d+OR+output+OR+GDP+OR+%e2%80%9ceconomic+growth%e2%80%9d+OR+%e2%80%9ceconomic+activity%e2%80%9d+OR+employment+OR+unemployment+OR+inflation+OR+%e2%80%9cprice+level%e2%80%9d+OR+%e2%80%9cGDP+deflator%e2%80%9d+OR+CPI)+)&type=1&searchMode=And&site=ehost-live](https://search.ebscohost.com/login.aspx?direct=true&db=eoh&bquery=monetary+policy+shocks+AND+(+(%e2%80%9cindustrial+production%e2%80%9d+OR+output+OR+GDP+OR+%e2%80%9ceconomic+growth%e2%80%9d+OR+%e2%80%9ceconomic+activity%e2%80%9d+OR+employment+OR+unemployment+OR+inflation+OR+%e2%80%9cprice+level%e2%80%9d+OR+%e2%80%9cGDP+deflator%e2%80%9d+OR+CPI)+)&type=1&searchMode=And&site=ehost-live)
@@ -24,11 +30,3 @@ Date of search: 9 February 2023
 > You might need a subscription or institutional access to EconLit to open this link.
 >
 > If you click on this link, the search will be performed again. The number of results is based on the current state of the EconLit database, which will be different from the state at the time of our search. The number of results and the order will therefore most likely be different from the search we performed on 9 February 2023.
-
-## Files: 
-
-- The `.zip` [file](https://github.com/META-CMP/data/blob/main/data/study%20search/database%20search/raw/EconLit%20search/38ecfbf0-25c0-4cfb-bd0e-5fc4bbe0c62e.zip) is the original file as retrieved from EconLit.
-- The `.ris` [file](https://github.com/META-CMP/data/blob/main/data/study%20search/database%20search/raw/EconLit%20search/EL%20-%20Query%20-%20monetary%20policy%20shocks%20AND%20(%E2%80%9Cindustrial%20production%E2%80%9D%20OR%20output%20OR%20GDP%20OR%20%E2%80%9Ceconomic%20growth%E2%80%9D%20OR%20%E2%80%9Ceconomic%20activity%E2%80%9D%20OR%20employment%20OR%20unemployment%20OR%20inflation%20OR%20%E2%80%9Cprice%20level%E2%80%9D%20OR%20%E2%80%9CGDP%20deflator%E2%80%9D%20OR%20CPI).ris) is the unzipped version of the original file and can be opened with bibliographic software.
-- We also provide the converted `.csv` [version](https://github.com/META-CMP/data/blob/main/data/study%20search/database%20search/raw/EconLit%20search/EL%20-%20Query%20-%20monetary%20policy%20shocks%20AND%20(%E2%80%9Cindustrial%20production%E2%80%9D%20OR%20output%20OR%20GDP%20OR%20%E2%80%9Ceconomic%20growth%E2%80%9D%20OR%20%E2%80%9Ceconomic%20activity%E2%80%9D%20OR%20employment%20OR%20unemployment%20OR%20inflation%20OR%20%E2%80%9Cprice%20level%E2%80%9D%20OR%20%E2%80%9CGDP%20deflator%E2%80%9D%20OR%20CPI).csv) of the original file for ease of access.
-
-

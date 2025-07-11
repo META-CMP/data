@@ -18,9 +18,12 @@ Date of search: 9 February 2023
 
 [https://search.ebscohost.com/login.aspx?direct=true&db=eoh&bquery=monetary+policy+shocks+AND+(+(%e2%80%9cindustrial+production%e2%80%9d+OR+output+OR+GDP+OR+%e2%80%9ceconomic+growth%e2%80%9d+OR+%e2%80%9ceconomic+activity%e2%80%9d+OR+employment+OR+unemployment+OR+inflation+OR+%e2%80%9cprice+level%e2%80%9d+OR+%e2%80%9cGDP+deflator%e2%80%9d+OR+CPI)+)&type=1&searchMode=And&site=ehost-live](https://search.ebscohost.com/login.aspx?direct=true&db=eoh&bquery=monetary+policy+shocks+AND+(+(%e2%80%9cindustrial+production%e2%80%9d+OR+output+OR+GDP+OR+%e2%80%9ceconomic+growth%e2%80%9d+OR+%e2%80%9ceconomic+activity%e2%80%9d+OR+employment+OR+unemployment+OR+inflation+OR+%e2%80%9cprice+level%e2%80%9d+OR+%e2%80%9cGDP+deflator%e2%80%9d+OR+CPI)+)&type=1&searchMode=And&site=ehost-live)
 
-You might need a subscription or institutional access to EconLit to open this link.
 
-IMPORTANT NOTE: If you click on this link, the search will be performed again. The number of results is based on the current state of the EconLit database, which will be different from the state at the time of our search. The number of results and the order will therefore most likely be different from the search we performed on 9 February 2023.
+> [!IMPORTANT]
+>
+> You might need a subscription or institutional access to EconLit to open this link.
+>
+> If you click on this link, the search will be performed again. The number of results is based on the current state of the EconLit database, which will be different from the state at the time of our search. The number of results and the order will therefore most likely be different from the search we performed on 9 February 2023.
 
 ## Files: 
 

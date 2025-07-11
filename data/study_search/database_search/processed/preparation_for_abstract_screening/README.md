@@ -54,15 +54,15 @@ We complemented our search strategy by screening existing related meta-studies t
 
 Finally, we merged 
 
-1. `entries_complete_abstracts.csv`
-2. `abstracts_from_titles.csv`
-3. `abstracts_from_URLs.csv`
-4. `havranek_2013.csv`
-5. `Nguyen_2021_2020.csv`
+1. [`entries_complete_abstracts.csv`](retrieving_missing_or_incomplete_abstracts/entries_complete_abstracts.csv)
+2. [`abstracts_from_titles.csv`](retrieving_missing_or_incomplete_abstracts/abstracts_from_titles.csv)
+3. [`abstracts_from_URLs.csv`](retrieving_missing_or_incomplete_abstracts/abstracts_from_URLs.csv)
+4. [`havranek_2013.csv`](studies_from_other_meta_studies/Havranek_2013.csv)
+5. [`Nguyen_2021_2020.csv`](studies_from_other_meta_studies/Nguyen_2021_2020.csv)
 
-to retrieve our dataset for a final round of checks conducted in[`merge_all_files.R`](). During this final check, we randomly screened for additional available abstracts when the abstract note was "NA." We also checked the abstracts for remaining "..." quotes and added 11 additional observations in `points_in_abstracts.csv` for which some information of the abstract was missing in the current dataset but full abstracts were available. Additionally, we conducted two more rounds of duplicate removal using the "revtools" package app in R. Finally, we removed entries without abstract or title and saved the resulting dataset for abstract screening as `unlabelled_full_sample.csv`.
+to retrieve our dataset for a final round of checks conducted in[`merge_all_files.R`](merge_all_files.R). During this final check, we screened for additional available abstracts when the abstract note was "NA." We also checked the abstracts for remaining `...` entries from Google Scholar adding 11 additional observations as documented in [`points_in_abstracts.csv`](retrieving_missing_or_incomplete_abstracts/points_in_abstracts.csv) for which some information of the abstract was missing in the current dataset but full abstracts were available. Additionally, we conducted two more rounds of duplicate removal using the [`revtools`](https://CRAN.R-project.org/package=revtools) R package. Finally, we removed entries without abstract or title and saved the resulting dataset for abstract screening as [`unlabelled_full_sample.csv`](/data/study_search/database_search/processed/abstract_screening/unlabelled_full_sample.csv) in the [`abstract_screening`](/data/study_search/database_search/processed/abstract_screening) folder.
 
-__The resulting literature database contains 10,714 entries and was then screened for non-eligiblilty based on title and abstract.__
+__The resulting literature database contains 10714 entries and was then screened for eligiblilty based on title and abstract.__
 
 ## References
 

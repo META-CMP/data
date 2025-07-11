@@ -26,6 +26,6 @@ Total number of results from our Google Scholar search: 10810
 
 ## Files: 
 
-- The `.pxa` files are the original archieved files of our Google Scholar searches through Publish or perish. You need to install Publish or perish in order to open these files.
-- The `.ris` and `.csv` files are the converted versions of the `.pxa`files for use in bibliographic software (`.ris`) and for easy access (`.csv`) to our raw data.
+- The `.pxa` [files](https://github.com/META-CMP/data/tree/documentation/data/study_search/database_search/raw/Google_Scholar_search/pxa_format) are the original raw archieved files of our Google Scholar searches through Publish or perish. You need to install Publish or perish in order to open these files.
+- Was also provide the converted versions of the raw `.pxa`files for use in bibliographic software (`.ris` [files](https://github.com/META-CMP/data/tree/documentation/data/study_search/database_search/raw/Google_Scholar_search/ris_format)) and for easy access (`.csv` [files](https://github.com/META-CMP/data/tree/documentation/data/study_search/database_search/raw/Google_Scholar_search/csv_format)).
 

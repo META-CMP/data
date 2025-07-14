@@ -59,9 +59,6 @@ For eligible studies, we developed a custom `R` package ([MetaExtractR](https://
 
 ...
 
-#### Effect size transformation
-
-...
 
 ### Snowballing
 

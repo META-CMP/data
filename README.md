@@ -43,30 +43,12 @@ After the abstract screening we conducted some validity tests as well as agreeme
 
 [^2]: See [here](data/study_search/database_search/processed/post_AS/full_text_download_HIWI_sheet.pdf) for the guidance for the full text download.
 
-- [x] Store final ASReview files
-- [x] Refer to AS rules and criteria in pre-reg
-- [X] outline steps to get to our dataset
-- [ ] refer to folder and files
-- [ ] refer to more detailed documentation therin
-- [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
-- [ ] check if something important in quarto docs
-
-
 ### Full text screening
 
 
 ...
 
-- [ ] Study download
-- [ ] Refer to stopping rules and criteria in pre-reg
-- [ ] outline steps to get to our dataset
-- [ ] refer to folder and files, also JSONs
-- [ ] refer to more detailed documentation therin
-- [ ] refer to "How to code ..." issues.
-- [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
-- [ ] check if something important in quarto docs
-- [ ] Refer to data extraction with webplotdigit and add detailed documentation
-- [ ] Refer to doublechecking and add more detailed documentation
+
 
 
 ### Snowballing

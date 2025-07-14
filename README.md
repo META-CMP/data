@@ -45,13 +45,21 @@ After the abstract screening we conducted some validity tests as well as agreeme
 
 #### PDF retrieval 
 
-Following the abstract screening, we proceeded to download full texts of the potentially relevant studies. The full text download was conducted by research assistants using standardized procedures as documented [here](data/study_search/database_search/processed/post_AS/full_text_download_HIWI_sheet.pdf). The studies were divided into [26 Excel files]() about 100 bibliographic entries each. For each entry, research assistants attempted to access PDFs via the provided URLs or DOIs, or by searching Google Scholar when direct links were unavailable or not working. All PDFs were saved using their BibtexKey as filename in a centralized folder. During the download process, assistants verified that each PDF matched the bibliographic information, checked for the most recent version of working papers, and documented various attributes including availability status, whether the paper was retracted, duplicates, and whether it was a master's/bachelor's thesis (which we defined as non-eligible). Special attention was paid to accessing the most current versions of working papers that may have been subsequently published in journals.
+Following the abstract screening, we proceeded to download full texts of the potentially relevant studies. The full text download was conducted by research assistants using standardized procedures as documented [here](data/study_search/database_search/processed/post_AS/full_text_download_HIWI_sheet.pdf). The studies were divided into [26 sets]() about 100 bibliographic entries each. For each entry, research assistants attempted to access PDFs via the provided URLs or DOIs, or by searching Google Scholar when direct links were unavailable or not working. All PDFs were saved using their BibtexKey as filename in a centralized folder. During the download process, assistants verified that each PDF matched the bibliographic information, checked for the most recent version of working papers, and documented various attributes (see [here]() for the updated study sets) including availability status, whether the paper was retracted, duplicates, and whether it was a master's/bachelor's thesis (which we defined as non-eligible). Special attention was paid to accessing the most current versions of working papers that may have been subsequently published in journals.
 
-#### Full text assesment, coding and data extraction
+#### Full text assesment and coding
+
+After retrieving the full texts, we conducted a systematic assessment and coding of each study following standardized procedures documented in our [coding guidelines](https://github.com/META-CMP/data/issues/12). Each study was independently reviewed by trained researchers who first assessed whether the study met our inclusion criteria. Importantly, studies were marked for exclusion if they lacked proper identification strategies (e.g., simple OLS without shock identification) or did not report confidence intervals or mean/median estimates. Reasons for exclusions were documented in the [26 study sets]().
+
+For eligible studies, we developed a custom `R` package ([MetaExtractR]()) to facilitate systematic data extraction using individual `JSON` files for each study, enabling version control and transparent documentation of all coding decisions through Git and GitHub. Researchers coded a comprehensive set of study characteristics including: identification strategies (e.g., Cholesky, IV, high-frequency identification), estimation methods (VAR, local projections, etc.), data characteristics (frequency, time period, countries), regime dependence, control variables, and publication characteristics. The `JSON`-based workflow allowed us to handle multiple models per study efficiently while maintaining the _single-point-of-truth_ principle. When necessary, coding decisions were discussed among team members to ensure consistency and accuracy across the dataset. We also extensively double checked coding decisions, with a first round of subsample double checks to identify systematic deviations between screeners and multiple further rounds to ensure consistency of these cases. For difficult variables, 100% of the coding decisions were double checked.
+
+#### Graphical effect size data extraction
 
 ...
 
+#### Effect size transformation
 
+...
 
 ### Snowballing
 

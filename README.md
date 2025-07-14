@@ -53,11 +53,7 @@ After the abstract screening we conducted some validity tests as well as agreeme
 
 ### Snowballing
 
-- [ ] Refer to procedure
-- [ ] outline steps to get to our dataset
-- [ ] refer to folder and files
-- [ ] refer to more detailed documentation therin
-- [ ] check if renaming of the folders without spaces is possible without causing any problems (should be a single commit). 
+
 
 ### PRISMA Diagramm
 
@@ -65,11 +61,6 @@ After the abstract screening we conducted some validity tests as well as agreeme
 
 ### External data
 
-- [ ] refer to folder and files
-- [ ] macroeconoimc data
-- [ ] publication data (citations, rankings)
-- [ ] refer to pre-registration
-- [ ] refer to sources
 
 ---
 
@@ -77,15 +68,11 @@ After the abstract screening we conducted some validity tests as well as agreeme
 
 ...
 
-- refer also to the package 
+
 
 ---
 
 ## Data analyses
-
-
-> [!IMPORTANT]
-> At the moment, this repo also contains our analysis scripts and results. But we should think about creating a separate repo for this within our GitHub organization.
 
 
 ...

@@ -120,7 +120,7 @@ nrow(df)-sum(is.na(df$`abstract note`)|is.na(df$title))
 ### Google scholar abstract test
 
 sum(grepl("…", df$`abstract note`) == TRUE) # The 15 remaining studies do not include abbreviated Google Scholar abstracts, but for other reasons "..."
-View(df[grepl("…", df$`Abstract Note`) == TRUE, ])
+# View(df[grepl("…", df$`Abstract Note`) == TRUE, ])
 
 
 ### Final duplicate check (same title & same abstract)
@@ -132,7 +132,7 @@ View(df[duplicated_rows, ])
 
 
 
-### Store the dataset as `full_sample_unlabeled.csv` without the remaining missing abstracts and titles:
+### Store the dataset as `unlabelled_full_sample.csv` without the remaining missing abstracts and titles:
 
 
 df<-df[!(is.na(df$`abstract note`)|is.na(df$title)),]

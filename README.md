@@ -57,13 +57,9 @@ For eligible studies, we developed a custom `R` package ([MetaExtractR](https://
 
 #### Graphical effect size data extraction
 
-...
+Since the effect sizes in our eligible studies were reported as impulse response functions (IRFs) in graphical form, we implemented a systematic extraction process using [WebPlotDigitizer](https://automeris.io/). Following our standardized extraction guidelines, researchers first captured high-quality screenshots of all relevant IRFs from each study, carefully documenting which model specification and outcome variable each graph represented. These screenshots were then processed using WebPlotDigitizer's semi-automatic extraction tools, where researchers aligned axes, traced the response curves (including point estimates and confidence bounds), and extracted the underlying data points using the "X Step w/ Interpolation" algorithm.
 
-For most studies, effect sizes were reported in visual form (impulse response functions, IRFs) and had to be extracted via pixel coordinates using WebPlotDigitizer. PNG files of the IRFs of each eligible study as well as replicable extraction files and final CSV files of the extracted effect size data were stored [here](https://github.com/META-CMP/data/tree/main/data/effect_sizes/IRFs).
-
-Special cases of effect size reporting, i.e. unconventional visual reporting or tables, were stored [here](https://github.com/META-CMP/data/tree/main/data/effect_sizes/tables). ___[UPDATE THIS?]___ 
-
-
+For each IRF, we extracted three separate datasets: the point estimate, upper confidence bound, and lower confidence bound, saving them as individual CSV files alongside the original screenshots and WebPlotDigitizer project files (`.tar`) to ensure full reproducibility. The `.tar`-files can be opened using WebPlotDigitizer to compare the digitized values against the original graphs. The complete set of screenshots, extraction project files, and resulting CSV data for all eligible studies is available in our [effect sizes repository](data/effect_sizes), organized by study identifier, model_id and response variable. This transparent approach allows for verification and potential corrections of any extraction, supporting the reproducibility of our meta-analysis results.
 
 ### Snowballing
 

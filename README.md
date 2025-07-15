@@ -56,16 +56,15 @@ For eligible studies, we developed a custom `R` package ([MetaExtractR](https://
 
 #### Graphical effect size data extraction
 
-Since the effect sizes in our eligible studies were overwhelmingly reported as impulse response functions (IRFs) in graphical form, we implemented a systematic extraction process using [WebPlotDigitizer](https://automeris.io/). Following our standardized extraction guidelines, researchers first captured high-quality screenshots of all relevant IRFs from each study, carefully documenting which model specification and outcome variable each graph represented. These screenshots were then processed using WebPlotDigitizer's semi-automatic extraction tools, where researchers aligned axes, traced the response curves (including point estimates and confidence bounds), and extracted the underlying data points using the "X Step w/ Interpolation" algorithm.
+Since the effect sizes in our eligible studies were overwhelmingly reported as impulse response functions (IRFs) in graphical form, we implemented a systematic graphical extraction process using [WebPlotDigitizer](https://automeris.io/). Following our standardized extraction guidelines, researchers first captured high-quality screenshots of all relevant IRFs from each study, carefully documenting which model specification and outcome variable each graph represented. These screenshots were then processed using WebPlotDigitizer's semi-automatic extraction tools, where researchers aligned axes, traced the response curves (including point estimates and confidence bounds), and extracted the underlying data points using the "X Step w/ Interpolation" algorithm.
 
 For each IRF, we extracted three separate datasets: the point estimate, upper confidence bound, and lower confidence bound, saving them as individual CSV files alongside the original screenshots and WebPlotDigitizer project files (`.tar`) to ensure full reproducibility. The `.tar`-files can be opened using WebPlotDigitizer to compare the digitized values against the original graphs. The complete set of screenshots, extraction project files, and resulting data for all eligible studies is available in our [effect sizes repository](data/effect_sizes), organized by study identifier, model_id and response variable. This transparent approach allows for verification and potential corrections of any extraction, supporting the reproducibility of our meta-analysis results.
 
 ### Snowballing
 
+To complement our systematic database search, we conducted backward snowballing following the approach outlined in [Section 3.4.2]() of our pre-registration. After completing the full text screening, we identified the ten most recent eligible studies published in our dataset and systematically screened their reference lists for additional relevant studies.
 
-
-### PRISMA Diagramm
-
+From these ten studies, we extracted a total of [406 references](data/snowballing/Snowballing.csv). After removing duplicates and screening for relevance based on titles and abstracts, we identified [59 potentially relevant studies](data/snowballing/df_snowballing_full_text_screening.xlsx) that had not been captured in our original database search. These underwent the same full text screening process as our main sample, resulting in [20 additional eligible studies](data/study_search/database_search/processed/post_AS/packages_for_full_text_download_updated/study_set_27.xlsx) being included in our meta-analysis. Data and `R` scripts from the snowballing process, including duplicate checking against our existing dataset, can be found [here](data/snowballing).
 
 
 ### External data

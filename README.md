@@ -16,8 +16,7 @@
 >
 > ## Research papers:
 > 
-> Enzinger, M., Gechert, S., Heimberger, P., Prante, F., & Romero, D. F. (n.d.). **The overstated effects of conventional monetary policy on output and prices**. [**[OSF Preprint]**](https://osf.io/preprints/osf/72cen_v1) [**[Replication files]**](https://github.com/META-CMP/data/tree/main/analysis/working_paper_1) 
->
+> Enzinger, M., Gechert, S., Heimberger, P., Prante, F., & Romero, D. F. (2025). **The overstated effects of conventional monetary policy on output and prices**. [**[OSF Preprint]**](https://osf.io/preprints/osf/72cen_v1) [**[Replication files]**](https://github.com/META-CMP/data/tree/main/analysis/working_paper_1) 
 
 ---
 

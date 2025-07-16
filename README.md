@@ -74,7 +74,7 @@ To enrich our meta-analysis, we incorporated several external data sources which
 
 #### Citations data
 
-...
+We collected citation counts of eligible studies from Google Scholar. This data collection was conducted systematically on July 15-16, 2024 to ensure temporal consistency across all measurements. For each included study, a research assistant searched Google Scholar using the study title and verified that the first search result matched our study's metadata (same authors, publication venue, and year). We then recorded the citation count and the search date. The complete citations data, including Google Scholar links and search dates, is stored in [citations_for_included_studies.xlsx](data/study_characteristics/citations_for_included_studies.xlsx). Studies that could not be found on Google Scholar were noted accordingly.
 
 #### Journal ranking data
 

@@ -98,13 +98,9 @@ For country income classifications, we utilized the [World Bank income group cla
 
 ## Data processing and transformation
 
-...
-
-
 
 ---
 
 ## Data analyses
 
-
-...
+Folders with replication files for the data analysis in our research papers are linked [above](https://github.com/META-CMP/data/edit/documentation/README.md#research-papers).

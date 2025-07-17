@@ -8,7 +8,6 @@ library(stringdist)
 library(stringr)
 
 #Load data by running data_prep script
-# load("data/preliminary_data_01082024.RData")
 load("data/final_join_json_irf_data.RData") # Load the data from final_join()
 
 # Set path for study sets
@@ -29,7 +28,7 @@ df_full_bib <- df_full_text %>% filter(included==1)
 
 # Define our list of top 50 journals which are present in our dataset
 
-# Create a list of A+
+# Create a list of A+ - based on "VWL_Zeitschriftenliste_2023.xlsx" from forschungsmonitoring.org
 top5 <- c(
   "Quarterly Journal of Economics",
   "The Quarterly Journal of Economics",
@@ -40,7 +39,7 @@ top5 <- c(
   "Review of Economic Studies",
   "The Review of Economic Studies")
 
-# Create a list of A journals
+# Create a list of A journals - based on "VWL_Zeitschriftenliste_2023.xlsx" from forschungsmonitoring.org
 journals <- c(
   "Journal of Finance",
   "The Journal of Finance",

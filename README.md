@@ -6,17 +6,17 @@
 >  
 > This repository contains raw and processed data, replication files and documentation for our **meta-study on the macroeconomic effects of conventional monetary policy**. Below, we provide guidance on our research process and the documentation of our data collection, data processing and transformation, and the scripts for the data analyses.
 > 
-> ## Project:
-> 
-> This repository is part of the research project [Monetary Policy and Energy Prices](https://www.tu-chemnitz.de/wirtschaft/vwl4/Makrooekonomie/MORPEP.php.en) funded by the [European Macro Policy Network (EMPN)](https://empn.eu/).
-> 
 > ## Pre-registration:
 >
 > The pre-registration and pre-analysis plan for our meta-study can be found at [https://osf.io/cduq4](https://osf.io/cduq4).
 >
 > ## Research papers:
 > 
-> Enzinger, M., Gechert, S., Heimberger, P., Prante, F., & Romero, D. F. (2025). **The overstated effects of conventional monetary policy on output and prices**. [**[OSF Preprint]**](https://osf.io/preprints/osf/72cen_v1) [**[Replication files]**](https://github.com/META-CMP/data/tree/main/analysis/working_paper_1) 
+> Enzinger, M., Gechert, S., Heimberger, P., Prante, F., & Romero, D. F. (2025). **The overstated effects of conventional monetary policy on output and prices**. [**[OSF Preprint]**](https://osf.io/preprints/osf/72cen_v1) [**[Replication files]**](https://github.com/META-CMP/data/tree/main/analysis/working_paper_1)
+>
+> ## Project:
+> 
+> This repository is part of the research project [Monetary Policy and Energy Prices](https://www.tu-chemnitz.de/wirtschaft/vwl4/Makrooekonomie/MORPEP.php.en) funded by the [European Macro Policy Network (EMPN)](https://empn.eu/).
 
 ---
 

@@ -10,7 +10,7 @@ library(readxl) # to read excel file
 library(lubridate) # for date transformation
 
 ## Load publications data and join with full text screening data ----
-load("data/papers_test.RData")
+load("data/sjr.RData")
 data <- data %>% left_join(
   df_full_bib %>% 
     select(key,

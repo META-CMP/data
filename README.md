@@ -96,8 +96,26 @@ For country income classifications, we utilized the [World Bank income group cla
 
 ---
 
-## Data processing and transformation
+## Data processing and effect size standardization
 
+After completing the data collection phase, we needed to standardize and transform the heterogeneous effect sizes from different studies to enable meaningful meta-analysis. This process involved three main components:
+
+### Data integration and standardization pipeline
+
+We developed a custom R package, `MetaExtractR`, to systematically merge and standardize the study data. The package integrates:
+
+- **Study metadata and coding**: Stored in individual `JSON` files for each study, containing all coded variables
+- **Effect size data**: Extracted impulse response functions (IRFs) stored as `CSV` files, with separate files for point estimates and confidence bounds
+
+The standardization process follows a multi-step approach including:
+
+- **Data merging**: The `final_join()` function matches JSON metadata with corresponding IRF data for each study and model
+- **Effect size transformation**: Based on the specific characteristics of each study (e.g., variable definitions and transformations, shock sizes, data frequency), the package applies the appropriate standardization formula to ensure comparability across studies
+- **Confidence interval and standard error calculation**: The package derives standard errors from confidence bands, accounting for different confidence levels
+
+Our standardization approach handles several cases based on how variables are measured and transformed in the original studies (e.g., log levels vs. growth rates, cumulative vs. non-cumulative IRFs). The transformations for each case are detailed in our [effect size transformation guide]().
+
+The final data processing after full text screening was implemented in [``](), resulting in a in a unified dataset [``]() that was prepared for futher analysis in [``]().
 
 ---
 

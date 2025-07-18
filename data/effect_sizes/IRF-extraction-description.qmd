@@ -1,0 +1,154 @@
+# Digitizing the Impulse Response Functions {.unnumbered}
+
+To digitize the impulse response functions (IRFs), we used the WebPlotDigitizer software (available at [https://automeris.io](https://automeris.io/WebPlotDigitizer/download.html)), a tool specifically designed for extracting data points from graphical representations. Below, we outline the process followed during the digitization.
+
+The digitization began with the installation of the latest version of WebPlotDigitizer, which was downloaded in December 2023 from the official website. Once installed, the IRF images were loaded into the application via  `File` --> `Load Image(s)` functionality.
+
+```{r}
+#| label: fig-ds
+#| echo: false
+#| fig-cap: >
+#|   Loading the respective impulse response function image.
+#| out.width: 400
+knitr::include_graphics("images/Load_images.png", dpi = 270)
+```
+
+For each IRF, the tool was set to the `2D (X-Y) Plot` mode to ensure precise data extraction.
+
+```{r}
+#| label: fig-ds-1
+#| echo: false
+#| fig-cap: >
+#|   Selecting the "2D (X-Y) Plot" option in WebPlotDigitizer.
+#| out.width: 400
+knitr::include_graphics("images/2d_plot.png", dpi = 270)
+```
+
+### Aligning the Axes
+
+Aligning the axes was crucial for accurate digitization. This was done by identifying four known points on the axes as specified in the alignment interface - `Align Axes`. These points were carefully selected in the order specified in the alignment guide.
+
+```{r}
+#| label: fig-ds-2
+#| echo: false
+#| fig-cap: >
+#|   Aligning the axes in WebPlotDigitizer.
+#| out.width: 400
+knitr::include_graphics("images/align_axes.png", dpi = 270)
+```
+
+
+The alignment was completed by entering the corresponding axis values and adjusting the scaling as needed. For instance, if the X-axis required adjustments — such as multiplying by specific factors like 4 or 12 to convert quarterly or yearly scales into monthly scales for monthly estimates — these adjustments were applied directly during this step.
+
+Afterward, we selected the option `Assume axes are perfectly aligned with image coordinates (skip rotation correction)` and then pressed `OK`.
+
+
+```{r}
+#| label: fig-ds-4
+#| echo: false
+#| fig-cap: >
+#|   Enter the respective X-Axis and Y-Axis values.
+#| out.width: 500
+knitr::include_graphics("images/axis_points.png", dpi = 270)
+```
+
+
+
+### Extracting Data Points
+
+As a first step, data extraction was done by manually tracing the IRFs manually using the Pen tool (in the `Automatic Extraction` section and by selecting the `Pen`-Tab) when multiple lines had the same color. The Pen width was adjusted as needed for accurate tracing of the IRF curves. For IRFs with multiple confidence bounds, the most readable confidence level was prioritized for extraction.
+
+```{r}
+#| label: fig-ds-5
+#| echo: false
+#| fig-cap: >
+#|   Using the Pen tool to trace the impulse response function.
+#| out.width: 500
+knitr::include_graphics("images/pen.png", dpi = 270)
+```
+
+Foreground colors were adjusted to enhance automatic extraction. This process involved selecting color codes using the Color Picker tool.
+
+```{r}
+#| label: fig-ds-6
+#| echo: false
+#| fig-cap: >
+#|   Adjusting the foreground color for better extraction.
+#| out.width: 500
+knitr::include_graphics("images/color_picker.png", dpi = 270)
+```
+
+
+The next step involved choosing the appropriate algorithm for data extraction. This was done using the drop-down menu near the `Algorithm` field, selecting either `X Step w/ Interpolation` or `X Step`, depending on the data requirements.
+
+```{r}
+#| label: fig-ds-8
+#| echo: false
+#| fig-cap: >
+#|   Selecting the `X Step w/ Interpolation` Algorithm.
+#| out.width: 500
+knitr::include_graphics("images/step_inter.png", dpi = 270)
+```
+
+Following this, the `ΔX Step` and the starting and ending values for the X- and Y-axes were configured. For instance, the step size was adjusted to match the interval of observed data points. In the provided example, the step size was changed from 0.08 to 1, as the data only included yearly observations.
+
+```{r}
+#| label: fig-ds-9
+#| echo: false
+#| fig-cap: >
+#|   Adjusting the step size and starting/ending values for the X- and Y-axes.
+#| out.width: 180
+knitr::include_graphics("images/stepsize.png", dpi = 270)
+```
+
+Once the settings were finalized, we pressed the `Run` button to initiate the extraction process. This step automated the digitization of data points according to the defined parameters, producing a preliminary dataset for further refinement.
+
+### Adjusting and Verifying Data
+
+After the initial extraction, data points were adjusted using the `Adjust Points` functionality. Only the Y-values were modified to ensure the alignment remained consistent with the original X-axes.
+
+```{r}
+#| label: fig-ds-10
+#| echo: false
+#| fig-cap: >
+#|   Adjusting data points for accuracy.
+#| out.width: 400
+knitr::include_graphics("images/adjust_points.png", dpi = 270)
+```
+
+Separate datasets were created for the mean estimate, upper confidence bound, and lower confidence bound by adding. Each dataset was traced following the same process to maintain consistency.
+
+```{r}
+#| label: fig-ds-11
+#| echo: false
+#| fig-cap: >
+#|   Creating and renaming datasets for mean, upper, and lower bounds.
+#| out.width: 400
+knitr::include_graphics("images/New_dataset.png", dpi = 270)
+```
+
+### Finalizing and Exporting Data
+
+Once all data points were properly digitized, they were exported as `.csv` files.  Each dataset (mean, upper, and lower) was saved individually in the same directory as its corresponding screenshot. This ensured traceability and easy validation.
+
+```{r}
+#| label: fig-ds-final
+#| echo: false
+#| fig-cap: >
+#|   Saving digitized data to .csv files.
+#| out.width: 300
+knitr::include_graphics("images/save.png", dpi = 270)
+```
+
+Additionally, the entire project was saved as a `.tar` file, named consistently with the image file for future reference.
+
+```{r}
+#| label: fig-ds-last
+#| echo: false
+#| fig-cap: >
+#|   Saving the project file for reproducibility.
+#| out.width: 350
+knitr::include_graphics("images/save_project.png", dpi = 270)
+```
+
+

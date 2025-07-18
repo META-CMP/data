@@ -1,0 +1,1784 @@
+TY  - CONF
+TI  - Sign restrictions and statistical identification under volatility breaks -- Simulation based evidence and an empirical application to monetary policy analysis
+AU  - Herwartz, Helmut
+AU  - Plödt, Martin
+AB  - Apart from a priori assumptions on instantaneous or long run effects of structural shocks, sign restrictions have become a prominent means for structural vector autoregressive (SVAR) analysis. Moreover, second order heterogeneity of systems of times series can be fruitfully exploited for identification purposes in SVARs. We show by means of a Monte Carlo study that taking statistical information into account offers a more accurate quantification of the true structural relations. In contrast, resorting only to commonly used sign restrictions bears a higher risk of failing to recover these structural relations. As an empirical illustration we employ the statistical and the sign restriction approach in a stylized model of US monetary policy. By combining identifying information from both approaches we strive for improved insights into the effects of monetary policy on output. Our results point to a decline in real GDP after a monetary tightening at an intermediate horizon.
+DA  - 2014///
+PY  - 2014
+DP  - www.econstor.eu
+LA  - eng
+PB  - Kiel und Hamburg: ZBW - Deutsche Zentralbibliothek für Wirtschaftswissenschaften, Leibniz-Informationszentrum Wirtschaft
+UR  - https://www.econstor.eu/handle/10419/100326
+Y2  - 2023/02/27/09:21:13
+ER  - 
+
+TY  - GEN
+TI  - Information Variables for Monetary Policy in a Small Structural Model of the Euro Area
+AU  - Lippi, Francesco
+AU  - Neri, Stefano
+AB  - This Paper estimates a small New-Keynesian model with imperfect information and optimal discretionary policy using data for the euro area. The model is used to assess the usefulness of monetary aggregates and unit labour costs as information variables for monetary policy. The estimates reveal that the information content of the M3 monetary aggregate is limited. A more useful role emerges for the unit labour costs indicator, which contains information that helps to reduce the volatility of the output gap. Finally, the estimated weights for the objectives of monetary policy indicate that considerable importance is attributed to interest-rate smoothing, greater than the importance attributed to the output gap stabilization. This finding indicates that the welfare gains of commitment may be smaller than is suggested by typical parameterizations of New-Keynesian models.
+CY  - Rochester, NY
+DA  - 2003/12/01/
+PY  - 2003
+DP  - Social Science Research Network
+LA  - en
+UR  - https://papers.ssrn.com/abstract=480823
+Y2  - 2023/02/27/09:21:17
+KW  - monetary policy
+KW  - inflation
+KW  - output gap
+KW  - Kalman Filter
+ER  - 
+
+TY  - GEN
+TI  - Banks' Financial Conditions and the Transmission of Monetary Policy: A Favar Approach
+AU  - Jimborean, Ramona
+AU  - Mésonnier, Jean-Stéphane
+AB  - We propose a novel approach to assess whether banks' financial conditions, as reflected by bank-level information, matter for the transmission of monetary policy, while reconciling the micro and macro levels of analysis. We include factors summarizing large sets of individual bank balance sheet ratios in a standard factor-augmented vector autoregression model (FAVAR) of the French economy. We first find that factors extracted from banks' liquidity and leverage ratios predict macroeconomic fluctuations. This suggests a potential scope for macroprudential policies aimed at dampening the procyclical effects of adjustments in banks' balance sheets structure. However, we also find that fluctuations in bank ratio factors are largely irrelevant for the transmission of monetary shocks. Thus, there is little point monitoring the information contained in bank balance sheets, above the information already contained in credit aggregates, as far as monetary policy transmission is concerned.
+CY  - Rochester, NY
+DA  - 2010/07/01/
+PY  - 2010
+DO  - 10.2139/ssrn.1684114
+DP  - Social Science Research Network
+LA  - en
+ST  - Banks' Financial Conditions and the Transmission of Monetary Policy
+UR  - https://papers.ssrn.com/abstract=1684114
+Y2  - 2023/02/27/09:21:19
+KW  - Credit Channel
+KW  - Factor Augmented Vector Autoregression (FAVAR)
+KW  - Monetary Transmission
+ER  - 
+
+TY  - JOUR
+TI  - Canadian Monetary Policy: Will the Checklist Approach Ever Get us to Price Stability?
+AU  - Racette, Daniel
+AU  - Raynauld, Jacques
+T2  - The Canadian Journal of Economics / Revue canadienne d'Economique
+AB  - The purpose of this paper is to investigate whether the checklist approach that the Bank of Canada has followed in one way or another over the last two decades is likely to lead us to the stated objective of price stability. The analysis of Canadian monetary policy is performed through the estimation of a Bayesian VAR model of a set of important Canadian macroeconomic variables in their international context. To estimate the model we borrowed from Sims (1989), but we also transposed his methodology to take into account Canadian features. The results suggest that the exchange rate has been high on the checklist of the Bank of Canada over the years and that, rather, the Bank should concentrate its attention on (broad) monetary aggregates if it really wants to deliver price stability. /// La politique monétaire canadienne: est-ce que l'observation d'une multitude d'indicateurs nous mènera jamais à la stabilité des prix? La politique monétaire canadienne a été conduite, au cours des deux dernières décennies, à travers l'observation d'une multiplicité d'indicateurs. Le but de ce travail est de caractériser les résultats d'une telle approche. Pour ce faire, nous utilisons la méthode des vecteurs auto-régressifs bayésiens (BVAR) que nous appliquons à une série de variables canadiennes dans leur environnement international. Pour l'estimation du BVAR, nous empruntons à Sims (1989) mais nous transposons pour tenir compte des particularités de l'économie canadienne. Les résultats indiquent que le taux de change a joué un rôle démesuré dans la conduite de la politique de la Banque du Canada et qu'il serait plus approprié de suivre de près l'évolution des agrégats monétaires (larges) si la Banque veut vraiment nous mener à la stabilité des prix.
+DA  - 1992///
+PY  - 1992
+DO  - 10.2307/135767
+DP  - JSTOR
+VL  - 25
+IS  - 4
+SP  - 819
+EP  - 838
+SN  - 0008-4085
+ST  - Canadian Monetary Policy
+UR  - https://www.jstor.org/stable/135767
+Y2  - 2023/02/27/09:21:21
+ER  - 
+
+TY  - JOUR
+TI  - Causes of Inflation in the Iranian Economy
+AU  - Armesh, Hamed
+AU  - Salarzehi, Habibollah
+AU  - Yaghoobi, Noor
+T2  - International Review of Business Research Papers
+AB  - It is clear that in the nearly last four decades inflation is one of the important problems of Iranian economy. In this study, we determine and analyze the effective factors on inflation in the Islamic Republic of Iran. After briefly reviewing the theoretical background, we use econometric method, such as the Ordinary Least Squares (OLS), to study causes of inflation Iran. Our analysis is based on time series annual data from 1961 to 2005 and our results show that import price index, as well as liquidity, do have positively a significant impact on inflation rates in Iran. Additionally, results show that actual GDP has a negative impact on inflation in Iran.
+DA  - 2010/09/01/
+PY  - 2010
+DP  - ResearchGate
+VL  - 6
+SP  - 30
+EP  - 44
+J2  - International Review of Business Research Papers
+L4  - https://www.researchgate.net/profile/Habibollah-Salarzehi/publication/229053633_Causes_of_Inflation_in_the_Iranian_Economy/links/5627fe8b08ae04c2aead821d/Causes-of-Inflation-in-the-Iranian-Economy.pdf
+ER  - 
+
+TY  - JOUR
+TI  - The Fiscal Reaction Function and the Transmission Mechanism for Pakistan
+AU  - Khalid, Mahmood
+AU  - Malik, Wasim Shahid
+AU  - Sattar, Abdul
+T2  - The Pakistan Development Review
+AB  - In developing economies such as Pakistan the fiscal transmission mechanism needs to be identified, as active fiscal policy is practised and large seigniorage revenues exist. In this context, the present study aims at estimating the fiscal policy reaction function and identifying the fiscal policy transmission mechanism. More specifically, the Vector Autoregression (VAR) model, containing three variables (output gap and inflation as policy objectives and fiscal deficit as a percentage of GDP), has been estimated as a fiscal instrument. We find evidence of fiscal policy in Pakistan being endogenous over the period 1965 to 2006. Although the response to both the variables is significant, we find only pro-cyclical response of fiscal policy to the business cycle fluctuations specifically in the periods of boom. The effect of fiscal policy changes on output and inflation is not significant. We also find the evidence of contemporaneous response of policy to the state of the economy, but the policy is not forward-looking at all.
+DA  - 2007///
+PY  - 2007
+DP  - JSTOR
+VL  - 46
+IS  - 4
+SP  - 435
+EP  - 447
+SN  - 0030-9729
+UR  - https://www.jstor.org/stable/41261175
+Y2  - 2023/02/27/09:21:25
+ER  - 
+
+TY  - JOUR
+TI  - Econometric model of Russian Federation: analysis and forecasts for 2018 - 2019
+AU  - Mitsek, Sergey A.
+T2  - IFAC-PapersOnLine
+T3  - 17th IFAC Workshop on Control Applications of Optimization CAO 2018
+AB  - The paper describes an econometric model of the Russian economy which is tailored to analyze and explain current trends in Russian economy and to forecast its dynamics for the next 2 years. The model showed that if all exogenous variables (export and import prices, the money mass and economically active population, etc.) will have the same dynamics they had during last years the average annual growth rate of Russian economy for the next two years will be about 1 - 2 % annually while inflation will increase to about 8 - 9 % annually. Active monetary policy increases the short-term economic growth only slightly but helps to improve investment in fixed capital. Active fiscal policy has negative impact on economic growth. Such outcome is the result of reduction of total factor productivity of Russian economy and of inadequate investment.
+DA  - 2018/01/01/
+PY  - 2018
+DO  - 10.1016/j.ifacol.2018.11.416
+DP  - ScienceDirect
+VL  - 51
+IS  - 32
+SP  - 395
+EP  - 400
+J2  - IFAC-PapersOnLine
+LA  - en
+SN  - 2405-8963
+ST  - Econometric model of Russian Federation
+UR  - https://www.sciencedirect.com/science/article/pii/S2405896318331136
+Y2  - 2023/02/27/09:21:27
+KW  - Applications in Economics
+KW  - Environmental Science
+KW  - Management
+ER  - 
+
+TY  - JOUR
+TI  - 99 Luftballons: Monetary policy and the house price boom across U.S. states
+AU  - Del Negro, Marco
+AU  - Otrok, Christopher
+T2  - Journal of Monetary Economics
+AB  - We use a dynamic factor model estimated on quarterly state-level data from 1986 to 2005 via Bayesian methods to disentangle the relative importance of the common component in OFHEO house price movements from local (state- or region-specific) shocks. We find that historically movements in house prices were mainly driven by the local component. The recent period (2001–2005) has been different: the increase in house prices is a national phenomenon. We use a VAR to investigate the extent to which expansionary monetary policy is responsible for this phenomenon. We find the impact of policy shocks on house prices to be small in comparison with the magnitude of recent fluctuations.
+DA  - 2007/10/01/
+PY  - 2007
+DO  - 10.1016/j.jmoneco.2006.11.003
+DP  - ScienceDirect
+VL  - 54
+IS  - 7
+SP  - 1962
+EP  - 1985
+J2  - Journal of Monetary Economics
+LA  - en
+SN  - 0304-3932
+ST  - 99 Luftballons
+UR  - https://www.sciencedirect.com/science/article/pii/S0304393206002315
+Y2  - 2023/02/27/09:21:29
+KW  - Monetary policy
+KW  - Housing
+KW  - Bayesian analysis
+ER  - 
+
+TY  - JOUR
+TI  - Re-exploring the nexus between monetary policy and banks' risk-taking
+AU  - Ngambou Djatche, Melchisédek Joslem
+T2  - Economic Modelling
+AB  - In this paper, we analyse the link between monetary policy and banks' risk-taking behaviour. Some theoretical and empirical studies show that monetary easing increases banks' appetite for risk related to asset valuation and the search for higher yield. However, the low interest rate environment that began in 2010 is casting doubt on these findings. Our study adds to analyses of the monetary risk-taking channel considering non-linearity, especially testing threshold effects in this channel. Using a dataset of US banks, we find that the impact of low interest rates on banks' risk behaviour depends on the previous monetary regime, that is on the deviation of monetary rates from the Taylor rule. We complement the literature on the Taylor rule and provide arguments that extend the use of the Taylor rule by Central Banks to financial stability purposes.
+DA  - 2019/11/01/
+PY  - 2019
+DO  - 10.1016/j.econmod.2019.01.016
+DP  - ScienceDirect
+VL  - 82
+SP  - 294
+EP  - 307
+J2  - Economic Modelling
+LA  - en
+SN  - 0264-9993
+UR  - https://www.sciencedirect.com/science/article/pii/S0264999318310459
+Y2  - 2023/02/27/09:21:32
+KW  - Monetary policy
+KW  - Financial stability
+KW  - Bank risk-taking
+KW  - Non-dynamic panel threshold model
+ER  - 
+
+TY  - GEN
+TI  - The International Transmission of U.S. Monetary Policy: New Evidence from Trade Data
+AU  - Research, Institute for Monetary and Financial
+AU  - Kong, Hong
+AB  - This working paper was written by Shu Lin (Fudan University and Hong Kong Institute for Monetary Research) and Haichun Ye (Shanghai University of Finance and Economics).We make the first attempt in the literature to empirically examine the spillover effects of U.S. monetary policy on trade in other countries. In a large sector-level bilateral trade dataset of 137 countries for the years 1970-2000, we find strong and robust evidence supporting an international credit channel of U.S. monetary policy transmission. We show that: 1) financially more constrained sectors have a more negative exposure of their trade to a tight U.S. monetary policy; 2) this international credit channel works mainly during significant U.S. monetary tightening periods (e.g., a large increase in interest rates); 3) the negative impact of a tight U.S. policy is significantly stronger in financially less developed countries or countries with no monetary autonomy.
+CY  - Rochester, NY
+DA  - 2015/04/10/
+PY  - 2015
+DO  - 10.2139/ssrn.2592826
+DP  - Social Science Research Network
+LA  - en
+ST  - The International Transmission of U.S. Monetary Policy
+UR  - https://papers.ssrn.com/abstract=2592826
+Y2  - 2023/02/27/09:21:34
+KW  - Trade
+KW  - Credit Channel
+KW  - Credit Constraints
+KW  - International Transmission of U.S. Monetary Policy
+ER  - 
+
+TY  - JOUR
+TI  - Do Instruments of Monetary Policy and Fiscal Policy Affect Firm-level Leverage? Evidence from Pakistan and India
+AU  - Rehman, Zia ur
+AU  - Siddiqui, Dr Muhammad Ayub
+AU  - Khan, Sher Ali
+AU  - Khan, Asad
+T2  - GMJACS
+AB  - Monetary and Fiscal policy instruments are important macroeconomic variables that may influence the financing choices of a firm. However, empirical evidence with respect to their influence on firm-level leverage is somewhat under researched particularly in the context of developing countries. The mainobjective of this study was to measure the influence of monetary and fiscal policy instruments on the leveraging of non-financial firms listed of Pakistan and India for the period 2006-2017. The findings of the study revealed that monetary and fiscal policy instruments do influence leverage decisions of listed firms inPakistan and India, however, the extent of their influence varies in both countries. In Pakistan, except real interest rates all other monetary and fiscal policy instruments significantly influence leveraging decisions of listed firms whereas in India only real interest rates significantly influence leverage decisions of listed firms. Moreover, in Pakistan only incomes taxes negatively influences leverage whereas all other variables positively influence leverage. In India tax revenue, real interest rate and M2 negatively influence leverage whereas incomes taxes and public debt positively influences leverage.
+DA  - 2020///
+PY  - 2020
+DP  - www.gmjacs.bahria.edu.pk
+VL  - 10
+IS  - 1
+SP  - 10
+EP  - 10
+LA  - en
+SN  - 2305-0756
+ST  - Do Instruments of Monetary Policy and Fiscal Policy Affect Firm-level Leverage?
+UR  - https://www.gmjacs.bahria.edu.pk/index.php/ojs/article/view/141
+Y2  - 2023/02/27/09:21:38
+KW  - E52
+KW  - Monetary policy
+KW  - E62
+KW  - F31
+KW  - fiscal Policy
+KW  - leverage JEL Classification: E42
+KW  - M2
+KW  - public debt
+KW  - real interest rate
+KW  - tax revenue
+ER  - 
+
+TY  - GEN
+TI  - Monetary Policy and Regional House-Price Appreciation
+AU  - Cooper, Daniel
+AU  - Luengo‐Prado, María José
+AU  - Olivei, Giovanni
+AB  - This paper examines the link between monetary policy and house-price appreciation by exploiting the fact that monetary policy is set at the national level, but has different effects on state-level activity in the United States. This differential impact of monetary policy provides an exogenous source of variation that can be used to assess the effect of monetary policy on state-level housing prices. Policy accommodation equivalent to 100 basis points on an equilibrium real federal funds rate basis raises housing prices by about 2.5 percent over the next two years. However, the estimated effect increases to 6.6 percent during the early 2000s housing boom.
+CY  - Rochester, NY
+DA  - 2016/11//
+PY  - 2016
+DP  - Social Science Research Network
+LA  - en
+UR  - https://papers.ssrn.com/abstract=2884608
+Y2  - 2023/02/27/09:21:39
+KW  - SSRN
+KW  - Daniel Cooper
+KW  - Giovanni Olivei
+KW  - María José Luengo‐Prado
+KW  - Monetary Policy and Regional House-Price Appreciation
+ER  - 
+
+TY  - GEN
+TI  - Procyclicality, Fiscal Dominance, and the Effectiveness of Fiscal Policy in Egypt
+AU  - Hassan, Mohamed
+AB  - This paper uses Structural Vector Autoregressive (SVAR) models to study the effectiveness of fiscal policy in stabilizing the real GDP. To do so, it first addresses the cyclicality of fiscal policy in Egypt since the early 1980s. Then, it tackles the fiscal dominance. Once the stage is prepared, it moves on to investigate the effectiveness of the fiscal policy. The paper concludes that the relationship between the fiscal policy and the economic activity is very week and it goes from the former to the later while the relationship between the fiscal policy and the monetary policy is strong and it also goes from the former to the later. This aggravated the economic instability and made the economy more prone to a boom-bust cycle
+CY  - Rochester, NY
+DA  - 2007/03/29/
+PY  - 2007
+DO  - 10.2139/ssrn.2004268
+DP  - Social Science Research Network
+LA  - en
+UR  - https://papers.ssrn.com/abstract=2004268
+Y2  - 2023/02/27/09:21:45
+KW  - Fiscal dominance
+KW  - Procyclicality
+KW  - SVAR
+ER  - 
+
+TY  - GEN
+TI  - Interest Rate Policy and the Inflation Scare Problem: 1979-1992
+AU  - Goodfriend, Marvin
+AB  - Institutional knowledge of Federal Reserve policy procedures, simple economic theory, and the inflation scare concept explain interest rate policy as practiced by the Fed since 1979. The focus is the primary policy problem during the period: the acquisition and maintenance of credibility for the commitment to low inflation.
+CY  - Rochester, NY
+DA  - 1993///
+PY  - 1993
+DP  - Social Science Research Network
+LA  - en
+ST  - Interest Rate Policy and the Inflation Scare Problem
+UR  - https://papers.ssrn.com/abstract=2129296
+Y2  - 2023/02/27/09:21:46
+KW  - SSRN
+KW  - Interest Rate Policy and the Inflation Scare Problem: 1979-1992
+KW  - Marvin Goodfriend
+ER  - 
+
+TY  - GEN
+TI  - Heterogeneous Loans and the Effect of Monetary Interventions
+AU  - Cafiso, Gianluca
+AU  - Rivolta, Giulia
+AB  - The amount of credit in the economy is a heterogeneous aggregate that can be analyzed across different dimensions. Considering such dimensions provides insights into the effect of monetary policy interventions because the credit components are observed to respond differently. Several possible motivations are behind such a differential response and those relate to either demand and supply factors intrinsic to the transmission mechanism of monetary policy. Our objective is to unveil such a differential response across a couple of relevant dimensions and discuss the possible causes behind what observed. The analysis refers to the US and is based on a vector auto-regression estimated using Bayesian techniques and identified with a combination of sign and zero-restrictions.
+CY  - Rochester, NY
+DA  - 2021///
+PY  - 2021
+DO  - 10.2139/ssrn.3892618
+DP  - Social Science Research Network
+LA  - en
+UR  - https://papers.ssrn.com/abstract=3892618
+Y2  - 2023/02/27/09:21:48
+KW  - SSRN
+KW  - Gianluca Cafiso
+KW  - Giulia Rivolta
+KW  - Heterogeneous Loans and the Effect of Monetary Interventions
+ER  - 
+
+TY  - RPRT
+TI  - How the Bundesbank really conducted monetary policy: An analysis based on real-time data
+AU  - Gerberding, Christina
+AU  - Worms, Andreas
+AU  - Seitz, Franz
+AB  - Papers estimating the reaction function of the Bundesbank generally find that its monetary policy from the 1970s to 1998 can well be captured by a standard Taylor rule according to which the central bank responds to the output gap and to deviations of inflation from target, but not to monetary growth. This result is at odds with the Bundesbank's claim that it followed a strategy of monetary targeting. This paper analyses whether this apparent contradiction is due to (a) the use of ex post data which do not necessarily match policy makers? real-time information sets and (b) the omission of important explanatory variables. Accordingly, we compile a real-time data set for Germany including the Bundesbank?s own estimates of potential output and use it to reestimate the Bundesbank?s reaction function. We find that the use of real-time data considerably changes the results. Moreover, when adding the change in the output gap as well as deviations of money growth from target to the set of explanatory variables, we find that both variables are highly significant. This suggests that the Bundesbank took its monetary targets seriously, but also responded to deviations of expected inflation and output growth from target.
+DA  - 2004///
+PY  - 2004
+DP  - www.econstor.eu
+LA  - eng
+M3  - Working Paper
+PB  - Discussion Paper Series 1
+SN  - 2004,25
+ST  - How the Bundesbank really conducted monetary policy
+UR  - https://www.econstor.eu/handle/10419/19492
+Y2  - 2023/02/27/09:21:56
+ER  - 
+
+TY  - JOUR
+TI  - Quarterly Bulletin February 1998
+AU  - Fry, Maxwell
+DA  - 1998///
+PY  - 1998
+DP  - Zotero
+LA  - en
+L1  - https://www.bankofengland.co.uk/-/media/boe/files/quarterly-bulletin/1998/macroeconomic-policy-and-economic-performance-in-developing-countries.pdf
+ER  - 
+
+TY  - GEN
+TI  - Using Dollarized Countries to Analyze the Effects of US Monetary Policy Shocks
+AU  - Willems, Tim
+AB  - Identifying monetary policy shocks is difficult. Therefore, instead of trying to do this perfectly, this paper exploits a natural setting that reduces the con sequences of shock misidentification. It does so by inferring from the responses of variables in dollarized countries. They import US monetary policy just as genuine US states do, but have the advantage that non-monetary US shocks are not imported perfectly. Consequently, this setting reduces the role played by any non-monetary US shocks, while leaving the effects of the true monetary shocks unaffected. Results suggest that prices fall after monetary contractions; output does not show a clear response.
+CY  - Rochester, NY
+DA  - 2011/01/19/
+PY  - 2011
+DO  - 10.2139/ssrn.1685786
+DP  - Social Science Research Network
+LA  - en
+UR  - https://papers.ssrn.com/abstract=1685786
+Y2  - 2023/02/27/09:21:58
+KW  - Block exogeneity
+KW  - Identification
+KW  - Monetary policy effects
+KW  - Price puzzle
+KW  - Structural VARs
+ER  - 
+
+TY  - CONF
+TI  - Monetary Policy: Recent Theory and Practice
+AU  - Tobin, James
+A2  - Wagner, Helmut
+T3  - Contributions to Economics
+AB  - Milton Friedman’s monetarism provoked hot debates on the conduct of monetary policy from the 1950s through the 1970s. The monetarists wanted the central bank to stop setting interest rates and instead to target growth in a monetary quantity, a stock of money by one or another definition, from the monetary base to intermediate aggregates as inclusive as M2 and M3. For hitting at least some of these monetary targets setting a money-market interest rate might be the operating mechanism. (The alternative could be quantitative control of the bank reserves portion of the monetary base, as practiced by the Federal Reserve 1979–82.)
+C1  - Heidelberg
+C3  - Current Issues in Monetary Economics
+DA  - 1998///
+PY  - 1998
+DO  - 10.1007/978-3-642-99797-6_2
+DP  - Springer Link
+SP  - 13
+EP  - 21
+LA  - en
+PB  - Physica-Verlag HD
+SN  - 978-3-642-99797-6
+ST  - Monetary Policy
+KW  - Monetary Policy
+KW  - Interest Rate
+KW  - Central Bank
+KW  - Federal Reserve
+KW  - Fiscal Policy
+ER  - 
+
+TY  - CHAP
+TI  - The Banking Risk-Taking Channel of Monetary Policy in South Africa
+AU  - Gumata, Nombulelo
+AU  - Ndou, Eliphas
+T2  - Bank Credit Extension and Real Economic Activity in South Africa: The Impact of Capital Flow Dynamics, Bank Regulation and Selected Macro-prudential Tools
+A2  - Gumata, Nombulelo
+A2  - Ndou, Eliphas
+AB  - •  Determine if there is a banking risk-taking channel of monetary policy in South Africa•  Provide empirical evidence on the link between monetary policy and bank risk taking; and that high interest rates reduce risk-taking behavior.•  Quantify and demonstrate the extent to which contractionary policy affects the bank risk-taking channel and the implications for macroeconomic performance.•  Show the implications of the monetary policy tightening cycle
+CY  - Cham
+DA  - 2017///
+PY  - 2017
+DP  - Springer Link
+SP  - 335
+EP  - 362
+LA  - en
+PB  - Springer International Publishing
+SN  - 978-3-319-43551-0
+UR  - https://doi.org/10.1007/978-3-319-43551-0_15
+Y2  - 2023/02/27/09:22:01
+KW  - Economic Growth
+KW  - Monetary Policy
+KW  - Interest Rate
+KW  - House Price
+KW  - Risk Variable
+ER  - 
+
+TY  - GEN
+TI  - The Connection between Wall Street and Main Street: Measurement and Implications for Monetary Policy
+AU  - Barattieri, Alessandro
+AU  - Eden, Maya
+AU  - Stevanovi, Dalibor
+AB  - We propose a measure of the extent to which a financial sector is connected to the real economy. The Measure of Connectedness is the share of credit market instruments represented by claims whose direct counterpart belongs to the non-financial sectors. The aggregate U.S. Measure of Connectedness declines by about 27% in the period 1952-2009. We suggest that this increase in disconnectedness between the financial sector and the real economy may have dampened the sensitivity of the real economy to monetary shocks. We present a stylized model that illustrates how interbank trading can reduce the sensitivity of lending to the entrepreneur's net worth, thereby dampening the credit channel transmission of monetary policy. Finally, we interact our measure with both a SVAR and a FAVAR for the U.S. economy, and establish that the impulse responses to monetary policy shocks are dampened as the level of connection declines.
+CY  - Rochester, NY
+DA  - 2013/08/18/
+PY  - 2013
+DO  - 10.2139/ssrn.2342217
+DP  - Social Science Research Network
+LA  - en
+ST  - The Connection between Wall Street and Main Street
+UR  - https://papers.ssrn.com/abstract=2342217
+Y2  - 2023/02/27/09:22:07
+KW  - monetary policy transmission mechanism
+KW  - Connection
+KW  - financial sector
+KW  - real economy
+ER  - 
+
+TY  - JOUR
+TI  - Alternative Maximum Likelihood Estimation of Structural Vector Autoregressive Models Partially Identified with Short-Run Restrictions
+AU  - Jang, Kyungho
+T2  - Journal of Money, Credit and Banking
+AB  - This paper presents an alternative maximum likelihood estimation method for partially identified vector autoregressive models. This method might be especially useful to handle very large systems of variables by reducing the dimension of the likelihood space. As an application, we consider an open economy model to investigate the effects of monetary policy on exchange rates and term structures. We find that exchange rates tend to overshoot and term structures have hump-shaped responses to monetary policy shocks.
+DA  - 2013///
+PY  - 2013
+DO  - 10.1111/jmcb.12010
+DP  - Wiley Online Library
+VL  - 45
+IS  - 2-3
+SP  - 465
+EP  - 476
+LA  - en
+SN  - 1538-4616
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1111/jmcb.12010
+Y2  - 2023/02/27/09:22:09
+KW  - E52
+KW  - C51
+KW  - E32
+KW  - C32
+KW  - monetary policy
+KW  - exchange rate
+KW  - identification
+KW  - F31
+KW  - ML estimation
+KW  - VAR model
+ER  - 
+
+TY  - ELEC
+TI  - An investigation into the positive and normative aspects of monetary policy - ProQuest
+AB  - Explore millions of resources from scholarly journals, books, newspapers, videos and more, on the ProQuest Platform.
+LA  - de
+UR  - https://www.proquest.com/openview/8beb96cc2c2d764ec574d6ef2754f89b/1?pq-origsite=gscholar&cbl=18750&diss=y
+Y2  - 2023/02/27/09:57:27
+ER  - 
+
+TY  - JOUR
+TI  - The Impact of Monetary Policy on the Corporate Balance Sheet
+AU  - Yao, Haibo
+AU  - Roskelley, Kenneth
+T2  - SSRN Electronic Journal
+AB  - We analyze the impact of monetary policy on investing and financing behavior for U.S. firms. We find that monetary policy deviations from the Taylor Rule have a substantial impact on firms’ balance sheets. Policy deviations are positively associated with working capital and leverage ratios, and this relation is independent of the level of the Federal Funds rate and the business cycle. The impact monetary policy deviations have on working capital and leverage are greater the longer Federal Reserve policy has deviated from the Taylor Rule’s proscribed policy. In addition, lengthy deviations from the Taylor Rule are negatively related to new investment expenditures.
+DA  - 2011///
+PY  - 2011
+DO  - 10.2139/ssrn.1929211
+DP  - DOI.org (Crossref)
+J2  - SSRN Journal
+LA  - en
+SN  - 1556-5068
+UR  - http://www.ssrn.com/abstract=1929211
+Y2  - 2023/02/27/09:57:28
+L1  - https://web.archive.org/web/20141023230950id_/http://www.fma.org/Istanbul/Papers/MonetaryPolicyBalanceSheet.pdf
+ER  - 
+
+TY  - JOUR
+TI  - Money velocity and asset prices in the euro area
+AU  - Dreger, Christian
+AU  - Wolters, Jürgen
+T2  - Empirica
+AB  - Monetary growth in the euro area has exceeded its target since several years. At the same time, the money demand function seems to be increasingly unstable if more recent data are used. If the link between money balances and the macroeconomy is fragile, the rationale of monetary aggregates in the ECB strategy has to be doubted. In fact, a rise in the income elasticity after 2001 can be observed, and may reflect the exclusion of real and financial wealth in conventional specifications of money demand. This presumption is explored by means of a cointegration analysis. To separate income from wealth effects, the specification in terms of money velocity is preferred. Evidence for the presence of wealth in the long run relationship is provided. In particular, both stock and house prices have exerted a negative impact on velocity after 2001 and lead to almost identical equilibrium errors. The extended error correction model is stable over the entire sample period and survive a battery of specification tests.
+DA  - 2009/02/01/
+PY  - 2009
+DO  - 10.1007/s10663-008-9092-1
+DP  - Springer Link
+VL  - 36
+IS  - 1
+SP  - 51
+EP  - 63
+J2  - Empirica
+LA  - en
+SN  - 1573-6911
+UR  - https://doi.org/10.1007/s10663-008-9092-1
+Y2  - 2023/02/27/09:57:32
+ER  - 
+
+TY  - JOUR
+TI  - Analyzing Fed behavior using a dynamic Taylor-type rule
+AU  - Seyfried, William L.
+AU  - Bremmer, Dale S.
+T2  - Journal of Economics and Finance
+AB  - This paper estimates a dynamic Taylor-type model in order to analyze the behavior of the Federal Reserve under the leadership of three different Fed chairs: Arthur Burns, Paul Volcker, and Alan Greenspan. The model proves useful in distinguishing the conduct of monetary policy under each. Burns is found to have paid little attention to inflation and inflationary pressures. Volcker focused on reducing actual inflation during his first term while turning his attention to the GDP gap and inflationary pressures in his second term. Greenspan emphasized preemptive strikes against inflation as indicated by high weights attributed to the GDP gap and expected inflation.
+DA  - 2001/03/01/
+PY  - 2001
+DO  - 10.1007/BF02759684
+DP  - Springer Link
+VL  - 25
+IS  - 1
+SP  - 23
+EP  - 32
+J2  - J Econ Finan
+LA  - en
+SN  - 1938-9744
+UR  - https://doi.org/10.1007/BF02759684
+Y2  - 2023/02/27/09:57:34
+ER  - 
+
+TY  - CHAP
+TI  - Canonical Dynamics Mechanism of Monetary Policy and Interest Rate
+AU  - Jeng, Jenher
+AU  - Niu, Wei-Fang
+AU  - Wang, Nan-Jye
+AU  - Lin, Shih-Shan
+T2  - Applied Quantitative Finance
+A2  - Härdle, Wolfgang K.
+A2  - Hautsch, Nikolaus
+A2  - Overbeck, Ludger
+AB  - Interest rates are the fundamental elements of financial and economic activities, and their movements are the major risk factors driving the global capital flows. In the United States, the central bank (Federal Reserve Bank) uses the Fed Funds Rate (FFR, the overnight borrowing rate between banks) as the key tool to anchor its monetary policy for maintaining both sustainable growth and price stability. It has been a sophisticated art and science for the Federal Open Market Committee (FOMC, the primary unit of the FRB for setting the FFR) to balance growth and inflation by tuning the FFR. Among a few models trying to quantitatively assess the FOMC’s efforts on FFR determination is the popular Taylor Rule (Taylor (1993)) for best outlining the thoughts of arguments from the beginning.
+CY  - Berlin, Heidelberg
+DA  - 2008///
+PY  - 2008
+DP  - Springer Link
+SP  - 417
+EP  - 441
+LA  - en
+PB  - Springer
+SN  - 978-3-540-69179-2
+UR  - https://doi.org/10.1007/978-3-540-69179-2_21
+Y2  - 2023/02/27/09:57:36
+KW  - Consumer Price Index
+KW  - Monetary Policy
+KW  - Interest Rate
+KW  - Central Banker
+KW  - Hedge Fund
+ER  - 
+
+TY  - GEN
+TI  - Examine Taylor’s Rule and Create a Regression Model for Federal Funds Rate 2005–2015
+AU  - Yang, Xinye
+AB  - In recent years, John Taylor's famous 1993 paper, "Discretion Versus Policy Rules in Practice," has revolutionized the way many policymakers at central banks think about monetary policy. In fact, the Taylor rule, which is based on deviations of inflation from its target and output gaps, can be helpful to describe policy actions in the past and indicate how federal funds rate should be set in the future based on the state of the economy (Taylor). In this paper, we are going to use his paper, "Discretion Versus Policy Rules in Practice," as a guide to analyzing how monetary policy has been conducted in the decade of 2005-2015 and how the Taylor Rule can help us understand the economy.
+CY  - Rochester, NY
+DA  - 2020/05/01/
+PY  - 2020
+DO  - 10.2139/ssrn.3607643
+DP  - Social Science Research Network
+LA  - en
+UR  - https://papers.ssrn.com/abstract=3607643
+Y2  - 2023/02/27/09:57:39
+KW  - Taylor’s Rule
+ER  - 
+
+TY  - JOUR
+TI  - Correlation of business cycles in the euro zone
+AU  - Gonçalves, Carlos Eduardo S.
+AU  - Rodrigues, Mauro
+AU  - Soares, Tiago
+T2  - Economics Letters
+AB  - In this short article we use a simple differences-in-differences technique to investigate whether bilateral correlation of business cycles increased more amongst members of the European Monetary Union (EMU) after the implementation of the Euro than amidst other OECD economies. We present evidence suggesting this to be the case.
+DA  - 2009/01/01/
+PY  - 2009
+DO  - 10.1016/j.econlet.2008.11.011
+DP  - ScienceDirect
+VL  - 102
+IS  - 1
+SP  - 56
+EP  - 58
+J2  - Economics Letters
+LA  - en
+SN  - 0165-1765
+UR  - https://www.sciencedirect.com/science/article/pii/S0165176508003108
+Y2  - 2023/02/27/09:57:41
+KW  - European Monetary Union
+KW  - Bilateral trade
+KW  - Economic cycles
+ER  - 
+
+TY  - JOUR
+TI  - Aims of monetary policy and options to instrumentate it in Lithuania
+AU  - Buračas, Antanas
+T2  - Organizacijų vadyba: sisteminiai tyrimai
+AB  - The article concerns the current monetary policy situation in Lithuania and its modeling environment under the currency board regime when the country is in the process of integration to the EU. Special attention is given to statistical evaluations of the finance flows also to identification of some serious problems concerning alternative simulations of monetary policy management within Baltic economies. At the same time I expect that more ingenious solutions of the problematic cases may be generated in the following discussions.
+DA  - 2000///
+PY  - 2000
+DP  - etalpykla.lituanistikadb.lt
+IS  - 15
+SP  - 27
+EP  - 44
+LA  - eng
+SN  - 1392-1142
+UR  - https://etalpykla.lituanistikadb.lt/object/LT-LDB-0001:J.04~2000~1367182591135/
+Y2  - 2023/02/27/09:57:49
+ER  - 
+
+TY  - ELEC
+TI  - THE MONETARY TRANSMISSION IN EAST ASIA - ProQuest
+UR  - https://www.proquest.com/openview/c07cd9771ab57ba859d1359163c870d6/1?pq-origsite=gscholar&cbl=60419
+Y2  - 2023/02/27/09:57:51
+ER  - 
+
+TY  - JOUR
+TI  - ON THE PROBLEM OF MACROECONOMIC ANALYSIS AND FORECASTING OF THE ECONOMY.
+AU  - Kurpayanidi, Konstantin
+T2  - Theoretical & Applied Science
+AB  - A new stage of reforms has begun in the Republic of Uzbekistan, characterized by deep and large-scale transformations in all spheres of life and activity of the state. The action Strategy for five priority areas of the country's development in 2017-2021 was approved. Special attention is paid to issues of social and economic development, creating an open economy, healthy competition, reducing the state presence in the economy, achieving high rates of economic growth by diversifying the economy and increasing labor productivity, and implementing a stable monetary policy. A balanced macroeconomic policy is being implemented, which is aimed at maintaining a balance between social support for the population and stimulating the growth of economic sectors. The paper provides a deep system analysis of the dynamics of changes in some macroeconomic indicators in recent years. The issues of development of the main trade partners of Uzbekistan are considered. As a result of the study, the author identified the vectors of strategic directions for the national economy of Uzbekistan, and also proposed solutions to typical problems associated with projected economic growth.
+DA  - 2020/03/30/
+PY  - 2020
+DO  - 10.15863/TAS.2020.03.83.1
+DP  - ResearchGate
+VL  - 83
+SP  - 1
+EP  - 6
+J2  - Theoretical & Applied Science
+L4  - https://www.researchgate.net/profile/Konstantin-Kurpayanidi/publication/340557919_ON_THE_PROBLEM_OF_MACROECONOMIC_ANALYSIS_AND_FORECASTING_OF_THE_ECONOMY/links/5ea12258458515ec3aff255b/ON-THE-PROBLEM-OF-MACROECONOMIC-ANALYSIS-AND-FORECASTING-OF-THE-ECONOMY.pdf
+ER  - 
+
+TY  - JOUR
+TI  - The Causes and Effects of Deflation in Macao
+AU  - Kai, Vong Lap
+AB  - Macao has entered a deflationary era since the second half of 1998 as the economy started a recession in 1996. The change in consumer prices, a widely known measure of inflation or deflation, moved from a rate as high as 8.56% in 1995 down to a record low of -3.2% in 1999 within a period of three years. Deflation remains in Macao despite that the economy has bounced back to positive growth after 2000. Based on a framework that depicts the relationship of change in consumer prices with various endogenous and exogenous factors, this paper tries to explain why deflation occurs in theoretical sense and in the practical situation of Macao. It is found that deflation in Macao is more closely related to the prices of imports as well as the asset prices. Studies of price convergence between Macao and its neighbouring cities and supply side reasoning for the decline in consumer prices would enrich the explanatory power of price movements in Macao.
+DP  - Zotero
+LA  - en
+L1  - https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=5559302ff120c9e886bebc4c6b665e04e097d6b5
+ER  - 
+
+TY  - JOUR
+TI  - Housing markets, monetary policy, and the international co-movement of housing bubbles
+AU  - Caraiani, Petre
+AU  - Călin, Adrian Cantemir
+T2  - Review of International Economics
+AB  - We analyze whether there was co-movement in bubbles at the international level from the mid-1990s to 2018 using a data set of developed and emerging economies. We first identify the markets that were more prone to volatility and speculation before the crisis. Second, we determine and compare the responses of bubbles in housing markets to monetary policy in a Bayesian time-varying framework. We then study the co-movement of bubble responses to monetary shocks before and after the crisis using a dynamic factor model. This approach allows us to disentangle a common global factor from factors specific to high/low speculative housing markets.
+DA  - 2020///
+PY  - 2020
+DO  - 10.1111/roie.12454
+DP  - Wiley Online Library
+VL  - 28
+IS  - 2
+SP  - 365
+EP  - 375
+LA  - en
+SN  - 1467-9396
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1111/roie.12454
+Y2  - 2023/02/27/09:58:06
+ER  - 
+
+TY  - JOUR
+TI  - Forecasting with a Bayesian DSGE Model: An Application to the Euro Area
+AU  - Smets, Frank
+AU  - Wouters, Raf
+T2  - JCMS: Journal of Common Market Studies
+AB  - In monetary policy strategies geared towards maintaining price stability, conditional and unconditional forecasts of inflation and output play an important role. In this article we illustrate how modern sticky-price dynamic stochastic general equilibrium (DSGE) models, estimated using Bayesian techniques, can become an additional useful tool in the forecasting kit of central banks. First, we show that the forecasting performance of such models compares well with a-theoretical vector autoregressions. Moreover, we illustrate how the posterior distribution of the model can be used to calculate the complete distribution of the forecast, as well as various inflation risk measures that have been proposed in the literature. Finally, the structural nature of the model allows computing forecasts conditional on a policy path. It also allows examination of the structural sources of the forecast errors and their implications for monetary policy. Using those tools, we analyse macroeconomic developments in the euro area since the start of EMU.
+DA  - 2004///
+PY  - 2004
+DO  - 10.1111/j.0021-9886.2004.00532.x
+DP  - Wiley Online Library
+VL  - 42
+IS  - 4
+SP  - 841
+EP  - 867
+LA  - en
+SN  - 1468-5965
+ST  - Forecasting with a Bayesian DSGE Model
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1111/j.0021-9886.2004.00532.x
+Y2  - 2023/02/27/09:58:08
+ER  - 
+
+TY  - JOUR
+TI  - Macroeconomic Switching Regimes and Monetary Policy in Canada
+AU  - Lange, Ronald Henry
+T2  - Applied Economics and Finance
+AB  - This study examines the behaviour of monetary policy in Canada over the last 40 years using a Markov-switching VAR model of the macroeconomy. The Markov-switching estimates capture three continuous regimes that are interpreted as the ‘surprise’ regime from 1972Q1 to 1982Q2, the ‘recovery’ regime from 1982Q3 to 1991Q3 and the ‘target’ regime from 1991Q4 to 2014Q4. Monetary policy multipliers for the output gap are greater than one for all three regimes, suggesting that the central bank does not accommodate any expected changes in inflation over the long-run due to the domestic relationship between the output gap and future inflation. The long-run multipliers for inflation are equal to one in the surprise and recovery regimes, indicating that monetary policy also responds to offset inflation shocks. Overall, the policy multipliers and impulse response functions indicate a proactive central bank that responds systematically to movements in the output gap in order to control expected future inflation and to inflation surprises in the three regimes. The regime-dependent behaviour of monetary policy indicates a central bank pursuing an implicit form of inflation targeting as a means of achieving a nominal anchor for policy. The implicit inflation targets are consistent with historical episodes of inflation in Canada over the past 40 years.
+DA  - 2017/06/01/
+PY  - 2017
+DO  - 10.11114/aef.v4i4.2342
+DP  - DOI.org (Crossref)
+VL  - 4
+IS  - 4
+SP  - 17
+J2  - AEF
+LA  - en
+SN  - 2332-7308, 2332-7294
+UR  - http://redfame.com/journal/index.php/aef/article/view/2342
+Y2  - 2023/02/27/09:58:13
+L1  - https://core.ac.uk/download/pdf/235495640.pdf
+ER  - 
+
+TY  - JOUR
+TI  - Determinants of the long-term yield in Canada: an open economy VAR approach
+AU  - Lange, Ronald H.
+T2  - Applied Economics
+AB  - This study analyses the economic determinants of short- and long-term interest rates in Canada using a structural vector autoregressive (VAR) model. The VAR takes into consideration that Canadian financial markets are small and open relative to those in the USA and that Canada is a relatively large exporter of commodities. In part, the empirical results for Canada are similar to those for the USA. Aggregate demand shocks have relatively large and persistent effects on long-term yields, while aggregate supply shocks do not have significant effects. However, monetary policy shocks in Canada are found to have larger and more persistent effects on long-term yields than those found for the USA. The most striking result is that movements in US monetary policy have relatively large, significant and persistent effects on Canadian long-term bond yields. Furthermore, US monetary policy disturbances can account for the overall trend in long-term yields in Canada.
+DA  - 2005/04/10/
+PY  - 2005
+DO  - 10.1080/0003684042000337389
+DP  - Taylor and Francis+NEJM
+VL  - 37
+IS  - 6
+SP  - 681
+EP  - 693
+SN  - 0003-6846
+ST  - Determinants of the long-term yield in Canada
+UR  - https://www.tandfonline.com/doi/abs/10.1080/0003684042000337389
+Y2  - 2023/02/27/09:58:13
+ER  - 
+
+TY  - JOUR
+TI  - The Fed Response to Equity Prices and Inflation
+AU  - Dupor, Bill
+AU  - Conley, Timothy
+T2  - American Economic Review
+DA  - 2004/05//
+PY  - 2004
+DO  - 10.1257/0002828041301704
+DP  - www.aeaweb.org
+VL  - 94
+IS  - 2
+SP  - 24
+EP  - 28
+LA  - en
+SN  - 0002-8282
+UR  - https://www.aeaweb.org/articles?id=10.1257/0002828041301704
+Y2  - 2023/02/27/09:58:15
+KW  - Inflation
+KW  - Price Level
+KW  - Bond Interest Rates
+KW  - Deflation, Monetary Policy, Central Banks and Their Policies, Asset Pricing
+KW  - Trading Volume
+ER  - 
+
+TY  - JOUR
+TI  - The interplay between output, inflation, interest rates and house prices: international evidence
+AU  - Demary, Markus
+T2  - Journal of Property Research
+AB  - We quantify the linkages between real house prices and the price level, output and interest rates for 10 OECD countries by applying vectorautoregressions. As results emerge, that (1) interest rate shocks lower real house prices and explain between 12% and 24% of the variation in house prices, (2) house prices are driven by output movements in most countries, while house prices are more volatile compared with output and the price level, and (3) house price shocks increase output, prices as well as interest rates and contribute significantly to the variation in these variables. Our results indicate that housing markets have a stronger impact onto macroeconomic variables compared to the impact of macroeconomic variables onto housing markets.
+DA  - 2010/03/01/
+PY  - 2010
+DO  - 10.1080/09599916.2010.499015
+DP  - Taylor and Francis+NEJM
+VL  - 27
+IS  - 1
+SP  - 1
+EP  - 17
+SN  - 0959-9916
+ST  - The interplay between output, inflation, interest rates and house prices
+UR  - https://doi.org/10.1080/09599916.2010.499015
+Y2  - 2023/02/27/09:58:17
+KW  - economic fundamentals
+KW  - house price drivers
+KW  - HP‐filter
+KW  - interest rate sensitivity
+KW  - vector autoregressive models
+ER  - 
+
+TY  - JOUR
+TI  - The evolution of the monetary policy regimes in the U.S.
+AU  - Bae, Jinho
+AU  - Kim, Chang-Jin
+AU  - Kim, Dong Heon
+T2  - Empirical Economics
+AB  - The existing literature on U.S. monetary policy provides no sense of a consensus regarding the existence of a monetary policy regime. This article explores the evolution of U.S. monetary policy regimes via the development of a Markov-switching model predicated on narrative and statistical evidence of a monetary policy regime. We identified five regimes for the period spanning 1956:I–2005:IV and they roughly corresponded to the Chairman term of the Federal Reserve, except for the Greenspan era. More importantly, we demonstrate that the conflicting results regarding the response to inflation for the pre-Volcker period in the existing literature is not attributable to the different data but due to different samples, and also provided an insight regarding the Great Inflation—namely, that the near non-response to inflation in the early 1960s appears to have constituted the initial seed of the Great Inflation. We also find via analysis of the Markov-switching model for the U.S. real interest rate, that the regime changes in the real interest rate follow the regime changes in monetary policy within 2 years and that the evolution of real interest rate regimes provides a good explanation for the conflicting results regarding the dynamics of real interest rate.
+DA  - 2012/10/01/
+PY  - 2012
+DO  - 10.1007/s00181-011-0492-x
+DP  - Springer Link
+VL  - 43
+IS  - 2
+SP  - 617
+EP  - 649
+J2  - Empir Econ
+LA  - en
+SN  - 1435-8921
+UR  - https://doi.org/10.1007/s00181-011-0492-x
+Y2  - 2023/02/27/09:58:19
+ER  - 
+
+TY  - JOUR
+TI  - Unconventional monetary policy in a nonlinear quadratic model
+AU  - Faulwasser, Timm
+AU  - Gross, Marco
+AU  - Semmler, Willi
+AU  - Loungani, Prakash
+T2  - Studies in Nonlinear Dynamics & Econometrics
+AB  - After the financial market meltdown and the Great Recession of the years 2007–9, the financial market-macro link has become an important issue in monetary policy modeling. We develop a dynamic model that contains a nonlinear Phillips curve, a dynamic output equation, and a nonlinear credit flow equation – capturing the importance of credit cycles, risk premia, and credit spreads. Our Nonlinear Quadratic Model (NLQ) model has three dynamic state equations and a quadratic objective function. It can be used to evaluate the response of central banks to the Great Recession in moving from conventional to unconventional monetary policy. We solve the model with a new numerical procedure using estimated parameters for the euro area. We conduct simulations to explore the (de)stabilizing effects of the nonlinearities in the model. We demonstrate that credit flows, risk premia, and credit spreads play an important role as an amplification mechanism and in affecting the transmission of monetary policy. We thereby highlight the importance of the natural rate of interest as an anchor for a central bank target and the weight it places on the credit flows for the effectiveness of unconventional monetary policy. Our model is similar in structure compared to larger scale macro-econometric models which many central banks employ.
+DA  - 2020/12/01/
+PY  - 2020
+DO  - 10.1515/snde-2019-0099
+DP  - www.degruyter.com
+VL  - 24
+IS  - 5
+LA  - en
+SN  - 1558-3708
+UR  - https://www.degruyter.com/document/doi/10.1515/snde-2019-0099/html
+Y2  - 2023/02/27/09:58:21
+KW  - unconventional monetary policy
+KW  - nonlinear Phillips curve
+KW  - inflation targeting
+KW  - credit cycles
+KW  - credit spread
+KW  - NLQ model
+KW  - RS-VAR
+ER  - 
+
+TY  - JOUR
+TI  - Infrequent Housing Adjustment, Limited Participation, and Monetary Policy
+AU  - Ghent, Andra
+T2  - Journal of Money, Credit and Banking
+AB  - This paper asks why monetary contractions have strong effects on the housing market. The paper presents a model with staggered housing adjustment in which monetary policy has real effects in the absence of any rigidity in producer pricing or wages. Limited participation in financial markets leads to a rise in the real mortgage rate following an increase in the nominal short rate. Since households must take on a mortgage to consume housing, the rise in the real interest rate reduces the share of residential investment in output.
+DA  - 2012///
+PY  - 2012
+DO  - 10.1111/j.1538-4616.2012.00516.x
+DP  - Wiley Online Library
+VL  - 44
+IS  - 5
+SP  - 931
+EP  - 955
+LA  - en
+SN  - 1538-4616
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1538-4616.2012.00516.x
+Y2  - 2023/02/27/09:58:36
+KW  - E52
+KW  - monetary policy
+KW  - mortgages
+KW  - G14
+KW  - limited participation
+KW  - R21
+KW  - R31
+KW  - residential investment
+KW  - sticky housing
+ER  - 
+
+TY  - JOUR
+TI  - Financial Shocks, Uncertainty Shocks, and Monetary Policy Trade-Offs
+AU  - Brianti, Marco
+AB  - This paper separately identiﬁes ﬁnancial and uncertainty shocks using a novel SVAR procedure and discusses their distinct monetary policy implications. The procedure relies on the qualitatively different responses of corporate cash holdings: after a ﬁnancial shock, ﬁrms draw down their cash reserves as they lose access to external ﬁnance, while uncertainty shocks drive up cash holdings for precautionary reasons. Although both ﬁnancial and uncertainty shocks are contractionary, my results show that the former are inﬂationary while the latter generate deﬂation. I rationalize this pattern in a New-Keynesian model: after a ﬁnancial shock, ﬁrms increase prices to raise current liquidity; after an uncertainty shock, ﬁrms cut prices in response to falling demand. These distinct channels have stark monetary policy implications: conditional on uncertainty shocks, the monetary authority can potentially stabilize output and inﬂation at the same time, while in the case of ﬁnancial shocks, the central bank can stabilize inﬂation only at the cost of more unstable output ﬂuctuations.
+DP  - Zotero
+LA  - en
+L1  - https://sites.ualberta.ca/~econwps/2021/wp2021-05.pdf
+ER  - 
+
+TY  - JOUR
+TI  - Nonlinear Monetary Policy Rules: Some New Evidence for the U.S.
+AU  - Dolado, Juan
+AU  - Pedrero, Ramón María-Dolores
+AU  - Ruge-Murcia, Francisco J.
+T2  - Studies in Nonlinear Dynamics & Econometrics
+AB  - This paper derives optimal monetary policy rules in setups where certainty equivalence does not hold because either central bank preferences are not quadratic, and/or the aggregate supply relation is nonlinear. Analytical results show that these features lead to sign and size asymmetries, and nonlinearities in the policy rule. Reduced-form estimates indicate that US monetary policy can be characterized by a nonlinear policy rule after 1983, but not before 1979. This finding is consistent with the view that the Fed's inflation preferences during the Volcker-Greenspan regime differ considerably from the ones during the Burns-Miller regime.
+DA  - 2004/09/16/
+PY  - 2004
+DO  - 10.2202/1558-3708.1155
+DP  - www.degruyter.com
+VL  - 8
+IS  - 3
+LA  - en
+SN  - 1558-3708
+ST  - Nonlinear Monetary Policy Rules
+UR  - https://www.degruyter.com/document/doi/10.2202/1558-3708.1155/html
+Y2  - 2023/02/27/09:58:48
+ER  - 
+
+TY  - JOUR
+TI  - Monetary policy when potential output is uncertain: Understanding the growth gamble of the 1990s
+AU  - Gorodnichenko, Yuriy
+AU  - Shapiro, Matthew D.
+T2  - Journal of Monetary Economics
+AB  - The Fed kept interest rates low and essentially unchanged during the late 1990s despite a booming economy and record-low unemployment. These interest rates were accommodative by historical standards. Nonetheless, inflation remained low. How did the Fed succeed in sustaining rapid economic growth without fueling inflation and inflationary expectations? In retrospect, it is evident that the productive capacity of the economy increased. Yet as events unfolded, there was uncertainty about the expansion of the capacity of the economy and therefore about the sustainability of the Fed's policy. This paper provides an explanation for the success of the Fed in accommodating growth with stable inflation in the late 1990s. It shows that if the central bank is committed to reverse policy errors it makes because of unwarranted optimism, inflation can remain in check even if the central bank keeps interest rates low because of this optimism. In particular, a price level target—which is a simple way to model a commitment to offset errors—can serve to anchor inflation even if the public does not share the central bank's optimism about shifts in potential output. The paper shows that price level targeting is superior to inflation targeting in a wide range of situations. The paper also provides econometric evidence that, in contrast to earlier periods, the Fed has recently put substantial weight on the price level in setting interest rates. Moreover, it shows that CPI announcement surprises lead to reversion in the price level. Finally, it provides textual evidence that Alan Greenspan puts relatively more weight on the price level than inflation.
+DA  - 2007/05/01/
+PY  - 2007
+DO  - 10.1016/j.jmoneco.2006.03.004
+DP  - ScienceDirect
+VL  - 54
+IS  - 4
+SP  - 1132
+EP  - 1162
+J2  - Journal of Monetary Economics
+LA  - en
+SN  - 0304-3932
+ST  - Monetary policy when potential output is uncertain
+UR  - https://www.sciencedirect.com/science/article/pii/S0304393206002091
+Y2  - 2023/02/27/09:58:50
+KW  - Inflation targeting
+KW  - Taylor rule
+KW  - Central bank
+KW  - Price level targeting
+ER  - 
+
+TY  - JOUR
+TI  - Monetary-Fiscal Policy Relations in the Euro Area: The Impact on the Primary Balance
+AU  - Dascher, Fabienne-Lara
+AU  - Greiner, Alfred
+T2  - SSRN Electronic Journal
+AB  - With this paper, our objective is to empirically study public debt sustainability by estimating a ﬁscal reaction function where the primary balance relative to GDP is assumed to be a function of the public debt to GDP ratio of the previous year and of other macroeconomic variables. In particular, we take into account the eﬀects of monetary policy on the primary budget of the government by including the real long term interest rate and the inﬂation rate, measured as the change in the GDP price deﬂator. We resort to the ﬁxed eﬀects and to the random eﬀects models for a panel of 12 euro area economies from 1996 to 2020. We ﬁnd statistical evidence for sustainable debt policies and detect that both monetary policy variables are positively correlated with the primary balance to GDP ratio. This holds both for the ﬁxed and for the random eﬀects estimation, when those variables are included simultaneously.
+DA  - 2022///
+PY  - 2022
+DO  - 10.2139/ssrn.4180139
+DP  - DOI.org (Crossref)
+J2  - SSRN Journal
+LA  - en
+SN  - 1556-5068
+ST  - Monetary-Fiscal Policy Relations in the Euro Area
+UR  - https://www.ssrn.com/abstract=4180139
+Y2  - 2023/02/27/09:58:56
+L1  - https://web.archive.org/web/20220803134250id_/https://pub.uni-bielefeld.de/download/2964827/2964828/wpaper_05_2022.pdf
+ER  - 
+
+TY  - CHAP
+TI  - Impact of Expansionary Monetary Policy on Crude Oil Prices
+AU  - Taghizadeh-Hesary, Farhad
+AU  - Yoshino, Naoyuki
+T2  - Monetary Policy and the Oil Market
+A2  - Yoshino, Naoyuki
+A2  - Taghizadeh-Hesary, Farhad
+T3  - ADB Institute Series on Development Economics
+AB  - While the oil price shocks of the 1970s can be explained by pure supply factors, starting in the 1980s oil prices increasingly began to come under a different type of pressure. Oil prices accelerated from about $35 per barrel in 1981 to beyond $111 per barrel in 2011. At the same time interest rates subsided from 16.7 % per annum to about 0.1 %. This chapter explains how this long-term price increase in most cases, was caused by expansionary monetary policies that heightened oil prices through interest rate channels. Aggressive monetary policies stimulated oil demand and blew up oil prices, a trend that led to slower economic growth. As for elasticities the results described in this chapter show that demand is price elastic and, unlike some earlier literature states, it is significantly elastic to income too. In the last section, the results show that oil prices adjust instantly, declaring the existence of equilibrium in the oil market during the period from 1960 to 2011.
+CY  - Tokyo
+DA  - 2016///
+PY  - 2016
+DP  - Springer Link
+SP  - 7
+EP  - 27
+LA  - en
+PB  - Springer Japan
+SN  - 978-4-431-55797-5
+UR  - https://doi.org/10.1007/978-4-431-55797-5_2
+Y2  - 2023/02/27/09:58:56
+KW  - Q41
+KW  - Q31
+KW  - E52
+KW  - Monetary policy
+KW  - Oil market
+KW  - Interest rate
+KW  - Equilibrium vs. disequilibrium
+ER  - 
+
+TY  - JOUR
+TI  - Credit in the euro area: An empirical investigation using aggregate data
+AU  - Calza, Alessandro
+AU  - Manrique, Marta
+AU  - Sousa, João
+T2  - The Quarterly Review of Economics and Finance
+AB  - This paper uses multivariate cointegration techniques to estimate a model of aggregate bank lending in the euro area. The model provides a quantitative benchmark for assessing conjunctural developments in loans to the area-wide private sector. Large and protracted deviations of realised loans from the paths implied by the model may reveal information about the emergence of financial imbalances as well as about the state of the economy, particularly about the strength of inflationary pressures. A specific application of the model shows that its error-correction term contains information on future changes in inflation over forecast horizons of relevance for monetary policy.
+DA  - 2006/05/01/
+PY  - 2006
+DO  - 10.1016/j.qref.2005.02.001
+DP  - ScienceDirect
+VL  - 46
+IS  - 2
+SP  - 211
+EP  - 226
+J2  - The Quarterly Review of Economics and Finance
+LA  - en
+SN  - 1062-9769
+ST  - Credit in the euro area
+UR  - https://www.sciencedirect.com/science/article/pii/S1062976906000214
+Y2  - 2023/02/27/09:58:58
+KW  - Cointegration
+KW  - Bank lending
+KW  - Credit
+KW  - Euro area
+ER  - 
+
+TY  - JOUR
+TI  - Non-Keynesian effects of public expenditure in Spain
+AU  - de Castro, Francisco
+T2  - Applied Economics Letters
+AB  - Evidence is provided of non-Keynesian effects of fiscal policy in Spain within a VAR framework. Shocks to government expenditure expand activity, although moderately, in the short term, with output multipliers slightly above one. In the medium term, however, the response of output becomes significantly negative. The two main explanations proposed in the literature seem to apply here, namely higher real interest rates as a result of higher risk premia on the demand side and higher equilibrium wage reducing entrepreneurial profits and investment accordingly on the supply side.
+DA  - 2003/08/01/
+PY  - 2003
+DO  - 10.1080/1350485032000136397
+DP  - Taylor and Francis+NEJM
+VL  - 10
+IS  - 10
+SP  - 651
+EP  - 655
+SN  - 1350-4851
+UR  - https://doi.org/10.1080/1350485032000136397
+Y2  - 2023/02/27/09:59:00
+ER  - 
+
+TY  - JOUR
+TI  - Stylized Facts and Stylized Illusions: Inflation and Productivity Revisited
+AU  - Cameron, Norman
+AU  - Hum, Derek
+AU  - Simpson, Wayne
+T2  - The Canadian Journal of Economics / Revue canadienne d'Economique
+AB  - Recent estimates of a negative empirical relationship between inflation and the rate of growth of productivity provide a strong case for vigorous anti-inflationary policy. This paper tests the robustness of this evidence using long quarterly and annual datasets for four countries (Canada, United States, United Kingdom, West Germany). Our results from cointegration and other time series tests show no evidence for any connection between inflation and the level of productivity. We do find a strong connection between inflation and productivity growth, but it is so internally inconsistent as to be incredible. The best explanation is that it is accounted for entirely by statistical bias from attempting to cointegrate stationary and non-stationary variables. /// Faits stylisés et illusions stylisées: un autre coup d'oeil à l'inflation et à la productivité. Des travaux montrant une relation empirique négative entre inflation et taux de croissance de la productivité ont donné un fort support à la politique vigoureuse de lutte à l'inflation. Ce mémoire met au test la robustesse de ces résultats en utilisant des données pour quatre pays (Canada, Etats-Unis, Royaume-Uni et Allemagne de l'Ouest). Les résultats obtenus par cointegration et par d'autres tests de séries chronologiques ne montrent aucun signe d'une relation quelconque entre l'inflation et le niveau de productivité. Les auteurs trouvent une relation forte entre l'inflation et la croissance de la productivité, mais il s'agit de résultats d'une telle incohérence interne qu'ils manquent de crédibilité. La meilleure explication des résultats obtenus est que la relation est entièrement attribuable au bias statistique engendré par la cointégration de variables stationnaires et non-stationnaires.
+DA  - 1996///
+PY  - 1996
+DO  - 10.2307/136156
+DP  - JSTOR
+VL  - 29
+IS  - 1
+SP  - 152
+EP  - 162
+SN  - 0008-4085
+ST  - Stylized Facts and Stylized Illusions
+UR  - https://www.jstor.org/stable/136156
+Y2  - 2023/02/27/09:59:03
+ER  - 
+
+TY  - JOUR
+TI  - Monetary vs. fiscal policy: Some evidence from vector autoregression for India
+AU  - Ansari, M. I.
+T2  - Journal of Asian Economics
+AB  - This paper investigates the relative importance of monetary and fiscal policy for India. Unlike previous studies, a more general approach of multivariate vector autoregression has been employed. Analysis of the causality results based on the joint F-tests and the dynamic multipliers based on the variance decompositions and the impulse response functions unambiguously support the Keynesian stance on the importance of fiscal policy. There is very little evidence of exogeneity of money supply, undermining the validity of the monetarist proposition. On the contrary, Indian monetary policy appears to have accommodated changes in government expenditure, prices and output, lending support to the structuralist-Mundellian views.
+DA  - 1996/12/01/
+PY  - 1996
+DO  - 10.1016/S1049-0078(96)90061-5
+DP  - ScienceDirect
+VL  - 7
+IS  - 4
+SP  - 677
+EP  - 698
+J2  - Journal of Asian Economics
+LA  - en
+SN  - 1049-0078
+ST  - Monetary vs. fiscal policy
+UR  - https://www.sciencedirect.com/science/article/pii/S1049007896900615
+Y2  - 2023/02/27/09:59:04
+ER  - 
+
+TY  - GEN
+TI  - The Current Account and Monetary Policy in the Euro Area
+AU  - Schuler, Tobias
+AU  - Sun, Yiqiao
+AB  - We investigate the factors driving current account and monetary policy developments in the euro area. We estimate an open-economy structural vector autoregression (VAR) model with zero and sign restrictions derived from a multi-country dynamic stochastic general equilibrium (DSGE) model to identify relevant shocks and analyse their impact on the current account and interest rate. Examining the VAR impulse responses for Germany, Italy and Spain we find that investment shocks and preference shocks drive the current account and interest rates in the opposite directions. By contrast, external demand shocks and productivity shocks cause both the current account balance and interest rate to move in the same direction. We also provide evidence for spillovers to the euro area from US preference shocks and US interest rate policy shocks.
+CY  - Rochester, NY
+DA  - 2022/08/01/
+PY  - 2022
+DO  - 10.2139/ssrn.4182219
+DP  - Social Science Research Network
+LA  - en
+UR  - https://papers.ssrn.com/abstract=4182219
+Y2  - 2023/02/27/09:59:06
+KW  - monetary policy
+KW  - current account
+KW  - macroeconomic shocks
+ER  - 
+
+TY  - JOUR
+TI  - The Budget of 1981 was over the top
+AU  - Nickell, Stephen
+DP  - Zotero
+LA  - en
+L1  - https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=bbbd991f0207e896b4ad9e3fb59bb242ff87821b
+ER  - 
+
+TY  - JOUR
+TI  - Monetary Policy and the Measurement of Inflation: Prices, Wages and Expectations
+AU  - Cecchetti, Stephen
+AU  - Moreno, Ramon
+AU  - Mihaljek, Dubravko
+AU  - Villar, Agustin
+AU  - Saxena, Sweta
+AB  - Issues of inflation measurement are fundamental to the conduct of monetary policy. Price indices form the foundation of central bank policy frameworks around the world. They serve as guides to decision-making, as well as providing the primary mechanism for holding independent policymakers accountable. To shed some light on the role of inflation measurement, the annual meeting of Deputy Governors of emerging market economies (EMEs), held in Basel on 5-6 February 2009, explored three issues: Price indices used by central banks; the role of wages and productivity in inflation policy; and the measurement and assessment of inflation expectations. This volume contains contributions by senior central bankers and BIS staff. The issues are summarised in an overview chapter by Stephen Cecchetti. Price indices used by central banks. The primary price indicator or target of EME central banks is headline CPI, supplemented by other indicators. At least two issues of measurement arise. The first is transitory phenomena, or noise, that should not affect policymakers' actions. Many central banks deal with noise by using measures of underlying or core inflation that exclude certain prices from computation in the index. The second issue is measurement biases, related to the way in which individual prices are weighted together to form an aggregate index (weighting bias; eg substitution bias); or due to actual errors in measuring the individual prices themselves (eg quality or new goods bias). Wages, productivity and structural inflation. Wages are a key element in the inflation process: Wage growth equals productivity growth plus inflation and real wage growth that is in line with labour productivity growth is widely seen as a precondition for macroeconomic stability. In EMEs, a close relationship between real wage growth and labour productivity growth helps preserve external competitiveness while limiting inflationary pressures and the risk of a wage-price spiral developing. The adoption of inflation targeting frameworks by many emerging market central banks has provided an incentive to compile better labour market data and has enabled central banks to use productivity and unit labour costs more widely in their inflation forecasts. Other aspects of the role of wages in inflation are highlighted by two-sector models of differential productivity growth in tradable and non-tradable industries. One implication is that the rate of wage increase will depend on wage increase in the tradable sector. Another is that inflation sometimes reflect productivity growth in tradable industries, so not all inflation in rapidly-growing EMEs is necessarily undesirable or avoidable. Inflation expectations and monetary policy. Three issues may be highlighted that are discussed in this volume drawing on EME experience: (i) How central banks measure inflation expectations and use such measures; (ii) the relationship between inflation expectations and the costs of disinflation; and (iii) whether monetary policy frameworks are effective in anchoring inflation expectations. Measurements of expectations draw either on surveys (of households and businesses, professional forecasters and financial market participants) or financial markets (eg the difference in return between an inflation-linked bond and a nominal rate). As for the costs of disinflation, these are related to inflation persistence, which can in turn be related to expectations (eg backward-looking, or reflecting limited information about central bank objectives). Finally, the experience of central banks suggests that inflation expectations have been better anchored in this decade.
+DA  - 2010/01/01/
+PY  - 2010
+DP  - ResearchGate
+ST  - Monetary Policy and the Measurement of Inflation
+L4  - https://www.researchgate.net/profile/Ramon-Moreno-6/publication/228270266_Monetary_Policy_and_the_Measurement_of_Inflation_Prices_Wages_and_Expectations/links/00b7d51839d7dd1e50000000/Monetary-Policy-and-the-Measurement-of-Inflation-Prices-Wages-and-Expectations.pdf#page=121
+ER  - 
+
+TY  - JOUR
+TI  - Modeling US inflation dynamics: persistence and monetary policy regimes
+AU  - Zhang, Chengsi
+AU  - Clovis, Joel
+T2  - Empirical Economics
+AB  - This paper employs the recently developed structural stability test with multiple regime shifts and grid bootstrapping methods to model US inflation dynamics over the past half century. Our empirical results suggest that the persistence of inflation has witnessed significant declines over the most recent period of low inflation and this helps to embed a low inflation environment. The finding is robust to a variety of measures of the inflation series and offers new insight on understanding the stationarity issue of the US inflation series.
+DA  - 2009/05/01/
+PY  - 2009
+DO  - 10.1007/s00181-008-0205-2
+DP  - Springer Link
+VL  - 36
+IS  - 2
+SP  - 455
+EP  - 477
+J2  - Empir Econ
+LA  - en
+SN  - 1435-8921
+ST  - Modeling US inflation dynamics
+UR  - https://doi.org/10.1007/s00181-008-0205-2
+Y2  - 2023/02/27/09:59:14
+ER  - 
+
+TY  - RPRT
+TI  - How to normalize monetary policy in the Euro area
+AU  - Beck, Guenter W.
+AU  - Wieland, Volker
+AB  - Since 2014 the ECB has implemented a massive expansion of monetary policy including large-scale asset purchases and negative policy rates. As the euro area economy has improved and inflation has risen, questions concerning the future normalization of monetary policy are starting to dominate the public debate. The study argues that the ECB should develop a strategy for policy normalization and communicate it very soon to prepare the ground for subsequent steps towards tightening. It provides analysis and makes proposals concerning key aspects of this strategy. The aim is to facilitate the emergence of expectations among market participants that are consistent with a smooth process of policy normalization.
+DA  - 2017///
+PY  - 2017
+DP  - www.econstor.eu
+LA  - eng
+M3  - Working Paper
+PB  - IMFS Working Paper Series
+SN  - 115
+UR  - https://www.econstor.eu/handle/10419/168566
+Y2  - 2023/02/27/09:59:15
+ER  - 
+
+TY  - JOUR
+TI  - Does Inflation Targeting Really Promote Economic Growth?
+AU  - Khan, Najib
+T2  - Review of Political Economy
+AB  - Inflation targeting, as a monetary-policy framework, is said to promote economic growth. Yet, when evaluating the macroeconomic performance of inflation-targeting regime, the existing literature only emphasizes the dynamics of inflation and the costs associated with taming inflation. There is hardly any assessment of the growth claim. To fill the gap and to measure the causal impact of inflation-targeting adoption on economic growth, we compare the dynamics of output growth and long-term unemployment between countries that have adopted inflation targeting and the non-adopting countries. Our findings seem to refute the growth claim, and paint a bleak picture of inflation targeting: when compared to the countries that did not adopt inflation targeting, there is a significant reduction in the average growth rate among the inflation-targeting adopters by over ½ percentage point. Additionally, long-term unemployment significantly rises among the inflation-targeting countries by over 1½ percentage points as compared to the non-adopters. These results are robust to both the exclusion of the outlier observations and to the sensitivity tests recommended for such analysis.
+DA  - 2022/07/03/
+PY  - 2022
+DO  - 10.1080/09538259.2021.1902165
+DP  - Taylor and Francis+NEJM
+VL  - 34
+IS  - 3
+SP  - 564
+EP  - 584
+SN  - 0953-8259
+UR  - https://doi.org/10.1080/09538259.2021.1902165
+Y2  - 2023/02/27/09:59:20
+KW  - growth
+KW  - E52
+KW  - E58
+KW  - Monetary policy
+KW  - inflation targeting
+KW  - unemployment
+KW  - E20
+KW  - E24
+ER  - 
+
+TY  - BOOK
+TI  - Discretionary Monetary Policy Versus Rules: The Japanese Experience During 1986-91
+AU  - Meredith, Mr Guy
+AB  - This paper compares the hypothetical performance of various monetary policy rules with that of the discretionary policies actually pursued in Japan over the 1986-91 period. The results suggest that simple rules based on targeting growth in either the money supply, nominal income, or prices would have failed to stabilize economic variables more successfully than discretionary policies. At the same time, it appears that an indicator of monetary conditions incorporating movements in the real exchange rate and the real interest rate would have been useful in assessing the effect of current policies on future activity.
+DA  - 1992/08/01/
+PY  - 1992
+DP  - Google Books
+SP  - 28
+LA  - en
+PB  - International Monetary Fund
+SN  - 978-1-4518-4833-5
+ST  - Discretionary Monetary Policy Versus Rules
+L2  - https://books.google.de/books?id=UFQYEAAAQBAJ
+KW  - Business & Economics / Banks & Banking
+KW  - Business & Economics / Foreign Exchange
+KW  - Business & Economics / Inflation
+ER  - 
+
+TY  - BOOK
+TI  - Edge: A model of the euro area with applications to monetary policy
+AU  - Kortelainen, Mika
+AB  - Mallin tärkeimpiin ominaisuuksiin kuuluvat Blanc-pääomavarallisuuden arvostaminen pääomatulojen nykyarvona, työmarkkinoiden limittäiset Calvo-sopimukset, ja neoklassinen tarjonta Cobb-Douglas hyötyfunktiolla.Mallin ensimmäinen ja toinen momentti kalibroidaan vastaamaan julkisesti saatavilla olevaa euroalueen dataa.Stokastisilla simuloinneilla tuotettu mallin ristikorrelaatiorakenne muistuttaa euroalueen datan ristikorrelaatiorakennetta.Mallin diagnostiset simulointitulokset ovat talousteoreettisesti luontevia.Heterogeenisten odotusten merkitystä rahapolitiikassa tarkastellaan erottamalla rahapolitiikkaa koskevat yksityisen sektorin ja keskuspankin odotukset toisistaan.Simulointitulokset osoittavat, että kun yksityisen sektorin odotukset poikkeavat keskuspankin odotuksista, talouteen aiheutuu reaalisia kustannuksia.Lisäksi osoitetaan, että nämä kustannukset ovat pienemmät, jos taloudessa on jokin oppimekanismi, joka poistaa erot eri agenttien odotuksissa. Havaitaan myös, että rahapolitiikkaan kohdistuvissa yleisön odotuksissa ilmenevät satunnaiset poikkeamat, joiden tulkitaan kuvaavan häiriöitä rahapolitiikan läpinäkyvyydessä, aiheuttavat kustannuksia vaihtelevuuden voimistumisen vuoksi.Tulokset osoittavat, että heterogeeniset rahapolitiikkaodotukset voivat aiheuttaa merkittäviä taloudellisia kustannuksia. Asiasanat: EDGE, rationaaliset odotukset, heterogeeniset odotukset, oppiminen, dynaaminen yleisen tasapainon malli
+DA  - 2002///
+PY  - 2002
+DP  - www.econstor.eu
+LA  - eng
+PB  - Helsinki: Bank of Finland
+SN  - 978-952-462-001-7
+ST  - Edge
+UR  - https://www.econstor.eu/handle/10419/212956
+Y2  - 2023/02/27/09:59:25
+ER  - 
+
+TY  - JOUR
+TI  - The Conditions for Monetary Targeting in Slovenia
+AU  - Mejra Festic
+T2  - Eastern European Economics
+AB  - If money multipliers are stable, there is a relationship between the controllable variable - base money (B) - and intermediate targets such as M1, M2, and M3. These intermediate targets have a long-term and stable relationship with the final target, the price level. If potential output, money demand, and velocity are predictable, a strategy of monetary targeting can be successful in the period before Slovenia joins the European Monetary Union. This article examines the stability of money multipliers and transmission mechanisms from money to prices for Slovenia. It concludes that these are sufficiently stable to make monetary targeting a feasible monetary policy for Slovenia. ments between tolar and foreign currency deposits that are included in it. The target annual growth rate of aggregate M3 in 1997 was 14–22 percent, and 18–26 percent in 1998. In 1998, aggregate M3 increased by 22.2 percent, only 2.2 percentage points above the lower limit. The target for 1999 was an annual increase of M3 by 16–24 percent and for 2000, 12–18 percent (Bilten BS). We will test stability of the relationship between monetary and real aggregates in Slovenia. Such stability is the prerequisite for effective monetary policy, including a policy of inflation targeting. The Transmission of Monetary Impulses Tobe successful, monetary policy must include an accurate assessment
+DA  - 2002/05/01/
+PY  - 2002
+DO  - 10.1080/00128775.2002.11041017
+DP  - Taylor and Francis+NEJM
+VL  - 40
+IS  - 3
+SP  - 69
+EP  - 89
+SN  - 0012-8775
+UR  - https://doi.org/10.1080/00128775.2002.11041017
+Y2  - 2023/02/27/09:59:28
+ER  - 
+
+TY  - JOUR
+TI  - Financial Liberalization and Money Demand in CEMAC: Evidence from GMM Estimations of a Dynamic Panel
+AU  - SÃ©raphin, Prao Yao
+T2  - International Journal of Economics and Financial Research
+AB  - The objective of this paper is to examine the impact of financial market development and liberalization on money demand behavior in Central African Economic and Monetary Community (CEMAC). We adopt the generalized method of moments (GMM) system for panel data. The empirical results indicate that financial liberalization has a negative impact on money demand. Moreover, real GDP and the GDP deflator affect it positively, while the main policy rate has a negative impact. In terms of economic policy involvement, monetary authorities must pursue reforms aimed at deepening financial liberalization measures so that banks actively participate in the financing of CEMAC economies.
+DA  - 2018///
+PY  - 2018
+DP  - ideas.repec.org
+VL  - 4
+IS  - 8
+SP  - 250
+EP  - 257
+LA  - en
+ST  - Financial Liberalization and Money Demand in CEMAC
+UR  - https://ideas.repec.org//a/arp/ijefrr/2018p250-257.html
+Y2  - 2023/02/27/09:59:29
+KW  - Money demand
+KW  - Financial liberalization
+KW  - Monetary policy.
+ER  - 
+
+TY  - JOUR
+TI  - Discussion of "Trend Inflation in Advanced Economies"
+AU  - Morley, James
+T2  - International Journal of Central Banking
+DA  - 2015///
+PY  - 2015
+DP  - Zotero
+VL  - 11
+LA  - en
+L1  - https://www.ijcb.org/journal/ijcb15q4a3.pdf
+ER  - 
+
+TY  - JOUR
+TI  - The impact of financial development indicators on natural resource markets: Evidence from two-step GMM estimator
+AU  - Rashid Khan, Haroon Ur
+AU  - Islam, Talat
+AU  - Yousaf, Sheikh Usman
+AU  - Zaman, Khalid
+AU  - Shoukry, Alaa Mohamd
+AU  - Sharkawy, Mohamed A.
+AU  - Gani, Showkat
+AU  - Aamir, Alamzeb
+AU  - Hishan, Sanil S.
+T2  - Resources Policy
+AB  - The financialization in energy and commodity markets is the overwhelming subject of energy and resource policy, which is exercised in the context of China to analyzed government financial policies to support natural resource markets during the period of 1967–2016. The results show that real interest rate supports energy and resource markets through increased energy production, oil rents, and crop production in a country. Money supply increases fossil fuel energy demand, energy efficiency, and agricultural and livestock production. Domestic credit provided by financial sector is negatively influenced to energy and resource markets with some exceptions. FDI inflows largely influenced soft and hard commodity markets to decrease natural resource rents and agricultural & livestock productions, except total fisheries production, which substantially increases FDI inflows in a country. The commodity prices distorted energy and natural resource markets except for ores and mineral exports that inflamed by higher price level. The growth-specific factors substantially improve the efficiency of energy & resource markets. Thus, the overall debate comes to the conclusion that commodity prices distorted energy and commodity markets, which may be subsidized by sound economic growth, trade liberalization policies, financial development, tight monetary policy, and optimized growth strategies in a country.
+DA  - 2019/08/01/
+PY  - 2019
+DO  - 10.1016/j.resourpol.2019.04.002
+DP  - ScienceDirect
+VL  - 62
+SP  - 240
+EP  - 255
+J2  - Resources Policy
+LA  - en
+SN  - 0301-4207
+ST  - The impact of financial development indicators on natural resource markets
+UR  - https://www.sciencedirect.com/science/article/pii/S0301420718306470
+Y2  - 2023/02/27/09:59:34
+KW  - China
+KW  - Energy markets
+KW  - Commodity prices
+KW  - Commodity markets
+KW  - Financialization
+KW  - Growth specific factors
+KW  - Natural resources
+KW  - Simultaneous GMM estimator
+ER  - 
+
+TY  - JOUR
+TI  - Science of Monetary Policy: Some Perspectives on the Indian Economy
+AU  - Rao, M. J. Manohar
+T2  - Economic and Political Weekly
+AB  - This paper exposits the monetary policy design problem within the limits of an empirical framework for the Indian economy. Four main issues are examined. The paper first looks at a few of the theories that have been advanced to explain the stylised facts of economic fluctuations and then examines the main features of business cycles in the Indian economy over the past 50 years. In the process, it presents forecasts of aggregate economic activity for 2002-03 and 2003-04 besides obtaining quantitative estimates of the impact of the business cycle on the fiscal deficit. Second, it empirically measures the threshold rate of inflation within the framework of growth-inflation trade-offs and derives the optimal rate of monetary expansion needed to smooth out fluctuations and stabilise the inflation rate at its threshold level. Third, it specifies a theoretical model (linking growth, inflation, interest rates and money supply) capable of deriving an optimal fiscal deficit which maximises the real growth rate; and applies it within the Indian context to measure the desired amount of fiscal consolidation. Finally, it provides estimates of a comprehensive macroeconomic conditions index which can very effectively be incorporated into a simple Taylor-type interest rate rule (reaction function) for monetary policy.
+DA  - 2003///
+PY  - 2003
+DP  - JSTOR
+VL  - 38
+IS  - 8
+SP  - 809
+EP  - 820
+SN  - 0012-9976
+ST  - Science of Monetary Policy
+UR  - https://www.jstor.org/stable/4413252
+Y2  - 2023/02/27/09:59:37
+ER  - 
+
+TY  - JOUR
+TI  - What Is the Importance of Monetary and Fiscal Shocks in Explaining U.S. Macroeconomic Fluctuations?
+AU  - Rossi, Barbara
+AU  - Zubairy, Sarah
+T2  - Journal of Money, Credit and Banking
+AB  - This paper analyzes the importance of monetary and fiscal policy shocks in explaining U.S. macroeconomic fluctuations, and establishes new stylized facts. The novelty of our empirical analysis is that we jointly consider both monetary and fiscal policy, whereas the existing literature only focuses on either one or the other. Our main findings are twofold: fiscal shocks are relatively more important in explaining medium cycle fluctuations whereas monetary policy shocks are relatively more important in explaining business cycle fluctuations, and failing to recognize that both monetary and fiscal policy simultaneously affect macroeconomic variables might incorrectly attribute the fluctuations to the wrong source.
+DA  - 2011///
+PY  - 2011
+DO  - 10.1111/j.1538-4616.2011.00424.x
+DP  - Wiley Online Library
+VL  - 43
+IS  - 6
+SP  - 1247
+EP  - 1270
+LA  - en
+SN  - 1538-4616
+UR  - https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1538-4616.2011.00424.x
+Y2  - 2023/02/27/09:59:39
+KW  - monetary policy
+KW  - fiscal policy
+KW  - E5
+KW  - business cycle fluctuations
+KW  - C5
+KW  - E1
+KW  - E6
+KW  - government spending
+KW  - medium cycle
+ER  - 
+
+TY  - JOUR
+TI  - Price stability and monetary policy: A proposal of a non active policy rule
+AU  - Castañeda, Juan E.
+AU  - Wood, Geoffrey E.
+T2  - Cuadernos de Economía
+AB  - A new type of monetary policy rule designed to achieve both price and output stability has increasingly been recommended during the last business cycle expansion, prior to the 2007 crisis. This type of rule implies “active” reaction functions. Based on the new Keynesian approach to monetary economics, these rules prescribe an active response by the central bank in the face of any shock that shifts prices or output from target, which leads to excessive money creation. Here, a less active type of reaction function is proposed; one in which price stability is the long run target, but permitting prices to respond to changes originating in real disturbances. It is argued that the resulting policy delivers outcomes preferable to currently popular rules.
+Resumen
+Durante la última etapa expansiva de la economía, previa a la crisis iniciada en 2007, se propusieron nuevas reglas monetarias dirigidas a estabilizar tanto la inflación como la actividad económica alrededor de ciertos objetivos. Este tipo de reglas implican la intervención frecuente en la economía a través de la aplicación de funciones de reacción activas. Basadas en modelos Neo-Keynesianos, estas funciones de reacción prescriben la intervención activa del banco central para corregir cualquier desviación de la inflación y del output gap de sus objetivos, lo que conduce a un exceso de creación de liquidez en la economía. En su lugar, proponemos en este trabajo una función de reacción menos activa, que tenga un objetivo de estabilidad de precios a medio y largo plazo, pero que permita las variaciones de precios debidas a cambios en la productividad. Concluímos que este tipo de reglas menos activas conducen a mejores resultados que las funciones basadas en la conocida regla de Taylor.
+DA  - 2011/05/01/
+PY  - 2011
+DO  - 10.1016/S0210-0266(11)70007-3
+DP  - ScienceDirect
+VL  - 34
+IS  - 95
+SP  - 62
+EP  - 72
+J2  - Cuadernos de Economía
+LA  - en
+SN  - 0210-0266
+ST  - Price stability and monetary policy
+UR  - https://www.sciencedirect.com/science/article/pii/S0210026611700073
+Y2  - 2023/02/27/09:59:41
+KW  - Taylor rule
+KW  - Reaction function
+KW  - Function de reacción
+KW  - Monetary rule
+KW  - Neutral monetary policy
+KW  - Política monetaria neutral
+KW  - Regla de Taylor
+KW  - Regla monetaria
+ER  - 
+
+TY  - JOUR
+TI  - The Phillips curve is alive and well
+AU  - Fuhrer, Jeffrey C.
+T2  - New England Economic Review
+AB  - <em>Gale</em> Academic OneFile includes The Phillips curve is alive and well by Jeffrey C. Fuhrer. Read the beginning or sign in for the full text.
+DA  - 1995/03/01/
+PY  - 1995
+DP  - go.gale.com
+SP  - 41
+EP  - 57
+LA  - English
+SN  - 00284726
+UR  - https://go.gale.com/ps/i.do?p=AONE&sw=w&issn=00284726&v=2.1&it=r&id=GALE%7CA16992901&sid=googleScholar&linkaccess=abs
+Y2  - 2023/02/27/09:59:44
+ER  - 
+
+TY  - JOUR
+TI  - A Cointegration Tests on Malaysian Government Securities (MGS) Spreads and Inflation
+AU  - Cheng, Fan Fah
+AU  - Nasir, Annuar
+T2  - Terengganu International Finance and Economics Journal (TIFEJ)
+AB  - The purpose of this research is to study the relationship between yield spreads of Malaysian Government Securities (MGS) and inflation dynamics over the period of 1976 to 2008. The study used various statistical techniques to determine the predictive power of yield spreads between 1-year MGS and 10-years MGS in inflation movement. The quarterly data provide evidences that the cointegration test explains that there is a long-run cointegration relationship between the MGS spreads and GDP deflator. The result is further supported by the Granger causality test where there is a unidirectional relationship running from GDP deflator to spreads. The evidence found here is consistent with the theory that inflation is Granger-caused by spreads. The result from regression indicates that linear relationship exists between MGS quarterly yield spreads and inflation. The efficiency of regression model is confirmed by Durbin-Watson test and residual plots.
+DA  - 2017/02/14/
+PY  - 2017
+DP  - myjms.mohe.gov.my
+VL  - 2
+IS  - 1
+SP  - 15
+EP  - 27
+LA  - en
+SN  - 2232-0539
+UR  - https://myjms.mohe.gov.my/index.php/tifej/article/view/1590
+Y2  - 2023/02/27/09:59:46
+ER  - 
+
+TY  - CONF
+TI  - Possibilities of Russian Economy Monetization
+AU  - Smirnov, V. V.
+AU  - Kadysheva, O. N.
+AU  - Semenov, V. L.
+AU  - Anufrieva, O. M.
+AU  - Voskresenskaya, N. V.
+T2  - Russian Conference on Digital Economy and Knowledge Management (RuDEcK 2020)
+AB  - The research is devoted to the issues of the monetization of economy. The topic of the study is the possibility of monetization of the Russian economy. The purpose of the research is to identify the possibilities of changing the monetization coefficient of economy, by analyzing the impact of changes on economy in the dynamics of GDP growth rates in...
+DA  - 2020/08/01/
+PY  - 2020
+DO  - 10.2991/aebmr.k.200730.116
+DP  - www.atlantis-press.com
+SP  - 631
+EP  - 636
+LA  - en
+PB  - Atlantis Press
+SN  - 978-94-6252-997-7
+UR  - https://www.atlantis-press.com/proceedings/rudeck-20/125942574
+Y2  - 2023/02/27/09:59:48
+ER  - 
+
+TY  - JOUR
+TI  - A Study on the Impact of China's Monetary Policy on South Korea's Exchange Rate
+AU  - He, Yugang
+T2  - The Journal of Industrial Distribution & Business
+AB  - Purpose - The adjustment of one country's monetary policy can cause the macroeconomic change of other countries. Due to this, this paper attempts to analyze the impact of China’s monetary policy on South Korea’s exchange rate. Research design, data, and methodology - Based on the flexible-price monetary model, sets of annual time series from 1980 to 2017 are employed to perform an empirical estimation. The vector error correction model is also used to exploit the short-run relationship between both of them. Of course, the South Korea’s real GDP, the China’s real GDP, South Korea’s interest rate, the South Korea’s interest rate and the South Korea’s monetary supply are treated as independent variables in this paper.
+Result - The long-run findings reveal that the China’s money supply has a negative effect on South Korea’s exchange rate. Respectively, the short-run findings depicts that the China’s money supply has negative a effect on South Korea’s exchange rate. Of course, other variables selected in this paper also have an effect on South Korea’s exchange rate whatever positive or negative.
+Conclusions - As the empirical evidence shows, the China’s monetary policy has a negative effect on South Korea’s exchange rate whenever in the long run or in the short run.
+DA  - 2018/06/30/
+PY  - 2018
+DO  - 10.13106/IJIDB.2018.VOL9.NO6.15
+DP  - DOI.org (CSL JSON)
+VL  - 9
+IS  - 6
+SP  - 15
+EP  - 24
+LA  - en
+UR  - https://doi.org/10.13106/IJIDB.2018.VOL9.NO6.15
+Y2  - 2023/02/27/10:00:06
+L1  - https://koreascience.kr/article/JAKO201816357066762.pdf
+ER  - 
+
+TY  - CHAP
+TI  - Deflation Risks in Germany and the EMU: The Role of Wages and Wage Bargaining
+AU  - Hein, Eckhard
+AU  - Schulten, Thorsten
+AU  - Truger, Achim
+T2  - Wages, Employment, Distribution and Growth: International Perspectives
+A2  - Hein, Eckhard
+A2  - Heise, Arne
+A2  - Truger, Achim
+AB  - In late 2003 the deflationary dangers in Germany could hardly be denied. The GDP deflator for Germany rose by 1.0 per cent in 2003 and the forecast rise for 2004 was 0.8 per cent. Meanwhile, the consumer price index rose by 0.9 per cent in 2003 and was forecast to rise by 1.2 per cent in 2004 (Institute 2003). These figures mean that inflation in Germany has in principle already reached the level considered by the European Central Bank (ECB) to be the minimum safety margin against deflation in its reformulated monetary policy strategy for the whole of the European Monetary Union (EMU) (ECB 2003). A further fall in inflation would therefore significantly increase the danger of deflation and a cumulative deflationary spiral. In its April 2003 Task Force Report, the IMF named Germany alongside Japan, Taiwan and Hong Kong as one of the economies most at risk from deflation worldwide (IMF 2003).1
+CY  - London
+DA  - 2006///
+PY  - 2006
+DP  - Springer Link
+SP  - 67
+EP  - 92
+LA  - en
+PB  - Palgrave Macmillan UK
+SN  - 978-0-230-37178-1
+ST  - Deflation Risks in Germany and the EMU
+UR  - https://doi.org/10.1057/9780230371781_5
+Y2  - 2023/02/27/10:00:11
+KW  - Inflation Rate
+KW  - Monetary Policy
+KW  - European Central Bank
+KW  - European Monetary Union
+KW  - Nominal Wage
+ER  - 
+
+TY  - JOUR
+TI  - Impact of Foreign Direct Investment, Population Growth & Inflation on Unemployment in Rwanda (1985-2018)
+AU  - Gakuru, Elias
+AU  - Felicien, Uwiringiyimana
+T2  - International Journal of Economics and Management
+AB  - This paper examines the impact of foreign direct investment, population growth, and inflation on unemployment in Rwanda. Using co-integration analysis of Johansen and Error Correction Model (ECM), annually, periodic data from 1985 to 2018 were analyzed so as to reach this aim. The results indicated that there is a significant long-run relationship between foreign direct investment net inflows (% of GDP), population growth (annual %), inflation, GDP deflator (annual %), and unemployment (% of the total labor force). In long-run, as well as in the short-run, the two independent variables (population growth and inflation) have a positive impact on unemployment, but Foreign Direct Investment has a negative impact on unemployment in the period of study. About inflation and unemployment there is no presence of Philips curve. The government of Rwanda has been recommended to reinforce policies of attracting foreign investors, to reinforce control of demographic changes, to reinforce made in Rwanda policy in order to discourage imported inflation and controlling money supply using monetary policy tools, especially selective credit control and wage control.
+DA  - 2020/10/09/
+PY  - 2020
+DO  - 10.14445/23939125/IJEMS-V7I9P113
+DP  - ResearchGate
+VL  - Volume 7
+SP  - 14
+J2  - International Journal of Economics and Management
+L4  - https://www.researchgate.net/profile/Elias-Gakuru/publication/344566944_Impact_of_Foreign_Direct_Investment_Population_Growth_Inflation_on_Unemployment_in_Rwanda_1985-2018/links/5f8077e792851c14bcbbcd1d/Impact-of-Foreign-Direct-Investment-Population-Growth-Inflation-on-Unemployment-in-Rwanda-1985-2018.pdf
+ER  - 
+
+TY  - JOUR
+TI  - Financial Crisis and Long-term Stagnation in Japan: Fiscal Consolidation under Deflationary Pressures
+AU  - Fukao, Mitsuhiro
+DP  - Zotero
+LA  - en
+L1  - https://web.worldbank.org/archive/website01291/WEB/IMAGES/FUKAO.PDF
+ER  - 
+
+TY  - GEN
+TI  - The Monetary Transmission Mechanism in the Euro Area: Has it Changed and Why?
+AU  - Cecioni, Martina
+AU  - Neri, Stefano
+AB  - Based on a structural VAR and a dynamic general equilibrium model, we provide evidence of the changes in the monetary transmission mechanism (MTM) in the European Monetary Union after the adoption of the common currency in 1999. The estimation of a Bayesian VAR over the periods before and after 1999 suggests that the effects of a monetary policy shock on output and prices have not significantly changed over time. We claim that this cannot be the final word on the evolution of the MTM as changes in the conduct of monetary policy and the structure of the economy may have offset each other giving rise to similar responses of output and inflation to monetary policy shocks between the two periods. The estimation of a DSGE model with several real and nominal frictions over the two sub-samples shows that monetary policy has become more effective in stabilizing the economy as the result of a decrease in the degree of nominal rigidities and a shift in monetary policy  towards inflation stabilization.
+CY  - Rochester, NY
+DA  - 2011/04/12/
+PY  - 2011
+DO  - 10.2139/ssrn.1849863
+DP  - Social Science Research Network
+LA  - en
+ST  - The Monetary Transmission Mechanism in the Euro Area
+UR  - https://papers.ssrn.com/abstract=1849863
+Y2  - 2023/02/27/10:00:18
+KW  - monetary policy
+KW  - Bayesian methods
+KW  - transmission mechanism
+ER  - 
+
+TY  - JOUR
+TI  - Milton Friedman, the demand for money, and the ECB’s monetary policy strategy
+AU  - Hall, Stephen G.
+AU  - Swamy, P. a. V. B.
+AU  - Tavlas, George S.
+AB  - The European Central Bank (ECB) assigns greater weight to the role of money in its monetary policy
+strategy than most, if not all, other major central banks. Nevertheless, reflecting the view that the
+demand for money became unstable in the early 2000s, some commentators have reported that the
+ECB has “downgraded” the role of money demand functions in its strategy. This paper explains the
+ECB’s monetary policy strategy and shows the considerable influence of Milton Friedman’s contributions
+on the formulation of that strategy. The paper also provides new evidence on the stability of euro area
+money demand. Following a conjecture made by Friedman (1956), the authors assign a role to uncertainty
+in the money demand function. They find that although uncertainty is nonstationary and subject
+to wide swings, it is nonetheless mean reverting and has substantial effects on the demand for money.
+DA  - 2012/05//
+PY  - 2012
+DP  - repository.up.ac.za
+LA  - en
+SN  - 0014-9187
+UR  - https://repository.up.ac.za/handle/2263/59263
+Y2  - 2023/02/27/10:00:20
+ER  - 
+
+TY  - JOUR
+TI  - Monetary Policy and Alternative Measures of Inflation: Empirical Evidence for the UK
+AU  - Kučaidze, Karina
+AU  - Martin, Christopher
+T2  - Ekonomika
+AB  - The issue of which measure of inflation ought to be targeted by policymakers has been extensively analysed, but the equally important issue of which inflation rate is actually targeted by policymakers in practice has been given much less attention. The paper addresses this question, using data for the UK, a country where differences among the alternative measures are especially marked. We estimate simple Taylor-like monetary policy rules, using several different measures of inflation. We find that plausible models can be obtained for each of the different measures, suggesting that it may not matter which is used in empirical analysis. Models using the RPI measure of inflation have a slight empirical advantage which reflects the ability better to explain monetary policy in more turbulent circumstances.
+DA  - 2015/01/01/
+PY  - 2015
+DO  - 10.15388/Ekon.2015.2.8233
+VL  - 94
+IS  - 2
+SP  - 73
+EP  - 82
+J2  - ECO
+SN  - 1392-1258
+ST  - Monetary Policy and Alternative Measures of Inflation
+UR  - https://www.journals.vu.lt/ekonomika/article/view/8233
+ER  - 
+
+TY  - JOUR
+TI  - The Macroeconomic Effects of Exogenous Fiscal Policy Shocks in Germany: A Disaggregated SVAR Analysis
+AU  - Tenhofen, Jörn
+AU  - Wolff, Guntram B.
+AU  - Heppke-Falk, Kirsten H.
+T2  - Jahrbücher für Nationalökonomie und Statistik
+AB  - We investigate the effects of fiscal policy shocks on the German economy extending the SVAR approach of Blanchard and Perotti (2002). Direct government expenditure shocks are found to increase output and private consumption on impact. The output multiplier is smaller than one and is falling rather quickly reaching zero after 3 years. Government operating expenditure has size able positive effects on output, in the long run in particular due to public capital formation. Compensation of public employees is not effective in stimulating the economy.Government net revenue shocks do not affect output significantly. Indirect taxes have little effects, while direct taxes lower output significantly. Overall, the effects of fiscal policy are short-lived with the exception of public investment increases.
+DA  - 2010/06/01/
+PY  - 2010
+DO  - 10.1515/jbnst-2010-0305
+DP  - www.degruyter.com
+VL  - 230
+IS  - 3
+SP  - 328
+EP  - 355
+LA  - de
+SN  - 2366-049X
+ST  - The Macroeconomic Effects of Exogenous Fiscal Policy Shocks in Germany
+UR  - https://www.degruyter.com/document/doi/10.1515/jbnst-2010-0305/html
+Y2  - 2023/02/27/10:00:25
+KW  - Fiscal policy
+KW  - government spending
+KW  - net revenue
+KW  - structural vector autoregression
+ER  - 
+
+TY  - ELEC
+TI  - EBSCOhost | 53291203 | Efficacy of Monetary Policy in Curtailing Consumption: Empirical Evidence from Fiji.
+AB  - Should Reserve Bank of Fiji (RBF) use rate of interest to control private consumption expenditure in Fiji? This paper investigates whether rate of interest is an appropriate monetary policy instrument to reduce consumption in Fiji. Results indicate that interest rate has no effect on private consumption. The appropriate monetary policy stance is targeting the availability of consumer credit, if RBF intends to maintain the internal and external balance, because demand for money is stable.
+UR  - https://web.s.ebscohost.com/abstract?direct=true&profile=ehost&scope=site&authtype=crawler&jrnl=09729291&AN=53291203&h=CKTXsWRJ4YaPFosE%2bT9oMaGkjHQb8HzhB5svFqJrgP%2bbMNbO9y0riFwb8TEiX1Puf6%2bHl9RuHMeR244WajbbNA%3d%3d&crl=c&resultNs=AdminWebAuth&resultLocal=ErrCrlNotAuth&crlhashurl=login.aspx%3fdirect%3dtrue%26profile%3dehost%26scope%3dsite%26authtype%3dcrawler%26jrnl%3d09729291%26AN%3d53291203
+Y2  - 2023/02/27/10:03:21
+ER  - 
+
+TY  - GEN
+TI  - Money Still Matters: How the Bank of Canada Might Better Monitor Inflation
+AU  - Dubrovinsky, Mati
+AB  - The Bank of Canada (BoC) should carefully monitor the money supply to better predict inflation and track the effectiveness of its monetary policy, according to a new C.D. Howe Institute report. In “Money Still Matters: How the Bank of Canada Might Better Monitor Inflation,” author Mati Dubrovinsky suggests the BoC should also pay particular attention to the possibility that the public’s inflation expectations will shift below targeted inflation, and should be prepared to adjust policy if and when such a shift occurs.
+CY  - Rochester, NY
+DA  - 2014/08/13/
+PY  - 2014
+DO  - 10.2139/ssrn.2484583
+DP  - Social Science Research Network
+LA  - en
+ST  - Money Still Matters
+UR  - https://papers.ssrn.com/abstract=2484583
+Y2  - 2023/02/27/10:03:25
+KW  - Monetary Policy
+ER  - 
+
+TY  - JOUR
+TI  - The nature of shadow bank leverage shocks on the macroeconomy
+AU  - Istiak, Khandokar
+T2  - The North American Journal of Economics and Finance
+AB  - Recently a group of non-bank financial institutions, known as the shadow banks, has developed beside the traditional commercial banking sector in the US. Based on the argument of Serletis and Xu (2019) that the traditional banking was overtaken by shadow banks at around the year of 2000, I run two structural VAR models to examine the impact of shadow bank leverage shocks on some key economic indicators in pre-2000 and post-2000 periods. This is a new approach in the literature to examine how the macroeconomy is influenced by the shadow banking sector over time. I find that the traditional contractionary interest rate policy is not helpful to control the leverage of shadow banks. The impulse responses from the VAR models show that shadow bank leverage has become an important economic indicator during the post-2000 period because of its capacity to influence key macroeconomic variables. I suggest the policymakers controlling the leverage of the shadow banks besides the traditional contractionary monetary policy to prevent asset bubbles and maintain financial stability.
+DA  - 2019/11/01/
+PY  - 2019
+DO  - 10.1016/j.najef.2019.101029
+DP  - ScienceDirect
+VL  - 50
+SP  - 101029
+J2  - The North American Journal of Economics and Finance
+LA  - en
+SN  - 1062-9408
+UR  - https://www.sciencedirect.com/science/article/pii/S1062940819300452
+Y2  - 2023/02/27/10:03:38
+KW  - Monetary policy
+KW  - Leverage
+KW  - Shadow banking
+KW  - Structural vector autoregression
+ER  - 
+
+TY  - JOUR
+TI  - Does trade credit redistribution thwart monetary policy? Evidence from Italy
+AU  - Marotta, Giuseppe
+T2  - Applied Economics
+AB  - Italy is an ideal candidate for testing the credit view of the transmission mechanism because of a bank-centred financial structure, a sizeable trade debt, and an economy titled towards small firms. An empirical analysis of trade credit and debt on averaged panel data shows that small firms act as financially constrained and cycle-sensitive, whereas large ones aim at smoothing sales, adopt an integrated management of inventories and receivables and have a higher trade debt to purchases elasticity. On balance, the net trade credit channel does not, as implied by the credit view, shield small firms from a monetary squeeze.
+DA  - 1997/12/01/
+PY  - 1997
+DO  - 10.1080/00036849700000038
+DP  - Taylor and Francis+NEJM
+VL  - 29
+IS  - 12
+SP  - 1619
+EP  - 1629
+SN  - 0003-6846
+ST  - Does trade credit redistribution thwart monetary policy?
+UR  - https://doi.org/10.1080/00036849700000038
+Y2  - 2023/02/27/10:03:42
+ER  - 
+
+TY  - JOUR
+TI  - Loan supply shocks during the financial crisis: Evidence for the Euro area
+AU  - Hristov, Nikolay
+AU  - Hülsewig, Oliver
+AU  - Wollmershäuser, Timo
+T2  - Journal of International Money and Finance
+T3  - Financial Stress in the Eurozone
+AB  - This paper employs a panel vector autoregressive model for the member countries of the Euro Area to explore the role of banks during the slump of the real economy that followed the financial crisis. In particular, we seek to quantify the macroeconomic effects of adverse loan supply shocks, which are identified using sign restrictions. We find that loan supply shocks significantly contributed to the evolution of the loan volume and real GDP growth in all member countries during the financial crisis. However, concerning both, the timing and the magnitude of the shocks our results also indicate that the Euro Area was characterized by a considerable degree of cross-country heterogeneity.
+DA  - 2012/04/01/
+PY  - 2012
+DO  - 10.1016/j.jimonfin.2011.10.007
+DP  - ScienceDirect
+VL  - 31
+IS  - 3
+SP  - 569
+EP  - 592
+J2  - Journal of International Money and Finance
+LA  - en
+SN  - 0261-5606
+ST  - Loan supply shocks during the financial crisis
+UR  - https://www.sciencedirect.com/science/article/pii/S0261560611001495
+Y2  - 2023/02/27/10:03:44
+KW  - Sign restrictions
+KW  - Euro Area
+KW  - Loan supply shocks
+KW  - Panel vector autoregressive model
+ER  - 
+
+TY  - JOUR
+TI  - Policy and Business Cycle Shocks: A Structural Factor Model Representation of the US Economy
+AU  - Forni, Mario
+AU  - Gambetti, Luca
+T2  - Journal of Risk and Financial Management
+AB  - We use a dynamic factor model to provide a semi-structural representation for 101 quarterly US macroeconomic series. We find that (i) the US economy is well described by a number of structural shocks between two and five. Focusing on the four-shock specification, we identify, using sign restrictions, two policy shocks, monetary and fiscal, and two non-policy shocks, demand and supply. We obtain the following results. (ii) Both supply and demand shocks are important sources of fluctuations; supply prevails for GDP, while demand prevails for employment and inflation. (ii) Monetary and fiscal policy shocks have sizable effects on output and prices, with no evidence of crowding-out of private aggregate demand components; both monetary and fiscal authorities implement important systematic countercyclical policies reacting to demand shocks. (iii) Negative demand shocks have a large long-run positive effect on productivity, consistently with the Schumpeterian “cleansing” view of recessions.
+DA  - 2021/08//
+PY  - 2021
+DO  - 10.3390/jrfm14080371
+DP  - www.mdpi.com
+VL  - 14
+IS  - 8
+SP  - 371
+LA  - en
+SN  - 1911-8074
+ST  - Policy and Business Cycle Shocks
+UR  - https://www.mdpi.com/1911-8074/14/8/371
+Y2  - 2023/03/06/12:33:03
+KW  - demand
+KW  - fiscal policy
+KW  - monetary policy
+KW  - sign restrictions
+KW  - structural factor model
+KW  - supply
+ER  - 
+
+TY  - GEN
+TI  - Monetary Policy, Firm Exit and Productivity
+AU  - Lieberknecht, Philipp
+AU  - Hartwig, Benny
+AB  - We analyze the influence of monetary policy on firms' extensive margin and productivity. Our empirical evidence for the U.S. based on a macro-financial SVAR suggests that expansionary monetary policy shocks stimulate corporate profits, reduce firm exit and increase firm entry. In the medium run, exit overshoots the baseline. We rationalize these findings in a general equilibrium model featuring endogenous entry and exit. In the model, expansionary monetary policy shocks increase firm profits by stimulating aggregate demand and thereby allow less productive firms to remain in the market. As the monetary stimulus fades, these less productive firms become unprofitable such that exit overshoots. This exit channel of monetary policy implies a flatter aggregate supply curve and therefore amplifies output responses, but dampens inflationary effects.
+CY  - Rochester, NY
+DA  - 2020///
+PY  - 2020
+DO  - 10.2139/ssrn.3747469
+DP  - Social Science Research Network
+LA  - en
+UR  - https://papers.ssrn.com/abstract=3747469
+Y2  - 2023/03/06/12:34:27
+KW  - Benny Hartwig
+KW  - Firm Exit and Productivity
+KW  - Monetary Policy
+KW  - Philipp Lieberknecht
+KW  - SSRN
+ER  - 
+
+TY  - JOUR
+TI  - Monetary versus fiscal policy in India: an SVAR analysis
+AU  - Arora, Sanchit
+T2  - Macroeconomics and Finance in Emerging Market Economies
+AB  - Conventionally, the policymakers relied on three policy alternatives to manage business cycles – debt-financed government spending, debt-financed tax rebate and interest rate. While the first two are fiscal policy instruments, the latter is a monetary policy instrument. This paper aims to capture interactions among Indian monetary and fiscal policy actions, and the impact of such policy actions on select macroeconomic variables for the period 1990Q1–2011Q4. The policy actions are identified using the sign restrictions approach combined with magnitude restrictions in a Structural Vector Autoregression framework, and interpreted using impulse responses and variance decomposition. The results show that Indian monetary policy responds to tax rebate shocks and spending shocks differently. In the case of a tax rebate shock, Indian monetary policy responds by reducing interest rates thereby accommodating fiscal expansion. On the opposite, monetary policy seems not to accommodate expenditure shocks. Interestingly, the monetary policy shock is accompanied by a fiscal expansion that threatens the credibility of the central bank actions, thus indicating fiscal policy dominance. A comparison of the efficacy of the policies suggests that the interest rate is more effective in stimulating output. Out of the two fiscal policy instruments analysed, the tax rebate seems to be the better option for stimulating output considering the output-debt trade-off.
+DA  - 2018/09/02/
+PY  - 2018
+DO  - 10.1080/17520843.2017.1297325
+DP  - Taylor and Francis+NEJM
+VL  - 11
+IS  - 3
+SP  - 250
+EP  - 274
+SN  - 1752-0843
+ST  - Monetary versus fiscal policy in India
+UR  - https://doi.org/10.1080/17520843.2017.1297325
+Y2  - 2023/03/06/12:35:02
+KW  - E52
+KW  - E62
+KW  - fiscal policy
+KW  - India
+KW  - Monetary policy
+KW  - sign restrictions
+KW  - SVAR
+ER  - 
+
+TY  - JOUR
+TI  - Money demand function for Southeast Asian countries: An empirical view from expenditure components
+AU  - Cheong Tang, Tuck
+T2  - Journal of Economic Studies
+AB  - Purpose – The purpose of this paper is to empirically investigate the money demand function for five Southeast Asian countries, viz. Malaysia, Thailand, Singapore, the Philippines, and Indonesia. Design/methodology/approach – The ARDL modeling approach is employed because of its ability to incorporate both I(0) and I(1) regressors. Findings – The results reveal that real M2 aggregate, real expenditure components, exchange rate, and inflation rate are cointegrated for Malaysia, the Philippines, and Singapore. The statistical significance of real income components suggests the bias of using single real income variable in money demand (M2 aggregate) specification of both short‐ and long‐run. The CUSUM and CUSUMSQ tests show that the estimated parameters are stable for the five Southeast Asian economies, except for Indonesia which is based on short‐run specification. Practical implications – These findings are important for policy makers in formulating monetary policy. Originality/value – Besides conventional determinants of money demand such as exchange rate and interest rate variables, this study considers the major components of final expenditure (GDP) – final consumption expenditures (private and government sectors), expenditures on investment goods, and exports as scale variables.
+DA  - 2007/01/01/
+PY  - 2007
+DO  - 10.1108/01443580710830952
+DP  - Emerald Insight
+VL  - 34
+IS  - 6
+SP  - 476
+EP  - 496
+SN  - 0144-3585
+ST  - Money demand function for Southeast Asian countries
+UR  - https://doi.org/10.1108/01443580710830952
+Y2  - 2023/03/06/12:35:47
+L2  - https://www.emerald.com/insight/content/doi/10.1108/01443580710830952/full/html
+KW  - Expenditure
+KW  - Fiscal measures
+KW  - Money supply
+KW  - National economy
+KW  - South East Asia
+ER  - 
+
+TY  - JOUR
+TI  - Prior Selection for Vector Autoregressions
+AU  - Giannone, Domenico
+AU  - Lenza, Michele
+AU  - Primiceri, Giorgio E.
+T2  - The Review of Economics and Statistics
+AB  - Vector autoregressions (VARs) are flexible time series models that can capture complex dynamic interrelationships among macroeconomic variables. However, their dense parameterization leads to unstable inference and inaccurate out-of-sample forecasts, particularly for models with many variables. A solution to this problem is to use informative priors in order to shrink the richly parameterized unrestricted model toward a parsimonious naıve benchmark, and thus reduce estimation uncertainty. This paper studies the optimal choice of the informativeness of these priors, which we treat as additional parameters, in the spirit of hierarchical modeling. This approach, theoretically grounded and easy to implement, greatly reduces the number and importance of subjective choices in the setting of the prior. Moreover, it performs very well in terms of both out-of-sample forecasting—as well as factor models—and accuracy in the estimation of impulse response functions.
+DA  - 2015/05/01/
+PY  - 2015
+DO  - 10.1162/REST_a_00483
+DP  - Silverchair
+VL  - 97
+IS  - 2
+SP  - 436
+EP  - 451
+J2  - The Review of Economics and Statistics
+SN  - 0034-6535
+UR  - https://doi.org/10.1162/REST_a_00483
+Y2  - 2023/03/06/12:36:14
+L2  - https://direct.mit.edu/rest/article-abstract/97/2/436/58236/Prior-Selection-for-Vector-Autoregressions
+ER  - 
+
+TY  - JOUR
+TI  - The role of money during the recession in Australia in 1990—92
+AU  - Weber, Ernst Juerg
+T2  - Applied Financial Economics
+AB  - What role did money play during the severe recession in Australia in 1990–92? A multivariate time-series model of the Australian economy is developed and the influence of each variable–including money–on real GDP is determined. A dramatic fall in the rate of monetary expansion during 1989 accounts for the severity of the recession. Indeed, the recession would have been even more serious without mitigating foreign factors. The Reserve Bank readjusted monetary policy in 1990 and there were no further adverse monetary shocks during the downward phase of the business cycle. The time-series technique employed is known as historical decomposition.
+DA  - 1994/10/01/
+PY  - 1994
+DO  - 10.1080/758536473
+DP  - Taylor and Francis+NEJM
+VL  - 4
+IS  - 5
+SP  - 355
+EP  - 361
+SN  - 0960-3107
+UR  - https://doi.org/10.1080/758536473
+Y2  - 2023/03/06/12:38:16
+ER  - 
+

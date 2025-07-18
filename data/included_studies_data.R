@@ -4,8 +4,8 @@ library(dplyr)
 library(purrr)
 library(openxlsx)
 
-# Specify the directory where the Excel files are located
-directory <- "/Users/franzprante/Desktop/temp/packages_for_full_text_download"
+# Set path for study sets
+directory <- here::here("data/study_search/database_search/processed/post_AS/packages_for_full_text_download")
 
 # Get list of files in the directory
 files <- list.files(directory, pattern = "^study_set_.*\\.xlsx$", full.names = TRUE)
@@ -34,9 +34,6 @@ papers <- files %>%
 
 papers$`publication year` <- as.integer(papers$`publication year`)
 
-# Save the dataframe as an RData file
-save(papers, file = "data/papers_test.RData")
-
 # Prepare Excel file for data collection of citations via Google Scholar
 cg_data <- papers %>% select(key, author, title, `publication year`, `publication title`, `item type`)
 cg_data$GS_link <- NA
@@ -45,7 +42,7 @@ cg_data$gs_date <- NA
 cg_data$note <- NA
 
 # Save the table as xlsx
-write.xlsx(cg_data, file = "citations_for_included_studies.xlsx")
+write.xlsx(cg_data, file = "data/study_characteristics/citations_for_included_studies.xlsx")
 
 # Prepare table for data collection of journal ranking and impact factor via resurchify
 cg_data_journals <-data.frame(
@@ -56,5 +53,5 @@ cg_data_journals <-data.frame(
   resurchify_date = NA,
   note = NA
 ) 
-write.xlsx(cg_data_journals, file = "journals_ranking_impact.xlsx")
+write.xlsx(cg_data_journals, file = "data/study_characteristics/sjr.xlsx")
 

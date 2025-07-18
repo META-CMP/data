@@ -1,0 +1,277 @@
+# Introduction
+
+As a first step, **prior to coding a study**, we followed the checklist below to ensure that the effect sizes from the study could be compared:
+
+1. Is the shock size clearly stated or extractable from the IRFs/text?
+2. Is the size of the impact on the response variable clearly measurable?
+3. Are the standard errors (SE) or confidence bands provided, and is the percentage value unambiguous?
+4. Is effect size transformation possible?
+    - **Exclude studies** where:
+        1. The first difference of the interest rate is used.
+        2. Data is normalized to a sample mean of one and standard deviation of one.
+        3. Other transformations, such as log(1+x), are applied.
+    - **Include studies** only if the transformation does not alter the effect sizes, such as when the interest rate is only demeaned.
+5. Is SE or confidence band transformation feasible?
+
+Thus, we only included studies that use transformations corresponding to one of Cases 1 to 6. Further, we exclude studies if output or the CPI is presented in levels (without taking the log), or if the interest rate is log-transformed.
+
+---
+
+# Effect size and confidence band transformation for output, prices, and total employment.
+
+## Classic Impulse Response Functions
+
+### Case 1: Response Variable in Logs and Interest Rate in Levels
+  
+We standardize model estimates $\theta$ from the IRFs — the confidence bounds $bound_h$, and the mean or median responses $\omega_h$ — to a 100 basis points interest rate hike and aim to capture the % change of the outcome variable $y$ after $h$ periods in percentage scale.
+
+We do this by calculating:
+  
+$$
+  \theta_{\text{stand}} = \frac{\theta_{\text{original}} \cdot 100 \cdot yscale}{bp}
+$$
+  
+Where:
+- $\theta_{\text{stand}}$ is the standardized model estimate.
+- $\theta_{\text{original}}$ is the original model estimate obtained from the IRF graph.
+- $bp$ is the original monetary policy shock size used in the paper in basis points.
+- $yscale$ adjusts for the y-axis scale of the model (e.g., $yscale = 100$ if the y-axis scale of the model is in decimal instead of percentage scale).
+
+To calculate the standard errors for the upper and lower confidence bound, we use:
+  
+$$
+  SE_{h,\text{final}} = \frac{|bound_{h,\text{stand}} - \omega_{h,\text{stand}}|}{\text{critical value}_h}
+$$
+  
+Where:
+- $SE_{h,\text{final}}$ is the standard error estimate for the lower or upper bound of the confidence level $h$ periods after the shock and after standardization.
+- $bound_{h,\text{stand}}$ measures the standardized value for the respective lower or upper bound.
+- $\omega_{h,\text{stand}}$ is the standardized median or mean response of the IRF.
+- $\text{critical value}_h$ is the critical value corresponding to the chosen confidence interval and assuming a normal distribution.
+
+
+---
+  
+### Case 2: Response Variable in Growth Rates and Interest Rate in Levels
+
+#### Mean/Median effect size Transformation
+  
+1. Standardize the model estimates $\theta$ from the IRFs—the confidence bounds $bound_h$ and the mean or median responses $\omega_h$—to a 100 basis points interest rate hike and capture the percentage point (pp) change of the outcome variable $y$ after $h$ periods.
+
+$$ 
+  \theta_{\text{stand}} = \frac{\theta_{\text{original}} \cdot 100 \cdot yscale}{bp}
+$$
+  
+2. Sum up the individual effects:
+  
+$$ 
+  \omega_{h, \text{final}} = \omega_{1,\text{stand}} + \omega_{2,\text{stand}} + \cdots + \omega_{h,\text{stand}} 
+$$
+  
+to get the estimate at time $h$ for the mean or median response (as described in [Fabo et al. 2021 appendix](https://ars.els-cdn.com/content/image/1-s2.0-S0304393221000398-mmc1.pdf)).
+
+```{r}
+#| label: fig-ds
+#| echo: false
+#| fig-cap: >
+#|   Standardize growth rate impact estimates.
+#| out.width: 400
+knitr::include_graphics("images/trans.png", dpi = 270)
+```
+
+
+
+#### Standard Error Transformation
+
+After calculating $SE_{h,\text{stand}}$ for each period $h$ using the formula:
+
+$$
+SE_{h,\text{stand}} = \frac{|bound_{h,\text{stand}} - \omega_{h,\text{stand}}|}{\text{critical value}_h},
+$$
+
+we derive the transformed standard error for the upper and lower confidence bounds at period $h$ using the following cumulative transformation:
+
+$$
+SE_{h,\text{final}} = \sqrt{SE_{1,\text{stand}}^2 + SE_{2,\text{stand}}^2 + \cdots + SE_{h,\text{stand}}^2}
+$$
+
+This approach combines the standardized standard errors from all previous periods (from $1$ to $h$ into a single aggregated standard error value, representing the uncertainty at period $h$ after the shock. The square root ensures that the final standard error accounts for the cumulative variance while maintaining the proper scale.
+
+##### Adjust for yearly or quarterly growth rates
+
+An additional transformation is necessary if the model model estimates $(\theta)$ are obtained using annual growth rates for the underlying computations and the studied data is on higher frequency (monthly or quarterly). If this is the case the standardization of the model estimates $(\theta)$ changes from $\theta_{\text {stand}}=\frac{\theta_{\text {original}} * 100 * yscale}{bp}$ to: 
+
+
+For annualized growth rate and monthly data:
+
+$$
+\theta_{\text {stand}}=((\frac{\theta_{\text {original}} * yscale}{100}+1)^{1/12}-1)*\frac{10000}{bp}
+$$ 
+
+For annualized growth rate and quarterly data
+
+$$
+\theta_{\text {stand}}=((\frac{\theta_{\text {original}} * yscale}{100}+1)^{1/4}-1)*\frac{10000}{bp}
+$$ 
+
+We do this transformation by assuming that the authors annualized growth rates of endogenous variables $y_t$ by the formula: $y_{t, \text { annual }}=\left(1+y_t\right)^n-1$.  Moreover, we assume that the authors use period to period growth rates where the period matches the frequency used for the IRF plots, if not stated differently by the authors. 
+
+  
+---
+  
+### Case 3: Log Differences (Log Approximation of the Growth Rate) of the Outcome Variable and Interest Rate in Levels
+  
+As the [Fabo et al 2021 appendix](https://ars.els-cdn.com/content/image/1-s2.0-S0304393221000398-mmc1.pdf) suggests, we transform the estimates in a first step by $\theta_{h, \text{gr}}=\exp{(\theta_h*yscale/100)}-1$. We transform confidence bounds and mean/median estimates in the same manner. We take this step before adjusting for the original shock size and make sure that the estimates measure growth rates in decimal scale.  
+
+
+As a second step, we transform the model estimates $(\theta_{h, \text{gr}})$ from the IRFs - the confidence bounds $bound_{h, \text{gr}}$ and the mean or median responses $\omega_{h, \text{gr}}$ - to a 100 basis points interest rate hike and aim to capture the pp. change of the outcome variable y after h periods in percentage scale.
+
+We do this by: 
+
+$$
+\theta_{\text {stand}}=\frac{\theta_{\text {original, gr}} * 100}{bp}
+$$
+
+In a third step, we sum up the individual effects $\omega_{h, \text{final}}=\omega_{1,\text {stand}}+\omega_{2,\text {stand}}+\cdots+\omega_{h,\text {stand}}$ up to each point $h$ to get the estimate at horizon $h$ for the mean or median response (as described in [Fabo et al 2021 appendix](https://ars.els-cdn.com/content/image/1-s2.0-S0304393221000398-mmc1.pdf)): 
+
+
+After we calculted $SE_{h,\text {stand}}$ in the same manner as in the previous Case 2: $SE_{h,\text {stand}}=\frac{|bound_{h,\text {stand}} - \omega_{h,\text {stand}}|} { \text {critical value}_h}$, we obtain the standard errors for the upper and lower confidence bound using the following transformation as before:
+
+$$
+SE_{h, \text{final}} = sqrt(SE_{1,\text {stand}}^2+SE_{2,\text {stand}}^2+\cdots+SE_{h,\text {stand}}^2)
+$$   
+
+to get the transformed standard error at period $h$. 
+
+
+
+##### Adjust for yearly or quarterly growth rates
+
+As in the previous case, an additional transformation is necessary if the model model estimates $(\theta)$ are obtained using annual growth rates for the underlying computations and the studied data is on higher frequency (monthly or quarterly). If this is the case the standardization of the model estimates $(\theta)$ applied in step 2 changes from $\theta_{\text {stand}}=\frac{\theta_{\text {original, gr}} * 100 * yscale}{bp}$ to: 
+
+For annualized growth rate and monthly data:
+
+$\theta_{\text {stand}}=((\frac{\theta_{\text {original, gr}} * yscale}{100}+1)^{1/12}-1)*\frac{10000}{bp}$. 
+
+For annualized growth rate and quarterly data:
+
+$\theta_{\text {stand}}=((\frac{\theta_{\text {original, gr}} * yscale}{100}+1)^{1/4}-1)*\frac{10000}{bp}$. 
+
+We do this transformation by assuming that the authors annualized growth rates of endogenous variables $y_t$ by the formula: $y_{t, \text { annual }}=\left(1+y_t\right)^n-1$.  Moreover, we assume that the authors use period to period growth rates where the period matches the frequency used for the IRF plots, if not stated differently. 
+
+# Effect Size and Confidence Band Transformation for Employment Rate, Unemployment Rate, and Output Gap Measures
+
+### Case 4: Response Variable in Levels and Interest Rate in Levels
+
+Results are only obtained if they are reported in non-cumulative IRFs.
+
+We standardize the model estimates $(\theta)$ from the IRFs — both the confidence bounds $bound_h$ and the mean or median responses $\omega_h$ — to reflect a 100 basis points interest rate hike, aiming to capture the percentage point change of the employment/ unemployment rate $y$ after $h$ periods on a percentage scale.
+
+This is achieved using the formula as described in case 1:
+
+$$\theta_{\text{stand}} = \frac{\theta_{\text{original}} \cdot 100 \cdot yscale}{bp}$$
+
+where:
+- $\theta_{\text{stand}}$ is the standardized model estimate,
+- $\theta_{\text{original}}$ is the original model estimate obtained from the IRF graph,
+- $bp$ is the original monetary policy shock size in basis points used in the paper, and
+- $yscale$ adjusts for the y-axis scale of the model (e.g., $yscale = 100$ if the y-axis scale of the model is in decimal instead of percentage scale).
+
+To calculate the standard errors for the upper and lower confidence bounds, we use the following formula as described in case 1:
+
+$$
+SE_{h,\text{final}} = \frac{|bound_{h,\text{stand}} - \omega_{h,\text{stand}}|}{\text{critical value}_h}
+$$
+
+where:
+- $SE_{h,\text{final}}$ is the standard error estimate for the lower or upper bound of the confidence level $h$ periods after the shock and after standardization,
+- $bound_{h,\text{stand}}$ measures the standardized value for the respective lower or upper bound,
+- $\omega_{h,\text{stand}}$ is the standardized median or mean response of the IRF, and
+- $\text{critical value}_h$ is the critical value corresponding to the chosen confidence interval and assuming a normal distribution.
+
+---
+
+### Case 5: Response Variable is an Output Gap Measure and Interest Rate in Levels
+
+Results are only obtained if they are reported in non-cumulative IRFs.
+
+We standardize the model estimates $(\theta)$ from the IRFs — both the confidence bounds $bound_h$ and the mean or median responses $\omega_h$ — to reflect a 100 basis points interest rate hike, aiming to capture the percentage point change of the output gap measure $y$ after $h$ periods on a percentage scale.
+
+This is achieved using the formula as described in case 1:
+
+$$\theta_{\text{stand}} = \frac{\theta_{\text{original}} \cdot 100 \cdot yscale}{bp},$$
+
+where:
+- $\theta_{\text{stand}}$ is the standardized model estimate,
+- $\theta_{\text{original}}$ is the original model estimate obtained from the IRF graph,
+- $bp$ is the original monetary policy shock size in basis points used in the paper, and
+- $yscale$ adjusts for the y-axis scale of the model (e.g., $yscale = 100$ if the y-axis scale of the model is in decimal instead of percentage scale).
+
+To calculate the standard errors for the upper and lower confidence bounds, we use the following formula as described in case 1:
+
+$$SE_{h,\text{final}} = \frac{|bound_{h,\text{stand}} - \omega_{h,\text{stand}}|}{\text{critical value}_h},$$
+
+where:
+- $SE_{h,\text{final}}$ is the standard error estimate for the lower or upper bound of the confidence level $h$ periods after the shock and after standardization,
+- $bound_{h,\text{stand}}$ measures the standardized value for the respective lower or upper bound,
+- $\omega_{h,\text{stand}}$ is the standardized median or mean response of the IRF, and
+- $\text{critical value}_h$ is the critical value corresponding to the chosen confidence interval and assuming a normal distribution.
+
+---
+  
+## Cumulative Impulse Response Functions
+  
+### Case 6: Response Variable in Growth Rates (or Log Differences) and Interest Rate in Levels
+  
+In this case, we aim to directly use the effect sizes for the mean estimate and the confidence intervals and normalize them by the size of the interest rate shock and the y-axis unit as described in case 1:
+  
+$$ 
+  \theta_{\text{stand}} = \frac{\theta_{\text{original}} \cdot 100 \cdot yscale}{bp}
+$$
+
+To obtain the standard errors for the upper and lower confidence bound we again use as for case 1: 
+
+$$
+SE_{h,\text {final}}=\frac{|bound_{h,\text {stand}}- \omega_{h,\text {stand}}|} { \text {critical value}_h}
+$$ 
+
+
+
+
+
+---
+  
+# Adjustment of Non-Yearly Interest Rates for all cases 1-6.
+  
+In a first step, we adjust the original monetary policy shock size $bp$ for quarterly or monthly interest rates:
+  
+For quarterly rates:
+$$ 
+  bp_a = \left((1 + bp_q / 10000)^4 - 1\right) \cdot 10000
+$$
+  
+For monthly rates:
+
+$$ 
+  bp_a = \left((1 + bp_m / 10000)^{12} - 1\right) \cdot 10000
+$$
+  
+In a second step, we also adjust the IRF estimates of the policy rate $\theta_{pr}$ to annual levels $\theta_{pr,a}$ : 
+
+$$ 
+  \theta_{pr,a} = \left((1 + \theta_{pr}/100)^n - 1\right) \cdot 100
+$$
+  
+
+
+where:
+- $bp_q$ and $bp_m$ are the original policy shock sizes reported in quarterly or monthly rates, respectively,
+- $bp_a$ is the annualized policy shock size,
+- $θ_pr$ is the IRF estimate of the policy rate at the given frequency (monthly or quarterly),
+- $n$ is the number of periods in a year (e.g., 12 for monthly and 4 for quarterly).
+
+These transformations enable a consistent approach to standardize impulse response functions (IRFs) across different studies. By accounting for differences in response variable scaling, growth rates, and frequency, the methods ensure that effect sizes, confidence intervals, and standard errors are reported in a comparable format.
+
+
+
+

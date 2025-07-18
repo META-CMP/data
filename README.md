@@ -52,7 +52,7 @@ Following the abstract screening, we proceeded to download full texts of the pot
 
 After retrieving the full texts, we conducted a systematic assessment and coding of each study following standardized procedures documented in our [coding guidelines](https://github.com/META-CMP/data/issues/12) and our [codebook](codebook.csv). Each study was independently reviewed by one of of five researchers who first assessed whether the study met our inclusion criteria. Importantly, studies were marked for exclusion if they lacked proper identification strategies (e.g., simple OLS without shock identification) or did not report confidence intervals or comparable effect size estimates. Reasons for exclusions were documented in the [study set files](data/study_search/database_search/processed/post_AS/packages_for_full_text_download).
 
-For eligible studies, we developed a custom `R` package ([MetaExtractR](https://github.com/META-CMP/MetaExtractR)) to facilitate systematic data extraction using individual [`JSON` files for each study](data/full_text_screening/JSON_files),[^3] enabling version control and transparent documentation of all coding decisions and revisions through Git and GitHub. Researchers coded a comprehensive set of study characteristics and study-internal moderator variables, including identification strategies, estimation methods, sample characteristics, control variables, and publication characteristics. The `JSON`-based [workflow](https://github.com/META-CMP/MetaExtractR?tab=readme-ov-file#basic-workflow) allowed us to handle multiple models per study efficiently while maintaining the [_single-point-of-truth_](https://en.wikipedia.org/wiki/Single_source_of_truth) principle. When necessary, coding decisions were discussed among team members to ensure consistency and accuracy across the dataset. We also extensively double checked coding decisions, with a first round of subsample double checks (>10%) to identify systematic deviations between screeners and multiple further rounds to ensure consistency of these cases. For more difficult variables, 100% of the coding decisions were double checked.
+For eligible studies, we developed a custom `R` package ([`MetaExtractR`](https://github.com/META-CMP/MetaExtractR)) to facilitate systematic data extraction using individual [`JSON` files for each study](data/full_text_screening/JSON_files),[^3] enabling version control and transparent documentation of all coding decisions and revisions through Git and GitHub. Researchers coded a comprehensive set of study characteristics and study-internal moderator variables, including identification strategies, estimation methods, sample characteristics, control variables, and publication characteristics. The `JSON`-based [workflow](https://github.com/META-CMP/MetaExtractR?tab=readme-ov-file#basic-workflow) allowed us to handle multiple models per study efficiently while maintaining the [_single-point-of-truth_](https://en.wikipedia.org/wiki/Single_source_of_truth) principle. When necessary, coding decisions were discussed among team members to ensure consistency and accuracy across the dataset. We also extensively double checked coding decisions, with a first round of subsample double checks (>10%) to identify systematic deviations between screeners and multiple further rounds to ensure consistency of these cases. For more difficult variables, 100% of the coding decisions were double checked.
 
 [^3]: The files are named after the unique study identifier (`Key`).
 
@@ -102,20 +102,20 @@ After completing the data collection phase, we needed to standardize and transfo
 
 ### Data integration and standardization pipeline
 
-We developed a custom R package, `MetaExtractR`, to systematically merge and standardize the study data. The package integrates:
+We developed a custom R package, [`MetaExtractR`](https://github.com/META-CMP/MetaExtractR), to systematically merge and standardize the study data. The package integrates:
 
-- **Study metadata and coding**: Stored in individual `JSON` files for each study, containing all coded variables
-- **Effect size data**: Extracted impulse response functions (IRFs) stored as `CSV` files, with separate files for point estimates and confidence bounds
+- **Study metadata and coding**: Stored in individual [`JSON`](data/full_text_screening/JSON_files) files for each study, containing all coded variables
+- **Effect size data**: Extracted impulse response functions (IRFs) stored as `CSV` [files](data/effect_sizes/IRFs), with separate files for point estimates and confidence bounds
 
 The standardization process follows a multi-step approach including:
 
-- **Data merging**: The `final_join()` function matches JSON metadata with corresponding IRF data for each study and model
+- **Data merging**: The `MetaExtracR::final_join()` function matches JSON metadata with corresponding IRF data for each study and model
 - **Effect size transformation**: Based on the specific characteristics of each study (e.g., variable definitions and transformations, shock sizes, data frequency), the package applies the appropriate standardization formula to ensure comparability across studies
-- **Confidence interval and standard error calculation**: The package derives standard errors from confidence bands, accounting for different confidence levels
+- **Confidence interval and standard error calculation**: The package approximates standard errors from confidence bands, accounting for different confidence levels
 
 Our standardization approach handles several cases based on how variables are measured and transformed in the original studies (e.g., log levels vs. growth rates, cumulative vs. non-cumulative IRFs). The transformations for each case are detailed in our [effect size transformation guide]().
 
-The final data processing after full text screening was implemented in [``](), resulting in a in a unified dataset [``]() that was prepared for futher analysis in [``]().
+The final data processing after full text screening was implemented in [`final_join.R`](data/final_join.R), resulting in a in a unified dataset [`final_join_json_irf_data.RData`](data/final_join_json_irf_data.RData) that was prepared for futher analysis in [`final_data_preparation_working_paper_1.R`](data/final_data_preparation_working_paper_1.R).
 
 ---
 

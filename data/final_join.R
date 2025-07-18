@@ -3,9 +3,7 @@ library(MetaExtractR)
 
 # Define problematic JSON files/studies
 error_jsons <- c(
-  "example_file",
-  "V2A8ZH66", # no IRFs, only table
-  "Q5FHEZNE" # contains table estimates as well. 
+  "example_file"
 )
 
 # Join JSON and IRF data and save as RData file

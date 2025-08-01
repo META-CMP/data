@@ -1,91 +1,80 @@
-Category,Variable,Description,Type,Entries,Reference,Motivation_theory,json,source,Preference_ME,Preference_FP,Hypothese
-General,key,Primary key of the study.,string,,,,TRUE,zotero,,YES,
-General,rid1,Researcher ID of the first screener.,factor,fp me,,,TRUE,researcher,,YES,
-General,rid2,Researcher ID of the second screener (in case of double checking).,factor,fp me,,,TRUE,researcher,,YES,
-General,study_notes,"General notes on the study, applicable to all model specifications within the study.",string,,,,TRUE,researcher,,YES,
-General,model_notes,"Model specific notes (also use this to indicate the presence of multiple models if none of the other extracted variables identifies the muliple models from a specific study, e.g. regimes/state-dependency that we do not extract).",string,,,,TRUE,researcher,,YES,
-General,FIGURE,"Number of the figure from which the impulse response is taken. (if number contains an A for appendix write it as a string e.g. A2, if number not stated in the document code as null)",string,"xxx; ""A2""",,,TRUE,study,YES,YES,
-General,PAGE,"Page on which the impulse response is displayed. (page number displayed in the original document, if not available use the pdf page number) ",numeric,xxx,,,TRUE,study,YES,YES,
-General,IRF,Dummy if IRF is available (true if IRF is available; false if not),logical,true; false,,,TRUE,study,YES,YES,
-General,CUM,Dummy if the results (table or picture) of the IRF are shown for a cumulative IRF,logical,true; false,,,TRUE,study,NEW_July,NEW_July,
-impulse_and_response_variables,INTTYPE,"Type of short term interest rate variable which is shocked (add here on the fly). If no information is provided or the paper only states ""interest rate"" code as ""null"".",factor,https://github.com/META-CMP/data/issues/6,,"e.g. Bauer and Swanson use 2 year treasury yield, fed funds rate, real interest rate,....",TRUE,study,YES,YES,
-impulse_and_response_variables,SIZE,"Shock size in basis points e.g., 100 = 1pp. How to deal with 1% shock? ",factor,"for bp shock: ""xbp""
-for % shock:
-""x%""
-for SD shock (if no information on SD size):
-""xSD""",Rusnak et al. 2013,,TRUE,study,YES,YES,
-impulse_and_response_variables,AXIS_TRANS,note if the axis scale needs to be transformed to be in percentage scale or another scale.,string,e.g.: y*100,,,TRUE,study,NEW_June,NEW_June,
-impulse_and_response_variables,DEP,Vector of variable names + transformation of the variabe and real or nominal (add here on the fly),factor,https://github.com/META-CMP/data/issues/10,,,TRUE,study,YES,YES,
-impulse_and_response_variables,CONF,Level of the confidence bounds or standard errors (add here on the fly),factor,68  90  95  1_SE  2_SE  80,,,TRUE,study,YES,Unsure,
-impulse_and_response_variables,MAIN,1 if outcome variable is of main research interest for the paper,factor,gdp  emp  inflation  other,,,TRUE,study,YES,YES,
-impulse_and_response_variables,PREFER,1 if estimate (model specification) is preferred in underlying study,logical,true; false,Heimberger and Gechert (2022),,TRUE,study,YES,YES,
-Identification_strategy,IV,1 if Instrumental Variable - dummy for internal or external instrument (=Proxy SVAR) or for identifaction of impulse responses?,logical,true; false,Gechert 2015,Same dummy for internal and external instrument as well as for LP-IV? pre registration plan: ?berbegriffe ja + beispiele zu variablen die wir erfassen wollen wenn wir hypothesen zu deren Einfluss haben. Zwei gruppen von Moderatorvariablen: die mit hypothesen (z.b. Regime dependent) und explorative Variablen. ,TRUE,study,YES,YES,
-Identification_strategy,FORECAST_BASED,"1 if forecast based identification strategy is used, as for example in Romer and Romer (2004) for detailed description see github issue 41 in the data repository",logical,true; false,,,TRUE,study,NEW_June,NEW_June,
-Identification_strategy,NR,1 if Narrative record,logical,true; false,Gechert 2015,,TRUE,study,YES,YES,
-Identification_strategy,EVENT,1 if Event study or direct measurement of the shock ,logical,true; false,-,"Probably not that many and code togehter with narrative record, romer and romer 2010, or paper looking at the changes in eurodollar rates around FOMC meetings. SIRF can be directly obtained according to Stock and Watson 2016 p. 460",TRUE,study,YES,YES,
-Identification_strategy,CHOL,1 if obtained by recursive Cholesky identification - irrespective of the order of the variables (but note quality constraint if conteporaneous effect of inflation or output are zero on the interest rate). Hence the system of short run restrictions sets all the contemporaneous effects of variables ordered above on the variables ordered below to zero (and tries to estimates all the parameters of the lower triangular identification matrix of the monetary part). ,logical,true; false,Papadamou et al. 2019,Or more detailed on the ordering of the variables,TRUE,study,YES,YES,
-Identification_strategy,SVAR,1 if SVAR (for any other structural identification other than cholesky if the contemporaneous elasticities in the upper triangular of the identification matrix are set to some specific value instead of zero as for choleski or are not estimated in case of the lower triangular matrix),logical,true; false,Ehrenbergerova et al. 2021,Code the structure of the VAR? See Ramey page 78,TRUE,study,YES,YES,
-Identification_strategy,SIGNR,1 if obtained by employing sign restrictions (also known as ?set identification? or partial identification),logical,true; false,Papadamou et al. 2019,Or maybe exclude those responses where the variable of interest is sign restricted. In this case we do not need this moderator variable see Uhlig 2005,TRUE,study,YES,YES,
-Identification_strategy,HF,1 if high frequency identification is used,logical,true; false,- ,Is one identification method according to Ramey (2016),TRUE,study,YES,YES,
-Identification_strategy,HETEROSKEDAS,1 if Identification by Heteroskedasticity,logical,true; false,,Identification Method according to Stock and Watson 2016,TRUE,study,YES,YES,
-Identification_strategy,LONGRUN,1 of identification by Long-Run Restrictions,logical,true; false,,Identification Method according to Stock and Watson 2016,TRUE,study,YES,YES,
-Identification_strategy,IDOTHER,1 if Other,logical,true; false,Gechert 2015,,TRUE,study,YES,YES,
-Estimation_Method,VAR,1 if Vector Autoregression Model,logical,true; false,Gechert 2015,,TRUE,study,YES,YES,
-Estimation_Method,LP,1 if Local Projections,logical,true; false,-,,TRUE,study,YES,YES,
-Estimation_Method,VECM,Vector error correction model,logical,true; false,Ehrenbergerova et al. 2021,,TRUE,study,YES,YES,
-Estimation_Method,DYN_OLS,1 if dynamic OLS (ARDL? ECM? ? ?) (add here on the fly),factor,ardl  ecm false,,,TRUE,study,YES,YES,
-Estimation_Method,FVAR,1 if factor-augmented VAR,logical,true; false,"Papadamou et al. 2019, Havranek and Rusnak 2013",,TRUE,study,YES,YES,
-Estimation_Method,TVAR,1 if time-varying parameter VAR,logical,true; false,"Papadamou et al. 2019, Havranek and Rusnak 2013",,TRUE,study,YES,YES,
-Estimation_Method,GVAR,1 if global VAR,logical,true; false,,,TRUE,study,NEW_May,NEW_May,
-Estimation_Method,BAYES,1 if Bayesian methods,logical,true; false,"Papadamou et al. 2019, Havranek and Rusnak 2013",,TRUE,study,YES,YES,
-Estimation_Method,DSGE,1 if estimated DSGE,logical,true; false,,,TRUE,study,YES,YES,
-Estimation_Method,VAROTHER,1 if other VAR approach,logical,true; false,,,TRUE,study,YES,YES,
-Regime_dependence,LOR,1 if definition of a 'recession' or 'downswing' regime lag-polynomial in a transition VAR or of there is clear indication in the text that the estimated value is relevant for a downswing period,logical,true; false,,"Jorda 2020: Specifically, we find that stimulating a weak economy is much harder than reining in a strong one.",TRUE,study,YES,YES,
-Regime_dependence,UPR,1 if definition of an 'upswing' or 'bom' regime lag-polynomial in a transition VAR or of there is clear indication in the text that the estimated value is relevant for an upswing period,logical,true; false,,,TRUE,study,YES,YES,
-Regime_dependence,SCR,1 if definition of a 'supply constrained' or 'a supply shock' regime lag-polynomial in a transition VAR or of there is clear indication in the text that the estimated value is relevant for a supply constrained period,logical,true; false,,,TRUE,study,YES,YES,
-Regime_dependence,DCR,1 if definition of a 'demand constrained' or 'a demand shock' regime lag-polynomial in a transition VAR or of there is clear indication in the text that the estimated value is relevant for a demand constrained period,logical,true; false,,,TRUE,study,YES,YES,
-Regime_dependence,HIKE,1 if estimate is for an interest rate hike,logical,true; false,,Only if assymetric model is estimated,TRUE,study,YES,YES,
-Regime_dependence,CUT,1 if estimate is for an interest rate cut,logical,true; false,,Only if assymetric model is estimated,TRUE,study,YES,YES,
-Data_frequency,ANNUAL,1 if annual data are used,logical,true; false,Havranek and Rusnak 2013,,TRUE,study,YES,YES,
-Data_frequency,QUARTER,1 if quarterly data are used,logical,true; false,Havranek and Rusnak 2013,,TRUE,study,YES,YES,
-Data_frequency,MONTH,1 if monthly data are used,logical,true; false,Havranek and Rusnak 2013,,TRUE,study,YES,YES,
-Country_composition,LIST_OF_COUNTRIES,"List of countries if Panel is used (iso2 code, ""EA"" for Euro area)",string,,,"Collect in the database, not used for estimation, construct dummy variables with this list?",TRUE,study,YES,YES,
-Country_composition,N_OF_COUNTRIES,Number of countries in sample,numeric,xxx,,,TRUE,study,YES,YES,
-Further_data_characteristics,PANEL,1 if Panel(VAR),logical,true; false,Ehrenbergerova et al. 2021,,TRUE,study,YES,YES,
-Further_data_characteristics,START,Sample start (https://www.r-bloggers.com/2013/08/date-formats-in-r/) for format codes,string,"for monthly data: ""%m-%Y"" 
-for quarterly data: ""Q%q-%Y"" 
-for yearly data: ""%Y""",Ehrenbergerova et al. 2021,included in database but probably not in the estimation. Extract to calculate the mean year and the timespan and sample start dummies.,TRUE,study,YES,YES,
-Further_data_characteristics,END,Sample end (https://www.r-bloggers.com/2013/08/date-formats-in-r/) for format codes,string,"for monthly data: ""%m-%Y"" 
-for quarterly data: ""Q%q-%Y"" 
-for yearly data: ""%Y""",Ehrenbergerova et al. 2021,included in database but probably not in the estimation. Extract to calculate the mean year and the timespan and sample start dummies.,TRUE,study,YES,YES,
-Further_data_characteristics,SAMPLESIZE,Sample size for estimation. For details see: https://github.com/META-CMP/data/issues/22,numeric,"xxx; ""null""",Havranek and Rusnak 2013,,TRUE,study/own_calculation,YES_or_imp,YES_or_imp,
-Control_variables,COMPRICE,1 if commodity price variable is included,logical,true; false,,"Aus Ramey (2016): Sims (1992) conjectured that the Federal Reserve used more information about future movements in inflation than was commonly included in the VAR. He showed that the price puzzle was substantially reduced if commodity prices, often a harbinger of future inflation, were included in the VAR. Rusnake et al. 2013 find that its inclusion drives the results in the literature.",TRUE,study,YES,YES,
-Control_variables,OUTPGAP,1 if output gap variable is included,logical,true; false,Havranek and Rusnak 2013,Aus Rusnak et al. 2013: Giordani (2004) argues that the use of GDP in the VAR system without controlling for the potential of the economy can bias the estimates and cause the price puzzle.,TRUE,study,YES,YES,
-Control_variables,FIND,"1 if financial development is controlled for, for example by the usage of credit or asset variables related to financial development and or financial cycle variables (levels or GDP ratios)",logical,true; false,Havranek and Rusnak 2013 Ehrenbergerova et al. 2021,,TRUE,study,YES,YES,
-Control_variables,EGLOB,1 if economic globalisation is controlled for,logical,true; false,Havranek and Rusnak 2013,,TRUE,study,YES,YES,
-Control_variables,CBIND,1 if central bank independence is controlled for,logical,true; false,Havranek and Rusnak 2013,,TRUE,study,YES,YES,
-Control_variables,FEXCH,1 if exchange rate regime is controlled for,logical,true; false,Ehrenbergerova et al. 2021,,TRUE,study,YES,YES,
-Control_variables,INFLEXP,1 if inflation expectations variable is included,logical,true; false,-,"Aus Ramey (2016): Boivin et al. (2010) find that in a standard VAR the results for prices are very sensitive to the specification. Inclusion of a commodity price index does not resolve the price puzzle, but inclusion of a measure of expected inflation does resolve it in the post-1984:1 period. ",TRUE,study,YES,YES,
-Control_variables,FOREIGNIR,"1 if a foreign interest rate is included (how to handle in panel setting, probably =1)",logical,true; false,Ehrenbergerova et al. 2021,,TRUE,study,YES,YES,
-Control_variables,FX,1 if the exchange rate is included ,logical,true; false,Ehrenbergerova et al. 2021,,TRUE,study,YES,YES,
-Control_variables,LRIR,"1 if the long-run interest rate (in addition to the short-run
-interest rate) is included",logical,true; false,Ehrenbergerova et al. 2021,"Regarding specication characteristics, we nd that the omission of long-term interest rates and variables related to liquidity (credit or money supply) is associated with stronger responses of house prices to changes in the policy
-rate.",TRUE,study,YES,YES,
-Econometric_details,PURE_RATE_SHOCK,1 only if the monetary policy shock is defined in matters of interest rates. ,logical,true; false,,,TRUE,study,NEW_July,NEW_July,
-Econometric_details,CONVENT,1 if monetary policy shock plausibly only covers conventional monetary policy,logical,"true; false; ""null""",,,TRUE,study,NEW_May,NEW_May,
-Econometric_details,DECOMPOSITION,"1 if monetary policy shock is decomposed into several parts (conventional, unconventional, information, forward guidance, …)",logical,true; false,,,TRUE,study,NEW_June,NEW_June,
-External_controls,EXT_FEXCH,1 if exchange rate regime is fixed,,,Havranek and Rusnak 2013,,FALSE,public_database,YES,YES,
-External_controls,EXT_INFL,Average inflation rate over the sample period for which the output coefficient was estimated,,,De Grauwe and Storti 2004,"Jorda 2020: Yet another source of state dependence comes from the level of inflation, however. Additionally include Regime dummies for low and high inflation regimes. ",FALSE,public_database,YES,YES,
-External_controls,EXT_INFLVAR,"Inflation variability, standard deviation inflation over time",,,Nguyen 2020,,FALSE,public_database,YES,YES,
-External_controls,EXT_TOPEN,Average trade openness over the sample period (KOF index),,,,,FALSE,public_database,YES,YES,
-External_controls,EXT_FOPEN,Average financial openness over the sample period,,,,,FALSE,public_database,YES,YES,
-External_controls,EXT_GDPPC,Average GDP per capita over the sample period,,,Rusnak et al. 2013,,FALSE,public_database,YES,YES,
-External_controls,EXT_FDEV,Average financial development over the sample period (domestic credit to private sector in % of GDP),,,Rusnak et al. 2013,Jorda 2020: State dependence in credit boom and bust episodes. Or additionally include regime dummies?,FALSE,public_database,YES,YES,
-External_controls,EXT_CBIND,Average central bank independence over the sample period (index),,,Rusnak et al. 2013,,FALSE,public_database,YES,YES,
-External_controls,EXT_UNEM,Average unemployment rate over the sample period,,,,additional variables on workers bargaining power?,FALSE,public_database,YES,YES,
-External_controls,EXT_SUPPLY,"Share of years which are supply constrained, or with supply price shocks",,,,,FALSE,public_database,YES_or_imp,YES_or_imp,
-Publication_characteristics,CITAT,Number of citations (Ehrenbergerova et al. 2022 use google scholar citations within the first three years p.17),numeric,xxx,Gechert and Heimberger 2022,,FALSE,public_database,YES,YES,
-Publication_characteristics,IMPACT,Journal impact factor,numeric,xxx,Gechert and Heimberger 2022,which impact factor?,FALSE,public_database,YES,YES,
-Publication_characteristics,CBANKER,"1 if at least one coauthor is affiliated with a central bank - dummy 1-0 (BIS ja, Zeipunkt des Papiers) auch wenn in CB paper erschienen 1",logical,true; false,Rusnak et al. 2013,,TRUE,study,YES,YES,
-Publication_characteristics,SNOWBALL,1 if study is found via snowballing. Maybe 0-2 if we include a second round of snowballing,logical,true; false,Fabo et al 2021,,FALSE,researcher,YES,YES,
-reason_for_exclusion,reason_for_exclusion,Reason for exclusion after full text screening for definition see: https://github.com/META-CMP/data/issues/37,factor,no_relevant_effect_sizes; no_original_estimate; shock_size_unclear; calibrated_model; disagregated_responses_only; no_se; wrong_response_variable; wrong_shock_variable; no_comparable_effect_sizes,,,FALSE,researcher,YES,YES,
+Category,Variable,Description,Type,Entries,json,source,Coding_instruction
+general,key,Primary key of the study.,string,"e.g. ""2LWMVPV7""",TRUE,zotero,NA
+general,rid1,Researcher ID of the first screener.,factor,"e.g. ""me"", ""sg"", ""fp"", ""ph"", ""dr""",TRUE,researcher,NA
+general,rid2,Researcher ID of the second screener (in case of double checking).,factor,"e.g. ""me"", ""sg"", ""fp"", ""ph"", ""dr""",TRUE,researcher,NA
+general,study_notes,General notes on the study that are relevant for all models within the study.,string,See coding_instruction,TRUE,researcher,https://github.com/META-CMP/data/issues/9
+general,model_notes,Model specific notes that are relevant only for a given model within the study.,string,See coding_instruction,TRUE,researcher,https://github.com/META-CMP/data/issues/67
+general,figure,Indicates the number of the figure from which the impulse response is taken,string,See coding_instruction,TRUE,study,https://github.com/META-CMP/data/issues/46
+general,page,Indicates the page on which the impulse response (figure or table) is displayed.,numeric,See coding_instruction,TRUE,study,https://github.com/META-CMP/data/issues/97
+general,irf,Indicates if there is a graphical representation of the irfs in the study.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/71
+general,cum,Indicates if the impulse response function represents cumulated effects.,logical,true; false,TRUE,study/screener,https://github.com/META-CMP/data/issues/72
+impulse_and_response_variables,inttype,Type of short term interest rate variable which is shocked.,factor,See coding_instruction,TRUE,study,https://github.com/META-CMP/data/issues/6
+impulse_and_response_variables,size,Shock size in basis points or percent.,factor,See coding_instruction,TRUE,study,https://github.com/META-CMP/data/issues/52
+impulse_and_response_variables,axis_trans,Note if the axis scale needs to be transformed to be a percentage scale.,string,See coding_instruction,TRUE,study/screener,https://github.com/META-CMP/data/issues/62
+impulse_and_response_variables,dep,Dependent (outcome) variable codes.,factor,See coding_instruction,TRUE,study,https://github.com/META-CMP/data/issues/10
+impulse_and_response_variables,conf,Level of the confidence bounds or standard errors.,factor,See coding_instruction,TRUE,study,https://github.com/META-CMP/data/issues/98
+impulse_and_response_variables,main,The outcome variable representing the main research interest of the study.,factor,gdp  emp  inflation  other,TRUE,study,https://github.com/META-CMP/data/issues/17
+impulse_and_response_variables,prefer,Indicates if the effect estimate based on the model specification is preferred in the study.,logical,true; false,TRUE,study/screener,https://github.com/META-CMP/data/issues/87
+identification_strategy,iv,Indicates if an instrumental variable approch is used for identification.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/99
+identification_strategy,forecast_based,Indicates whether a forecast-based strategy is used for shock identification.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/41
+identification_strategy,nr,Indicates if a narrative strategy based on narrative records or sentiments of central bank statements is used for shock identification.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/41
+identification_strategy,event,Indicates if an event study or a similar direct measurement of the monetary policy shock is used for shock identification.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/100
+identification_strategy,chol,"Indicates if a recursive (""Cholesky"") ordering is used for shock identification.",logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/101
+identification_strategy,svar,Indicates if a non-recursive structural VAR approach is used for shock identification (no Cholesky).,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/102
+identification_strategy,signr,Indicates if a sign restriction approach is used for shock identification.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/86
+identification_strategy,hf,Indicates if a high frequency approach is used for shock identification.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/103
+identification_strategy,heteroskedas,Indicates if a heteroskedasticity-based approach is used for shock identification.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/78
+identification_strategy,longrun,Indicates if shock identification is based on long-run restrictions.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/104
+identification_strategy,idother,Indicates if the identification strategy does not correspond to one of the other variables in identification_strategy.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/69
+estimation_method,var,Indicates if a vector autoregression model (VAR) is used for estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/105
+estimation_method,lp,Indicates if a local projections method is used for estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/106
+estimation_method,vecm,Indicates if a vector error correction model is used for estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/107
+estimation_method,dyn_ols,"Indicates if a dynamic ols model, such as an autoregressive distributed lag model, is used for estimation.",factor,ardl  ecm false,TRUE,study,https://github.com/META-CMP/data/issues/25
+estimation_method,fvar,Indicates if a factor-augmented VAR model is used for estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/81
+estimation_method,tvar,Indicates if a time-varying parameter VAR models is used for estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/108
+estimation_method,gvar,Indicates if a global VAR model (no panel) is used for estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/109
+estimation_method,bayes,Indicates if a Bayesian approach is used for estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/110
+estimation_method,dsge,Indicates if a dynamic stochastic general equilibrium (DSGE) model is used for estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/32
+estimation_method,varother,Indicates if an other VAR approach is used for estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/111
+regime_dependence,lor,Indicates that the effect is estimated for a 'downswing' or 'recession' regime.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/196
+regime_dependence,upr,Indicates that the effect is estimated for an 'upswing' or 'boom' regime.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/197
+regime_dependence,scr,Indicates that the effect is estimated for a supply-constrained regime.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/198
+regime_dependence,dcr,Indicates that the effect is estimated for a demand-constrained regime.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/199
+regime_dependence,hike,Indicates that the effect is estimated for an interest rate hike only.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/200
+regime_dependence,cut,Indicates that the effect is estimated for an interest rate cut only.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/201
+data_frequency,annual,Annual data is used for effect estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/15
+data_frequency,quarter,Quarterly data is used for effect estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/15
+data_frequency,month,Monthly data is used for effect estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/15
+country_composition,list_of_countries,ISO 2 codes of the countries for which the effect is estimated.,string,See coding_instruction,TRUE,study,https://github.com/META-CMP/data/issues/65
+country_composition,n_of_countries,Number of countries used in the estimation sample of the model.,numeric,See coding_instruction,TRUE,study,https://github.com/META-CMP/data/issues/113
+further_data_characteristics,panel,Indicates if a panel data method (e.g. panel VAR) is used for estimation.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/66
+further_data_characteristics,start,Start date of the sample that is used for estimation.,string,See coding_instruction,TRUE,study,https://github.com/META-CMP/data/issues/42
+further_data_characteristics,end,End date of the sample that is used for estimation.,string,See coding_instruction,TRUE,study,https://github.com/META-CMP/data/issues/42
+further_data_characteristics,samplesize,Sample size for estimation.,numeric,See coding_instruction,TRUE,study/own_calculation,https://github.com/META-CMP/data/issues/22
+control_variables,comprice,Indicates that a commodity price variable is included as a control variable.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/88
+control_variables,outpgap,Indicates that a measure for the output gap is included as a control variable.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/114
+control_variables,find,Indicates that a variable for financial development is included as a control variable.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/54
+control_variables,eglob,Indicates that a measure of economic globalisation is included as a control variable.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/55
+control_variables,cbind,Indicates that central bank independence is included as a control variable.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/115
+control_variables,fexch,Indicates that the exchange rate regime is included as a control variable.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/116
+control_variables,inflexp,Indicates that inflation expectations are included as a control variable.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/117
+control_variables,foreignir,Indicates that a foreign interest rate is included as a control variable.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/89
+control_variables,fx,Indicates that a exchange rate is included as a control variable.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/118
+control_variables,lrir,Indicates that a long-run interest rate is included as a control variable.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/119
+econometric_details,pure_rate_shock,Indicates that the monetary policy shock is explicitly defined in terms of the interest rate.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/70
+econometric_details,convent,Indicates that the monetary policy shock is explicitly defined in terms of a conventional monetary policy shock.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/80
+econometric_details,decomposition,Indicates that the monetary policy shocks have been decomposed into different components.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/85
+external_controls,ext_fexch,Indicates the exchange rate regime of the country for which the model is estimated.,factor,NA,FALSE,public_database,NA
+external_controls,ext_infl,Average inflation rate over the sample period for which the output coefficient was estimated,numeric,NA,FALSE,public_database,NA
+external_controls,ext_inflvar,"Inflation variability, standard deviation inflation over time",numeric,NA,FALSE,public_database,NA
+external_controls,ext_topen,Average trade openness over the sample period (KOF index),numeric,NA,FALSE,public_database,NA
+external_controls,ext_fopen,Average financial openness over the sample period,numeric,NA,FALSE,public_database,NA
+external_controls,ext_gdppc,Average GDP per capita over the sample period,numeric,NA,FALSE,public_database,NA
+external_controls,ext_fdev,Average financial development over the sample period (domestic credit to private sector in % of GDP),numeric,NA,FALSE,public_database,NA
+external_controls,ext_cbind,Average central bank independence over the sample period (index),numeric,NA,FALSE,public_database,NA
+external_controls,ext_unem,Average unemployment rate over the sample period,numeric,NA,FALSE,public_database,NA
+external_controls,ext_supply,"Share of years which are supply constrained, or with supply price shocks",numeric,NA,FALSE,public_database,NA
+publication_characteristics,citat,Number of citations (Ehrenbergerova et al. 2022 use google scholar citations within the first three years p.17),numeric,NA,FALSE,public_database,NA
+publication_characteristics,impact,Journal impact factor,numeric,NA,FALSE,public_database,NA
+publication_characteristics,cbanker,Indicates that there is an institutional affiliation of one of the authors and/or the publication format with central banks.,logical,true; false,TRUE,study,https://github.com/META-CMP/data/issues/58
+reason_for_exclusion,reason_for_exclusion,Reason for exclusion after full text screening for definition see: https://github.com/META-CMP/data/issues/37,factor,See coding_instruction,FALSE,researcher,https://github.com/META-CMP/data/issues/37

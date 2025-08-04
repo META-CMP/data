@@ -2,7 +2,7 @@
     "general": {
         "key": "U5B2LUWW",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "me",
         "study_notes": "quality_concern: study is not consistent in explaining the applied variable transformation.; cum: set to true because of shape of the IRF.",
         "model_notes": "null",
         "figure": "1.row-1, 3.row-1 & 6.row-1",

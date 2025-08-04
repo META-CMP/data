@@ -2,7 +2,7 @@
     "general": { 
         "key": "P85XBWGQ", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "me", 
         "study_notes": "axis_trans: probably gr_q_deflator responses should be divided by 100 as the interest rate as they are pretty large compared to the gdp responses. Moreover, interest rates and inflation rates could be used in the same way in the model; DR: this probably is because gr_a_deflator instead of gr_q_deflator is used; figure 13: The units on the y-axis are in percent, except the responses in interest rate (rt), which are in basis points. They include a time trend as in Rossi and Zubairy (2011).; cum: set to true because of shape of the IRF.", 
         "model_notes": "null", 
         "figure": {

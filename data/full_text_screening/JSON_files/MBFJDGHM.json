@@ -2,7 +2,7 @@
     "general": {
         "key": "MBFJDGHM",
         "rid1": "me",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "quality_concern: most likely the authors misinterpret the ouput gap effects by a factor of 100.; lrir: is the forward rate agreement. dep: the authors use the cpi excluding regulated prices. conf: confidence bounds for models 9 and 10 are not explicitly defined as 95%, but most probably represent 95%",
         "model_notes": "null",
         "figure": {

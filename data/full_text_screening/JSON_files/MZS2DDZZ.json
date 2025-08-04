@@ -2,7 +2,7 @@
     "general": {
         "key": "MZS2DDZZ",
         "rid1": "dr",
-        "rid2": "null",
+        "rid2": "me",
         "study_notes": "null",
         "model_notes": {
           "model_1": "cum: set to true because of IRF pattern.; estimate their baseline VAR with the new monetary policy measure ordered last in the recursive ordering.",

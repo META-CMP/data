@@ -2,7 +2,7 @@
     "general": { 
         "key": "BATUQMMR", 
         "rid1": "ph", 
-        "rid2": "null", 
+        "rid2": "dr", 
         "study_notes": "cum: cum set to true because IRF pattern and usual in local projections literature; they include a constant and a time trend.", 
         "model_notes": "null", 
         "figure": {

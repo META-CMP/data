@@ -2,7 +2,7 @@
     "general": {
         "key": "9ECXEKL2",
         "rid1": "fp",
-        "rid2": "null",
+        "rid2": "dr",
         "study_notes": "cum: use log for gdp (to treat it as cumulative) because IRF pattern; they include a trend in the model.",
         "model_notes": "null",
         "figure": {

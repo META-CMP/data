@@ -56,7 +56,7 @@ For eligible studies, we developed a custom `R` package ([`MetaExtractR`](https:
 
 [^3]: The files are named after the unique study identifier (`Key`).
 [^5]: See `full_random_check` entries in `reason for doublecheck` column in the [study set files](data/study_search/database_search/processed/post_AS/packages_for_full_text_download).
-[^6]: See `recoding_check` entries in `reason for doublecheck` column in the [study set files](data/study_search/database_search/processed/post_AS/packages_for_full_text_download). See #73 for further documentation of these cases.
+[^6]: See `recoding_check` entries in `reason for doublecheck` column in the [study set files](data/study_search/database_search/processed/post_AS/packages_for_full_text_download). See [here](https://github.com/META-CMP/data/issues/73) for further documentation of these cases.
 
 #### Graphical effect size data extraction
 

@@ -78,7 +78,22 @@ To complement our systematic database search, we conducted backward snowballing 
 
 We collected citation counts of eligible studies from Google Scholar. This data collection was conducted systematically on July 15-16, 2024 to ensure temporal consistency across all measurements. For each included study, a research assistant searched Google Scholar using the study title and verified that the first search result matched our study's metadata (same authors, publication venue, and year). We then recorded the citation count and the search date. The complete citations data, including Google Scholar links and search dates, is stored in [citations_for_included_studies.xlsx](data/study_characteristics/citations_for_included_studies.xlsx). Studies that could not be found on Google Scholar were noted accordingly.
 
-
+<!---#### Journal ranking data
+We collected journal ranking data to classify publications into tiers based on established rankings:
+1. **Top 5 journals**: _Quarterly Journal of Economics_, _Journal of Political Economy_, _American Economic Review_, _Econometrica_, and _Review of Economic Studies_. Out of these, the _American Economic Review_ and the _Review of Economic Studies_ were present in our dataset. 
+2. **Top tier journals**: An extended list of top 50 leading economics journals based on the 2023 Scientific Journal Rankings (SJR) indicators. The [ranking list of all economics journals](data/study_characteristics/VWL_Zeitschriftenliste_2023.xlsx) was retrieved from [forschungsmonitoring.org](https://www.forschungsmonitoring.org/VWL_Zeitschriftenliste%202023.xlsx). SJR ranking data of the journals in our dataset was collected by a research assistant from [resurchify.com](https://www.resurchify.com) and can be accessed alongside our classification in the file [sjr.xlsx](data/study_characteristics/sjr.xlsx) (retrival dates and missing cases were documented in the file). The classification of entires was implemented using fuzzy string matching (Levenshtein string distance ≤ 3) to account for variations in journal name formatting across our dataset, see [journal_matching.R](data/study_characteristics/journal_matching.R) for details. Out of the extended list of top tier journals, the following are present in our dataset:
+_Journal of the European Economic Association_,
+_Journal of Monetary Economics_,
+_Journal of Financial Economics_,
+_American Economic Journal: Macroeconomics_,
+_Economic Journal_,
+_Journal of International Economics_,
+_Journal of Business & Economic Statistics_,
+_The Economic Journal_,
+_Review of Economics and Statistics_,
+_Brookings Papers on Economic Activity_,
+_The journal of finance_.
+3. **Other publications**: All remaining publications ---> 
 
 #### World Bank income group classifications
 For country income classifications, we utilized the [World Bank income group classifications for fiscal year 2025](https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups), accessed on December 23, 2024 and stored as [`world_bank_country_goups_2025_fiscal_year.xlsx`](data/world_bank_country_goups_2025_fiscal_year.xlsx). These classifications divide countries into four income groups: high income, upper middle income, lower middle income, and low income. We matched each country in our dataset to its corresponding income group. Our sample only included countries from the World Bank's high-income and upper-middle-income groups, which we have labelled ‘advanced’ and ‘emerging’ respectively. Studies were then classified based on their country composition: those examining only countries from a single income group were labeled accordingly, while studies spanning multiple income groups were classified as "mixed_or_unclear".

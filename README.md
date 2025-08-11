@@ -12,7 +12,7 @@
 >
 > ## Research papers:
 > 
-> Enzinger, M., Gechert, S., Heimberger, P., Prante, F., & Romero, D. F. (2025). **The overstated effects of conventional monetary policy on output and prices**. [**[OSF Preprint]**](https://osf.io/preprints/osf/72cen_v1) [**[Replication files]**](https://github.com/META-CMP/data/tree/main/analysis/working_paper_1)
+> Enzinger, M., Gechert, S., Heimberger, P., Prante, F., & Romero, D. F. (2025). **The overstated effects of conventional monetary policy on output and prices**. [**[OSF Preprint, https://doi.org/10.31219/osf.io/72cen_v1]**](https://osf.io/preprints/osf/72cen_v1) [**[Replication files]**](https://github.com/META-CMP/data/tree/main/analysis/working_paper_1)
 >
 > > **Abstract**: We build a dataset of output and price effects of conventional monetary policy containing 146,463 point estimates and confidence bands from 4,871 impulse-response functions in 409 primary studies. Simple average responses suggest that interest rate hikes substantially dampen output and prices. However, we find robust evidence for publication bias. Bias corrections reduce effect sizes by half or more: in response to a 100 basis points rate hike, output and prices are unlikely to fall by more than 0.5 and 0.25 percent, respectively. Shock identification choices and publication characteristics correlate with effect sizes but are quantitatively less important than publication bias.
 >

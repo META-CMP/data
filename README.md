@@ -117,7 +117,7 @@ The standardization process follows a multi-step approach including:
 - **Effect size transformation**: Based on the specific characteristics of each study (e.g., variable definitions and transformations, shock sizes, data frequency), the package applies the appropriate standardization formula to ensure comparability across studies
 - **Confidence interval and standard error calculation**: The package approximates standard errors from confidence bands, accounting for different confidence levels
 
-Our standardization approach handles several cases based on how variables are measured and transformed in the original studies (e.g., log levels vs. growth rates, cumulative vs. non-cumulative IRFs). The transformations for each case are detailed in our [effect size transformation guide]().
+Our standardization approach handles several cases based on how variables are measured and transformed in the original studies (e.g., log levels vs. growth rates, cumulative vs. non-cumulative IRFs). The transformations for each case are detailed in our [effect size transformation guide](https://github.com/META-CMP/data/issues/51).
 
 The final data processing after full text screening was implemented in [`final_join.R`](data/final_join.R), resulting in a unified dataset [`final_join_json_irf_data.RData`](data/final_join_json_irf_data.RData) that was prepared for futher analysis in [`final_data_preparation_working_paper_1.R`](data/final_data_preparation_working_paper_1.R). Importantly, we merged the external data to each observation and consolidated some moderator variables. For example, we consolidated coding categories like identification strategies and estimation methods into broader categories.
 

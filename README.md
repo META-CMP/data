@@ -79,7 +79,7 @@ To complement our systematic database search, we conducted backward snowballing 
 We collected citation counts of eligible studies from Google Scholar. This data collection was conducted systematically on July 15-16, 2024 to ensure temporal consistency across all measurements. For each included study, a research assistant searched Google Scholar using the study title and verified that the first search result matched our study's metadata (same authors, publication venue, and year). We then recorded the citation count and the search date. The complete citations data, including Google Scholar links and search dates, is stored in [citations_for_included_studies.xlsx](data/study_characteristics/citations_for_included_studies.xlsx). Studies that could not be found on Google Scholar were noted accordingly.
 
 #### Journal ranking
-We use the [2022 SCImago Journal Rank (SJR) indicator](https://www.scimagojr.com/journalrank.php?area=2000&year=2022&page=3&total_size=1363) to classify publications into _top journals_ and _other publications_. Top journals belong to a list of top-50 economics journals according to the SJR. The 13 top journals for our sample are (in alphabetic order): 
+We use the [2022 SCImago Journal Rank (SJR) indicator](https://www.scimagojr.com/journalrank.php?area=2000&year=2022&page=1&total_size=1363) to classify publications into _top journals_ and _other publications_. Top journals belong to a list of top-50 economics journals according to the SJR. The 13 top journals for our sample are (in alphabetic order): 
 _American Economic Journal: Macroeconomics_,
 _American Economic Review_, 
 _Brookings Papers on Economic Activity_, 

@@ -6,6 +6,10 @@ library(tidyverse) # For data manipulation
 data_path <- here("data/final_data_working_paper_1.RData")
 load(data_path)
 
+# Correct top journal classification for "Quantitative Economics" (Rank 47 in SJR 2022)
+data <- data %>% 
+  mutate(is_top_tier = ifelse(`publication title` == "Quantitative Economics", 1, top_5_or_tier))
+
 # Store data with quality concerns for robustness checks ----
 d_qc <- data
 
@@ -35,3 +39,4 @@ titles_size <- 16
 
 # Set seed for reproducibility ----
 set.seed(42)
+

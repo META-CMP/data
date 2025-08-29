@@ -8,7 +8,7 @@ We entered the following search query into the EconLit database:
 
 `monetary policy shocks AND (“industrial production” OR output OR GDP OR “economic growth” OR “economic activity” OR employment OR unemployment OR inflation OR “price level” OR “GDP deflator” OR CPI)`
 
-Additionally, we choose the search mode “Find all my search terms” and the expander “Apply equivalent subjects” in the advanced search options.
+Additionally, we selected the search mode “Find all my search terms” and the expander “Apply equivalent subjects” in the advanced search options.
 
 Total results from our EconLit search: 7455 bibliographic entries.
 

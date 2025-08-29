@@ -8,7 +8,7 @@ We entered the following search queries into the Google Scholar database using t
 
 ### Queries: 
 
-The date of the search and the retrieved results are given in paranthesis.
+The date of the search and the retrieved results are given in parantheses.
 
 - `Effect of “monetary policy” on “industrial production”` (date of search: 7 February 2023; results: 980)
 - `Effect of “monetary policy” on “economic growth”` (date of search: 8 February 2023; results: 980)

@@ -1,6 +1,6 @@
 # Final duplicate check 
 
-After we split the studies randomly into [26 packages](data/study_search/database_search/processed/post_AS/packages_for_full_text_download) to facilitate the work sharing, we conducted one final round of duplicates checks. During these checks we aimed to find matches where we have two different versions of a paper in our data set. For example, a working paper version and a journal version of the same paper. In such cases we only kept the most recent and published version and created a duplicated note for the other item. Thus we made sure that we do not double code studies. We again used the `revtools` `R` package with "fuzzy matching" technique. 
+After we split the studies randomly into [26 packages](data/study_search/database_search/processed/post_AS/packages_for_full_text_download) to facilitate the work sharing, we conducted one final round of duplicates checks. During these checks we aimed to find matches where we have two different versions of a paper in our data set. For example, a working paper version and a journal version of the same paper. In such cases we only kept the most recent and published version and created a duplicated note for the other item. Thus we made sure that we do not double code studies. We again used the `revtools` `R` package with the "fuzzy matching" algorithm. 
 
 The specific steps taken in `duplicate_check_2540.R` are the following:
 

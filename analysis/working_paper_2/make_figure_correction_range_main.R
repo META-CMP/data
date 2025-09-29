@@ -15,6 +15,9 @@ source(here::here("analysis/R/kasy_MetaStudiesFunctions.R"))
 source(here::here("analysis/R/kasy_RobustVariance.R"))
 source(here::here("analysis/R/kasy_MetaStudiesPlots.R"))
 
+# Capping procedure for period 0 precision and se ----
+source(here::here("analysis/working_paper_2/period_0_capping_se_prec.R"))
+
 # Sub-folder for figures ----
 subfolder <- "main"
 # This version:
@@ -27,44 +30,7 @@ subfolder <- "main"
 ## WAAP (2.8, horizon-based model selection) unweighted
 ## AK
 # Sampling: no, full sample
-# Winsorization: 0, 0.01, 0.02, 0.03, 0.04, 0.05 (only up to 0.03 for interest rate)
-
-# Hardcode the maximum of period 0 precision to allow estimation in period 0 ---- 
-## Create vectors of the columns we want to process ----
-
-se_cols <- c("SE.avg", "SE.upper", "SE.lower")
-precision_cols <- c("precision.avg", "precision.upper", "precision.lower")
-
-for (outcome in unique(d_no_qc$outcome)) {
-  # Subset data for this outcome where period.month == 1
-  subset_data <- d_no_qc[d_no_qc$period.month == 1 & d_no_qc$outcome == outcome, ]
-  
-  # Process SE columns (check against minimums)
-  for (col in se_cols) {
-    winsorized_values <- winsorizor(subset_data[[col]], percentile = wins_para)
-    min_value <- min(winsorized_values)
-    
-    # Only overwrite values that are below the minimum
-    mask <- d_no_qc$period.month == 0 &
-      d_no_qc$outcome == outcome &
-      d_no_qc[[col]] < 2*min_value
-    
-    d_no_qc[mask, col] <- 2*min_value
-  }
-  
-  # Process precision columns (check against maximums)
-  for (col in precision_cols) {
-    winsorized_values <- winsorizor(subset_data[[col]], percentile = wins_para)
-    max_value <- max(winsorized_values)
-    
-    # Only overwrite values that are above the maximum
-    mask <- d_no_qc$period.month == 0 &
-      d_no_qc$outcome == outcome &
-      d_no_qc[[col]] > 2*max_value
-    
-    d_no_qc[mask, col] <- 2*max_value
-  }
-}
+# Winsorization: 0, 0.01, 0.02, 0.03, 0.04, 0.05
 
 # Define additional functions ----
 
@@ -130,25 +96,25 @@ analyze_fullsample <- function(subsample_id) {
 
 
 # Set range of winsorization levels for estimations
-wins_para_levels <- c(0, 0.01, 0.02, 0.03)#, 0.04, 0.05) # AK fails otherwise
+wins_para_levels <- c(0, 0.01, 0.02, 0.03, 0.04, 0.05)
 
 # Define periods for estimation
 chosen_periods <- seq(0, 60, by = 3)
 
-# For employment ----
+# For emp ----
 out_var <- "emp"
 
-# Function to perform multiple meta-analyses for a given wins level for employment
+# Function to perform multiple meta-analyses for a given wins level for emp
 perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 24) {
   list(
     fatpet_uw = meta_analysis(
       data = data,
       outvar = out_var,
-      se_option = se_opt,
+      se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
       prec_weighted = FALSE,
-      estimation = "FAT-PET",
+      estimation = "FAT-PET", 
       cluster_se = TRUE),
     fatpet = meta_analysis(
       data = data,
@@ -164,11 +130,11 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 2
     peese_uw = meta_analysis(
       data = data,
       outvar = out_var,
-      se_option = se_opt,
+      se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
       prec_weighted = FALSE,
-      estimation = "PEESE",
+      estimation = "PEESE", 
       cluster_se = TRUE),
     peese = meta_analysis(
       data = data,
@@ -327,7 +293,7 @@ figure_irf_range_correction_emp <- figure_irf_range_correction_emp$plot %>%
                 dash = 'dash')
   ) %>%
   layout(
-    title = "Employment response to 100 bp rate shock, average and p-bias corrected range",
+    title = "emp response to 100 bp rate shock, average and p-bias corrected range",
     xaxis = list(title = "Month"),
     yaxis = list(title = "Effect in %"),
     hovermode = "compare"
@@ -342,11 +308,11 @@ orca(figure_irf_range_correction_emp,
      height = 1100 * 0.6
 )
 
-# For the unemployment rate ----
+# For unemp ----
 out_var <- "unemp"
 
-# Function to perform multiple meta-analyses for a given wins level for unemployment rate 
-perform_meta_analysis <- function(data, wins, se_opt = "lower", waap_horizon = 24) {
+# Function to perform multiple meta-analyses for a given wins level for unemp 
+perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 24) {
   list(
     fatpet_uw = meta_analysis(
       data = data,
@@ -534,7 +500,7 @@ figure_irf_range_correction_unemp <- figure_irf_range_correction_unemp$plot %>%
                 dash = 'dash')
   ) %>%
   layout(
-    title = "Unemployment rate response to 100 bp rate shock, average and p-bias corrected range",
+    title = "unemp response to 100 bp rate shock, average and p-bias corrected range",
     xaxis = list(title = "Month"),
     yaxis = list(title = "Effect in %"),
     hovermode = "compare"
@@ -549,27 +515,24 @@ orca(figure_irf_range_correction_unemp,
      height = 1100 * 0.6
 )
 
-
 # For interest rate ----
 out_var <- "rate"
 
-# Source the setup file again - this is necessary because the hardcoding of period 0 does not work for the interest rate
-source(here::here("analysis/working_paper_2/setup_wp_2.R"))
+# Restrict range of winsorization levels for AK estimation (higher values fail due to singularity issues)
+wins_para_levels_ak <- c(0, 0.01, 0.02)  # Restricted range for AK method
 
-# Set range of winsorization levels for estimations (higher values fail due to singularity issues)
-wins_para_levels <- c(0, 0.01, 0.02, 0.03, 0.04)
-
-# Function to perform multiple meta-analyses for a given wins level for interest rate
+# Modified perform_meta_analysis function for interest rate to allow for restriction of wins levels for AK
 perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12) {
-  list(
+  # Check if this wins level is available for AK
+  wins_ak <- ifelse(wins %in% wins_para_levels_ak, wins, NA)
+  
+  results <- list(
     fatpet_uw = meta_analysis(
       data = data,
       outvar = out_var,
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "FAT-PET", 
       cluster_se = TRUE),
@@ -579,8 +542,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = FALSE,
       prec_weighted = TRUE,
       estimation = "FAT-PET",
@@ -592,8 +553,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt, 
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       prec_weighted = FALSE,
       estimation = "PEESE", 
       cluster_se = TRUE),
@@ -603,8 +562,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = FALSE,
       prec_weighted = TRUE,
       estimation = "PEESE",
@@ -616,8 +573,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = TRUE,
@@ -632,8 +587,6 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
-      first_period_wins_prec = 0.2,
-      first_period_wins_mean = wins,
       ap = TRUE,
       ap_horizon = waap_horizon,
       ap_prec_weighted = FALSE,
@@ -641,15 +594,19 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       prec_weighted = FALSE,
       estimation = "UWLS",
       cluster_se = TRUE
-    ),
-    AK = meta_analysis(
+    )
+  )
+  
+  # Only add AK if wins level is available for AK
+  if (!is.na(wins_ak)) {
+    results$AK = meta_analysis(
       data = data,
       outvar = out_var,
       se_option = se_opt,
       periods = chosen_periods,
-      wins = wins,
-      # first_period_wins_prec = 0.2,
-      # first_period_wins_mean = wins,
+      wins = wins_ak,
+      
+      first_period_wins_mean = wins_ak,
       prec_weighted = FALSE,
       estimation = "AK",
       cluster_se = TRUE,
@@ -659,7 +616,60 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       AK_conf_level = conflevel,
       ak_plot = "both"
     )
+  }
+  
+  return(results)
+}
+
+# Modified analyze_fullsample function for interest rate to allow for missing AK results
+analyze_fullsample <- function(subsample_id) {
+  subsample <- filtered_data
+  
+  # First, run all methods with their respective winsorization levels
+  results_list <- lapply(wins_para_levels, function(wins) perform_meta_analysis(subsample, wins))
+  names(results_list) <- paste0("wins_", wins_para_levels)
+  
+  # Now we need to handle the missing AK results for wins > 0.02
+  # We'll use the AK results from wins = 0.02 for higher winsorization levels
+  ak_results_max <- results_list[["wins_0.02"]][["AK"]]
+  
+  for (wins in wins_para_levels[wins_para_levels > 0.02]) {
+    wins_name <- paste0("wins_", wins)
+    if (is.null(results_list[[wins_name]][["AK"]])) {
+      # Copy AK results from max available winsorization level
+      # but we need to update the wins_para label in the results
+      results_list[[wins_name]][["AK"]] <- ak_results_max
+    }
+  }
+  
+  # Combine results for all methods
+  final_fatpet_uw <- do.call(rbind, combine_results(results_list, "fatpet_uw"))
+  final_fatpet <- do.call(rbind, combine_results(results_list, "fatpet"))
+  final_peese_uw <- do.call(rbind, combine_results(results_list, "peese_uw"))
+  final_peese <- do.call(rbind, combine_results(results_list, "peese"))
+  final_waap_uw <- do.call(rbind, combine_results(results_list, "waap_uw"))
+  final_waap <- do.call(rbind, combine_results(results_list, "waap"))
+  
+  # For AK, only include results where it was actually computed
+  ak_results_to_combine <- list()
+  for (wins in wins_para_levels_ak) {
+    wins_name <- paste0("wins_", wins)
+    ak_results_to_combine[[wins_name]] <- results_list[[wins_name]]
+  }
+  final_ak <- do.call(rbind, combine_results(ak_results_to_combine, "AK"))
+  
+  # Combine all method results into a single final data frame
+  final_df <- rbind(final_fatpet_uw,
+                    final_fatpet,
+                    final_peese_uw,
+                    final_peese,
+                    final_waap_uw,
+                    final_waap,
+                    final_ak
   )
+  final_df$subsample <- subsample_id
+  
+  return(final_df)
 }
 
 filtered_data <- d_no_qc %>%
@@ -784,7 +794,7 @@ figure_irf_range_correction_all <- subplot(subplot(figure_irf_range_correction_e
                                                    figure_irf_range_correction_unemp,
                                                    shareY = FALSE),
                                            figure_irf_range_correction_rate, widths = c(.66, .33)
-                                           ) %>%
+) %>%
   layout(legend = list(orientation = "h",   # show entries horizontally
                        xanchor = "center",  # use center of legend as anchor
                        x = 0.5, y = -0.15, 
@@ -793,17 +803,17 @@ figure_irf_range_correction_all <- subplot(subplot(figure_irf_range_correction_e
          xaxis2 = list(title = "Months")
   ) %>%
   layout(
-  yaxis = list(#title = "Effect (%)",
-  range = list(y_lims[1], y_lims[2])),
-  yaxis2 = list(#title = "Effect (%-points)",
-  range = list(y_lims[1], y_lims[2])),
-  yaxis3 = list(#title = "Effect (%-points)",
-    range = list(-1, 1.5))
+    yaxis = list(#title = "Effect (%)",
+      range = list(y_lims[1], y_lims[2])),
+    yaxis2 = list(#title = "Effect (%-points)",
+      range = list(y_lims[1], y_lims[2])),
+    yaxis3 = list(#title = "Effect (%-points)",
+      range = list(-1, 1.5))
   ) %>%
   layout(annotations = list(
-    list(x = 30, y = y_lims[2], text = "Employment response (%)", showarrow = FALSE, xref = "x", yref = "y",
+    list(x = 30, y = y_lims[2], text = "emp response (%)", showarrow = FALSE, xref = "x", yref = "y",
          xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
-    list(x = 30, y = y_lims[2], text = "Unemployment rate response (%)", showarrow = FALSE, xref = "x2", yref = "y",
+    list(x = 30, y = y_lims[2], text = "unemp response (%)", showarrow = FALSE, xref = "x2", yref = "y",
          xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
     list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y3",
          xanchor = "center", yanchor = "bottom", font = list(size = titles_size))

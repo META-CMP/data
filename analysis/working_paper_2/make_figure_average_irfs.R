@@ -626,7 +626,7 @@ avg_irf_unemp_corrections <- avg_irf_unemp %>%
     x = ~period,
     y = ~estimate,
     name = "PEESE",
-    showlegend = FALSE,
+    showlegend = TRUE,
     line = list(color = "darkgreen", width = 1, dash = 'solid')
   ) %>% 
   add_lines(
@@ -634,7 +634,7 @@ avg_irf_unemp_corrections <- avg_irf_unemp %>%
     x = ~period,
     y = ~estimate,
     name = "FAT-PET",
-    showlegend = FALSE,
+    showlegend = TRUE,
     line = list(color = "darkgreen", width = 2, dash = "dot")
   ) %>% 
   add_lines(
@@ -642,7 +642,7 @@ avg_irf_unemp_corrections <- avg_irf_unemp %>%
     x = ~period,
     y = ~estimate,
     name = "OLS",
-    showlegend = FALSE,
+    showlegend = TRUE,
     line = list(color = "darkgreen", width = 4, dash = "dot")
   ) %>%
   add_lines(
@@ -650,7 +650,7 @@ avg_irf_unemp_corrections <- avg_irf_unemp %>%
     x = ~period,
     y = ~estimate,
     name = "OLS with SE<sup>2</sup>",
-    showlegend = FALSE,
+    showlegend = TRUE,
     line = list(color = "darkgreen", width = 4, dash = "solid")
   ) %>%
   add_trace(
@@ -658,7 +658,7 @@ avg_irf_unemp_corrections <- avg_irf_unemp %>%
     x = ~period,
     y = ~estimate,
     name = "WAAP",
-    showlegend = FALSE,
+    showlegend = TRUE,
     marker = list(color = "darkgreen", size = 5)
   ) %>%
   add_trace(
@@ -666,7 +666,7 @@ avg_irf_unemp_corrections <- avg_irf_unemp %>%
     x = ~period,
     y = ~estimate,
     name = "UAAP",
-    showlegend = FALSE,
+    showlegend = TRUE,
     marker = list(color = "white", size = 5,
                   line = list(
                     color = 'darkgreen',
@@ -678,7 +678,7 @@ avg_irf_unemp_corrections <- avg_irf_unemp %>%
     x = ~period,
     y = ~estimate,
     name = "AK",
-    showlegend = FALSE,
+    showlegend = TRUE,
     line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
   )
 avg_irf_unemp_corrections
@@ -971,6 +971,495 @@ orca(figure_average_irfs_emp_unemp_corrections,
      scale = NULL,
      width = 1034,
      height = 486 * 0.8
+)
+
+
+# For the interest rate ----
+out_var <- "rate"
+
+## Without median ----
+avg_irf_rate <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE,
+  show_median = FALSE,
+  return_data = TRUE
+)
+# Save data as csv
+write_csv(avg_irf_rate$data, here::here(save_path, "avg_irf_rate.csv"))
+# Change plot title
+avg_irf_rate <- avg_irf_rate$plot %>% plotly::layout(
+  title = "Average IRF for Interest Rate"
+)
+
+## With median ----
+avg_irf_rate_median <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE,
+  show_median = TRUE,
+  return_data = TRUE
+)
+# Save data as csv
+write_csv(avg_irf_rate_median$data, here::here(save_path, "avg_irf_rate_median.csv"))
+# Change plot title
+avg_irf_rate_median <- avg_irf_rate_median$plot %>% plotly::layout(
+  title = "Average and median IRF for Interest Rate"
+)
+
+
+## With median and different publication bias corrections ----
+### Estimate PEESE ----
+peese_rate <- meta_analysis(d_no_qc,
+                            outvar = out_var,
+                            se_option = "avg", 
+                            periods = seq(0, 60, by = 3),
+                            wins = wins_para,
+                            prec_weighted = TRUE,
+                            estimation = "PEESE", 
+                            cluster_se = TRUE)
+peese_rate_pbias <- extract_pbias(peese_rate)
+peese_rate <- extract_intercepts(peese_rate)
+### Estimate FAT-PET ----
+fatpet_rate <- meta_analysis(d_no_qc,
+                             outvar = out_var,
+                             se_option = "avg",
+                             periods = seq(0, 60, by = 3),
+                             wins = wins_para,
+                             prec_weighted = TRUE,
+                             estimation = "FAT-PET",
+                             cluster_se = TRUE)
+fatpet_rate_pbias <- extract_pbias(fatpet_rate)
+fatpet_rate <- extract_intercepts(fatpet_rate)
+### Estimate FAT-PET without weights ----
+fatpet_uw_rate <- meta_analysis(d_no_qc,
+                                outvar = out_var,
+                                se_option = "avg",
+                                periods = seq(0, 60, by = 3),
+                                wins = wins_para,
+                                prec_weighted = FALSE,
+                                estimation = "FAT-PET",
+                                cluster_se = TRUE)
+fatpet_uw_rate_pbias <- extract_pbias(fatpet_uw_rate)
+fatpet_uw_rate <- extract_intercepts(fatpet_uw_rate)
+### Estimate PEESE without weights ----
+peese_uw_rate <- meta_analysis(d_no_qc,
+                               outvar = out_var,
+                               se_option = "avg", 
+                               periods = seq(0, 60, by = 3),
+                               wins = wins_para,
+                               prec_weighted = FALSE,
+                               estimation = "PEESE", 
+                               cluster_se = TRUE)
+peese_uw_rate_pbias <- extract_pbias(peese_uw_rate)
+peese_uw_rate <- extract_intercepts(peese_uw_rate)
+### Estimate WAAP with model selection based on horizon ----
+model_waap_rate <- meta_analysis(d_no_qc,
+                                 outvar = out_var,
+                                 se_option = "avg", 
+                                 periods = seq(0, 60, by = 3),
+                                 wins = wins_para,
+                                 prec_weighted = FALSE,
+                                 ap = TRUE,
+                                 ap_horizon = 12,
+                                 ap_prec_weighted = TRUE,
+                                 ap_parameter = 2.8,
+                                 estimation = "UWLS", 
+                                 cluster_se = TRUE)
+model_waap_rate <- extract_intercepts(model_waap_rate)
+### Estimate AAP (unweigthed WAAP) with model selection based on horizon ----
+model_waap_uw_rate <- meta_analysis(d_no_qc,
+                                    outvar = out_var,
+                                    se_option = "avg", 
+                                    periods = seq(0, 60, by = 3),
+                                    wins = wins_para,
+                                    prec_weighted = FALSE,
+                                    ap = TRUE,
+                                    ap_horizon = 12,
+                                    ap_prec_weighted = FALSE,
+                                    ap_parameter = 2.8,
+                                    estimation = "UWLS", 
+                                    cluster_se = TRUE)
+model_waap_uw_rate <- extract_intercepts(model_waap_uw_rate)
+### Estimate AK ----
+ak_rate <- meta_analysis(d_no_qc,
+                         outvar = out_var,
+                         se_option = "avg", 
+                         periods = seq(0, 60, by = 3),
+                         wins = wins_para,
+                         prec_weighted = FALSE,
+                         estimation = "AK", 
+                         cluster_se = TRUE,
+                         cutoff_val = 1,
+                         AK_modelmu = "t",
+                         AK_symmetric = FALSE,
+                         AK_conf_level = conflevel,
+                         ak_plot = "both")
+ak_rate <- extract_intercepts_AK(ak_rate)
+### Plot corrected effects ----
+avg_irf_rate_corrections <- avg_irf_rate %>% 
+  add_lines(
+    data = peese_rate,
+    x = ~period,
+    y = ~estimate,
+    name = "PEESE",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
+  ) %>% 
+  add_lines(
+    data = fatpet_rate,
+    x = ~period,
+    y = ~estimate,
+    name = "FAT-PET",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 2, dash = "dot")
+  ) %>% 
+  add_lines(
+    data = fatpet_uw_rate,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  ) %>%
+  add_lines(
+    data = peese_uw_rate,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS with SE<sup>2</sup>",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "solid")
+  ) %>%
+  add_trace(
+    data = model_waap_rate,
+    x = ~period,
+    y = ~estimate,
+    name = "WAAP",
+    showlegend = FALSE,
+    marker = list(color = "darkgreen", size = 5)
+  ) %>%
+  add_trace(
+    data = model_waap_uw_rate,
+    x = ~period,
+    y = ~estimate,
+    name = "UAAP",
+    showlegend = FALSE,
+    marker = list(color = "white", size = 5,
+                  line = list(
+                    color = 'darkgreen',
+                    width = 1
+                  ))
+  ) #%>% 
+  # add_lines(
+  #   data = ak_rate,
+  #   x = ~period,
+  #   y = ~estimate,
+  #   name = "AK",
+  #   line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
+  # )
+avg_irf_rate_corrections
+### Save as PDF
+orca(avg_irf_rate_corrections,
+     file = "analysis/working_paper_2/figures/average_irfs/avg_irf_rate_corrections.pdf",
+     scale = NULL,
+     width = 1500 * 0.6,
+     height = 1100 * 0.6
+)
+### Plot corrected effects with bounds ----
+avg_irf_rate_corrections_with_bounds <- avg_irf_rate %>% 
+  add_ribbons(
+    data = peese_rate,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE",
+    line = list(color = "darkgreen", width = 1, dash = 'solid')
+  ) %>% 
+  add_ribbons(
+    data = fatpet_rate,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "FAT-PET",
+    line = list(color = "darkgreen", width = 2, dash = "dot")
+  ) %>%
+  add_ribbons(
+    data = fatpet_uw_rate,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "OLS",
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  ) %>% 
+  add_ribbons(
+    data = peese_uw_rate,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "OLS with SE<sup>2</sup>",
+    line = list(color = "darkgreen", width = 4, dash = "solid")
+  ) %>%
+  add_ribbons(
+    data = model_waap_rate,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "WAAP",
+    line = list(color = "darkgreen", width = 1)
+  ) %>%
+  add_ribbons(
+    data = model_waap_uw_rate,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "UAAP",
+    line = list(color = "darkgreen", width = 1)
+  ) %>% 
+  # add_ribbons(
+  #   data = ak_rate,
+  #   x = ~period,
+  #   ymin = ~lower,
+  #   ymax = ~upper,
+  #   name = "AK",
+  #   line = list(color = "darkgreen", width = 1, dash = 'longdashdot')
+  # ) %>% 
+  layout(
+    yaxis = list(
+      range = c(-0.12, 1)
+    )
+  )
+avg_irf_rate_corrections_with_bounds
+### Save as PDF
+orca(avg_irf_rate_corrections_with_bounds,
+     file = "analysis/working_paper_2/figures/average_irfs/avg_irf_rate_corrections_with_bounds.pdf",
+     scale = NULL,
+     width = 1500 * 0.6,
+     height = 1100 * 0.6
+)
+### Plot p-bias coefficients ----
+rate_pbias_plot <- plot_ly() %>%
+  add_ribbons(
+    data = fatpet_rate_pbias,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "FAT-PET",
+    line = list(width = 3)
+  ) %>% 
+  add_ribbons(
+    data = fatpet_uw_rate_pbias,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "OLS",
+    line = list(width = 3, dash = "dot")
+  ) %>%
+  add_ribbons(
+    data = peese_rate_pbias,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "PEESE",
+    line = list(width = 3, dash = "solid")
+  ) %>%
+  add_ribbons(
+    data = peese_uw_rate_pbias,
+    x = ~period,
+    ymin = ~lower,
+    ymax = ~upper,
+    name = "OLS with SE<sup>2</sup>",
+    line = list(width = 3, dash = "dash")
+  )
+rate_pbias_plot
+### Save as PDF
+orca(rate_pbias_plot,
+     file = "analysis/working_paper_2/figures/average_irfs/rate_pbias_plot.pdf",
+     scale = NULL,
+     width = 1500 * 0.6,
+     height = 1100 * 0.6
+)
+
+## With median, with SE bounds ----
+avg_irf_rate_median_se_bounds <- plot_average_irfs(
+  d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var),
+  period_limit = 60,
+  winsor = TRUE,
+  wins_par = wins_para,
+  corrected_irf = NULL,
+  show_legend = TRUE,
+  show_median = TRUE,
+  ci_method = "avg.se",
+  se_multiplier = 2,
+  return_data = TRUE
+)
+# Save data as csv
+write_csv(avg_irf_rate_median_se_bounds$data, here::here(save_path, "avg_irf_rate_median_se_bounds.csv"))
+# Change plot title
+avg_irf_rate_median_se_bounds <- avg_irf_rate_median_se_bounds$plot %>% plotly::layout(
+  title = "Average and median IRF for Interest Rate",
+  yaxis = list(title = "Effect (%-points)")
+)
+# Comparison plot avg_irf_rate_median and avg_irf_rate_median_se_bounds with same ylim and next to each other
+figure_avg_irf_rate_median_se_bounds <- subplot(avg_irf_rate_median, 
+                                                avg_irf_rate_median_se_bounds, 
+                                                nrows = 1, 
+                                                margin = 0.03) %>% layout(
+                                                  showlegend=FALSE,
+                                                  title = 'Average effects of conventional monetary policy shocks on the interest rate',
+                                                  xaxis3 = list(title = "Month"), # x-axis for plot 3
+                                                  xaxis4 = list(title = "Month")  # x-axis for plot 4
+                                                ) %>% layout(annotations = list(
+                                                  list(x = 0.25, y = 1, text = "With approx. CI bounds", showarrow = FALSE, xref = "paper", yref = "paper",
+                                                       xanchor = "center", yanchor = "bottom"),
+                                                  list(x = 0.75, y = 1, text = "With SE bounds", showarrow = FALSE, xref = "paper", yref = "paper",
+                                                       xanchor = "center", yanchor = "bottom")
+                                                ), margin = list(t = 60)) %>%
+  layout(
+    xaxis = list(title = "Months"),
+    xaxis2 = list(title = "Months"),
+    yaxis = list(title = "Effect (%-points)",
+                 range = list(-1,1.5)
+    ),
+    yaxis2 = list(range = list(-1,1.5)
+    ),
+    hovermode = "compare"
+  )
+# Save as pdf
+orca(figure_avg_irf_rate_median_se_bounds,
+     file = "analysis/working_paper_2/figures/average_irfs/figure_avg_irf_rate_median_se_bounds.pdf",
+     scale = NULL,
+     width = 1500,
+     height = NULL
+)
+
+# Joint figure of average IRFs for emp and unemp ----
+figure_average_irfs_emp_unemp <- subplot(avg_irf_emp, 
+                                                 avg_irf_unemp, 
+                                                 nrows = 1, 
+                                                 margin = 0.03) %>% layout(
+                                                   showlegend=FALSE,
+                                                   title = 'Average effects of conventional monetary policy shocks',
+                                                   xaxis3 = list(title = "Month"), # x-axis for plot 3
+                                                   xaxis4 = list(title = "Month")  # x-axis for plot 4
+                                                 ) %>% layout(annotations = list(
+                                                   list(x = 0.25, y = 1, text = "Employment", showarrow = FALSE, xref = "paper", yref = "paper",
+                                                        xanchor = "center", yanchor = "bottom"),
+                                                   list(x = 0.75, y = 1, text = "Unemployment", showarrow = FALSE, xref = "paper", yref = "paper",
+                                                        xanchor = "center", yanchor = "bottom")
+                                                 ),
+                                                 margin = list(t = 60)) %>%
+  layout(
+    xaxis = list(title = "Months"),
+    xaxis2 = list(title = "Months"),
+    yaxis = list(title = "Effect (%)",
+                 range = list(-2.8,0.8)
+    ),
+    yaxis2 = list(range = list(-2.8,0.8)
+    ),
+    hovermode = "compare"
+  )
+
+# Display figure
+figure_average_irfs_emp_unemp
+
+# Save as pdf
+orca(figure_average_irfs_emp_unemp,
+     file = "analysis/working_paper_2/figures/average_irfs/figure_average_irfs_emp_unemp.pdf",
+     scale = NULL,
+     width = 1500,
+     height = NULL
+)
+
+# Joint figure of average IRFs for emp, unemp and interest rate with median ----
+figure_average_irfs_emp_unemp_rate_with_median <- subplot(subplot(avg_irf_emp_median,
+                                                                          avg_irf_unemp_median,
+                                                                          shareY = TRUE),
+                                                                  avg_irf_rate_median, widths = c(.66, .33)
+) %>%
+  layout(legend = list(orientation = "h",   # show entries horizontally
+                       xanchor = "center",  # use center of legend as anchor
+                       x = 0.5, y = -0.3, 
+                       font = list(size = titles_size))) %>%        # put legend in center of x-axis
+  layout(title = "",
+         xaxis2 = list(title = "Months")
+  ) %>%
+  layout(
+    yaxis = list(#title = "Effect (%)",
+      range = list(y_lims[1], y_lims[2])),
+    yaxis2 = list(#title = "Effect (%-points)",
+      range = list(-1, 1.5))
+  ) %>%
+  layout(annotations = list(
+    list(x = 30, y = y_lims[2], text = "emp response (%)", showarrow = FALSE, xref = "x", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = y_lims[2], text = "Unemployment response (%)", showarrow = FALSE, xref = "x2", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y2",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+  ), margin = list(t = 60)
+  )
+# Display figure
+figure_average_irfs_emp_unemp_rate_with_median
+
+# Save as pdf
+orca(figure_average_irfs_emp_unemp_rate_with_median,
+     file = "analysis/working_paper_2/figures/average_irfs/figure_average_irfs_emp_unemp_rate_with_median.pdf",
+     scale = NULL,
+     width = 1034,
+     height = 486 * 0.8
+)
+
+# Joint figure of average IRFs for emp, unemp and interest rate with different publication bias corrections ----
+figure_average_irfs_emp_unemp_rate_corrections <- subplot(subplot(avg_irf_emp_corrections,
+                                                                          avg_irf_unemp_corrections,
+                                                                          shareY = FALSE),
+                                                                  avg_irf_rate_corrections, widths = c(.66, .33)
+) %>%
+  layout(legend = list(orientation = "h",   # show entries horizontally
+                       xanchor = "center",  # use center of legend as anchor
+                       x = 0.5, y = -0.15, 
+                       font = list(size = titles_size))) %>%        # put legend in center of x-axis
+  layout(title = "",
+         xaxis2 = list(title = "Months")
+  ) %>%
+  layout(
+    yaxis = list(#title = "Effect (%)",
+      range = list(y_lims[1], y_lims[2])),
+    yaxis2 = list(#title = "Effect (%)",
+      range = list(y_lims[1], y_lims[2])),
+    yaxis3 = list(#title = "Effect (%-points)",
+      range = list(-1, 1.5))
+  ) %>%
+  layout(annotations = list(
+    list(x = 30, y = y_lims[2], text = "emp response (%)", showarrow = FALSE, xref = "x", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = y_lims[2], text = "Unemployment response (%)", showarrow = FALSE, xref = "x2", yref = "y",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size)),
+    list(x = 30, y = 1.5, text = "Interest rate response (%-points)", showarrow = FALSE, xref = "x3", yref = "y3",
+         xanchor = "center", yanchor = "bottom", font = list(size = titles_size))
+  ), margin = list(t = 60)
+  )
+# Display figure
+figure_average_irfs_emp_unemp_rate_corrections
+# Save as pdf
+orca(figure_average_irfs_emp_unemp_rate_corrections,
+     file = "analysis/working_paper_2/figures/average_irfs/figure_average_irfs_emp_unemp_rate_corrections.pdf",
+     scale = NULL,
+     width = 1034,
+     height = 486 * 1.2
+)
+# HIGHER VERSION
+orca(figure_average_irfs_emp_unemp_rate_corrections,
+     file = "analysis/working_paper_2/figures/average_irfs/figure_average_irfs_emp_unemp_rate_corrections_higher.pdf",
+     scale = NULL,
+     width = 1034,
+     height = 486 * 1.5
 )
 
 # For sub-samples ----

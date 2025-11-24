@@ -5,6 +5,8 @@
 > ## About:
 >  
 > This repository contains raw and processed data, replication files and documentation for our **meta-study on the macroeconomic effects of conventional monetary policy**. Below, we provide guidance on our research process and the documentation of our data collection, data processing and transformation, and the scripts for the data analyses.
+>
+> **🏆 Winner of the [SaxFDM Open Data Award 2025](https://saxfdm.de/open-data-award-2025/)**
 > 
 > ## Pre-registration:
 >

@@ -246,7 +246,7 @@ mean_median_per_period <- all_results_df %>%
 # Generate the average IRF data and plot
 figure_irf_range_correction_output <- plot_average_irfs(
   filtered_data,
-  period_limit = 45,
+  period_limit = 48,
   winsor = TRUE,
   wins_par = wins_para,
   show_median = FALSE,
@@ -295,7 +295,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   geom_line(aes(y = correction.mean), color = "darkgreen", linetype = "dashed", linewidth = 0.9) +
   
   coord_cartesian(ylim = c(-2.75, 0.75)) +
-  scale_x_continuous(limits = c(0, 45), breaks = seq(0, 45, 20), expand = c(0, 0)) +
+  scale_x_continuous(limits = c(0, 48), breaks = seq(0, 48, 20), expand = c(0, 0)) +
   scale_y_continuous(breaks = seq(-2.5, 0.5, by = 0.5), expand = c(0, 0)) +
   
   labs(title = "Output response (%)", x = "Month", y = NULL) +
@@ -815,7 +815,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   geom_line(aes(y = avg.effect), color = "deepskyblue4", linewidth = 1.1) +
   geom_line(aes(y = correction.mean), color = "darkgreen", linetype = "dashed", linewidth = 0.9) +
   
-  coord_cartesian(ylim = c(-1, 1.5)) +
+  coord_cartesian(ylim = c(-1, 1.75)) +
   scale_x_continuous(limits = c(0, 48), breaks = seq(0, 48, 20), expand = c(0, 0)) +
   scale_y_continuous(breaks = seq(-1, 1.5, by = 0.5), expand = c(0, 0)) +
   

@@ -290,7 +290,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
               fill = "darkgreen", alpha = 0.35) +
   
   # Lines
-  geom_hline(yintercept = 0, linewidth = 0.4, color = "black") +
+  geom_hline(yintercept = 0, linewidth = 0.4, color = "grey30") +
   geom_line(aes(y = avg.effect), color = "deepskyblue4", linewidth = 1.1) +
   geom_line(aes(y = correction.mean), color = "darkgreen", linetype = "dashed", linewidth = 0.9) +
   
@@ -302,12 +302,14 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   theme_minimal(base_size = 13) +
   theme(
     legend.position = "none",
-    plot.title = element_text(hjust = 0.5, size = 18),
+    plot.title = element_text(hjust = 0.5, size = 14, color = "grey30"),
     panel.grid.minor = element_blank(),
-    axis.text.y  = element_text(color = "black"),
-    axis.title.y = element_text(color = "black"),
-    axis.ticks.y = element_line(color = "black"),
-    axis.line.y  = element_line(color = "black")
+    axis.text.y  = element_text(color = "grey30"),
+    axis.ticks.y = element_line(color = "grey30"),
+    axis.line.y  = element_line(color = "grey30"),
+    axis.title.x = element_text(color = "grey30"),
+    legend.text  = element_text(color = "grey30"),
+    legend.title = element_text(color = "grey30")
   )
 
 p_out
@@ -517,7 +519,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
               fill = "darkgreen", alpha = 0.35) +
   
   # Lines
-  geom_hline(yintercept = 0, linewidth = 0.4, color = "black") +
+  geom_hline(yintercept = 0, linewidth = 0.4, color = "grey30") +
   geom_line(aes(y = avg.effect), color = "deepskyblue4", linewidth = 1.1) +
   geom_line(aes(y = correction.mean), color = "darkgreen", linetype = "dashed", linewidth = 0.9) +
   
@@ -529,12 +531,14 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   theme_minimal(base_size = 13) +
   theme(
     legend.position = "none",
-    plot.title = element_text(hjust = 0.5, size = 18),
+    plot.title = element_text(hjust = 0.5, size = 14, color = "grey30"),
     panel.grid.minor = element_blank(),
-    axis.text.y  = element_text(color = "black"),
-    axis.title.y = element_text(color = "black"),
-    axis.ticks.y = element_line(color = "black"),
-    axis.line.y  = element_line(color = "black")
+    axis.text.y  = element_text(color = "grey30"),
+    axis.ticks.y = element_line(color = "grey30"),
+    axis.line.y  = element_line(color = "grey30"),
+    axis.title.x = element_text(color = "grey30"),
+    legend.text  = element_text(color = "grey30"),
+    legend.title = element_text(color = "grey30")
   )
 
 p_out
@@ -811,7 +815,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
               fill = "darkgreen", alpha = 0.35) +
   
   # Lines
-  geom_hline(yintercept = 0, linewidth = 0.4, color = "black") +
+  geom_hline(yintercept = 0, linewidth = 0.4, color = "grey30") +
   geom_line(aes(y = avg.effect), color = "deepskyblue4", linewidth = 1.1) +
   geom_line(aes(y = correction.mean), color = "darkgreen", linetype = "dashed", linewidth = 0.9) +
   
@@ -823,12 +827,14 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   theme_minimal(base_size = 13) +
   theme(
     legend.position = "none",
-    plot.title = element_text(hjust = 0.5, size = 18),
+    plot.title = element_text(hjust = 0.5, size = 14, color = "grey30"),
     panel.grid.minor = element_blank(),
-    axis.text.y  = element_text(color = "black"),
-    axis.title.y = element_text(color = "black"),
-    axis.ticks.y = element_line(color = "black"),
-    axis.line.y  = element_line(color = "black")
+    axis.text.y  = element_text(color = "grey30"),
+    axis.ticks.y = element_line(color = "grey30"),
+    axis.line.y  = element_line(color = "grey30"),
+    axis.title.x = element_text(color = "grey30"),
+    legend.text  = element_text(color = "grey30"),
+    legend.title = element_text(color = "grey30")
   )
 
 p_out

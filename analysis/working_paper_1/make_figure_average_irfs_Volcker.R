@@ -87,7 +87,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
               fill = fill_med, alpha = 0.22) +
   
   # Lines
-  geom_hline(yintercept = 0, linewidth = 0.4, color = "black") +
+  geom_hline(yintercept = 0, linewidth = 0.4, color = "grey30") +
   geom_line(data = lines_df,
             aes(y = value, color = series),
             linewidth = 1.2) +
@@ -188,7 +188,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
               fill = fill_med, alpha = 0.22) +
   
   # Lines
-  geom_hline(yintercept = 0, linewidth = 0.4, color = "black") +
+  geom_hline(yintercept = 0, linewidth = 0.4, color = "grey30") +
   geom_line(data = lines_df,
             aes(y = value, color = series),
             linewidth = 1.2) +
@@ -217,7 +217,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
     panel.grid.minor = element_blank(),
     axis.text.y  = element_text(color = "grey30"),
     axis.ticks.y = element_line(color = "grey30"),
-    axis.line.y  = element_line(color = "black"),
+    axis.line.y  = element_line(color = "grey30"),
     axis.title.x = element_text(color = "grey30"),
     legend.text  = element_text(color = "grey30"),
     legend.title = element_text(color = "grey30")
@@ -288,7 +288,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
               fill = fill_med, alpha = 0.22) +
   
   # Lines
-  geom_hline(yintercept = 0, linewidth = 0.4, color = "black") +
+  geom_hline(yintercept = 0, linewidth = 0.4, color = "grey30") +
   geom_line(data = lines_df,
             aes(y = value, color = series),
             linewidth = 1.2) +

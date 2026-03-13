@@ -105,8 +105,8 @@ results_bma_output <- bma_loop(data = bma_data,
                                    "not_top_5_or_tier",
                                    "cbanker"
                                  ),
-                                 burn_ = 1e5,
-                                 iter_ = 2e5,
+                                 burn_ = 1e6,
+                                 iter_ = 2e6,
                                  nmodel = 5000,
                                  mprior = "dilut",
                                  g = "UIP"
@@ -119,8 +119,8 @@ saveRDS(results_bma_output, here::here("analysis/working_paper_1/figures/mmr/bma
 ## BMA analysis with no fixed regressors ----
 
 results_bma_output_no_fixed <- bma_loop(data = bma_data,
-                               burn_ = 1e5,
-                               iter_ = 2e5,
+                               burn_ = 1e6,
+                               iter_ = 2e6,
                                nmodel = 5000,
                                mprior = "dilut",
                                g = "UIP"
@@ -167,7 +167,7 @@ p2 <- p2 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "SE"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-y_lims <- c(-1, 2)
+y_lims <- c(-1, 1.5)
 p3 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_ident_broadchol", conf_levels = c(0.67, 0.89, 0.97), 
                                   custom_title = "Chol/SVAR") +
   coord_cartesian(ylim = y_lims) +
@@ -1133,8 +1133,8 @@ results_bma_pricelevel <- bma_loop(data = bma_data,
                                    "not_top_5_or_tier",
                                    "cbanker"
                                  ),
-                                 burn_ = 1e5,
-                                 iter_ = 2e5,
+                                 burn_ = 1e6,
+                                 iter_ = 2e6,
                                  nmodel = 5000,
                                  mprior = "dilut",
                                  g = "UIP")
@@ -1145,8 +1145,8 @@ saveRDS(results_bma_pricelevel, here::here("analysis/working_paper_1/figures/mmr
 
 ## BMA analysis without fixed baseline regressors ----
 results_bma_pricelevel_no_fixed <- bma_loop(data = bma_data,
-                                            burn_ = 1e5,
-                                            iter_ = 2e5,
+                                            burn_ = 1e6,
+                                            iter_ = 2e6,
                                             nmodel = 5000,
                                             mprior = "dilut",
                                             g = "UIP")
@@ -1192,7 +1192,7 @@ p2 <- p2 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "SE"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-y_lims <- c(-1.5, 1.25)
+y_lims <- c(-1, 1)
 p3 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_ident_broadchol", 
                                   custom_title = "Chol/SVAR") +
   coord_cartesian(ylim = y_lims) +

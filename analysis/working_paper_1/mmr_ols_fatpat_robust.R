@@ -46,9 +46,8 @@ modelsummary::modelsummary(mmr_output_ols_fatpet[as.character(chosen_periods_tab
 #### Plots ----
 ##### Coefficient plots ----
 (p1 <- create_mmr_coefficient_plot(mmr_output_ols_fatpet, "(Intercept)",
-                                   custom_title = "Corrected reference response") +
-   coord_cartesian(ylim = c(-0.75, 0.25)) +
-   labs(subtitle = "Cholesky/SVAR, no top journal, no CB affiliation") +
+                                   custom_title = "Intercept") +
+   labs(subtitle = "Ref. cat.: HF, top journal, no CB affiliation") +
    # No axis labels
    theme(axis.title.x = element_blank(),
          axis.title.y = element_blank()))
@@ -71,9 +70,9 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_ols_fa
        device = "pdf",
        width = 7,
        height = 2.5)
-y_lims <- c(-1.5, 0.75)
-p3 <- create_mmr_coefficient_plot(mmr_output_ols_fatpet, "group_ident_broadhf", 
-                                  custom_title = "HF") +
+y_lims <- c(-1, 2)
+p3 <- create_mmr_coefficient_plot(mmr_output_ols_fatpet, "group_ident_broadchol", 
+                                  custom_title = "Chol/SVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -104,9 +103,9 @@ p6 <- create_mmr_coefficient_plot(mmr_output_ols_fatpet, "group_ident_broadidoth
   # No axis labels
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
-# Plot on top journal 
-p7 <- create_mmr_coefficient_plot(mmr_output_ols_fatpet, "top_5_or_tier", 
-                                  custom_title = "Top journal") +
+# Plot on not top journal 
+p7 <- create_mmr_coefficient_plot(mmr_output_ols_fatpet, "not_top_5_or_tier", 
+                                  custom_title = "Not top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -137,11 +136,11 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_ols_fa
 
 ### Corrected effects for OLS version of FAT-PET baseline ----
 prediction_conf_level = 0.67
-#### For different identification methods (top_5_or_tier and cbanker roughly at sample average) ----
-get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
+#### For different identification methods (not_top_5_or_tier and cbanker roughly at sample average) ----
+get_predictions <- function(method, levels = c("hf", "chol", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
-    top_5_or_tier = 0.14, # See table 1 in working paper
+    not_top_5_or_tier = 1 - 0.14, # = 0.86; See table 1 in working paper
     cbanker = 0.54, # See table 1 in working paper
     standarderror_winsor = 0
   )
@@ -262,6 +261,12 @@ other <- data.frame(
   average = avg_irf_output_idother$data$avg.effect
 )
 
+# Store uncorrected
+d_uncorrected <- prediction %>% filter(source == "Uncorrected")
+
+# Delete uncorrected from prediction to avoid double plotting
+prediction <- prediction %>% filter(source != "Uncorrected")
+
 #### Plot corrected effects ----
 mmr_output_baseline_corrected_effects_ident_OLS <- ggplot(prediction, 
                                                        aes(x = period, 
@@ -280,16 +285,14 @@ mmr_output_baseline_corrected_effects_ident_OLS <- ggplot(prediction,
       "High Frequency" = "#E41A1C",
       "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3",
-      "Uncorrected" = "#1f77b4"
+      "Other" = "#984EA3"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
       "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3",
-      "Uncorrected" = "#1f77b4"
+      "Other" = "#984EA3"
     )) +
     labs(
       title = "P-bias corrected effects, 14 % top journal, 54 % CB affiliation",
@@ -308,14 +311,11 @@ mmr_output_baseline_corrected_effects_ident_OLS <- ggplot(prediction,
     ) +
     geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.5) +
     # Add uncorrected
-    geom_line(data = prediction %>% filter(source == "Uncorrected"),
-              aes(y = predicted_value),
-              color = "#1f77b4",
-              linetype = "dashed") +
-    geom_point(data = prediction %>% filter(source == "Uncorrected"),
-               aes(y = predicted_value),
-               color = "#1f77b4",
-               size = 2)
+    geom_line(data = d_uncorrected,
+              aes(x = period, y = predicted_value),
+              color = "black",
+              linetype = "longdash",
+              linewidth = 2)
 mmr_output_baseline_corrected_effects_ident_OLS
 
 #### Save plot as pdf ----
@@ -449,12 +449,8 @@ modelsummary::modelsummary(mmr_pricelevel_ols_fatpet[as.character(chosen_periods
 #### Plots ----
 ##### Coefficient plots ----
 (p1 <- create_mmr_coefficient_plot(mmr_pricelevel_ols_fatpet, "(Intercept)", 
-                                   custom_title = "Corrected reference response") +
-   coord_cartesian(ylim = c(-0.25, 0.4)) +
-   # No subtitle
-   # theme(plot.subtitle = element_blank()) +
-   # Add subtitle "Corrected response for Cholesky/SVAR, no top journal, no CB affiliation"
-   labs(subtitle = "Cholesky/SVAR, no top journal, no CB affiliation") +
+                                   custom_title = "Intercept") +
+   labs(subtitle = "Ref. cat.: HF, top journal, no CB affiliation") +
    # No axis labels
    theme(axis.title.x = element_blank(),
          axis.title.y = element_blank()))
@@ -479,9 +475,9 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_ol
        device = "pdf",
        width = 7,
        height = 2.5)
-y_lims <- c(-1, 0.5)
-p3 <- create_mmr_coefficient_plot(mmr_pricelevel_ols_fatpet, "group_ident_broadhf", 
-                                  custom_title = "HF") +
+y_lims <- c(-1.5, 1.25)
+p3 <- create_mmr_coefficient_plot(mmr_pricelevel_ols_fatpet, "group_ident_broadchol", 
+                                  custom_title = "Chol/SVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -516,9 +512,9 @@ p6 <- create_mmr_coefficient_plot(mmr_pricelevel_ols_fatpet, "group_ident_broadi
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-# Plot on top journal 
-p7 <- create_mmr_coefficient_plot(mmr_pricelevel_ols_fatpet, "top_5_or_tier", 
-                                  custom_title = "Top journal") +
+# Plot on not top journal 
+p7 <- create_mmr_coefficient_plot(mmr_pricelevel_ols_fatpet, "not_top_5_or_tier", 
+                                  custom_title = "Not top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -551,11 +547,11 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_ol
 
 ### Corrected effects for OLS version of FAT-PET baseline ----
 
-#### For different identification methods (top_5_or_tier and cbanker roughly at sample average) ----
-get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
+#### For different identification methods (not_top_5_or_tier and cbanker roughly at sample average) ----
+get_predictions <- function(method, levels = c("hf", "chol", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
-    top_5_or_tier = 0.14, # See table 1 in working paper
+    not_top_5_or_tier = 1 - 0.14, # = 0.86; See table 1 in working paper
     cbanker = 0.54, # See table 1 in working paper
     standarderror_winsor = 0
   )
@@ -677,6 +673,12 @@ other <- data.frame(
   average = avg_irf_pricelevel_idother$data$avg.effect
 )
 
+# Store uncorrected
+d_uncorrected <- prediction %>% filter(source == "Uncorrected")
+
+# Delete uncorrected from prediction to avoid double plotting
+prediction <- prediction %>% filter(source != "Uncorrected")
+
 #### Plot corrected effects ----
 mmr_pricelevel_baseline_corrected_effects_ident_OLS <- ggplot(prediction, 
                                                            aes(x = period, 
@@ -695,16 +697,14 @@ mmr_pricelevel_baseline_corrected_effects_ident_OLS <- ggplot(prediction,
       "High Frequency" = "#E41A1C",
       "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3",
-      "Uncorrected" = "#1f77b4"
+      "Other" = "#984EA3"
     )) +
     scale_fill_manual(values = c(
       "Chol/SVAR" = "#112EB8",
       "High Frequency" = "#E41A1C",
       "Narrative" = "orange",
       "SignR" = "#4DAF4A",
-      "Other" = "#984EA3",
-      "Uncorrected" = "#1f77b4"
+      "Other" = "#984EA3"
     )) +
     labs(
       title = "P-bias corrected effects, 14 % top journals, 54 % CB affiliation",
@@ -722,15 +722,12 @@ mmr_pricelevel_baseline_corrected_effects_ident_OLS <- ggplot(prediction,
       plot.subtitle = element_text(hjust = 0.5)
     ) +
     geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.5) +
-    # # Add uncorrected
-    geom_line(data = prediction %>% filter(source == "Uncorrected"),
-              aes(y = predicted_value),
-              color = "#1f77b4",
-              linetype = "dashed") +
-    geom_point(data = prediction %>% filter(source == "Uncorrected"),
-               aes(y = predicted_value),
-               color = "#1f77b4",
-               size = 2)
+    # Add uncorrected
+    geom_line(data = d_uncorrected,
+              aes(x = period, y = predicted_value),
+              color = "black",
+              linetype = "longdash",
+              linewidth = 2)
 mmr_pricelevel_baseline_corrected_effects_ident_OLS
 
 #### Save plot as pdf ----
@@ -818,5 +815,3 @@ mmr_pricelevel_robust_ols_fatpet <- meta_analysis(d_no_qc,
                                                      baseline_mods,
                                                      robustness_mods_pricelevel)
 )
-
-

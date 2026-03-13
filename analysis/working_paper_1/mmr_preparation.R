@@ -45,16 +45,25 @@ peese_coef_name <- c(
   "variance_winsor"= "Variance"
 )
 ### Consolidated identification methods
+#### Relevel so that HF is the reference category
+d_no_qc <- d_no_qc |>
+  mutate(
+    group_ident_broad = relevel(group_ident_broad, ref = "hf")
+  )
 ident_mod <- "group_ident_broad"
 ident_coef_name <- c(
-  'group_ident_broadhf' = 'High frequency', 
+  'group_ident_broadchol' = 'Cholesky/SVAR',
   'group_ident_broadnr' = 'Narrative',
   'group_ident_broadsignr' = 'Sign restrictions',
-  'group_ident_broadidother' = 'Other identificiation '
+  'group_ident_broadidother' = 'Other identification'
 )
-### Top journal dummy 
-top_journal_mod <- c("top_5_or_tier") 
-top_journal_coef_name <- c('top_5_or_tier' = 'Top tier publication')
+### Top journal dummy (flipped: not_top_5_or_tier so that top journal is reference)
+d_no_qc <- d_no_qc |>
+  mutate(
+    not_top_5_or_tier = 1 - top_5_or_tier
+  )
+top_journal_mod <- c("not_top_5_or_tier")
+top_journal_coef_name <- c('not_top_5_or_tier' = 'Not top tier publication')
 ### CB affiliation dummy
 cb_mod <- c("cbanker")
 cb_coef_name <- c('cbanker' = 'Central bank related')

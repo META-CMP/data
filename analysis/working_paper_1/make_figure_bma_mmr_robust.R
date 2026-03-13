@@ -39,26 +39,36 @@ out_var <- "output"
 
 ## Select variables for BMA and winsorize ----
 
-bma_data <- d_no_qc %>% 
+bma_data <- d_no_qc %>%
   filter(outcome == out_var) %>%
-  mutate(         
+  mutate(
     mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
     SE = (JWileymisc::winsorizor(SE.upper, wins_para, na.rm = TRUE))
-  ) %>% 
+  ) %>%
+  # Create dummies for group_ident_broad with HF as reference before bma_loop,
+  # because bma_loop uses fastDummies with remove_most_frequent_dummy = TRUE
+  # which would drop chol (most frequent) instead of hf
+  fastDummies::dummy_cols(select_columns = "group_ident_broad",
+                          remove_selected_columns = TRUE,
+                          remove_most_frequent_dummy = FALSE) %>%
+  select(-group_ident_broad_hf) %>%  # Drop HF (reference category)
   select(
     period.month, # Necessary for the BMA loop to work
     mean.effect, # (Intercept)
-    
+
     ### P-bias test ###
     SE,
-    
+
     ### Baseline specification ###
-    # Consolidated identification approach
-    group_ident_broad,
+    # Consolidated identification approach (dummies, HF is reference)
+    group_ident_broad_chol,
+    group_ident_broad_nr,
+    group_ident_broad_signr,
+    group_ident_broad_idother,
     # Publication characteristics
     cbanker,
     top_5_or_tier,
-    
+
     ### Robustness moderators ###
     # Consolidated estimation methods
     group_est_broad,
@@ -72,28 +82,31 @@ bma_data <- d_no_qc %>%
     num_cit_dm,
     # Preferred estimate
     prefer,
-    # Byproduct 
+    # Byproduct
     byproduct,
-    # Data frequency 
+    # Data frequency
     freq,
     # Panel (vs time series)
     panel
-  )
+  ) %>%
+  # Flip top journal dummy so that top journal is the reference
+  mutate(not_top_5_or_tier = 1 - top_5_or_tier) %>%
+  select(-top_5_or_tier)
 
 ## BMA analysis with fixed baseline regressors ----
 
 results_bma_output <- bma_loop(data = bma_data,
                                  # Fixing the baseline variabels to be included in all models
                                  fixed.vars = c(
-                                   "group_ident_broad_hf",
+                                   "group_ident_broad_chol",
                                    "group_ident_broad_nr",
                                    "group_ident_broad_signr",
                                    "group_ident_broad_idother",
-                                   "top_5_or_tier",
+                                   "not_top_5_or_tier",
                                    "cbanker"
                                  ),
-                                 burn_ = 1e6,
-                                 iter_ = 2e6,
+                                 burn_ = 1e5,
+                                 iter_ = 2e5,
                                  nmodel = 5000,
                                  mprior = "dilut",
                                  g = "UIP"
@@ -106,8 +119,8 @@ saveRDS(results_bma_output, here::here("analysis/working_paper_1/figures/mmr/bma
 ## BMA analysis with no fixed regressors ----
 
 results_bma_output_no_fixed <- bma_loop(data = bma_data,
-                               burn_ = 1e6,
-                               iter_ = 2e6,
+                               burn_ = 1e5,
+                               iter_ = 2e5,
                                nmodel = 5000,
                                mprior = "dilut",
                                g = "UIP"
@@ -121,8 +134,7 @@ saveRDS(results_bma_output_no_fixed, here::here("analysis/working_paper_1/figure
 #### Plots ----
 ##### Coefficient plots ----
 p1 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "(Intercept)", conf_levels = c(0.67, 0.89, 0.97),
-                                  custom_title = "Corrected reference response") +
-  coord_cartesian(ylim = c(-0.75, 0.25)) +
+                                  custom_title = "Intercept") +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
   # No axis labels
@@ -155,9 +167,9 @@ p2 <- p2 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "SE"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-y_lims <- c(-1.5, 0.75)
-p3 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_ident_broadhf", conf_levels = c(0.67, 0.89, 0.97), 
-                                  custom_title = "HF") +
+y_lims <- c(-1, 2)
+p3 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_ident_broadchol", conf_levels = c(0.67, 0.89, 0.97), 
+                                  custom_title = "Chol/SVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -166,11 +178,11 @@ p3 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_ident_bro
         axis.title.y = element_blank())
 # Add BMA lines:
 p3 <- p3 +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output, "group_ident_broad_hf"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_output, "group_ident_broad_hf"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output, "group_ident_broad_chol"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_output, "group_ident_broad_chol"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "red", linetype = "dotdash", linewidth = 2) +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_ident_broad_hf"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_ident_broad_hf"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_ident_broad_chol"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_ident_broad_chol"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 p4 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "group_ident_broadnr", conf_levels = c(0.67, 0.89, 0.97), 
@@ -224,8 +236,8 @@ p6 <- p6 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "group_ident_broad_idother"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p7 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "top_5_or_tier", conf_levels = c(0.67, 0.89, 0.97), 
-                                  custom_title = "Top journal") +
+p7 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "not_top_5_or_tier", conf_levels = c(0.67, 0.89, 0.97), 
+                                  custom_title = "Not top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -234,11 +246,11 @@ p7 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "top_5_or_tier",
         axis.title.y = element_blank())
 # Add BMA lines:
 p7 <- p7 +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output, "top_5_or_tier"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_output, "top_5_or_tier"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output, "not_top_5_or_tier"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_output, "not_top_5_or_tier"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "red", linetype = "dotdash", linewidth = 2) +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output_no_fixed, "top_5_or_tier"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "top_5_or_tier"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_output_no_fixed, "not_top_5_or_tier"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_output_no_fixed, "not_top_5_or_tier"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 p8 <- create_mmr_coefficient_plot(mmr_output_robust_ols_fatpet, "cbanker", conf_levels = c(0.67, 0.89, 0.97), 
@@ -677,20 +689,20 @@ pip_2 <- create_simple_plot(
                               post_mean = plotly_data(pip_plot(results_bma_output_no_fixed, "SE"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-###### HF
+###### Chol/SVAR
 pip_3 <- create_simple_plot(
-  data = plotly_data(pip_plot(results_bma_output, c("group_ident_broad_hf"))),
+  data = plotly_data(pip_plot(results_bma_output, c("group_ident_broad_chol"))),
   x_name = "Period",
   y_name = "PIP",
-  custom_title = "HF",
+  custom_title = "Chol/SVAR",
   # custom_subtitle = "Sample Data",
   line_color = "red",        
   point_color = "red",       
   x_lab = "Month",
   y_lab = "PIP"
 ) + 
-  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_output_no_fixed, "group_ident_broad_hf"))$Period, 
-                              post_mean = plotly_data(pip_plot(results_bma_output_no_fixed, "group_ident_broad_hf"))$PIP),
+  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_output_no_fixed, "group_ident_broad_chol"))$Period, 
+                              post_mean = plotly_data(pip_plot(results_bma_output_no_fixed, "group_ident_broad_chol"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 ###### NR
@@ -741,20 +753,20 @@ pip_6 <- create_simple_plot(
                               post_mean = plotly_data(pip_plot(results_bma_output_no_fixed, "group_ident_broad_idother"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-###### Top 5 or Tier
+###### Not top journal
 pip_7 <- create_simple_plot(
-  data = plotly_data(pip_plot(results_bma_output, c("top_5_or_tier"))),
+  data = plotly_data(pip_plot(results_bma_output, c("not_top_5_or_tier"))),
   x_name = "Period",
   y_name = "PIP",
-  custom_title = "Top journal",
+  custom_title = "Not top journal",
   # custom_subtitle = "Sample Data",
   line_color = "red",        
   point_color = "red",       
   x_lab = "Month",
   y_lab = "PIP"
 ) + 
-  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_output_no_fixed, "top_5_or_tier"))$Period, 
-                              post_mean = plotly_data(pip_plot(results_bma_output_no_fixed, "top_5_or_tier"))$PIP),
+  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_output_no_fixed, "not_top_5_or_tier"))$Period, 
+                              post_mean = plotly_data(pip_plot(results_bma_output_no_fixed, "not_top_5_or_tier"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 ###### CB affiliated
@@ -1057,22 +1069,32 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_bma_output_robust
 out_var <- "inflation"
 
 ## Select variables for BMA and winsorize ----
-bma_data <- d_no_qc %>% 
+bma_data <- d_no_qc %>%
   filter(outcome == out_var) %>%
-  mutate(         
+  mutate(
     mean.effect = JWileymisc::winsorizor(mean.effect, wins_para, na.rm = TRUE),
     SE = (JWileymisc::winsorizor(SE.upper, wins_para, na.rm = TRUE))
-  ) %>% 
+  ) %>%
+  # Create dummies for group_ident_broad with HF as reference before bma_loop,
+  # because bma_loop uses fastDummies with remove_most_frequent_dummy = TRUE
+  # which would drop chol (most frequent) instead of hf
+  fastDummies::dummy_cols(select_columns = "group_ident_broad",
+                          remove_selected_columns = TRUE,
+                          remove_most_frequent_dummy = FALSE) %>%
+  select(-group_ident_broad_hf) %>%  # Drop HF (reference category)
   select(
     period.month, # Necessary for the BMA loop to work
     mean.effect, # (Intercept)
-    
+
     ### P-bias test ###
     SE,
-    
+
     ### Baseline specification ###
-    # Consolidated identification approach
-    group_ident_broad,
+    # Consolidated identification approach (dummies, HF is reference)
+    group_ident_broad_chol,
+    group_ident_broad_nr,
+    group_ident_broad_signr,
+    group_ident_broad_idother,
     # Publication characteristics
     cbanker,
     top_5_or_tier,
@@ -1095,21 +1117,24 @@ bma_data <- d_no_qc %>%
     freq,
     # Panel (vs time series)
     panel
-  )
+  ) %>%
+  # Flip top journal dummy so that top journal is the reference
+  mutate(not_top_5_or_tier = 1 - top_5_or_tier) %>%
+  select(-top_5_or_tier)
 
 ## BMA analysis with fixed baseline regressors ----
 results_bma_pricelevel <- bma_loop(data = bma_data,
                                  # Fixing the baseline variabels to be included in all models
                                  fixed.vars = c(
-                                   "group_ident_broad_hf",
+                                   "group_ident_broad_chol",
                                    "group_ident_broad_nr",
                                    "group_ident_broad_signr",
                                    "group_ident_broad_idother",
-                                   "top_5_or_tier",
+                                   "not_top_5_or_tier",
                                    "cbanker"
                                  ),
-                                 burn_ = 1e6,
-                                 iter_ = 2e6,
+                                 burn_ = 1e5,
+                                 iter_ = 2e5,
                                  nmodel = 5000,
                                  mprior = "dilut",
                                  g = "UIP")
@@ -1120,8 +1145,8 @@ saveRDS(results_bma_pricelevel, here::here("analysis/working_paper_1/figures/mmr
 
 ## BMA analysis without fixed baseline regressors ----
 results_bma_pricelevel_no_fixed <- bma_loop(data = bma_data,
-                                            burn_ = 1e6,
-                                            iter_ = 2e6,
+                                            burn_ = 1e5,
+                                            iter_ = 2e5,
                                             nmodel = 5000,
                                             mprior = "dilut",
                                             g = "UIP")
@@ -1135,8 +1160,7 @@ saveRDS(results_bma_pricelevel_no_fixed, here::here("analysis/working_paper_1/fi
 #### Plots ----
 ##### Coefficient plots ----
 p1 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "(Intercept)",
-                                  custom_title = "Corrected reference response") +
-  coord_cartesian(ylim = c(-0.25, 0.4)) +
+                                  custom_title = "Intercept") +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
   # No axis labels
@@ -1168,9 +1192,9 @@ p2 <- p2 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "SE"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-y_lims <- c(-1, 0.5)
-p3 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_ident_broadhf", 
-                                  custom_title = "HF") +
+y_lims <- c(-1.5, 1.25)
+p3 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_ident_broadchol", 
+                                  custom_title = "Chol/SVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -1179,11 +1203,11 @@ p3 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_ident
         axis.title.y = element_blank())
 # Add BMA lines:
 p3 <- p3 +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel, "group_ident_broad_hf"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel, "group_ident_broad_hf"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel, "group_ident_broad_chol"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel, "group_ident_broad_chol"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "red", linetype = "dotdash", linewidth = 2) +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_hf"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_hf"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_chol"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_chol"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 p4 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "group_ident_broadnr", 
@@ -1237,8 +1261,8 @@ p6 <- p6 +
                                 post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_idother"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-p7 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "top_5_or_tier", 
-                                  custom_title = "Top journal") +
+p7 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "not_top_5_or_tier", 
+                                  custom_title = "Not top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -1247,11 +1271,11 @@ p7 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "top_5_or_ti
         axis.title.y = element_blank())
 # Add BMA lines:
 p7 <- p7 +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel, "top_5_or_tier"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel, "top_5_or_tier"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel, "not_top_5_or_tier"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel, "not_top_5_or_tier"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "red", linetype = "dotdash", linewidth = 2) +
-    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "top_5_or_tier"))$Period, 
-                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "top_5_or_tier"))$`Post Mean`),
+    geom_line(data = data.frame(period = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "not_top_5_or_tier"))$Period, 
+                                post_mean = plotly_data(post_mean_plot(results_bma_pricelevel_no_fixed, "not_top_5_or_tier"))$`Post Mean`),
               aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 p8 <- create_mmr_coefficient_plot(mmr_pricelevel_robust_ols_fatpet, "cbanker", 
@@ -1627,20 +1651,20 @@ pip_2 <- create_simple_plot(
                               post_mean = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "SE"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-###### HF
+###### Chol/SVAR
 pip_3 <- create_simple_plot(
-  data = plotly_data(pip_plot(results_bma_pricelevel, c("group_ident_broad_hf"))),
+  data = plotly_data(pip_plot(results_bma_pricelevel, c("group_ident_broad_chol"))),
   x_name = "Period",
   y_name = "PIP",
-  custom_title = "HF",
+  custom_title = "Chol/SVAR",
   # custom_subtitle = "Sample Data",
   line_color = "red",        
   point_color = "red",       
   x_lab = "Month",
   y_lab = "PIP"
 ) + 
-  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_hf"))$Period, 
-                              post_mean = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_hf"))$PIP),
+  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_chol"))$Period, 
+                              post_mean = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_chol"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 ###### NR
@@ -1691,20 +1715,20 @@ pip_6 <- create_simple_plot(
                               post_mean = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "group_ident_broad_idother"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
-###### Top 5 or tier
+###### Not top journal
 pip_7 <- create_simple_plot(
-  data = plotly_data(pip_plot(results_bma_pricelevel, c("top_5_or_tier"))),
+  data = plotly_data(pip_plot(results_bma_pricelevel, c("not_top_5_or_tier"))),
   x_name = "Period",
   y_name = "PIP",
-  custom_title = "Top journal",
+  custom_title = "Not top journal",
   # custom_subtitle = "Sample Data",
   line_color = "red",        
   point_color = "red",       
   x_lab = "Month",
   y_lab = "PIP"
 ) + 
-  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "top_5_or_tier"))$Period, 
-                              post_mean = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "top_5_or_tier"))$PIP),
+  geom_line(data = data.frame(period = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "not_top_5_or_tier"))$Period, 
+                              post_mean = plotly_data(pip_plot(results_bma_pricelevel_no_fixed, "not_top_5_or_tier"))$PIP),
             aes(x = period, y = post_mean), color = "blue", linetype = "longdash", linewidth = 1)
 
 ###### CB affiliated

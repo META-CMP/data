@@ -52,8 +52,7 @@ modelsummary::modelsummary(mmr_output_wls_peese[as.character(chosen_periods_tabl
 ##### Coefficient plots ----
 (p1 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "(Intercept)",
                                    custom_title = "Corrected reference response") +
-   coord_cartesian(ylim = c(-0.4, 0)) +
-   labs(subtitle = "Cholesky/SVAR, no top journal, no CB affiliation") +
+   labs(subtitle = "HF, top journal, no CB affiliation") +
    # No axis labels
    theme(axis.title.x = element_blank(),
          axis.title.y = element_blank()))
@@ -76,9 +75,9 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_pe
        device = "pdf",
        width = 7,
        height = 3)
-y_lims <- c(-0.75, 0.5)
-p3 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "group_ident_broadhf", 
-                                  custom_title = "HF") +
+y_lims <- c(-1, 2)
+p3 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "group_ident_broadchol", 
+                                  custom_title = "Chol/SVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -109,9 +108,9 @@ p6 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "group_ident_broadidothe
   # No axis labels
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
-# Plot on top journal 
-p7 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "top_5_or_tier", 
-                                  custom_title = "Top journal") +
+# Plot on not top journal 
+p7 <- create_mmr_coefficient_plot(mmr_output_wls_peese, "not_top_5_or_tier", 
+                                  custom_title = "Not top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -141,11 +140,11 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_pe
        height = 9)
 ##### Corrected effects ----
 prediction_conf_level = 0.67
-###### For different identification methods (top_5_or_tier and cbanker roughly at sample average) ----
-get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
+###### For different identification methods (not_top_5_or_tier and cbanker roughly at sample average) ----
+get_predictions <- function(method, levels = c("hf", "chol", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
-    top_5_or_tier = 0.14, # See table 1 in working paper
+    not_top_5_or_tier = 1 - 0.14, # = 0.86; See table 1 in working paper
     cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
@@ -391,10 +390,10 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_pe
        height = 5)
 
 ###### For other publications for different identification methods (cbanker roughly at sample average) ----
-get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
+get_predictions <- function(method, levels = c("hf", "chol", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
-    top_5_or_tier = 0,
+    not_top_5_or_tier = 1,
     cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
@@ -521,10 +520,10 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_pe
        width = 7,
        height = 5)
 ###### For top journals for different identification methods (cbanker roughly at sample average) ----
-get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
+get_predictions <- function(method, levels = c("hf", "chol", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
-    top_5_or_tier = 1,
+    not_top_5_or_tier = 0,
     cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
@@ -709,11 +708,7 @@ modelsummary::modelsummary(mmr_output_wls_peese_robust[as.character(chosen_perio
 ##### Coefficient plots ----
 (p1 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "(Intercept)",
                                    custom_title = "Corrected reference response") +
-    coord_cartesian(ylim = c(-0.4, 0)) +
-    # No subtitle
-    # theme(plot.subtitle = element_blank()) +
-    # Add subtitle "Corrected response for Cholesky/SVAR, no top journal, no CB affiliation"
-    labs(subtitle = "Cholesky/SVAR, no top journal, no CB affiliation") +
+    labs(subtitle = "HF, top journal, no CB affiliation") +
     # No axis labels
     theme(axis.title.x = element_blank(),
           axis.title.y = element_blank()))
@@ -740,9 +735,9 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_output_wls_pe
        width = 7,
        height = 3)
 
-y_lims <- c(-0.75, 0.5)
-p3 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_ident_broadhf", 
-                                  custom_title = "HF") +
+y_lims <- c(-1, 2)
+p3 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_ident_broadchol", 
+                                  custom_title = "Chol/SVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -777,8 +772,9 @@ p6 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "group_ident_broa
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p7 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "top_5_or_tier", 
-                                  custom_title = "Top journal") +
+# Plot on not top journal
+p7 <- create_mmr_coefficient_plot(mmr_output_wls_peese_robust, "not_top_5_or_tier", 
+                                  custom_title = "Not top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -1011,11 +1007,7 @@ modelsummary::modelsummary(mmr_pricelevel_wls_peese[as.character(chosen_periods_
 ##### Coefficient plots ----
 (p1 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "(Intercept)", 
                                    custom_title = "Corrected reference response") +
-   coord_cartesian(ylim = c(-0.2, 0.1)) +
-   # No subtitle
-   # theme(plot.subtitle = element_blank()) +
-   # Add subtitle "Corrected response for Cholesky/SVAR, no top journal, no CB affiliation"
-   labs(subtitle = "Cholesky/SVAR, no top journal, no CB affiliation") +
+   labs(subtitle = "HF, top journal, no CB affiliation") +
    # No axis labels
    theme(axis.title.x = element_blank(),
          axis.title.y = element_blank()))
@@ -1040,9 +1032,9 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wl
        device = "pdf",
        width = 7,
        height = 3)
-y_lims <- c(-0.75, 0.5)
-p3 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "group_ident_broadhf", 
-                                  custom_title = "HF") +
+y_lims <- c(-1.5, 1.25)
+p3 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "group_ident_broadchol", 
+                                  custom_title = "Chol/SVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -1077,9 +1069,9 @@ p6 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "group_ident_broadid
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-# Plot on top journal 
-p7 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "top_5_or_tier", 
-                                  custom_title = "Top journal") +
+# Plot on not top journal 
+p7 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese, "not_top_5_or_tier", 
+                                  custom_title = "Not top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -1110,11 +1102,11 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wl
        width = 7,
        height = 9)
 ##### Corrected effects ----
-###### For different identification methods (top_5_or_tier and cbanker roughly at sample average) ----
-get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
+###### For different identification methods (not_top_5_or_tier and cbanker roughly at sample average) ----
+get_predictions <- function(method, levels = c("hf", "chol", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
-    top_5_or_tier = 0.14, # See table 1 in working paper
+    not_top_5_or_tier = 1 - 0.14, # = 0.86; See table 1 in working paper
     cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
@@ -1365,10 +1357,10 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wl
 
 
 ###### For other publications for different identification methods (cbanker roughly at sample average) ----
-get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
+get_predictions <- function(method, levels = c("hf", "chol", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
-    top_5_or_tier = 0,
+    not_top_5_or_tier = 1,
     cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
@@ -1490,10 +1482,10 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wl
        width = 7,
        height = 5)
 ###### For top journals for different identification methods (cbanker roughly at sample average) ----
-get_predictions <- function(method, levels = c("chol", "hf", "nr", "signr", "idother")) {
+get_predictions <- function(method, levels = c("hf", "chol", "nr", "signr", "idother")) {
   pred_data <- data.frame(
     group_ident_broad = factor(method, levels = levels),
-    top_5_or_tier = 1,
+    not_top_5_or_tier = 0,
     cbanker = 0.54, # See table 1 in working paper
     variance_winsor = 0
   )
@@ -1674,11 +1666,7 @@ modelsummary::modelsummary(mmr_pricelevel_wls_peese_robust[as.character(chosen_p
 ##### Coefficient plots ----
 (p1 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "(Intercept)",
                                    custom_title = "Corrected reference response") +
-   coord_cartesian(ylim = c(-0.2, 0.1)) +
-   # No subtitle
-   # theme(plot.subtitle = element_blank()) +
-   # Add subtitle "Corrected response for Cholesky/SVAR, no top journal, no CB affiliation"
-   labs(subtitle = "Cholesky/SVAR, no top journal, no CB affiliation") +
+   labs(subtitle = "HF, top journal, no CB affiliation") +
    # No axis labels
    theme(axis.title.x = element_blank(),
          axis.title.y = element_blank()))
@@ -1704,9 +1692,9 @@ ggsave(here::here("analysis/working_paper_1/figures/mmr/figure_mmr_pricelevel_wl
        device = "pdf",
        width = 7,
        height = 3)
-y_lims <- c(-0.75, 0.5)
-p3 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_ident_broadhf", 
-                                  custom_title = "HF") +
+y_lims <- c(-1.5, 1.25)
+p3 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_ident_broadchol", 
+                                  custom_title = "Chol/SVAR") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +
@@ -1741,8 +1729,8 @@ p6 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "group_ident_
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank())
 
-p7 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "top_5_or_tier", 
-                                  custom_title = "Top journal") +
+p7 <- create_mmr_coefficient_plot(mmr_pricelevel_wls_peese_robust, "not_top_5_or_tier", 
+                                  custom_title = "Not top journal") +
   coord_cartesian(ylim = y_lims) +
   # No subtitle
   theme(plot.subtitle = element_blank()) +

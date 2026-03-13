@@ -1317,6 +1317,17 @@ out_var <- "output"
 ### For top journals vs other publications ----
 y_lims <- c(-3.5, 1.1)
 #### Top journals
+##### OLS estimation 
+fatpet_uw_output_top_journals <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", top_5_or_tier == "top journal"),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, top_5_or_tier == "top journal"),
@@ -1327,15 +1338,36 @@ avg_irf_output_top_journals <- plot_average_irfs(
   show_legend = TRUE,
   show_median = TRUE,
   return_data = TRUE
-)
+) 
 # Save data as csv
 write_csv(avg_irf_output_top_journals$data, here::here(save_path, "avg_irf_output_top_journals.csv"))
 # Change plot title
 avg_irf_output_top_journals <- avg_irf_output_top_journals$plot %>% plotly::layout(
   title = ""
 )
+# Add OLS correction
+avg_irf_output_top_journals <- avg_irf_output_top_journals |>
+  add_lines(
+    data = fatpet_uw_output_top_journals,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = TRUE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### Other publications
+##### OLS estimation 
+fatpet_uw_output_other_publications <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", top_5_or_tier == "other publication"),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, top_5_or_tier == "other publication"),
@@ -1353,6 +1385,16 @@ write_csv(avg_irf_output_other_publications$data, here::here(save_path, "avg_irf
 avg_irf_output_other_publications <- avg_irf_output_other_publications$plot %>% plotly::layout(
   title = ""
 )
+# Add OLS correction
+avg_irf_output_other_publications <- avg_irf_output_other_publications |>
+  add_lines(
+    data = fatpet_uw_output_other_publications,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### Joint figure, top journals right plot, other left
 figure_average_irfs_output_top_journals_other_publications <- subplot(avg_irf_output_other_publications, 
@@ -1413,6 +1455,17 @@ d_no_qc %>%
 
 ### For cbanker vs non-cbanker ----
 #### For central bank affiliated
+##### OLS estimation
+fatpet_uw_output_cbanker <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", cbanker == "central bank affiliated"),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_cbanker <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, cbanker == "central bank affiliated"),
@@ -1430,9 +1483,29 @@ write_csv(avg_irf_output_cbanker$data, here::here(save_path, "avg_irf_output_cba
 avg_irf_output_cbanker <- avg_irf_output_cbanker$plot %>% plotly::layout(
   title = ""
 )
+# Add OLS correction
+avg_irf_output_cbanker <- avg_irf_output_cbanker |>
+  add_lines(
+    data = fatpet_uw_output_cbanker,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = TRUE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### For non-central bank affiliated
-##### Corrected IRF PEESE
+##### OLS estimation
+fatpet_uw_output_non_cbanker <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", cbanker == "non-central bank affiliated"),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_non_cbanker <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, cbanker == "non-central bank affiliated"),
@@ -1450,6 +1523,16 @@ write_csv(avg_irf_output_non_cbanker$data, here::here(save_path, "avg_irf_output
 avg_irf_output_non_cbanker <- avg_irf_output_non_cbanker$plot %>% plotly::layout(
   title = ""
 )
+# Add OLS correction
+avg_irf_output_non_cbanker <- avg_irf_output_non_cbanker |>
+  add_lines(
+    data = fatpet_uw_output_non_cbanker,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 # Joint figure, cbanker right plot, non-cbanker left
 y_lims <- c(-2.5, 1)
@@ -1511,6 +1594,17 @@ mean(cbanker_prop$proportion)
 ### For identifaction methods ("chol", "signr", "hf", "idother", "nr") ----
 ### For all publications
 #### For Cholesky
+##### OLS estimation
+fatpet_uw_output_chol <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", group_ident_broad == "chol"),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_chol <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol"),
@@ -1528,8 +1622,29 @@ write_csv(avg_irf_output_chol$data, here::here(save_path, "avg_irf_output_chol.c
 avg_irf_output_chol <- avg_irf_output_chol$plot %>% plotly::layout(
   title = "Cholesky"
 )
+# Add OLS correction
+avg_irf_output_chol <- avg_irf_output_chol |>
+  add_lines(
+    data = fatpet_uw_output_chol,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### For Sign restrictions
+##### OLS estimation
+fatpet_uw_output_signr <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", group_ident_broad == "signr"),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_signr <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr"),
@@ -1547,8 +1662,29 @@ write_csv(avg_irf_output_signr$data, here::here(save_path, "avg_irf_output_signr
 avg_irf_output_signr <- avg_irf_output_signr$plot %>% plotly::layout(
   title = "Sign restrictions"
 )
+# Add OLS correction
+avg_irf_output_signr <- avg_irf_output_signr |>
+  add_lines(
+    data = fatpet_uw_output_signr,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### For High frequency
+##### OLS estimation
+fatpet_uw_output_hf <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", group_ident_broad == "hf"),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_hf <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf"),
@@ -1566,8 +1702,29 @@ write_csv(avg_irf_output_hf$data, here::here(save_path, "avg_irf_output_hf.csv")
 avg_irf_output_hf <- avg_irf_output_hf$plot %>% plotly::layout(
   title = "High frequency"
 )
+# Add OLS correction
+avg_irf_output_hf <- avg_irf_output_hf |>
+  add_lines(
+    data = fatpet_uw_output_hf,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### For Other identification methods
+##### OLS estimation
+fatpet_uw_output_idother <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", group_ident_broad == "idother"),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_idother <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother"),
@@ -1585,8 +1742,29 @@ write_csv(avg_irf_output_idother$data, here::here(save_path, "avg_irf_output_ido
 avg_irf_output_idother <- avg_irf_output_idother$plot %>% plotly::layout(
   title = "Other identification methods"
 )
+# Add OLS correction
+avg_irf_output_idother <- avg_irf_output_idother |>
+  add_lines(
+    data = fatpet_uw_output_idother,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = TRUE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### For narrative
+##### OLS estimation
+fatpet_uw_output_nr <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", group_ident_broad == "nr"),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_nr <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr"),
@@ -1604,6 +1782,16 @@ write_csv(avg_irf_output_nr$data, here::here(save_path, "avg_irf_output_nr.csv")
 avg_irf_output_nr <- avg_irf_output_nr$plot %>% plotly::layout(
   title = "Narrative"
 )
+# Add OLS correction
+avg_irf_output_nr <- avg_irf_output_nr |>
+  add_lines(
+    data = fatpet_uw_output_nr,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 # Joint figure, one row
 y_lims <- c(-5, 2)
@@ -1987,6 +2175,17 @@ orca(figure_average_irfs_output_identification_methods_top_journals_other_public
 
 ### By country/region ----
 #### US ----
+##### OLS estimation
+fatpet_uw_output_us <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", us == 1),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_us <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, us == 1),
@@ -2004,9 +2203,29 @@ write_csv(avg_irf_output_us$data, here::here(save_path, "avg_irf_output_us.csv")
 avg_irf_output_us <- avg_irf_output_us$plot %>% plotly::layout(
   title = "US"
 )
+# Add OLS correction
+avg_irf_output_us <- avg_irf_output_us |>
+  add_lines(
+    data = fatpet_uw_output_us,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### EA12 ----
-##### Corrected IRF PEESE
+##### OLS estimation
+fatpet_uw_output_ea12 <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", ea12 == 1),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_ea12 <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, ea12 == 1),
@@ -2024,8 +2243,29 @@ write_csv(avg_irf_output_ea12$data, here::here(save_path, "avg_irf_output_ea12.c
 avg_irf_output_ea12 <- avg_irf_output_ea12$plot %>% plotly::layout(
   title = "EA12"
 )
+# Add OLS correction
+avg_irf_output_ea12 <- avg_irf_output_ea12 |>
+  add_lines(
+    data = fatpet_uw_output_ea12,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### Upper middle ----
+##### OLS estimation
+fatpet_uw_output_upper_middle <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", upper_middle_income == 1),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_upper_middle <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, upper_middle_income == 1),
@@ -2043,8 +2283,29 @@ write_csv(avg_irf_output_upper_middle$data, here::here(save_path, "avg_irf_outpu
 avg_irf_output_upper_middle <- avg_irf_output_upper_middle$plot %>% plotly::layout(
   title = "Emerging Economies"
 )
+# Add OLS correction
+avg_irf_output_upper_middle <- avg_irf_output_upper_middle |>
+  add_lines(
+    data = fatpet_uw_output_upper_middle,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### Other high_income  ----
+##### OLS estimation
+fatpet_uw_output_other_high_income <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "output", high_income == 1, ea12 != 1, us != 1),
+  outvar = "output",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_output_other_high_income <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, high_income == 1, ea12 != 1, us != 1),
@@ -2062,6 +2323,16 @@ write_csv(avg_irf_output_other_high_income$data, here::here(save_path, "avg_irf_
 avg_irf_output_other_high_income <- avg_irf_output_other_high_income$plot %>% plotly::layout(
   title = "Other high_income"
 )
+# Add OLS correction
+avg_irf_output_other_high_income <- avg_irf_output_other_high_income |>
+  add_lines(
+    data = fatpet_uw_output_other_high_income,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = TRUE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### Joint plot 
 y_lims <- c(-3, 1.5)
@@ -2153,6 +2424,17 @@ ggplot(d_plot, aes(x = period.month, y = n,
 out_var <- "inflation"
 ### For top journals vs other publications ----
 #### Top journals
+##### OLS estimation
+fatpet_uw_pricelevel_top_journals <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", top_5_or_tier == "top journal"),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_top_journals <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, top_5_or_tier == "top journal"),
@@ -2170,8 +2452,29 @@ write_csv(avg_irf_pricelevel_top_journals$data, here::here(save_path, "avg_irf_p
 avg_irf_pricelevel_top_journals <- avg_irf_pricelevel_top_journals$plot %>% plotly::layout(
   title = "Top journals"
 )
+# Add OLS correction
+avg_irf_pricelevel_top_journals <- avg_irf_pricelevel_top_journals |>
+  add_lines(
+    data = fatpet_uw_pricelevel_top_journals,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = TRUE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### Other publications
+##### OLS estimation
+fatpet_uw_pricelevel_other_publications <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", top_5_or_tier == "other publication"),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_other_publications <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, top_5_or_tier == "other publication"),
@@ -2189,6 +2492,16 @@ write_csv(avg_irf_pricelevel_other_publications$data, here::here(save_path, "avg
 avg_irf_pricelevel_other_publications <- avg_irf_pricelevel_other_publications$plot %>% plotly::layout(
   title = "Other publications"
 )
+# Add OLS correction
+avg_irf_pricelevel_other_publications <- avg_irf_pricelevel_other_publications |>
+  add_lines(
+    data = fatpet_uw_pricelevel_other_publications,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### Joint figure, top journals right plot, other left
 y_lims <- c(-3, 0.9)
@@ -2242,6 +2555,17 @@ d_no_qc %>%
 
 ### For cbanker vs non-cbanker ----
 #### Central bank affiliated
+##### OLS estimation
+fatpet_uw_pricelevel_cbanker <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", cbanker == "central bank affiliated"),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_cbanker <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, cbanker == "central bank affiliated"),
@@ -2259,8 +2583,29 @@ write_csv(avg_irf_pricelevel_cbanker$data, here::here(save_path, "avg_irf_pricel
 avg_irf_pricelevel_cbanker <- avg_irf_pricelevel_cbanker$plot %>% plotly::layout(
   title = "Central bank affiliated"
 )
+# Add OLS correction
+avg_irf_pricelevel_cbanker <- avg_irf_pricelevel_cbanker |>
+  add_lines(
+    data = fatpet_uw_pricelevel_cbanker,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = TRUE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 ### For non-cbanker
+##### OLS estimation
+fatpet_uw_pricelevel_non_cbanker <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", cbanker == "non-central bank affiliated"),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_non_cbanker <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, cbanker == "non-central bank affiliated"),
@@ -2278,6 +2623,16 @@ write_csv(avg_irf_pricelevel_non_cbanker$data, here::here(save_path, "avg_irf_pr
 avg_irf_pricelevel_non_cbanker <- avg_irf_pricelevel_non_cbanker$plot %>% plotly::layout(
   title = "Non-central bank affiliated"
 )
+# Add OLS correction
+avg_irf_pricelevel_non_cbanker <- avg_irf_pricelevel_non_cbanker |>
+  add_lines(
+    data = fatpet_uw_pricelevel_non_cbanker,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 # Joint figure, cbanker right plot, non-cbanker left
 y_lims <- c(-2, 0.5)
@@ -2317,6 +2672,17 @@ orca(figure_average_irfs_pricelevel_cbanker_non_cbanker,
 ### By identifcation method ("chol", "signr", "hf", "idother", "nr") ----
 ### For all publications
 #### For Cholesky
+##### OLS estimation
+fatpet_uw_pricelevel_chol <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", group_ident_broad == "chol"),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_chol <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "chol"),
@@ -2334,8 +2700,29 @@ write_csv(avg_irf_pricelevel_chol$data, here::here(save_path, "avg_irf_priceleve
 avg_irf_pricelevel_chol <- avg_irf_pricelevel_chol$plot %>% plotly::layout(
   title = "Cholesky & SVAR"
 )
+# Add OLS correction
+avg_irf_pricelevel_chol <- avg_irf_pricelevel_chol |>
+  add_lines(
+    data = fatpet_uw_pricelevel_chol,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### For Sign restrictions
+##### OLS estimation
+fatpet_uw_pricelevel_signr <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", group_ident_broad == "signr"),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_signr <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "signr"),
@@ -2353,8 +2740,29 @@ write_csv(avg_irf_pricelevel_signr$data, here::here(save_path, "avg_irf_pricelev
 avg_irf_pricelevel_signr <- avg_irf_pricelevel_signr$plot %>% plotly::layout(
   title = "Sign restrictions"
 )
+# Add OLS correction
+avg_irf_pricelevel_signr <- avg_irf_pricelevel_signr |>
+  add_lines(
+    data = fatpet_uw_pricelevel_signr,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### For High frequency
+##### OLS estimation
+fatpet_uw_pricelevel_hf <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", group_ident_broad == "hf"),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_hf <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "hf"),
@@ -2372,8 +2780,29 @@ write_csv(avg_irf_pricelevel_hf$data, here::here(save_path, "avg_irf_pricelevel_
 avg_irf_pricelevel_hf <- avg_irf_pricelevel_hf$plot %>% plotly::layout(
   title = "High frequency"
 )
+# Add OLS correction
+avg_irf_pricelevel_hf <- avg_irf_pricelevel_hf |>
+  add_lines(
+    data = fatpet_uw_pricelevel_hf,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### For Other identification methods
+##### OLS estimation
+fatpet_uw_pricelevel_idother <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", group_ident_broad == "idother"),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_idother <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "idother"),
@@ -2391,8 +2820,29 @@ write_csv(avg_irf_pricelevel_idother$data, here::here(save_path, "avg_irf_pricel
 avg_irf_pricelevel_idother <- avg_irf_pricelevel_idother$plot %>% plotly::layout(
   title = "Other identification methods"
 )
+# Add OLS correction
+avg_irf_pricelevel_idother <- avg_irf_pricelevel_idother |>
+  add_lines(
+    data = fatpet_uw_pricelevel_idother,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = TRUE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### For narrative
+##### OLS estimation
+fatpet_uw_pricelevel_nr <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", group_ident_broad == "nr"),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_nr <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, group_ident_broad == "nr"),
@@ -2410,6 +2860,16 @@ write_csv(avg_irf_pricelevel_nr$data, here::here(save_path, "avg_irf_pricelevel_
 avg_irf_pricelevel_nr <- avg_irf_pricelevel_nr$plot %>% plotly::layout(
   title = "Narrative"
 )
+# Add OLS correction
+avg_irf_pricelevel_nr <- avg_irf_pricelevel_nr |>
+  add_lines(
+    data = fatpet_uw_pricelevel_nr,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 # Joint figure, one row
 y_lims <- c(-2.5, 1)
@@ -2802,6 +3262,17 @@ orca(figure_average_irfs_pricelevel_identification_methods_top_journals_other_pu
 
 ### By country/region ----
 #### US ----
+##### OLS estimation
+fatpet_uw_pricelevel_us <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", us == 1),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_us <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, us == 1),
@@ -2819,8 +3290,29 @@ write_csv(avg_irf_pricelevel_us$data, here::here(save_path, "avg_irf_pricelevel_
 avg_irf_pricelevel_us <- avg_irf_pricelevel_us$plot %>% plotly::layout(
   title = "US"
 )
+# Add OLS correction
+avg_irf_pricelevel_us <- avg_irf_pricelevel_us |>
+  add_lines(
+    data = fatpet_uw_pricelevel_us,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### EA12 ----
+##### OLS estimation
+fatpet_uw_pricelevel_ea12 <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", ea12 == 1),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_ea12 <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, ea12 == 1),
@@ -2838,8 +3330,29 @@ write_csv(avg_irf_pricelevel_ea12$data, here::here(save_path, "avg_irf_priceleve
 avg_irf_pricelevel_ea12 <- avg_irf_pricelevel_ea12$plot %>% plotly::layout(
   title = "EA12"
 )
+# Add OLS correction
+avg_irf_pricelevel_ea12 <- avg_irf_pricelevel_ea12 |>
+  add_lines(
+    data = fatpet_uw_pricelevel_ea12,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### Upper middle ----
+##### OLS estimation
+fatpet_uw_pricelevel_upper_middle <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", upper_middle_income == 1),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_upper_middle <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, upper_middle_income == 1),
@@ -2857,8 +3370,29 @@ write_csv(avg_irf_pricelevel_upper_middle$data, here::here(save_path, "avg_irf_p
 avg_irf_pricelevel_upper_middle <- avg_irf_pricelevel_upper_middle$plot %>% plotly::layout(
   title = "Upper middle income countries"
 )
+# Add OLS correction
+avg_irf_pricelevel_upper_middle <- avg_irf_pricelevel_upper_middle |>
+  add_lines(
+    data = fatpet_uw_pricelevel_upper_middle,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = FALSE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### Other high_income ----
+##### OLS estimation
+fatpet_uw_pricelevel_other_high_income <- meta_analysis(
+  d_no_qc |> filter(period.month %in% seq(0, 60, by = 3), outcome == "inflation", high_income == 1, ea12 != 1, us != 1),
+  outvar = "inflation",
+  se_option = "upper",
+  periods = seq(0, 60, by = 3),
+  wins = wins_para,
+  prec_weighted = FALSE,
+  estimation = "FAT-PET",
+  cluster_se = TRUE
+) |> extract_intercepts()
 ##### Plot
 avg_irf_pricelevel_other_high_income <- plot_average_irfs(
   d_no_qc %>% filter(period.month %in% seq(0,60,by=3), outcome == out_var, high_income == 1, ea12 != 1, us != 1),
@@ -2876,6 +3410,16 @@ write_csv(avg_irf_pricelevel_other_high_income$data, here::here(save_path, "avg_
 avg_irf_pricelevel_other_high_income <- avg_irf_pricelevel_other_high_income$plot %>% plotly::layout(
   title = "Other high income economies"
 )
+# Add OLS correction
+avg_irf_pricelevel_other_high_income <- avg_irf_pricelevel_other_high_income |>
+  add_lines(
+    data = fatpet_uw_pricelevel_other_high_income,
+    x = ~period,
+    y = ~estimate,
+    name = "OLS correction",
+    showlegend = TRUE,
+    line = list(color = "darkgreen", width = 4, dash = "dot")
+  )
 
 #### Joint plot 
 y_lims <- c(-2, 0.75)

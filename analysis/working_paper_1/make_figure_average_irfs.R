@@ -1346,15 +1346,15 @@ avg_irf_output_top_journals <- avg_irf_output_top_journals$plot %>% plotly::layo
   title = ""
 )
 # Add OLS correction
-avg_irf_output_top_journals <- avg_irf_output_top_journals |>
-  add_lines(
-    data = fatpet_uw_output_top_journals,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = TRUE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_top_journals <- avg_irf_output_top_journals |>
+#   add_lines(
+#     data = fatpet_uw_output_top_journals,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = TRUE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### Other publications
 ##### OLS estimation 
@@ -1386,15 +1386,15 @@ avg_irf_output_other_publications <- avg_irf_output_other_publications$plot %>% 
   title = ""
 )
 # Add OLS correction
-avg_irf_output_other_publications <- avg_irf_output_other_publications |>
-  add_lines(
-    data = fatpet_uw_output_other_publications,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_other_publications <- avg_irf_output_other_publications |>
+#   add_lines(
+#     data = fatpet_uw_output_other_publications,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### Joint figure, top journals right plot, other left
 figure_average_irfs_output_top_journals_other_publications <- subplot(avg_irf_output_other_publications, 
@@ -1484,15 +1484,15 @@ avg_irf_output_cbanker <- avg_irf_output_cbanker$plot %>% plotly::layout(
   title = ""
 )
 # Add OLS correction
-avg_irf_output_cbanker <- avg_irf_output_cbanker |>
-  add_lines(
-    data = fatpet_uw_output_cbanker,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = TRUE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_cbanker <- avg_irf_output_cbanker |>
+#   add_lines(
+#     data = fatpet_uw_output_cbanker,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = TRUE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### For non-central bank affiliated
 ##### OLS estimation
@@ -1524,15 +1524,15 @@ avg_irf_output_non_cbanker <- avg_irf_output_non_cbanker$plot %>% plotly::layout
   title = ""
 )
 # Add OLS correction
-avg_irf_output_non_cbanker <- avg_irf_output_non_cbanker |>
-  add_lines(
-    data = fatpet_uw_output_non_cbanker,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_non_cbanker <- avg_irf_output_non_cbanker |>
+#   add_lines(
+#     data = fatpet_uw_output_non_cbanker,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 # Joint figure, cbanker right plot, non-cbanker left
 y_lims <- c(-2.5, 1)
@@ -1623,15 +1623,15 @@ avg_irf_output_chol <- avg_irf_output_chol$plot %>% plotly::layout(
   title = "Cholesky"
 )
 # Add OLS correction
-avg_irf_output_chol <- avg_irf_output_chol |>
-  add_lines(
-    data = fatpet_uw_output_chol,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_chol <- avg_irf_output_chol |>
+#   add_lines(
+#     data = fatpet_uw_output_chol,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### For Sign restrictions
 ##### OLS estimation
@@ -1663,15 +1663,15 @@ avg_irf_output_signr <- avg_irf_output_signr$plot %>% plotly::layout(
   title = "Sign restrictions"
 )
 # Add OLS correction
-avg_irf_output_signr <- avg_irf_output_signr |>
-  add_lines(
-    data = fatpet_uw_output_signr,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_signr <- avg_irf_output_signr |>
+#   add_lines(
+#     data = fatpet_uw_output_signr,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### For High frequency
 ##### OLS estimation
@@ -1703,15 +1703,15 @@ avg_irf_output_hf <- avg_irf_output_hf$plot %>% plotly::layout(
   title = "High frequency"
 )
 # Add OLS correction
-avg_irf_output_hf <- avg_irf_output_hf |>
-  add_lines(
-    data = fatpet_uw_output_hf,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_hf <- avg_irf_output_hf |>
+#   add_lines(
+#     data = fatpet_uw_output_hf,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### For Other identification methods
 ##### OLS estimation
@@ -1743,15 +1743,15 @@ avg_irf_output_idother <- avg_irf_output_idother$plot %>% plotly::layout(
   title = "Other identification methods"
 )
 # Add OLS correction
-avg_irf_output_idother <- avg_irf_output_idother |>
-  add_lines(
-    data = fatpet_uw_output_idother,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = TRUE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_idother <- avg_irf_output_idother |>
+#   add_lines(
+#     data = fatpet_uw_output_idother,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = TRUE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### For narrative
 ##### OLS estimation
@@ -1783,15 +1783,15 @@ avg_irf_output_nr <- avg_irf_output_nr$plot %>% plotly::layout(
   title = "Narrative"
 )
 # Add OLS correction
-avg_irf_output_nr <- avg_irf_output_nr |>
-  add_lines(
-    data = fatpet_uw_output_nr,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_nr <- avg_irf_output_nr |>
+#   add_lines(
+#     data = fatpet_uw_output_nr,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 # Joint figure, one row
 y_lims <- c(-5, 2)
@@ -2204,15 +2204,15 @@ avg_irf_output_us <- avg_irf_output_us$plot %>% plotly::layout(
   title = "US"
 )
 # Add OLS correction
-avg_irf_output_us <- avg_irf_output_us |>
-  add_lines(
-    data = fatpet_uw_output_us,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_us <- avg_irf_output_us |>
+#   add_lines(
+#     data = fatpet_uw_output_us,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### EA12 ----
 ##### OLS estimation
@@ -2244,15 +2244,15 @@ avg_irf_output_ea12 <- avg_irf_output_ea12$plot %>% plotly::layout(
   title = "EA12"
 )
 # Add OLS correction
-avg_irf_output_ea12 <- avg_irf_output_ea12 |>
-  add_lines(
-    data = fatpet_uw_output_ea12,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_ea12 <- avg_irf_output_ea12 |>
+#   add_lines(
+#     data = fatpet_uw_output_ea12,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### Upper middle ----
 ##### OLS estimation
@@ -2284,15 +2284,15 @@ avg_irf_output_upper_middle <- avg_irf_output_upper_middle$plot %>% plotly::layo
   title = "Emerging Economies"
 )
 # Add OLS correction
-avg_irf_output_upper_middle <- avg_irf_output_upper_middle |>
-  add_lines(
-    data = fatpet_uw_output_upper_middle,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_upper_middle <- avg_irf_output_upper_middle |>
+#   add_lines(
+#     data = fatpet_uw_output_upper_middle,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### Other high_income  ----
 ##### OLS estimation
@@ -2324,15 +2324,15 @@ avg_irf_output_other_high_income <- avg_irf_output_other_high_income$plot %>% pl
   title = "Other high_income"
 )
 # Add OLS correction
-avg_irf_output_other_high_income <- avg_irf_output_other_high_income |>
-  add_lines(
-    data = fatpet_uw_output_other_high_income,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = TRUE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_output_other_high_income <- avg_irf_output_other_high_income |>
+#   add_lines(
+#     data = fatpet_uw_output_other_high_income,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = TRUE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### Joint plot 
 y_lims <- c(-3, 1.5)
@@ -2453,15 +2453,15 @@ avg_irf_pricelevel_top_journals <- avg_irf_pricelevel_top_journals$plot %>% plot
   title = "Top journals"
 )
 # Add OLS correction
-avg_irf_pricelevel_top_journals <- avg_irf_pricelevel_top_journals |>
-  add_lines(
-    data = fatpet_uw_pricelevel_top_journals,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = TRUE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_top_journals <- avg_irf_pricelevel_top_journals |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_top_journals,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = TRUE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### Other publications
 ##### OLS estimation
@@ -2493,15 +2493,15 @@ avg_irf_pricelevel_other_publications <- avg_irf_pricelevel_other_publications$p
   title = "Other publications"
 )
 # Add OLS correction
-avg_irf_pricelevel_other_publications <- avg_irf_pricelevel_other_publications |>
-  add_lines(
-    data = fatpet_uw_pricelevel_other_publications,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_other_publications <- avg_irf_pricelevel_other_publications |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_other_publications,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### Joint figure, top journals right plot, other left
 y_lims <- c(-3, 0.9)
@@ -2584,15 +2584,15 @@ avg_irf_pricelevel_cbanker <- avg_irf_pricelevel_cbanker$plot %>% plotly::layout
   title = "Central bank affiliated"
 )
 # Add OLS correction
-avg_irf_pricelevel_cbanker <- avg_irf_pricelevel_cbanker |>
-  add_lines(
-    data = fatpet_uw_pricelevel_cbanker,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = TRUE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_cbanker <- avg_irf_pricelevel_cbanker |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_cbanker,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = TRUE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 ### For non-cbanker
 ##### OLS estimation
@@ -2624,15 +2624,15 @@ avg_irf_pricelevel_non_cbanker <- avg_irf_pricelevel_non_cbanker$plot %>% plotly
   title = "Non-central bank affiliated"
 )
 # Add OLS correction
-avg_irf_pricelevel_non_cbanker <- avg_irf_pricelevel_non_cbanker |>
-  add_lines(
-    data = fatpet_uw_pricelevel_non_cbanker,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_non_cbanker <- avg_irf_pricelevel_non_cbanker |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_non_cbanker,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 # Joint figure, cbanker right plot, non-cbanker left
 y_lims <- c(-2, 0.5)
@@ -2701,15 +2701,15 @@ avg_irf_pricelevel_chol <- avg_irf_pricelevel_chol$plot %>% plotly::layout(
   title = "Cholesky & SVAR"
 )
 # Add OLS correction
-avg_irf_pricelevel_chol <- avg_irf_pricelevel_chol |>
-  add_lines(
-    data = fatpet_uw_pricelevel_chol,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_chol <- avg_irf_pricelevel_chol |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_chol,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### For Sign restrictions
 ##### OLS estimation
@@ -2741,15 +2741,15 @@ avg_irf_pricelevel_signr <- avg_irf_pricelevel_signr$plot %>% plotly::layout(
   title = "Sign restrictions"
 )
 # Add OLS correction
-avg_irf_pricelevel_signr <- avg_irf_pricelevel_signr |>
-  add_lines(
-    data = fatpet_uw_pricelevel_signr,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_signr <- avg_irf_pricelevel_signr |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_signr,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### For High frequency
 ##### OLS estimation
@@ -2781,15 +2781,15 @@ avg_irf_pricelevel_hf <- avg_irf_pricelevel_hf$plot %>% plotly::layout(
   title = "High frequency"
 )
 # Add OLS correction
-avg_irf_pricelevel_hf <- avg_irf_pricelevel_hf |>
-  add_lines(
-    data = fatpet_uw_pricelevel_hf,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_hf <- avg_irf_pricelevel_hf |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_hf,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### For Other identification methods
 ##### OLS estimation
@@ -2821,15 +2821,15 @@ avg_irf_pricelevel_idother <- avg_irf_pricelevel_idother$plot %>% plotly::layout
   title = "Other identification methods"
 )
 # Add OLS correction
-avg_irf_pricelevel_idother <- avg_irf_pricelevel_idother |>
-  add_lines(
-    data = fatpet_uw_pricelevel_idother,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = TRUE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_idother <- avg_irf_pricelevel_idother |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_idother,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = TRUE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### For narrative
 ##### OLS estimation
@@ -2861,15 +2861,15 @@ avg_irf_pricelevel_nr <- avg_irf_pricelevel_nr$plot %>% plotly::layout(
   title = "Narrative"
 )
 # Add OLS correction
-avg_irf_pricelevel_nr <- avg_irf_pricelevel_nr |>
-  add_lines(
-    data = fatpet_uw_pricelevel_nr,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_nr <- avg_irf_pricelevel_nr |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_nr,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 # Joint figure, one row
 y_lims <- c(-2.5, 1)
@@ -3291,15 +3291,15 @@ avg_irf_pricelevel_us <- avg_irf_pricelevel_us$plot %>% plotly::layout(
   title = "US"
 )
 # Add OLS correction
-avg_irf_pricelevel_us <- avg_irf_pricelevel_us |>
-  add_lines(
-    data = fatpet_uw_pricelevel_us,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_us <- avg_irf_pricelevel_us |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_us,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### EA12 ----
 ##### OLS estimation
@@ -3331,15 +3331,15 @@ avg_irf_pricelevel_ea12 <- avg_irf_pricelevel_ea12$plot %>% plotly::layout(
   title = "EA12"
 )
 # Add OLS correction
-avg_irf_pricelevel_ea12 <- avg_irf_pricelevel_ea12 |>
-  add_lines(
-    data = fatpet_uw_pricelevel_ea12,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_ea12 <- avg_irf_pricelevel_ea12 |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_ea12,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### Upper middle ----
 ##### OLS estimation
@@ -3371,15 +3371,15 @@ avg_irf_pricelevel_upper_middle <- avg_irf_pricelevel_upper_middle$plot %>% plot
   title = "Upper middle income countries"
 )
 # Add OLS correction
-avg_irf_pricelevel_upper_middle <- avg_irf_pricelevel_upper_middle |>
-  add_lines(
-    data = fatpet_uw_pricelevel_upper_middle,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = FALSE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_upper_middle <- avg_irf_pricelevel_upper_middle |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_upper_middle,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = FALSE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### Other high_income ----
 ##### OLS estimation
@@ -3411,15 +3411,15 @@ avg_irf_pricelevel_other_high_income <- avg_irf_pricelevel_other_high_income$plo
   title = "Other high income economies"
 )
 # Add OLS correction
-avg_irf_pricelevel_other_high_income <- avg_irf_pricelevel_other_high_income |>
-  add_lines(
-    data = fatpet_uw_pricelevel_other_high_income,
-    x = ~period,
-    y = ~estimate,
-    name = "OLS correction",
-    showlegend = TRUE,
-    line = list(color = "darkgreen", width = 4, dash = "dot")
-  )
+# avg_irf_pricelevel_other_high_income <- avg_irf_pricelevel_other_high_income |>
+#   add_lines(
+#     data = fatpet_uw_pricelevel_other_high_income,
+#     x = ~period,
+#     y = ~estimate,
+#     name = "OLS correction",
+#     showlegend = TRUE,
+#     line = list(color = "darkgreen", width = 4, dash = "dot")
+#   )
 
 #### Joint plot 
 y_lims <- c(-2, 0.75)

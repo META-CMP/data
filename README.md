@@ -122,6 +122,10 @@ Our standardization approach handles several cases based on how variables are me
 
 The final data processing after full text screening was implemented in [`final_join.R`](data/final_join.R), resulting in a unified dataset [`final_join_json_irf_data.RData`](data/final_join_json_irf_data.RData) that was prepared for further analysis in [`final_data_preparation_working_paper_1.R`](data/final_data_preparation_working_paper_1.R). Importantly, we merged the external data to each observation and consolidated some moderator variables. For example, we consolidated coding categories like [identification strategies](https://github.com/META-CMP/data/issues/253) into broader categories.
 
+## List of studies included in the meta-analysis dataset
+
+After applying the full screening procedure, inclusion and exclusion criteria, and the quality checks described in the paper, the studies that remained in the final meta-analysis dataset are listed [here](https://github.com/META-CMP/data/blob/main/list.md).
+
 ---
 
 ## Data analyses

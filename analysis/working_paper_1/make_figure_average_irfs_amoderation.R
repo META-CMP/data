@@ -33,7 +33,7 @@ d_no_qc$cbanker <- factor(d_no_qc$cbanker, levels = c(0, 1), labels = c("non-cen
 
 # Robustness check period after Great Moderation: Use only before Great Moderation ----
 d_no_qc <- d_no_qc %>%
-  filter(start_date > "1985-07-01")
+  filter(start_date > "1984-04-01")
 
 # For output ----
 out_var <- "output"

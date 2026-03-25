@@ -26,17 +26,93 @@ save_path <- "analysis/working_paper_1/figures/average_irfs/"
 # Capping procedure for period 0 precision and se ----
 source(here::here("analysis/working_paper_1/period_0_capping_se_prec.R"))
 
+## With median and different publication bias corrections ----
+#### Define helper function to extract intercepts ----  
+extract_intercepts <- function(results) {
+  
+  # For other estimation methods, use confint
+  intercepts <- lapply(results, function(model) {
+    ci <- confint(model, level = conflevel)
+    c(estimate = model[[1]][1],
+      estimate_se = model[1,2],
+      lower = ci[1, 1],
+      upper = ci[1, 2])
+  })
+  
+  data.frame(
+    period = as.numeric(names(results)),
+    estimate = sapply(intercepts, function(x) x["estimate"]),
+    estimate_se = sapply(intercepts, function(x) x["estimate_se"]),
+    lower = sapply(intercepts, function(x) x["lower"]),
+    upper = sapply(intercepts, function(x) x["upper"])
+  )
+}
+#### Define helper function to p-bias coefficients (only for FAT-PET, PEESE) ----  
+extract_pbias <- function(results) {
+  
+  # For other estimation methods, use confint
+  pbias <- lapply(results, function(model) {
+    ci <- confint(model, level = conflevel)
+    c(estimate = model[[2]][1],
+      estimate_se = model[2,2],
+      lower = ci[2, 1],
+      upper = ci[2, 2])
+  })
+  
+  data.frame(
+    period = as.numeric(names(results)),
+    estimate = sapply(pbias, function(x) x["estimate"]),
+    estimate_se = sapply(pbias, function(x) x["estimate_se"]),
+    lower = sapply(pbias, function(x) x["lower"]),
+    upper = sapply(pbias, function(x) x["upper"])
+  )
+}
+#### Define helper function to extract AK intercepts ----  
+extract_intercepts_AK <- function(results) {
+  # For AK estimation method, extract the precomputed confidence intervals
+  intercepts <- lapply(results, function(model) {
+    # Assuming the first row contains the intercept estimates
+    c(estimate = model$tidy$estimate[1],
+      estimate_se = model$tidy$std.error[1],
+      lower = model$tidy$conf.low[1],
+      upper = model$tidy$conf.high[1])
+  })
+  
+  data.frame(
+    period = as.numeric(names(results)),
+    estimate = sapply(intercepts, function(x) x["estimate"]),
+    estimate_se = sapply(intercepts, function(x) x["estimate_se"]),
+    lower = sapply(intercepts, function(x) x["lower"]),
+    upper = sapply(intercepts, function(x) x["upper"])
+  )
+}
+
+
 # Redefining top_5_or_tier and cbanker as factors
 d_no_qc$top_5_or_tier <- factor(d_no_qc$top_5_or_tier, levels = c(0, 1), labels = c("other publication", "top journal"))
 d_no_qc$cbanker <- factor(d_no_qc$cbanker, levels = c(0, 1), labels = c("non-central bank affiliated", "central bank affiliated"))
 
 
-# Robustness check period before Great Moderation: Use only before Great Moderation ----
+# Robustness check period after Great Moderation: Use only before Great Moderation ----
 d_no_qc <- d_no_qc %>%
-  filter(end_date <= "1984-01-01")
+  filter(start_date > "1984-04-01")
 
 # For output ----
 out_var <- "output"
+
+### Estimate FAT-PET without weights ----
+fatpet_uw_output_amoderation <- meta_analysis(d_no_qc,
+                                              outvar = out_var,
+                                              se_option = "upper",
+                                              periods = seq(0, 60, by = 3),
+                                              wins = wins_para,
+                                              prec_weighted = FALSE,
+                                              estimation = "FAT-PET",
+                                              cluster_se = TRUE)
+
+fatpet_uw_output_amoderation <- extract_intercepts(fatpet_uw_output_amoderation)
+
+### Plot -----
 
 avg_irf_output_median <- plot_average_irfs(
   d_no_qc %>% dplyr::filter(period.month %in% seq(0, 60, by = 3), outcome == out_var),
@@ -52,7 +128,7 @@ avg_irf_output_median <- plot_average_irfs(
 )
 
 # Save data
-#write_csv(avg_irf_output_median$data, file.path(save_path, "avg_irf_output_median_bmoderation.csv"))
+#write_csv(avg_irf_output_median$data, file.path(save_path, "avg_irf_output_median_ols_amoderation.csv"))
 
 df_plot <- avg_irf_output_median$data
 
@@ -68,6 +144,7 @@ lines_df <- df_plot %>%
 # Colors to match your screenshot
 col_mean   <- "navy"  # dark blue line
 col_median <- "red3"  # red line
+col_correction <- "darkgreen" # green OLS correction line
 fill_mean  <- "skyblue1"  # light blue ribbon
 fill_med   <- "red1"  # light red ribbon
 
@@ -90,6 +167,19 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   geom_line(data = lines_df,
             aes(y = value, color = series),
             linewidth = 1.2) +
+  # FAT-PET UW intercepts (OLS correction)
+  geom_line(
+    data = fatpet_uw_output_amoderation,
+    aes(x = period, y = estimate, color = "OLS correction"),
+    linetype = "11",
+    linewidth = 1.4
+  ) +
+  geom_point(
+    data = fatpet_uw_output_amoderation,
+    aes(x = period, y = estimate, color = "OLS correction"),
+    shape = 20,
+    size  = 1.4
+  ) +
   
   # Axes (same style as your example)
   coord_cartesian(ylim = c(-2.75, 0.75)) +
@@ -99,8 +189,10 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   # Legend colors + labels already set in `series`
   scale_color_manual(values = c(
     "Mean effect from literature"   = col_mean,
-    "Median effect from literature" = col_median
+    "Median effect from literature" = col_median,
+    "OLS correction"                = col_correction
   )) +
+  guides(color = guide_legend(ncol = 2, byrow = TRUE)) +
   
   labs(
     title = "Output response (%)",
@@ -124,7 +216,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
 p_out
 
 # Export PDF
-out_pdf <- file.path(save_path, "avg_irf_output_median_bmoderation.pdf")
+out_pdf <- file.path(save_path, "avg_irf_output_median_ols_amoderation.pdf")
 ggsave(
   filename = out_pdf,
   plot     = p_out,
@@ -138,6 +230,20 @@ ggsave(
 
 # For price level ----
 out_var <- "inflation"
+
+### Estimate FAT-PET without weights ----
+fatpet_uw_pricelevel_amoderation <- meta_analysis(d_no_qc,
+                                              outvar = out_var,
+                                              se_option = "upper",
+                                              periods = seq(0, 60, by = 3),
+                                              wins = wins_para,
+                                              prec_weighted = FALSE,
+                                              estimation = "FAT-PET",
+                                              cluster_se = TRUE)
+
+fatpet_uw_pricelevel_amoderation <- extract_intercepts(fatpet_uw_pricelevel_amoderation)
+
+### Plot -----
 
 avg_irf_pricelevel_median <- plot_average_irfs(
   d_no_qc %>% dplyr::filter(period.month %in% seq(0, 60, by = 3), outcome == out_var),
@@ -153,7 +259,7 @@ avg_irf_pricelevel_median <- plot_average_irfs(
 )
 
 # Save data
-#write_csv(avg_irf_pricelevel_median$data, file.path(save_path, "avg_irf_pricelevel_median_bmoderation.csv"))
+#write_csv(avg_irf_pricelevel_median$data, file.path(save_path, "avg_irf_pricelevel_median_ols_amoderation.csv"))
 
 df_plot <- avg_irf_pricelevel_median$data
 
@@ -169,6 +275,7 @@ lines_df <- df_plot %>%
 # Colors to match your screenshot
 col_mean   <- "navy"  # dark blue line
 col_median <- "red3"  # red line
+col_correction <- "darkgreen" #green OLS correction line
 fill_mean  <- "skyblue1"  # light blue ribbon
 fill_med   <- "red1"  # light red ribbon
 
@@ -191,6 +298,19 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   geom_line(data = lines_df,
             aes(y = value, color = series),
             linewidth = 1.2) +
+  # FAT-PET UW intercepts (OLS correction)
+  geom_line(
+    data = fatpet_uw_pricelevel_amoderation,
+    aes(x = period, y = estimate, color = "OLS correction"),
+    linetype = "11",
+    linewidth = 1.4
+  ) +
+  geom_point(
+    data = fatpet_uw_pricelevel_amoderation,
+    aes(x = period, y = estimate, color = "OLS correction"),
+    shape = 20,
+    size  = 1.4
+  ) +
   
   # Axes (same style as your example)
   coord_cartesian(ylim = c(-2.75, 0.75)) +
@@ -200,8 +320,10 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   # Legend colors + labels already set in `series`
   scale_color_manual(values = c(
     "Mean effect from literature"   = col_mean,
-    "Median effect from literature" = col_median
+    "Median effect from literature" = col_median,
+    "OLS correction"                = col_correction
   )) +
+  guides(color = guide_legend(ncol = 2, byrow = TRUE)) +
   
   labs(
     title = "Price level response (%)",
@@ -225,7 +347,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
 p_out
 
 # Export PDF
-out_pdf <- file.path(save_path, "avg_irf_pricelevel_median_bmoderation.pdf")
+out_pdf <- file.path(save_path, "avg_irf_pricelevel_median_ols_amoderation.pdf")
 ggsave(
   filename = out_pdf,
   plot     = p_out,
@@ -238,6 +360,20 @@ ggsave(
 
 # For interest rate ----
 out_var <- "rate"
+
+### Estimate FAT-PET without weights ----
+fatpet_uw_rate_amoderation <- meta_analysis(d_no_qc,
+                                              outvar = out_var,
+                                              se_option = "avg",
+                                              periods = seq(0, 60, by = 3),
+                                              wins = wins_para,
+                                              prec_weighted = FALSE,
+                                              estimation = "FAT-PET",
+                                              cluster_se = TRUE)
+
+fatpet_uw_rate_amoderation <- extract_intercepts(fatpet_uw_rate_amoderation)
+
+### Plot -----
 
 avg_irf_rate_median <- plot_average_irfs(
   d_no_qc %>% dplyr::filter(period.month %in% seq(0, 60, by = 3), outcome == out_var),
@@ -253,7 +389,7 @@ avg_irf_rate_median <- plot_average_irfs(
 )
 
 # Save data
-#write_csv(avg_irf_rate_median$data, file.path(save_path, "avg_irf_rate_median_bmoderation.csv"))
+#write_csv(avg_irf_rate_median$data, file.path(save_path, "avg_irf_rate_median_ols_amoderation.csv"))
 
 df_plot <- avg_irf_rate_median$data
 
@@ -269,6 +405,7 @@ lines_df <- df_plot %>%
 # Colors to match your screenshot
 col_mean   <- "navy"  # dark blue line
 col_median <- "red3"  # red line
+col_correction <- "darkgreen" #green OLS correction
 fill_mean  <- "skyblue1"  # light blue ribbon
 fill_med   <- "red1"  # light red ribbon
 
@@ -291,6 +428,19 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   geom_line(data = lines_df,
             aes(y = value, color = series),
             linewidth = 1.2) +
+  # FAT-PET UW intercepts (OLS correction)
+  geom_line(
+    data = fatpet_uw_rate_amoderation,
+    aes(x = period, y = estimate, color = "OLS correction"),
+    linetype = "11",
+    linewidth = 1.4
+  ) +
+  geom_point(
+    data = fatpet_uw_rate_amoderation,
+    aes(x = period, y = estimate, color = "OLS correction"),
+    shape = 20,
+    size  = 1.4
+  ) +
   
   # Axes (same style as your example)
   coord_cartesian(ylim = c(-1, 1.5)) +
@@ -300,8 +450,10 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   # Legend colors + labels already set in `series`
   scale_color_manual(values = c(
     "Mean effect from literature"   = col_mean,
-    "Median effect from literature" = col_median
+    "Median effect from literature" = col_median,
+    "OLS correction"                = col_correction
   )) +
+  guides(color = guide_legend(ncol = 2, byrow = TRUE)) +
   
   labs(
     title = "Interest rate response (%-points)",
@@ -325,7 +477,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
 p_out
 
 # Export PDF
-out_pdf <- file.path(save_path, "avg_irf_rate_median_bmoderation.pdf")
+out_pdf <- file.path(save_path, "avg_irf_rate_median_ols_amoderation.pdf")
 ggsave(
   filename = out_pdf,
   plot     = p_out,

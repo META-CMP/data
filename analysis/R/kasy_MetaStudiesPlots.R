@@ -106,7 +106,7 @@ estimates_plot<-function(cutoffs, symmetric, estimates, model="normal"){
   names(dens)[names(dens) == 'f'] <- 'density of true effect'
   names(dens)[names(dens) == 'p'] <- 'publication probability'
 
-  dens=melt(dens, id="z")
+  dens=reshape2::melt(dens, id="z")
   ggplot(dens, aes(x=z, y=value)) +
     xlab(paste("Z, ", intToUtf8(952)))+
     geom_line(size=2, color="blue") +

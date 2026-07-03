@@ -1,0 +1,13 @@
+name: test
+title: test
+username: mgwk
+account: mgwk
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1341326
+bundleId:
+url: https://mgwk.shinyapps.io/test/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: data_explorer_dev_1_module_test.R|data_explorer_dev_1.R|data_explorer_dev_2.R|data_explorer_dev_3.R|R|working_paper_1|working_paper_2

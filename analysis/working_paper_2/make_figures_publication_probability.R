@@ -3,6 +3,10 @@
 # Source the setup file ---- 
 source(here::here("analysis/working_paper_2/setup_wp_2.R"))
 
+# TO DO: decide if we keep this.
+# Temp: only use US data
+d_no_qc <- d_no_qc %>% filter(us == 1)
+
 # Load required libraries ----
 library(JWileymisc) # For winsorizing
 library(patchwork) # For arranging plots
@@ -35,7 +39,7 @@ emp_ak <- meta_analysis(d_no_qc,
                            AK_symmetric = FALSE,
                            AK_conf_level = conflevel,
                            ak_plot = "pub_prob_only",
-                           AK_plot_prob_y_range = c(-100, 100)
+                           AK_plot_prob_y_range = c(-10, 15)
 )
 
 ## Create combined plots ----
@@ -120,6 +124,11 @@ ggsave("analysis/working_paper_2/figures/publication_probability/figure_publicat
 # For unemployment rate ----
 out_var <- "unemp"
 
+# Temporary hack: Reverse the sign of effect sizes
+# TO DO: Make the option available in the meta_analysis function
+d_no_qc <- d_no_qc %>%
+  mutate(mean.effect = -mean.effect)
+
 ## Estimation ----
 unemp_ak <- meta_analysis(d_no_qc,
                                outvar = out_var,
@@ -134,7 +143,7 @@ unemp_ak <- meta_analysis(d_no_qc,
                                AK_symmetric = FALSE,
                                AK_conf_level = conflevel,
                                ak_plot = "pub_prob_only",
-                               AK_plot_prob_y_range = c(-10, 20) # Use c(0, 12.5) for narrower plots without confidence bands 
+                               AK_plot_prob_y_range = c(-20, 40) # Use c(0, 12.5) for narrower plots without confidence bands 
 )
 ## Create combined plots ----
 plots <- list()

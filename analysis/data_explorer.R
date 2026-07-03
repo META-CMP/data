@@ -13,40 +13,131 @@ library(lmtest)
 library(shinyjs)
 library(purrr)
 
-# Load the data 
-# data_path <- here("data/preliminary_data_test_old.RData")
-data_path <- here("data/preliminary_data_test.RData") # works
-# data_path <- here("data/preliminary_data_03072024.RData")
-# data_path <- here("data/preliminary_data_test_11072024.RData")
+# Load the data
+# data_path <- here("data/preliminary_data_test.RData") # works
+data_path <- "final_data_working_paper_1.RData"
 load(data_path)
 rm(data_path)
 # data <- data[1:20000,] # For testing
 
+# Extract year from the MM-YYYY format strings
+data <- data |>
+  mutate(
+    start_year = as.numeric(str_sub(sapply(start, `[`, 1), -4, -1)),
+    end_year = as.numeric(str_sub(sapply(end, `[`, 1), -4, -1))
+  )
 
 
-# necessary to remove list element of the list_of_countries vector. 
+# necessary to remove list element of the list_of_countries vector.
 data <- data %>%
-  mutate(list_of_countries = map_chr(list_of_countries, ~ paste(.x, collapse = " ")))
-
+  mutate(
+    list_of_countries = map_chr(list_of_countries, ~ paste(.x, collapse = " "))
+  )
 
 
 #data<-data %>% filter(period.month %in% seq(0,60,by=3))
 
-
+# Create named choices where display names map to internal values
+# NOTE: Dataset incorrectly uses "inflation" for what should be "price level"
+# This workaround allows correct display while maintaining data compatibility
+# TODO: Fix the actual dataset to use "price level" instead of "inflation"
+outcome_choices <- c("All", unique(data$outcome))
+names(outcome_choices) <- c(
+  "All",
+  ifelse(outcome_choices[-1] == "inflation", "price level", outcome_choices[-1])
+)
 
 # Define choices for moderator filters
 moderator_groups <- list(
-  "General" = list("prefer","cum","transformation","periodicity", "quality_concern"),
-  "Impulse and Response Variables" = list("prefer", "interest_rate_short", "shock_size"),
-  "Identification Strategy" = list("iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "idother","group_ident_broad"),
-  "Estimation Method" = list("var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge", "varother"),
-  "Regime Dependence" = list("regime", "lor", "upr", "scr", "dcr", "hike", "cut"),
+  "General" = list(
+    "prefer",
+    "cum",
+    "transformation",
+    "periodicity",
+    "quality_concern"
+  ),
+  "Impulse and Response Variables" = list(
+    "prefer",
+    "interest_rate_short",
+    "shock_size"
+  ),
+  "Identification Strategy" = list(
+    "iv",
+    "forecast_based",
+    "nr",
+    "event",
+    "chol",
+    "svar",
+    "signr",
+    "hf",
+    "heteroskedas",
+    "longrun",
+    "idother",
+    "group_ident_broad"
+  ),
+  "Estimation Method" = list(
+    "var",
+    "lp",
+    "vecm",
+    "dyn_ols",
+    "fvar",
+    "tvar",
+    "gvar",
+    "bayes",
+    "dsge",
+    "varother"
+  ),
+  "Regime Dependence" = list(
+    "regime",
+    "lor",
+    "upr",
+    "scr",
+    "dcr",
+    "hike",
+    "cut"
+  ),
   "Data Frequency" = list("annual", "quarter", "month"),
-  "Further Data Characteristics" = list("panel", "us", "country_dev", "advanced", "upper_middle", "mixed_unclass", "ea12"),
-  "Control Variables" = list("comprice", "outpgap", "find", "eglob", "cbind", "fexch", "inflexp", "foreignir", "fx", "lrir"),
+  "Further Data Characteristics" = list(
+    "panel",
+    "us",
+    "country_dev",
+    "advanced",
+    "upper_middle",
+    "mixed_unclass",
+    "ea12"
+  ),
+  "Control Variables" = list(
+    "comprice",
+    "outpgap",
+    "find",
+    "eglob",
+    "cbind",
+    "fexch",
+    "inflexp",
+    "foreignir",
+    "fx",
+    "lrir"
+  ),
   "Econometric Details" = list("pure_rate_shock", "convent", "decomposition"),
-  "Publication Characteristics" = list("cbanker", "is_top_5", "is_top_tier", "top_5_or_tier","pub_year","log(1+journal_impact)","log(1+num_cit)","main_research_q"),
-  "External Variables" = list("tradegl","log(infl)","fingl","findev","cbi","log(gdppc)","exrate")
+  "Publication Characteristics" = list(
+    "cbanker",
+    "is_top_5",
+    "is_top_tier",
+    "top_5_or_tier",
+    "pub_year",
+    "log(1+journal_impact)",
+    "log(1+num_cit)",
+    "main_research_q"
+  ),
+  "External Variables" = list(
+    "tradegl",
+    "log(infl)",
+    "fingl",
+    "findev",
+    "cbi",
+    "log(gdppc)",
+    "exrate"
+  )
 )
 
 ui <- fluidPage(
@@ -63,494 +154,824 @@ ui <- fluidPage(
       h4("Filters"),
       wellPanel(
         uiOutput("reset_button"),
-        sliderInput("filter_years", "Sample years",
-                    min = min(data$start_year, na.rm = TRUE),
-                    max = max(data$end_year, na.rm = TRUE),
-                    value = c(min(data$start_year, na.rm = TRUE), max(data$end_year, na.rm = TRUE)),
-                    sep = "")
+        sliderInput(
+          "filter_years",
+          "Sample years",
+          min = min(data$start_year, na.rm = TRUE),
+          max = max(data$end_year, na.rm = TRUE),
+          value = c(
+            min(data$start_year, na.rm = TRUE),
+            max(data$end_year, na.rm = TRUE)
+          ),
+          sep = ""
+        )
       ),
       tabsetPanel(
-        tabPanel("Response variable",
-                 selectInput("filter_outcome", "Show data for specific response variable", choices = c("All", unique(data$outcome)), selected = "All"),
-                 selectInput("filter_transformation", "Select the transformation of the response variable", choices = c("All", unique(data$transformation)), selected = "All"),
-                 selectInput("filter_periodicity", "Select the periodicity of the response variable", choices = c("All", unique(data$periodicity)), selected = "All"),
-                 conditionalPanel(
-                   condition = "input.filter_outcome != 'All'",
-                   selectInput("filter_outcome_measure", "Select the outcome measure of the response variable", 
-                               choices = c("All", unique(data$outcome_measure)), selected = "All")
-                 )
+        tabPanel(
+          "Response variable",
+          selectInput(
+            "filter_outcome",
+            "Show data for specific response variable",
+            choices = outcome_choices,
+            selected = "All"
+          ),
+          #  selectInput("filter_outcome", "Show data for specific response variable", choices = c("All", unique(data$outcome)), selected = "All"),
+          selectInput(
+            "filter_transformation",
+            "Select the transformation of the response variable",
+            choices = c("All", unique(data$transformation)),
+            selected = "All"
+          ),
+          selectInput(
+            "filter_periodicity",
+            "Select the periodicity of the response variable",
+            choices = c("All", unique(data$periodicity)),
+            selected = "All"
+          ),
+          conditionalPanel(
+            condition = "input.filter_outcome != 'All'",
+            selectInput(
+              "filter_outcome_measure",
+              "Select the outcome measure of the response variable",
+              choices = c("All", unique(data$outcome_measure)),
+              selected = "All"
+            )
+          )
         ),
-        tabPanel("Countries", 
-                 selectInput("country_filter_type", "Country filter type:",
-                             choices = c("All countries" = "all",
-                                         "Unique combinations in primary studies" = "specific_country",
-                                         "One country only" = "one_country",
-                                         "Country in sample" = "country_in_sample",
-                                         "Country group only" = "country_group_only",
-                                         "Country group in sample" = "country_group_in_sample",
-                                         "Exclude countries" = "exclude_countries"),
-                             selected = "all"),
-                 
-                 conditionalPanel(
-                   condition = "input.country_filter_type == 'specific_country'",
-                   selectInput("filter_country", "Show data only for specific unique combinations in the primary studies",
-                               choices = c("All", unique(data$list_of_countries)), selected = "All")
-                 ),
-                 
-                 conditionalPanel(
-                   condition = "input.country_filter_type == 'one_country'",
-                   textInput("one_country", "Filter models with only one specific country")
-                 ),
-                 
-                 conditionalPanel(
-                   condition = "input.country_filter_type == 'country_in_sample'",
-                   textInput("country_in_sample", "Filter models with a specific country in their sample. Specify country:")
-                 ),
-                 
-                 conditionalPanel(
-                   condition = "input.country_filter_type == 'country_group_only'",
-                   textInput("country_group_only", "Filter models with only a specific group of countries. Specify countries (comma-separated):")
-                 ),
-                 
-                 conditionalPanel(
-                   condition = "input.country_filter_type == 'country_group_in_sample'",
-                   textInput("country_group_in_sample", "Filter models with a specific group of countries in their sample. Specify countries (comma-separated):")
-                 ),
-                 
-                 conditionalPanel(
-                   condition = "input.country_filter_type == 'exclude_countries'",
-                   textInput("exclude_countries", "Filter models excluding specific countries. Specify countries (comma-separated):")
-                 )
+        tabPanel(
+          "Countries",
+          selectInput(
+            "country_filter_type",
+            "Country filter type:",
+            choices = c(
+              "All countries" = "all",
+              "Unique combinations in primary studies" = "specific_country",
+              "One country only" = "one_country",
+              "Country in sample" = "country_in_sample",
+              "Country group only" = "country_group_only",
+              "Country group in sample" = "country_group_in_sample",
+              "Exclude countries" = "exclude_countries"
+            ),
+            selected = "all"
+          ),
+
+          conditionalPanel(
+            condition = "input.country_filter_type == 'specific_country'",
+            selectInput(
+              "filter_country",
+              "Show data only for specific unique combinations in the primary studies",
+              choices = c("All", unique(data$list_of_countries)),
+              selected = "All"
+            )
+          ),
+
+          conditionalPanel(
+            condition = "input.country_filter_type == 'one_country'",
+            textInput(
+              "one_country",
+              "Filter models with only one specific country"
+            )
+          ),
+
+          conditionalPanel(
+            condition = "input.country_filter_type == 'country_in_sample'",
+            textInput(
+              "country_in_sample",
+              "Filter models with a specific country in their sample. Specify country:"
+            )
+          ),
+
+          conditionalPanel(
+            condition = "input.country_filter_type == 'country_group_only'",
+            textInput(
+              "country_group_only",
+              "Filter models with only a specific group of countries. Specify countries (comma-separated):"
+            )
+          ),
+
+          conditionalPanel(
+            condition = "input.country_filter_type == 'country_group_in_sample'",
+            textInput(
+              "country_group_in_sample",
+              "Filter models with a specific group of countries in their sample. Specify countries (comma-separated):"
+            )
+          ),
+
+          conditionalPanel(
+            condition = "input.country_filter_type == 'exclude_countries'",
+            textInput(
+              "exclude_countries",
+              "Filter models excluding specific countries. Specify countries (comma-separated):"
+            )
+          )
         ),
-        tabPanel("Other moderators",
-                 selectInput(
-                   "include_filter",
-                   "Required model characteristics:",
-                   choices = moderator_groups,
-                   multiple = TRUE
-                 ),
-                 selectInput(
-                   "exclude_filter",
-                   "Excluded model characteristics:",
-                   choices = moderator_groups,
-                   multiple = TRUE
-                 )
+        tabPanel(
+          "Other moderators",
+          selectInput(
+            "include_filter",
+            "Required model characteristics:",
+            choices = moderator_groups,
+            multiple = TRUE
+          ),
+          selectInput(
+            "exclude_filter",
+            "Excluded model characteristics:",
+            choices = moderator_groups,
+            multiple = TRUE
+          )
         ),
-        tabPanel("Studies",
-                 selectInput("study_filter_type", "Select filter type:",
-                             choices = c("No filter" = "no_filter",
-                                         "Include specific studies" = "include_studies",
-                                         "Exclude specific studies" = "exclude_studies"),
-                             selected = "no_filter"),
-                 
-                 conditionalPanel(
-                   condition = "input.study_filter_type == 'include_studies'",
-                   textInput("filter_include_keys", "Specify studies to include (comma-separated keys):", value = "")
-                 ),
-                 conditionalPanel(
-                   condition = "input.study_filter_type == 'exclude_studies'",
-                   textInput("filter_exclude_keys", "Specify studies to exclude (comma-separated keys):", value = "")
-                 )
+        tabPanel(
+          "Studies",
+          selectInput(
+            "study_filter_type",
+            "Select filter type:",
+            choices = c(
+              "No filter" = "no_filter",
+              "Include specific studies" = "include_studies",
+              "Exclude specific studies" = "exclude_studies"
+            ),
+            selected = "no_filter"
+          ),
+
+          conditionalPanel(
+            condition = "input.study_filter_type == 'include_studies'",
+            textInput(
+              "filter_include_keys",
+              "Specify studies to include (comma-separated keys):",
+              value = ""
+            )
+          ),
+          conditionalPanel(
+            condition = "input.study_filter_type == 'exclude_studies'",
+            textInput(
+              "filter_exclude_keys",
+              "Specify studies to exclude (comma-separated keys):",
+              value = ""
+            )
+          )
         ),
-        tabPanel("Precision",
-                 selectInput("precision_filter", "Precision Filter:",
-                             choices = c("None", "Above", "Below", "Top Percentile", "Bottom Percentile")),
-                 conditionalPanel(
-                   condition = "input.precision_filter != 'None'",
-                   numericInput("precision_threshold", "Precision Threshold:", value = 0, min = 1),
-                   selectInput("precision_filter_method", "Precision Filter Method:",
-                               choices = c("All Data Points" = "all",
-                                           "By Period" = "by_period",
-                                           "By Model" = "by_model"))
-                 ),
-                 conditionalPanel(
-                   condition = "input.precision_filter != 'None' && input$precision_filter_method == 'by_model'",
-                   selectInput("model_precision", "Model Precision:",
-                               choices = c("Minimum" = "min", "Maximum" = "max", "Average" = "avg"),
-                               selected = "min")
-                 )
+        tabPanel(
+          "Precision",
+          selectInput(
+            "precision_filter",
+            "Precision Filter:",
+            choices = c(
+              "None",
+              "Above",
+              "Below",
+              "Top Percentile",
+              "Bottom Percentile"
+            )
+          ),
+          conditionalPanel(
+            condition = "input.precision_filter != 'None'",
+            numericInput(
+              "precision_threshold",
+              "Precision Threshold:",
+              value = 0,
+              min = 1
+            ),
+            selectInput(
+              "precision_filter_method",
+              "Precision Filter Method:",
+              choices = c(
+                "All Data Points" = "all",
+                "By Period" = "by_period",
+                "By Model" = "by_model"
+              )
+            )
+          ),
+          conditionalPanel(
+            condition = "input.precision_filter != 'None' && input$precision_filter_method == 'by_model'",
+            selectInput(
+              "model_precision",
+              "Model Precision:",
+              choices = c(
+                "Minimum" = "min",
+                "Maximum" = "max",
+                "Average" = "avg"
+              ),
+              selected = "min"
+            )
+          )
         ),
-        tabPanel("Publication Characteristics",
-                 sliderInput("pub_year", "Publication Year",
-                             min = min(data$pub_year, na.rm = TRUE),
-                             max = max(data$pub_year, na.rm = TRUE),
-                             value = c(min(data$pub_year, na.rm = TRUE), max(data$pub_year, na.rm = TRUE)),
-                             step = 1,
-                             sep = ""),
-                 plotOutput("pub_year_plot"),
-                 checkboxInput("journal_article", "Journal Article Only", value = FALSE)
+        tabPanel(
+          "Publication Characteristics",
+          sliderInput(
+            "pub_year",
+            "Publication Year",
+            min = min(data$pub_year, na.rm = TRUE),
+            max = max(data$pub_year, na.rm = TRUE),
+            value = c(
+              min(data$pub_year, na.rm = TRUE),
+              max(data$pub_year, na.rm = TRUE)
+            ),
+            step = 1,
+            sep = ""
+          ),
+          plotOutput("pub_year_plot"),
+          checkboxInput(
+            "journal_article",
+            "Journal Article Only",
+            value = FALSE
+          )
         )
       )
     ),
     mainPanel(
       tabsetPanel(
-        tabPanel("Plots",
-                 tabsetPanel(
-                   tabPanel("Basic plot of effects",
-                            fluidRow(
-                              # Add a new input for selecting the x-axis variable
-                              selectInput("x_axis_var", "X-Axis Variable:",
-                                          choices = c("In order of models" = "model_index",
-                                                      "In order of IRF periods" = "period_month"),
-                                          selected = "model_index"),
-                              column(12, plotlyOutput("meanEffectPlot")),
-                              column(12, checkboxInput("show_extreme_table", 'Show table of extreme value & potentially "explosive" IRFs', value = FALSE)),
-                              column(12, conditionalPanel(
-                                condition = "input.show_extreme_table == true",
-                                numericInput("filter_value", "Filter mean.effect greater than:", value = 100, min = 0),
-                                h3("Studies with extreme values:"),
-                                verbatimTextOutput("studyKeys_extreme"),
-                                dataTableOutput("extremeValueTable"),
-                                h3("Studies with max values in last period (potentially explosive):"),
-                                verbatimTextOutput("studyKeys_explosive"),
-                                dataTableOutput("maxLastPeriodTable")
-                              ))
-                            )
-                   ),
-                   tabPanel("Study IRFs",
-                            fluidRow(
-                              column(12,
-                                     textInput("study_keys", "Enter study keys (comma-separated)", value = "")
-                              ),
-                              column(12,
-                                     checkboxInput("show_approx_bounds", "Show approximated CI bounds", value = FALSE)
-                              ),
-                              column(12,
-                                     selectInput("selected_model", "Select a specific model", choices = NULL)
-                              )
-                            ),
-                            plotlyOutput("studyIRFsPlot"),
-                            checkboxInput("show_moderators", "Show study characteristics", value = FALSE),
-                            conditionalPanel(
-                              condition = "input.show_moderators == true",
-                              dataTableOutput("moderatorTable")
-                            )
-                   ),
-                   tabPanel("Average IRFs",
-                            fluidRow(
-                              column(12,
-                                     numericInput("period_limit", "Restrict period (months):", 
-                                                  value = max(data$period.month), 
-                                                  min = 1)
-                              ),
-                              column(12,
-                                     selectInput("selected_outcome_var", "Select outcome_var:", choices = c("All", unique(data$outcome_var)))
-                              ),
-                              column(12,
-                                     checkboxInput("random_model", "Include one random model per study", value = FALSE)
-                              ),
-                              column(12,
-                                     actionButton("redo_random", "Redo Random Selection")
-                              )
-                            ),
-                            plotlyOutput("averageIRFsPlot"),
-                            checkboxInput("irf_quarters_only", "Only show quarters", value = FALSE),
-                            checkboxInput("IRF_wins", "Winsorize?", value = FALSE),
-                            checkboxInput("show_corrected_irf", "Show Corrected IRF", value = FALSE),
-                            conditionalPanel(
-                              condition = "input.show_corrected_irf == true",
-                              h6("Quick selection"),
-                              fluidRow(
-                                column(12,
-                                       actionButton("unweighted_avg_irf", "Unweighted average"),
-                                       actionButton("uwls_irf", "UWLS"),
-                                       actionButton("waap_irf", "WAAP"),
-                                       actionButton("fat_pet_irf", "FAT-PET"),
-                                       actionButton("peese_irf", "PEESE"),
-                                       actionButton("ioannidis_irf", "Top 10% precision"),
-                                       actionButton("furukawa_irf", "Furukawa (2021) - stem", disabled = TRUE),
-                                       actionButton("bom_rachinger_irf", "Bom and Rachinger (2019) - endogenous kink"),
-                                       actionButton("andrews_kasy_irf", "Andrews and Kasy (2019)"),
-                                       actionButton("brodeur_2020_files_irf", "Brodeur (2020)", disabled = TRUE),
-                                       actionButton("maive_irf", "MAIVE", disabled = TRUE),
-                                       style = "margin-bottom: 15px;"
-                                )
-                              )
-                            ),
-                            checkboxInput("show_counts_plot", "Show Model/Study Counts Plot", value = FALSE),
-                            conditionalPanel(
-                              condition = "input.show_counts_plot == true",
-                              selectInput("plot_type", "Select Plot Type:",
-                                          choices = c("Model Counts" = "model", "Study Counts" = "study"),
-                                          selected = "model"),
-                              plotlyOutput("countsPlot")
-                            )
+        tabPanel(
+          "Plots",
+          tabsetPanel(
+            tabPanel(
+              "Basic plot of effects",
+              fluidRow(
+                # Add a new input for selecting the x-axis variable
+                selectInput(
+                  "x_axis_var",
+                  "X-Axis Variable:",
+                  choices = c(
+                    "In order of models" = "model_index",
+                    "In order of IRF periods" = "period_month"
                   ),
-                  tabPanel("Funnel Plot",
-                           br(),
-                           fluidRow(
-                             column(12,
-                                    fluidRow(
-                                      column(4,
-                                             numericInput("funnel_prd", "Period (Months):", value = 3, min = 0)
-                                      ),
-                                      column(4,
-                                             selectInput("funnel_se_option", "Standard Error Option:",
-                                                         choices = c("avg", "lower", "upper"))
-                                      ),
-                                      column(4,
-                                             numericInput("funnel_wins", "Winsorization Parameter:", value = 0, min = 0, max = 1, step = 0.01),
-                                             checkboxInput("ap", "Adequately powered (80% or more)", value = FALSE),
-                                             sliderInput("funnel_opac", "Opacity Parameter:", value = 0.12, min = 0.01, max = 0.5, step = 0.01)
-                                      )
-                                    ),
-                                    radioButtons("funnel_type", "Funnel type",
-                                                 choices = c("Standard" = "standard",
-                                                             "Andrews and Kasy" = "AK"),
-                                                 selected = "standard"),
-                                    conditionalPanel(
-                                      condition = "input.funnel_type == 'AK'",
-                                      checkboxGroupInput("AK_funnel_critvals", "Cutoffs for statistical significance",
-                                                         choices = list("68% CI" = 1, "90% CI" = 1.645, "95% CI" = 1.960, "99% CI" = 2.576),
-                                                         selected = 1),
-                                      checkboxInput("AK_outliers", "Andrews and Kasy outlier exclusion", value = FALSE)
-                                    ),
-                                    checkboxInput("show_additional_plots", "Show additional plots", value = FALSE),
-                                    conditionalPanel(
-                                      condition = "input.show_additional_plots == false",
-                                      plotlyOutput("funnel_plot")
-                                    ),
-                                    conditionalPanel(
-                                      condition = "input.show_additional_plots == true",
-                                      fluidRow(
-                                        column(4, plotlyOutput("funnel_plot_1")),
-                                        column(4, plotlyOutput("funnel_plot_2")),
-                                        column(4, plotlyOutput("funnel_plot_3"))
-                                      ),
-                                      fluidRow(
-                                        column(4, plotlyOutput("funnel_plot_4")),
-                                        column(4, plotlyOutput("funnel_plot_5")),
-                                        column(4, plotlyOutput("funnel_plot_6"))
-                                      ),
-                                      fluidRow(
-                                        column(4, plotlyOutput("funnel_plot_7")),
-                                        column(4, plotlyOutput("funnel_plot_8")),
-                                        column(4, plotlyOutput("funnel_plot_9"))
-                                      ),
-                                      fluidRow(
-                                        column(4, plotlyOutput("funnel_plot_10")),
-                                        column(4, plotlyOutput("funnel_plot_11")),
-                                        column(4, plotlyOutput("funnel_plot_12"))
-                                      ),
-                                      fluidRow(
-                                        column(4, plotlyOutput("funnel_plot_13")),
-                                        column(4, plotlyOutput("funnel_plot_14")),
-                                        column(4, plotlyOutput("funnel_plot_15")),
-                                        column(4, plotlyOutput("funnel_plot_16"))
-                                      )
-                                    )
-                                   )
-                             )
-                           ),
-                  tabPanel("Density plots",
-                           br(),
-                           wellPanel(helpText("Same options as in funnel plot tab")),
-                           conditionalPanel(
-                             condition = "input.show_additional_plots == false",
-                             plotlyOutput("AK_density")
-                           ),
-                           conditionalPanel(
-                             condition = "input.show_additional_plots == true",
-                             fluidRow(
-                               column(4, plotlyOutput("AK_density_1")),
-                               column(4, plotlyOutput("AK_density_2")),
-                               column(4, plotlyOutput("AK_density_3"))
-                             ),
-                             fluidRow(
-                               column(4, plotlyOutput("AK_density_4")),
-                               column(4, plotlyOutput("AK_density_5")),
-                               column(4, plotlyOutput("AK_density_6"))
-                             ),
-                             fluidRow(
-                               column(4, plotlyOutput("AK_density_7")),
-                               column(4, plotlyOutput("AK_density_8")),
-                               column(4, plotlyOutput("AK_density_9"))
-                             ),
-                             fluidRow(
-                               column(4, plotlyOutput("AK_density_10")),
-                               column(4, plotlyOutput("AK_density_11")),
-                               column(4, plotlyOutput("AK_density_12"))
-                             ),
-                             fluidRow(
-                               column(4, plotlyOutput("AK_density_13")),
-                               column(4, plotlyOutput("AK_density_14")),
-                               column(4, plotlyOutput("AK_density_15")),
-                               column(4, plotlyOutput("AK_density_16"))
-                             )
-                           )
-
-                  )
+                  selected = "period_month"
+                ),
+                column(12, plotlyOutput("meanEffectPlot")),
+                column(
+                  12,
+                  checkboxInput(
+                    "show_extreme_table",
+                    'Show high effect IRFs',
+                    value = FALSE
                   )
                 ),
-        tabPanel("Stats",
-                 tabsetPanel(
-                   tabPanel("Descriptive statistics",
-                            htmlOutput("moderator_summary")
-                   ),
-                   tabPanel("Meta-analysis",
-                            h6("Quick selection"),
-                            fluidRow(
-                              column(12,
-                                     actionButton("unweighted_avg", "Unweighted average"),
-                                     actionButton("uwls", "UWLS"),
-                                     actionButton("waap", "WAAP"),
-                                     actionButton("fat_pet", "FAT-PET"),
-                                     actionButton("peese", "PEESE"),
-                                     actionButton("ioannidis", "Top 10% precision"),
-                                     actionButton("furukawa", "Furukawa (2021) - stem", disabled = TRUE),
-                                     actionButton("bom_rachinger", "Bom and Rachinger (2019) - endogenous kink"),
-                                     actionButton("andrews_kasy", "Andrews and Kasy (2019)"),
-                                     actionButton("brodeur_2020_files", "Brodeur (2020)", disabled = TRUE),
-                                     actionButton("maive", "MAIVE", disabled = TRUE),
-                                     style = "margin-bottom: 15px;"
-                              )
-                            ),
-                            wellPanel(
-                              h6("Customize"),
-                              fluidRow(
-                                column(3,
-                                       selectInput("estimation", "Meta model:",
-                                                   choices = c("Mean", "UWLS", "FAT-PET", "PEESE", "EK", "AK"),
-                                                   selected = "Mean"),
-                                       checkboxInput("prec_weighted", "Precision weighted", value = FALSE),
-                                       conditionalPanel(
-                                         condition = "input.estimation == 'AK'",
-                                         helpText("The Andrews and Kasy method inherently accounts for estimate precision through its likelihood function, so manual precision weighting is not applicable.")
-                                       ),
-                                       selectInput("cluster_se", "Cluster SEs by study", 
-                                                   choices = c(FALSE, TRUE),
-                                                   selected = FALSE),
-                                       conditionalPanel(
-                                         condition = "input.cluster_se == true",
-                                         selectInput("hc_type", "HC Type:",
-                                                   choices = c("HC0" = "HC0", "HC1" = NULL, "HC2" = "HC2", "HC3" = "HC3"),
-                                                   selected = "HC1")
-                                       )
-                                ),
-                                column(9,
-                                       selectInput("mod_reg", "Select Moderators:",
-                                                   choices = moderator_groups,
-                                                   multiple = TRUE),
-                                       conditionalPanel(
-                                         condition = "input.estimation == 'EK'",
-                                         wellPanel(
-                                           selectInput("EK_sig", "Confidence band threshold", choices = c("68 %", "90 %", "95 %", "99 %"), selected = "95")
-                                         )
-                                       ),
-                                       conditionalPanel(
-                                         condition = "input.estimation == 'AK'",
-                                         wellPanel(
-                                           checkboxInput("symmetric", "Symmetric p(.)", value = FALSE),
-                                           radioButtons("modelmu", "Model for the distribution of effects",
-                                                        choices = c("Normal" = "normal",
-                                                                    "Student-t" = "t"),
-                                                        selected = "normal"),
-                                           checkboxGroupInput("cutoff_vals", "Cutoffs for statistical significance",
-                                                              choices = list("68% CI" = 1, "90% CI" = 1.645, "95% CI" = 1.960, "99% CI" = 2.576),
-                                                              selected = 1)
-                                         )
-                                       )
-                                )
-                              )
-                            ),
-                            uiOutput("equation_display"),
-                            conditionalPanel(
-                              condition = "input.estimation == 'AK'",
-                                wellPanel(helpText("We apply a custom calculation of confidence intervalls and p-values under normality assumptions for the AK method. We may want to check if this is adequate for their method."))
-                            ),
-                            htmlOutput("meta_analysis_table"),
-                            selectInput("stats", "Statistics:",
-                                        choices = list("Standard Error" = "se = {std.error}", 
-                                                       "Confidence Interval" = "conf.int"),
-                                        multiple = TRUE,
-                                        selected = ""),
-                            numericInput("conf_level", "Confidence Level:", value = 0.89, min = 0, max = 0.99, step = 0.01),
-                            selectInput("diagn", "Diagnostics:",
-                                        choices = list("Num.Obs" = "nobs",
-                                                       "All" = "all",
-                                                       "None" = "none"),
-                                        selected = "Num.Obs"),
-                            checkboxInput("stargaze", "Stargaze?", value = FALSE),
-                            checkboxInput("meta_modelplot", "Show model plot", value = FALSE),
-                            conditionalPanel(
-                              condition = "input.meta_modelplot == true",
-                              plotOutput("meta_analysis_plot_effect"),
-                              conditionalPanel(
-                                condition = "input.estimation != 'Mean' && input.estimation != 'UWLS'",
-                                plotOutput("meta_analysis_plot_pbias")
-                              ),
-                              conditionalPanel(
-                                condition = "input.estimation == 'AK'",
-                                plotOutput("meta_analysis_plot_AK_extra_coeff"),
-                              ),
-                              conditionalPanel(
-                                condition = "input.estimation == 'AK'",
-                                h4("Andrews & Kasy (2019) Plots"),
-                                uiOutput("ak_plots")
-                              )
-                            )
-                            )
-                   )
-                 )
+                column(
+                  12,
+                  conditionalPanel(
+                    condition = "input.show_extreme_table == true",
+                    numericInput(
+                      "filter_value",
+                      "Filter mean.effect greater than:",
+                      value = 25,
+                      min = 0
+                    ),
+                    h3("Studies with extreme values:"),
+                    verbatimTextOutput("studyKeys_extreme"),
+                    dataTableOutput("extremeValueTable"),
+                    h3(
+                      "Studies with max values in last period (potentially explosive):"
+                    ),
+                    verbatimTextOutput("studyKeys_explosive"),
+                    dataTableOutput("maxLastPeriodTable")
+                  )
+                )
+              )
+            ),
+            tabPanel(
+              "Study IRFs",
+              fluidRow(
+                column(
+                  12,
+                  textInput(
+                    "study_keys",
+                    "Enter study keys (comma-separated)",
+                    value = ""
+                  )
+                ),
+                column(
+                  12,
+                  checkboxInput(
+                    "show_approx_bounds",
+                    "Show approximated CI bounds",
+                    value = FALSE
+                  )
+                ),
+                column(
+                  12,
+                  selectInput(
+                    "selected_model",
+                    "Select a specific model",
+                    choices = NULL
+                  )
+                )
+              ),
+              plotlyOutput("studyIRFsPlot"),
+              checkboxInput(
+                "show_moderators",
+                "Show study characteristics",
+                value = FALSE
+              ),
+              conditionalPanel(
+                condition = "input.show_moderators == true",
+                dataTableOutput("moderatorTable")
+              )
+            ),
+            tabPanel(
+              "Average IRFs",
+              fluidRow(
+                column(
+                  12,
+                  numericInput(
+                    "period_limit",
+                    "Restrict period (months):",
+                    value = max(data$period.month),
+                    min = 1
+                  )
+                ),
+                column(
+                  12,
+                  selectInput(
+                    "selected_outcome_var",
+                    "Select outcome_var:",
+                    choices = c("All", unique(data$outcome_var))
+                  )
+                ),
+                column(
+                  12,
+                  checkboxInput(
+                    "random_model",
+                    "Include one random model per study",
+                    value = FALSE
+                  )
+                ),
+                column(12, actionButton("redo_random", "Redo Random Selection"))
+              ),
+              plotlyOutput("averageIRFsPlot"),
+              checkboxInput(
+                "irf_quarters_only",
+                "Only show quarters",
+                value = FALSE
+              ),
+              checkboxInput("show_median", "Show Median", value = FALSE),
+              checkboxInput("IRF_wins", "Winsorize?", value = FALSE),
+              checkboxInput(
+                "show_corrected_irf",
+                "Show Corrected IRF",
+                value = FALSE
+              ),
+              conditionalPanel(
+                condition = "input.show_corrected_irf == true",
+                h6("Quick selection"),
+                fluidRow(
+                  column(
+                    12,
+                    actionButton("unweighted_avg_irf", "Unweighted average"),
+                    actionButton("uwls_irf", "UWLS"),
+                    actionButton("waap_irf", "WAAP"),
+                    actionButton("fat_pet_irf", "FAT-PET"),
+                    actionButton("peese_irf", "PEESE"),
+                    actionButton("ioannidis_irf", "Top 10% precision"),
+                    actionButton(
+                      "furukawa_irf",
+                      "Furukawa (2021) - stem",
+                      disabled = TRUE
+                    ),
+                    actionButton(
+                      "bom_rachinger_irf",
+                      "Bom and Rachinger (2019) - endogenous kink"
+                    ),
+                    actionButton("andrews_kasy_irf", "Andrews and Kasy (2019)"),
+                    actionButton(
+                      "brodeur_2020_files_irf",
+                      "Brodeur (2020)",
+                      disabled = TRUE
+                    ),
+                    actionButton("maive_irf", "MAIVE", disabled = TRUE),
+                    style = "margin-bottom: 15px;"
+                  )
+                )
+              ),
+              checkboxInput(
+                "show_counts_plot",
+                "Show Model/Study Counts Plot",
+                value = FALSE
+              ),
+              conditionalPanel(
+                condition = "input.show_counts_plot == true",
+                selectInput(
+                  "plot_type",
+                  "Select Plot Type:",
+                  choices = c(
+                    "Model Counts" = "model",
+                    "Study Counts" = "study"
+                  ),
+                  selected = "model"
+                ),
+                plotlyOutput("countsPlot")
+              )
+            ),
+            tabPanel(
+              "Funnel Plot",
+              br(),
+              fluidRow(
+                column(
+                  12,
+                  fluidRow(
+                    column(
+                      4,
+                      numericInput(
+                        "funnel_prd",
+                        "Period (Months):",
+                        value = 3,
+                        min = 0
+                      )
+                    ),
+                    column(
+                      4,
+                      selectInput(
+                        "funnel_se_option",
+                        "Standard Error Option:",
+                        choices = c("avg", "lower", "upper")
+                      )
+                    ),
+                    column(
+                      4,
+                      numericInput(
+                        "funnel_wins",
+                        "Winsorization Parameter:",
+                        value = 0,
+                        min = 0,
+                        max = 1,
+                        step = 0.01
+                      ),
+                      checkboxInput(
+                        "ap",
+                        "Adequately powered (80% or more)",
+                        value = FALSE
+                      ),
+                      sliderInput(
+                        "funnel_opac",
+                        "Opacity Parameter:",
+                        value = 0.12,
+                        min = 0.01,
+                        max = 0.5,
+                        step = 0.01
+                      )
+                    )
+                  ),
+                  radioButtons(
+                    "funnel_type",
+                    "Funnel type",
+                    choices = c(
+                      "Standard" = "standard",
+                      "Andrews and Kasy" = "AK"
+                    ),
+                    selected = "standard"
+                  ),
+                  conditionalPanel(
+                    condition = "input.funnel_type == 'AK'",
+                    checkboxGroupInput(
+                      "AK_funnel_critvals",
+                      "Cutoffs for statistical significance",
+                      choices = list(
+                        "68% CI" = 1,
+                        "90% CI" = 1.645,
+                        "95% CI" = 1.960,
+                        "99% CI" = 2.576
+                      ),
+                      selected = 1
+                    ),
+                    checkboxInput(
+                      "AK_outliers",
+                      "Andrews and Kasy outlier exclusion",
+                      value = FALSE
+                    )
+                  ),
+                  checkboxInput(
+                    "show_additional_plots",
+                    "Show additional plots",
+                    value = FALSE
+                  ),
+                  conditionalPanel(
+                    condition = "input.show_additional_plots == false",
+                    plotlyOutput("funnel_plot")
+                  ),
+                  conditionalPanel(
+                    condition = "input.show_additional_plots == true",
+                    fluidRow(
+                      column(4, plotlyOutput("funnel_plot_1")),
+                      column(4, plotlyOutput("funnel_plot_2")),
+                      column(4, plotlyOutput("funnel_plot_3"))
+                    ),
+                    fluidRow(
+                      column(4, plotlyOutput("funnel_plot_4")),
+                      column(4, plotlyOutput("funnel_plot_5")),
+                      column(4, plotlyOutput("funnel_plot_6"))
+                    ),
+                    fluidRow(
+                      column(4, plotlyOutput("funnel_plot_7")),
+                      column(4, plotlyOutput("funnel_plot_8")),
+                      column(4, plotlyOutput("funnel_plot_9"))
+                    ),
+                    fluidRow(
+                      column(4, plotlyOutput("funnel_plot_10")),
+                      column(4, plotlyOutput("funnel_plot_11")),
+                      column(4, plotlyOutput("funnel_plot_12"))
+                    ),
+                    fluidRow(
+                      column(4, plotlyOutput("funnel_plot_13")),
+                      column(4, plotlyOutput("funnel_plot_14")),
+                      column(4, plotlyOutput("funnel_plot_15")),
+                      column(4, plotlyOutput("funnel_plot_16"))
+                    )
+                  )
+                )
+              )
+            ),
+            tabPanel(
+              "Density plots",
+              br(),
+              wellPanel(helpText("Same options as in funnel plot tab")),
+              conditionalPanel(
+                condition = "input.show_additional_plots == false",
+                plotlyOutput("AK_density")
+              ),
+              conditionalPanel(
+                condition = "input.show_additional_plots == true",
+                fluidRow(
+                  column(4, plotlyOutput("AK_density_1")),
+                  column(4, plotlyOutput("AK_density_2")),
+                  column(4, plotlyOutput("AK_density_3"))
+                ),
+                fluidRow(
+                  column(4, plotlyOutput("AK_density_4")),
+                  column(4, plotlyOutput("AK_density_5")),
+                  column(4, plotlyOutput("AK_density_6"))
+                ),
+                fluidRow(
+                  column(4, plotlyOutput("AK_density_7")),
+                  column(4, plotlyOutput("AK_density_8")),
+                  column(4, plotlyOutput("AK_density_9"))
+                ),
+                fluidRow(
+                  column(4, plotlyOutput("AK_density_10")),
+                  column(4, plotlyOutput("AK_density_11")),
+                  column(4, plotlyOutput("AK_density_12"))
+                ),
+                fluidRow(
+                  column(4, plotlyOutput("AK_density_13")),
+                  column(4, plotlyOutput("AK_density_14")),
+                  column(4, plotlyOutput("AK_density_15")),
+                  column(4, plotlyOutput("AK_density_16"))
+                )
+              )
+            )
+          )
+        ),
+        tabPanel(
+          "Stats",
+          tabsetPanel(
+            tabPanel("Descriptive statistics", htmlOutput("moderator_summary")),
+            tabPanel(
+              "Meta-analysis",
+              h6("Quick selection"),
+              fluidRow(
+                column(
+                  12,
+                  actionButton("unweighted_avg", "Unweighted average"),
+                  actionButton("uwls", "UWLS"),
+                  actionButton("waap", "WAAP"),
+                  actionButton("fat_pet", "FAT-PET"),
+                  actionButton("peese", "PEESE"),
+                  actionButton("ioannidis", "Top 10% precision"),
+                  actionButton(
+                    "furukawa",
+                    "Furukawa (2021) - stem",
+                    disabled = TRUE
+                  ),
+                  actionButton(
+                    "bom_rachinger",
+                    "Bom and Rachinger (2019) - endogenous kink"
+                  ),
+                  actionButton("andrews_kasy", "Andrews and Kasy (2019)"),
+                  actionButton(
+                    "brodeur_2020_files",
+                    "Brodeur (2020)",
+                    disabled = TRUE
+                  ),
+                  actionButton("maive", "MAIVE", disabled = TRUE),
+                  style = "margin-bottom: 15px;"
+                )
+              ),
+              wellPanel(
+                h6("Customize"),
+                fluidRow(
+                  column(
+                    3,
+                    selectInput(
+                      "estimation",
+                      "Meta model:",
+                      choices = c(
+                        "Mean",
+                        "UWLS",
+                        "FAT-PET",
+                        "PEESE",
+                        "EK",
+                        "AK"
+                      ),
+                      selected = "Mean"
+                    ),
+                    checkboxInput(
+                      "prec_weighted",
+                      "Precision weighted",
+                      value = FALSE
+                    ),
+                    conditionalPanel(
+                      condition = "input.estimation == 'AK'",
+                      helpText(
+                        "The Andrews and Kasy method inherently accounts for estimate precision through its likelihood function, so manual precision weighting is not applicable."
+                      )
+                    ),
+                    selectInput(
+                      "cluster_se",
+                      "Cluster SEs by study",
+                      choices = c(FALSE, TRUE),
+                      selected = FALSE
+                    ),
+                    conditionalPanel(
+                      condition = "input.cluster_se == true",
+                      selectInput(
+                        "hc_type",
+                        "HC Type:",
+                        choices = c(
+                          "HC0" = "HC0",
+                          "HC1" = NULL,
+                          "HC2" = "HC2",
+                          "HC3" = "HC3"
+                        ),
+                        selected = "HC1"
+                      )
+                    )
+                  ),
+                  column(
+                    9,
+                    selectInput(
+                      "mod_reg",
+                      "Select Moderators:",
+                      choices = moderator_groups,
+                      multiple = TRUE
+                    ),
+                    conditionalPanel(
+                      condition = "input.estimation == 'EK'",
+                      wellPanel(
+                        selectInput(
+                          "EK_sig",
+                          "Confidence band threshold",
+                          choices = c("68 %", "90 %", "95 %", "99 %"),
+                          selected = "95"
+                        )
+                      )
+                    ),
+                    conditionalPanel(
+                      condition = "input.estimation == 'AK'",
+                      wellPanel(
+                        checkboxInput(
+                          "symmetric",
+                          "Symmetric p(.)",
+                          value = FALSE
+                        ),
+                        radioButtons(
+                          "modelmu",
+                          "Model for the distribution of effects",
+                          choices = c("Normal" = "normal", "Student-t" = "t"),
+                          selected = "normal"
+                        ),
+                        checkboxGroupInput(
+                          "cutoff_vals",
+                          "Cutoffs for statistical significance",
+                          choices = list(
+                            "68% CI" = 1,
+                            "90% CI" = 1.645,
+                            "95% CI" = 1.960,
+                            "99% CI" = 2.576
+                          ),
+                          selected = 1
+                        )
+                      )
+                    )
+                  )
+                )
+              ),
+              uiOutput("equation_display"),
+              conditionalPanel(
+                condition = "input.estimation == 'AK'",
+                wellPanel(helpText(
+                  "We apply a custom calculation of confidence intervalls and p-values under normality assumptions for the AK method. We may want to check if this is adequate for their method."
+                ))
+              ),
+              htmlOutput("meta_analysis_table"),
+              selectInput(
+                "stats",
+                "Statistics:",
+                choices = list(
+                  "Standard Error" = "se = {std.error}",
+                  "Confidence Interval" = "conf.int"
+                ),
+                multiple = TRUE,
+                selected = ""
+              ),
+              numericInput(
+                "conf_level",
+                "Confidence Level:",
+                value = 0.89,
+                min = 0,
+                max = 0.99,
+                step = 0.01
+              ),
+              selectInput(
+                "diagn",
+                "Diagnostics:",
+                choices = list(
+                  "Num.Obs" = "nobs",
+                  "All" = "all",
+                  "None" = "none"
+                ),
+                selected = "Num.Obs"
+              ),
+              checkboxInput("stargaze", "Stargaze?", value = FALSE),
+              checkboxInput("meta_modelplot", "Show model plot", value = FALSE),
+              conditionalPanel(
+                condition = "input.meta_modelplot == true",
+                plotOutput("meta_analysis_plot_effect"),
+                conditionalPanel(
+                  condition = "input.estimation != 'Mean' && input.estimation != 'UWLS'",
+                  plotOutput("meta_analysis_plot_pbias")
+                ),
+                conditionalPanel(
+                  condition = "input.estimation == 'AK'",
+                  plotOutput("meta_analysis_plot_AK_extra_coeff"),
+                ),
+                conditionalPanel(
+                  condition = "input.estimation == 'AK'",
+                  h4("Andrews & Kasy (2019) Plots"),
+                  uiOutput("ak_plots")
+                )
+              )
+            )
+          )
+        )
       ),
     )
   )
 )
 
 server <- function(input, output, session) {
-  
   # Sidebar filters
   filtered_data_no_years <- reactive({
     data_filtered <- data
-    
+
     # Country filters
     if (input$filter_country != "All") {
-      data_filtered <- data_filtered %>% filter(list_of_countries == input$filter_country)
+      data_filtered <- data_filtered %>%
+        filter(list_of_countries == input$filter_country)
     }
-    
+
     if (input$one_country != "") {
       data_filtered <- one_country(data_filtered, input$one_country)
     }
-    
+
     if (input$country_in_sample != "") {
       data_filtered <- country_in_sample(data_filtered, input$country_in_sample)
     }
-    
+
     if (input$country_group_only != "") {
       countries <- strsplit(input$country_group_only, ",")[[1]]
       data_filtered <- country_group_only(data_filtered, countries)
     }
-    
+
     if (input$country_group_in_sample != "") {
       countries <- strsplit(input$country_group_in_sample, ",")[[1]]
       data_filtered <- country_group_in_sample(data_filtered, countries)
     }
-    
+
     if (input$exclude_countries != "") {
       countries <- strsplit(input$exclude_countries, ",")[[1]]
       data_filtered <- exclude_countries(data_filtered, countries)
     }
-    
+
     # Outcome variable filter
     if (input$filter_outcome != "All") {
       data_filtered <- data_filtered %>% filter(outcome == input$filter_outcome)
     }
-    
+
     # Outcome variable filter
     if (input$filter_outcome != "All" & input$filter_outcome_measure != "All") {
-      data_filtered <- data_filtered %>% filter(outcome_measure == input$filter_outcome_measure)
+      data_filtered <- data_filtered %>%
+        filter(outcome_measure == input$filter_outcome_measure)
     }
-    
+
     # Transformation filter
     if (input$filter_transformation != "All") {
-      data_filtered <- data_filtered %>% filter(transformation == input$filter_transformation)
+      data_filtered <- data_filtered %>%
+        filter(transformation == input$filter_transformation)
     }
-    
+
     # Periodicity filter
     if (input$filter_periodicity != "All") {
-      data_filtered <- data_filtered %>% filter(periodicity == input$filter_periodicity)
+      data_filtered <- data_filtered %>%
+        filter(periodicity == input$filter_periodicity)
     }
-    
+
     # Include or exclude specific studies based on the selected study filter type
     if (input$study_filter_type == "include_studies") {
       if (input$filter_include_keys != "") {
@@ -563,7 +984,7 @@ server <- function(input, output, session) {
         data_filtered <- data_filtered %>% filter(!(key %in% exclude_keys))
       }
     }
-    
+
     # Moderator filters
     # Include
     if (!is.null(input$include_filter)) {
@@ -586,117 +1007,218 @@ server <- function(input, output, session) {
       }
       data_filtered <- random_data()
     }
-    
+
     # Precision filtering
     if (input$precision_filter != "None") {
       data_filtered <- precision_filter(
         data = data_filtered,
         precision_filter = input$precision_filter,
-        precision_col = switch(input$funnel_se_option,
-                               "avg" = "precision.avg",
-                               "lower" = "precision.lower",
-                               "upper" = "precision.upper"),
+        precision_col = switch(
+          input$funnel_se_option,
+          "avg" = "precision.avg",
+          "lower" = "precision.lower",
+          "upper" = "precision.upper"
+        ),
         threshold = input$precision_threshold,
         method = input$precision_filter_method,
         model_precision = input$model_precision
       )
     }
-    
+
     # Publication year filter
     # data_filtered <- data_filtered %>%
     #   filter(pub_year >= input$pub_year[1] & pub_year <= input$pub_year[2])
-    
+
     # Journal filter
     # if (input$journal_article) {
     #   data_filtered <- data_filtered %>% filter(type == "journalArticle")
     # }
-    
+
     return(data_filtered)
   })
-  
+
   # Apply sample start & end filter after other filtering
   filtered_data <- reactive({
-
-      data_filtered <- filtered_data_no_years() %>%
+    data_filtered <- filtered_data_no_years() %>%
       filter(start_year >= input$filter_years[1]) %>%
       filter(end_year <= input$filter_years[2])
-    
+
     return(data_filtered)
   })
-  
+
   # Data summary
-  output$filteredDataSummary <- renderTable({
-    filtered_data_summary(filtered_data())
-    }, align = "l")
+  output$filteredDataSummary <- renderTable(
+    {
+      filtered_data_summary(filtered_data())
+    },
+    align = "l"
+  )
   # Filter summary
   filterSummary <- reactive({
     summary <- "Filter summary:\n"
-    
+
     # Response variable filters summary
     if (input$filter_outcome != "All") {
-      summary <- paste0(summary, "Response Variable: ", input$filter_outcome, "\n")
+      summary <- paste0(
+        summary,
+        "Response Variable: ",
+        input$filter_outcome,
+        "\n"
+      )
     }
     if (input$filter_transformation != "All") {
-      summary <- paste0(summary, "  Transformation: ", input$filter_transformation, "\n")
+      summary <- paste0(
+        summary,
+        "  Transformation: ",
+        input$filter_transformation,
+        "\n"
+      )
     }
     if (input$filter_periodicity != "All") {
-      summary <- paste0(summary, "  Periodicity: ", input$filter_periodicity, "\n")
+      summary <- paste0(
+        summary,
+        "  Periodicity: ",
+        input$filter_periodicity,
+        "\n"
+      )
     }
     if (input$filter_outcome_measure != "All") {
-      summary <- paste0(summary, "  Outcome Measure: ", input$filter_outcome_measure, "\n")
+      summary <- paste0(
+        summary,
+        "  Outcome Measure: ",
+        input$filter_outcome_measure,
+        "\n"
+      )
     }
 
     # Country filters summary
     if (input$country_filter_type != "all") {
-      if (input$country_filter_type == "specific_country" && input$filter_country != "All") {
+      if (
+        input$country_filter_type == "specific_country" &&
+          input$filter_country != "All"
+      ) {
         summary <- paste0(summary, "\nCountries: ", input$filter_country, "\n")
-      } else if (input$country_filter_type == "one_country" && input$one_country != "") {
+      } else if (
+        input$country_filter_type == "one_country" && input$one_country != ""
+      ) {
         summary <- paste0(summary, "\nOne Country: ", input$one_country, "\n")
-      } else if (input$country_filter_type == "country_in_sample" && input$country_in_sample != "") {
-        summary <- paste0(summary, "\nCountry in Sample: ", input$country_in_sample, "\n")
-      } else if (input$country_filter_type == "country_group_only" && input$country_group_only != "") {
-        summary <- paste0(summary, "\nCountry Group Only: ", input$country_group_only, "\n")
-      } else if (input$country_filter_type == "country_group_in_sample" && input$country_group_in_sample != "") {
-        summary <- paste0(summary, "\nCountry Group in Sample: ", input$country_group_in_sample, "\n")
-      } else if (input$country_filter_type == "exclude_countries" && input$exclude_countries != "") {
-        summary <- paste0(summary, "\nExcluded Countries: ", input$exclude_countries, "\n")
+      } else if (
+        input$country_filter_type == "country_in_sample" &&
+          input$country_in_sample != ""
+      ) {
+        summary <- paste0(
+          summary,
+          "\nCountry in Sample: ",
+          input$country_in_sample,
+          "\n"
+        )
+      } else if (
+        input$country_filter_type == "country_group_only" &&
+          input$country_group_only != ""
+      ) {
+        summary <- paste0(
+          summary,
+          "\nCountry Group Only: ",
+          input$country_group_only,
+          "\n"
+        )
+      } else if (
+        input$country_filter_type == "country_group_in_sample" &&
+          input$country_group_in_sample != ""
+      ) {
+        summary <- paste0(
+          summary,
+          "\nCountry Group in Sample: ",
+          input$country_group_in_sample,
+          "\n"
+        )
+      } else if (
+        input$country_filter_type == "exclude_countries" &&
+          input$exclude_countries != ""
+      ) {
+        summary <- paste0(
+          summary,
+          "\nExcluded Countries: ",
+          input$exclude_countries,
+          "\n"
+        )
       }
     }
-    
+
     # Moderator filters summary
     # Include summary
     if (length(input$include_filter) > 0) {
       summary <- paste0(summary, "\nRequired Moderators:\n")
-      
+
       for (group in names(moderator_groups)) {
-        included_moderators <- intersect(input$include_filter, moderator_groups[[group]])
+        included_moderators <- intersect(
+          input$include_filter,
+          moderator_groups[[group]]
+        )
         if (length(included_moderators) > 0) {
-          summary <- paste0(summary, "  ", group, ": ", paste(included_moderators, collapse = ", "), "\n")
+          summary <- paste0(
+            summary,
+            "  ",
+            group,
+            ": ",
+            paste(included_moderators, collapse = ", "),
+            "\n"
+          )
         }
       }
     }
     # Exclude summary
     if (length(input$exclude_filter) > 0) {
       summary <- paste0(summary, "\nExcluded Moderators:\n")
-      
+
       for (group in names(moderator_groups)) {
-        excluded_moderators <- intersect(input$exclude_filter, moderator_groups[[group]])
+        excluded_moderators <- intersect(
+          input$exclude_filter,
+          moderator_groups[[group]]
+        )
         if (length(excluded_moderators) > 0) {
-          summary <- paste0(summary, "  ", group, ": ", paste(excluded_moderators, collapse = ", "), "\n")
+          summary <- paste0(
+            summary,
+            "  ",
+            group,
+            ": ",
+            paste(excluded_moderators, collapse = ", "),
+            "\n"
+          )
         }
       }
     }
-    
+
     # Precision filter summary
     if (input$precision_filter != "None") {
-      summary <- paste0(summary, "\nPrecision Filter: ", input$precision_filter, "\n")
-      summary <- paste0(summary, "  Threshold: ", input$precision_threshold, "\n")
-      summary <- paste0(summary, "  Method: ", input$precision_filter_method, "\n")
+      summary <- paste0(
+        summary,
+        "\nPrecision Filter: ",
+        input$precision_filter,
+        "\n"
+      )
+      summary <- paste0(
+        summary,
+        "  Threshold: ",
+        input$precision_threshold,
+        "\n"
+      )
+      summary <- paste0(
+        summary,
+        "  Method: ",
+        input$precision_filter_method,
+        "\n"
+      )
       if (input$precision_filter_method == "by_model") {
-        summary <- paste0(summary, "  Model Precision: ", input$model_precision, "\n")
+        summary <- paste0(
+          summary,
+          "  Model Precision: ",
+          input$model_precision,
+          "\n"
+        )
       }
     }
-    
+
     # Available start and end year summary based on current filter selection (excluding year filter)
     min_start_year <- min(filtered_data_no_years()$start_year, na.rm = TRUE)
     max_start_year <- max(filtered_data_no_years()$start_year, na.rm = TRUE)
@@ -705,12 +1227,28 @@ server <- function(input, output, session) {
     # Selected start and end year summary
     selected_start_year <- input$filter_years[1]
     selected_end_year <- input$filter_years[2]
-    summary <- paste0(summary, "\nSelected year range: ", selected_start_year, "(min ", min_start_year, ", max ", max_start_year, ")", " - ", selected_end_year, "(min ", min_end_year, ", max ", max_end_year, ")")
-    
+    summary <- paste0(
+      summary,
+      "\nSelected year range: ",
+      selected_start_year,
+      "(min ",
+      min_start_year,
+      ", max ",
+      max_start_year,
+      ")",
+      " - ",
+      selected_end_year,
+      "(min ",
+      min_end_year,
+      ", max ",
+      max_end_year,
+      ")"
+    )
+
     # Publication year summary
     # full_min_year <- min(data$pub_year, na.rm = TRUE)
     # full_max_year <- max(data$pub_year, na.rm = TRUE)
-    # 
+    #
     # if (input$pub_year[1] > full_min_year || input$pub_year[2] < full_max_year) {
     #   summary <- paste0(summary, "\nPublication Years: ", input$pub_year[1], " - ", input$pub_year[2], "\n")
     # }
@@ -720,112 +1258,167 @@ server <- function(input, output, session) {
   output$filterSummary <- renderText({
     filterSummary()
   })
-  
+
   # Update years filter values
   observe({
-    if (input$filter_years[1] < min(filtered_data_no_years()$start_year, na.rm = TRUE)) {
-      updateSliderInput(session, "filter_years",
-                        value = c(min(filtered_data_no_years()$start_year, na.rm = TRUE),
-                                  input$filter_years[2]))
+    if (
+      input$filter_years[1] <
+        min(filtered_data_no_years()$start_year, na.rm = TRUE)
+    ) {
+      updateSliderInput(
+        session,
+        "filter_years",
+        value = c(
+          min(filtered_data_no_years()$start_year, na.rm = TRUE),
+          input$filter_years[2]
+        )
+      )
     }
-    if (input$filter_years[2] > max(filtered_data_no_years()$end_year, na.rm = TRUE)) {
-      updateSliderInput(session, "filter_years",
-                        value = c(input$filter_years[1],
-                                  max(filtered_data_no_years()$end_year, na.rm = TRUE)))
+    if (
+      input$filter_years[2] >
+        max(filtered_data_no_years()$end_year, na.rm = TRUE)
+    ) {
+      updateSliderInput(
+        session,
+        "filter_years",
+        value = c(
+          input$filter_years[1],
+          max(filtered_data_no_years()$end_year, na.rm = TRUE)
+        )
+      )
     }
   })
-  
-  # Show a message for year range 
-  observe({
 
-    if (input$filter_years[1] > min(filtered_data_no_years()$start_year, na.rm = TRUE) | input$filter_years[2] < max(filtered_data_no_years()$end_year, na.rm = TRUE)) {
-      
+  # Show a message for year range
+  observe({
+    if (
+      input$filter_years[1] >
+        min(filtered_data_no_years()$start_year, na.rm = TRUE) |
+        input$filter_years[2] <
+          max(filtered_data_no_years()$end_year, na.rm = TRUE)
+    ) {
       showNotification(
         "Restricted sample years",
         type = "warning",
         closeButton = TRUE,
         duration = 5
       )
-      
-    } else if (input$filter_years[1] == min(filtered_data_no_years()$start_year, na.rm = TRUE) | input$filter_years[2] == max(filtered_data_no_years()$end_year, na.rm = TRUE)) {
-      
+    } else if (
+      input$filter_years[1] ==
+        min(filtered_data_no_years()$start_year, na.rm = TRUE) |
+        input$filter_years[2] ==
+          max(filtered_data_no_years()$end_year, na.rm = TRUE)
+    ) {
       showNotification(
         "Unrestricted sample years.",
         type = "message",
         closeButton = TRUE,
         duration = 5
       )
-      
     }
-    
   })
   # Add filter_years reset button
   output$reset_button <- renderUI({
     min_start_year <- min(filtered_data_no_years()$start_year, na.rm = TRUE)
     max_end_year <- max(filtered_data_no_years()$end_year, na.rm = TRUE)
-    
-    if (input$filter_years[1] > min_start_year || input$filter_years[2] < max_end_year) {
-      actionButton("reset_years", "Reset to maximal range", class = "btn-warning")
+
+    if (
+      input$filter_years[1] > min_start_year ||
+        input$filter_years[2] < max_end_year
+    ) {
+      actionButton(
+        "reset_years",
+        "Reset to maximal range",
+        class = "btn-warning"
+      )
     }
   })
   observeEvent(input$reset_years, {
     min_start_year <- min(filtered_data_no_years()$start_year, na.rm = TRUE)
     max_end_year <- max(filtered_data_no_years()$end_year, na.rm = TRUE)
-    
-    updateSliderInput(session, "filter_years",
-                      value = c(min_start_year, max_end_year))
+
+    updateSliderInput(
+      session,
+      "filter_years",
+      value = c(min_start_year, max_end_year)
+    )
   })
-  
+
   # Update exclude_filter when include_filter changes
   observeEvent(input$include_filter, {
-    updateSelectInput(session, "exclude_filter",
-                      selected = setdiff(input$exclude_filter, input$include_filter))
+    updateSelectInput(
+      session,
+      "exclude_filter",
+      selected = setdiff(input$exclude_filter, input$include_filter)
+    )
   })
-  
+
   # Update include_filter when exclude_filter changes
   observeEvent(input$exclude_filter, {
-    updateSelectInput(session, "include_filter",
-                      selected = setdiff(input$include_filter, input$exclude_filter))
+    updateSelectInput(
+      session,
+      "include_filter",
+      selected = setdiff(input$include_filter, input$exclude_filter)
+    )
   })
-  
+
   # Update exclude_filter based on the frequency selection in include_filter
   observeEvent(input$include_filter, {
     frequency_values <- c("quarter", "month", "annual")
     selected_frequency <- intersect(input$include_filter, frequency_values)
-    
+
     if (length(selected_frequency) > 0) {
       excluded_frequency <- setdiff(frequency_values, selected_frequency)
-      updateSelectInput(session, "exclude_filter",
-                        selected = union(input$exclude_filter, excluded_frequency))
+      updateSelectInput(
+        session,
+        "exclude_filter",
+        selected = union(input$exclude_filter, excluded_frequency)
+      )
     }
   })
-  
+
   # Updating outcome_measure, transformation and periodicity filtering options
   # Updating filter_outcome_measure
   observe({
     if (input$filter_outcome != "All") {
-      outcome_measures <- c("All", unique(data$outcome_measure[data$outcome == input$filter_outcome]))
+      outcome_measures <- c(
+        "All",
+        unique(data$outcome_measure[data$outcome == input$filter_outcome])
+      )
     } else {
       outcome_measures <- c("All", unique(data$outcome_measure))
     }
-    updateSelectInput(session, "filter_outcome_measure", choices = outcome_measures, selected = input$filter_outcome_measure)
+    updateSelectInput(
+      session,
+      "filter_outcome_measure",
+      choices = outcome_measures,
+      selected = input$filter_outcome_measure
+    )
   })
   # Updating filter_transformation
   observe({
     if (input$filter_outcome != "All") {
-      transformations <- c("All", unique(data$transformation[data$outcome == input$filter_outcome]))
+      transformations <- c(
+        "All",
+        unique(data$transformation[data$outcome == input$filter_outcome])
+      )
     } else {
       transformations <- c("All", unique(data$transformation))
     }
-    updateSelectInput(session, "filter_transformation", choices = transformations, selected = input$filter_transformation)
+    updateSelectInput(
+      session,
+      "filter_transformation",
+      choices = transformations,
+      selected = input$filter_transformation
+    )
   })
-  
+
   random_data <- reactiveVal(NULL)
-  
+
   observeEvent(input$redo_random, {
     random_data(NULL)
   })
-  
+
   # Country filter reset when selected filter changes
   observeEvent(input$country_filter_type, {
     if (input$country_filter_type != "specific_country") {
@@ -847,33 +1440,55 @@ server <- function(input, output, session) {
       updateTextInput(session, "exclude_countries", value = "")
     }
   })
-  
+
   # Update precision_threshold input based on selection in precision_filter
   observe({
     if (input$precision_filter == "Above") {
-      updateNumericInput(session, "precision_threshold",
-                         label = "Precision Threshold (Minimum):",
-                         value = 0, min = 1)
+      updateNumericInput(
+        session,
+        "precision_threshold",
+        label = "Precision Threshold (Minimum):",
+        value = 0,
+        min = 1
+      )
     } else if (input$precision_filter == "Below") {
-      updateNumericInput(session, "precision_threshold",
-                         label = "Precision Threshold (Maximum):",
-                         value = 10000, min = 1)
+      updateNumericInput(
+        session,
+        "precision_threshold",
+        label = "Precision Threshold (Maximum):",
+        value = 10000,
+        min = 1
+      )
     } else if (input$precision_filter == "Top Percentile") {
-      updateNumericInput(session, "precision_threshold",
-                         label = "Top Percentile (%):",
-                         value = 10, min = 0, max = 100)
+      updateNumericInput(
+        session,
+        "precision_threshold",
+        label = "Top Percentile (%):",
+        value = 10,
+        min = 0,
+        max = 100
+      )
     } else if (input$precision_filter == "Bottom Percentile") {
-      updateNumericInput(session, "precision_threshold",
-                         label = "Bottom Percentile (%):",
-                         value = 90, min = 0, max = 100)
+      updateNumericInput(
+        session,
+        "precision_threshold",
+        label = "Bottom Percentile (%):",
+        value = 90,
+        min = 0,
+        max = 100
+      )
     }
   })
-  
+
   # Basic plot of effects
   output$meanEffectPlot <- renderPlotly({
-    plot_mean_effect(filtered_data(), filter_outcome = input$filter_outcome, x_axis = input$x_axis_var)
+    plot_mean_effect(
+      filtered_data(),
+      filter_outcome = input$filter_outcome,
+      x_axis = input$x_axis_var
+    )
   })
-  
+
   # Extreme data table
   extreme_data <- reactive({
     filtered_data() %>%
@@ -882,89 +1497,131 @@ server <- function(input, output, session) {
       summarise(most.extreme.value = max(mean.effect, na.rm = TRUE)) %>%
       ungroup()
   })
-  
-  output$extremeValueTable <- renderDataTable({
-    extreme_data()
-  }, options = list(pageLength = 10))
-  
+
+  output$extremeValueTable <- renderDataTable(
+    {
+      extreme_data()
+    },
+    options = list(pageLength = 10)
+  )
+
   # Study keys for extreme data
   output$studyKeys_extreme <- renderText({
     study_keys_extreme <- unique(extreme_data()$key)
     paste(paste(study_keys_extreme, collapse = ","))
   })
-  
+
   # Table with potentially explosive models
   explosive_data <- reactive({
     find_max_last_period_models(filtered_data())
   })
-  
-  output$maxLastPeriodTable <- renderDataTable({
-    explosive_data()
-  }, options = list(pageLength = 10))
-  
+
+  output$maxLastPeriodTable <- renderDataTable(
+    {
+      explosive_data()
+    },
+    options = list(pageLength = 10)
+  )
+
   # Study keys for porentially explosive IRFs
   output$studyKeys_explosive <- renderText({
     study_keys_explosive <- unique(explosive_data()$key)
     paste(paste(study_keys_explosive, collapse = ","))
   })
-  
-  # Study-specific IRFs 
+
+  # Study-specific IRFs
   # Reactive expression to filter data based on study keys and selected model
   study_data <- reactive({
     study_keys <- strsplit(input$study_keys, ",")[[1]] %>% trimws()
     if (length(study_keys) > 0 && study_keys != "") {
       data_filtered <- data %>% filter(key %in% study_keys)
       if (input$selected_model != "All" && !is.null(input$selected_model)) {
-        data_filtered <- data_filtered %>% filter(model_id == input$selected_model)
+        data_filtered <- data_filtered %>%
+          filter(model_id == input$selected_model)
       }
       return(data_filtered)
     }
     return(data.frame())
   })
-  
+
   # Update the selectInput for models when study keys change
   observe({
     study_keys <- strsplit(input$study_keys, ",")[[1]] %>% trimws()
     if (length(study_keys) > 0 && study_keys != "") {
       filtered_data <- data %>% filter(key %in% study_keys)
       model_ids <- unique(filtered_data$model_id)
-      updateSelectInput(session, "selected_model", choices = c("All", model_ids))
+      updateSelectInput(
+        session,
+        "selected_model",
+        choices = c("All", model_ids)
+      )
     } else {
       updateSelectInput(session, "selected_model", choices = NULL)
     }
   })
-  
+
   # Render the plot for study IRFs
   output$studyIRFsPlot <- renderPlotly({
     plot_data <- study_data()
-    if (nrow(plot_data) == 0) return(NULL)
-    
-    plot_study_irfs(plot_data, input$study_keys, selected_model = input$selected_model, show_approx_bounds = input$show_approx_bounds)
+    if (nrow(plot_data) == 0) {
+      return(NULL)
+    }
+
+    plot_study_irfs(
+      plot_data,
+      input$study_keys,
+      selected_model = input$selected_model,
+      show_approx_bounds = input$show_approx_bounds
+    )
   })
-  
+
   # Render the table for moderator variables
-  output$moderatorTable <- renderDataTable({
-    table_data <- study_data()
-    if (nrow(table_data) == 0) return(NULL)
-    
-    # Select unique rows for each model
-    table_data <- table_data %>% distinct(model_id, .keep_all = TRUE)
-    
-    # Columns to exclude
-    columns_to_exclude <- c("period", "CI.upper.raw", "mean.effect.raw", "CI.lower.raw", "CI.upper",
-                            "mean.effect", "CI.lower", "SE.upper", "SE.lower", "period.month",
-                            "rate_CI.upper.raw", "rate_mean.effect.raw", "rate_CI.lower.raw",
-                            "rate_CI.upper", "rate_mean.effect", "rate_CI.lower", "rate_SE.upper",
-                            "rate_SE.lower", "approx.CI.lower_68", "approx.CI.upper_68", 
-                            "approx.CI.lower_90", "approx.CI.upper_90", "approx.CI.lower_95", 
-                            "approx.CI.upper_95")
-    
-    # Select all columns except the ones to exclude
-    table_data <- table_data %>% select(-all_of(columns_to_exclude))
-    
-    table_data
-  }, options = list(pageLength = 10))
-  
+  output$moderatorTable <- renderDataTable(
+    {
+      table_data <- study_data()
+      if (nrow(table_data) == 0) {
+        return(NULL)
+      }
+
+      # Select unique rows for each model
+      table_data <- table_data %>% distinct(model_id, .keep_all = TRUE)
+
+      # Columns to exclude
+      columns_to_exclude <- c(
+        "period",
+        "CI.upper.raw",
+        "mean.effect.raw",
+        "CI.lower.raw",
+        "CI.upper",
+        "mean.effect",
+        "CI.lower",
+        "SE.upper",
+        "SE.lower",
+        "period.month",
+        "rate_CI.upper.raw",
+        "rate_mean.effect.raw",
+        "rate_CI.lower.raw",
+        "rate_CI.upper",
+        "rate_mean.effect",
+        "rate_CI.lower",
+        "rate_SE.upper",
+        "rate_SE.lower",
+        "approx.CI.lower_68",
+        "approx.CI.upper_68",
+        "approx.CI.lower_90",
+        "approx.CI.upper_90",
+        "approx.CI.lower_95",
+        "approx.CI.upper_95"
+      )
+
+      # Select all columns except the ones to exclude
+      table_data <- table_data %>% select(-all_of(columns_to_exclude))
+
+      table_data
+    },
+    options = list(pageLength = 10)
+  )
+
   # Average IRF
   output$averageIRFsPlot <- renderPlotly({
     if (input$show_corrected_irf) {
@@ -974,92 +1631,106 @@ server <- function(input, output, session) {
     }
     # Option to only show quarters in IRF
     if (input$irf_quarters_only == TRUE) {
-      average_irf_data <- filtered_data() %>% filter(period.month %in% seq(0,input$period_limit, by = 3))
+      average_irf_data <- filtered_data() %>%
+        filter(period.month %in% seq(0, input$period_limit, by = 3))
     } else {
       average_irf_data <- filtered_data()
     }
-    plot_average_irfs(average_irf_data, 
-                      period_limit = input$period_limit, 
-                      winsor = input$IRF_wins, 
-                      wins_par = input$funnel_wins,
-                      corrected_irf = corrected)
+    plot_average_irfs(
+      average_irf_data,
+      period_limit = input$period_limit,
+      winsor = input$IRF_wins,
+      wins_par = input$funnel_wins,
+      show_median = input$show_median,
+      corrected_irf = corrected
+    )
   })
-  
+
   # Model/Study counts plot
   output$countsPlot <- renderPlotly({
     req(input$show_counts_plot)
     plot_model_study_counts(filtered_data(), plot_type = input$plot_type)
   })
-  
+
   # Funnel plot
   output$funnel_plot <- renderPlotly({
-    create_funnel_plot(filtered_data(),
-                       outvar = input$filter_outcome,
-                       prd = input$funnel_prd,
-                       se_option = input$funnel_se_option,
-                       wins = input$funnel_wins,
-                       opac = input$funnel_opac,
-                       ap = input$ap,
-                       type = input$funnel_type, 
-                       AK_critvals = as.numeric(input$AK_funnel_critvals), 
-                       AK_exclude_outliers = input$AK_outliers)
+    create_funnel_plot(
+      filtered_data(),
+      outvar = input$filter_outcome,
+      prd = input$funnel_prd,
+      se_option = input$funnel_se_option,
+      wins = input$funnel_wins,
+      opac = input$funnel_opac,
+      ap = input$ap,
+      type = input$funnel_type,
+      AK_critvals = as.numeric(input$AK_funnel_critvals),
+      AK_exclude_outliers = input$AK_outliers
+    )
   })
   for (i in 1:16) {
     local({
       i <- i
       output_name <- paste0("funnel_plot_", i)
-      
+
       output[[output_name]] <- renderPlotly({
-        create_funnel_plot(filtered_data(),
-                           outvar = input$filter_outcome,
-                           prd = input$funnel_prd * i,
-                           se_option = input$funnel_se_option,
-                           wins = input$funnel_wins,
-                           opac = input$funnel_opac,
-                           ap = input$ap,
-                           type = input$funnel_type, 
-                           AK_critvals = as.numeric(input$AK_funnel_critvals), 
-                           AK_exclude_outliers = input$AK_outliers,
-                           legend = FALSE)
+        create_funnel_plot(
+          filtered_data(),
+          outvar = input$filter_outcome,
+          prd = input$funnel_prd * i,
+          se_option = input$funnel_se_option,
+          wins = input$funnel_wins,
+          opac = input$funnel_opac,
+          ap = input$ap,
+          type = input$funnel_type,
+          AK_critvals = as.numeric(input$AK_funnel_critvals),
+          AK_exclude_outliers = input$AK_outliers,
+          legend = FALSE
+        )
       })
     })
   }
-  # Binned density 
+  # Binned density
   output$AK_density <- renderPlotly({
-    create_z_histogram(filtered_data(),
-                      outvar = input$filter_outcome, 
-                      prd = input$funnel_prd, 
-                      se_option = input$funnel_se_option, 
-                      wins = input$funnel_wins, 
-                      ap = input$ap, 
-                      critvals = as.numeric(input$AK_funnel_critvals))
+    create_z_histogram(
+      filtered_data(),
+      outvar = input$filter_outcome,
+      prd = input$funnel_prd,
+      se_option = input$funnel_se_option,
+      wins = input$funnel_wins,
+      ap = input$ap,
+      critvals = as.numeric(input$AK_funnel_critvals)
+    )
   })
   for (i in 1:16) {
     local({
       i <- i
       output_name <- paste0("AK_density_", i)
-      
+
       output[[output_name]] <- renderPlotly({
-        create_z_histogram(filtered_data(),
-                           outvar = input$filter_outcome,
-                           prd = input$funnel_prd * i,
-                           se_option = input$funnel_se_option,
-                           wins = input$funnel_wins,
-                           ap = input$ap,
-                           critvals = as.numeric(input$AK_funnel_critvals))
+        create_z_histogram(
+          filtered_data(),
+          outvar = input$filter_outcome,
+          prd = input$funnel_prd * i,
+          se_option = input$funnel_se_option,
+          wins = input$funnel_wins,
+          ap = input$ap,
+          critvals = as.numeric(input$AK_funnel_critvals)
+        )
       })
     })
   }
-    
+
   # Meta-analyses
   # EK_sig for Endogenous Kink method
   EK_sig <- reactive({
-    switch(input$EK_sig,
-                  "68 %" = 1.0,
-                  "90 %" = 1.645,
-                  "95 %" = 1.96,
-                  "99 %" = 2.576,
-                  stop("Invalid confidence level. Choose from 68, 90, 95, or 99 %."))
+    switch(
+      input$EK_sig,
+      "68 %" = 1.0,
+      "90 %" = 1.645,
+      "95 %" = 1.96,
+      "99 %" = 2.576,
+      stop("Invalid confidence level. Choose from 68, 90, 95, or 99 %.")
+    )
   })
   # Get moderators for multivariate regression
   mods_reg <- reactive({
@@ -1067,22 +1738,24 @@ server <- function(input, output, session) {
   })
   # Estimation
   reg_results <- reactive({
-    meta_analysis(data = filtered_data(),
-                  outvar = input$filter_outcome,
-                  se_option = input$funnel_se_option,
-                  periods = input$funnel_prd*1:20,
-                  wins = input$funnel_wins,
-                  ap = input$ap,
-                  prec_weighted = input$prec_weighted,
-                  estimation = input$estimation,
-                  cluster_se = input$cluster_se,
-                  hc_type = input$hc_type,
-                  EK_sig_threshold = 10,
-                  mods = mods_reg(),
-                  cutoff_val = input$cutoff_vals,
-                  AK_symmetric = input$symmetric,
-                  AK_modelmu = input$modelmu,
-                  AK_conf_level = input$conf_level)
+    meta_analysis(
+      data = filtered_data(),
+      outvar = input$filter_outcome,
+      se_option = input$funnel_se_option,
+      periods = input$funnel_prd * 1:20,
+      wins = input$funnel_wins,
+      ap = input$ap,
+      prec_weighted = input$prec_weighted,
+      estimation = input$estimation,
+      cluster_se = input$cluster_se,
+      hc_type = input$hc_type,
+      EK_sig_threshold = 10,
+      mods = mods_reg(),
+      cutoff_val = input$cutoff_vals,
+      AK_symmetric = input$symmetric,
+      AK_modelmu = input$modelmu,
+      AK_conf_level = input$conf_level
+    )
   })
   # Equation display
   equation <- reactive({
@@ -1096,22 +1769,22 @@ server <- function(input, output, session) {
       ))
     )
   })
-  # Table 
+  # Table
   output$meta_analysis_table <- renderUI({
-    
     diagnostics <- if (input$diagn == "ALL") NULL else input$diagn
-    
-    modelsummary(reg_results(),
-                 output = "gt", 
-                 stars = input$stargaze, 
-                 statistic = input$stats, 
-                 conf_level = input$conf_level, 
-                 title = "Meta-Analysis", 
-                 gof_map = diagnostics)
+
+    modelsummary(
+      reg_results(),
+      output = "gt",
+      stars = input$stargaze,
+      statistic = input$stats,
+      conf_level = input$conf_level,
+      title = "Meta-Analysis",
+      gof_map = diagnostics
+    )
   })
   # Model Plot
   output$meta_analysis_plot_effect <- renderPlot({
-    
     if (input$estimation %in% c("Mean", "UWLS")) {
       omit <- NULL
     } else if (input$estimation == "FAT-PET") {
@@ -1123,42 +1796,47 @@ server <- function(input, output, session) {
     } else if (input$estimation == "AK") {
       omit <- 2:nrow(reg_results()[[1]]$tidy[1])
     }
-    
+
     b <- list(geom_vline(xintercept = 0, color = 'orange'))
-    
-    modelplot(reg_results(),
-              coef_omit = omit,
-              conf_level = input$conf_level,
-              title = "Meta-Analysis Plot", 
-              background = b)
+
+    modelplot(
+      reg_results(),
+      coef_omit = omit,
+      conf_level = input$conf_level,
+      title = "Meta-Analysis Plot",
+      background = b
+    )
   })
   output$meta_analysis_plot_pbias <- renderPlot({
-    
     b <- list(geom_vline(xintercept = 0, color = 'orange'))
-    
+
     if (input$estimation == "EK") {
       omit <- "constant"
     } else if (input$estimation == "AK") {
-      omit <- c(1,3:nrow(reg_results()[[1]]$tidy[1]))
+      omit <- c(1, 3:nrow(reg_results()[[1]]$tidy[1]))
     } else {
       omit <- "Interc"
     }
-    modelplot(reg_results(),
-              coef_omit = omit,
-              conf_level = input$conf_level,
-              title = "Meta-Analysis Plot", 
-              background = b)
+    modelplot(
+      reg_results(),
+      coef_omit = omit,
+      conf_level = input$conf_level,
+      title = "Meta-Analysis Plot",
+      background = b
+    )
   })
   # Only for AK
   output$meta_analysis_plot_AK_extra_coeff <- renderPlot({
     if (input$estimation == "AK") {
       b <- list(geom_vline(xintercept = 0, color = 'orange'))
       omit <- 1:2
-      modelplot(reg_results(),
-                coef_omit = omit,
-                conf_level = input$conf_level,
-                title = "Meta-Analysis Plot", 
-                background = b)
+      modelplot(
+        reg_results(),
+        coef_omit = omit,
+        conf_level = input$conf_level,
+        title = "Meta-Analysis Plot",
+        background = b
+      )
     }
   })
   # Estimation presets
@@ -1247,53 +1925,161 @@ server <- function(input, output, session) {
       shinyjs::enable("mod_reg")
     }
   })
-  
+
   # Moderator summary table
   output$moderator_summary <- renderUI({
-    mod_vars_list <- c("cum","prefer","iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "idother","var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge", "varother","lor", "upr", "scr", "dcr", "hike", "cut","annual", "quarter", "month","panel","comprice", "outpgap", "find", "eglob", "cbind", "fexch", "inflexp", "foreignir", "fx", "lrir","pure_rate_shock", "convent", "decomposition","cbanker")
-    
+    mod_vars_list <- c(
+      "cum",
+      "prefer",
+      "iv",
+      "forecast_based",
+      "nr",
+      "event",
+      "chol",
+      "svar",
+      "signr",
+      "hf",
+      "heteroskedas",
+      "longrun",
+      "idother",
+      "var",
+      "lp",
+      "vecm",
+      "dyn_ols",
+      "fvar",
+      "tvar",
+      "gvar",
+      "bayes",
+      "dsge",
+      "varother",
+      "lor",
+      "upr",
+      "scr",
+      "dcr",
+      "hike",
+      "cut",
+      "annual",
+      "quarter",
+      "month",
+      "panel",
+      "comprice",
+      "outpgap",
+      "find",
+      "eglob",
+      "cbind",
+      "fexch",
+      "inflexp",
+      "foreignir",
+      "fx",
+      "lrir",
+      "pure_rate_shock",
+      "convent",
+      "decomposition",
+      "cbanker"
+    )
+
     # Remove excluded variables from mod_vars_list
     mod_vars_list <- setdiff(mod_vars_list, input$exclude_filter)
-    
+
     # Subset filtered_data based on the updated mod_vars_list
     mod_vars <- filtered_data()[, mod_vars_list, drop = FALSE]
-    
+
     # Generate the datasummary_skim output and save it as an HTML document
-    datasummary_skim(mod_vars, output = "gt", type = "categorical", title = "Moderator variables in current selection")
+    datasummary_skim(
+      mod_vars,
+      output = "gt",
+      type = "categorical",
+      title = "Moderator variables in current selection"
+    )
   })
   # Moderator summary table
   output$moderator_summary <- renderUI({
-    mod_vars <- filtered_data()[, c("cum","prefer","iv", "forecast_based", "nr", "event", "chol", "svar", "signr", "hf", "heteroskedas", "longrun", "idother","var", "lp", "vecm", "dyn_ols", "fvar", "tvar", "gvar", "bayes", "dsge", "varother","lor", "upr", "scr", "dcr", "hike", "cut","annual", "quarter", "month","panel","comprice", "outpgap", "find", "eglob", "cbind", "fexch", "inflexp", "foreignir", "fx", "lrir","pure_rate_shock", "convent", "decomposition","cbanker"), drop = FALSE]
-    
-    # Generate the datasummary_skim output and save it as an HTML document
-    datasummary_skim(mod_vars, output = "gt", type = "categorical", title = "Moderator variables in current selection")
+    mod_vars <- filtered_data()[,
+      c(
+        "cum",
+        "prefer",
+        "iv",
+        "forecast_based",
+        "nr",
+        "event",
+        "chol",
+        "svar",
+        "signr",
+        "hf",
+        "heteroskedas",
+        "longrun",
+        "idother",
+        "var",
+        "lp",
+        "vecm",
+        "dyn_ols",
+        "fvar",
+        "tvar",
+        "gvar",
+        "bayes",
+        "dsge",
+        "varother",
+        "lor",
+        "upr",
+        "scr",
+        "dcr",
+        "hike",
+        "cut",
+        "annual",
+        "quarter",
+        "month",
+        "panel",
+        "comprice",
+        "outpgap",
+        "find",
+        "eglob",
+        "cbind",
+        "fexch",
+        "inflexp",
+        "foreignir",
+        "fx",
+        "lrir",
+        "pure_rate_shock",
+        "convent",
+        "decomposition",
+        "cbanker"
+      ),
+      drop = FALSE
+    ]
 
+    # Generate the datasummary_skim output and save it as an HTML document
+    datasummary_skim(
+      mod_vars,
+      output = "gt",
+      type = "categorical",
+      title = "Moderator variables in current selection"
+    )
   })
-  
+
   # Corrected IRF
   # Corrected IRF
   intercept_estimates <- reactive({
     results <- reg_results()
-    
+
     extract_intercepts <- function(results) {
       if (input$estimation == "AK") {
         # For AK estimation method, extract the precomputed confidence intervals
         intercepts <- lapply(results, function(model) {
           # Assuming the first row contains the intercept estimates
-          c(estimate = model$tidy$estimate[1],
+          c(
+            estimate = model$tidy$estimate[1],
             lower = model$tidy$conf.low[1],
-            upper = model$tidy$conf.high[1])
+            upper = model$tidy$conf.high[1]
+          )
         })
       } else {
         # For other estimation methods, use confint
         intercepts <- lapply(results, function(model) {
           ci <- confint(model, level = input$conf_level)
-          c(estimate = coef(model)[1],
-            lower = ci[1, 1],
-            upper = ci[1, 2])
+          c(estimate = coef(model)[1], lower = ci[1, 1], upper = ci[1, 2])
         })
       }
-      
+
       data.frame(
         period = as.numeric(names(results)),
         estimate = sapply(intercepts, function(x) x["estimate"]),
@@ -1301,73 +2087,72 @@ server <- function(input, output, session) {
         upper = sapply(intercepts, function(x) x["upper"])
       )
     }
-    
+
     extract_intercepts(results)
   })
-  
+
   # pub_year_plot
   output$pub_year_plot <- renderPlot({
     req(filtered_data())
     pub_year_counts <- table(filtered_data()$pub_year)
-    barplot(pub_year_counts,
-            main="# obs for each publication year",
-            xlab="Year",
-            ylab="Count",
-            col="skyblue",
-            border="white")
+    barplot(
+      pub_year_counts,
+      main = "# obs for each publication year",
+      xlab = "Year",
+      ylab = "Count",
+      col = "skyblue",
+      border = "white"
+    )
   })
-  
+
   # Update pub_year slider values # DEACTIVATED BECAUSE IT HAS UNINTENDED EFFECTS
   # observe({
   #   full_min_year <- min(data$pub_year, na.rm = TRUE)
   #   full_max_year <- max(data$pub_year, na.rm = TRUE)
-  #   
+  #
   #   filtered_min_year <- min(filtered_data()$pub_year, na.rm = TRUE)
   #   filtered_max_year <- max(filtered_data()$pub_year, na.rm = TRUE)
-  #   
+  #
   #   current_min <- input$pub_year[1]
   #   current_max <- input$pub_year[2]
-  #   
+  #
   #   updateSliderInput(session, "pub_year",
   #                     min = full_min_year,
   #                     max = full_max_year,
   #                     value = c(max(current_min, filtered_min_year),
   #                               min(current_max, filtered_max_year)))
   # })
-  
-  
+
   # New output for AK estimation plots
   output$ak_plots <- renderUI({
     req(input$estimation == "AK")
     results <- reg_results()
-    
+
     plot_outputs <- lapply(seq_along(results), function(i) {
-      plotOutput(paste0("ak_plot_", i), height = "400px",width = "200px")
+      plotOutput(paste0("ak_plot_", i), height = "400px", width = "200px")
     })
-    
+
     do.call(tagList, plot_outputs)
   })
-  
+
   # Render individual AK estimation plots
   observe({
     req(input$estimation == "AK")
     results <- reg_results()
-    
+
     lapply(seq_along(results), function(i) {
       output[[paste0("ak_plot_", i)]] <- renderPlot({
         # Extract the period from the name of the result
         period <- names(results)[i]
-        
+
         # Add title to the plot
-        results[[i]]$plot + 
+        results[[i]]$plot +
           ggplot2::labs(title = paste(period, "months"))
       })
     })
   })
-  
-  # Storing publication bias estimation results
-  
 
+  # Storing publication bias estimation results
 }
 
 shinyApp(ui = ui, server = server)

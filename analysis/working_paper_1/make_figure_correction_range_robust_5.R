@@ -18,12 +18,23 @@ source(here::here("analysis/R/kasy_MetaStudiesPlots.R"))
 # Capping procedure for period 0 precision and se ----
 source(here::here("analysis/working_paper_1/period_0_capping_se_prec.R"))
 
+# Calculate share of top journal and non-chol in data ----
+share <- d_no_qc %>%
+  filter(
+    outcome != "unemp",
+    outcome != "emp",
+    period.month %in% seq(0, 60, by = 3)
+  ) %>%
+  count(top_5_or_tier & group_ident_broad != "chol") %>%
+  mutate(share = n / sum(n) * 100)
+share
+
 # Robustness check 5: Use only non-Chol/SVAR and only top journal estimates ----
-d_no_qc <- d_no_qc %>% 
+d_no_qc <- d_no_qc %>%
   filter(
     group_ident_broad != "chol",
     top_5_or_tier == 1
-    )
+  )
 
 # Sub-folder for figures ----
 subfolder <- "robust_no_chol_only_top_journal" # Robustness check 5
@@ -74,10 +85,12 @@ combine_results <- function(results_list, method_name) {
 analyze_fullsample <- function(subsample_id) {
   # Instead of sampling, just use the filtered data directly
   subsample <- filtered_data
-  
-  results_list <- lapply(wins_para_levels, function(wins) perform_meta_analysis(subsample, wins))
+
+  results_list <- lapply(wins_para_levels, function(wins) {
+    perform_meta_analysis(subsample, wins)
+  })
   names(results_list) <- paste0("wins_", wins_para_levels)
-  
+
   # Combine results for all methods
   final_fatpet_uw <- do.call(rbind, combine_results(results_list, "fatpet_uw"))
   final_fatpet <- do.call(rbind, combine_results(results_list, "fatpet"))
@@ -86,18 +99,19 @@ analyze_fullsample <- function(subsample_id) {
   final_waap_uw <- do.call(rbind, combine_results(results_list, "waap_uw"))
   final_waap <- do.call(rbind, combine_results(results_list, "waap"))
   final_ak <- do.call(rbind, combine_results(results_list, "AK"))
-  
+
   # Combine all method results into a single final data frame
-  final_df <- rbind(final_fatpet_uw,
-                    final_fatpet,
-                    final_peese_uw,
-                    final_peese,
-                    final_waap_uw,
-                    final_waap,
-                    final_ak
+  final_df <- rbind(
+    final_fatpet_uw,
+    final_fatpet,
+    final_peese_uw,
+    final_peese,
+    final_waap_uw,
+    final_waap,
+    final_ak
   )
   final_df$subsample <- subsample_id
-  
+
   return(final_df)
 }
 
@@ -112,17 +126,23 @@ chosen_periods <- seq(0, 60, by = 3)
 out_var <- "output"
 
 # Function to perform multiple meta-analyses for a given wins level for output
-perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 12) {
+perform_meta_analysis <- function(
+  data,
+  wins,
+  se_opt = "upper",
+  waap_horizon = 12
+) {
   list(
     fatpet_uw = meta_analysis(
       data = data,
       outvar = out_var,
-      se_option = se_opt, 
+      se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
       prec_weighted = FALSE,
-      estimation = "FAT-PET", 
-      cluster_se = TRUE),
+      estimation = "FAT-PET",
+      cluster_se = TRUE
+    ),
     fatpet = meta_analysis(
       data = data,
       outvar = out_var,
@@ -137,12 +157,13 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 1
     peese_uw = meta_analysis(
       data = data,
       outvar = out_var,
-      se_option = se_opt, 
+      se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
       prec_weighted = FALSE,
-      estimation = "PEESE", 
-      cluster_se = TRUE),
+      estimation = "PEESE",
+      cluster_se = TRUE
+    ),
     peese = meta_analysis(
       data = data,
       outvar = out_var,
@@ -220,29 +241,32 @@ all_results_df %>%
     n()
   )
 
-# Use 95% region of estimate per period. 
+# Use 95% region of estimate per period.
 min_max_per_period_95 <- all_results_df %>%
   group_by(period) %>%
   summarise(
-    min_estimate = quantile(estimate,0.025, na.rm = TRUE),
-    max_estimate = quantile(estimate,0.975, na.rm = TRUE)
-  ) %>% ungroup()
+    min_estimate = quantile(estimate, 0.025, na.rm = TRUE),
+    max_estimate = quantile(estimate, 0.975, na.rm = TRUE)
+  ) %>%
+  ungroup()
 
-# Use 68% region of estimate per period. 
+# Use 68% region of estimate per period.
 min_max_per_period_68 <- all_results_df %>%
   group_by(period) %>%
   summarise(
-    min_estimate = quantile(estimate,0.16, na.rm = TRUE),
-    max_estimate = quantile(estimate,0.84, na.rm = TRUE)
-  ) %>% ungroup()
+    min_estimate = quantile(estimate, 0.16, na.rm = TRUE),
+    max_estimate = quantile(estimate, 0.84, na.rm = TRUE)
+  ) %>%
+  ungroup()
 
-# Mean estimate per period. 
+# Mean estimate per period.
 mean_median_per_period <- all_results_df %>%
   group_by(period) %>%
   summarise(
     mean = mean(estimate),
     median = median(estimate)
-  ) %>% ungroup()
+  ) %>%
+  ungroup()
 
 # Generate the average IRF data and plot
 figure_irf_range_correction_output <- plot_average_irfs(
@@ -260,17 +284,36 @@ figure_irf_range_correction_output <- plot_average_irfs(
 
 # Join average IRF data with correction data
 min_max_per_period_95 <- min_max_per_period_95 %>%
-  rename(period.month = period, correction.min_estimate_95 = min_estimate, correction.max_estimate_95 = max_estimate)
+  rename(
+    period.month = period,
+    correction.min_estimate_95 = min_estimate,
+    correction.max_estimate_95 = max_estimate
+  )
 min_max_per_period_68 <- min_max_per_period_68 %>%
-  rename(period.month = period, correction.min_estimate_68 = min_estimate, correction.max_estimate_68 = max_estimate)
+  rename(
+    period.month = period,
+    correction.min_estimate_68 = min_estimate,
+    correction.max_estimate_68 = max_estimate
+  )
 mean_median_per_period <- mean_median_per_period %>%
-  rename(period.month = period, correction.mean = mean, correction.median = median)
+  rename(
+    period.month = period,
+    correction.mean = mean,
+    correction.median = median
+  )
 figure_irf_range_correction_output$data <- figure_irf_range_correction_output$data %>%
   left_join(min_max_per_period_95, by = "period.month") %>%
   left_join(min_max_per_period_68, by = "period.month") %>%
   left_join(mean_median_per_period, by = "period.month")
 # Save figure data as csv
-write_csv(figure_irf_range_correction_output$data, here::here(paste0("analysis/working_paper_1/figures/irf_range_correction/", subfolder, "/figure_irf_range_correction_output_robust_5.csv")))
+write_csv(
+  figure_irf_range_correction_output$data,
+  here::here(paste0(
+    "analysis/working_paper_1/figures/irf_range_correction/",
+    subfolder,
+    "/figure_irf_range_correction_output_robust_5.csv"
+  ))
+)
 
 # Add publication bias correction range to plot
 figure_irf_range_correction_output <- figure_irf_range_correction_output$plot %>%
@@ -291,14 +334,13 @@ figure_irf_range_correction_output <- figure_irf_range_correction_output$plot %>
     name = "P-bias corrected 16%-84% percentile range",
     line = list(color = 'rgba(0,0,0,0)'),
     fillcolor = 'rgba(0,100,0,0.3)'
-  ) %>% 
+  ) %>%
   add_lines(
     data = mean_median_per_period,
     x = ~period.month,
     y = ~correction.mean,
     name = "Corrected mean",
-    line = list(color = 'darkgreen',
-                dash = 'dash')
+    line = list(color = 'darkgreen', dash = 'dash')
   ) %>%
   layout(
     # title = "Output response to 100 bp rate shock, average and p-bias corrected range",
@@ -310,28 +352,39 @@ figure_irf_range_correction_output <- figure_irf_range_correction_output$plot %>
 figure_irf_range_correction_output
 
 # Save figure as pdf
-orca(figure_irf_range_correction_output,
-     file = paste0("analysis/working_paper_1/figures/irf_range_correction/", subfolder, "/figure_irf_range_correction_output_robust_5.pdf"),
-     scale = NULL,
-     width = 360,
-     height = 486 * 0.65
+orca(
+  figure_irf_range_correction_output,
+  file = paste0(
+    "analysis/working_paper_1/figures/irf_range_correction/",
+    subfolder,
+    "/figure_irf_range_correction_output_robust_5.pdf"
+  ),
+  scale = NULL,
+  width = 360,
+  height = 486 * 0.65
 )
 
 # For price level ----
 out_var <- "inflation"
 
-# Function to perform multiple meta-analyses for a given wins level for price level 
-perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 48) {
+# Function to perform multiple meta-analyses for a given wins level for price level
+perform_meta_analysis <- function(
+  data,
+  wins,
+  se_opt = "upper",
+  waap_horizon = 48
+) {
   list(
     fatpet_uw = meta_analysis(
       data = data,
       outvar = out_var,
-      se_option = se_opt, 
+      se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
       prec_weighted = FALSE,
-      estimation = "FAT-PET", 
-      cluster_se = TRUE),
+      estimation = "FAT-PET",
+      cluster_se = TRUE
+    ),
     fatpet = meta_analysis(
       data = data,
       outvar = out_var,
@@ -346,12 +399,13 @@ perform_meta_analysis <- function(data, wins, se_opt = "upper", waap_horizon = 4
     peese_uw = meta_analysis(
       data = data,
       outvar = out_var,
-      se_option = se_opt, 
+      se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
       prec_weighted = FALSE,
-      estimation = "PEESE", 
-      cluster_se = TRUE),
+      estimation = "PEESE",
+      cluster_se = TRUE
+    ),
     peese = meta_analysis(
       data = data,
       outvar = out_var,
@@ -429,29 +483,32 @@ all_results_df %>%
     n()
   )
 
-# Use 95% region of estimate per period. 
+# Use 95% region of estimate per period.
 min_max_per_period_95 <- all_results_df %>%
   group_by(period) %>%
   summarise(
-    min_estimate = quantile(estimate,0.025, na.rm = TRUE),
-    max_estimate = quantile(estimate,0.975, na.rm = TRUE)
-  ) %>% ungroup()
+    min_estimate = quantile(estimate, 0.025, na.rm = TRUE),
+    max_estimate = quantile(estimate, 0.975, na.rm = TRUE)
+  ) %>%
+  ungroup()
 
-# Use 68% region of estimate per period. 
+# Use 68% region of estimate per period.
 min_max_per_period_68 <- all_results_df %>%
   group_by(period) %>%
   summarise(
-    min_estimate = quantile(estimate,0.16, na.rm = TRUE),
-    max_estimate = quantile(estimate,0.84, na.rm = TRUE)
-  ) %>% ungroup()
+    min_estimate = quantile(estimate, 0.16, na.rm = TRUE),
+    max_estimate = quantile(estimate, 0.84, na.rm = TRUE)
+  ) %>%
+  ungroup()
 
-# Mean estimate per period. 
+# Mean estimate per period.
 mean_median_per_period <- all_results_df %>%
   group_by(period) %>%
   summarise(
     mean = mean(estimate),
     median = median(estimate)
-  ) %>% ungroup()
+  ) %>%
+  ungroup()
 
 # Generate the average IRF data and plot
 figure_irf_range_correction_pricelevel <- plot_average_irfs(
@@ -469,17 +526,36 @@ figure_irf_range_correction_pricelevel <- plot_average_irfs(
 
 # Join average IRF data with correction data
 min_max_per_period_95 <- min_max_per_period_95 %>%
-  rename(period.month = period, correction.min_estimate_95 = min_estimate, correction.max_estimate_95 = max_estimate)
+  rename(
+    period.month = period,
+    correction.min_estimate_95 = min_estimate,
+    correction.max_estimate_95 = max_estimate
+  )
 min_max_per_period_68 <- min_max_per_period_68 %>%
-  rename(period.month = period, correction.min_estimate_68 = min_estimate, correction.max_estimate_68 = max_estimate)
+  rename(
+    period.month = period,
+    correction.min_estimate_68 = min_estimate,
+    correction.max_estimate_68 = max_estimate
+  )
 mean_median_per_period <- mean_median_per_period %>%
-  rename(period.month = period, correction.mean = mean, correction.median = median)
+  rename(
+    period.month = period,
+    correction.mean = mean,
+    correction.median = median
+  )
 figure_irf_range_correction_pricelevel$data <- figure_irf_range_correction_pricelevel$data %>%
   left_join(min_max_per_period_95, by = "period.month") %>%
   left_join(min_max_per_period_68, by = "period.month") %>%
   left_join(mean_median_per_period, by = "period.month")
 # Save figure data as csv
-write_csv(figure_irf_range_correction_pricelevel$data, here::here(paste0("analysis/working_paper_1/figures/irf_range_correction/", subfolder, "/figure_irf_range_correction_pricelevel_robust_5.csv")))
+write_csv(
+  figure_irf_range_correction_pricelevel$data,
+  here::here(paste0(
+    "analysis/working_paper_1/figures/irf_range_correction/",
+    subfolder,
+    "/figure_irf_range_correction_pricelevel_robust_5.csv"
+  ))
+)
 
 # Add publication bias correction range to plot
 figure_irf_range_correction_pricelevel <- figure_irf_range_correction_pricelevel$plot %>%
@@ -500,14 +576,13 @@ figure_irf_range_correction_pricelevel <- figure_irf_range_correction_pricelevel
     name = "P-bias corrected 16%-84% percentile range",
     line = list(color = 'rgba(0,0,0,0)'),
     fillcolor = 'rgba(0,100,0,0.3)'
-  ) %>% 
+  ) %>%
   add_lines(
     data = mean_median_per_period,
     x = ~period.month,
     y = ~correction.mean,
     name = "Corrected mean",
-    line = list(color = 'darkgreen',
-                dash = 'dash')
+    line = list(color = 'darkgreen', dash = 'dash')
   ) %>%
   layout(
     # title = "Price level response to 100 bp rate shock, average and p-bias corrected range",
@@ -519,11 +594,16 @@ figure_irf_range_correction_pricelevel <- figure_irf_range_correction_pricelevel
 figure_irf_range_correction_pricelevel
 
 # Save figure as pdf
-orca(figure_irf_range_correction_pricelevel,
-     file = paste0("analysis/working_paper_1/figures/irf_range_correction/", subfolder, "/figure_irf_range_correction_pricelevel_robust_5.pdf"),
-     scale = NULL,
-     width = 360,
-     height = 486 * 0.65
+orca(
+  figure_irf_range_correction_pricelevel,
+  file = paste0(
+    "analysis/working_paper_1/figures/irf_range_correction/",
+    subfolder,
+    "/figure_irf_range_correction_pricelevel_robust_5.pdf"
+  ),
+  scale = NULL,
+  width = 360,
+  height = 486 * 0.65
 )
 
 
@@ -531,26 +611,32 @@ orca(figure_irf_range_correction_pricelevel,
 out_var <- "rate"
 
 # Set range of winsorization levels for estimations (higher levels fail due to singularity issues)
-wins_para_levels <- c(0)#, 0.01, 0.02, 0.03)
+wins_para_levels <- c(0) #, 0.01, 0.02, 0.03)
 
 # Restrict range of winsorization levels for AK estimation (higher values fail due to singularity issues)
-wins_para_levels_ak <- c(0, 0.01, 0.02)  # Restricted range for AK method
+wins_para_levels_ak <- c(0, 0.01, 0.02) # Restricted range for AK method
 
 # Modified perform_meta_analysis function for interest rate to allow for restriction of wins levels for AK
-perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12) {
+perform_meta_analysis <- function(
+  data,
+  wins,
+  se_opt = "avg",
+  waap_horizon = 12
+) {
   # Check if this wins level is available for AK
   wins_ak <- ifelse(wins %in% wins_para_levels_ak, wins, NA)
-  
+
   results <- list(
     fatpet_uw = meta_analysis(
       data = data,
       outvar = out_var,
-      se_option = se_opt, 
+      se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
       prec_weighted = FALSE,
-      estimation = "FAT-PET", 
-      cluster_se = TRUE),
+      estimation = "FAT-PET",
+      cluster_se = TRUE
+    ),
     fatpet = meta_analysis(
       data = data,
       outvar = out_var,
@@ -565,12 +651,13 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
     peese_uw = meta_analysis(
       data = data,
       outvar = out_var,
-      se_option = se_opt, 
+      se_option = se_opt,
       periods = chosen_periods,
       wins = wins,
       prec_weighted = FALSE,
-      estimation = "PEESE", 
-      cluster_se = TRUE),
+      estimation = "PEESE",
+      cluster_se = TRUE
+    ),
     peese = meta_analysis(
       data = data,
       outvar = out_var,
@@ -611,7 +698,7 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       cluster_se = TRUE
     )
   )
-  
+
   # Only add AK if wins level is available for AK
   if (!is.na(wins_ak)) {
     results$AK = meta_analysis(
@@ -620,7 +707,7 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       se_option = se_opt,
       periods = chosen_periods,
       wins = wins_ak,
-      
+
       first_period_wins_mean = wins_ak,
       prec_weighted = FALSE,
       estimation = "AK",
@@ -632,22 +719,24 @@ perform_meta_analysis <- function(data, wins, se_opt = "avg", waap_horizon = 12)
       ak_plot = "both"
     )
   }
-  
+
   return(results)
 }
 
 # Modified analyze_fullsample function for interest rate to allow for missing AK results
 analyze_fullsample <- function(subsample_id) {
   subsample <- filtered_data
-  
+
   # First, run all methods with their respective winsorization levels
-  results_list <- lapply(wins_para_levels, function(wins) perform_meta_analysis(subsample, wins))
+  results_list <- lapply(wins_para_levels, function(wins) {
+    perform_meta_analysis(subsample, wins)
+  })
   names(results_list) <- paste0("wins_", wins_para_levels)
-  
+
   # Now we need to handle the missing AK results for wins > 0.02
   # We'll use the AK results from wins = 0.02 for higher winsorization levels
   ak_results_max <- results_list[["wins_0.02"]][["AK"]]
-  
+
   for (wins in wins_para_levels[wins_para_levels > 0.02]) {
     wins_name <- paste0("wins_", wins)
     if (is.null(results_list[[wins_name]][["AK"]])) {
@@ -656,7 +745,7 @@ analyze_fullsample <- function(subsample_id) {
       results_list[[wins_name]][["AK"]] <- ak_results_max
     }
   }
-  
+
   # Combine results for all methods
   final_fatpet_uw <- do.call(rbind, combine_results(results_list, "fatpet_uw"))
   final_fatpet <- do.call(rbind, combine_results(results_list, "fatpet"))
@@ -664,7 +753,7 @@ analyze_fullsample <- function(subsample_id) {
   final_peese <- do.call(rbind, combine_results(results_list, "peese"))
   final_waap_uw <- do.call(rbind, combine_results(results_list, "waap_uw"))
   final_waap <- do.call(rbind, combine_results(results_list, "waap"))
-  
+
   # For AK, only include results where it was actually computed
   ak_results_to_combine <- list()
   for (wins in wins_para_levels_ak) {
@@ -672,18 +761,19 @@ analyze_fullsample <- function(subsample_id) {
     ak_results_to_combine[[wins_name]] <- results_list[[wins_name]]
   }
   final_ak <- do.call(rbind, combine_results(ak_results_to_combine, "AK"))
-  
+
   # Combine all method results into a single final data frame
-  final_df <- rbind(final_fatpet_uw,
-                    final_fatpet,
-                    final_peese_uw,
-                    final_peese,
-                    final_waap_uw,
-                    final_waap,
-                    final_ak
+  final_df <- rbind(
+    final_fatpet_uw,
+    final_fatpet,
+    final_peese_uw,
+    final_peese,
+    final_waap_uw,
+    final_waap,
+    final_ak
   )
   final_df$subsample <- subsample_id
-  
+
   return(final_df)
 }
 
@@ -707,29 +797,32 @@ all_results_df %>%
     n()
   )
 
-# Use 95% region of estimate per period. 
+# Use 95% region of estimate per period.
 min_max_per_period_95 <- all_results_df %>%
   group_by(period) %>%
   summarise(
-    min_estimate = quantile(estimate,0.025, na.rm = TRUE),
-    max_estimate = quantile(estimate,0.975, na.rm = TRUE)
-  ) %>% ungroup()
+    min_estimate = quantile(estimate, 0.025, na.rm = TRUE),
+    max_estimate = quantile(estimate, 0.975, na.rm = TRUE)
+  ) %>%
+  ungroup()
 
-# Use 68% region of estimate per period. 
+# Use 68% region of estimate per period.
 min_max_per_period_68 <- all_results_df %>%
   group_by(period) %>%
   summarise(
-    min_estimate = quantile(estimate,0.16, na.rm = TRUE),
-    max_estimate = quantile(estimate,0.84, na.rm = TRUE)
-  ) %>% ungroup()
+    min_estimate = quantile(estimate, 0.16, na.rm = TRUE),
+    max_estimate = quantile(estimate, 0.84, na.rm = TRUE)
+  ) %>%
+  ungroup()
 
-# Mean estimate per period. 
+# Mean estimate per period.
 mean_median_per_period <- all_results_df %>%
   group_by(period) %>%
   summarise(
     mean = mean(estimate),
     median = median(estimate)
-  ) %>% ungroup()
+  ) %>%
+  ungroup()
 
 # Generate the average IRF data and plot
 figure_irf_range_correction_rate <- plot_average_irfs(
@@ -747,17 +840,36 @@ figure_irf_range_correction_rate <- plot_average_irfs(
 
 # Join average IRF data with correction data
 min_max_per_period_95 <- min_max_per_period_95 %>%
-  rename(period.month = period, correction.min_estimate_95 = min_estimate, correction.max_estimate_95 = max_estimate)
+  rename(
+    period.month = period,
+    correction.min_estimate_95 = min_estimate,
+    correction.max_estimate_95 = max_estimate
+  )
 min_max_per_period_68 <- min_max_per_period_68 %>%
-  rename(period.month = period, correction.min_estimate_68 = min_estimate, correction.max_estimate_68 = max_estimate)
+  rename(
+    period.month = period,
+    correction.min_estimate_68 = min_estimate,
+    correction.max_estimate_68 = max_estimate
+  )
 mean_median_per_period <- mean_median_per_period %>%
-  rename(period.month = period, correction.mean = mean, correction.median = median)
+  rename(
+    period.month = period,
+    correction.mean = mean,
+    correction.median = median
+  )
 figure_irf_range_correction_rate$data <- figure_irf_range_correction_rate$data %>%
   left_join(min_max_per_period_95, by = "period.month") %>%
   left_join(min_max_per_period_68, by = "period.month") %>%
   left_join(mean_median_per_period, by = "period.month")
 # Save figure data as csv
-write_csv(figure_irf_range_correction_rate$data, here::here(paste0("analysis/working_paper_1/figures/irf_range_correction/", subfolder, "/figure_irf_range_correction_rate_robust_5.csv")))
+write_csv(
+  figure_irf_range_correction_rate$data,
+  here::here(paste0(
+    "analysis/working_paper_1/figures/irf_range_correction/",
+    subfolder,
+    "/figure_irf_range_correction_rate_robust_5.csv"
+  ))
+)
 
 # Add publication bias correction range to plot
 figure_irf_range_correction_rate <- figure_irf_range_correction_rate$plot %>%
@@ -778,14 +890,13 @@ figure_irf_range_correction_rate <- figure_irf_range_correction_rate$plot %>%
     name = "P-bias corrected 16%-84% percentile range",
     line = list(color = 'rgba(0,0,0,0)'),
     fillcolor = 'rgba(0,100,0,0.3)'
-  ) %>% 
+  ) %>%
   add_lines(
     data = mean_median_per_period,
     x = ~period.month,
     y = ~correction.mean,
     name = "Corrected mean",
-    line = list(color = 'darkgreen',
-                dash = 'dash')
+    line = list(color = 'darkgreen', dash = 'dash')
   ) %>%
   layout(
     # title = "Interest rate response to 100 bp interest rate shock, average and p-bias corrected range",
@@ -797,11 +908,16 @@ figure_irf_range_correction_rate <- figure_irf_range_correction_rate$plot %>%
 figure_irf_range_correction_rate
 
 # Save figure as pdf
-orca(figure_irf_range_correction_rate,
-     file = paste0("analysis/working_paper_1/figures/irf_range_correction/", subfolder, "/figure_irf_range_correction_rate_robust_5.pdf"),
-     scale = NULL,
-     width = 360,
-     height = 486 * 0.65
+orca(
+  figure_irf_range_correction_rate,
+  file = paste0(
+    "analysis/working_paper_1/figures/irf_range_correction/",
+    subfolder,
+    "/figure_irf_range_correction_rate_robust_5.pdf"
+  ),
+  scale = NULL,
+  width = 360,
+  height = 486 * 0.65
 )
 
 beepr::beep()

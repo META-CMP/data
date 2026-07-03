@@ -1,0 +1,21 @@
+"Variable","Explanation","Share"
+"VAR","Vector autoregression (VAR) + vector error correction models (VECM)",60.0132802124834
+"LP/ARDL","Local projection (LP) and autoregressive distributed lag (ARDL) models",19.1766268260292
+"FAVAR","Factor Augmented VAR (FAVAR) estimation",14.7277556440903
+"Other VAR","Other VAR estimation method (e.g. TVP-VAR, GVAR)",5.55112881806109
+"DSGE","Estimated DSGE model",0.531208499335989
+"Publication year","Publication year of the study",2017.17556440903
+"Citations","Number of citations in Google Scholar",179.843758845172
+"By-product","Indicator whether the estimate was not the main research question",59.7609561752988
+"Preferred estimate","The authors signal an estimate to be their preferred one",39.5883134130146
+"Employment","Employment level is the output variable",30.0991806813282
+"Employment rate","Employment rate is the output variable",1.85424752048297
+"Unemployment rate","Unemployment rate is the output variable",68.0465717981889
+"Overnight rate","Short-term rates (including money market and policy rates)",52.2045152722444
+"Lending rate","Weekly to monthly lending and bond rates",23.1739707835325
+"Year rate","Yearly to longer-term rates",24.6215139442231
+"Annual frequency","Estimates based on annual frequency data",0.863213811420983
+"Quarterly frequency","Estimates based on quarterly frequency data",47.7689243027888
+"Monthly frequency","Estimates based on monthly frequency data",51.3678618857902
+"Panel data","Panel data used",2.73572377158035
+"Time series","Time series data used ",97.2642762284197

@@ -1,0 +1,611 @@
+# ------------------------------------------------------------------------------
+# Setup and Data Import ----
+# ------------------------------------------------------------------------------
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(readxl)
+
+# Source your setup file (adjust the path as needed)
+source(here::here("analysis/working_paper_2/setup_wp_2.R"))
+
+# Use d_no_qc as df and filter out unwanted outcome measures
+# Filtered from the period months we use
+
+df <- d_no_qc
+df <- df %>% filter(period.month %in% seq(0, 60, by = 3))
+
+# Summaries for continuous publication variables:
+custom_summary <- function(x) {
+  c(
+    Min = min(x, na.rm = TRUE),
+    Q1 = quantile(x, 0.25, na.rm = TRUE),
+    Median = median(x, na.rm = TRUE),
+    Mean = mean(x, na.rm = TRUE),
+    Q3 = quantile(x, 0.75, na.rm = TRUE),
+    Max = max(x, na.rm = TRUE),
+    SD = sd(x, na.rm = TRUE)
+  )
+}
+options(digits = 10)
+
+
+# ------------------------------------------------------------------------------
+# 1. Compute Shares for Categorical Moderators ----
+# ------------------------------------------------------------------------------
+period_month <- df %>%
+  count(period.month) %>%
+  mutate(share = n / sum(n) * 100)
+
+# For Identification method values (from df$group_ident_broad):
+identifcation_shares <- df %>%
+  count(group_ident_broad) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create identification values to be paste in the table
+
+chol <- identifcation_shares[["share"]][[1]]
+hf <- identifcation_shares[["share"]][[2]]
+nr <- identifcation_shares[["share"]][[3]]
+signr <- identifcation_shares[["share"]][[4]]
+idother <- identifcation_shares[["share"]][[5]]
+
+# For Variable frequency:
+# Annual frequency
+annual <- df %>%
+  count(annual) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create annual frequency value
+annual <- annual[["share"]][[2]]
+
+#Create quarterly frequency value
+quarter <- df %>%
+  count(quarter) %>%
+  mutate(share = n / sum(n) * 100)
+
+quarter <- quarter[["share"]][[2]]
+
+
+#Create monthly frequency value
+
+monthly <- df %>%
+  count(month) %>%
+  mutate(share = n / sum(n) * 100)
+
+monthly <- monthly[["share"]][[2]]
+
+
+#Create top tier value
+
+top_5_or_tier <- df %>%
+  count(top_5_or_tier) %>%
+  mutate(share = n / sum(n) * 100)
+
+top_5_or_tier <- top_5_or_tier[["share"]][[2]]
+
+#Create central bank value
+
+cbanker <- df %>%
+  count(cbanker) %>%
+  mutate(share = n / sum(n) * 100)
+
+cbanker <- cbanker[["share"]][[2]]
+
+
+country_us <- df %>%
+  count(us) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create US country share value
+
+us <- country_us[["share"]][[2]]
+
+country_ea12 <- df %>%
+  count(ea12) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create EA-12 share value
+
+ea12 <- country_ea12[["share"]][[2]]
+
+#Create other advanced countries share value
+
+other_advanced <- df %>%
+  count(country_dev) %>%
+  mutate(share = n / sum(n) * 100)
+
+advanced <-
+  other_advanced[["share"]][[1]] -
+  country_us[["share"]][[2]] -
+  country_ea12[["share"]][[2]]
+
+#Create emerging countries share value
+
+emerging <-
+  other_advanced[["share"]][[3]]
+
+# For Estimation method values (from df$group_est_broad):
+estimation_shares <- df %>%
+  count(group_est_broad) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create estimation values to paste in the table
+
+var <- estimation_shares[["share"]][[1]]
+lp_ardl <- estimation_shares[["share"]][[2]]
+favar <- estimation_shares[["share"]][[3]]
+other_var <- estimation_shares[["share"]][[4]]
+dsge <- estimation_shares[["share"]][[5]]
+
+# Count how much VECM are in the data
+vecm <- df %>%
+  count(vecm) %>%
+  mutate(share = n / sum(n) * 100)
+
+# Create VECM value
+# vecm <- vecm[["share"]][[2]]
+vecm <- 0 # There are no VECM
+
+#Create publication year mean value
+
+stats_pubyear <- custom_summary(df$pub_year)
+
+mean_pubyear <- stats_pubyear[["Mean"]]
+sd_pubyear <- stats_pubyear[["SD"]]
+sd_pubyear
+
+#Create number of citations mean value
+
+stats_numcit <- custom_summary(df$num_cit)
+
+mean_numcit <- stats_numcit[["Mean"]]
+sd_numcit <- stats_numcit[["SD"]]
+sd_numcit
+
+#Create byproduct value
+
+byproduct <- df %>%
+  count(byproduct) %>%
+  mutate(share = n / sum(n) * 100)
+
+byproduct <- byproduct[["share"]][[2]]
+
+prefer <- df %>%
+  count(prefer) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create preferred estimate value
+
+prefer <- prefer[["share"]][[2]]
+
+#For outcome measures
+
+outcome <- df %>%
+  filter(!(outcome_measure %in% c("rate")))
+
+outcome_measure <- outcome %>%
+  count(outcome_measure) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create outcome measures share values
+
+outcome_emp <- outcome_measure[["share"]][[1]]
+outcome_emp_rate <- outcome_measure[["share"]][[2]]
+outcome_une_rate <- outcome_measure[["share"]][[3]]
+
+# For interest rate type:
+interest_type <- df %>%
+  count(group_inttype) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create interest rates share values
+
+overnight <- interest_type[["share"]][[1]]
+lending <- interest_type[["share"]][[2]]
+year_rate <- interest_type[["share"]][[3]]
+
+#For the type of the data
+
+type_data <- df %>%
+  count(panel) %>%
+  mutate(share = n / sum(n) * 100)
+
+#Create panel data share value
+
+panel <- type_data[["share"]][[2]]
+
+#Create time series share value
+time_series <- type_data[["share"]][[1]]
+
+#For transformed IRF if needed
+
+trans_irf <- df %>%
+  filter(!(outcome_measure %in% c("rate"))) %>%
+  count(transformation) %>%
+  mutate(share = n / sum(n) * 100)
+
+growth <- trans_irf[["share"]][[1]]
+levels <- trans_irf[["share"]][[2]]
+log_level <- trans_irf[["share"]][[3]]
+log_diff <- trans_irf[["share"]][[4]]
+
+transformed <- trans_irf[["share"]][[1]] + trans_irf[["share"]][[4]]
+no_transformed <- trans_irf[["share"]][[2]] + trans_irf[["share"]][[3]]
+
+
+# ------------------------------------------------------------------------------
+# 2. Create table 1
+# ------------------------------------------------------------------------------
+
+# Create the data frame with Variable and Value
+table_data1 <- data.frame(
+  Variable = c(
+    # Identification approach
+    "Cholesky",
+    "Sign restrictions",
+    "High-Frequency",
+    "Narrative",
+    "Other identification",
+    # Publication characteristics
+    "Top publication",
+    "Central bank",
+    "US",
+    "Euro Area",
+    "Other advanced",
+    "Emerging"
+  ),
+  Explanation = c(
+    # Identification Methods
+    "Cholesky decomposition or SVAR restrictions",
+    "Sign restrictions of responses",
+    "High frequency information",
+    "Narrative approach",
+    "Other strategy (e.g. long-run restrictions, heteroskedasticity, DSGE)",
+    # Publication characteristics
+    "Paper published in top-50 economics journal",
+    "Central bank outlet or authors affiliated with central bank",
+    # Country groups
+    "Estimates based on US data",
+    "Estimates based on Euro Area country data",
+    "Other advanced countries (e.g. UK, Japan, Canada, Australia)",
+    "Emerging market countries"
+  ),
+  Share = c(
+    # Identification approach
+    chol,
+    signr,
+    hf,
+    nr,
+    idother,
+    # Publication characteristics
+    top_5_or_tier,
+    cbanker,
+    #Country groups
+    us,
+    ea12,
+    advanced,
+    emerging
+  )
+)
+
+# Format the table
+table_data1 %>%
+  kable(
+    format = "html",
+    digits = 2,
+    align = c("l", "l", "r"),
+    col.names = c("Variable", "Explanation", "Share in % / Mean"),
+    caption = "Table 1: Description and summary statistics for moderator variables"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    position = "left"
+  ) %>%
+  pack_rows("Identification method", 1, 5, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows(
+    "Publication characteristics",
+    6,
+    7,
+    bold = TRUE,
+    hline_after = TRUE
+  ) %>%
+  pack_rows("Country groups", 8, 11, bold = TRUE, hline_after = TRUE) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 1))
+
+# ------------------------------------------------------------------------------
+# 3. Create table 2
+# ------------------------------------------------------------------------------
+
+# Create the data frame with Variable and Value
+table_data2 <- data.frame(
+  Variable = c(
+    # Estimation method
+    "VAR",
+    "LP/ARDL",
+    "FAVAR",
+    "Other VAR",
+    "DSGE",
+    # Other publication characteristics
+    "Publication year",
+    "Citations",
+    "By-product",
+    "Preferred estimate",
+    # Measurement and sample characteristics
+    "Employment",
+    "Employment rate",
+    "Unemployment rate",
+    "Overnight rate",
+    "Lending rate",
+    "Year rate",
+    "Annual frequency",
+    "Quarterly frequency",
+    "Monthly frequency",
+    "Panel data",
+    "Time series"
+  ),
+  Explanation = c(
+    # Estimation Method
+    "Vector autoregression (VAR) + vector error correction models (VECM)",
+    "Local projection (LP) and autoregressive distributed lag (ARDL) models",
+    "Factor Augmented VAR (FAVAR) estimation",
+    "Other VAR estimation method (e.g. TVP-VAR, GVAR)",
+    "Estimated DSGE model",
+    # Other publication characteristics
+    "Publication year of the study",
+    "Number of citations in Google Scholar",
+    "Indicator whether the estimate was not the main research question",
+    "The authors signal an estimate to be their preferred one",
+    # Measurement and sample characteristics
+    "Employment level is the output variable",
+    "Employment rate is the output variable",
+    "Unemployment rate is the output variable",
+    "Short-term rates (including money market and policy rates)",
+    "Weekly to monthly lending and bond rates",
+    "Yearly to longer-term rates",
+    "Estimates based on annual frequency data",
+    "Estimates based on quarterly frequency data",
+    "Estimates based on monthly frequency data",
+    "Panel data used",
+    "Time series data used "
+  ),
+  Share = c(
+    # Estimation method
+    var,
+    lp_ardl,
+    favar,
+    other_var,
+    dsge,
+    # Other publication characteristics
+    mean_pubyear,
+    mean_numcit,
+    byproduct,
+    prefer,
+    # Measurement and sample characteristics
+    outcome_emp,
+    outcome_emp_rate,
+    outcome_une_rate,
+    overnight,
+    lending,
+    year_rate,
+    annual,
+    quarter,
+    monthly,
+    panel,
+    time_series
+  )
+)
+
+# Format the table
+table_data2 %>%
+  kable(
+    format = "html",
+    digits = 2,
+    align = c("l", "l", "r"),
+    col.names = c("Variable", "Explanation", "Share in % / Mean"),
+    caption = "Table 2: Description and summary statistics for other control variables"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    position = "left"
+  ) %>%
+  pack_rows("Estimation Method", 1, 5, bold = TRUE, hline_after = TRUE) %>%
+  pack_rows(
+    "Other publication characteristics",
+    6,
+    9,
+    bold = TRUE,
+    hline_after = TRUE
+  ) %>%
+  pack_rows(
+    "Measurement and sample characteristics",
+    10,
+    20,
+    bold = TRUE,
+    hline_after = TRUE
+  ) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 1))
+
+# ------------------------------------------------------------------------------
+# 4. Save to file
+# ------------------------------------------------------------------------------
+
+write.csv(
+  table_data1,
+  file = here::here(
+    "analysis/working_paper_2/tables/summary_statistics/table1.csv"
+  ),
+  row.names = FALSE
+)
+
+write.csv(
+  table_data2,
+  file = here::here(
+    "analysis/working_paper_2/tables/summary_statistics/table2.csv"
+  ),
+  row.names = FALSE
+)
+
+# ------------------------------------------------------------------------------
+# 5. ECB questions
+# ------------------------------------------------------------------------------
+
+# Create a data frame specifically for identification methods
+ident_table <- data.frame(
+  Method = c(
+    "Cholesky",
+    "Sign restrictions",
+    "High-Frequency",
+    "Narrative",
+    "Other identification",
+    "Total"
+  ),
+  Count = c(
+    # Extract the counts from the identifcation_shares data frame
+    identifcation_shares$n[1],
+    identifcation_shares$n[4], # Sign restrictions
+    identifcation_shares$n[2], # High-Frequency
+    identifcation_shares$n[3], # Narrative
+    identifcation_shares$n[5], # Other
+    sum(identifcation_shares$n) # Total
+  ),
+  Share = c(
+    # Extract the shares from the identifcation_shares data frame
+    chol,
+    signr,
+    hf,
+    nr,
+    idother,
+    100.00 # Total should be 100%
+  )
+)
+
+# Format the table
+ident_table %>%
+  kable(
+    format = "html",
+    digits = 2,
+    align = c("l", "r", "r"),
+    col.names = c("Identification Method", "Count", "Share (%)"),
+    caption = "Identification Methods: Counts and Shares"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    position = "left"
+  )
+
+
+# Table with number of studies using each identifiaction method ----
+d <- d_no_qc %>%
+  filter(
+    outcome %in% c("output", "inflation", "rate"),
+    period.month %in% seq(0, 60, by = 3)
+  )
+length(unique(d$key))
+
+n_studies_chol <- nrow(unique(
+  d %>%
+    filter(group_ident_broad == "chol") %>%
+    select(key)
+))
+n_studies_signr <- nrow(unique(
+  d %>%
+    filter(group_ident_broad == "signr") %>%
+    select(key)
+))
+n_studies_hf <- nrow(unique(
+  d %>%
+    filter(group_ident_broad == "hf") %>%
+    select(key)
+))
+n_studies_nr <- nrow(unique(
+  d %>%
+    filter(group_ident_broad == "nr") %>%
+    select(key)
+))
+n_studies_other <- nrow(unique(
+  d %>%
+    filter(group_ident_broad == "idother") %>%
+    select(key)
+))
+n_studies_total <- sum(
+  n_studies_chol,
+  n_studies_signr,
+  n_studies_hf,
+  n_studies_nr,
+  n_studies_other
+)
+n_studies_total # Can be more than 409 because one study may have several models with different identifaction methods
+
+nrow(unique(
+  d_no_qc %>%
+    filter(
+      outcome %in% c("output", "inflation", "rate"),
+      period.month %in% seq(0, 60, by = 3)
+    ) %>%
+    select(key)
+))
+# Create a data frame for the number of studies using each identification method
+ident_studies_table <- data.frame(
+  Method = c(
+    "Cholesky/SVAR",
+    "Sign restrictions",
+    "High-Frequency",
+    "Narrative",
+    "Other identification",
+    "Total"
+  ),
+  Count = c(
+    n_studies_chol,
+    n_studies_signr,
+    n_studies_hf,
+    n_studies_nr,
+    n_studies_other,
+    n_studies_total
+  )
+)
+# Format the table
+ident_studies_table %>%
+  kable(
+    format = "html",
+    digits = 2,
+    align = c("l", "r"),
+    col.names = c("Identification Method", "Count"),
+    caption = "Number of Studies Using Each Identification Method"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    position = "left"
+  )
+
+# Publication types ----
+# For each unique d$key in d, give me the d$type
+d_study_types <- d %>%
+  group_by(key) %>%
+  select(key, type) %>%
+  unique()
+nrow(d_study_types)
+
+# Count the number of studies for each type
+study_types_count <- d_study_types %>%
+  group_by(type) %>%
+  summarise(n = n()) %>%
+  mutate(share = n / sum(n) * 100)
+# Format the table
+study_types_count %>%
+  kable(
+    format = "html",
+    digits = 2,
+    align = c("l", "r", "r"),
+    col.names = c("Publication Type", "Count", "Share (%)"),
+    caption = "Publication Types: Counts and Shares"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    position = "left"
+  )

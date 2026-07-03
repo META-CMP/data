@@ -1,0 +1,13 @@
+name: meta-cmp-data-explorer-dev
+title: meta-cmp-data-explorer-dev
+username: mgwk
+account: mgwk
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 15794998
+bundleId: 11051672
+url: https://mgwk.shinyapps.io/meta-cmp-data-explorer-dev/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: data_explorer_dev_1_module_test.R|data_explorer_dev_1.R|data_explorer_dev_2.R|data_explorer_dev_3.R|R|working_paper_1|working_paper_2

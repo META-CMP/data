@@ -1,0 +1,111 @@
+{
+    "general": {
+        "key": "HT9XL53Z",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "Models from Online Appendix C, page refers to the online appendix.",
+        "model_notes": "null",
+        "figure": {
+                "model_1": "C.2",
+                "model_2": "C.1"
+        },
+        "page": 10,
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_1_year_gov",
+        "size": "25bp",
+        "axis_trans": false,
+        "dep": {
+                "model_1": "log_m_ip log_m_cpi",
+                "model_2": "log_q_emp"
+        },
+        "conf": "90",
+        "main": "other",
+        "prefer": {
+                "model_1": true,
+                "model_2": false
+        }
+    },
+    "identification_strategy": {
+        "iv": true,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": true,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": true,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": {
+                "model_1": false,
+                "model_2": true
+        },
+        "month": {
+                "model_1": true,
+                "model_2": false
+        }
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": {
+                "model_1": "01-1986",
+                "model_2": "Q1-1986"
+        },
+        "end": {
+                "model_1": "12-2016",
+                "model_2": "Q4-2016"
+        },
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": false,
+        "convent": false,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}

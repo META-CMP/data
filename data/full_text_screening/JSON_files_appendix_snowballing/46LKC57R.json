@@ -1,0 +1,160 @@
+{
+    "general": {
+        "key": "46LKC57R",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "varother: quarter-dependent VAR, i.e. a regime VAR with one regime per quarter, set to true for models 2-9.; IRF screenshots from CEP DP 725 (Figs. 1-9 identical to the AER).",
+        "model_notes": {
+                "model_1": "no quarter dependence.",
+                "model_2": "shock in Q1, benchmark model.",
+                "model_3": "shock in Q2, benchmark model.",
+                "model_4": "shock in Q3, benchmark model.",
+                "model_5": "shock in Q4, benchmark model.",
+                "model_6": "shock in Q1, seasonally unadjusted data.",
+                "model_7": "shock in Q2, seasonally unadjusted data.",
+                "model_8": "shock in Q3, seasonally unadjusted data.",
+                "model_9": "shock in Q4, seasonally unadjusted data."
+        },
+        "figure": {
+                "model_1": 1,
+                "model_2": 2,
+                "model_3": 3,
+                "model_4": 4,
+                "model_5": 5,
+                "model_6": 6,
+                "model_7": 7,
+                "model_8": 8,
+                "model_9": 9
+        },
+        "page": {
+                "model_1": 641,
+                "model_2": 641,
+                "model_3": 642,
+                "model_4": 642,
+                "model_5": 643,
+                "model_6": 645,
+                "model_7": 646,
+                "model_8": 646,
+                "model_9": 647
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "-25bp",
+        "axis_trans": false,
+        "dep": {
+                "model_1": "log_q_rgdp log_q_deflator",
+                "model_2": "log_q_rgdp log_q_deflator",
+                "model_3": "log_q_rgdp log_q_deflator",
+                "model_4": "log_q_rgdp log_q_deflator",
+                "model_5": "log_q_rgdp log_q_deflator",
+                "model_6": "log_q_rgdp log_q_cpi",
+                "model_7": "log_q_rgdp log_q_cpi",
+                "model_8": "log_q_rgdp log_q_cpi",
+                "model_9": "log_q_rgdp log_q_cpi"
+        },
+        "conf": "95",
+        "main": "gdp inflation",
+        "prefer": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": true,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false,
+                "model_7": false,
+                "model_8": false,
+                "model_9": false
+        },
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": true,
+                "model_5": true,
+                "model_6": true,
+                "model_7": true,
+                "model_8": true,
+                "model_9": true
+        }
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q1-1966",
+        "end": "Q4-2002",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": true,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}

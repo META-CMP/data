@@ -1,0 +1,138 @@
+{
+    "general": {
+        "key": "23Y8QPAL",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "dep: Y is quarterly real GDP interpolated to monthly (Chow and Lin 1971).; Fig. 5 not coded: the Federal Reserve equation is normalized on M1, so its shock is a money supply shock.",
+        "model_notes": {
+                "model_1": "Fig. 11 (column 1 of Fig. 10 with bands), 13-variable model.",
+                "model_2": "Fig. 13, column 1 (short-lived tightening), 18-variable model; column 2 not coded because RF starts at zero.",
+                "model_3": "Fig. 4, column 3 (shock to RF), 4-variable recursive model."
+        },
+        "figure": {
+                "model_1": 11,
+                "model_2": 13,
+                "model_3": 4
+        },
+        "page": {
+                "model_1": 50,
+                "model_2": 56,
+                "model_3": 24
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": {
+                "model_1": "lev_a_3_month_gov",
+                "model_2": "lev_a_fed_funds",
+                "model_3": "lev_a_fed_funds"
+        },
+        "size": "1SD",
+        "axis_trans": false,
+        "dep": {
+                "model_1": "log_m_rgdp log_m_cpi lev_m_une_rate",
+                "model_2": "log_m_rgdp log_m_cpi lev_m_une_rate",
+                "model_3": "log_m_rgdp log_m_cpi"
+        },
+        "conf": "68",
+        "main": "gdp inflation",
+        "prefer": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": false,
+        "nr": false,
+        "event": false,
+        "chol": {
+                "model_1": false,
+                "model_2": false,
+                "model_3": true
+        },
+        "svar": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false
+        },
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": true,
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": true,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1960",
+        "end": "03-1996",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false
+        },
+        "outpgap": false,
+        "find": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false
+        },
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false
+        },
+        "lrir": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false
+        }
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": true
+    }
+}

@@ -100,7 +100,8 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   scale_color_manual(values = c(
     "Mean effect from literature"   = col_mean,
     "Median effect from literature" = col_median
-  )) +
+  ),
+  breaks = c("Median effect from literature", "Mean effect from literature")) + # Median first, as in Figure 3
   
   labs(
     title = "Output response (%)",
@@ -110,7 +111,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    legend.position = "bottom",
+    legend.position = "none", # no legend here: common legend saved below
     plot.title = element_text(hjust = 0.5, size = 14, color = "grey30"),
     panel.grid.minor = element_blank(),
     axis.text.y  = element_text(color = "grey30"),
@@ -201,7 +202,8 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   scale_color_manual(values = c(
     "Mean effect from literature"   = col_mean,
     "Median effect from literature" = col_median
-  )) +
+  ),
+  breaks = c("Median effect from literature", "Mean effect from literature")) + # Median first, as in Figure 3
   
   labs(
     title = "Price level response (%)",
@@ -211,7 +213,7 @@ p_out <- ggplot(df_plot, aes(x = period.month)) +
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    legend.position = "bottom",
+    legend.position = "none", # no legend here: common legend saved below
     plot.title = element_text(hjust = 0.5, size = 14, color = "grey30"),
     panel.grid.minor = element_blank(),
     axis.text.y  = element_text(color = "grey30"),
@@ -231,6 +233,24 @@ ggsave(
   plot     = p_out,
   width    = 360/72,
   height   = (486 * 0.65)/72,
+  units    = "in",
+  device   = cairo_pdf
+)
+
+
+# Common legend for the output and price level panels ----
+# One legend for the four panels of the figure (as in Figure 3): Median (red) first, then Mean (blue)
+legend_common <- ggpubr::as_ggplot(ggpubr::get_legend(p_out + theme(legend.position = "bottom", legend.key.spacing.x = unit(20, "pt"))))
+
+legend_common
+
+# Export PDF
+out_pdf <- file.path(save_path, "avg_irf_legend_median_moderation.pdf")
+ggsave(
+  filename = out_pdf,
+  plot     = legend_common,
+  width    = 360/72,
+  height   = 36/72,
   units    = "in",
   device   = cairo_pdf
 )

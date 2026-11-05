@@ -1,0 +1,150 @@
+{
+    "general": {
+        "key": "AW6NQTYM",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "dep: the rows of Fig. 2 are labelled annual growth in ind. prod. and annual CPI inflation, but the text and Table 2 show that they are the log levels of industrial production and the CPI.; Fig. 4, column 3 not coded: identical to Fig. 2, column 3.",
+        "model_notes": {
+                "model_1": "Standard VAR (Fig. 2, column 1).",
+                "model_2": "VAR with R&R shocks (Fig. 2, column 2).",
+                "model_3": "R&R baseline (Fig. 2, column 3).",
+                "model_4": "single equation approach with VAR shocks (Fig. 4, column 1).",
+                "model_5": "single equation approach with VAR with R&R shocks (Fig. 4, column 2)."
+        },
+        "figure": {
+                "model_1": 2,
+                "model_2": 2,
+                "model_3": 2,
+                "model_4": 4,
+                "model_5": 4
+        },
+        "page": {
+                "model_1": 6,
+                "model_2": 6,
+                "model_3": 6,
+                "model_4": 11,
+                "model_5": 11
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "100bp",
+        "axis_trans": "y*100 lev_m_une_rate_false lev_a_fed_funds_false",
+        "dep": "log_m_ip lev_m_une_rate log_m_cpi",
+        "conf": "1_SE",
+        "main": "gdp emp",
+        "prefer": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": true
+        },
+        "nr": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": true,
+                "model_4": false,
+                "model_5": true
+        },
+        "event": false,
+        "chol": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true,
+                "model_5": true
+        },
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false
+        },
+        "lp": false,
+        "vecm": false,
+        "dyn_ols": {
+                "model_1": "false",
+                "model_2": "false",
+                "model_3": "ardl",
+                "model_4": "ardl",
+                "model_5": "ardl"
+        },
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": false,
+        "upr": false,
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": false,
+        "month": true
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "01-1970",
+        "end": "12-1996",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false
+        },
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}

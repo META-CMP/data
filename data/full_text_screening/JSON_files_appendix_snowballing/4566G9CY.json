@@ -1,0 +1,132 @@
+{
+    "general": {
+        "key": "4566G9CY",
+        "rid1": "dr",
+        "rid2": "null",
+        "study_notes": "Models 3-6 from the online appendix (Section A), page refers to the online appendix.; size: not reported, the fed funds rate responds by only about 0.025 on impact.",
+        "model_notes": {
+                "model_1": "regime: contraction (blue line), Fig. 1 baseline indicator.",
+                "model_2": "regime: expansion (green line), Fig. 1 baseline indicator.",
+                "model_3": "regime: contraction (blue line), indicator: MA filtered log real GDP.",
+                "model_4": "regime: expansion (green line), indicator: MA filtered log real GDP.",
+                "model_5": "regime: contraction (blue line), indicator: BP filtered log real GDP, one period lagged.",
+                "model_6": "regime: expansion (green line), indicator: BP filtered log real GDP, one period lagged."
+        },
+        "figure": {
+                "model_1": 1,
+                "model_2": 1,
+                "model_3": "A2",
+                "model_4": "A2",
+                "model_5": "A3",
+                "model_6": "A3"
+        },
+        "page": {
+                "model_1": 22,
+                "model_2": 22,
+                "model_3": 3,
+                "model_4": 3,
+                "model_5": 4,
+                "model_6": 4
+        },
+        "irf": true,
+        "cum": false
+    },
+    "impulse_and_response_variables": {
+        "inttype": "lev_a_fed_funds",
+        "size": "null",
+        "axis_trans": false,
+        "dep": "log_q_gap logdiff_q_deflator",
+        "conf": "1_SE",
+        "main": "gdp inflation",
+        "prefer": {
+                "model_1": true,
+                "model_2": true,
+                "model_3": false,
+                "model_4": false,
+                "model_5": false,
+                "model_6": false
+        }
+    },
+    "identification_strategy": {
+        "iv": false,
+        "forecast_based": true,
+        "nr": true,
+        "event": false,
+        "chol": false,
+        "svar": false,
+        "signr": false,
+        "hf": false,
+        "heteroskedas": false,
+        "longrun": false,
+        "idother": false
+    },
+    "estimation_method": {
+        "var": false,
+        "lp": true,
+        "vecm": false,
+        "dyn_ols": "false",
+        "fvar": false,
+        "tvar": false,
+        "gvar": false,
+        "bayes": false,
+        "dsge": false,
+        "varother": false
+    },
+    "regime_dependence": {
+        "lor": {
+                "model_1": true,
+                "model_2": false,
+                "model_3": true,
+                "model_4": false,
+                "model_5": true,
+                "model_6": false
+        },
+        "upr": {
+                "model_1": false,
+                "model_2": true,
+                "model_3": false,
+                "model_4": true,
+                "model_5": false,
+                "model_6": true
+        },
+        "scr": false,
+        "dcr": false,
+        "hike": false,
+        "cut": false
+    },
+    "data_frequency": {
+        "annual": false,
+        "quarter": true,
+        "month": false
+    },
+    "country_composition": {
+        "list_of_countries": "US",
+        "n_of_countries": 1
+    },
+    "further_data_characteristics": {
+        "panel": false,
+        "start": "Q3-1982",
+        "end": "Q4-2008",
+        "samplesize": "null"
+    },
+    "control_variables": {
+        "comprice": false,
+        "outpgap": false,
+        "find": false,
+        "eglob": false,
+        "cbind": false,
+        "fexch": false,
+        "inflexp": false,
+        "foreignir": false,
+        "fx": false,
+        "lrir": false
+    },
+    "econometric_details": {
+        "pure_rate_shock": true,
+        "convent": true,
+        "decomposition": false
+    },
+    "publication_characteristics": {
+        "cbanker": false
+    }
+}

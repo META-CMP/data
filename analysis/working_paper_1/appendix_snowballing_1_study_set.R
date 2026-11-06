@@ -13,6 +13,12 @@
 #   Wong (2021), the 30th reference of Franz's list, was screened: its ASReview record (record_id
 #   7848) was excluded by screener 2 (note 220) and not seen by screener 1; step 2 matched it to a
 #   second record of 2019 without a full abstract, which was removed before the screening.
+# Row 32 (added on 4 November 2026, after the first run of this script): Olivei and Tenreyro (2007),
+#   AER, record 46LKC57R of study_set_11.xlsx (Excel row 6). Both screeners labelled it relevant at
+#   title and abstract, but in the full text screening it was excluded with the reason
+#   "master thesis?" (rid1 ph), although master_bachelor_thesis = 0 and the paper is an AER article.
+#   It is re-screened here. study_set_28.xlsx already existed, so Dani pastes this row from the row
+#   file instead of running the script again.
 # What: one row per reference (30) plus Iacoviello (2005), with the columns of study_set_27.xlsx,
 #   so that the full text screening is recorded as in the other study sets: included (0/1),
 #   reason_for_exclusion (codes of GitHub issue META-CMP/data#37, e.g. no_se,
@@ -25,7 +31,8 @@
 #   No key is generated. For Iacoviello (2005), the key of its AER record in the database search
 #   (P7JNJ2KA, ASReview record_id 3092). make_zotero_key() at the end is only needed for a paper
 #   without a Zotero key.
-# record_id: row of the reference in Snowballing.csv; for Iacoviello, its ASReview record_id.
+# record_id: row of the reference in Snowballing.csv; for Iacoviello, its ASReview record_id; for
+#   Olivei and Tenreyro, its record_id in study_set_11 (986).
 # PDFs: saved by BibtexKey in the OneDrive folder "Full text download/PDFs/appendix_snowballing",
 #   online appendices as BibtexKey_appendix.pdf. The PDF columns are filled as in the Anleitung Full
 #   Text Download (PDF_source, access_date, personal_id, notes_PDF_download with the codes
@@ -89,6 +96,7 @@ keys_never_screened <- c(
   "VFDHXQ5G"  # Wong (2021), Princeton WP (in Franz's list; screened by screener 2 only, see the header)
 )
 key_iacoviello <- "P7JNJ2KA" # Iacoviello (2005), AER, record of the database search
+key_olivei <- "46LKC57R" # Olivei and Tenreyro (2007), AER, record of study_set_11
 
 # Bibliographic columns, as in study_set_27 ----
 bib_columns <- c("record_id", "key", "author", "title", "publication year", "publication title",
@@ -105,17 +113,22 @@ df_iacoviello <- merged_EL_GS_no_duplicates %>%
   select(all_of(bib_columns)) %>%
   mutate(across(everything(), as.character))
 
-study_set <- bind_rows(df_never, df_iacoviello)
+df_olivei <- read_excel(paste0(study_set_path, "/study_set_11.xlsx")) %>%
+  filter(key == key_olivei) %>%
+  select(all_of(bib_columns)) %>%
+  mutate(across(everything(), as.character))
+
+study_set <- bind_rows(df_never, df_iacoviello, df_olivei)
 study_set$record_id <- as.numeric(study_set$record_id)
 study_set$`publication year` <- as.numeric(study_set$`publication year`)
 
-# Test that all 31 studies were found
-if (nrow(study_set) != 31) {
-  stop("Expected 31 studies, found ", nrow(study_set), ". Check the keys.")
+# Test that all 32 studies were found
+if (nrow(study_set) != 32) {
+  stop("Expected 32 studies, found ", nrow(study_set), ". Check the keys.")
 }
 
-# Order as in keys_never_screened, Iacoviello last
-study_set <- study_set[match(c(keys_never_screened, key_iacoviello), study_set$key), ]
+# Order as in keys_never_screened, then Iacoviello and Olivei and Tenreyro
+study_set <- study_set[match(c(keys_never_screened, key_iacoviello, key_olivei), study_set$key), ]
 
 # Adding a bibtex key ----
 # Format of the project: name-of-first-author_year_first-word-of-title (see compare_with_our_dataset.R).
@@ -136,6 +149,8 @@ create_bibtex_key <- function(year, author, title) {
   paste0(surname, "_", year, "_", first_word)
 }
 study_set$BibtexKey <- mapply(create_bibtex_key, study_set$`publication year`, study_set$author, study_set$title)
+# Olivei and Tenreyro keep their BibtexKey of study_set_11 (its PDF is saved under that name)
+study_set$BibtexKey[study_set$key == key_olivei] <- "Olivei_2007_the"
 
 # Test uniqueness of bibtex keys:
 if (length(unique(study_set$BibtexKey)) == length(study_set$BibtexKey)) {
@@ -164,6 +179,16 @@ study_set$issue[sastry] <- "2"
 study_set$`item type`[sastry] <- "journalArticle"
 study_set$doi[sastry] <- "10.1257/mac.20220266"
 study_set$url[sastry] <- "https://doi.org/10.1257/mac.20220266"
+# biblio_edit_newer: Olivei and Tenreyro, whose record in study_set_11 (2006, no journal) is replaced
+#   by the published version (AER 2007, 97(3): 636-663).
+olivei <- study_set$key == key_olivei
+study_set$`publication title`[olivei] <- "American Economic Review"
+study_set$`publication year`[olivei] <- 2007
+study_set$volume[olivei] <- "97"
+study_set$issue[olivei] <- "3"
+study_set$`item type`[olivei] <- "journalArticle"
+study_set$doi[olivei] <- "10.1257/aer.97.3.636"
+study_set$url[olivei] <- "https://doi.org/10.1257/aer.97.3.636"
 
 # PDF retrieval (3 November 2026; Iacoviello on 9 October 2026) ----
 # PDF_source: DOI link for the PDFs downloaded through UAM, otherwise the URL of the open copy.
@@ -202,9 +227,11 @@ pdf_info <- tibble::tribble(
   "ECWH377I", "https://www.nber.org/system/files/working_papers/w21162/w21162.pdf", 1, "NBER WP 21162 (2015), the version of the record. The 2013 Jackson Hole proceedings version is free at https://www.kansascityfed.org/documents/4575/2013Rey.pdf but could not be downloaded automatically.",
   "RI5T7ZIA", NA, 0, "pay. Not in open access (Google, Google Scholar) and not available through UAM: requested by interlibrary loan. JME 1994, 34(1), 75-88.",
   "VFDHXQ5G", "https://jfhoude.wiscweb.wisc.edu/wp-content/uploads/sites/769/2019/09/Arlene-Wong-refinancing.pdf", 0, "Draft of February 2019. The record is Princeton WP 2021-57 (March 2021), whose PDF link is broken.",
-  "P7JNJ2KA", "Author's website (RED/papers_snow)", 1, "Published version (AER 2005)."
+  "P7JNJ2KA", "Author's website (RED/papers_snow)", 1, "Published version (AER 2005).",
+  "46LKC57R", "https://doi.org/10.1257/aer.97.3.636", 1, "biblio_edit_newer (citation columns of the published version). Published version (AER 2007), copied from the project folder PDFs/PDFs (Olivei_2007_the.pdf). The PDF_source in study_set_11 was LSE eprints 3742, which is CEP Discussion Paper 725 (May 2006)."
 )
-pdf_info$access_date <- as.Date(ifelse(pdf_info$key == "P7JNJ2KA", "2026-10-09", "2026-11-03"))
+pdf_info$access_date <- as.Date(ifelse(pdf_info$key == "P7JNJ2KA", "2026-10-09",
+                                       ifelse(pdf_info$key == "46LKC57R", "2026-11-04", "2026-11-03")))
 pdf_info$not_available <- ifelse(pdf_info$key == "RI5T7ZIA", 1, 0)
 
 # Hints for the full text screening ----
@@ -244,7 +271,8 @@ hints <- tibble::tribble(
   "ECWH377I", "Unclear: mainly financial responses", "need a closer look", "stopping rule", 2,
   "RI5T7ZIA", "Unclear: narrative episodes; check bands and shock size", "need a closer look", "stopping rule; dropped at step 1 by a false match with Romer and Romer (1989)", 1,
   "VFDHXQ5G", "Not in Table 3. Abstract: household consumption and mortgage refinancing", "likely not eligible", "screened: excluded at title and abstract screening by screener 2 only (note 220); step 2 matched a 2019 record without a full abstract", 2,
-  "P7JNJ2KA", "Excluded at title and abstract screening by both screeners (note 202). Full text: Section I VAR, Figure 1, 90% bands (one model)", NA, "screened: excluded at title and abstract screening", NA
+  "P7JNJ2KA", "Excluded at title and abstract screening by both screeners (note 202). Full text: Section I VAR, Figure 1, 90% bands (one model)", NA, "screened: excluded at title and abstract screening", NA,
+  "46LKC57R", "Relevant for both screeners at title and abstract. Full text: VAR with real GDP, GDP deflator and fed funds rate, 25 bp shocks, 95% and 80% bands (Figs. 1-13)", NA, "screened: full text in study_set_11 (Excel row 6), excluded with reason 'master thesis?' (rid1 ph), although master_bachelor_thesis = 0", NA
 )
 
 # Combine and add the empty columns of the study sets ----
@@ -275,7 +303,7 @@ study_set <- study_set %>%
          relevance_title_abstract, group_franz, not_screened_because, snowball_step)
 
 # Print the keys and Bibtex keys ----
-print(study_set %>% select(key, BibtexKey, most_recent_version_available), n = 31)
+print(study_set %>% select(key, BibtexKey, most_recent_version_available), n = 32)
 
 # Save the study set ----
 options("openxlsx.dateFormat" = "dd-mm-yyyy") # Format of access_date in the Anleitung
